@@ -39,15 +39,13 @@
     "extends": "react-app"
   },
   "jest": {
-    "verbose": true,
-    "testEnvironment": "jsdom",
-    "coverageReporters": [
-      "text",
-      "html"
-    ],
     "coveragePathIgnorePatterns": [
       "src/serviceWorker.js",
       "src/service-worker.js"
+    ],
+    "coverageReporters": [
+      "text",
+      "html"
     ],
     "coverageThreshold": {
       "global": {
@@ -56,6 +54,9 @@
         "functions": 100,
         "lines": 100
       }
-    }
+    },
+    "globalSetup": "<rootDir>/jestSetup.js",
+    "testEnvironment": "jsdom",
+    "verbose": true
   }
 }
