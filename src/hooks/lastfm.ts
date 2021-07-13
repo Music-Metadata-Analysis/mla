@@ -1,19 +1,19 @@
 import React from "react";
 import { UserContext } from "../providers/user/user.provider";
-import { TopAlbumsResponseInterface } from "../types/proxy.types";
+import { LastFMTopAlbumsProxyResponseInterface } from "../types/lastfm.types";
 import useAnalytics from "./analytics";
 import { postData } from "../utils/http";
 import { ProxyRequestInterface } from "../types/proxy.types";
-import apiRoutes from "../config/apiRoutes";
+import apiEndpoints from "../config/apiEndpoints";
 import Events from "../config/events";
 
-const useProfile = () => {
+const useLastFM = () => {
   const analytics = useAnalytics();
   const { userProperties, dispatch } = React.useContext(UserContext);
 
   const retrieveTop20 = (userName: string) => {
-    postData<ProxyRequestInterface, TopAlbumsResponseInterface>(
-      apiRoutes.lastfm.top20,
+    postData<ProxyRequestInterface, LastFMTopAlbumsProxyResponseInterface>(
+      apiEndpoints.v1.reports.lastfm.albums,
       {
         userName,
       }
@@ -55,4 +55,4 @@ const useProfile = () => {
   };
 };
 
-export default useProfile;
+export default useLastFM;
