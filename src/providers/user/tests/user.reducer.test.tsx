@@ -3,7 +3,7 @@ import { UserStateInterface, UserActionType } from "../../../types/user.types";
 import InitialValues from "../user.initial";
 
 import { UserReducer } from "../user.reducer";
-import { TopAlbumsResponseInterface } from "../../../types/proxy.types";
+import { TopAlbumsProxyResponseInterface } from "../../../types/proxy.types";
 
 describe("UserReducer", () => {
   let received: UserStateInterface | null;
@@ -46,7 +46,7 @@ describe("UserReducer", () => {
   it("should handle SuccessFetchUser correctly", () => {
     const mock_lastfm_data = {
       albums: [],
-      profileUrl: [
+      image: [
         {
           size: "large",
           "#text": "http://someurl.com",
@@ -56,7 +56,7 @@ describe("UserReducer", () => {
     received = arrange({
       type: "SuccessFetchUser",
       userName: "someguy",
-      data: mock_lastfm_data as TopAlbumsResponseInterface,
+      data: mock_lastfm_data as TopAlbumsProxyResponseInterface,
     });
     expect(received.profileUrl).toBe("https://www.last.fm/user/someguy");
     expect(received.userName).toBe("someguy");

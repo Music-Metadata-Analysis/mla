@@ -5,7 +5,7 @@ import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import { UserContext } from "../../providers/user/user.provider";
 import { UserContextInterface } from "../../types/user.types";
-import useProfile from "../profile";
+import useLastFM from "../lastfm";
 import { InitialState } from "../../providers/user/user.initial";
 import { postData } from "../../utils/http";
 import Events from "../../config/events";
@@ -25,7 +25,7 @@ interface MockUserContextWithChildren {
   mockContext: UserContextInterface;
 }
 
-describe("useProfile", () => {
+describe("useLastFM", () => {
   let mockUserName = "user1234";
   let mockAPIResponse = { response: "mocked data" };
   let received: ReturnType<typeof arrange>;
@@ -55,7 +55,7 @@ describe("useProfile", () => {
   };
 
   const arrange = (providerProps: UserContextInterface) => {
-    return renderHook(() => useProfile(), {
+    return renderHook(() => useLastFM(), {
       wrapper: providerWrapper,
       initialProps: {
         mockContext: providerProps,

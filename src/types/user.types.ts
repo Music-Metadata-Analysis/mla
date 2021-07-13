@@ -1,8 +1,12 @@
-import { TopAlbumsResponseInterface } from "./proxy.types";
+import { TopAlbumsProxyResponseInterface } from "./proxy.types";
+import { LastFMTopAlbumsProxyResponseInterface } from "./lastfm.types";
 
 export interface UserStateInterface {
   userName: string | null;
-  data: {} | TopAlbumsResponseInterface;
+  data:
+    | {}
+    | TopAlbumsProxyResponseInterface
+    | LastFMTopAlbumsProxyResponseInterface;
   profileUrl: string | null;
   ready: boolean;
   error: boolean;
@@ -20,5 +24,5 @@ export type UserActionType =
   | {
       type: "SuccessFetchUser";
       userName: string;
-      data: TopAlbumsResponseInterface;
+      data: TopAlbumsProxyResponseInterface;
     };
