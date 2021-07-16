@@ -23,6 +23,9 @@ export interface LastFMAlbumDataInterface {
   name?: string;
   playcount?: string;
   url?: string;
+  "@attr"?: {
+    rank: string;
+  };
   "#text"?: string;
 }
 

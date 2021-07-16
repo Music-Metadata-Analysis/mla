@@ -28,7 +28,7 @@ describe(apiEndpoints.v1.reports.lastfm.albums, () => {
     image: [],
   };
 
-  beforeAll(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 

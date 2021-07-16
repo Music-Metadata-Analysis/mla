@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "preinstall": "npx npm-force-resolutions",
     "build": "next build",
     "start": "next start",
     "lint": "eslint ./src/",
@@ -62,6 +61,9 @@
       }
     },
     "globalSetup": "<rootDir>/jestSetup.js",
+    "roots": [
+      "./src"
+    ],
     "testEnvironment": "jsdom",
     "verbose": true
   }
