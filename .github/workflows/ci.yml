@@ -9,6 +9,7 @@ on:
 
 env:
   PROJECT_NAME: "top20-nextjs"
+  INTEGRATION_TEST_LAST_FM_KEY: ${{ secrets.INTEGRATION_TEST_LAST_FM_KEY }}
 
 jobs:
   build:
