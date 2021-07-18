@@ -2,7 +2,7 @@ import LastFMClient from "./client.class";
 import { LastFMProxyInterface } from "../../types/lastfm.types";
 
 class LastFMProxy implements LastFMProxyInterface {
-  internalClient: LastFMClient;
+  private internalClient: LastFMClient;
 
   constructor() {
     this.internalClient = new LastFMClient(process.env.LAST_FM_KEY);

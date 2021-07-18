@@ -9,35 +9,51 @@ const userReducer = (state: UserStateInterface, action: UserActionType) => {
     case "ResetState":
       return {
         ...state,
-        userName: "",
-        profileUrl: null,
         data: {},
         error: false,
+        profileUrl: null,
+        ratelimited: false,
         ready: false,
+        userName: "",
       };
     case "StartFetchUser":
       return {
         ...state,
-        userName: action.userName,
+        data: {},
         error: false,
+        profileUrl: null,
+        ratelimited: false,
         ready: false,
+        userName: action.userName,
       };
     case "FailureFetchUser":
       return {
         ...state,
-        userName: action.userName,
-        profileUrl: null,
         data: {},
         error: true,
+        profileUrl: null,
+        ratelimited: false,
         ready: false,
+        userName: action.userName,
+      };
+    case "RatelimitedFetchUser":
+      return {
+        ...state,
+        data: {},
+        error: true,
+        profileUrl: null,
+        ratelimited: true,
+        ready: false,
+        userName: action.userName,
       };
     case "SuccessFetchUser":
       return {
-        userName: action.userName,
-        profileUrl: GenerateUserLink(action.userName),
         data: action.data,
         error: false,
+        profileUrl: GenerateUserLink(action.userName),
+        ratelimited: false,
         ready: true,
+        userName: action.userName,
       };
     default:
       return state;

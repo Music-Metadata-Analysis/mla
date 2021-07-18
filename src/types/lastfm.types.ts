@@ -29,12 +29,6 @@ export interface LastFMAlbumDataInterface {
   "#text"?: string;
 }
 
-export interface LastFMClientInterface {
-  secret_key: string;
-  getTopAlbums: (username: string) => Promise<LastFMAlbumDataInterface[]>;
-  getUserImage: (username: string) => Promise<LastFMImageDataInterface[]>;
-}
-
 export interface LastFMProxyInterface {
   getTopAlbums: (
     username: string
@@ -45,4 +39,14 @@ export interface LastFMTopAlbumsProxyResponseInterface
   extends TopAlbumsProxyResponseInterface {
   albums: LastFMAlbumDataInterface[];
   image: LastFMImageDataInterface[];
+}
+
+export interface LastFMClientInterface {
+  secret_key: string;
+  getTopAlbums: (username: string) => Promise<LastFMAlbumDataInterface[]>;
+  getUserImage: (username: string) => Promise<LastFMImageDataInterface[]>;
+}
+
+export interface LastFMTopAlbumsReportInterface {
+  retrieveAlbumReport: (userName: string) => void;
 }

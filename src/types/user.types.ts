@@ -7,19 +7,23 @@ export interface UserStateInterface {
     | {}
     | TopAlbumsProxyResponseInterface
     | LastFMTopAlbumsProxyResponseInterface;
+  ratelimited: boolean;
   profileUrl: string | null;
   ready: boolean;
   error: boolean;
 }
 
+export type userDispatchType = (action: UserActionType) => void;
+
 export interface UserContextInterface {
   userProperties: UserStateInterface;
-  dispatch: (action: UserActionType) => void;
+  dispatch: userDispatchType;
 }
 
 export type UserActionType =
   | { type: "ResetState" }
   | { type: "StartFetchUser"; userName: string }
+  | { type: "RatelimitedFetchUser"; userName: string }
   | { type: "FailureFetchUser"; userName: string }
   | {
       type: "SuccessFetchUser";

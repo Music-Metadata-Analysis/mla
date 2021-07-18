@@ -4,6 +4,7 @@ import apiEndpoints from "../../../../../config/apiEndpoints";
 import { body, validationResult } from "express-validator";
 import nextConnect from "next-connect";
 import LastFMProxy from "../../../../../integrations/lastfm/proxy.class";
+import { ProxyError } from "../../../../../errors/proxy.error.class";
 
 const onNoMatch = (req: NextApiRequest, res: NextApiResponse) => {
   res.status(405).json(status.STATUS_405_MESSAGE);
@@ -24,12 +25,20 @@ handler.post(
       try {
         const proxyResponse = await proxy.getTopAlbums(req.body.userName);
         res.status(200).json(proxyResponse);
-      } catch {
-        res.status(502).json(status.STATUS_502_MESSAGE);
+      } catch (err) {
+        errorResponse((err as ProxyError), res);
       }
     }
     next();
   }
 );
+
+const errorResponse = (err: ProxyError, res: NextApiResponse) => {
+  if (err.clientStatusCode === 429) {
+    res.status(429).json(status.STATUS_429_MESSAGE);
+  } else {
+    res.status(502).json(status.STATUS_502_MESSAGE);
+  }
+};
 
 export default handler;

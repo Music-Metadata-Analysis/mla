@@ -1,14 +1,10 @@
 import ReactGA from "react-ga";
 import React from "react";
-
 import { renderHook } from "@testing-library/react-hooks";
-
 import useAnalytics from "../analytics";
-
 import { AnalyticsContext } from "../../providers/analytics/analytics.provider";
 import { AnalyticsContextInterface } from "../../types/analytics.types";
-
-import Events from "../../config/events.js";
+import Events from "../../config/events";
 import { MutableEnv } from "../../types/process.types";
 
 jest.mock("react-ga");
@@ -97,7 +93,7 @@ describe("useAnalytics", () => {
         });
 
         it("should NOT process events when event is called", async () => {
-          received.result.current.event(Events.test);
+          received.result.current.event(Events.General.Test);
           expect(ReactGA.event).toBeCalledTimes(0);
         });
       });
@@ -137,7 +133,7 @@ describe("useAnalytics", () => {
         });
 
         it("should NOT process events when event is called", async () => {
-          received.result.current.event(Events.test);
+          received.result.current.event(Events.General.Test);
           expect(ReactGA.event).toBeCalledTimes(0);
         });
       });
@@ -187,9 +183,9 @@ describe("useAnalytics", () => {
         });
 
         it("should process events when event is called", async () => {
-          received.result.current.event(Events.test);
+          received.result.current.event(Events.General.Test);
           expect(ReactGA.event).toBeCalledTimes(1);
-          expect(ReactGA.event).toBeCalledWith(Events.test);
+          expect(ReactGA.event).toBeCalledWith(Events.General.Test);
         });
       });
     });
@@ -230,7 +226,7 @@ describe("useAnalytics", () => {
         });
 
         it("should NOT process events when event is called", async () => {
-          received.result.current.event(Events.test);
+          received.result.current.event(Events.General.Test);
           expect(ReactGA.event).toBeCalledTimes(0);
         });
       });
@@ -270,7 +266,7 @@ describe("useAnalytics", () => {
         });
 
         it("should NOT process events when event is called", async () => {
-          received.result.current.event(Events.test);
+          received.result.current.event(Events.General.Test);
           expect(ReactGA.event).toBeCalledTimes(0);
         });
       });
@@ -320,9 +316,9 @@ describe("useAnalytics", () => {
         });
 
         it("should process events when event is called", async () => {
-          received.result.current.event(Events.test);
+          received.result.current.event(Events.General.Test);
           expect(ReactGA.event).toBeCalledTimes(1);
-          expect(ReactGA.event).toBeCalledWith(Events.test);
+          expect(ReactGA.event).toBeCalledWith(Events.General.Test);
         });
       });
     });
