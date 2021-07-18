@@ -1,7 +1,7 @@
 import { Reducer } from "react";
-import {
-  MiddlewareType,
+import type {
   MiddlewareOrReducerType,
+  MiddlewareType,
   NestedType,
 } from "../types/reducer.types";
 

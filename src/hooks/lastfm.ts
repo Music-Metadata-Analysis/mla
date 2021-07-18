@@ -1,8 +1,8 @@
 import React from "react";
-import Events from "../config/events";
-import { UserContext } from "../providers/user/user.provider";
 import useAnalytics from "./analytics";
+import Events from "../config/events";
 import LastFMReportRequest from "../integrations/lastfm/report.class";
+import { UserContext } from "../providers/user/user.provider";
 
 const useLastFM = () => {
   const analytics = useAnalytics();

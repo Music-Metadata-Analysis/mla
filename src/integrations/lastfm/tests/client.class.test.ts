@@ -1,5 +1,5 @@
 import LastFMClient from "../client.class";
-import {
+import type {
   LastFMAlbumDataInterface,
   LastFMImageDataInterface,
 } from "../../../types/lastfm.types";

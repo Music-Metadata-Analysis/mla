@@ -1,15 +1,13 @@
-import Events from "../../config/events";
 import apiEndpoints from "../../config/apiEndpoints";
-
+import Events from "../../config/events";
 import { postData } from "../../utils/http";
-
-import { userDispatchType } from "../../types/user.types";
-import { eventCreatorType } from "../../types/analytics.types";
-import { ProxyRequestInterface } from "../../types/proxy.types";
-import {
+import type { eventCreatorType } from "../../types/analytics.types";
+import type {
   LastFMTopAlbumsProxyResponseInterface,
   LastFMTopAlbumsReportInterface,
 } from "../../types/lastfm.types";
+import type { ProxyRequestInterface } from "../../types/proxy.types";
+import type { userDispatchType } from "../../types/user.types";
 
 class LastFMReportRequest implements LastFMTopAlbumsReportInterface {
   private dispatch: userDispatchType;

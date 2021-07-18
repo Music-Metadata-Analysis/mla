@@ -1,10 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import * as status from "../../../../../config/status";
-import apiEndpoints from "../../../../../config/apiEndpoints";
 import { body, validationResult } from "express-validator";
 import nextConnect from "next-connect";
-import LastFMProxy from "../../../../../integrations/lastfm/proxy.class";
+import apiEndpoints from "../../../../../config/apiEndpoints";
+import * as status from "../../../../../config/status";
 import { ProxyError } from "../../../../../errors/proxy.error.class";
+import LastFMProxy from "../../../../../integrations/lastfm/proxy.class";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const onNoMatch = (req: NextApiRequest, res: NextApiResponse) => {
   res.status(405).json(status.STATUS_405_MESSAGE);

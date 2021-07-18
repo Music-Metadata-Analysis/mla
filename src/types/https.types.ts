@@ -1,5 +1,5 @@
 export type HttpMethodType = "GET" | "POST";
 
-export type StatusMessage = {
+export type StatusMessageType = {
   detail: string;
 };

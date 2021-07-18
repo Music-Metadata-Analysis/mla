@@ -1,8 +1,10 @@
-import withMiddleware from "../../utils/reducer.middleware";
-import reducerLoggingMiddleware from "../../utils/reducer.logger";
 import { GenerateUserLink } from "../../config/lastfm";
-
-import { UserStateInterface, UserActionType } from "../../types/user.types";
+import reducerLoggingMiddleware from "../../utils/reducer.logger";
+import withMiddleware from "../../utils/reducer.middleware";
+import type {
+  UserStateInterface,
+  UserActionType,
+} from "../../types/user.types";
 
 const userReducer = (state: UserStateInterface, action: UserActionType) => {
   switch (action.type) {

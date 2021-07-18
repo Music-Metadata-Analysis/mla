@@ -1,8 +1,7 @@
 import React from "react";
-
 import reducerLoggingMiddleware from "../reducer.logger";
-import { ActionType } from "../../types/reducer.types";
-import { MutableEnv } from "../../types/process.types";
+import type { MutableEnv } from "../../types/process.types";
+import type { ActionType } from "../../types/reducer.types";
 
 type capturedOutput = Array<string | ActionType>;
 type testState = typeof testState1 | typeof testState2;

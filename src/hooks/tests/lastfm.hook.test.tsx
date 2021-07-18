@@ -1,14 +1,11 @@
-import React from "react";
 import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
-
+import React from "react";
 import Events from "../../config/events";
-
 import { InitialState } from "../../providers/user/user.initial";
 import { UserContext } from "../../providers/user/user.provider";
-import { UserContextInterface } from "../../types/user.types";
-
 import useLastFM from "../lastfm";
+import type { UserContextInterface } from "../../types/user.types";
 
 const mockRetrieve = jest.fn();
 

@@ -1,5 +1,5 @@
 import { voidDispatch } from "../../utils/voids";
-import {
+import type {
   UserStateInterface,
   UserContextInterface,
 } from "../../types/user.types";

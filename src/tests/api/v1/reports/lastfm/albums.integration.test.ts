@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
-import albumHandler from "../../../../../pages/api/v1/reports/lastfm/albums";
 import apiEndpoints from "../../../../../config/apiEndpoints";
-import { HttpMethodType } from "../../../../../types/https.types";
 import * as status from "../../../../../config/status";
-import testAccounts from "../../../../fixtures/lastfm.users";
+import albumHandler from "../../../../../pages/api/v1/reports/lastfm/albums";
 import testResponses from "../../../../fixtures/lastfm.topalbums";
+import testAccounts from "../../../../fixtures/lastfm.users";
+import type { HttpMethodType } from "../../../../../types/https.types";
 
 type ArrangeArgs = {
   body: object;

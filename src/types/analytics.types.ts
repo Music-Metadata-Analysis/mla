@@ -1,4 +1,4 @@
-import { EventArgs } from "react-ga";
+import type { EventArgs } from "react-ga";
 
 export type EventDefinitionType = {
   category: "LASTFM" | "MAIN" | "TEST";

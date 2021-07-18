@@ -1,6 +1,6 @@
+import Events from "../../../config/events";
 import { postData } from "../../../utils/http";
 import LastFMReportRequest from "../report.class";
-import Events from "../../../config/events";
 
 jest.mock("../../../utils/http");
 

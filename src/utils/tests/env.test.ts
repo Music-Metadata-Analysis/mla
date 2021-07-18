@@ -1,5 +1,5 @@
 import { isTest, isProduction } from "../env";
-import { MutableEnv } from "../../types/process.types";
+import type { MutableEnv } from "../../types/process.types";
 
 describe("When node is running in production mode", () => {
   let originalEnvironment: MutableEnv;

@@ -1,5 +1,5 @@
 import { voidSetter } from "../../utils/voids";
-import { AnalyticsContextInterface } from "../../types/analytics.types";
+import type { AnalyticsContextInterface } from "../../types/analytics.types";
 
 const InitialValues = <AnalyticsContextInterface>{
   initialized: false,
