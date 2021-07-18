@@ -1,47 +1,21 @@
 import React from "react";
-import { UserContext } from "../providers/user/user.provider";
-import { LastFMTopAlbumsProxyResponseInterface } from "../types/lastfm.types";
-import useAnalytics from "./analytics";
-import { postData } from "../utils/http";
-import { ProxyRequestInterface } from "../types/proxy.types";
-import apiEndpoints from "../config/apiEndpoints";
 import Events from "../config/events";
+import { UserContext } from "../providers/user/user.provider";
+import useAnalytics from "./analytics";
+import LastFMReportRequest from "../integrations/lastfm/report.class";
 
 const useLastFM = () => {
   const analytics = useAnalytics();
   const { userProperties, dispatch } = React.useContext(UserContext);
-
-  const retrieveTop20 = (userName: string) => {
-    postData<ProxyRequestInterface, LastFMTopAlbumsProxyResponseInterface>(
-      apiEndpoints.v1.reports.lastfm.albums,
-      {
-        userName,
-      }
-    )
-      .then((response) => {
-        dispatch({
-          type: "SuccessFetchUser",
-          userName: userName,
-          data: response,
-        });
-        analytics.event(Events.SuccessProfile);
-      })
-      .catch((error) => {
-        dispatch({
-          type: "FailureFetchUser",
-          userName: userName,
-        });
-        analytics.event(Events.ErrorProfile);
-      });
-  };
+  const requests = new LastFMReportRequest(dispatch, analytics.event);
 
   const top20 = (userName: string): void => {
-    analytics.event(Events.Search);
+    analytics.event(Events.LastFM.RequestAlbumsReport);
     dispatch({
       type: "StartFetchUser",
       userName: userName,
     });
-    retrieveTop20(userName);
+    requests.retrieveAlbumReport(userName);
   };
 
   const clear = (): void => {

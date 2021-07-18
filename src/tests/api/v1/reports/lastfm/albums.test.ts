@@ -4,6 +4,7 @@ import handleProxy from "../../../../../pages/api/v1/reports/lastfm/albums";
 import apiEndpoints from "../../../../../config/apiEndpoints";
 import { HttpMethodType } from "../../../../../types/https.types";
 import * as status from "../../../../../config/status";
+import { ProxyError } from "../../../../../errors/proxy.error.class";
 
 const mockBackendResponse = jest.fn();
 jest.mock("../../../../../integrations/lastfm/proxy.class.ts", () => {
@@ -85,6 +86,19 @@ describe(apiEndpoints.v1.reports.lastfm.albums, () => {
         it("should return a 502 status code", () => {
           expect(res._getStatusCode()).toBe(502);
           expect(res._getJSONData()).toStrictEqual(status.STATUS_502_MESSAGE);
+        });
+      });
+      describe("with a lastfm ratelimiting error", () => {
+        beforeEach(async () => {
+          mockBackendResponse.mockImplementationOnce(() => {
+            throw new ProxyError(mockError, 429);
+          });
+          await arrange({ body: { userName: "string" }, method: "POST" });
+        });
+
+        it("should return a 429 status code", () => {
+          expect(res._getStatusCode()).toBe(429);
+          expect(res._getJSONData()).toStrictEqual(status.STATUS_429_MESSAGE);
         });
       });
       describe("with a valid lastfm response", () => {

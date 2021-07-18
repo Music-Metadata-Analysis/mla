@@ -1,14 +1,24 @@
 import React from "react";
-
 import { act, waitFor } from "@testing-library/react";
-
 import { renderHook } from "@testing-library/react-hooks";
+
+import Events from "../../config/events";
+
+import { InitialState } from "../../providers/user/user.initial";
 import { UserContext } from "../../providers/user/user.provider";
 import { UserContextInterface } from "../../types/user.types";
+
 import useLastFM from "../lastfm";
-import { InitialState } from "../../providers/user/user.initial";
-import { postData } from "../../utils/http";
-import Events from "../../config/events";
+
+const mockRetrieve = jest.fn();
+
+jest.mock("../../integrations/lastfm/report.class", () => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      retrieveAlbumReport: mockRetrieve,
+    };
+  });
+});
 
 const mockEvent = jest.fn();
 
@@ -18,8 +28,6 @@ jest.mock("../analytics", () => {
   };
 });
 
-jest.mock("../../utils/http");
-
 interface MockUserContextWithChildren {
   children?: React.ReactNode;
   mockContext: UserContextInterface;
@@ -27,7 +35,7 @@ interface MockUserContextWithChildren {
 
 describe("useLastFM", () => {
   let mockUserName = "user1234";
-  let mockAPIResponse = { response: "mocked data" };
+  let mockAPIResponse = { data: "mocked data" };
   let received: ReturnType<typeof arrange>;
   let mockDispatch = jest.fn();
 
@@ -44,14 +52,6 @@ describe("useLastFM", () => {
         {children}
       </UserContext.Provider>
     );
-  };
-
-  const setUpRetrieve = (success: boolean) => {
-    if (success) {
-      (postData as jest.Mock).mockResolvedValueOnce(mockAPIResponse);
-    } else {
-      (postData as jest.Mock).mockRejectedValueOnce(mockAPIResponse);
-    }
   };
 
   const arrange = (providerProps: UserContextInterface) => {
@@ -83,58 +83,31 @@ describe("useLastFM", () => {
     });
   });
 
-  describe("when retrieve is called", () => {
-    describe("when a response is successful", () => {
-      beforeEach(() => setUpRetrieve(true));
+  describe("top20", () => {
+    beforeEach(async () => {
+      act(() => received.result.current.top20(mockUserName));
+    });
 
-      it("should dispatch the reducer correctly", async () => {
-        act(() => received.result.current.top20(mockUserName));
-        await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
-        expect(mockDispatch).toHaveBeenCalledWith({
-          type: "StartFetchUser",
-          userName: mockUserName,
-        });
-        expect(mockDispatch).toHaveBeenCalledWith({
-          type: "SuccessFetchUser",
-          userName: mockUserName,
-          data: mockAPIResponse,
-        });
-      });
-
-      it("should register events correctly", async () => {
-        act(() => received.result.current.top20(mockUserName));
-        await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
-        expect(mockEvent).toHaveBeenCalledWith(Events.Search);
-        expect(mockEvent).toHaveBeenCalledWith(Events.SuccessProfile);
+    it("should dispatch the reducer correctly", async () => {
+      await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: "StartFetchUser",
+        userName: mockUserName,
       });
     });
 
-    describe("when a response fails", () => {
-      beforeEach(() => setUpRetrieve(false));
+    it("should register events correctly", async () => {
+      await waitFor(() => expect(mockEvent).toBeCalledTimes(1));
+      expect(mockEvent).toHaveBeenCalledWith(Events.LastFM.RequestAlbumsReport);
+    });
 
-      it("should dispatch the reducer correctly", async () => {
-        act(() => received.result.current.top20(mockUserName));
-        await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
-        expect(mockDispatch).toHaveBeenCalledWith({
-          type: "StartFetchUser",
-          userName: mockUserName,
-        });
-        expect(mockDispatch).toHaveBeenCalledWith({
-          type: "FailureFetchUser",
-          userName: mockUserName,
-        });
-      });
-
-      it("should register events correctly", async () => {
-        act(() => received.result.current.top20(mockUserName));
-        await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
-        expect(mockEvent).toHaveBeenCalledWith(Events.Search);
-        expect(mockEvent).toHaveBeenCalledWith(Events.ErrorProfile);
-      });
+    it("should retrieve the report from lastfm", async () => {
+      await waitFor(() => expect(mockRetrieve).toBeCalledTimes(1));
+      expect(mockRetrieve).toHaveBeenCalledWith(mockUserName);
     });
   });
 
-  describe("when clear is called", () => {
+  describe("clear", () => {
     it("should dispatch the reducer correctly", async () => {
       act(() => received.result.current.clear());
       await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));

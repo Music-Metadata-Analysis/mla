@@ -9,6 +9,7 @@ export const InitialState = <UserStateInterface>{
   integration: null,
   data: {},
   profileUrl: null,
+  ratelimited: false,
   ready: false,
   error: false,
 };
