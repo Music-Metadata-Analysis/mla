@@ -2,6 +2,31 @@
   "extends": ["next", "next/core-web-vitals"],
   "plugins": ["unused-imports"],
   "rules": {
-    "unused-imports/no-unused-imports": "error"
+    "unused-imports/no-unused-imports": "error",
+    "import/order": [
+      "error",
+      {
+        "alphabetize": { "order": "asc" },
+        "groups": [
+          "external",
+          "builtin",
+          "sibling",
+          "parent",
+          "object",
+          "index",
+          "internal",
+          "type"
+        ],
+        "newlines-between": "never",
+        "pathGroups": [
+          {
+            "pattern": "@app/**",
+            "group": "external",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"]
+      }
+    ]
   }
 }

@@ -1,5 +1,5 @@
-import { TopAlbumsProxyResponseInterface } from "./proxy.types";
 import { LastFMTopAlbumsProxyResponseInterface } from "./lastfm.types";
+import type { TopAlbumsProxyResponseInterface } from "./proxy.types";
 
 export interface UserStateInterface {
   userName: string | null;

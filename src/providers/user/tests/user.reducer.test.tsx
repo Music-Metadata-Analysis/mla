@@ -1,9 +1,10 @@
-import { UserStateInterface, UserActionType } from "../../../types/user.types";
-
 import InitialValues from "../user.initial";
-
 import { UserReducer } from "../user.reducer";
-import { TopAlbumsProxyResponseInterface } from "../../../types/proxy.types";
+import type { TopAlbumsProxyResponseInterface } from "../../../types/proxy.types";
+import type {
+  UserStateInterface,
+  UserActionType,
+} from "../../../types/user.types";
 
 describe("UserReducer", () => {
   let received: UserStateInterface | null;

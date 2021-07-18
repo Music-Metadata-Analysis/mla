@@ -1,4 +1,4 @@
-import { LastFMTopAlbumsProxyResponseInterface } from "../../types/lastfm.types";
+import type { LastFMTopAlbumsProxyResponseInterface } from "../../types/lastfm.types";
 
 interface TestData {
   [key: string]: LastFMTopAlbumsProxyResponseInterface;

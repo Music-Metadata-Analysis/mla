@@ -1,11 +1,11 @@
-import ReactGA from "react-ga";
-import React from "react";
 import { renderHook } from "@testing-library/react-hooks";
-import useAnalytics from "../analytics";
-import { AnalyticsContext } from "../../providers/analytics/analytics.provider";
-import { AnalyticsContextInterface } from "../../types/analytics.types";
+import React from "react";
+import ReactGA from "react-ga";
 import Events from "../../config/events";
-import { MutableEnv } from "../../types/process.types";
+import { AnalyticsContext } from "../../providers/analytics/analytics.provider";
+import useAnalytics from "../analytics";
+import type { AnalyticsContextInterface } from "../../types/analytics.types";
+import type { MutableEnv } from "../../types/process.types";
 
 jest.mock("react-ga");
 jest.mock("next/router");

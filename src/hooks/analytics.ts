@@ -1,8 +1,9 @@
-import React from "react";
-import ReactGA, { EventArgs } from "react-ga";
 import { useRouter } from "next/router";
+import React from "react";
+import ReactGA from "react-ga";
 import { AnalyticsContext } from "../providers/analytics/analytics.provider";
 import { isProduction } from "../utils/env";
+import type { EventArgs } from "react-ga";
 
 const useAnalytics = () => {
   const router = useRouter();

@@ -1,10 +1,8 @@
-import React from "react";
 import { render } from "@testing-library/react";
-
-import { UserContextInterface } from "../../../types/user.types";
-
-import UserProvider, { UserContext } from "../user.provider";
+import React from "react";
 import InitialValues from "../user.initial";
+import UserProvider, { UserContext } from "../user.provider";
+import type { UserContextInterface } from "../../../types/user.types";
 
 describe("UserProvider", () => {
   let received: any = {};

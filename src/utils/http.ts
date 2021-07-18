@@ -1,12 +1,12 @@
 import * as status from "../config/status.js";
-import { StatusMessage } from "../types/https.types";
+import type { StatusMessageType } from "../types/https.types";
 
 export const postData = async <POSTDATA, RESPONSE>(
   url: string,
   postData: POSTDATA
 ): Promise<{
   status: number;
-  response: RESPONSE | StatusMessage;
+  response: RESPONSE | StatusMessageType;
 }> => {
   const response = await fetch(url, {
     method: "POST",
