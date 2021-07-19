@@ -1,6 +1,6 @@
 import apiEndpoints from "../../config/apiEndpoints";
 import Events from "../../config/events";
-import { postData } from "../../utils/http";
+import HTTPClient from "../../utils/http.class";
 import type { eventCreatorType } from "../../types/analytics.types";
 import type {
   LastFMTopAlbumsProxyResponseInterface,
@@ -12,19 +12,22 @@ import type { userDispatchType } from "../../types/user.types";
 class LastFMReportRequest implements LastFMTopAlbumsReportInterface {
   private dispatch: userDispatchType;
   private event: eventCreatorType;
+  private client: HTTPClient;
 
   constructor(dispatch: userDispatchType, event: eventCreatorType) {
     this.dispatch = dispatch;
     this.event = event;
+    this.client = new HTTPClient();
   }
 
   retrieveAlbumReport(userName: string): void {
-    postData<ProxyRequestInterface, LastFMTopAlbumsProxyResponseInterface>(
-      apiEndpoints.v1.reports.lastfm.albums,
-      {
-        userName,
-      }
-    )
+    this.client
+      .post<ProxyRequestInterface, LastFMTopAlbumsProxyResponseInterface>(
+        apiEndpoints.v1.reports.lastfm.albums,
+        {
+          userName,
+        }
+      )
       .then((response) => {
         if (response.status === 200) {
           this.dispatch({

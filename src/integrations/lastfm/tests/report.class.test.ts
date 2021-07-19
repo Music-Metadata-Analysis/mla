@@ -1,8 +1,14 @@
 import Events from "../../../config/events";
-import { postData } from "../../../utils/http";
 import LastFMReportRequest from "../report.class";
 
-jest.mock("../../../utils/http");
+const mockPost = jest.fn();
+jest.mock("../../../utils/http.class", () => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      post: mockPost,
+    };
+  });
+});
 
 describe("LastFMReportRequest", () => {
   let mockUserName = "user1234";
@@ -17,12 +23,12 @@ describe("LastFMReportRequest", () => {
 
   const setUpRetrieve = (success: boolean, status: number) => {
     if (success) {
-      (postData as jest.Mock).mockResolvedValueOnce({
+      mockPost.mockResolvedValueOnce({
         status: status,
         response: mockAPIResponse,
       });
     } else {
-      (postData as jest.Mock).mockRejectedValueOnce({});
+      mockPost.mockRejectedValueOnce({});
     }
   };
 
