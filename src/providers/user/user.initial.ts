@@ -1,17 +1,17 @@
 import { voidDispatch } from "../../utils/voids";
-import type {
-  UserStateInterface,
-  UserContextInterface,
-} from "../../types/user.types";
+import type { UserContextInterface } from "../../types/user/context.types";
+import type { UserStateInterface } from "../../types/user/state.types";
 
 export const InitialState = <UserStateInterface>{
-  userName: null,
-  integration: null,
-  data: {},
+  data: {
+    integration: null,
+    report: {},
+  },
+  error: false,
   profileUrl: null,
   ratelimited: false,
   ready: false,
-  error: false,
+  userName: null,
 };
 
 const InitialContext = <UserContextInterface>{

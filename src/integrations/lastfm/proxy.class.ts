@@ -1,5 +1,5 @@
 import LastFMClient from "./client.class";
-import type { LastFMProxyInterface } from "../../types/lastfm.types";
+import type { LastFMProxyInterface } from "../../types/integrations/lastfm/proxy.types";
 
 class LastFMProxy implements LastFMProxyInterface {
   private internalClient: LastFMClient;

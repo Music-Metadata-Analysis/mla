@@ -1,17 +1,15 @@
 import { GenerateUserLink } from "../../config/lastfm";
 import reducerLoggingMiddleware from "../../utils/reducer.logger";
 import withMiddleware from "../../utils/reducer.middleware";
-import type {
-  UserStateInterface,
-  UserActionType,
-} from "../../types/user.types";
+import type { UserActionType } from "../../types/user/action.types";
+import type { UserStateInterface } from "../../types/user/state.types";
 
 const userReducer = (state: UserStateInterface, action: UserActionType) => {
   switch (action.type) {
     case "ResetState":
       return {
         ...state,
-        data: {},
+        data: { integration: null, report: {} },
         error: false,
         profileUrl: null,
         ratelimited: false,
@@ -21,7 +19,7 @@ const userReducer = (state: UserStateInterface, action: UserActionType) => {
     case "StartFetchUser":
       return {
         ...state,
-        data: {},
+        data: { integration: action.integration, report: {} },
         error: false,
         profileUrl: null,
         ratelimited: false,
@@ -31,7 +29,7 @@ const userReducer = (state: UserStateInterface, action: UserActionType) => {
     case "FailureFetchUser":
       return {
         ...state,
-        data: {},
+        data: { integration: action.integration, report: {} },
         error: true,
         profileUrl: null,
         ratelimited: false,
@@ -41,7 +39,7 @@ const userReducer = (state: UserStateInterface, action: UserActionType) => {
     case "RatelimitedFetchUser":
       return {
         ...state,
-        data: {},
+        data: { integration: action.integration, report: {} },
         error: true,
         profileUrl: null,
         ratelimited: true,
@@ -50,7 +48,7 @@ const userReducer = (state: UserStateInterface, action: UserActionType) => {
       };
     case "SuccessFetchUser":
       return {
-        data: action.data,
+        data: { integration: action.integration, report: action.data },
         error: false,
         profileUrl: GenerateUserLink(action.userName),
         ratelimited: false,

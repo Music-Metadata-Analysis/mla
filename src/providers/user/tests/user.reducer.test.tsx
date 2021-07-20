@@ -1,17 +1,19 @@
 import InitialValues from "../user.initial";
 import { UserReducer } from "../user.reducer";
-import type { TopAlbumsProxyResponseInterface } from "../../../types/proxy.types";
-import type {
-  UserStateInterface,
-  UserActionType,
-} from "../../../types/user.types";
+import type { TopAlbumsReportResponseInterface } from "../../../types/proxy.types";
+import type { UserActionType } from "../../../types/user/action.types";
+import type { UserStateInterface } from "../../../types/user/state.types";
 
 describe("UserReducer", () => {
   let received: UserStateInterface | null;
+  const testIntegrationType = "TEST";
   const badInitialUserState = {
     userName: "somebody",
     ratelimited: true,
-    data: {},
+    data: {
+      integration: null,
+      report: {},
+    },
     error: true,
     profileUrl: "http://localhost",
     ready: true,
@@ -39,7 +41,10 @@ describe("UserReducer", () => {
   it("should handle ResetState correctly", () => {
     received = arrange({ type: "ResetState" }, badInitialUserState);
     expect(received.userName).toBe("");
-    expect(received.data).toStrictEqual({});
+    expect(received.data).toStrictEqual({
+      integration: null,
+      report: {},
+    });
     expect(received.ratelimited).toBe(false);
     expect(received.error).toBe(false);
     expect(received.profileUrl).toBe(null);
@@ -49,11 +54,18 @@ describe("UserReducer", () => {
   it("should handle StartFetchUser correctly", () => {
     const mockPayload = { mock: "data" };
     received = arrange(
-      { type: "StartFetchUser", userName: "niall" },
+      {
+        type: "StartFetchUser",
+        userName: "niall",
+        integration: testIntegrationType,
+      },
       badInitialUserState
     );
     expect(received.userName).toBe("niall");
-    expect(received.data).toStrictEqual({});
+    expect(received.data).toStrictEqual({
+      integration: testIntegrationType,
+      report: {},
+    });
     expect(received.error).toBe(false);
     expect(received.profileUrl).toBe(null);
     expect(received.ready).toBe(false);
@@ -73,14 +85,18 @@ describe("UserReducer", () => {
       {
         type: "SuccessFetchUser",
         userName: "someguy",
-        data: mock_lastfm_data as TopAlbumsProxyResponseInterface,
+        data: mock_lastfm_data as TopAlbumsReportResponseInterface,
+        integration: testIntegrationType,
       },
       badInitialUserState
     );
     expect(received.profileUrl).toBe("https://www.last.fm/user/someguy");
     expect(received.userName).toBe("someguy");
     expect(received.ratelimited).toBe(false);
-    expect(received.data).toStrictEqual(mock_lastfm_data);
+    expect(received.data).toStrictEqual({
+      integration: testIntegrationType,
+      report: mock_lastfm_data,
+    });
     expect(received.error).toBe(false);
     expect(received.ready).toBe(true);
   });
@@ -90,13 +106,17 @@ describe("UserReducer", () => {
       {
         type: "FailureFetchUser",
         userName: "someguy",
+        integration: testIntegrationType,
       },
       { ...InitialValues.userProperties }
     );
     expect(received.profileUrl).toBe(null);
     expect(received.ratelimited).toBe(false);
     expect(received.userName).toBe("someguy");
-    expect(received.data).toStrictEqual({});
+    expect(received.data).toStrictEqual({
+      integration: testIntegrationType,
+      report: {},
+    });
     expect(received.error).toBe(true);
     expect(received.ready).toBe(false);
   });
@@ -106,13 +126,17 @@ describe("UserReducer", () => {
       {
         type: "RatelimitedFetchUser",
         userName: "someguy",
+        integration: testIntegrationType,
       },
       { ...InitialValues.userProperties }
     );
     expect(received.profileUrl).toBe(null);
     expect(received.ratelimited).toBe(true);
     expect(received.userName).toBe("someguy");
-    expect(received.data).toStrictEqual({});
+    expect(received.data).toStrictEqual({
+      integration: testIntegrationType,
+      report: {},
+    });
     expect(received.error).toBe(true);
     expect(received.ready).toBe(false);
   });
