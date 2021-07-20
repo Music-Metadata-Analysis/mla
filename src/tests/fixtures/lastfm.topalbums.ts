@@ -1,7 +1,7 @@
-import type { LastFMTopAlbumsProxyResponseInterface } from "../../types/lastfm.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "../../types/integrations/lastfm/report.types";
 
 interface TestData {
-  [key: string]: LastFMTopAlbumsProxyResponseInterface;
+  [key: string]: LastFMTopAlbumsReportResponseInterface;
 }
 
 const testResponses: TestData = {

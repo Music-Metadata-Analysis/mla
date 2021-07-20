@@ -2,9 +2,9 @@ import LastFm from "@toplast/lastfm";
 import { ProxyError } from "../../errors/proxy.error.class";
 import type {
   LastFMAlbumDataInterface,
-  LastFMClientInterface,
   LastFMImageDataInterface,
-} from "../../types/lastfm.types";
+} from "../../types/integrations/lastfm/api.types";
+import type { LastFMClientInterface } from "../../types/integrations/lastfm/client.types";
 
 class LastFmClient implements LastFMClientInterface {
   externalClient: LastFm;

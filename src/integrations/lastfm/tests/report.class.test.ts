@@ -11,8 +11,9 @@ jest.mock("../../../utils/http.class", () => {
 });
 
 describe("LastFMReportRequest", () => {
-  let mockUserName = "user1234";
-  let mockAPIResponse = { data: "mocked data" };
+  const mockUserName = "user1234";
+  const mockAPIResponse = { data: "mocked data" };
+  const integrationType = "LAST.FM";
   const mockDispatch = jest.fn();
   const mockEvent = jest.fn();
   let instance: LastFMReportRequest;
@@ -45,16 +46,25 @@ describe("LastFMReportRequest", () => {
       });
 
       it("should dispatch the reducer correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(1);
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "SuccessFetchUser",
           userName: mockUserName,
           data: mockAPIResponse,
+          integration: integrationType,
         });
       });
 
       it("should register events correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(1);
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.RequestAlbumsReport
+        );
         expect(mockEvent).toHaveBeenCalledWith(
           Events.LastFM.SuccessAlbumsReport
         );
@@ -69,15 +79,24 @@ describe("LastFMReportRequest", () => {
       });
 
       it("should dispatch the reducer correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(1);
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "RatelimitedFetchUser",
           userName: mockUserName,
+          integration: integrationType,
         });
       });
 
       it("should register events correctly", async () => {
-        expect(mockEvent).toBeCalledTimes(1);
+        expect(mockEvent).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.RequestAlbumsReport
+        );
         expect(mockEvent).toHaveBeenCalledWith(Events.LastFM.Ratelimited);
       });
     });
@@ -90,15 +109,24 @@ describe("LastFMReportRequest", () => {
       });
 
       it("should dispatch the reducer correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(1);
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "FailureFetchUser",
           userName: mockUserName,
+          integration: integrationType,
         });
       });
 
       it("should register events correctly", async () => {
-        expect(mockEvent).toBeCalledTimes(1);
+        expect(mockEvent).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.RequestAlbumsReport
+        );
         expect(mockEvent).toHaveBeenCalledWith(Events.LastFM.ErrorAlbumsReport);
       });
     });

@@ -1,6 +1,5 @@
 import React from "react";
 import useAnalytics from "./analytics";
-import Events from "../config/events";
 import LastFMReportRequest from "../integrations/lastfm/report.class";
 import { UserContext } from "../providers/user/user.provider";
 
@@ -10,11 +9,6 @@ const useLastFM = () => {
   const requests = new LastFMReportRequest(dispatch, analytics.event);
 
   const top20 = (userName: string): void => {
-    analytics.event(Events.LastFM.RequestAlbumsReport);
-    dispatch({
-      type: "StartFetchUser",
-      userName: userName,
-    });
     requests.retrieveAlbumReport(userName);
   };
 

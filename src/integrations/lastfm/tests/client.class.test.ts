@@ -2,7 +2,7 @@ import LastFMClient from "../client.class";
 import type {
   LastFMAlbumDataInterface,
   LastFMImageDataInterface,
-} from "../../../types/lastfm.types";
+} from "../../../types/integrations/lastfm/api.types";
 
 const mockApiCall = jest.fn();
 jest.mock("@toplast/lastfm", () => {

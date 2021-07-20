@@ -4,6 +4,7 @@ import type {
   HttpMethodType,
   StatusMessageType,
 } from "../types/https.types";
+import type { ProxyResponse } from "../types/proxy.types";
 
 class HTTPClient {
   private knownStatuses: { [index: number]: StatusMessageType } = {
@@ -35,10 +36,7 @@ class HTTPClient {
   post = async <POSTDATA, RESPONSE>(
     url: string,
     postData: POSTDATA
-  ): Promise<{
-    status: number;
-    response: RESPONSE | StatusMessageType;
-  }> => {
+  ): Promise<ProxyResponse<RESPONSE>> => {
     let fetchResponse = await fetch(url, {
       method: "POST",
       mode: "cors",

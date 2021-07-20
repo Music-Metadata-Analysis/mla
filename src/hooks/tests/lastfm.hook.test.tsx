@@ -1,11 +1,10 @@
 import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import React from "react";
-import Events from "../../config/events";
 import { InitialState } from "../../providers/user/user.initial";
 import { UserContext } from "../../providers/user/user.provider";
 import useLastFM from "../lastfm";
-import type { UserContextInterface } from "../../types/user.types";
+import type { UserContextInterface } from "../../types/user/context.types";
 
 const mockRetrieve = jest.fn();
 
@@ -17,14 +16,6 @@ jest.mock("../../integrations/lastfm/report.class", () => {
   });
 });
 
-const mockEvent = jest.fn();
-
-jest.mock("../analytics", () => {
-  return () => {
-    return { event: mockEvent };
-  };
-});
-
 interface MockUserContextWithChildren {
   children?: React.ReactNode;
   mockContext: UserContextInterface;
@@ -32,7 +23,6 @@ interface MockUserContextWithChildren {
 
 describe("useLastFM", () => {
   let mockUserName = "user1234";
-  let mockAPIResponse = { data: "mocked data" };
   let received: ReturnType<typeof arrange>;
   let mockDispatch = jest.fn();
 
@@ -83,19 +73,6 @@ describe("useLastFM", () => {
   describe("top20", () => {
     beforeEach(async () => {
       act(() => received.result.current.top20(mockUserName));
-    });
-
-    it("should dispatch the reducer correctly", async () => {
-      await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: "StartFetchUser",
-        userName: mockUserName,
-      });
-    });
-
-    it("should register events correctly", async () => {
-      await waitFor(() => expect(mockEvent).toBeCalledTimes(1));
-      expect(mockEvent).toHaveBeenCalledWith(Events.LastFM.RequestAlbumsReport);
     });
 
     it("should retrieve the report from lastfm", async () => {
