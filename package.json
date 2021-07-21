@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "compile": "tsc",
     "start": "next start",
     "lint": "eslint ./src/",
     "clean": "eslint --fix ./src; prettier --write \"./src/**/*.+(ts|tsx|js|jsx|json|yml|yaml|css|scss|md|vue)\"",

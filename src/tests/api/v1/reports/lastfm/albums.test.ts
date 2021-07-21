@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiEndpoints from "../../../../../config/apiEndpoints";
 import * as status from "../../../../../config/status";
 import { ProxyError } from "../../../../../errors/proxy.error.class";
 import handleProxy from "../../../../../pages/api/v1/reports/lastfm/albums";
 import type { HttpMethodType } from "../../../../../types/https.types";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const mockBackendResponse = jest.fn();
 jest.mock("../../../../../integrations/lastfm/proxy.class.ts", () => {

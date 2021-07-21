@@ -1,9 +1,9 @@
-import { Reducer } from "react";
 import type {
   MiddlewareOrReducerType,
   MiddlewareType,
   NestedType,
 } from "../types/reducer.types";
+import type { Reducer } from "react";
 
 const withMiddleware = <STATE, ACTION>(
   originalReducer: Reducer<STATE, ACTION>,
