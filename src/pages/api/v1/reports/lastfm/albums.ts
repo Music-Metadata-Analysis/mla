@@ -2,8 +2,8 @@ import { body, validationResult } from "express-validator";
 import nextConnect from "next-connect";
 import apiEndpoints from "../../../../../config/apiEndpoints";
 import * as status from "../../../../../config/status";
-import { ProxyError } from "../../../../../errors/proxy.error.class";
 import LastFMProxy from "../../../../../integrations/lastfm/proxy.class";
+import type { ProxyError } from "../../../../../errors/proxy.error.class";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const onNoMatch = (req: NextApiRequest, res: NextApiResponse) => {

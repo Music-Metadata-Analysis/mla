@@ -133,6 +133,32 @@ jobs:
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: error reporting job status!"
 
+  type_validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Type Validation -- Checkout Repository
+        uses: actions/checkout@v1
+
+      - name: Type Validation -- Setup Environment
+        run: |
+          source ./.github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Type Validation -- Install Node Modules
+        run: |
+          npm install
+
+      - name: Type Validation -- Compile Typescript
+        run: |
+          npm run compile
+
+      - name: Type Validation -- Report Job Status on Failure
+        if: failure()
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: type validation failed!"
+
   success_notification:
     needs:
       [
@@ -141,6 +167,7 @@ jobs:
         security_test,
         shellcheck_test,
         start_notification,
+        type_validation,
         workflow_lint_test,
       ]
 

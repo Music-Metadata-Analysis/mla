@@ -1,7 +1,7 @@
-import React from "react";
 import reducerLoggingMiddleware from "../reducer.logger";
 import type { MutableEnv } from "../../types/process.types";
 import type { ActionType } from "../../types/reducer.types";
+import type { Reducer } from "react";
 
 type capturedOutput = Array<string | ActionType>;
 type testState = typeof testState1 | typeof testState2;
@@ -16,8 +16,7 @@ const testState2 = { key: "value2" };
 describe("reducerLoggingMiddleware", () => {
   let originalEnvironment: typeof process.env;
   let outputData: capturedOutput[];
-  let reducer: React.Reducer<testState, MockActionType>;
-
+  let reducer: Reducer<testState, MockActionType>;
   beforeAll(() => {
     originalEnvironment = process.env;
   });

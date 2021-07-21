@@ -1,6 +1,6 @@
-import { Reducer } from "react";
 import withMiddleware from "../reducer.middleware";
 import type { ActionType } from "../../types/reducer.types";
+import type { Reducer } from "react";
 
 const callStack: any[] = [];
 let receivedAction: any;
