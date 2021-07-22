@@ -3,7 +3,7 @@ import type {
   FetchResponse,
   HttpMethodType,
   StatusMessageType,
-} from "../types/https.types";
+} from "../types/clients/https.types";
 import type { ProxyResponse } from "../types/proxy.types";
 
 class HTTPClient {

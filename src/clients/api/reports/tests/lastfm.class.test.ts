@@ -2,7 +2,7 @@ import Events from "../../../../config/events";
 import LastFMReport from "../lastfm.class";
 
 const mockPost = jest.fn();
-jest.mock("../../../../utils/http.class", () => {
+jest.mock("../../../http.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       post: mockPost,

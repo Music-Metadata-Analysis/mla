@@ -1,4 +1,4 @@
-import type { StatusMessageType } from "./https.types";
+import type { StatusMessageType } from "./clients/https.types";
 
 export interface ProxyRequestInterface {
   userName: string;
