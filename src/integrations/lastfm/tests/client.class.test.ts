@@ -1,4 +1,4 @@
-import LastFMClient from "../client.class";
+import LastFMClientAdapter from "../client.class";
 import type {
   LastFMAlbumDataInterface,
   LastFMImageDataInterface,
@@ -27,14 +27,14 @@ describe("LastFMClient", () => {
   let username: "testuser";
   let mockTopAlbumsResponse = { topalbums: { album: "response" } };
   let mockInfoResponse = { user: { image: "response" } };
-  let instance: LastFMClient;
+  let instance: LastFMClientAdapter;
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = (secretKey: string) => {
-    return new LastFMClient(secretKey);
+    return new LastFMClientAdapter(secretKey);
   };
 
   describe("when a user's top20 data is requested", () => {

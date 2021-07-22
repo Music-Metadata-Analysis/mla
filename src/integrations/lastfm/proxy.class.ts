@@ -1,11 +1,11 @@
-import LastFMClient from "./client.class";
+import LastFMClientAdapter from "./client.class";
 import type { LastFMProxyInterface } from "../../types/integrations/lastfm/proxy.types";
 
 class LastFMProxy implements LastFMProxyInterface {
-  private internalClient: LastFMClient;
+  private internalClient: LastFMClientAdapter;
 
   constructor() {
-    this.internalClient = new LastFMClient(process.env.LAST_FM_KEY);
+    this.internalClient = new LastFMClientAdapter(process.env.LAST_FM_KEY);
   }
 
   async getTopAlbums(username: string) {
