@@ -24,3 +24,28 @@ export type UserActionType =
       data: UserReportType;
       integration: IntegrationTypes;
     };
+
+export type UserActionType2 = {
+  FailureFetchUser: {
+    type: "FailureFetchUser";
+    userName: string;
+    integration: IntegrationTypes;
+  };
+  RatelimitUser: {
+    type: "RatelimitedFetchUser";
+    userName: string;
+    integration: IntegrationTypes;
+  };
+  ResetState: { type: "ResetState" };
+  StartFetchUser: {
+    type: "StartFetchUser";
+    userName: string;
+    integration: IntegrationTypes;
+  };
+  SuccessFetchuser: {
+    type: "SuccessFetchUser";
+    userName: string;
+    data: UserReportType;
+    integration: IntegrationTypes;
+  };
+};
