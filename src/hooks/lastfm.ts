@@ -1,15 +1,15 @@
 import React from "react";
 import useAnalytics from "./analytics";
-import LastFMReportRequest from "../integrations/lastfm/report.class";
+import LastFMReport from "../clients/api/reports/lastfm.class";
 import { UserContext } from "../providers/user/user.provider";
 
 const useLastFM = () => {
   const analytics = useAnalytics();
   const { userProperties, dispatch } = React.useContext(UserContext);
-  const requests = new LastFMReportRequest(dispatch, analytics.event);
+  const reports = new LastFMReport(dispatch, analytics.event);
 
   const top20 = (userName: string): void => {
-    requests.retrieveAlbumReport(userName);
+    reports.retrieveAlbumReport(userName);
   };
 
   const clear = (): void => {

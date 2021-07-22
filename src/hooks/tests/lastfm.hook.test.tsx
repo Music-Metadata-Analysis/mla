@@ -8,7 +8,7 @@ import type { UserContextInterface } from "../../types/user/context.types";
 
 const mockRetrieve = jest.fn();
 
-jest.mock("../../integrations/lastfm/report.class", () => {
+jest.mock("../../clients/api/reports/lastfm.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       retrieveAlbumReport: mockRetrieve,
