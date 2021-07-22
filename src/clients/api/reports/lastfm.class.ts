@@ -1,6 +1,6 @@
 import apiEndpoints from "../../../config/apiEndpoints";
 import Events from "../../../config/events";
-import HTTPClient from "../../../utils/http.class";
+import HTTPClient from "../../http.class";
 import type { eventCreatorType } from "../../../types/analytics.types";
 import type {
   LastFMTopAlbumsReportInterface,
