@@ -1,19 +1,19 @@
-import apiEndpoints from "../../config/apiEndpoints";
-import Events from "../../config/events";
-import HTTPClient from "../../utils/http.class";
-import type { eventCreatorType } from "../../types/analytics.types";
-import type { IntegrationTypes } from "../../types/integration.types";
+import apiEndpoints from "../../../config/apiEndpoints";
+import Events from "../../../config/events";
+import HTTPClient from "../../../utils/http.class";
+import type { eventCreatorType } from "../../../types/analytics.types";
 import type {
   LastFMTopAlbumsReportInterface,
   LastFMTopAlbumsReportResponseInterface,
-} from "../../types/integrations/lastfm/report.types";
+} from "../../../types/clients/api/reports/lastfm.types";
+import type { IntegrationTypes } from "../../../types/integration.types";
 import type {
   ProxyRequestInterface,
   ProxyResponse,
-} from "../../types/proxy.types";
-import type { userDispatchType } from "../../types/user/context.types";
+} from "../../../types/proxy.types";
+import type { userDispatchType } from "../../../types/user/context.types";
 
-class LastFMReportRequest implements LastFMTopAlbumsReportInterface {
+class LastFMReport implements LastFMTopAlbumsReportInterface {
   private dispatch: userDispatchType;
   private event: eventCreatorType;
   private client: HTTPClient;
@@ -96,4 +96,4 @@ class LastFMReportRequest implements LastFMTopAlbumsReportInterface {
   }
 }
 
-export default LastFMReportRequest;
+export default LastFMReport;

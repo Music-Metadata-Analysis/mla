@@ -1,8 +1,8 @@
-import Events from "../../../config/events";
-import LastFMReportRequest from "../report.class";
+import Events from "../../../../config/events";
+import LastFMReport from "../lastfm.class";
 
 const mockPost = jest.fn();
-jest.mock("../../../utils/http.class", () => {
+jest.mock("../../../../utils/http.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       post: mockPost,
@@ -10,13 +10,13 @@ jest.mock("../../../utils/http.class", () => {
   });
 });
 
-describe("LastFMReportRequest", () => {
+describe("LastFMReport", () => {
   const mockUserName = "user1234";
   const mockAPIResponse = { data: "mocked data" };
   const integrationType = "LAST.FM";
   const mockDispatch = jest.fn();
   const mockEvent = jest.fn();
-  let instance: LastFMReportRequest;
+  let instance: LastFMReport;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -34,7 +34,7 @@ describe("LastFMReportRequest", () => {
   };
 
   const arrange = () => {
-    return new LastFMReportRequest(mockDispatch, mockEvent);
+    return new LastFMReport(mockDispatch, mockEvent);
   };
 
   describe("retrieveTop20", () => {

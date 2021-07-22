@@ -1,4 +1,4 @@
-import type { LastFMTopAlbumsReportResponseInterface } from "./report.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "../../clients/api/reports/lastfm.types";
 
 export interface LastFMProxyInterface {
   getTopAlbums: (
