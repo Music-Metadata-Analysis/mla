@@ -4,6 +4,20 @@ import type { TopAlbumsReportResponseInterface } from "../../../types/proxy.type
 import type { UserActionType } from "../../../types/user/action.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
 
+const mockStates = {
+  FailureFetchUser: jest.fn(),
+  StartFetchUser: jest.fn(),
+  SuccessFetchUser: jest.fn(),
+  RatelimitedFetchUser: jest.fn(),
+  ResetState: jest.fn(),
+};
+
+jest.mock("../user.reducer.states.class", () => {
+  return jest.fn().mockImplementation(() => {
+    return mockStates;
+  });
+});
+
 describe("UserReducer", () => {
   let received: UserStateInterface | null;
   const testIntegrationType = "TEST";
@@ -21,6 +35,7 @@ describe("UserReducer", () => {
 
   beforeEach(() => {
     received = null;
+    jest.clearAllMocks();
   });
 
   const arrange = (
@@ -30,45 +45,24 @@ describe("UserReducer", () => {
     return UserReducer({ ...initialProps }, action as UserActionType);
   };
 
-  it("should have the expected default values", () => {
-    received = arrange(
-      { type: "NoAction" },
-      { ...InitialValues.userProperties }
-    );
-    expect(received).toStrictEqual(InitialValues.userProperties);
-  });
-
   it("should handle ResetState correctly", () => {
+    const action = {
+      type: "ResetState",
+    } as UserActionType;
     received = arrange({ type: "ResetState" }, badInitialUserState);
-    expect(received.userName).toBe("");
-    expect(received.data).toStrictEqual({
-      integration: null,
-      report: {},
-    });
-    expect(received.ratelimited).toBe(false);
-    expect(received.error).toBe(false);
-    expect(received.profileUrl).toBe(null);
-    expect(received.ready).toBe(false);
+    expect(mockStates.ResetState).toBeCalledTimes(1);
+    expect(mockStates.ResetState).toBeCalledWith(action);
   });
 
   it("should handle StartFetchUser correctly", () => {
-    const mockPayload = { mock: "data" };
-    received = arrange(
-      {
-        type: "StartFetchUser",
-        userName: "niall",
-        integration: testIntegrationType,
-      },
-      badInitialUserState
-    );
-    expect(received.userName).toBe("niall");
-    expect(received.data).toStrictEqual({
+    const action = {
+      type: "StartFetchUser",
+      userName: "niall",
       integration: testIntegrationType,
-      report: {},
-    });
-    expect(received.error).toBe(false);
-    expect(received.profileUrl).toBe(null);
-    expect(received.ready).toBe(false);
+    } as UserActionType;
+    received = arrange(action, badInitialUserState);
+    expect(mockStates.StartFetchUser).toBeCalledTimes(1);
+    expect(mockStates.StartFetchUser).toBeCalledWith(action);
   });
 
   it("should handle SuccessFetchUser correctly", () => {
@@ -81,63 +75,36 @@ describe("UserReducer", () => {
         },
       ],
     };
-    received = arrange(
-      {
-        type: "SuccessFetchUser",
-        userName: "someguy",
-        data: mock_lastfm_data as TopAlbumsReportResponseInterface,
-        integration: testIntegrationType,
-      },
-      badInitialUserState
-    );
-    expect(received.profileUrl).toBe("https://www.last.fm/user/someguy");
-    expect(received.userName).toBe("someguy");
-    expect(received.ratelimited).toBe(false);
-    expect(received.data).toStrictEqual({
+    const action = {
+      type: "SuccessFetchUser",
+      userName: "someguy",
+      data: mock_lastfm_data as TopAlbumsReportResponseInterface,
       integration: testIntegrationType,
-      report: mock_lastfm_data,
-    });
-    expect(received.error).toBe(false);
-    expect(received.ready).toBe(true);
+    } as UserActionType;
+    received = arrange(action, { ...InitialValues.userProperties });
+    expect(mockStates.SuccessFetchUser).toBeCalledTimes(1);
+    expect(mockStates.SuccessFetchUser).toBeCalledWith(action);
   });
 
   it("should handle FailureFetchUser correctly", () => {
-    received = arrange(
-      {
-        type: "FailureFetchUser",
-        userName: "someguy",
-        integration: testIntegrationType,
-      },
-      { ...InitialValues.userProperties }
-    );
-    expect(received.profileUrl).toBe(null);
-    expect(received.ratelimited).toBe(false);
-    expect(received.userName).toBe("someguy");
-    expect(received.data).toStrictEqual({
+    const action = {
+      type: "FailureFetchUser",
+      userName: "someguy",
       integration: testIntegrationType,
-      report: {},
-    });
-    expect(received.error).toBe(true);
-    expect(received.ready).toBe(false);
+    } as UserActionType;
+    received = arrange(action, { ...InitialValues.userProperties });
+    expect(mockStates.FailureFetchUser).toBeCalledTimes(1);
+    expect(mockStates.FailureFetchUser).toBeCalledWith(action);
   });
 
   it("should handle RatelimitedFetchUser correctly", () => {
-    received = arrange(
-      {
-        type: "RatelimitedFetchUser",
-        userName: "someguy",
-        integration: testIntegrationType,
-      },
-      { ...InitialValues.userProperties }
-    );
-    expect(received.profileUrl).toBe(null);
-    expect(received.ratelimited).toBe(true);
-    expect(received.userName).toBe("someguy");
-    expect(received.data).toStrictEqual({
+    const action = {
+      type: "RatelimitedFetchUser",
+      userName: "someguy",
       integration: testIntegrationType,
-      report: {},
-    });
-    expect(received.error).toBe(true);
-    expect(received.ready).toBe(false);
+    } as UserActionType;
+    received = arrange(action, { ...InitialValues.userProperties });
+    expect(mockStates.RatelimitedFetchUser).toBeCalledTimes(1);
+    expect(mockStates.RatelimitedFetchUser).toBeCalledWith(action);
   });
 });
