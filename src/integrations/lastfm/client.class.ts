@@ -6,7 +6,7 @@ import type {
 } from "../../types/integrations/lastfm/api.types";
 import type { LastFMClientInterface } from "../../types/integrations/lastfm/client.types";
 
-class LastFmClient implements LastFMClientInterface {
+class LastFmClientAdapter implements LastFMClientInterface {
   externalClient: LastFm;
   secret_key: string;
   reportAlbumCount = 20;
@@ -52,4 +52,4 @@ class LastFmClient implements LastFMClientInterface {
   }
 }
 
-export default LastFmClient;
+export default LastFmClientAdapter;
