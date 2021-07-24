@@ -1,7 +1,13 @@
 import "../styles/globals.css";
+
+import RootProvider from "../providers/root.provider";
 import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+function App({ Component, pageProps }: AppProps) {
+  return (
+    <RootProvider>
+      <Component {...pageProps} />
+    </RootProvider>
+  );
 }
-export default MyApp;
+export default App;
