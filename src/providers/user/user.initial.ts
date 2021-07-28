@@ -5,12 +5,15 @@ import type { UserStateInterface } from "../../types/user/state.types";
 export const InitialState = <UserStateInterface>{
   data: {
     integration: null,
-    report: {},
+    report: {
+      albums: [],
+      image: [],
+    },
   },
   error: false,
   profileUrl: null,
   ratelimited: false,
-  ready: false,
+  ready: true,
   userName: null,
 };
 
