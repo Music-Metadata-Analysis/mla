@@ -21,12 +21,13 @@ jest.mock("../user.reducer.states.class", () => {
 describe("UserReducer", () => {
   let received: UserStateInterface | null;
   const testIntegrationType = "TEST";
+  const initialReport = { albums: [], image: [] };
   const badInitialUserState = {
     userName: "somebody",
     ratelimited: true,
     data: {
       integration: null,
-      report: {},
+      report: initialReport,
     },
     error: true,
     profileUrl: "http://localhost",

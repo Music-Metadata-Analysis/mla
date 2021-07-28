@@ -4,11 +4,15 @@ import type { UserStateInterface } from "../../types/user/state.types";
 
 class UserReducerStates {
   wrongTypeError = "Received wrong action type.";
+  initialReport = {
+    albums: [],
+    image: [],
+  };
 
   FailureFetchUser(action: UserActionType): UserStateInterface {
     if (action.type === "FailureFetchUser") {
       return {
-        data: { integration: action.integration, report: {} },
+        data: { integration: action.integration, report: this.initialReport },
         error: true,
         profileUrl: null,
         ratelimited: false,
@@ -21,7 +25,7 @@ class UserReducerStates {
   StartFetchUser(action: UserActionType): UserStateInterface {
     if (action.type === "StartFetchUser") {
       return {
-        data: { integration: action.integration, report: {} },
+        data: { integration: action.integration, report: this.initialReport },
         error: false,
         profileUrl: null,
         ratelimited: false,
@@ -47,7 +51,7 @@ class UserReducerStates {
   ResetState(action: UserActionType): UserStateInterface {
     if (action.type === "ResetState") {
       return {
-        data: { integration: null, report: {} },
+        data: { integration: null, report: this.initialReport },
         error: false,
         profileUrl: null,
         ratelimited: false,
@@ -60,7 +64,7 @@ class UserReducerStates {
   RatelimitedFetchUser(action: UserActionType): UserStateInterface {
     if (action.type === "RatelimitedFetchUser") {
       return {
-        data: { integration: action.integration, report: {} },
+        data: { integration: action.integration, report: this.initialReport },
         error: true,
         profileUrl: null,
         ratelimited: true,

@@ -1,3 +1,3 @@
-import type { LastFMTopAlbumsReportInterface } from "../clients/api/reports/lastfm.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "../clients/api/reports/lastfm.types";
 
-export type UserReportType = LastFMTopAlbumsReportInterface | {};
+export type UserReportType = LastFMTopAlbumsReportResponseInterface;

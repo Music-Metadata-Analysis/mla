@@ -43,7 +43,7 @@ class LastFMReport implements LastFMTopAlbumsReportInterface {
       this.dispatch({
         type: "SuccessFetchUser",
         userName: userName,
-        data: response.response,
+        data: response.response as LastFMTopAlbumsReportResponseInterface,
         integration: this.integration,
       });
       this.event(Events.LastFM.SuccessAlbumsReport);

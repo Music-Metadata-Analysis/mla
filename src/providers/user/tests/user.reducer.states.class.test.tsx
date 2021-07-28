@@ -6,11 +6,12 @@ describe("UserReducerStates", () => {
   let reducerStates: UserReducerStates;
   const testIntegrationType = "TEST";
   const testUserName = "somebody";
+  const emptyReport = { albums: [], image: [] };
   const mock_lastfm_data = {
     albums: [],
     image: [
       {
-        size: "large",
+        size: "large" as "large",
         "#text": "http://someurl.com",
       },
     ],
@@ -47,7 +48,7 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
-        report: {},
+        report: emptyReport,
       });
       expect(received.error).toBe(true);
       expect(received.ready).toBe(false);
@@ -72,7 +73,7 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
-        report: {},
+        report: emptyReport,
       });
       expect(received.error).toBe(false);
       expect(received.profileUrl).toBe(null);
@@ -130,7 +131,7 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
-        report: {},
+        report: emptyReport,
       });
       expect(received.error).toBe(true);
       expect(received.ready).toBe(false);
@@ -151,7 +152,7 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(null);
       expect(received.data).toStrictEqual({
         integration: null,
-        report: {},
+        report: emptyReport,
       });
       expect(received.ratelimited).toBe(false);
       expect(received.error).toBe(false);
