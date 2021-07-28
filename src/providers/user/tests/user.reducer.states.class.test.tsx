@@ -51,7 +51,7 @@ describe("UserReducerStates", () => {
         report: emptyReport,
       });
       expect(received.error).toBe(true);
-      expect(received.ready).toBe(false);
+      expect(received.ready).toBe(true);
     });
 
     it("should not accept incompatible types", () => {
@@ -134,7 +134,7 @@ describe("UserReducerStates", () => {
         report: emptyReport,
       });
       expect(received.error).toBe(true);
-      expect(received.ready).toBe(false);
+      expect(received.ready).toBe(true);
     });
 
     it("should not accept incompatible types", () => {
@@ -157,7 +157,7 @@ describe("UserReducerStates", () => {
       expect(received.ratelimited).toBe(false);
       expect(received.error).toBe(false);
       expect(received.profileUrl).toBe(null);
-      expect(received.ready).toBe(false);
+      expect(received.ready).toBe(true);
     });
 
     it("should not accept incompatible types", () => {

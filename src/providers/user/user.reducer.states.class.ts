@@ -16,7 +16,7 @@ class UserReducerStates {
         error: true,
         profileUrl: null,
         ratelimited: false,
-        ready: false,
+        ready: true,
         userName: action.userName,
       };
     }
@@ -55,7 +55,7 @@ class UserReducerStates {
         error: false,
         profileUrl: null,
         ratelimited: false,
-        ready: false,
+        ready: true,
         userName: null,
       };
     }
@@ -68,7 +68,7 @@ class UserReducerStates {
         error: true,
         profileUrl: null,
         ratelimited: true,
-        ready: false,
+        ready: true,
         userName: action.userName,
       };
     }
