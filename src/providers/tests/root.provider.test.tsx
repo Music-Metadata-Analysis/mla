@@ -2,6 +2,7 @@ import { waitFor, screen, render } from "@testing-library/react";
 import Header from "../../components/header/header.component";
 import AnalyticsProvider from "../analytics/analytics.provider";
 import RootProvider from "../root.provider";
+import UserInterfaceProvider from "../ui/ui.provider";
 import UserProvider from "../user/user.provider";
 
 const providers = {
@@ -9,6 +10,7 @@ const providers = {
   Header: "Header",
   RootProvider: "RootProvider",
   UserProvider: "UserProvider",
+  UserInterfaceProvider: "UserInterfaceProvider",
 };
 
 const createProviderMock = (name: string) => {
@@ -29,8 +31,11 @@ jest.mock("../../providers/analytics/analytics.provider", () =>
 jest.mock("../../providers/user/user.provider", () =>
   createProviderMock(providers.UserProvider)
 );
+jest.mock("../ui/ui.provider", () =>
+  createProviderMock(providers.UserInterfaceProvider)
+);
 
-describe("APP", () => {
+describe("RootProvider", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -60,6 +65,13 @@ describe("APP", () => {
       arrange();
       await waitFor(() => expect(UserProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.UserProvider)).toBeTruthy;
+    });
+
+    it("should initialize the UserInterfaceProvider", async () => {
+      arrange();
+      await waitFor(() => expect(UserInterfaceProvider).toBeCalledTimes(1));
+      expect(await screen.findByTestId(providers.UserInterfaceProvider))
+        .toBeTruthy;
     });
 
     it("should display the RootProvider's Child Elements", async () => {
