@@ -52,8 +52,12 @@
     "extends": "react-app"
   },
   "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
     "coveragePathIgnorePatterns": [
-      "src/pages/_app.js"
+      "src/pages/_app.tsx",
+      "src/pages/index.tsx"
     ],
     "coverageReporters": [
       "text",
