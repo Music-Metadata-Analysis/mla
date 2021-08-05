@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
+    "@emotion/jest": "^11.3.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/react-hooks": "^7.0.0",
@@ -43,6 +44,7 @@
     "eslint-plugin-unused-imports": "^1.1.2",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.5",
+    "next-router-mock": "^0.2.2",
     "node-mocks-http": "^1.10.1",
     "npm-force-resolutions": "0.0.10",
     "prettier": "^2.3.2",
@@ -57,7 +59,9 @@
     ],
     "coveragePathIgnorePatterns": [
       "src/pages/_app.tsx",
-      "src/pages/index.tsx"
+      "src/pages/index.tsx",
+      "src/pages/about.tsx",
+      "src/pages/search.tsx"
     ],
     "coverageReporters": [
       "text",
@@ -71,9 +75,14 @@
         "lines": 100
       }
     },
-    "globalSetup": "<rootDir>/jestSetup.js",
+    "globalSetup": "<rootDir>/jest/globalSetup.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest/setup/emotion.js",
+      "<rootDir>/jest/setup/testing-library.js"
+    ],
     "moduleNameMapper": {
-      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+      ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
+      ".+\\.(png|jpg|ttf|woff|woff2)$": "<rootDir>/jest/modules/images.js"
     },
     "roots": [
       "./src"

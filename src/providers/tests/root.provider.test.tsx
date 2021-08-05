@@ -14,12 +14,10 @@ const providers = {
 };
 
 const createProviderMock = (name: string) => {
-  return {
-    __esModule: true,
-    default: jest.fn(({ children }: { children: React.ReactChildren }) => {
-      return <div data-testid={name}>{children}</div>;
-    }),
-  };
+  const {
+    mockComponentWithChildrenFactory,
+  } = require("../../tests/fixtures/mock.factory.class");
+  return mockComponentWithChildrenFactory.create(name);
 };
 
 jest.mock("../../components/header/header.component", () =>
