@@ -7,15 +7,15 @@ import type { Reducer } from "react";
 
 const withMiddleware = <STATE, ACTION>(
   originalReducer: Reducer<STATE, ACTION>,
-  middlewarestack: MiddlewareType[]
+  middlewareStack: MiddlewareType<STATE, ACTION>[]
 ): Reducer<STATE, ACTION> => {
-  const combinedStack: MiddlewareOrReducerType[] = [
+  const combinedStack: MiddlewareOrReducerType<STATE, ACTION>[] = [
     originalReducer,
-    ...middlewarestack,
+    ...middlewareStack,
   ];
   const reducerWithMiddleWare = combinedStack.reduce(
     (last, middlewareToApply) => {
-      return (middlewareToApply as NestedType)(last);
+      return (middlewareToApply as NestedType<STATE, ACTION>)(last);
     }
   );
   return reducerWithMiddleWare as Reducer<STATE, ACTION>;
