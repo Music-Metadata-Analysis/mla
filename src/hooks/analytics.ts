@@ -2,17 +2,14 @@ import { useRouter } from "next/router";
 import React from "react";
 import ReactGA from "react-ga";
 import { AnalyticsContext } from "../providers/analytics/analytics.provider";
+import Event from "../providers/analytics/event.class";
 import { isProduction } from "../utils/env";
+import type { ButtonClickHandlerType } from "../types/analytics.types";
 import type { EventArgs } from "react-ga";
 
 const useAnalytics = () => {
   const router = useRouter();
   const { initialized, setInitialized } = React.useContext(AnalyticsContext);
-
-  const handleRouteChange = (url: string): void => {
-    ReactGA.set({ page: url });
-    ReactGA.pageview(url);
-  };
 
   React.useEffect(() => {
     if (!initialized) return;
@@ -22,6 +19,20 @@ const useAnalytics = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized]);
+
+  const trackButtonClick: ButtonClickHandlerType = (e, buttonName) => {
+    const clickEvent = new Event({
+      category: "MAIN",
+      label: "BUTTON",
+      action: `CLICKED: ${buttonName}`,
+    });
+    event(clickEvent);
+  };
+
+  const handleRouteChange = (url: string): void => {
+    ReactGA.set({ page: url });
+    ReactGA.pageview(url);
+  };
 
   const event = (eventArgs: EventArgs): void => {
     if (initialized) {
@@ -40,6 +51,7 @@ const useAnalytics = () => {
   return {
     event,
     setup,
+    trackButtonClick,
   };
 };
 

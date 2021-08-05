@@ -1,6 +1,6 @@
 export const HomePage = "https://www.last.fm";
 
-export const GenerateUserLink = (username) => {
+export const GenerateUserLink = (username: string) => {
   return `${HomePage}/user/${username}`;
 };
 

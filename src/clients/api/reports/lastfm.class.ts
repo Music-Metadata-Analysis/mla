@@ -1,7 +1,7 @@
 import apiEndpoints from "../../../config/apiEndpoints";
 import Events from "../../../config/events";
 import HTTPClient from "../../http.class";
-import type { eventCreatorType } from "../../../types/analytics.types";
+import type { EventCreatorType } from "../../../types/analytics.types";
 import type {
   LastFMTopAlbumsReportInterface,
   LastFMTopAlbumsReportResponseInterface,
@@ -15,11 +15,11 @@ import type { userDispatchType } from "../../../types/user/context.types";
 
 class LastFMReport implements LastFMTopAlbumsReportInterface {
   private dispatch: userDispatchType;
-  private event: eventCreatorType;
+  private event: EventCreatorType;
   private client: HTTPClient;
   private integration: IntegrationTypes;
 
-  constructor(dispatch: userDispatchType, event: eventCreatorType) {
+  constructor(dispatch: userDispatchType, event: EventCreatorType) {
     this.dispatch = dispatch;
     this.event = event;
     this.client = new HTTPClient();

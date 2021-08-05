@@ -1,3 +1,7 @@
-export default function Home() {
-  return <div>HomePage</div>;
+export default function Index() {
+  return (
+    <>
+      <div>Index</div>
+    </>
+  );
 }
