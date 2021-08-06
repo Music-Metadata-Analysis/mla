@@ -8,3 +8,8 @@ export interface LastFMClientInterface {
   getTopAlbums: (username: string) => Promise<LastFMAlbumDataInterface[]>;
   getUserImage: (username: string) => Promise<LastFMImageDataInterface[]>;
 }
+
+export interface LastFMExternalClientError extends Error {
+  response: { status: number };
+  clientStatusCode: number;
+}

@@ -16,15 +16,15 @@ jest.mock("../../../../../integrations/lastfm/proxy.class.ts", () => {
 });
 
 type ArrangeArgs = {
-  body: object;
+  body: Record<string, unknown>;
   method: HttpMethodType;
 };
 
 describe(apiEndpoints.v1.reports.lastfm.albums, () => {
   let req: MockRequest<NextApiRequest>;
   let res: MockResponse<NextApiResponse>;
-  let mockError = "Mock Error";
-  let mockResponse = {
+  const mockError = "Mock Error";
+  const mockResponse = {
     albums: [],
     image: [],
   };

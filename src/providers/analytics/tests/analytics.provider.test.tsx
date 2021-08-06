@@ -4,7 +4,7 @@ import AnalyticsProvider, { AnalyticsContext } from "../analytics.provider";
 import type { AnalyticsContextInterface } from "../../../types/analytics.types";
 
 describe("AnalyticsProvider", () => {
-  let received: any = {};
+  const received: Partial<AnalyticsContextInterface> = {};
 
   const arrange = () => {
     render(
@@ -13,9 +13,7 @@ describe("AnalyticsProvider", () => {
           {(state) => (
             <div>
               {"Place Holder Div"}
-              {Object.keys(state).forEach(function (key) {
-                received[key] = state[key as keyof AnalyticsContextInterface];
-              })}
+              {JSON.stringify(Object.assign(received, state))}
             </div>
           )}
         </AnalyticsContext.Consumer>

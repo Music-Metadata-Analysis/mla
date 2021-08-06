@@ -13,7 +13,7 @@ jest.mock("../client.class", () => {
 
 describe("LastFMProxy", () => {
   let originalEnvironment: typeof process.env;
-  let mockError = "Mock Error";
+  const mockError = "Mock Error";
   const username = "testuser";
   const instance = new LastFMProxy();
 

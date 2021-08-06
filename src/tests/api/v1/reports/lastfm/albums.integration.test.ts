@@ -8,7 +8,7 @@ import type { HttpMethodType } from "../../../../../types/clients/https.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type ArrangeArgs = {
-  body: object;
+  body: Record<string, unknown>;
   method: HttpMethodType;
 };
 

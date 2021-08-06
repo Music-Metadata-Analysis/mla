@@ -4,24 +4,25 @@ import type {
   LastFMAlbumDataInterface,
   LastFMImageDataInterface,
 } from "../../types/integrations/lastfm/api.types";
-import type { LastFMClientInterface } from "../../types/integrations/lastfm/client.types";
+import type {
+  LastFMClientInterface,
+  LastFMExternalClientError,
+} from "../../types/integrations/lastfm/client.types";
 
 class LastFmClientAdapter implements LastFMClientInterface {
   externalClient: LastFm;
   secret_key: string;
   reportAlbumCount = 20;
-  reportAlbumPeriod = "overall" as "overall";
+  reportAlbumPeriod = "overall" as const;
 
   constructor(secret_key: string) {
     this.secret_key = secret_key;
     this.externalClient = new LastFm(this.secret_key);
   }
 
-  private createProxyCompatibleError(err: {
-    message: string;
-    response: { status: number };
-    clientStatusCode: number;
-  }): ProxyError {
+  private createProxyCompatibleError(
+    err: LastFMExternalClientError
+  ): ProxyError {
     if (err.response) return new ProxyError(err.message, err.response.status);
     return new ProxyError(err.message, undefined);
   }
@@ -36,7 +37,7 @@ class LastFmClientAdapter implements LastFMClientInterface {
       });
       return topAlbums.topalbums.album as LastFMAlbumDataInterface[];
     } catch (err) {
-      throw this.createProxyCompatibleError(err);
+      throw this.createProxyCompatibleError(err as LastFMExternalClientError);
     }
   }
 
@@ -47,7 +48,7 @@ class LastFmClientAdapter implements LastFMClientInterface {
       });
       return info.user.image as LastFMImageDataInterface[];
     } catch (err) {
-      throw this.createProxyCompatibleError(err);
+      throw this.createProxyCompatibleError(err as LastFMExternalClientError);
     }
   }
 }

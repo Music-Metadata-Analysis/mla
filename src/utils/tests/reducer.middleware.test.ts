@@ -1,11 +1,11 @@
 import withMiddleware from "../reducer.middleware";
-import type { ActionType } from "../../types/reducer.types";
+import type { ActionType, StateType } from "../../types/reducer.types";
 import type { Reducer } from "react";
 
-const callStack: any[] = [];
-let receivedAction: any;
+const callStack: ActionType[] = [];
+let receivedAction: ActionType;
 
-const mockReducer = (state: any, action: any) => {
+const mockReducer = (state: StateType, action: ActionType) => {
   receivedAction = action;
   switch (action.type) {
     default:
@@ -13,23 +13,23 @@ const mockReducer = (state: any, action: any) => {
   }
 };
 
-const mockMiddleware = (reducer: Reducer<any, ActionType>) => {
-  const wrappedReducer = (state: any, action: ActionType) => {
+const mockMiddleware = (reducer: Reducer<StateType, ActionType>) => {
+  const wrappedReducer = (state: StateType, action: ActionType) => {
     callStack.push(action);
     return reducer(state, action);
   };
   return wrappedReducer;
 };
 
-type MockedMiddlewareorReducer =
+type MockedMiddlewareOrReducer =
   | jest.Mock<typeof mockMiddleware>
   | jest.Mock<typeof mockReducer>;
 
 describe("withMiddleware", () => {
-  let mockMiddleware1: MockedMiddlewareorReducer;
-  let mockMiddleware2: MockedMiddlewareorReducer;
-  let mockMiddleware3: MockedMiddlewareorReducer;
-  let wrappedReducer: Reducer<any, ActionType>;
+  let mockMiddleware1: MockedMiddlewareOrReducer;
+  let mockMiddleware2: MockedMiddlewareOrReducer;
+  let mockMiddleware3: MockedMiddlewareOrReducer;
+  let wrappedReducer: Reducer<StateType, ActionType>;
 
   const createMiddlewareStack = () => {
     mockMiddleware1 = jest.fn((i) => mockMiddleware(i));

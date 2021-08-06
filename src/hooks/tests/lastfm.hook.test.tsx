@@ -22,9 +22,9 @@ interface MockUserContextWithChildren {
 }
 
 describe("useLastFM", () => {
-  let mockUserName = "user1234";
+  const mockUserName = "user1234";
+  const mockDispatch = jest.fn();
   let received: ReturnType<typeof arrange>;
-  let mockDispatch = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();

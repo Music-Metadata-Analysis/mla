@@ -3,7 +3,7 @@ import { ProxyError } from "../proxy.error.class";
 describe("ProxyError", () => {
   let err: ProxyError;
   let statusCode: number;
-  let message = "Test Error";
+  const message = "Test Error";
 
   describe("when given a status code", () => {
     beforeEach(() => {

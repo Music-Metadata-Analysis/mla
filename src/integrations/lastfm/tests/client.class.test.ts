@@ -1,8 +1,10 @@
 import LastFMClientAdapter from "../client.class";
+import type { ProxyError } from "../../../errors/proxy.error.class";
 import type {
   LastFMAlbumDataInterface,
   LastFMImageDataInterface,
 } from "../../../types/integrations/lastfm/api.types";
+import type { LastFMExternalClientError } from "../../../types/integrations/lastfm/client.types";
 
 const mockApiCall = jest.fn();
 jest.mock("@toplast/lastfm", () => {
@@ -16,17 +18,11 @@ jest.mock("@toplast/lastfm", () => {
   });
 });
 
-type ClientResponse = { status: number };
-
-interface ClientError extends Error {
-  response: ClientResponse;
-}
-
 describe("LastFMClient", () => {
   let secretKey: "123VerySecret";
   let username: "testuser";
-  let mockTopAlbumsResponse = { topalbums: { album: "response" } };
-  let mockInfoResponse = { user: { image: "response" } };
+  const mockTopAlbumsResponse = { topalbums: { album: "response" } };
+  const mockInfoResponse = { user: { image: "response" } };
   let instance: LastFMClientAdapter;
 
   beforeEach(() => {
@@ -60,10 +56,10 @@ describe("LastFMClient", () => {
     });
 
     describe("when the request errors", () => {
-      let err: ClientError;
+      let err: LastFMExternalClientError;
 
       beforeEach(() => {
-        err = new Error("Test Error") as ClientError;
+        err = new Error("Test Error") as LastFMExternalClientError;
       });
 
       describe("with a status code", () => {
@@ -77,8 +73,12 @@ describe("LastFMClient", () => {
           try {
             await instance.getTopAlbums(username);
           } catch (receivedError) {
-            expect(receivedError.message).toBe(`${err.message}`);
-            expect(receivedError.clientStatusCode).toBe(err.response.status);
+            expect((receivedError as ProxyError).message).toBe(
+              `${err.message}`
+            );
+            expect((receivedError as ProxyError).clientStatusCode).toBe(
+              err.response.status
+            );
           }
         });
       });
@@ -93,7 +93,9 @@ describe("LastFMClient", () => {
           try {
             await instance.getTopAlbums(username);
           } catch (receivedError) {
-            expect(receivedError.message).toBe(`${err.message}`);
+            expect((receivedError as ProxyError).message).toBe(
+              `${err.message}`
+            );
           }
         });
       });
@@ -120,10 +122,10 @@ describe("LastFMClient", () => {
     });
 
     describe("when the request errors", () => {
-      let err: ClientError;
+      let err: LastFMExternalClientError;
 
       beforeEach(() => {
-        err = new Error("Test Error") as ClientError;
+        err = new Error("Test Error") as LastFMExternalClientError;
       });
 
       describe("with a status code", () => {
@@ -137,8 +139,12 @@ describe("LastFMClient", () => {
           try {
             await instance.getUserImage(username);
           } catch (receivedError) {
-            expect(receivedError.message).toBe(`${err.message}`);
-            expect(receivedError.clientStatusCode).toBe(err.response.status);
+            expect((receivedError as ProxyError).message).toBe(
+              `${err.message}`
+            );
+            expect((receivedError as ProxyError).clientStatusCode).toBe(
+              err.response.status
+            );
           }
         });
       });
@@ -153,7 +159,9 @@ describe("LastFMClient", () => {
           try {
             await instance.getUserImage(username);
           } catch (receivedError) {
-            expect(receivedError.message).toBe(`${err.message}`);
+            expect((receivedError as ProxyError).message).toBe(
+              `${err.message}`
+            );
           }
         });
       });

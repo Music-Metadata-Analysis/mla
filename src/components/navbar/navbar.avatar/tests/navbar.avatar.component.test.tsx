@@ -52,7 +52,7 @@ describe("NavBarAvatar", () => {
     });
     describe("when clicked", () => {
       beforeEach(async () => {
-        let link = await screen.findByTestId(testIDs.NavBarAvatarLink);
+        link = await screen.findByTestId(testIDs.NavBarAvatarLink);
         if (link && link.firstChild) {
           fireEvent.click(link.firstChild);
         }
@@ -90,7 +90,7 @@ describe("NavBarAvatar", () => {
     });
     describe("when clicked", () => {
       beforeEach(async () => {
-        let link = await screen.findByTestId(testIDs.NavBarAvatarLink);
+        link = await screen.findByTestId(testIDs.NavBarAvatarLink);
         if (link && link.firstChild) {
           fireEvent.click(link.firstChild);
         }

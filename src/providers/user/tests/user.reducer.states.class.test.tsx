@@ -11,7 +11,7 @@ describe("UserReducerStates", () => {
     albums: [],
     image: [
       {
-        size: "large" as "large",
+        size: "large" as const,
         "#text": "http://someurl.com",
       },
     ],
@@ -34,7 +34,7 @@ describe("UserReducerStates", () => {
 
   describe("FailureFetchUser", () => {
     let received: UserStateInterface;
-    let testType: "FailureFetchUser" = "FailureFetchUser";
+    const testType = "FailureFetchUser" as const;
 
     it("should return the the expected state", () => {
       received = arrange({
@@ -61,7 +61,7 @@ describe("UserReducerStates", () => {
 
   describe("StartFetchUser", () => {
     let received: UserStateInterface;
-    let testType: "StartFetchUser" = "StartFetchUser";
+    const testType = "StartFetchUser" as const;
 
     it("should return the the expected state", () => {
       received = arrange({
@@ -87,7 +87,7 @@ describe("UserReducerStates", () => {
 
   describe("SuccessFetchUser", () => {
     let received: UserStateInterface;
-    let testType: "SuccessFetchUser" = "SuccessFetchUser";
+    const testType = "SuccessFetchUser" as const;
 
     it("should return the the expected state", () => {
       received = arrange({
@@ -117,7 +117,7 @@ describe("UserReducerStates", () => {
 
   describe("RatelimitedFetchUser", () => {
     let received: UserStateInterface;
-    let testType: "RatelimitedFetchUser" = "RatelimitedFetchUser";
+    const testType = "RatelimitedFetchUser" as const;
 
     it("should return the the expected state", () => {
       received = arrange({
@@ -144,7 +144,7 @@ describe("UserReducerStates", () => {
 
   describe("ResetState", () => {
     let received: UserStateInterface;
-    let testType: "ResetState" = "ResetState";
+    const testType = "ResetState" as const;
 
     it("should return the the expected state", () => {
       received = arrange({ type: testType });

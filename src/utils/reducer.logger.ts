@@ -5,9 +5,8 @@ import type { Reducer } from "react";
 const reducerLoggingMiddleware = <STATE, ACTION extends ActionType>(
   reducer: Reducer<STATE, ACTION>
 ): Reducer<STATE, ACTION> => {
-  let logging = true;
-  let name = reducer.name;
-  if (isTest() || isProduction()) logging = false;
+  const name = reducer.name;
+  const logging: boolean = !isTest() && !isProduction();
   const wrappedReducer = (state: STATE, action: ACTION) => {
     if (logging)
       console.log(`** ${name} BEFORE ${action.type}:\n`, { state, action });
