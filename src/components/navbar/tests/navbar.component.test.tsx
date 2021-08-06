@@ -2,7 +2,6 @@ import { IconButton } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import { HomePage } from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
-import translations from "../../../config/translations";
 import NavBar, { testIDs } from "../navbar.component";
 import NavBarLogo from "../navbar.logo/navbar.logo.component";
 import NavBarOptions from "../navbar.options/navbar.options.component";
@@ -73,7 +72,6 @@ let mockUserProperties: UserStateInterface = {
 // todo: check all props
 
 describe("NavBar", () => {
-  const title = translations.app.title;
   const config = NavConfig;
   const baseMockUserProperties = { ...mockUserProperties };
   let thisMockUserProperties = { ...baseMockUserProperties };
@@ -87,18 +85,11 @@ describe("NavBar", () => {
     albums: [],
     image: [
       {
-        size: "small" as "small",
+        size: "small",
         "#text": mockImageUrl,
       },
     ],
   };
-
-  const setWidth = (width: number) =>
-    Object.defineProperty(window, "innerWidth", {
-      writable: true,
-      configurable: true,
-      value: width,
-    });
 
   beforeEach(() => {
     thisMockUserProperties = { ...baseMockUserProperties };

@@ -34,7 +34,7 @@ export default function NavBar({ menuConfig }: NavBarProps) {
 
   const getProfileImageUrl = (size: LastFMImageDataInterface["size"]) => {
     const image = user.userProperties.data.report.image.find(
-      (image) => image.size == size
+      (thisImage) => thisImage.size == size
     );
     if (image) return image["#text"];
     return "";

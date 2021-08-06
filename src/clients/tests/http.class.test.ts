@@ -103,7 +103,7 @@ describe("HTTPClient", () => {
       beforeEach(() => setupFetch({ success: false, status: 400 }));
 
       it("should call the underlying fetch function correctly", () => {
-        arrange().catch(() => {});
+        arrange().catch(() => null);
         expect(fetch).toBeCalledTimes(1);
         expect(fetch).toBeCalledWith(remotesite, {
           method: "POST",
@@ -128,7 +128,7 @@ describe("HTTPClient", () => {
       beforeEach(() => setupFetchWithNetworkError());
 
       it("should call the underlying fetch function correctly", () => {
-        arrange().catch(() => {});
+        arrange().catch(() => null);
         expect(fetch).toBeCalledTimes(1);
         expect(fetch).toBeCalledWith(remotesite, {
           method: "POST",

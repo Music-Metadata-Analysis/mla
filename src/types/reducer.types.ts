@@ -1,14 +1,19 @@
 import type { Reducer } from "react";
 
-export type NestedType = (
-  encapsulated: MiddlewareOrReducerType
-) => MiddlewareOrReducerType;
-
-export type MiddlewareType = (reducer: Reducer<any, any>) => Reducer<any, any>;
-
-export type MiddlewareOrReducerType = Reducer<any, any> | MiddlewareType;
-
 export interface ActionType {
   type: string;
-  state: object;
 }
+
+export type MiddlewareType<STATE, ACTION> = (
+  reducer: Reducer<STATE, ACTION>
+) => Reducer<STATE, ACTION>;
+
+export type MiddlewareOrReducerType<STATE, ACTION> =
+  | Reducer<STATE, ACTION>
+  | MiddlewareType<STATE, ACTION>;
+
+export type NestedType<STATE, ACTION> = (
+  encapsulated: MiddlewareOrReducerType<STATE, ACTION>
+) => MiddlewareOrReducerType<STATE, ACTION>;
+
+export type StateType = Record<string, unknown>;

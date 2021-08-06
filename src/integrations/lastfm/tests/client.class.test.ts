@@ -25,8 +25,8 @@ interface ClientError extends Error {
 describe("LastFMClient", () => {
   let secretKey: "123VerySecret";
   let username: "testuser";
-  let mockTopAlbumsResponse = { topalbums: { album: "response" } };
-  let mockInfoResponse = { user: { image: "response" } };
+  const mockTopAlbumsResponse = { topalbums: { album: "response" } };
+  const mockInfoResponse = { user: { image: "response" } };
   let instance: LastFMClientAdapter;
 
   beforeEach(() => {

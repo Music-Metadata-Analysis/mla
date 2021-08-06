@@ -5,7 +5,7 @@ import UserProvider, { UserContext } from "../user.provider";
 import type { UserContextInterface } from "../../../types/user/context.types";
 
 describe("UserProvider", () => {
-  let received: any = {};
+  const received: Partial<UserContextInterface> = {};
 
   const arrange = () => {
     render(
@@ -14,9 +14,7 @@ describe("UserProvider", () => {
           {(state) => (
             <div>
               {"Place Holder Div"}
-              {Object.keys(state).forEach(function (key) {
-                received[key] = state[key as keyof UserContextInterface];
-              })}
+              {JSON.stringify(Object.assign(received, state))}
             </div>
           )}
         </UserContext.Consumer>

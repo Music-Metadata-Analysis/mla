@@ -10,6 +10,6 @@ export type ProxyResponse<REPORT> = {
 };
 
 export interface TopAlbumsReportResponseInterface {
-  albums: any[];
-  image: any[];
+  albums: unknown[];
+  image: unknown[];
 }

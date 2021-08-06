@@ -10,7 +10,7 @@ class LastFmClientAdapter implements LastFMClientInterface {
   externalClient: LastFm;
   secret_key: string;
   reportAlbumCount = 20;
-  reportAlbumPeriod = "overall" as "overall";
+  reportAlbumPeriod = "overall" as const;
 
   constructor(secret_key: string) {
     this.secret_key = secret_key;

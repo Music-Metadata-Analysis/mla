@@ -4,12 +4,13 @@ import type { TopAlbumsReportResponseInterface } from "../../../types/proxy.type
 import type { UserActionType } from "../../../types/user/action.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
 
+const mockReturn = "MockReturnedState";
 const mockStates = {
-  FailureFetchUser: jest.fn(),
-  StartFetchUser: jest.fn(),
-  SuccessFetchUser: jest.fn(),
-  RatelimitedFetchUser: jest.fn(),
-  ResetState: jest.fn(),
+  FailureFetchUser: jest.fn().mockReturnValue(mockReturn),
+  StartFetchUser: jest.fn().mockReturnValue(mockReturn),
+  SuccessFetchUser: jest.fn().mockReturnValue(mockReturn),
+  RatelimitedFetchUser: jest.fn().mockReturnValue(mockReturn),
+  ResetState: jest.fn().mockReturnValue(mockReturn),
 };
 
 jest.mock("../user.reducer.states.class", () => {
@@ -53,6 +54,7 @@ describe("UserReducer", () => {
     received = arrange({ type: "ResetState" }, badInitialUserState);
     expect(mockStates.ResetState).toBeCalledTimes(1);
     expect(mockStates.ResetState).toBeCalledWith(action);
+    expect(received).toBe(mockReturn);
   });
 
   it("should handle StartFetchUser correctly", () => {
@@ -64,6 +66,7 @@ describe("UserReducer", () => {
     received = arrange(action, badInitialUserState);
     expect(mockStates.StartFetchUser).toBeCalledTimes(1);
     expect(mockStates.StartFetchUser).toBeCalledWith(action);
+    expect(received).toBe(mockReturn);
   });
 
   it("should handle SuccessFetchUser correctly", () => {
@@ -85,6 +88,7 @@ describe("UserReducer", () => {
     received = arrange(action, { ...InitialValues.userProperties });
     expect(mockStates.SuccessFetchUser).toBeCalledTimes(1);
     expect(mockStates.SuccessFetchUser).toBeCalledWith(action);
+    expect(received).toBe(mockReturn);
   });
 
   it("should handle FailureFetchUser correctly", () => {
@@ -96,6 +100,7 @@ describe("UserReducer", () => {
     received = arrange(action, { ...InitialValues.userProperties });
     expect(mockStates.FailureFetchUser).toBeCalledTimes(1);
     expect(mockStates.FailureFetchUser).toBeCalledWith(action);
+    expect(received).toBe(mockReturn);
   });
 
   it("should handle RatelimitedFetchUser correctly", () => {
@@ -107,5 +112,6 @@ describe("UserReducer", () => {
     received = arrange(action, { ...InitialValues.userProperties });
     expect(mockStates.RatelimitedFetchUser).toBeCalledTimes(1);
     expect(mockStates.RatelimitedFetchUser).toBeCalledWith(action);
+    expect(received).toBe(mockReturn);
   });
 });
