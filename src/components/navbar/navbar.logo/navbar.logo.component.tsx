@@ -1,5 +1,5 @@
 import { Flex, Spacer } from "@chakra-ui/react";
-import translations from "../../../config/translations";
+import { useTranslation } from "next-i18next";
 import ButtonLink from "../../button.link/button.link.component";
 import NavBarAvatar from "../navbar.avatar/navbar.avatar.component";
 
@@ -9,9 +9,11 @@ interface NavBarLogoProps {
 }
 
 const NavBarLogo = ({ href, image }: NavBarLogoProps) => {
+  const { t } = useTranslation("navbar");
+
   return (
     <Flex h={16} alignItems={"center"}>
-      <ButtonLink href={"/"}>{translations.app.title}</ButtonLink>
+      <ButtonLink href={"/"}>{t("title")}</ButtonLink>
       <Spacer w="10px" />
       <NavBarAvatar href={href} image={image} />
     </Flex>

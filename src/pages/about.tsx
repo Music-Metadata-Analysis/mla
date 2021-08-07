@@ -1,3 +1,5 @@
+import pagePropsGenerator from "../utils/page.props";
+
 export default function About() {
   return (
     <>
@@ -5,3 +7,5 @@ export default function About() {
     </>
   );
 }
+
+export const getStaticProps = pagePropsGenerator({ pageKey: "about" });

@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import useAnalytics from "../../../hooks/analytics";
 import NavLink from "../navbar.link/navbar.link.component";
@@ -9,6 +10,7 @@ interface NavBarProps {
 const NavBarOptions = ({ menuConfig }: NavBarProps) => {
   const router = useRouter();
   const analytics = useAnalytics();
+  const { t } = useTranslation("navbar");
 
   return (
     <>
@@ -19,7 +21,7 @@ const NavBarOptions = ({ menuConfig }: NavBarProps) => {
           href={menuConfig[key]}
           trackButtonClick={analytics.trackButtonClick}
         >
-          {key}
+          {t(`menu.${key}`)}
         </NavLink>
       ))}
     </>

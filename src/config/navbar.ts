@@ -1,6 +1,6 @@
 const MenuConfig = {
-  About: "/about",
-  Search: "/search",
+  about: "/about",
+  search: "/search",
 };
 
 export default MenuConfig;

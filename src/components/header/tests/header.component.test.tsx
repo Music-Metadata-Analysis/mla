@@ -1,5 +1,6 @@
 import { waitFor, render } from "@testing-library/react";
 import Head from "next/head";
+import translation from "../../../../public/locales/en/main.json";
 import settings from "../../../config/head";
 import Header from "../header.component";
 
@@ -19,7 +20,7 @@ const MockNextHeader = ({
 };
 
 describe("Header Component", () => {
-  const testTitle = "Some Title";
+  const testTranslationKey = "default";
 
   beforeEach(() => {
     (Head as jest.Mock).mockImplementationOnce(MockNextHeader);
@@ -45,22 +46,26 @@ describe("Header Component", () => {
     return null;
   };
 
-  const arrange = (customTitle: string) => {
-    return render(<Header title={customTitle} />);
+  const arrange = () => {
+    return render(<Header pageKey={testTranslationKey} />);
   };
 
-  describe("When given a title", () => {
+  describe("When given a test pageKey", () => {
     beforeEach(() => {
-      arrange(testTitle);
+      arrange();
     });
 
     it("sets the title appropriately", async () => {
-      await waitFor(() => expect(document.title).toEqual(testTitle));
+      await waitFor(() =>
+        expect(document.title).toEqual(translation.pages.default.title)
+      );
     });
 
     it("should have the correct description metadata set", async () => {
       await waitFor(() =>
-        expect(getMeta("description")).toEqual(settings.description)
+        expect(getMeta("description")).toEqual(
+          translation.pages.default.description
+        )
       );
     });
 

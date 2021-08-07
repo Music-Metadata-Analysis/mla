@@ -34,46 +34,61 @@ jest.mock("../ui/ui.provider", () =>
 );
 
 describe("RootProvider", () => {
+  const testPageKey = "test";
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  const arrange = async () => {
+  const arrange = async (pageKey?: string) => {
+    const headerProps = pageKey ? { pageKey } : undefined;
     render(
-      <RootProvider>
+      <RootProvider headerProps={headerProps}>
         <div data-testid={providers.RootProvider}>Test</div>
       </RootProvider>
     );
   };
 
-  describe("When Rendered", () => {
+  describe("When Rendered, without a pageKey", () => {
+    beforeEach(() => arrange());
+
     it("should call the Header component correctly", async () => {
-      arrange();
       await waitFor(() => expect(Header).toBeCalledTimes(1));
+      await waitFor(() =>
+        expect(Header).toBeCalledWith({ pageKey: "default" }, {})
+      );
+      expect(await screen.findByTestId(providers.Header)).toBeTruthy;
+    });
+  });
+
+  describe("When Rendered, with a pageKey", () => {
+    beforeEach(() => arrange(testPageKey));
+
+    it("should call the Header component correctly", async () => {
+      await waitFor(() => expect(Header).toBeCalledTimes(1));
+      await waitFor(() =>
+        expect(Header).toBeCalledWith({ pageKey: testPageKey }, {})
+      );
       expect(await screen.findByTestId(providers.Header)).toBeTruthy;
     });
 
     it("should initialize the Analytics Provider", async () => {
-      arrange();
       await waitFor(() => expect(AnalyticsProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.AnalyticsProvider)).toBeTruthy;
     });
 
     it("should initialize the UserProvider", async () => {
-      arrange();
       await waitFor(() => expect(UserProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.UserProvider)).toBeTruthy;
     });
 
     it("should initialize the UserInterfaceProvider", async () => {
-      arrange();
       await waitFor(() => expect(UserInterfaceProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.UserInterfaceProvider))
         .toBeTruthy;
     });
 
     it("should display the RootProvider's Child Elements", async () => {
-      arrange();
       expect(await screen.findByTestId(providers.RootProvider)).toBeTruthy;
     });
   });
