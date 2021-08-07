@@ -9,6 +9,8 @@ const mockConfig = {
   otherPath: "/otherPath",
 };
 
+const translationPrefix = "menu";
+
 jest.mock("../../navbar.link/navbar.link.component");
 jest.mock("../../../../hooks/analytics", () => ({
   __esModule: true,
@@ -39,7 +41,7 @@ describe("NavBarOptions", () => {
         {
           href: mockConfig.mockPath,
           selected: false,
-          children: "mockPath",
+          children: `${translationPrefix}.mockPath`,
           trackButtonClick: mockAnalyticsHook.trackButtonClick,
         },
         {}
@@ -48,7 +50,7 @@ describe("NavBarOptions", () => {
         {
           href: mockConfig.otherPath,
           selected: false,
-          children: "otherPath",
+          children: `${translationPrefix}.otherPath`,
           trackButtonClick: mockAnalyticsHook.trackButtonClick,
         },
         {}
@@ -65,7 +67,7 @@ describe("NavBarOptions", () => {
         {
           href: mockConfig.mockPath,
           selected: true,
-          children: "mockPath",
+          children: `${translationPrefix}.mockPath`,
           trackButtonClick: mockAnalyticsHook.trackButtonClick,
         },
         {}
@@ -74,7 +76,7 @@ describe("NavBarOptions", () => {
         {
           href: mockConfig.otherPath,
           selected: false,
-          children: "otherPath",
+          children: `${translationPrefix}.otherPath`,
           trackButtonClick: mockAnalyticsHook.trackButtonClick,
         },
         {}

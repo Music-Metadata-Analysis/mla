@@ -1,0 +1,20 @@
+{
+  "pages": {
+    "default": {
+      "title": "Top20",
+      "description": "Music listening data visualization tool."
+    },
+    "about": {
+      "title": "Top20: About",
+      "description": "Music listening data visualization tool."
+    },
+    "home": {
+      "title": "Top20: Home",
+      "description": "Music listening data visualization tool."
+    },
+    "search": {
+      "title": "Top20: Search",
+      "description": "Music listening data visualization tool."
+    }
+  }
+}

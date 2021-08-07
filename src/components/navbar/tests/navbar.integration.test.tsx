@@ -1,12 +1,13 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import { RouterContext } from "next/dist/next-server/lib/router-context";
+import translation from "../../../../public/locales/en/navbar.json";
 import { HomePage } from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
-import translations from "../../../config/translations";
 import mockAnalyticsHook from "../../../hooks/tests/analytics.mock";
 import mockRouter from "../../../tests/fixtures/mock.router";
 import { testIDs as NavBarAnalyticsTestIDs } from "../navbar.avatar/navbar.avatar.component";
 import NavBar, { testIDs } from "../navbar.component";
+import type { JSONstringType } from "../../../types/json.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
 
 jest.mock("../../../hooks/lastfm", () => {
@@ -39,8 +40,11 @@ let mockUserProperties: UserStateInterface = {
 };
 
 describe("NavBar", () => {
+  const translationPrefix = "menu" as const;
   const config: { [index: string]: string } = NavConfig;
-  const clickAbleLinks = Object.keys(config);
+  const clickAbleLinks = Object.keys(config).map(
+    (key) => (translation[translationPrefix] as JSONstringType)[key]
+  );
   const baseMockUserProperties = { ...mockUserProperties };
   let thisMockUserProperties = { ...baseMockUserProperties };
 
@@ -69,8 +73,8 @@ describe("NavBar", () => {
   };
 
   const testLink = (link: string, searchRootTestId: string) => {
-    let destination = config[link];
-    if (link === translations.app.title) destination = "/";
+    let destination = config[link.toLowerCase()];
+    if (link === translation.title) destination = "/";
 
     describe(`when the "${link}" link is clicked`, () => {
       beforeEach(async () => {
@@ -105,11 +109,15 @@ describe("NavBar", () => {
 
   describe("when rendered", () => {
     it("should display the title", async () => {
-      expect(await screen.findByText(translations.app.title)).toBeTruthy();
+      expect(await screen.findByText(translation.title)).toBeTruthy();
     });
     it("should display the correct links", async () => {
       for (const linkText of Object.keys(NavConfig)) {
-        expect(await screen.findByText(linkText)).toBeTruthy();
+        expect(
+          await screen.findByText(
+            (translation[translationPrefix] as JSONstringType)[linkText]
+          )
+        ).toBeTruthy();
       }
     });
 
@@ -141,7 +149,7 @@ describe("NavBar", () => {
       for (let i = 0; i < clickAbleLinks.length; i++) {
         testLink(clickAbleLinks[i], testIDs.NavBarRoot);
       }
-      testLink(translations.app.title, testIDs.NavBarRoot);
+      testLink(translation.title, testIDs.NavBarRoot);
     });
 
     describe("when menubar links are clicked", () => {

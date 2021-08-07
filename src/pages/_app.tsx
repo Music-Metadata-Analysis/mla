@@ -1,16 +1,20 @@
 import "../styles/globals.css";
 
+import { appWithTranslation } from "next-i18next";
 import NavBar from "../components/navbar/navbar.component";
 import MenuConfig from "../config/navbar";
 import RootProvider from "../providers/root.provider";
 import type { AppProps } from "next/app";
 
-function App({ Component, pageProps }: AppProps) {
+function App({
+  Component,
+  pageProps: { headerProps, ...otherProps },
+}: AppProps) {
   return (
-    <RootProvider>
+    <RootProvider headerProps={headerProps}>
       <NavBar menuConfig={MenuConfig} />
-      <Component {...pageProps} />
+      <Component {...otherProps} />
     </RootProvider>
   );
 }
-export default App;
+export default appWithTranslation(App);

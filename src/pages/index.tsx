@@ -1,3 +1,5 @@
+import pagePropsGenerator from "../utils/page.props";
+
 export default function Index() {
   return (
     <>
@@ -5,3 +7,5 @@ export default function Index() {
     </>
   );
 }
+
+export const getStaticProps = pagePropsGenerator({ pageKey: "home" });

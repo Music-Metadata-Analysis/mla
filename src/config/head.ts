@@ -1,7 +1,8 @@
 const settings = {
-  description: "Music data visualization tool.",
-  favicon: "/favicon.ico",
   appleTouchIcon: "/cans192.png",
+  defaultTitle: "Top20",
+  defaultDescription: "Music data visualization tool.",
+  favicon: "/favicon.ico",
 };
 
 export default settings;
