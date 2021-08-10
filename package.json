@@ -62,6 +62,7 @@
     ],
     "coveragePathIgnorePatterns": [
       "src/pages/_app.tsx",
+      "src/pages/_document.tsx",
       "src/pages/index.tsx",
       "src/pages/about.tsx",
       "src/pages/search.tsx"

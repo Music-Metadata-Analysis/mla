@@ -1,10 +1,13 @@
-import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
-import { waitFor, screen, render } from "@testing-library/react";
+import { ChakraProvider, CSSReset, ColorModeProvider } from "@chakra-ui/react";
+import { render } from "@testing-library/react";
+import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import UserInterfaceProvider from "../ui.provider";
+import createTheme from "../ui.theme";
 
 const providers = {
   ChakraProvider: "ChakraProvider",
   ColorModeProvider: "ColorModeProvider",
+  CSSReset: "CSSReset",
 };
 
 const createMock = (name: string) =>
@@ -22,6 +25,11 @@ jest.mock("@chakra-ui/react", () => {
   return mockedModules;
 });
 
+jest.mock("../ui.theme", () => {
+  const chakra = jest.requireActual("@chakra-ui/react");
+  return jest.fn().mockImplementation(() => chakra.extendTheme({}));
+});
+
 describe("UserInterfaceProvider", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -36,16 +44,33 @@ describe("UserInterfaceProvider", () => {
   };
 
   describe("When Rendered", () => {
-    it("should initialize the ChakraProvider Provider", async () => {
+    it("should call createTheme", () => {
       arrange();
-      await waitFor(() => expect(ChakraProvider).toBeCalledTimes(1));
-      expect(await screen.findByTestId(providers.ChakraProvider)).toBeTruthy;
+      expect(createTheme).toBeCalledTimes(1);
+      expect(createTheme).toBeCalledWith();
     });
 
-    it("should initialize the ColorModeProvider", async () => {
+    it("should initialize the ChakraProvider Provider", () => {
       arrange();
-      await waitFor(() => expect(ColorModeProvider).toBeCalledTimes(1));
-      expect(await screen.findByTestId(providers.ColorModeProvider)).toBeTruthy;
+      expect(ChakraProvider).toBeCalledTimes(1);
+      checkMockCall(ChakraProvider, { theme: createTheme() });
+    });
+
+    it("should initialize the CSSReset", () => {
+      arrange();
+      expect(CSSReset).toBeCalledTimes(1);
+      checkMockCall(CSSReset, {});
+    });
+
+    it("should initialize the ColorModeProvider", () => {
+      arrange();
+      expect(ColorModeProvider).toBeCalledTimes(1);
+      checkMockCall(ColorModeProvider, {
+        options: {
+          useSystemColorMode: false,
+          initialColorMode: "dark",
+        },
+      });
     });
   });
 });
