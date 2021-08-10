@@ -9,5 +9,4 @@ class MockComponentWithChildrenFactory {
   };
 }
 
-export const mockComponentWithChildrenFactory =
-  new MockComponentWithChildrenFactory();
+export const factoryInstance = new MockComponentWithChildrenFactory();

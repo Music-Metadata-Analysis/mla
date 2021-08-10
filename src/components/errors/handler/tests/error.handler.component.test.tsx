@@ -8,9 +8,9 @@ import ErrorHandler from "../error.handler.component";
 
 const createMockedComponent = (name: string) => {
   const {
-    mockComponentWithChildrenFactory,
-  } = require("../../../../tests/fixtures/mock.factory.class");
-  return mockComponentWithChildrenFactory.create(name);
+    factoryInstance,
+  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
 };
 
 jest.mock("../../../billboard/billboard.component", () =>
