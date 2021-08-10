@@ -15,9 +15,9 @@ const providers = {
 
 const createProviderMock = (name: string) => {
   const {
-    mockComponentWithChildrenFactory,
-  } = require("../../tests/fixtures/mock.factory.class");
-  return mockComponentWithChildrenFactory.create(name);
+    factoryInstance,
+  } = require("../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
 };
 
 jest.mock("../../components/header/header.component", () =>
