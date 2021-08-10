@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import translation from "../../../../../public/locales/en/navbar.json";
+import routes from "../../../../config/routes";
 import ButtonLink from "../../../button.link/button.link.component";
 import NavBarAvatar from "../../navbar.avatar/navbar.avatar.component";
 import NavBarLogo from "../navbar.logo.component";
@@ -32,7 +33,7 @@ describe("NavBarLogo", () => {
   it("should render the title ButtonLink with the correct props", () => {
     expect(ButtonLink).toBeCalledTimes(1);
     const call = (ButtonLink as jest.Mock).mock.calls[0][0];
-    expect(call.href).toBe("/");
+    expect(call.href).toBe(routes.home);
     expect(call.children).toBe(translation.title);
     expect(Object.keys(call).length).toBe(2);
   });
