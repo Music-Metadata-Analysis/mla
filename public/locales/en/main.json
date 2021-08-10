@@ -1,4 +1,8 @@
 {
+  "error": {
+    "title": "An error has occurred!",
+    "resetButton": "Try Again!"
+  },
   "pages": {
     "default": {
       "title": "Top20",
