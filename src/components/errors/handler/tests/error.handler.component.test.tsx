@@ -1,9 +1,6 @@
-import { WarningTwoIcon } from "@chakra-ui/icons";
-import { Flex, Button } from "@chakra-ui/react";
-import { render, screen } from "@testing-library/react";
-import translation from "../../../../../public/locales/en/main.json";
+import { render } from "@testing-library/react";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import Billboard from "../../../billboard/billboard.component";
+import ErrorDisplay from "../../display/error.display.component";
 import ErrorHandler from "../error.handler.component";
 
 const createMockedComponent = (name: string) => {
@@ -13,23 +10,9 @@ const createMockedComponent = (name: string) => {
   return factoryInstance.create(name);
 };
 
-jest.mock("../../../billboard/billboard.component", () =>
-  createMockedComponent("BillBoard")
+jest.mock("../../display/error.display.component", () =>
+  createMockedComponent("ErrorDisplay")
 );
-
-jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Flex", "Button"]);
-});
-
-jest.mock("@chakra-ui/icons", () => {
-  const {
-    factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.icon.factory.class");
-  return factoryInstance.create(["WarningTwoIcon"]);
-});
 
 describe("ErrorHandler", () => {
   const mockErrorMessage = "Test Error";
@@ -57,36 +40,12 @@ describe("ErrorHandler", () => {
     expect(consoleErrorSpy).toBeCalledWith(mockError);
   });
 
-  it("should render the billboard correctly", () => {
-    expect(Billboard).toBeCalledTimes(1);
-    checkMockCall(Billboard, { title: translation.error.title });
-  });
-
-  it("should render the Flex correctly", () => {
-    expect(Flex).toBeCalledTimes(1);
-    checkMockCall(Flex, {
-      direction: "column",
-      align: "center",
-      justify: "center",
+  it("should render the ErrorDisplay correctly", () => {
+    expect(ErrorDisplay).toBeCalledTimes(1);
+    checkMockCall(ErrorDisplay, {
+      error: mockError,
+      errorKey: "generic",
+      resetError: mockReset,
     });
-  });
-
-  it("should render the WarningTwoIcon correctly", () => {
-    expect(WarningTwoIcon).toBeCalledTimes(1);
-    checkMockCall(WarningTwoIcon, { boxSize: 50, color: "yellow.800" });
-  });
-
-  it("should display the error message", async () => {
-    expect(await screen.findByText(mockErrorMessage)).toBeTruthy();
-  });
-
-  it("should render the Button correctly", () => {
-    expect(Button).toBeCalledTimes(1);
-    checkMockCall(Button, { bg: "gray.500", size: "sm" });
-  });
-
-  it("should call the reset function when the Button is pressed", () => {
-    expect(Button).toBeCalledTimes(1);
-    expect((Button as jest.Mock).mock.calls[0][0].onClick).toBe(mockReset);
   });
 });
