@@ -53,6 +53,8 @@ export default function NavBar({ menuConfig }: NavBarProps) {
   return (
     <>
       <Box
+        fontSize={[18, 18, 20]}
+        style={{ position: "fixed", top: 0, width: "100%" }}
         data-testid={testIDs.NavBarRoot}
         bg={useColorModeValue("gray.100", "gray.900")}
         px={4}
