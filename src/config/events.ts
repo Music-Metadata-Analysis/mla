@@ -24,6 +24,11 @@ const Events = {
     }),
   },
   General: {
+    Error: new EventDefinition({
+      category: "MAIN",
+      label: "ERROR",
+      action: "Unspecified error was caught by the error boundary.",
+    }),
     Contact: new EventDefinition({
       category: "MAIN",
       label: "CONTACT",
