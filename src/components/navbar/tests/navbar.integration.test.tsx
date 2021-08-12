@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import { RouterContext } from "next/dist/next-server/lib/router-context";
+import { RouterContext } from "next/dist/shared/lib/router-context";
 import translation from "../../../../public/locales/en/navbar.json";
 import { HomePage } from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
