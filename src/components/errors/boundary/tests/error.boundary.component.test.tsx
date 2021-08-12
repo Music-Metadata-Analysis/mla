@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { RouterContext } from "next/dist/next-server/lib/router-context";
+import { RouterContext } from "next/dist/shared/lib/router-context";
 import { useState } from "react";
 import Events from "../../../../config/events";
 import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
