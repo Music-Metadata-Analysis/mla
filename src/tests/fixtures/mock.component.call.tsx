@@ -12,9 +12,10 @@ const isFunction = (call: { [index: string]: () => void }, name: string) => {
 const checkMockCall = (
   component: React.FC<AnyProps>,
   props: Record<string, unknown>,
+  index = 0,
   functions: string[] = ["onClick"]
 ) => {
-  let call = { ...(component as jest.Mock).mock.calls[0][0] };
+  let call = { ...(component as jest.Mock).mock.calls[index][0] };
   if (call.children) delete call.children;
   functions.forEach((functionName) => {
     call = isFunction(call, functionName);

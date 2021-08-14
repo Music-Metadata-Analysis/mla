@@ -47,13 +47,14 @@ describe("404", () => {
           route: routes.home,
           eventDefinition: Events.General.Error,
         },
+        0,
         ["stateReset"]
       );
     });
 
     it("should call the ErrorDisplay correctly", () => {
       expect(ErrorDisplay).toBeCalledTimes(1);
-      mockCheckCall(ErrorDisplay, { errorKey: "404" }, ["resetError"]);
+      mockCheckCall(ErrorDisplay, { errorKey: "404" }, 0, ["resetError"]);
     });
   });
 });
