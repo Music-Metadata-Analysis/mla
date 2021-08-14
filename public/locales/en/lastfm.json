@@ -1,0 +1,15 @@
+{
+  "search": {
+    "title": "Search",
+    "fieldLabel": "Username:",
+    "fieldPlaceholder": "last.fm username",
+    "buttonText": "Perform Search",
+    "t": { "t": "t" },
+    "errors": {
+      "username": {
+        "required": "A username is required.",
+        "valid": "A proper username is required."
+      }
+    }
+  }
+}
