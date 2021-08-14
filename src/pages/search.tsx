@@ -1,15 +1,23 @@
+import ErrorBoundary from "../components/errors/boundary/error.boundary.component";
+import SearchForm from "../components/forms/search/lastfm/search.ui.component";
+import Events from "../config/events";
+import routes from "../config/routes";
 import pagePropsGenerator from "../utils/page.props";
+import { voidFn } from "../utils/voids";
 
-export default function Search() {
+export default function SearchLastFM() {
   return (
-    <>
-      <br />
-      <br />
-      <br />
-      <br />
-      <div>Search</div>
-    </>
+    <ErrorBoundary
+      eventDefinition={Events.General.Error}
+      route={routes.home}
+      stateReset={voidFn}
+    >
+      <SearchForm />
+    </ErrorBoundary>
   );
 }
 
-export const getStaticProps = pagePropsGenerator({ pageKey: "search" });
+export const getStaticProps = pagePropsGenerator({
+  pageKey: "search",
+  translations: ["lastfm"],
+});
