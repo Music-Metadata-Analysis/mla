@@ -29,7 +29,7 @@ describe("billboard", () => {
 
   it("should call the Center component correctly", () => {
     expect(Center).toBeCalledTimes(1);
-    checkMockCall(Center, { height: "calc(100vh - 128px)" });
+    checkMockCall(Center, { height: "calc(100vh + 32px)" });
   });
 
   it("should call the Flex component correctly", () => {
