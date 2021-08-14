@@ -2,7 +2,7 @@ import { Avatar } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { DimmingImage } from "./navbar.avatar.styles";
 import useAnalytics from "../../../hooks/analytics";
-import FallBackIcon from "../navbar.fallback.icon/navbar.fallback.icon.component";
+import LastFMIcon from "../../icons/lasfm/lastfm.icon";
 import type { NavBarAvatarClickSource } from "../../../types/analytics.types";
 
 export const testIDs = {
@@ -31,7 +31,7 @@ const NavBarAvatar = ({ href, image }: NavBarAvatarProps) => {
             cursor={"pointer"}
             size={"sm"}
             src={image}
-            icon={<FallBackIcon />}
+            icon={<LastFMIcon />}
           />
         </DimmingImage>
       </a>
