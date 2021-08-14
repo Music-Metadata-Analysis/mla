@@ -2,7 +2,7 @@ import { Avatar } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
-import FallBackIcon from "../../navbar.fallback.icon/navbar.fallback.icon.component";
+import LastFMIcon from "../../../icons/lastfm/lastfm.icon";
 import NavBarAvatar, { testIDs } from "../navbar.avatar.component";
 
 jest.mock("@chakra-ui/react", () => {
@@ -48,7 +48,7 @@ describe("NavBarAvatar", () => {
       expect(call.loading).toBe("eager");
       expect(call.size).toBe("sm");
       expect(call.src).toBe(mockImage);
-      expect(renderToString(call.icon)).toBe(renderToString(<FallBackIcon />));
+      expect(renderToString(call.icon)).toBe(renderToString(<LastFMIcon />));
     });
     describe("when clicked", () => {
       beforeEach(async () => {
@@ -86,7 +86,7 @@ describe("NavBarAvatar", () => {
       expect(call.loading).toBe("eager");
       expect(call.size).toBe("sm");
       expect(call.src).toBe("");
-      expect(renderToString(call.icon)).toBe(renderToString(<FallBackIcon />));
+      expect(renderToString(call.icon)).toBe(renderToString(<LastFMIcon />));
     });
     describe("when clicked", () => {
       beforeEach(async () => {
