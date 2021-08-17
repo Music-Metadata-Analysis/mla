@@ -1,4 +1,7 @@
 {
+  "altText": {
+    "lastfm": "last.fm"
+  },
   "errors": {
     "404": {
       "title": "Whoops!",
