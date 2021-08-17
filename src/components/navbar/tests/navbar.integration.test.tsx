@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import translation from "../../../../public/locales/en/navbar.json";
+import mainTranslations from "../../../../public/locales/en/main.json";
+import navbarTranslations from "../../../../public/locales/en/navbar.json";
 import { HomePage } from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
 import mockAnalyticsHook from "../../../hooks/tests/analytics.mock";
@@ -43,7 +44,7 @@ describe("NavBar", () => {
   const translationPrefix = "menu" as const;
   const config: { [index: string]: string } = NavConfig;
   const clickAbleLinks = Object.keys(config).map(
-    (key) => (translation[translationPrefix] as JSONstringType)[key]
+    (key) => (navbarTranslations[translationPrefix] as JSONstringType)[key]
   );
   const baseMockUserProperties = { ...mockUserProperties };
   let thisMockUserProperties = { ...baseMockUserProperties };
@@ -74,7 +75,7 @@ describe("NavBar", () => {
 
   const testLink = (link: string, searchRootTestId: string) => {
     let destination = config[link.toLowerCase()];
-    if (link === translation.title) destination = "/";
+    if (link === navbarTranslations.title) destination = "/";
 
     describe(`when the "${link}" link is clicked`, () => {
       beforeEach(async () => {
@@ -109,13 +110,13 @@ describe("NavBar", () => {
 
   describe("when rendered", () => {
     it("should display the title", async () => {
-      expect(await screen.findByText(translation.title)).toBeTruthy();
+      expect(await screen.findByText(navbarTranslations.title)).toBeTruthy();
     });
     it("should display the correct links", async () => {
       for (const linkText of Object.keys(NavConfig)) {
         expect(
           await screen.findByText(
-            (translation[translationPrefix] as JSONstringType)[linkText]
+            (navbarTranslations[translationPrefix] as JSONstringType)[linkText]
           )
         ).toBeTruthy();
       }
@@ -149,7 +150,7 @@ describe("NavBar", () => {
       for (let i = 0; i < clickAbleLinks.length; i++) {
         testLink(clickAbleLinks[i], testIDs.NavBarRoot);
       }
-      testLink(translation.title, testIDs.NavBarRoot);
+      testLink(navbarTranslations.title, testIDs.NavBarRoot);
     });
 
     describe("when menubar links are clicked", () => {
@@ -165,7 +166,9 @@ describe("NavBar", () => {
 
     describe("when the avatar image is clicked", () => {
       beforeEach(async () => {
-        const link = (await screen.findByAltText("LastFM")) as HTMLElement;
+        const link = (await screen.findByAltText(
+          mainTranslations.altText.lastfm
+        )) as HTMLElement;
         fireEvent.click(link);
       });
       it(`should produce an analytics event`, async () => {
