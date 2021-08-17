@@ -26,6 +26,10 @@
       "title": "Top20: Home",
       "description": "Music listening data visualization tool."
     },
+    "lastfm": {
+      "title": "Top20: Last.fm",
+      "description": "Music listening data visualization tool."
+    },
     "search": {
       "title": "Top20: Search",
       "description": "Music listening data visualization tool."
