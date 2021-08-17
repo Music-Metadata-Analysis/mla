@@ -8,8 +8,10 @@ on:
   workflow_dispatch:
 
 env:
+  NETLIFY_NAME: "stage-top20-nextjs"
   PROJECT_NAME: "top20-nextjs"
   INTEGRATION_TEST_LAST_FM_KEY: ${{ secrets.INTEGRATION_TEST_LAST_FM_KEY }}
+  NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
 
 jobs:
   build:
@@ -35,6 +37,43 @@ jobs:
         if: ${{ failure() }}
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: error during build!"
+
+  deploy_stage:
+    needs: [success_notification]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Stage -- Checkout Repository
+        if: github.ref == 'refs/heads/master'
+        uses: actions/checkout@v1
+
+      - name: Deploy Stage -- Setup Environment
+        if: github.ref == 'refs/heads/master'
+        run: |
+          source ./.github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Deploy Stage -- Trigger Netlify API
+        if: github.ref == 'refs/heads/master'
+        run: |
+          sudo npm install netlify-cli -g
+          npm install
+          netlify deploy --build --prod -s ${NETLIFY_SITE_ID}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Deploy Stage -- Report Job Status on Success
+        if: github.ref == 'refs/heads/master'
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: deployed https://${NETLIFY_NAME}.netlify.app"
+
+      - name: Deploy Stage -- Report Job Status on Failure
+        if: failure()
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: error deploying branch!"
 
   lint:
     runs-on: ubuntu-latest
