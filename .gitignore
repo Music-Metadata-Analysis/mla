@@ -35,3 +35,6 @@ yarn-error.log*
 
 # snippets
 /snippets
+
+# Local Netlify folder
+.netlify
