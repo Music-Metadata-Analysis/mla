@@ -1,9 +1,8 @@
 import { render, screen } from "@testing-library/react";
+import mainTranslations from "../../../../../public/locales/en/main.json";
 import LastFMIcon from "../lastfm.icon";
 
 describe("Icons", () => {
-  const altText = "LastFM";
-
   const arrange = (
     width: number | undefined = undefined,
     height: number | undefined = undefined
@@ -16,7 +15,7 @@ describe("Icons", () => {
       beforeEach(() => arrange());
 
       it("should have the correct styles", async () => {
-        const img = await screen.findByAltText(altText);
+        const img = await screen.findByAltText(mainTranslations.altText.lastfm);
         expect(img).toHaveStyleRule("border-radius", "50%");
         expect(img).toHaveStyleRule("width", "50px");
         expect(img).toHaveStyleRule("height", "50px");
@@ -26,7 +25,7 @@ describe("Icons", () => {
       beforeEach(() => arrange(100, 100));
 
       it("should have the correct styles", async () => {
-        const img = await screen.findByAltText(altText);
+        const img = await screen.findByAltText(mainTranslations.altText.lastfm);
         expect(img).toHaveStyleRule("border-radius", "50%");
         expect(img).toHaveStyleRule("width", "100px");
         expect(img).toHaveStyleRule("height", "100px");
