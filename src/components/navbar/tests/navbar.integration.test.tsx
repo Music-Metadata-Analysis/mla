@@ -73,7 +73,11 @@ describe("NavBar", () => {
     fireEvent.click(link);
   };
 
-  const testLink = (link: string, searchRootTestId: string) => {
+  const testLink = (
+    link: string,
+    searchRootTestId: string,
+    mobileClick = false
+  ) => {
     let destination = config[link.toLowerCase()];
     if (link === navbarTranslations.title) destination = "/";
 
@@ -92,14 +96,27 @@ describe("NavBar", () => {
         expect(Object.keys(call).length).toBe(2);
       });
 
-      it(`should route to ${destination}`, async () => {
-        expect(mockRouter.push).toBeCalledTimes(1);
-        expect(mockRouter.push).toBeCalledWith(destination, destination, {
-          locale: undefined,
-          scroll: undefined,
-          shallow: undefined,
+      if (destination === "/") {
+        it(`should route to ${destination}`, async () => {
+          expect(mockRouter.push).toBeCalledTimes(1);
+          expect(mockRouter.push).toBeCalledWith(destination, destination, {
+            locale: undefined,
+            scroll: undefined,
+            shallow: undefined,
+          });
         });
-      });
+      } else {
+        it(`should route to ${destination}`, async () => {
+          expect(mockRouter.push).toBeCalledTimes(1);
+          expect(mockRouter.push).toBeCalledWith(destination);
+        });
+      }
+
+      if (mobileClick) {
+        it(`should close the mobile menu`, () => {
+          expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
+        });
+      }
     });
   };
 
@@ -153,14 +170,14 @@ describe("NavBar", () => {
       testLink(navbarTranslations.title, testIDs.NavBarRoot);
     });
 
-    describe("when menubar links are clicked", () => {
+    describe("when mobile menu links are clicked", () => {
       beforeEach(async () => {
         expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
         await clickMobileMenuButton();
       });
 
       for (let i = 0; i < clickAbleLinks.length; i++) {
-        testLink(clickAbleLinks[i], testIDs.NavBarMobileMenu);
+        testLink(clickAbleLinks[i], testIDs.NavBarMobileMenu, true);
       }
     });
 

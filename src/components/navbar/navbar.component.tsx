@@ -98,7 +98,9 @@ export default function NavBar({ menuConfig }: NavBarProps) {
             display={{ sm: "none" }}
           >
             <Stack as={"nav"} spacing={4}>
-              <NavBarOptions menuConfig={menuConfig} />
+              <div onClick={onClose}>
+                <NavBarOptions menuConfig={menuConfig} />
+              </div>
             </Stack>
           </Box>
         </Condition>
