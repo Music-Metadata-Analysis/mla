@@ -1,7 +1,8 @@
-import { Box, Link, useColorModeValue } from "@chakra-ui/react";
-import styled from "@emotion/styled";
-import NextLink from "next/link";
+import { useColorModeValue } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { Selected, UnSelected } from "./navbar.link.styles";
 import type { ButtonClickHandlerType } from "../../../types/analytics.types";
+import type { MouseEvent } from "react";
 
 interface NavLinkProps {
   href: string;
@@ -16,30 +17,33 @@ const NavLink = ({
   children,
   trackButtonClick,
 }: NavLinkProps) => {
-  const background = useColorModeValue("gray.200", "gray.700");
-  const SelectedBox = styled(Box)`
-    border-radius: 10px;
-    border-width: 3px;
-  `;
+  const router = useRouter();
+  const hoverBackground = useColorModeValue("gray.300", "gray.700");
+  const background = useColorModeValue("gray.100", "gray.900");
+  const Element = selected ? Selected : UnSelected;
 
-  const Element = selected ? SelectedBox : Box;
+  const navigate = (
+    e: MouseEvent<HTMLElement>,
+    buttonName: string,
+    href: string
+  ) => {
+    trackButtonClick(e, buttonName);
+    router.push(href);
+  };
 
   return (
-    <Element>
-      <NextLink href={href} passHref>
-        <Link
-          onClick={(e) => trackButtonClick(e, children)}
-          px={2}
-          py={1}
-          rounded={"md"}
-          _hover={{
-            textDecoration: "none",
-            bg: background,
-          }}
-        >
-          {children}
-        </Link>
-      </NextLink>
+    <Element
+      onClick={(e) => navigate(e, children as string, href)}
+      px={2}
+      py={1}
+      rounded={"md"}
+      _hover={{
+        textDecoration: "none",
+        bg: hoverBackground,
+      }}
+      bg={background}
+    >
+      {children}
     </Element>
   );
 };
