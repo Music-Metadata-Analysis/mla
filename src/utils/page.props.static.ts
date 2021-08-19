@@ -5,7 +5,7 @@ interface pagePropsGeneratorInterface {
   translations?: string[];
 }
 
-interface getStaticPropsInterface {
+interface getPagePropsInterface {
   locale: string;
 }
 
@@ -13,7 +13,7 @@ const pagePropsGenerator = ({
   pageKey,
   translations = [],
 }: pagePropsGeneratorInterface) => {
-  const getPageProps = async ({ locale }: getStaticPropsInterface) => {
+  const getPageProps = async ({ locale }: getPagePropsInterface) => {
     return {
       props: {
         ...(await serverSideTranslations(

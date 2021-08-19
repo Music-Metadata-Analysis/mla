@@ -3,7 +3,7 @@ import ErrorBoundary from "../components/errors/boundary/error.boundary.componen
 import ErrorDisplay from "../components/errors/display/error.display.component";
 import Events from "../config/events";
 import routes from "../config/routes";
-import pagePropsGenerator from "../utils/page.props";
+import pagePropsGenerator from "../utils/page.props.static";
 import { voidFn } from "../utils/voids";
 
 export default function Custom404() {

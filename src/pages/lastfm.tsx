@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import pagePropsGenerator from "../utils/page.props";
+import pagePropsGenerator from "../utils/page.props.static";
 
 export default function LastFM() {
   const router = useRouter();
