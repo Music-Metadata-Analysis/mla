@@ -1,4 +1,4 @@
-import pagePropsGenerator from "../utils/page.props";
+import pagePropsGenerator from "../utils/page.props.server";
 
 export default function About() {
   return (
@@ -12,4 +12,4 @@ export default function About() {
   );
 }
 
-export const getStaticProps = pagePropsGenerator({ pageKey: "about" });
+export const getServerSideProps = pagePropsGenerator({ pageKey: "about" });

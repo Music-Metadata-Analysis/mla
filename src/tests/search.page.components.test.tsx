@@ -5,9 +5,9 @@ import Events from "../config/events";
 import routes from "../config/routes";
 import Page from "../pages/search";
 import mockCheckCall from "../tests/fixtures/mock.component.call";
-import getPageProps from "../utils/page.props";
+import getPageProps from "../utils/page.props.server";
 
-jest.mock("../utils/page.props", () => jest.fn());
+jest.mock("../utils/page.props.server", () => jest.fn());
 jest.mock("../components/errors/boundary/error.boundary.component", () =>
   createMockedComponent("ErrorBoundary")
 );

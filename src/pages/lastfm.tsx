@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import pagePropsGenerator from "../utils/page.props";
+import pagePropsGenerator from "../utils/page.props.server";
 
 export default function LastFM() {
   const router = useRouter();
@@ -16,4 +16,4 @@ export default function LastFM() {
   );
 }
 
-export const getStaticProps = pagePropsGenerator({ pageKey: "lastfm" });
+export const getServerSideProps = pagePropsGenerator({ pageKey: "lastfm" });

@@ -1,4 +1,4 @@
-import pagePropsGenerator from "../page.props";
+import pagePropsGenerator from "../page.props.server";
 
 jest.mock("next-i18next/serverSideTranslations", () => {
   return {
@@ -19,6 +19,7 @@ interface mockReturnValueType {
       translations: string[];
     };
     headerProps: { pageKey: string };
+    query: { username: string };
   };
 }
 
@@ -29,6 +30,7 @@ describe("pageProps", () => {
   const mockDefaultTranslations = ["main", "navbar"];
   const mockTranslations = ["one", "two"];
   const mockPageKey = "test";
+  const mockUsername = "mockUsername";
 
   beforeEach(() => jest.clearAllMocks());
 
@@ -48,11 +50,15 @@ describe("pageProps", () => {
       beforeEach(async () => {
         returnValue = (await generatedFunction({
           locale: mockLocale,
+          query: { username: mockUsername },
         })) as never as mockReturnValueType;
       });
 
       it("should return page props that contain the input locale", () => {
         expect(returnValue.props.i18NextProps.locale).toBe(mockLocale);
+      });
+      it("should return page props that contain the query string", () => {
+        expect(returnValue.props.query.username).toBe(mockUsername);
       });
       it("should return page props that contain the correct translations", () => {
         expect(returnValue.props.i18NextProps.translations).toStrictEqual(
@@ -79,6 +85,7 @@ describe("pageProps", () => {
     describe("the returned function", () => {
       beforeEach(async () => {
         returnValue = (await generatedFunction({
+          query: { username: mockUsername },
           locale: mockLocale,
         })) as never as mockReturnValueType;
       });

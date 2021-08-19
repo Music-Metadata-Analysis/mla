@@ -1,4 +1,4 @@
-import pagePropsGenerator from "../utils/page.props";
+import pagePropsGenerator from "../utils/page.props.server";
 
 export default function Index() {
   return (
@@ -12,4 +12,4 @@ export default function Index() {
   );
 }
 
-export const getStaticProps = pagePropsGenerator({ pageKey: "home" });
+export const getServerSideProps = pagePropsGenerator({ pageKey: "home" });

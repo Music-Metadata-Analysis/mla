@@ -2,7 +2,7 @@ import ErrorBoundary from "../components/errors/boundary/error.boundary.componen
 import SearchForm from "../components/forms/search/lastfm/search.ui.component";
 import Events from "../config/events";
 import routes from "../config/routes";
-import pagePropsGenerator from "../utils/page.props";
+import pagePropsGenerator from "../utils/page.props.server";
 import { voidFn } from "../utils/voids";
 
 export default function SearchLastFM() {
@@ -17,7 +17,7 @@ export default function SearchLastFM() {
   );
 }
 
-export const getStaticProps = pagePropsGenerator({
+export const getServerSideProps = pagePropsGenerator({
   pageKey: "search",
   translations: ["lastfm"],
 });
