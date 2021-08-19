@@ -1,4 +1,4 @@
-import pagePropsGenerator from "../page.props";
+import pagePropsGenerator from "../page.props.static";
 
 jest.mock("next-i18next/serverSideTranslations", () => {
   return {

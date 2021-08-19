@@ -1,4 +1,4 @@
-import pagePropsGenerator from "../utils/page.props";
+import pagePropsGenerator from "../utils/page.props.static";
 
 export default function Index() {
   return (
