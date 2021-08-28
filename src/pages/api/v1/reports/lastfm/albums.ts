@@ -1,6 +1,7 @@
 import { body, validationResult } from "express-validator";
 import nextConnect from "next-connect";
 import apiEndpoints from "../../../../../config/apiEndpoints";
+import { knownStatuses } from "../../../../../config/http";
 import * as status from "../../../../../config/status";
 import LastFMProxy from "../../../../../integrations/lastfm/proxy.class";
 import type { ProxyError } from "../../../../../errors/proxy.error.class";
@@ -34,8 +35,8 @@ handler.post(
 );
 
 const errorResponse = (err: ProxyError, res: NextApiResponse) => {
-  if (err.clientStatusCode === 429) {
-    res.status(429).json(status.STATUS_429_MESSAGE);
+  if (err.clientStatusCode && knownStatuses[err.clientStatusCode]) {
+    res.status(err.clientStatusCode).json(knownStatuses[err.clientStatusCode]);
   } else {
     res.status(502).json(status.STATUS_502_MESSAGE);
   }

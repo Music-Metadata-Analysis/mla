@@ -7,6 +7,11 @@ const Events = {
       label: "ERROR",
       action: "Error when creating a user's top albums report.",
     }),
+    NotFound: new EventDefinition({
+      category: "LASTFM",
+      label: "ERROR",
+      action: "Request was made for an unknown username.",
+    }),
     Ratelimited: new EventDefinition({
       category: "LASTFM",
       label: "ERROR",

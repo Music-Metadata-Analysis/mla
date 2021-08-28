@@ -6,6 +6,9 @@ export const STATUS_200_MESSAGE: StatusMessageType = {
 export const STATUS_400_MESSAGE: StatusMessageType = {
   detail: "Invalid Request.",
 };
+export const STATUS_404_MESSAGE: StatusMessageType = {
+  detail: "Resource not found.",
+};
 export const STATUS_405_MESSAGE: StatusMessageType = {
   detail: "Incorrect http method.",
 };

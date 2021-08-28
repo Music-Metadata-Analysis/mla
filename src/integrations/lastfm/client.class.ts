@@ -19,11 +19,9 @@ class LastFmClientAdapter implements LastFMClientInterface {
 
   private createProxyCompatibleError(err: {
     message: string;
-    response: { status: number };
-    clientStatusCode: number;
+    statusCode: number | undefined;
   }): ProxyError {
-    if (err.response) return new ProxyError(err.message, err.response.status);
-    return new ProxyError(err.message, undefined);
+    return new ProxyError(err.message, err.statusCode);
   }
 
   async getTopAlbums(username: string): Promise<LastFMAlbumDataInterface[]> {

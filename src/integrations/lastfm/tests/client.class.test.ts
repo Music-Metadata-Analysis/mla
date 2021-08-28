@@ -16,10 +16,8 @@ jest.mock("@toplast/lastfm", () => {
   });
 });
 
-type ClientResponse = { status: number };
-
 interface ClientError extends Error {
-  response: ClientResponse;
+  statusCode: number;
 }
 
 describe("LastFMClient", () => {
@@ -68,7 +66,7 @@ describe("LastFMClient", () => {
 
       describe("with a status code", () => {
         beforeEach(async () => {
-          err.response = { status: 999 };
+          err.statusCode = 999;
           mockApiCall.mockImplementationOnce(() => Promise.reject(err));
           instance = arrange(secretKey);
         });
@@ -78,7 +76,7 @@ describe("LastFMClient", () => {
             await instance.getTopAlbums(username);
           } catch (receivedError) {
             expect(receivedError.message).toBe(`${err.message}`);
-            expect(receivedError.clientStatusCode).toBe(err.response.status);
+            expect(receivedError.clientStatusCode).toBe(err.statusCode);
           }
         });
       });
@@ -128,7 +126,7 @@ describe("LastFMClient", () => {
 
       describe("with a status code", () => {
         beforeEach(async () => {
-          err.response = { status: 999 };
+          err.statusCode = 999;
           mockApiCall.mockImplementationOnce(() => Promise.reject(err));
           instance = arrange(secretKey);
         });
@@ -138,7 +136,7 @@ describe("LastFMClient", () => {
             await instance.getUserImage(username);
           } catch (receivedError) {
             expect(receivedError.message).toBe(`${err.message}`);
-            expect(receivedError.clientStatusCode).toBe(err.response.status);
+            expect(receivedError.clientStatusCode).toBe(err.statusCode);
           }
         });
       });

@@ -101,6 +101,36 @@ describe("LastFMReport", () => {
       });
     });
 
+    describe("when a request returns not found", () => {
+      beforeEach(() => {
+        setUpRetrieve(true, 404);
+        instance = arrange();
+        instance.retrieveAlbumReport(mockUserName);
+      });
+
+      it("should dispatch the reducer correctly", async () => {
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "NotFoundFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+      });
+
+      it("should register events correctly", async () => {
+        expect(mockEvent).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.RequestAlbumsReport
+        );
+        expect(mockEvent).toHaveBeenCalledWith(Events.LastFM.NotFound);
+      });
+    });
+
     describe("when a request fails", () => {
       beforeEach(() => {
         setUpRetrieve(false, 400);
