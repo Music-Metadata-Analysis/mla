@@ -1,4 +1,4 @@
-import * as status from "../config/status";
+import { knownStatuses } from "../config/http";
 import type {
   FetchResponse,
   HttpMethodType,
@@ -7,10 +7,6 @@ import type {
 import type { ProxyResponse } from "../types/proxy.types";
 
 class HTTPClient {
-  private knownStatuses: { [index: number]: StatusMessageType } = {
-    429: status.STATUS_429_MESSAGE,
-  };
-
   private handleUnsuccessful(
     response: FetchResponse,
     method: HttpMethodType,
@@ -23,11 +19,11 @@ class HTTPClient {
   }
 
   private handleKnownStatuses(response: FetchResponse): FetchResponse {
-    if (response.status in this.knownStatuses) {
+    if (response.status in knownStatuses) {
       return {
         ok: true,
         status: response.status,
-        json: () => Promise.resolve(this.knownStatuses[response.status]),
+        json: () => Promise.resolve(knownStatuses[response.status]),
       } as FetchResponse;
     }
     return response;

@@ -35,6 +35,20 @@ class LastFMReport implements LastFMTopAlbumsReportInterface {
     });
   }
 
+  private handleNotFound(
+    userName: string,
+    response: ProxyResponse<LastFMTopAlbumsReportResponseInterface>
+  ): void {
+    if (response.status === 404) {
+      this.dispatch({
+        type: "NotFoundFetchUser",
+        userName: userName,
+        integration: this.integration,
+      });
+      this.event(Events.LastFM.NotFound);
+    }
+  }
+
   private handleSuccessful(
     userName: string,
     response: ProxyResponse<LastFMTopAlbumsReportResponseInterface>
@@ -83,11 +97,15 @@ class LastFMReport implements LastFMTopAlbumsReportInterface {
         }
       )
       .then((response) => {
-        this.handleSuccessful(userName, response);
+        this.handleNotFound(userName, response);
         return Promise.resolve(response);
       })
       .then((response) => {
         this.handleRatelimited(userName, response);
+        return Promise.resolve(response);
+      })
+      .then((response) => {
+        this.handleSuccessful(userName, response);
         return Promise.resolve(response);
       })
       .catch(() => {

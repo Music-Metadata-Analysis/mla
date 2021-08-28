@@ -101,6 +101,19 @@ describe(apiEndpoints.v1.reports.lastfm.albums, () => {
           expect(res._getJSONData()).toStrictEqual(status.STATUS_429_MESSAGE);
         });
       });
+      describe("with a lastfm 404 error", () => {
+        beforeEach(async () => {
+          mockBackendResponse.mockImplementationOnce(() => {
+            throw new ProxyError(mockError, 404);
+          });
+          await arrange({ body: { userName: "string" }, method: "POST" });
+        });
+
+        it("should return a 404 status code", () => {
+          expect(res._getStatusCode()).toBe(404);
+          expect(res._getJSONData()).toStrictEqual(status.STATUS_404_MESSAGE);
+        });
+      });
       describe("with a valid lastfm response", () => {
         beforeEach(async () => {
           mockBackendResponse.mockReturnValueOnce(

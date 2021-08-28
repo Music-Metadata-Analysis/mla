@@ -9,12 +9,17 @@ export type UserActionType =
       integration: IntegrationTypes;
     }
   | {
+      type: "FailureFetchUser";
+      userName: string;
+      integration: IntegrationTypes;
+    }
+  | {
       type: "RatelimitedFetchUser";
       userName: string;
       integration: IntegrationTypes;
     }
   | {
-      type: "FailureFetchUser";
+      type: "NotFoundFetchUser";
       userName: string;
       integration: IntegrationTypes;
     }

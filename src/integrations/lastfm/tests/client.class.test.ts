@@ -64,7 +64,7 @@ describe("LastFMClient", () => {
 
       describe("with a status code", () => {
         beforeEach(async () => {
-          err.response = { status: 999 };
+          err.statusCode = 999;
           mockApiCall.mockImplementationOnce(() => Promise.reject(err));
           instance = arrange(secretKey);
         });
@@ -77,7 +77,7 @@ describe("LastFMClient", () => {
               `${err.message}`
             );
             expect((receivedError as ProxyError).clientStatusCode).toBe(
-              err.response.status
+              err.statusCode
             );
           }
         });
@@ -96,6 +96,9 @@ describe("LastFMClient", () => {
             expect((receivedError as ProxyError).message).toBe(
               `${err.message}`
             );
+            expect(
+              (receivedError as ProxyError).clientStatusCode
+            ).toBeUndefined();
           }
         });
       });
@@ -130,7 +133,7 @@ describe("LastFMClient", () => {
 
       describe("with a status code", () => {
         beforeEach(async () => {
-          err.response = { status: 999 };
+          err.statusCode = 999;
           mockApiCall.mockImplementationOnce(() => Promise.reject(err));
           instance = arrange(secretKey);
         });
@@ -143,7 +146,7 @@ describe("LastFMClient", () => {
               `${err.message}`
             );
             expect((receivedError as ProxyError).clientStatusCode).toBe(
-              err.response.status
+              err.statusCode
             );
           }
         });
@@ -162,6 +165,9 @@ describe("LastFMClient", () => {
             expect((receivedError as ProxyError).message).toBe(
               `${err.message}`
             );
+            expect(
+              (receivedError as ProxyError).clientStatusCode
+            ).toBeUndefined();
           }
         });
       });
