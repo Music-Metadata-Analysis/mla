@@ -22,6 +22,19 @@ class UserReducerStates {
     }
     throw new Error(this.wrongTypeError);
   }
+  NotFoundFetchUser(action: UserActionType): UserStateInterface {
+    if (action.type === "NotFoundFetchUser") {
+      return {
+        data: { integration: action.integration, report: this.initialReport },
+        error: false,
+        profileUrl: null,
+        ratelimited: false,
+        ready: true,
+        userName: action.userName,
+      };
+    }
+    throw new Error(this.wrongTypeError);
+  }
   StartFetchUser(action: UserActionType): UserStateInterface {
     if (action.type === "StartFetchUser") {
       return {

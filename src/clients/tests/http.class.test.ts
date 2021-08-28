@@ -99,6 +99,34 @@ describe("HTTPClient", () => {
       });
     });
 
+    describe("when a '404' status code is returned", () => {
+      beforeEach(() => setupFetch({ success: false, status: 404 }));
+
+      it("should call the underlying fetch function correctly", () => {
+        arrange();
+        expect(fetch).toBeCalledTimes(1);
+        expect(fetch).toBeCalledWith(remotesite, {
+          method: "POST",
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          referrerPolicy: "same-origin",
+          body: JSON.stringify(postContent),
+        });
+      });
+
+      it("should return the correct error message", async () => {
+        const response = await arrange();
+        expect(response).toStrictEqual({
+          status: 404,
+          response: status.STATUS_404_MESSAGE,
+        });
+      });
+    });
+
     describe("when a 'not ok' status is returned", () => {
       beforeEach(() => setupFetch({ success: false, status: 400 }));
 

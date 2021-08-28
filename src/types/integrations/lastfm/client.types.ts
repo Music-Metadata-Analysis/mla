@@ -10,6 +10,5 @@ export interface LastFMClientInterface {
 }
 
 export interface LastFMExternalClientError extends Error {
-  response: { status: number };
-  clientStatusCode: number;
+  statusCode: number;
 }

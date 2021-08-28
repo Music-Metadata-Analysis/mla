@@ -142,6 +142,33 @@ describe("UserReducerStates", () => {
     });
   });
 
+  describe("NotFoundFetchUser", () => {
+    let received: UserStateInterface;
+    const testType = "NotFoundFetchUser" as const;
+
+    it("should return the the expected state", () => {
+      received = arrange({
+        type: testType,
+        userName: testUserName,
+        integration: testIntegrationType,
+      });
+
+      expect(received.profileUrl).toBe(null);
+      expect(received.ratelimited).toBe(false);
+      expect(received.userName).toBe(testUserName);
+      expect(received.data).toStrictEqual({
+        integration: testIntegrationType,
+        report: emptyReport,
+      });
+      expect(received.error).toBe(false);
+      expect(received.ready).toBe(true);
+    });
+
+    it("should not accept incompatible types", () => {
+      expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
+    });
+  });
+
   describe("ResetState", () => {
     let received: UserStateInterface;
     const testType = "ResetState" as const;
