@@ -3,14 +3,14 @@ import NextLink from "next/link";
 import mockAnalyticsHook from "../../../hooks/tests/analytics.mock";
 import ButtonLink from "../button.link.component";
 
-jest.mock("next/link", () => ({
-  __esModule: true,
-  default: jest
-    .fn()
-    .mockImplementation(
-      ({ children }: { children: React.ReactChild }) => children
-    ),
-}));
+const createMockedComponent = (name: string) => {
+  const {
+    factoryInstance,
+  } = require("../../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
+};
+
+jest.mock("next/link", () => createMockedComponent("NextLink"));
 
 jest.mock("../../../hooks/analytics", () => ({
   __esModule: true,
