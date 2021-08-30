@@ -1,4 +1,4 @@
-import { Flex, Text, Center, Box } from "@chakra-ui/react";
+import { Container, Text, Center, Box } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import Billboard from "../billboard.component";
@@ -7,7 +7,7 @@ jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
   } = require("../../../tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Flex", "Text", "Center", "Box"]);
+  return factoryInstance.create(["Container", "Text", "Center", "Box"]);
 });
 
 describe("billboard", () => {
@@ -32,9 +32,13 @@ describe("billboard", () => {
     checkMockCall(Center, { height: "calc(100vh + 32px)" });
   });
 
-  it("should call the Flex component correctly", () => {
-    expect(Flex).toBeCalledTimes(1);
-    checkMockCall(Flex, { justify: "center" });
+  it("should call the Container component correctly", () => {
+    expect(Container).toBeCalledTimes(1);
+    checkMockCall(Container, {
+      centerContent: true,
+      textAlign: "center",
+      maxW: "medium",
+    });
   });
 
   it("should call the Box component correctly", () => {

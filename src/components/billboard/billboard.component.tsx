@@ -1,4 +1,10 @@
-import { Flex, Text, Center, Box, useColorModeValue } from "@chakra-ui/react";
+import {
+  Text,
+  Container,
+  Center,
+  Box,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 interface BillboardProps {
   title: string;
@@ -11,9 +17,9 @@ const Billboard = ({ children, title }: BillboardProps) => {
   return (
     <Center height={"calc(100vh + 32px)"}>
       <Box p={3} bg={bg} w={["90%", "80%", "70%"]}>
-        <Flex justify={"center"}>
+        <Container centerContent={true} maxW={"medium"} textAlign={"center"}>
           <Text fontSize={["xl", "2xl", "3xl"]}>{title}</Text>
-        </Flex>
+        </Container>
         <br />
         {children}
       </Box>
