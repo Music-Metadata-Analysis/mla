@@ -1,6 +1,7 @@
 import { waitFor, screen, render } from "@testing-library/react";
 import Header from "../../components/header/header.component";
 import AnalyticsProvider from "../analytics/analytics.provider";
+import NavBarProdivider from "../navbar/navbar.provider";
 import RootProvider from "../root.provider";
 import UserInterfaceProvider from "../ui/ui.provider";
 import UserProvider from "../user/user.provider";
@@ -8,6 +9,7 @@ import UserProvider from "../user/user.provider";
 const providers = {
   AnalyticsProvider: "AnalyticsProvider",
   Header: "Header",
+  NavBarProdivider: "NavBarProdivider",
   RootProvider: "RootProvider",
   UserProvider: "UserProvider",
   UserInterfaceProvider: "UserInterfaceProvider",
@@ -25,6 +27,9 @@ jest.mock("../../components/header/header.component", () =>
 );
 jest.mock("../../providers/analytics/analytics.provider", () =>
   createProviderMock(providers.AnalyticsProvider)
+);
+jest.mock("../../providers/navbar/navbar.provider", () =>
+  createProviderMock(providers.NavBarProdivider)
 );
 jest.mock("../../providers/user/user.provider", () =>
   createProviderMock(providers.UserProvider)
@@ -75,6 +80,11 @@ describe("RootProvider", () => {
     it("should initialize the Analytics Provider", async () => {
       await waitFor(() => expect(AnalyticsProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.AnalyticsProvider)).toBeTruthy;
+    });
+
+    it("should initialize the NavBar Provider", async () => {
+      await waitFor(() => expect(NavBarProdivider).toBeCalledTimes(1));
+      expect(await screen.findByTestId(providers.NavBarProdivider)).toBeTruthy;
     });
 
     it("should initialize the UserProvider", async () => {

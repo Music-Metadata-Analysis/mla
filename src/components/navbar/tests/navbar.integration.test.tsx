@@ -5,6 +5,7 @@ import navbarTranslations from "../../../../public/locales/en/navbar.json";
 import { HomePage } from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
 import mockAnalyticsHook from "../../../hooks/tests/analytics.mock";
+import NavBarProvider from "../../../providers/navbar/navbar.provider";
 import mockRouter from "../../../tests/fixtures/mock.router";
 import { testIDs as NavBarAnalyticsTestIDs } from "../navbar.avatar/navbar.avatar.component";
 import NavBar, { testIDs } from "../navbar.component";
@@ -52,6 +53,7 @@ describe("NavBar", () => {
   beforeEach(() => {
     thisMockUserProperties = { ...baseMockUserProperties };
     jest.clearAllMocks();
+
     arrange();
   });
 
@@ -59,7 +61,9 @@ describe("NavBar", () => {
     mockUserProperties = { ...thisMockUserProperties };
     render(
       <RouterContext.Provider value={mockRouter}>
-        <NavBar menuConfig={config} />
+        <NavBarProvider>
+          <NavBar menuConfig={config} />
+        </NavBarProvider>
       </RouterContext.Provider>
     );
   };
