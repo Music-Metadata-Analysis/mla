@@ -3,4 +3,8 @@ const MenuConfig = {
   search: "/search",
 };
 
+export const settings = {
+  heightDuringInput: 350,
+};
+
 export default MenuConfig;

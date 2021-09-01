@@ -1,4 +1,5 @@
 import AnalyticsProvider from "./analytics/analytics.provider";
+import NavBarProvider from "./navbar/navbar.provider";
 import UserInterfaceProvider from "./ui/ui.provider";
 import UserProvider from "./user/user.provider";
 import Header, { HeaderProps } from "../components/header/header.component";
@@ -16,8 +17,10 @@ const RootProvider = ({
     <UserInterfaceProvider>
       <UserProvider>
         <AnalyticsProvider>
-          <Header pageKey={headerProps.pageKey} />
-          {children}
+          <NavBarProvider>
+            <Header pageKey={headerProps.pageKey} />
+            {children}
+          </NavBarProvider>
         </AnalyticsProvider>
       </UserProvider>
     </UserInterfaceProvider>
