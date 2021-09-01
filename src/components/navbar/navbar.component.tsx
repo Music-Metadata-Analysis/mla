@@ -8,12 +8,13 @@ import {
   useColorModeValue,
   Stack,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import NavBarLogo from "./navbar.logo/navbar.logo.component";
 import NavBarOptions from "./navbar.options/navbar.options.component";
 import Spinner from "./navbar.spinner/navbar.spinner.component";
 import { HomePage } from "../../config/lastfm";
 import useLastFM from "../../hooks/lastfm";
+import { NavBarContext } from "../../providers/navbar/navbar.provider";
 import Condition from "../condition/condition.component";
 import type { LastFMImageDataInterface } from "../../types/integrations/lastfm/api.types";
 
@@ -29,7 +30,9 @@ interface NavBarProps {
 }
 
 export default function NavBar({ menuConfig }: NavBarProps) {
+  const { isVisible } = useContext(NavBarContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const menuBarBG = useColorModeValue("gray.100", "gray.900");
   const user = useLastFM();
 
   const getProfileImageUrl = (size: LastFMImageDataInterface["size"]) => {
@@ -50,13 +53,15 @@ export default function NavBar({ menuConfig }: NavBarProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.userProperties.ready]);
 
+  if (!isVisible) return null;
+
   return (
     <>
       <Box
         fontSize={[18, 18, 20]}
         style={{ position: "fixed", top: 0, width: "100%" }}
         data-testid={testIDs.NavBarRoot}
-        bg={useColorModeValue("gray.100", "gray.900")}
+        bg={menuBarBG}
         px={4}
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
