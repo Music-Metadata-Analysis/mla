@@ -1,6 +1,7 @@
-import { render } from "@testing-library/react";
+import { render, waitFor, cleanup } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import settings from "../../../../../config/lastfm";
+import mockNavBarHook from "../../../../../hooks/tests/navbar.mock";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../../tests/fixtures/mock.router";
 import SearchContainer from "../search.container.component";
@@ -10,6 +11,10 @@ import type { FormikHelpers } from "formik";
 
 jest.mock("../search.form.component", () => {
   return jest.fn().mockImplementation(() => <div>MockSearchForm</div>);
+});
+
+jest.mock("../../../../../hooks/navbar", () => {
+  return jest.fn().mockImplementation(() => mockNavBarHook);
 });
 
 describe("SearchContainer", () => {
@@ -35,6 +40,24 @@ describe("SearchContainer", () => {
       </RouterContext.Provider>
     );
   };
+
+  it("should attempt to hide the NavBar during render", () => {
+    arrange();
+    expect(mockNavBarHook.hideNavBar).toBeCalledTimes(1);
+  });
+
+  it("should attempt to hide the NavBar during a screen resize", () => {
+    arrange();
+    expect(mockNavBarHook.hideNavBar).toBeCalledTimes(1);
+    global.dispatchEvent(new Event("resize"));
+    expect(mockNavBarHook.hideNavBar).toBeCalledTimes(2);
+  });
+
+  it("should show the NavBar during cleanup", async () => {
+    arrange();
+    cleanup();
+    await waitFor(() => expect(mockNavBarHook.showNavBar).toBeCalledTimes(1));
+  });
 
   it("should render the SearchForm with the correct props", () => {
     arrange();
