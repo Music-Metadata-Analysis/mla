@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import SearchForm from "./search.form.component";
 import settings from "../../../../config/lastfm";
 import routes from "../../../../config/routes";
+import useNavBar from "../../../../hooks/navbar";
 import type { LastFMTop20SearchFormInterface } from "../../../../types/forms/lastfm/search";
 import type { FormikHelpers } from "formik";
 import type { TFunction } from "next-i18next";
@@ -18,6 +20,17 @@ export default function SearchContainer({
   t,
 }: SearchContainerProps) {
   const router = useRouter();
+  const { hideNavBar, showNavBar } = useNavBar();
+
+  useEffect(() => {
+    hideNavBar();
+    window.addEventListener("resize", hideNavBar);
+    return () => {
+      window.removeEventListener("resize", hideNavBar);
+      showNavBar();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const validateUserName = (value: string) => {
     if (!value) {
