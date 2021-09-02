@@ -83,6 +83,7 @@
     "globalSetup": "<rootDir>/jest/globalSetup.js",
     "setupFilesAfterEnv": [
       "<rootDir>/jest/setup/emotion.js",
+      "<rootDir>/jest/setup/fetch.js",
       "<rootDir>/jest/setup/i18next.js",
       "<rootDir>/jest/setup/testing-library.js"
     ],

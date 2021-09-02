@@ -8,7 +8,6 @@ describe("HTTPClient", () => {
   type responseType = { success: boolean };
 
   beforeAll(() => {
-    window.fetch = require("node-fetch");
     jest.spyOn(window, "fetch");
   });
   afterAll(() => jest.restoreAllMocks());
