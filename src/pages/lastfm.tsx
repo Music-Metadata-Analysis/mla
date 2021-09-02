@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import FourOhFour from "./404";
 import ErrorBoundary from "../components/errors/boundary/error.boundary.component";
-//import Top20Report from "../components/reports/lastfm/top20/top20.component";
+import Top20Report from "../components/reports/lastfm/top20/top20.component";
 import Events from "../config/events";
 import settings from "../config/lastfm";
 import routes from "../config/routes";
@@ -27,7 +27,7 @@ export default function LastFM() {
       route={routes.home}
       stateReset={user.clear}
     >
-      <div>{username}</div>
+      <Top20Report username={username} user={user} />
     </ErrorBoundary>
   );
 }
