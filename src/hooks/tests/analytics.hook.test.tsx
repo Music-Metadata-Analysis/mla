@@ -9,6 +9,7 @@ import type { AnalyticsContextInterface } from "../../types/analytics.types";
 import type { MutableEnv } from "../../types/process.types";
 
 jest.mock("react-ga");
+
 jest.mock("next/router");
 
 interface MockAnalyticsContextWithChildren {

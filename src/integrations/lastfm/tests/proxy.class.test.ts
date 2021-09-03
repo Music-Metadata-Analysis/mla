@@ -1,7 +1,5 @@
 import LastFMProxy from "../proxy.class";
 
-const mockGetTopAlbums = jest.fn();
-const mockGetUserImage = jest.fn();
 jest.mock("../client.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
@@ -10,6 +8,9 @@ jest.mock("../client.class", () => {
     };
   });
 });
+
+const mockGetTopAlbums = jest.fn();
+const mockGetUserImage = jest.fn();
 
 describe("LastFMProxy", () => {
   let originalEnvironment: typeof process.env;

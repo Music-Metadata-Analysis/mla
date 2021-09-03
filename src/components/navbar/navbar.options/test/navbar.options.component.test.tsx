@@ -4,18 +4,18 @@ import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
 import NavLink from "../../navbar.link/navbar.link.component";
 import NavLinkOptions from "../navbar.options.component";
 
-const mockConfig = {
-  mockPath: "/mockPath",
-  otherPath: "/otherPath",
-};
-
-const translationPrefix = "menu";
-
 jest.mock("../../navbar.link/navbar.link.component");
+
 jest.mock("../../../../hooks/analytics", () => ({
   __esModule: true,
   default: () => mockAnalyticsHook,
 }));
+
+const mockConfig = {
+  mockPath: "/mockPath",
+  otherPath: "/otherPath",
+};
+const translationPrefix = "menu";
 
 describe("NavBarOptions", () => {
   beforeEach(() => {

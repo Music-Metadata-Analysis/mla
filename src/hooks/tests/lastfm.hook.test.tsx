@@ -6,8 +6,6 @@ import { UserContext } from "../../providers/user/user.provider";
 import useLastFM from "../lastfm";
 import type { UserContextInterface } from "../../types/user/context.types";
 
-const mockRetrieve = jest.fn();
-
 jest.mock("../../clients/api/reports/lastfm.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
@@ -15,6 +13,8 @@ jest.mock("../../clients/api/reports/lastfm.class", () => {
     };
   });
 });
+
+const mockRetrieve = jest.fn();
 
 interface MockUserContextWithChildren {
   children?: React.ReactNode;

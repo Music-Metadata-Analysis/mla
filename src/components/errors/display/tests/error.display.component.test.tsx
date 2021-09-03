@@ -6,13 +6,6 @@ import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import Billboard from "../../../billboard/billboard.component";
 import ErrorDisplay from "../error.display.component";
 
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
-
 jest.mock("../../../billboard/billboard.component", () =>
   createMockedComponent("BillBoard")
 );
@@ -30,6 +23,13 @@ jest.mock("@chakra-ui/icons", () => {
   } = require("../../../../tests/fixtures/mock.chakra.icon.factory.class");
   return factoryInstance.create(["WarningTwoIcon"]);
 });
+
+const createMockedComponent = (name: string) => {
+  const {
+    factoryInstance,
+  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
+};
 
 describe("ErrorHandler", () => {
   const mockErrorMessage = "Test Error";

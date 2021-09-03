@@ -10,25 +10,14 @@ import NavSpinner from "../navbar.spinner/navbar.spinner.component";
 import type { LastFMTopAlbumsReportResponseInterface } from "../../../types/clients/api/reports/lastfm.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
 
-const mockedComponents = {
-  NavBarLogo: "NavBarLogo",
-  NavBarOptions: "NavBarOptions",
-  NavSpinner: "NavSpinner",
-};
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("../../../tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
-
 jest.mock("../navbar.logo/navbar.logo.component", () =>
   createMockedComponent("NavBarLogo")
 );
+
 jest.mock("../navbar.options/navbar.options.component", () =>
   createMockedComponent("NavBarOptions")
 );
+
 jest.mock("../navbar.spinner/navbar.spinner.component", () =>
   createMockedComponent("NavSpinner")
 );
@@ -53,6 +42,19 @@ jest.mock("../../../hooks/lastfm", () => {
     };
   });
 });
+
+const createMockedComponent = (name: string) => {
+  const {
+    factoryInstance,
+  } = require("../../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
+};
+
+const mockedComponents = {
+  NavBarLogo: "NavBarLogo",
+  NavBarOptions: "NavBarOptions",
+  NavSpinner: "NavSpinner",
+};
 
 const getMockedUserProperties = () => mockUserProperties;
 let mockUserProperties: UserStateInterface = {

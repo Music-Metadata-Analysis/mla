@@ -8,9 +8,11 @@ import mockCheckCall from "../tests/fixtures/mock.component.call";
 import getPageProps from "../utils/page.props.static";
 
 jest.mock("../utils/page.props.static", () => jest.fn());
+
 jest.mock("../components/errors/boundary/error.boundary.component", () =>
   createMockedComponent("ErrorBoundary")
 );
+
 jest.mock("../components/errors/display/error.display.component", () =>
   createMockedComponent("ErrorDisplay")
 );
