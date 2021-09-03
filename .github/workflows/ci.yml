@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  NETLIFY_NAME: "stage-top20-nextjs"
-  PROJECT_NAME: "top20-nextjs"
+  NETLIFY_NAME: "stage-mla"
+  PROJECT_NAME: "mla"
   INTEGRATION_TEST_LAST_FM_KEY: ${{ secrets.INTEGRATION_TEST_LAST_FM_KEY }}
   NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
 
