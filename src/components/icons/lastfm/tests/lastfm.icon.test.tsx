@@ -21,6 +21,7 @@ describe("Icons", () => {
         expect(img).toHaveStyleRule("height", "50px");
       });
     });
+
     describe("when rendered with values", () => {
       beforeEach(() => arrange(100, 100));
 

@@ -145,6 +145,7 @@ describe("NavBar", () => {
         expect(call.href).toBe(HomePage);
         expect(call.image).toBe("");
       });
+
       it("should render the spinner component", async () => {
         expect(
           await screen.findByTestId(mockedComponents.NavSpinner)
@@ -153,18 +154,22 @@ describe("NavBar", () => {
           (NavSpinner as jest.Mock).mock.calls[0][0].whileTrue
         ).toBeTruthy();
       });
+
       it("should render the menu once, inside the spinner", async () => {
         const spinner = await screen.findByTestId(mockedComponents.NavSpinner);
         within(spinner).findByTestId(testIDs.NavBarMenu);
       });
+
       it("should render the menu options once, inside the menu", async () => {
         const menu = await screen.findByTestId(testIDs.NavBarMenu);
         within(menu).findByTestId(mockedComponents.NavBarOptions);
         expect(NavBarOptions).toBeCalledTimes(1);
       });
+
       it("should NOT render the mobile menu", async () => {
         expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
       });
+
       it("should render the menu button with the right props", () => {
         expect(IconButton).toBeCalledTimes(1);
         const call = (IconButton as jest.Mock).mock.calls[0][0];
@@ -195,6 +200,7 @@ describe("NavBar", () => {
           expect(call.href).toBe(mockProfileUrl);
           expect(call.image).toBe(mockImageUrl);
         });
+
         it("should NOT render the spinner component", async () => {
           expect(
             await screen.findByTestId(mockedComponents.NavSpinner)
@@ -203,22 +209,27 @@ describe("NavBar", () => {
             (NavSpinner as jest.Mock).mock.calls[0][0].whileTrue
           ).toBeFalsy();
         });
+
         it("should render the menu component once", async () => {
           expect(await screen.findByTestId(testIDs.NavBarMenu));
         });
+
         it("should render the menu options, inside the menu", async () => {
           const menu = await screen.findByTestId(testIDs.NavBarMenu);
           within(menu).findByTestId(mockedComponents.NavBarOptions);
         });
+
         it("should NOT render the mobile menu", async () => {
           expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
         });
+
         it("should render the menu button with the right props", () => {
           expect(IconButton).toBeCalledTimes(1);
           const call = (IconButton as jest.Mock).mock.calls[0][0];
           expect(call.display).toStrictEqual({ sm: "none" });
         });
       });
+
       describe("with no user data", () => {
         beforeEach(() => {
           thisMockUserProperties.ready = true;
@@ -236,6 +247,7 @@ describe("NavBar", () => {
           expect(call.href).toBe(HomePage);
           expect(call.image).toBe("");
         });
+
         it("should NOT render the spinner component", async () => {
           expect(
             await screen.findByTestId(mockedComponents.NavSpinner)
@@ -244,16 +256,20 @@ describe("NavBar", () => {
             (NavSpinner as jest.Mock).mock.calls[0][0].whileTrue
           ).toBeFalsy();
         });
+
         it("should render the menu component once", async () => {
           expect(await screen.findByTestId(testIDs.NavBarMenu));
         });
+
         it("should render the menu options, inside the menu", async () => {
           const menu = await screen.findByTestId(testIDs.NavBarMenu);
           within(menu).findByTestId(mockedComponents.NavBarOptions);
         });
+
         it("should NOT render the mobile menu", async () => {
           expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
         });
+
         it("should render the menu button with the right props", () => {
           expect(IconButton).toBeCalledTimes(1);
           const call = (IconButton as jest.Mock).mock.calls[0][0];

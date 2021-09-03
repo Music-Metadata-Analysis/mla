@@ -133,6 +133,7 @@ describe("NavBar", () => {
     it("should display the title", async () => {
       expect(await screen.findByText(navbarTranslations.title)).toBeTruthy();
     });
+
     it("should display the correct links", async () => {
       for (const linkText of Object.keys(NavConfig)) {
         expect(
@@ -155,6 +156,7 @@ describe("NavBar", () => {
         ).toBeTruthy();
       });
     });
+
     describe("when the mobile menu button is clicked twice", () => {
       beforeEach(async () => {
         expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
@@ -192,6 +194,7 @@ describe("NavBar", () => {
         )) as HTMLElement;
         fireEvent.click(link);
       });
+
       it(`should produce an analytics event`, async () => {
         expect(mockAnalyticsHook.trackButtonClick).toBeCalledTimes(1);
         const call = mockAnalyticsHook.trackButtonClick.mock.calls[0];
@@ -199,6 +202,7 @@ describe("NavBar", () => {
         expect(call[1]).toBe("AVATAR: LASTFM");
         expect(Object.keys(call).length).toBe(2);
       });
+
       it(`the avatar should reference the external link correctly`, async () => {
         const link = (await screen.findByTestId(
           NavBarAnalyticsTestIDs.NavBarAvatarLink

@@ -1,18 +1,20 @@
 {
+  "globals": {
+    "jest": true
+  },
   "parser": "@typescript-eslint/parser",
   "extends": [
     "next",
     "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jest-formatting/recommended"
   ],
-  "plugins": ["unused-imports", "@typescript-eslint"],
+  "plugins": ["unused-imports", "@typescript-eslint", "jest-formatting"],
   "rules": {
-    "no-unused-vars": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
-    "unused-imports/no-unused-imports": "error",
     "import/order": [
       "error",
       {
@@ -37,6 +39,9 @@
         ],
         "pathGroupsExcludedImportTypes": ["builtin"]
       }
-    ]
+    ],
+    "jest-formatting/padding-around-expect-groups": "off",
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error"
   }
 }

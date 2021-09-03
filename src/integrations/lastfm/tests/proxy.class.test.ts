@@ -60,6 +60,7 @@ describe("LastFMProxy", () => {
         expect(test).rejects.toThrow(mockError);
       });
     });
+
     describe("when getUserImage is unsuccessful", () => {
       beforeEach(() => {
         mockGetUserImage.mockImplementationOnce(() => {

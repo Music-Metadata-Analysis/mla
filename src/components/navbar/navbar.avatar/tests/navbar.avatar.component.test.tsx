@@ -41,6 +41,7 @@ describe("NavBarAvatar", () => {
         await screen.findByTestId(testIDs.NavBarAvatarLink)
       ).toHaveAttribute("target", "_blank");
     });
+
     it("should render the Avatar component correctly", () => {
       expect(Avatar).toBeCalledTimes(1);
       const call = (Avatar as jest.Mock).mock.calls[0][0];
@@ -50,6 +51,7 @@ describe("NavBarAvatar", () => {
       expect(call.src).toBe(mockImage);
       expect(renderToString(call.icon)).toBe(renderToString(<LastFMIcon />));
     });
+
     describe("when clicked", () => {
       beforeEach(async () => {
         link = await screen.findByTestId(testIDs.NavBarAvatarLink);
@@ -79,6 +81,7 @@ describe("NavBarAvatar", () => {
         await screen.findByTestId(testIDs.NavBarAvatarLink)
       ).toHaveAttribute("target", "_blank");
     });
+
     it("should render the Avatar component correctly", () => {
       expect(Avatar).toBeCalledTimes(1);
       const call = (Avatar as jest.Mock).mock.calls[0][0];
@@ -88,6 +91,7 @@ describe("NavBarAvatar", () => {
       expect(call.src).toBe("");
       expect(renderToString(call.icon)).toBe(renderToString(<LastFMIcon />));
     });
+
     describe("when clicked", () => {
       beforeEach(async () => {
         link = await screen.findByTestId(testIDs.NavBarAvatarLink);

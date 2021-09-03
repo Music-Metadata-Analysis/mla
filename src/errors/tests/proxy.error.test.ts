@@ -21,6 +21,7 @@ describe("ProxyError", () => {
     beforeEach(() => {
       err = new ProxyError(message);
     });
+
     it("should have the correct properties", () => {
       expect(err.message).toBe(message);
       expect(err.clientStatusCode).toBeUndefined();

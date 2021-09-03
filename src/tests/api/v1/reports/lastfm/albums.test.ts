@@ -64,6 +64,7 @@ describe(apiEndpoints.v1.reports.lastfm.albums, () => {
         expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
       });
     });
+
     describe("with invalid data", () => {
       beforeEach(async () => {
         await arrange({ body: { userName: 1234 }, method: "POST" });
@@ -74,6 +75,7 @@ describe(apiEndpoints.v1.reports.lastfm.albums, () => {
         expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
       });
     });
+
     describe("with valid data", () => {
       describe("with a lastfm error", () => {
         beforeEach(async () => {
@@ -88,6 +90,7 @@ describe(apiEndpoints.v1.reports.lastfm.albums, () => {
           expect(res._getJSONData()).toStrictEqual(status.STATUS_502_MESSAGE);
         });
       });
+
       describe("with a lastfm ratelimiting error", () => {
         beforeEach(async () => {
           mockBackendResponse.mockImplementationOnce(() => {
@@ -101,6 +104,7 @@ describe(apiEndpoints.v1.reports.lastfm.albums, () => {
           expect(res._getJSONData()).toStrictEqual(status.STATUS_429_MESSAGE);
         });
       });
+
       describe("with a lastfm 404 error", () => {
         beforeEach(async () => {
           mockBackendResponse.mockImplementationOnce(() => {
@@ -114,6 +118,7 @@ describe(apiEndpoints.v1.reports.lastfm.albums, () => {
           expect(res._getJSONData()).toStrictEqual(status.STATUS_404_MESSAGE);
         });
       });
+
       describe("with a valid lastfm response", () => {
         beforeEach(async () => {
           mockBackendResponse.mockReturnValueOnce(
