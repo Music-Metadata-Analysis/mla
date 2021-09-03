@@ -47,6 +47,7 @@ describe("getStaticProps", () => {
 
 describe("lastfm", () => {
   const testUser = "someuser";
+
   beforeEach(() => jest.clearAllMocks());
 
   const arrange = () => {

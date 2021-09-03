@@ -95,12 +95,15 @@ describe("ErrorAlbumReportLastFM", () => {
     it("should report an error to jest", () => {
       expect(consoleErrorSpy).toBeCalledTimes(2);
     });
+
     it("should NOT render the child component", () => {
       expect(screen.queryByTestId(testIDs.ChildComponent)).toBeNull();
     });
+
     it("should render the error handler component", async () => {
       expect(screen.findByTestId(testIDs.ErrorHandlerComponent)).toBeTruthy();
     });
+
     it("should generate an analytics event", () => {
       expect(mockAnalyticsHook.event).toBeCalledTimes(1);
       expect(mockAnalyticsHook.event).toBeCalledWith(Events.General.Test);
@@ -108,15 +111,18 @@ describe("ErrorAlbumReportLastFM", () => {
 
     describe("when the error is reset", () => {
       let resetError: () => void;
+
       beforeEach(() => {
         resetError = (ErrorHandler as jest.Mock).mock.calls[0][0]
           .resetErrorBoundary;
         resetError();
       });
+
       it("should call the state reset function", () => {
         expect(mockStateReset).toBeCalledTimes(1);
         expect(mockStateReset).toBeCalledWith();
       });
+
       it("should route to the configured destination", () => {
         expect(mockRouter.push).toBeCalledTimes(1);
         expect(mockRouter.push).toBeCalledWith(mockTestRoute);
@@ -128,9 +134,11 @@ describe("ErrorAlbumReportLastFM", () => {
     it("should render the child component", async () => {
       expect(await screen.findByTestId(testIDs.ChildComponent)).toBeTruthy();
     });
+
     it("should NOT render the error handler component", () => {
       expect(screen.queryByTestId(testIDs.ErrorHandlerComponent)).toBeNull();
     });
+
     it("should NOT generate an analytics event", () => {
       expect(mockAnalyticsHook.event).toBeCalledTimes(0);
     });

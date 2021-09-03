@@ -10,7 +10,9 @@ describe("HTTPClient", () => {
   beforeAll(() => {
     jest.spyOn(window, "fetch");
   });
+
   afterAll(() => jest.restoreAllMocks());
+
   afterEach(() => jest.clearAllMocks());
 
   const setupFetch = ({

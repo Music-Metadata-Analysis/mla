@@ -30,6 +30,7 @@ describe("NavBarLogo", () => {
   it("should display the app title", async () => {
     expect(await screen.findByText(TitlePlaceHolder)).toBeTruthy();
   });
+
   it("should render the title ButtonLink with the correct props", () => {
     expect(ButtonLink).toBeCalledTimes(1);
     const call = (ButtonLink as jest.Mock).mock.calls[0][0];
@@ -37,6 +38,7 @@ describe("NavBarLogo", () => {
     expect(call.children).toBe(translation.title);
     expect(Object.keys(call).length).toBe(2);
   });
+
   it("should render the Avatar with the correct props", () => {
     expect(NavBarAvatar).toBeCalledTimes(1);
     const call = (NavBarAvatar as jest.Mock).mock.calls[0][0];

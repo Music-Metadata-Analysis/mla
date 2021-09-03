@@ -78,6 +78,7 @@ describe("useNavBar", () => {
         expect(mockSetIsVisible).toBeCalledWith(true);
       });
     });
+
     describe("when showNavBar is called", () => {
       beforeEach(() => received.result.current.showNavBar());
 
@@ -105,6 +106,7 @@ describe("useNavBar", () => {
         expect(mockSetIsVisible).toBeCalledWith(false);
       });
     });
+
     describe("when showNavBar is called", () => {
       beforeEach(() => received.result.current.showNavBar());
 

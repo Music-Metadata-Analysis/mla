@@ -11,6 +11,7 @@ jest.mock("@chakra-ui/react", () => {
 
 describe("SearchForm", () => {
   beforeEach(() => jest.clearAllMocks());
+
   const mockT = jest.fn((arg: string) => `t(${arg})`);
   const mockValidate = jest.fn();
   const mockSubmit = jest.fn();
@@ -29,6 +30,7 @@ describe("SearchForm", () => {
     arrange();
     expect(await screen.findByText("t(search.fieldLabel)")).toBeTruthy();
   });
+
   it("should display the correct username placeholder text", async () => {
     arrange();
     const inputField = await screen.findByPlaceholderText(
@@ -36,6 +38,7 @@ describe("SearchForm", () => {
     );
     expect(inputField).toHaveFocus();
   });
+
   it("should display the correct button button text", async () => {
     arrange();
     expect(await screen.findByText("t(search.buttonText)")).toBeTruthy();
@@ -56,6 +59,7 @@ describe("SearchForm", () => {
 
     describe("when submit is pressed", () => {
       let button: HTMLElement;
+
       beforeEach(async () => {
         button = await screen.findByText("t(search.buttonText)");
         await waitFor(() => {
@@ -63,6 +67,7 @@ describe("SearchForm", () => {
           fireEvent.click(button);
         });
       });
+
       it("should call the handleSubmit function as expected", () => {
         expect(mockValidate).toBeCalledTimes(2);
         expect(mockSubmit).toBeCalledTimes(1);

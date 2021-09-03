@@ -17,6 +17,7 @@ describe("reducerLoggingMiddleware", () => {
   let originalEnvironment: typeof process.env;
   let outputData: capturedOutput[];
   let reducer: Reducer<testState, MockActionType>;
+
   beforeAll(() => {
     originalEnvironment = process.env;
   });
