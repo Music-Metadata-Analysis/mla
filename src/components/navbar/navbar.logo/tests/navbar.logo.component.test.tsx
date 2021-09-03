@@ -5,14 +5,15 @@ import ButtonLink from "../../../button.link/button.link.component";
 import NavBarAvatar from "../../navbar.avatar/navbar.avatar.component";
 import NavBarLogo from "../navbar.logo.component";
 
-const TitlePlaceHolder = "TitlePlaceHolder";
-
 jest.mock("../../navbar.avatar/navbar.avatar.component", () => {
   return jest.fn().mockImplementation(() => <div>MockComponent</div>);
 });
+
 jest.mock("../../../button.link/button.link.component", () => {
   return jest.fn().mockImplementation(() => <>{TitlePlaceHolder}</>);
 });
+
+const TitlePlaceHolder = "TitlePlaceHolder";
 
 describe("NavBarLogo", () => {
   const mockHref = "https://google.ca";

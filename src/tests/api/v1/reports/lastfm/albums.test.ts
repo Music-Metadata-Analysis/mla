@@ -6,7 +6,6 @@ import handleProxy from "../../../../../pages/api/v1/reports/lastfm/albums";
 import type { HttpMethodType } from "../../../../../types/clients/https.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const mockBackendResponse = jest.fn();
 jest.mock("../../../../../integrations/lastfm/proxy.class.ts", () => {
   return jest.fn().mockImplementation(() => {
     return {
@@ -14,6 +13,8 @@ jest.mock("../../../../../integrations/lastfm/proxy.class.ts", () => {
     };
   });
 });
+
+const mockBackendResponse = jest.fn();
 
 type ArrangeArgs = {
   body: Record<string, unknown>;

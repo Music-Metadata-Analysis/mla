@@ -6,7 +6,6 @@ import type {
 } from "../../../types/integrations/lastfm/api.types";
 import type { LastFMExternalClientError } from "../../../types/integrations/lastfm/client.types";
 
-const mockApiCall = jest.fn();
 jest.mock("@toplast/lastfm", () => {
   return jest.fn().mockImplementation(() => {
     return {
@@ -17,6 +16,8 @@ jest.mock("@toplast/lastfm", () => {
     };
   });
 });
+
+const mockApiCall = jest.fn();
 
 describe("LastFMClient", () => {
   let secretKey: "123VerySecret";

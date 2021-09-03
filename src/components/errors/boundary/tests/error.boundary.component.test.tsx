@@ -7,9 +7,6 @@ import mockRouter from "../../../../tests/fixtures/mock.router";
 import ErrorHandler from "../../handler/error.handler.component";
 import ErrorBoundary from "../error.boundary.component";
 
-const mockTestRoute = "/";
-const mockStateReset = jest.fn();
-
 jest.mock("../../handler/error.handler.component", () => {
   const MockErrorHandler = () => (
     <div data-testid={testIDs.ErrorHandlerComponent}>Error Component</div>
@@ -24,6 +21,9 @@ jest.mock("../../../../hooks/analytics", () => ({
   __esModule: true,
   default: () => mockAnalyticsHook,
 }));
+
+const mockTestRoute = "/";
+const mockStateReset = jest.fn();
 
 const ComponentWithError = () => {
   throw new Error("test error");

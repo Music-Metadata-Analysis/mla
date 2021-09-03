@@ -2,16 +2,16 @@ import { render, screen } from "@testing-library/react";
 import BillBoard from "../../billboard.component";
 import BillBoardSpinner, { testIDs } from "../billboard.spinner.component";
 
+jest.mock("../../billboard.component", () =>
+  createMockedComponent("Billboard")
+);
+
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
   } = require("../../../../tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
-
-jest.mock("../../billboard.component", () =>
-  createMockedComponent("Billboard")
-);
 
 describe("BillBoardSpinner", () => {
   const arrange = (condition: boolean) => {

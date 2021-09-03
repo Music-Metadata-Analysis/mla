@@ -1,7 +1,6 @@
 import Events from "../../../../config/events";
 import LastFMReport from "../lastfm.class";
 
-const mockPost = jest.fn();
 jest.mock("../../../http.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
@@ -9,6 +8,8 @@ jest.mock("../../../http.class", () => {
     };
   });
 });
+
+const mockPost = jest.fn();
 
 describe("LastFMReport", () => {
   const mockUserName = "user1234";
