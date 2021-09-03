@@ -2,5 +2,36 @@
   "files.exclude": {
     "node_modules": true
   },
-  "javascript.preferences.importModuleSpecifier": "relative"
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "cSpell.words": [
+    "byrne",
+    "chakra",
+    "Eeek",
+    "extralarge",
+    "Fetchuser",
+    "fieldname",
+    "formik",
+    "Formik",
+    "lastfm",
+    "mbid",
+    "metas",
+    "middlewares",
+    "niall",
+    "pageview",
+    "playcount",
+    "POSTDATA",
+    "prefetch",
+    "Ratelimit",
+    "ratelimited",
+    "ratelimiting",
+    "remotesite",
+    "Scrobble",
+    "someguy",
+    "someuser",
+    "streamable",
+    "testid",
+    "testuser",
+    "topalbums",
+    "toplast"
+  ]
 }
