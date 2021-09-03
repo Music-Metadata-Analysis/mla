@@ -54,11 +54,13 @@ describe("pageProps", () => {
       it("should return page props that contain the input locale", () => {
         expect(returnValue.props.i18NextProps.locale).toBe(mockLocale);
       });
+
       it("should return page props that contain the correct translations", () => {
         expect(returnValue.props.i18NextProps.translations).toStrictEqual(
           mockDefaultTranslations.concat(mockTranslations)
         );
       });
+
       it("should return page props that contain the correct headerProps", () => {
         expect(returnValue.props.headerProps.pageKey).toBe(mockPageKey);
       });

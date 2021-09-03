@@ -37,6 +37,7 @@ describe("theme", () => {
 
     describe("the style function", () => {
       let result: Record<string, string>;
+
       beforeEach(() => (result = getStyleFunction()({})));
 
       it("should generate the expected body", async () => {

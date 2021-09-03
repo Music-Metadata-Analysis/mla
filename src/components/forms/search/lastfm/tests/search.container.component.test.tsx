@@ -94,6 +94,7 @@ describe("SearchContainer", () => {
         expect(mockT).toBeCalledWith("search.errors.username.required");
       });
     });
+
     describe("when called on username that's too long", () => {
       beforeEach(
         () =>
@@ -116,6 +117,7 @@ describe("SearchContainer", () => {
         expect(mockT).toBeCalledWith("search.errors.username.valid");
       });
     });
+
     describe("when called on a valid username", () => {
       beforeEach(() => (returnValue = validateUserName("niall-byrne")));
 
@@ -140,6 +142,7 @@ describe("SearchContainer", () => {
       expect(SearchForm).toBeCalledTimes(1);
       handleSubmit = (SearchForm as jest.Mock).mock.calls[0][0].handleSubmit;
     });
+
     const mockAction = {
       setSubmitting: jest.fn(),
     } as never as FormikHelpers<LastFMTop20SearchFormInterface>;

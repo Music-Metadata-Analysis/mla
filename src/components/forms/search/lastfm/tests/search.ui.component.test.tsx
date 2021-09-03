@@ -73,11 +73,13 @@ describe("SearchUI", () => {
       expect(Flex).toBeCalledTimes(1);
       checkMockCall(Flex, { align: "center", justify: "space-between" });
     });
+
     it("should call Box as expected to create a margin around the form", () => {
       expect(Box).toBeCalledTimes(2);
       checkMockCall(Box, { mb: 10 }, 0, []);
       checkMockCall(Box, { pl: [5, 5, 10], w: "100%" }, 1, []);
     });
+
     it("should call Avatar as expected to display the logo", () => {
       expect(Avatar).toBeCalledTimes(1);
       const call = (Avatar as jest.Mock).mock.calls[0][0];
@@ -85,6 +87,7 @@ describe("SearchUI", () => {
       expect(renderToString(call.icon)).toBe(renderToString(<LastFMIcon />));
       expect(Object.keys(call).length).toBe(2);
     });
+
     it("should call SearchContainer to display the search form", () => {
       expect(SearchContainer).toBeCalledTimes(1);
       checkMockCall(SearchContainer, {}, 0, ["openError", "closeError", "t"]);
@@ -149,6 +152,7 @@ describe("SearchUI", () => {
         });
       });
     });
+
     describe("when a toast is NOT present", () => {
       beforeEach(() => {
         jest.clearAllMocks();

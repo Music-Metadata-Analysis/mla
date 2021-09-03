@@ -116,6 +116,7 @@ describe("useAnalytics", () => {
 
         describe("event", () => {
           beforeEach(() => received.result.current.event(Events.General.Test));
+
           it("should NOT process events", async () => {
             expect(ReactGA.event).toBeCalledTimes(0);
           });
