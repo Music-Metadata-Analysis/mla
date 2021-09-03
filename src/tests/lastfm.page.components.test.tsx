@@ -10,14 +10,19 @@ import mockCheckCall from "../tests/fixtures/mock.component.call";
 import getPageProps from "../utils/page.props.static";
 
 jest.mock("../utils/page.props.static", () => jest.fn());
+
 jest.mock("../components/errors/boundary/error.boundary.component", () =>
   createMockedComponent("ErrorBoundary")
 );
+
 jest.mock("../components/reports/lastfm/top20/top20.component", () =>
   createMockedComponent("Top20Report")
 );
+
 jest.mock("../pages/404", () => createMockedComponent("FourOhFour"));
+
 jest.mock("../hooks/lastfm", () => () => mockLastFMHook);
+
 const mockWindowResponse = jest.fn();
 
 Object.defineProperty(window, "location", {

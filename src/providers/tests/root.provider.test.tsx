@@ -6,14 +6,25 @@ import RootProvider from "../root.provider";
 import UserInterfaceProvider from "../ui/ui.provider";
 import UserProvider from "../user/user.provider";
 
-const providers = {
-  AnalyticsProvider: "AnalyticsProvider",
-  Header: "Header",
-  NavBarProvider: "NavBarProvider",
-  RootProvider: "RootProvider",
-  UserProvider: "UserProvider",
-  UserInterfaceProvider: "UserInterfaceProvider",
-};
+jest.mock("../../components/header/header.component", () =>
+  createProviderMock(providers.Header)
+);
+
+jest.mock("../../providers/analytics/analytics.provider", () =>
+  createProviderMock(providers.AnalyticsProvider)
+);
+
+jest.mock("../../providers/navbar/navbar.provider", () =>
+  createProviderMock(providers.NavBarProvider)
+);
+
+jest.mock("../../providers/user/user.provider", () =>
+  createProviderMock(providers.UserProvider)
+);
+
+jest.mock("../ui/ui.provider", () =>
+  createProviderMock(providers.UserInterfaceProvider)
+);
 
 const createProviderMock = (name: string) => {
   const {
@@ -22,21 +33,14 @@ const createProviderMock = (name: string) => {
   return factoryInstance.create(name);
 };
 
-jest.mock("../../components/header/header.component", () =>
-  createProviderMock(providers.Header)
-);
-jest.mock("../../providers/analytics/analytics.provider", () =>
-  createProviderMock(providers.AnalyticsProvider)
-);
-jest.mock("../../providers/navbar/navbar.provider", () =>
-  createProviderMock(providers.NavBarProvider)
-);
-jest.mock("../../providers/user/user.provider", () =>
-  createProviderMock(providers.UserProvider)
-);
-jest.mock("../ui/ui.provider", () =>
-  createProviderMock(providers.UserInterfaceProvider)
-);
+const providers = {
+  AnalyticsProvider: "AnalyticsProvider",
+  Header: "Header",
+  NavBarProvider: "NavBarProvider",
+  RootProvider: "RootProvider",
+  UserProvider: "UserProvider",
+  UserInterfaceProvider: "UserInterfaceProvider",
+};
 
 describe("RootProvider", () => {
   const testPageKey = "test";

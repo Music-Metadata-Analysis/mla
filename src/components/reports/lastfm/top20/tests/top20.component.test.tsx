@@ -8,24 +8,26 @@ import ErrorDisplay from "../../../../errors/display/error.display.component";
 import Top20 from "../top20.component";
 import type useLastFM from "../../../../../hooks/lastfm";
 
+jest.mock(
+  "../../../../billboard/billboard.spinner/billboard.spinner.component",
+  () => createMockedComponent("BillBoardSpinner")
+);
+
+jest.mock("../../../../errors/display/error.display.component", () =>
+  createMockedComponent("ErrorDisplay")
+);
+
+jest.mock("next/router", () => ({
+  __esModule: true,
+  useRouter: () => mockRouter,
+}));
+
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
   } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
-
-jest.mock(
-  "../../../../billboard/billboard.spinner/billboard.spinner.component",
-  () => createMockedComponent("BillBoardSpinner")
-);
-jest.mock("../../../../errors/display/error.display.component", () =>
-  createMockedComponent("ErrorDisplay")
-);
-jest.mock("next/router", () => ({
-  __esModule: true,
-  useRouter: () => mockRouter,
-}));
 
 describe("Top20", () => {
   const testUsername = "niall-byrne";

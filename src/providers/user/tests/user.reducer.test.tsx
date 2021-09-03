@@ -4,6 +4,12 @@ import type { TopAlbumsReportResponseInterface } from "../../../types/proxy.type
 import type { UserActionType } from "../../../types/user/action.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
 
+jest.mock("../user.reducer.states.class", () => {
+  return jest.fn().mockImplementation(() => {
+    return mockStates;
+  });
+});
+
 const mockReturn = "MockReturnedState";
 const mockStates = {
   FailureFetchUser: jest.fn().mockReturnValue(mockReturn),
@@ -12,12 +18,6 @@ const mockStates = {
   RatelimitedFetchUser: jest.fn().mockReturnValue(mockReturn),
   ResetState: jest.fn().mockReturnValue(mockReturn),
 };
-
-jest.mock("../user.reducer.states.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return mockStates;
-  });
-});
 
 describe("UserReducer", () => {
   let received: UserStateInterface | null;

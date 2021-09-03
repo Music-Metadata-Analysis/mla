@@ -8,13 +8,6 @@ import LastFMIcon from "../../../../icons/lastfm/lastfm.icon";
 import SearchContainer from "../search.container.component";
 import SearchUI from "../search.ui.component";
 
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
-
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
@@ -29,11 +22,6 @@ jest.mock("../../../../billboard/billboard.component", () =>
   createMockedComponent("BillBoard")
 );
 
-const createMock = (name: string) =>
-  jest.fn(({ children }: { children: React.ReactChildren }) => {
-    return <div data-testid={name}>{children}</div>;
-  });
-
 jest.mock("../search.container.component", () => {
   return {
     __esModule: true,
@@ -47,6 +35,18 @@ jest.mock("../../../../icons/lastfm/lastfm.icon", () => {
     default: createMock("LastFMIcon"),
   };
 });
+
+const createMockedComponent = (name: string) => {
+  const {
+    factoryInstance,
+  } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
+};
+
+const createMock = (name: string) =>
+  jest.fn(({ children }: { children: React.ReactChildren }) => {
+    return <div data-testid={name}>{children}</div>;
+  });
 
 describe("SearchUI", () => {
   const testField = "test_field";
