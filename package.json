@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "dev": "next dev",
     "build": "next build",
     "compile": "tsc",
@@ -11,6 +12,9 @@
     "clean": "eslint --fix ./src; prettier --write \"./src/**/*.+(ts|tsx|js|jsx|json|yml|yaml|css|scss|md|vue)\"",
     "coverage": "jest test --coverage --coverageDirectory=coverage --watchAll=false",
     "test": "jest --watch"
+  },
+  "resolutions": {
+    "axios": ">=0.21.2"
   },
   "dependencies": {
     "@chakra-ui/clickable": "^1.1.7",
