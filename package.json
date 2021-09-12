@@ -59,7 +59,7 @@
     "node-mocks-http": "^1.10.1",
     "npm-force-resolutions": "0.0.10",
     "prettier": "^2.4.0",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.3"
   },
   "eslintConfig": {
     "extends": "react-app"
