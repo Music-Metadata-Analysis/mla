@@ -43,6 +43,7 @@ describe("UserReducerStates", () => {
         integration: testIntegrationType,
       });
 
+      expect(received.inProgress).toBe(false);
       expect(received.profileUrl).toBe(null);
       expect(received.ratelimited).toBe(false);
       expect(received.userName).toBe(testUserName);
@@ -51,6 +52,117 @@ describe("UserReducerStates", () => {
         report: emptyReport,
       });
       expect(received.error).toBe(true);
+      expect(received.ready).toBe(true);
+    });
+
+    it("should not accept incompatible types", () => {
+      expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
+    });
+  });
+
+  describe("RatelimitedFetchUser", () => {
+    let received: UserStateInterface;
+    const testType = "RatelimitedFetchUser" as const;
+
+    it("should return the the expected state", () => {
+      received = arrange({
+        type: testType,
+        userName: testUserName,
+        integration: testIntegrationType,
+      });
+
+      expect(received.inProgress).toBe(false);
+      expect(received.profileUrl).toBe(null);
+      expect(received.ratelimited).toBe(true);
+      expect(received.userName).toBe(testUserName);
+      expect(received.data).toStrictEqual({
+        integration: testIntegrationType,
+        report: emptyReport,
+      });
+      expect(received.error).toBe(true);
+      expect(received.ready).toBe(true);
+    });
+
+    it("should not accept incompatible types", () => {
+      expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
+    });
+  });
+
+  describe("ReadyFetchUser", () => {
+    let received: UserStateInterface;
+    const testType = "ReadyFetchUser" as const;
+
+    it("should return the the expected state", () => {
+      received = arrange({
+        type: testType,
+        userName: testUserName,
+        data: mock_lastfm_data,
+        integration: testIntegrationType,
+      });
+
+      expect(received.inProgress).toBe(false);
+      expect(received.profileUrl).toBe(
+        `https://www.last.fm/user/${testUserName}`
+      );
+      expect(received.userName).toBe(testUserName);
+      expect(received.ratelimited).toBe(false);
+      expect(received.data).toStrictEqual({
+        integration: testIntegrationType,
+        report: mock_lastfm_data,
+      });
+      expect(received.error).toBe(false);
+      expect(received.ready).toBe(true);
+    });
+
+    it("should not accept incompatible types", () => {
+      expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
+    });
+  });
+
+  describe("ResetState", () => {
+    let received: UserStateInterface;
+    const testType = "ResetState" as const;
+
+    it("should return the the expected state", () => {
+      received = arrange({ type: testType });
+
+      expect(received.inProgress).toBe(false);
+      expect(received.userName).toBe(null);
+      expect(received.data).toStrictEqual({
+        integration: null,
+        report: emptyReport,
+      });
+      expect(received.ratelimited).toBe(false);
+      expect(received.error).toBe(false);
+      expect(received.profileUrl).toBe(null);
+      expect(received.ready).toBe(true);
+    });
+
+    it("should not accept incompatible types", () => {
+      expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
+    });
+  });
+
+  describe("NotFoundFetchUser", () => {
+    let received: UserStateInterface;
+    const testType = "NotFoundFetchUser" as const;
+
+    it("should return the the expected state", () => {
+      received = arrange({
+        type: testType,
+        userName: testUserName,
+        integration: testIntegrationType,
+      });
+
+      expect(received.inProgress).toBe(false);
+      expect(received.profileUrl).toBe(null);
+      expect(received.ratelimited).toBe(false);
+      expect(received.userName).toBe(testUserName);
+      expect(received.data).toStrictEqual({
+        integration: testIntegrationType,
+        report: emptyReport,
+      });
+      expect(received.error).toBe(false);
       expect(received.ready).toBe(true);
     });
 
@@ -70,6 +182,7 @@ describe("UserReducerStates", () => {
         integration: testIntegrationType,
       });
 
+      expect(received.inProgress).toBe(true);
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
@@ -97,9 +210,8 @@ describe("UserReducerStates", () => {
         integration: testIntegrationType,
       });
 
-      expect(received.profileUrl).toBe(
-        `https://www.last.fm/user/${testUserName}`
-      );
+      expect(received.inProgress).toBe(false);
+      expect(received.profileUrl).toBe(null);
       expect(received.userName).toBe(testUserName);
       expect(received.ratelimited).toBe(false);
       expect(received.data).toStrictEqual({
@@ -107,84 +219,7 @@ describe("UserReducerStates", () => {
         report: mock_lastfm_data,
       });
       expect(received.error).toBe(false);
-      expect(received.ready).toBe(true);
-    });
-
-    it("should not accept incompatible types", () => {
-      expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
-    });
-  });
-
-  describe("RatelimitedFetchUser", () => {
-    let received: UserStateInterface;
-    const testType = "RatelimitedFetchUser" as const;
-
-    it("should return the the expected state", () => {
-      received = arrange({
-        type: testType,
-        userName: testUserName,
-        integration: testIntegrationType,
-      });
-
-      expect(received.profileUrl).toBe(null);
-      expect(received.ratelimited).toBe(true);
-      expect(received.userName).toBe(testUserName);
-      expect(received.data).toStrictEqual({
-        integration: testIntegrationType,
-        report: emptyReport,
-      });
-      expect(received.error).toBe(true);
-      expect(received.ready).toBe(true);
-    });
-
-    it("should not accept incompatible types", () => {
-      expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
-    });
-  });
-
-  describe("NotFoundFetchUser", () => {
-    let received: UserStateInterface;
-    const testType = "NotFoundFetchUser" as const;
-
-    it("should return the the expected state", () => {
-      received = arrange({
-        type: testType,
-        userName: testUserName,
-        integration: testIntegrationType,
-      });
-
-      expect(received.profileUrl).toBe(null);
-      expect(received.ratelimited).toBe(false);
-      expect(received.userName).toBe(testUserName);
-      expect(received.data).toStrictEqual({
-        integration: testIntegrationType,
-        report: emptyReport,
-      });
-      expect(received.error).toBe(false);
-      expect(received.ready).toBe(true);
-    });
-
-    it("should not accept incompatible types", () => {
-      expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
-    });
-  });
-
-  describe("ResetState", () => {
-    let received: UserStateInterface;
-    const testType = "ResetState" as const;
-
-    it("should return the the expected state", () => {
-      received = arrange({ type: testType });
-
-      expect(received.userName).toBe(null);
-      expect(received.data).toStrictEqual({
-        integration: null,
-        report: emptyReport,
-      });
-      expect(received.ratelimited).toBe(false);
-      expect(received.error).toBe(false);
-      expect(received.profileUrl).toBe(null);
-      expect(received.ready).toBe(true);
+      expect(received.ready).toBe(false);
     });
 
     it("should not accept incompatible types", () => {
