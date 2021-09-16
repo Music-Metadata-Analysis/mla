@@ -14,6 +14,7 @@ class UserReducerStates {
       return {
         data: { integration: action.integration, report: this.initialReport },
         error: true,
+        inProgress: false,
         profileUrl: null,
         ratelimited: false,
         ready: true,
@@ -27,6 +28,7 @@ class UserReducerStates {
       return {
         data: { integration: action.integration, report: this.initialReport },
         error: false,
+        inProgress: false,
         profileUrl: null,
         ratelimited: false,
         ready: true,
@@ -35,24 +37,26 @@ class UserReducerStates {
     }
     throw new Error(this.wrongTypeError);
   }
-  StartFetchUser(action: UserActionType): UserStateInterface {
-    if (action.type === "StartFetchUser") {
+  RatelimitedFetchUser(action: UserActionType): UserStateInterface {
+    if (action.type === "RatelimitedFetchUser") {
       return {
         data: { integration: action.integration, report: this.initialReport },
-        error: false,
+        inProgress: false,
+        error: true,
         profileUrl: null,
-        ratelimited: false,
-        ready: false,
+        ratelimited: true,
+        ready: true,
         userName: action.userName,
       };
     }
     throw new Error(this.wrongTypeError);
   }
-  SuccessFetchUser(action: UserActionType): UserStateInterface {
-    if (action.type === "SuccessFetchUser") {
+  ReadyFetchUser(action: UserActionType): UserStateInterface {
+    if (action.type === "ReadyFetchUser") {
       return {
         data: { integration: action.integration, report: action.data },
         error: false,
+        inProgress: false,
         profileUrl: GenerateUserLink(action.userName),
         ratelimited: false,
         ready: true,
@@ -66,6 +70,7 @@ class UserReducerStates {
       return {
         data: { integration: null, report: this.initialReport },
         error: false,
+        inProgress: false,
         profileUrl: null,
         ratelimited: false,
         ready: true,
@@ -74,14 +79,29 @@ class UserReducerStates {
     }
     throw new Error(this.wrongTypeError);
   }
-  RatelimitedFetchUser(action: UserActionType): UserStateInterface {
-    if (action.type === "RatelimitedFetchUser") {
+  SuccessFetchUser(action: UserActionType): UserStateInterface {
+    if (action.type === "SuccessFetchUser") {
+      return {
+        data: { integration: action.integration, report: action.data },
+        error: false,
+        inProgress: false,
+        profileUrl: null,
+        ratelimited: false,
+        ready: false,
+        userName: action.userName,
+      };
+    }
+    throw new Error(this.wrongTypeError);
+  }
+  StartFetchUser(action: UserActionType): UserStateInterface {
+    if (action.type === "StartFetchUser") {
       return {
         data: { integration: action.integration, report: this.initialReport },
-        error: true,
+        error: false,
+        inProgress: true,
         profileUrl: null,
-        ratelimited: true,
-        ready: true,
+        ratelimited: false,
+        ready: false,
         userName: action.userName,
       };
     }

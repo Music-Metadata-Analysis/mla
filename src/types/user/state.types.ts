@@ -8,6 +8,7 @@ interface UserDataInterface {
 export interface UserStateInterface {
   data: UserDataInterface;
   error: boolean;
+  inProgress: boolean;
   profileUrl: string | null;
   ratelimited: boolean;
   ready: boolean;

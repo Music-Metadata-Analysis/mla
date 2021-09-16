@@ -11,6 +11,7 @@ export const InitialState = <UserStateInterface>{
     },
   },
   error: false,
+  inProgress: false,
   profileUrl: null,
   ratelimited: false,
   ready: true,

@@ -70,6 +70,16 @@ describe("useLastFM", () => {
     });
   });
 
+  describe("clear", () => {
+    it("should dispatch the reducer correctly", async () => {
+      act(() => received.result.current.clear());
+      await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: "ResetState",
+      });
+    });
+  });
+
   describe("top20", () => {
     beforeEach(async () => {
       act(() => received.result.current.top20(mockUserName));
@@ -83,10 +93,13 @@ describe("useLastFM", () => {
 
   describe("clear", () => {
     it("should dispatch the reducer correctly", async () => {
-      act(() => received.result.current.clear());
+      act(() => received.result.current.ready());
       await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
       expect(mockDispatch).toHaveBeenCalledWith({
-        type: "ResetState",
+        type: "ReadyFetchUser",
+        userName: received.result.current.userProperties.userName,
+        data: received.result.current.userProperties.data.report,
+        integration: received.result.current.userProperties.data.integration,
       });
     });
   });
