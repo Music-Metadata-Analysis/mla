@@ -10,5 +10,11 @@
         "valid": "A proper username is required."
       }
     }
+  },
+  "top20": {
+    "communication": "Retrieving Results...",
+    "flipCardFrontAltText": "Album Cover",
+    "flipCardRearAltText": "Rank",
+    "noCover": "No Cover Art"
   }
 }
