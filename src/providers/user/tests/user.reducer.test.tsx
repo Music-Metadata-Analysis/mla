@@ -16,6 +16,7 @@ const mockStates = {
   StartFetchUser: jest.fn().mockReturnValue(mockReturn),
   SuccessFetchUser: jest.fn().mockReturnValue(mockReturn),
   RatelimitedFetchUser: jest.fn().mockReturnValue(mockReturn),
+  ReadyFetchUser: jest.fn().mockReturnValue(mockReturn),
   ResetState: jest.fn().mockReturnValue(mockReturn),
 };
 
@@ -25,6 +26,7 @@ describe("UserReducer", () => {
   const initialReport = { albums: [], image: [] };
   const badInitialUserState = {
     userName: "somebody",
+    inProgress: false,
     ratelimited: true,
     data: {
       integration: null,
@@ -46,6 +48,28 @@ describe("UserReducer", () => {
   ) => {
     return UserReducer({ ...initialProps }, action as UserActionType);
   };
+
+  it("should handle ReadyFetchUser correctly", () => {
+    const mock_lastfm_data = {
+      albums: [],
+      image: [
+        {
+          size: "large",
+          "#text": "http://someurl.com",
+        },
+      ],
+    };
+    const action = {
+      type: "ReadyFetchUser",
+      userName: "someguy",
+      data: mock_lastfm_data as TopAlbumsReportResponseInterface,
+      integration: testIntegrationType,
+    } as UserActionType;
+    received = arrange(action, { ...InitialValues.userProperties });
+    expect(mockStates.ReadyFetchUser).toBeCalledTimes(1);
+    expect(mockStates.ReadyFetchUser).toBeCalledWith(action);
+    expect(received).toBe(mockReturn);
+  });
 
   it("should handle ResetState correctly", () => {
     const action = {
