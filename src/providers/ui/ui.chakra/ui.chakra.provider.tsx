@@ -1,7 +1,11 @@
 import { ChakraProvider, ColorModeProvider, CSSReset } from "@chakra-ui/react";
-import createTheme from "./ui.theme";
+import createTheme from "./ui.chakra.theme";
 
-const UserInterfaceProvider = ({ children }: { children: JSX.Element }) => {
+const UserInterfaceChakraProvider = ({
+  children,
+}: {
+  children: JSX.Element;
+}) => {
   return (
     <ChakraProvider theme={createTheme()}>
       <ColorModeProvider
@@ -17,4 +21,4 @@ const UserInterfaceProvider = ({ children }: { children: JSX.Element }) => {
   );
 };
 
-export default UserInterfaceProvider;
+export default UserInterfaceChakraProvider;
