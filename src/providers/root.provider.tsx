@@ -1,6 +1,6 @@
 import AnalyticsProvider from "./analytics/analytics.provider";
 import NavBarProvider from "./navbar/navbar.provider";
-import UserInterfaceProvider from "./ui/ui.provider";
+import UserInterfaceRootProvider from "./ui/ui.root.provider";
 import UserProvider from "./user/user.provider";
 import Header, { HeaderProps } from "../components/header/header.component";
 
@@ -14,7 +14,7 @@ const RootProvider = ({
   headerProps = { pageKey: "default" },
 }: RootProviderProps) => {
   return (
-    <UserInterfaceProvider>
+    <UserInterfaceRootProvider>
       <UserProvider>
         <AnalyticsProvider>
           <NavBarProvider>
@@ -23,7 +23,7 @@ const RootProvider = ({
           </NavBarProvider>
         </AnalyticsProvider>
       </UserProvider>
-    </UserInterfaceProvider>
+    </UserInterfaceRootProvider>
   );
 };
 

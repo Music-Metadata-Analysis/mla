@@ -3,7 +3,7 @@ import Header from "../../components/header/header.component";
 import AnalyticsProvider from "../analytics/analytics.provider";
 import NavBarProvider from "../navbar/navbar.provider";
 import RootProvider from "../root.provider";
-import UserInterfaceProvider from "../ui/ui.provider";
+import UserInterfaceRootProvider from "../ui/ui.root.provider";
 import UserProvider from "../user/user.provider";
 
 jest.mock("../../components/header/header.component", () =>
@@ -22,8 +22,8 @@ jest.mock("../../providers/user/user.provider", () =>
   createProviderMock(providers.UserProvider)
 );
 
-jest.mock("../ui/ui.provider", () =>
-  createProviderMock(providers.UserInterfaceProvider)
+jest.mock("../ui/ui.root.provider", () =>
+  createProviderMock(providers.UserInterfaceRootProvider)
 );
 
 const createProviderMock = (name: string) => {
@@ -39,7 +39,7 @@ const providers = {
   NavBarProvider: "NavBarProvider",
   RootProvider: "RootProvider",
   UserProvider: "UserProvider",
-  UserInterfaceProvider: "UserInterfaceProvider",
+  UserInterfaceRootProvider: "UserInterfaceRootProvider",
 };
 
 describe("RootProvider", () => {
@@ -97,8 +97,8 @@ describe("RootProvider", () => {
     });
 
     it("should initialize the UserInterfaceProvider", async () => {
-      await waitFor(() => expect(UserInterfaceProvider).toBeCalledTimes(1));
-      expect(await screen.findByTestId(providers.UserInterfaceProvider))
+      await waitFor(() => expect(UserInterfaceRootProvider).toBeCalledTimes(1));
+      expect(await screen.findByTestId(providers.UserInterfaceRootProvider))
         .toBeTruthy;
     });
 
