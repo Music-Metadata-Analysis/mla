@@ -32,7 +32,7 @@ describe("UserReducer", () => {
       integration: null,
       report: initialReport,
     },
-    error: true,
+    error: "FailureFetchUser" as const,
     profileUrl: "http://localhost",
     ready: true,
   };

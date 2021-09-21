@@ -1,156 +1,204 @@
-import { cleanup, render } from "@testing-library/react";
-import routes from "../../../../../config/routes";
-import mockLastFMHook from "../../../../../hooks/tests/lastfm.mock";
+import { render, screen } from "@testing-library/react";
+import translations from "../../../../../../public/locales/en/lastfm.json";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
-import mockRouter from "../../../../../tests/fixtures/mock.router";
-import BillBoardSpinner from "../../../../billboard/billboard.spinner/billboard.spinner.component";
-import ErrorDisplay from "../../../../errors/display/error.display.component";
-import Top20 from "../top20.component";
-import type useLastFM from "../../../../../hooks/lastfm";
+import FlipCard from "../../../../flip.card/flip.card.component";
+import ReportTitle from "../../../common/report.title/report.title.component";
+import AlbumDrawer from "../drawer.album/drawer.album.component";
+import Top20Report, { Top20ReportProps } from "../top20.component";
 
-jest.mock(
-  "../../../../billboard/billboard.spinner/billboard.spinner.component",
-  () => createMockedComponent("BillBoardSpinner")
-);
+jest.mock("../drawer.album/drawer.album.component", () => {
+  return jest.fn(() => <div>{"MockAlbumDrawer"}</div>);
+});
 
-jest.mock("../../../../errors/display/error.display.component", () =>
-  createMockedComponent("ErrorDisplay")
-);
+jest.mock("../../../../flip.card/flip.card.component", () => {
+  return jest.fn(() => <div>{"MockFlipCard"}</div>);
+});
 
-jest.mock("next/router", () => ({
-  __esModule: true,
-  useRouter: () => mockRouter,
-}));
+jest.mock("../../../common/report.title/report.title.component", () => {
+  return jest.fn(() => <div>{"MockReportTitle"}</div>);
+});
 
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
+const mockImageIsLoaded = jest.fn();
+const mockUsername = "test-username";
+
+const Top20ReportBaseProps: Top20ReportProps = {
+  user: {
+    userProperties: {
+      error: null,
+      inProgress: false,
+      profileUrl: null,
+      ready: true,
+      userName: mockUsername,
+      data: {
+        report: {
+          albums: [],
+          image: [],
+        },
+        integration: null,
+      },
+    },
+    clear: jest.fn(),
+    ready: jest.fn(),
+    top20: jest.fn(),
+  },
+  imageIsLoaded: mockImageIsLoaded,
+  visible: true,
 };
 
-describe("Top20", () => {
-  const testUsername = "niall-byrne";
-  let mockHookState: ReturnType<typeof useLastFM>;
+describe("Top20Report", () => {
+  let currentProps: Top20ReportProps;
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-    resetHookState();
-  });
+  beforeEach(() => jest.clearAllMocks());
 
-  const checkDataFetching = () => {
-    it("should clear the state and request new data", () => {
-      expect(mockHookState.clear).toBeCalledTimes(1);
-      expect(mockHookState.top20).toBeCalledTimes(1);
-      expect(mockHookState.top20).toBeCalledWith(testUsername);
-    });
-
-    it("should clear the state during cleanup", () => {
-      cleanup();
-      expect(mockHookState.clear).toBeCalledTimes(2);
-    });
-  };
-
-  const checkErrorDisplay = (errorKey: string) => {
-    it("should render the ErrorDisplay as expected", () => {
-      expect(ErrorDisplay).toBeCalledTimes(1);
-      const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
-      expect(call.errorKey).toBe(errorKey);
-      expect(typeof call.resetError).toBe("function");
-      expect(Object.keys(call).length).toBe(2);
-    });
-  };
-
-  const resetHookState = () => {
-    mockHookState = {
-      ...mockLastFMHook,
-      userProperties: { ...mockLastFMHook.userProperties },
-    };
+  const resetProps = () => {
+    currentProps = { ...Top20ReportBaseProps };
   };
 
   const arrange = () => {
-    render(<Top20 username={testUsername} user={mockHookState} />);
+    return render(<Top20Report {...currentProps} />);
   };
 
-  describe("when there has been an error", () => {
-    describe("when the request has failed", () => {
-      beforeEach(() => {
-        mockHookState.userProperties.error = true;
-        arrange();
-      });
-
-      checkDataFetching();
-      checkErrorDisplay("lastfm_communications");
-
-      it("should NOT call the BillBoardSpinner", () => {
-        expect(BillBoardSpinner).toBeCalledTimes(0);
-      });
-
-      describe("when resetError is called on ErrorDisplay", () => {
-        beforeEach(() => {
-          const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
-          call.resetError();
-        });
-
-        it("should redirect to the search page", () => {
-          expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(routes.search);
-        });
-      });
+  describe("when a data fetch is in progress", () => {
+    beforeEach(() => {
+      resetProps();
+      currentProps.user.userProperties.inProgress = true;
+      arrange();
     });
 
-    describe("when the request has been ratelimited", () => {
-      beforeEach(() => {
-        mockHookState.userProperties.ratelimited = true;
-        arrange();
-      });
+    it("should NOT call AlbumDrawer", () => {
+      expect(AlbumDrawer).toBeCalledTimes(0);
+    });
 
-      checkDataFetching();
-      checkErrorDisplay("lastfm_ratelimited");
+    it("should NOT call ReportTitle", () => {
+      expect(ReportTitle).toBeCalledTimes(0);
+    });
 
-      it("should NOT call the BillBoardSpinner", () => {
-        expect(BillBoardSpinner).toBeCalledTimes(0);
-      });
-
-      describe("when resetError is called on ErrorDisplay", () => {
-        beforeEach(() => {
-          const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
-          call.resetError();
-        });
-
-        it("should reload the page", () => {
-          expect(mockRouter.reload).toBeCalledTimes(1);
-        });
-      });
+    it("should NOT call FlipCard", () => {
+      expect(FlipCard).toBeCalledTimes(0);
     });
   });
 
-  describe("when there has NOT been an error", () => {
-    describe("when the data is NOT in ready state", () => {
+  describe("when a data fetch is NOT in progress", () => {
+    beforeEach(() => {
+      resetProps();
+      currentProps.user.userProperties.inProgress = false;
+      currentProps.user.userProperties.data.report.albums = [
+        {
+          mbid: "some_mbid1",
+          name: "mock_album1",
+          artist: {
+            mbid: "some_mbid1",
+            name: "mock_artist1",
+          },
+          playcount: "101",
+          image: [
+            {
+              size: "large" as const,
+              "#text": "http://someurl1.com",
+            },
+          ],
+        },
+        {
+          mbid: "some_mbid2",
+          name: "mock_album2",
+          artist: {
+            mbid: "some_mbid2",
+            name: "mock_artist2",
+          },
+          playcount: "102",
+          image: [
+            {
+              size: "large" as const,
+              "#text": "http://someurl2.com",
+            },
+          ],
+        },
+      ];
+    });
+
+    const checkComponents = () => {
+      it("should call AlbumDrawer", () => {
+        expect(AlbumDrawer).toBeCalledTimes(1);
+        checkMockCall(
+          AlbumDrawer,
+          {
+            albumIndex: null,
+            albums: currentProps.user.userProperties.data.report.albums,
+            fallbackImage: "/images/static.gif",
+            isOpen: false,
+          },
+          0,
+          ["onClose", "t", "top20GetAlbumArtWork"]
+        );
+      });
+
+      it("should call ReportTitle", () => {
+        expect(ReportTitle).toBeCalledTimes(1);
+        checkMockCall(ReportTitle, {
+          size: 100,
+          title: translations.top20.title,
+          userName: mockUsername,
+        });
+      });
+
+      it("should call FlipCard", () => {
+        expect(FlipCard).toBeCalledTimes(2);
+        checkMockCall(
+          FlipCard,
+          {
+            currentlyFlipped: null,
+            fallbackImage: "/images/static.gif",
+            image: "http://someurl1.com",
+            index: 0,
+            rearImage: "/images/record-player.jpg",
+            size: 100,
+          },
+          0,
+          ["flipperController", "imageIsLoaded", "t"]
+        );
+        checkMockCall(
+          FlipCard,
+          {
+            currentlyFlipped: null,
+            fallbackImage: "/images/static.gif",
+            image: "http://someurl2.com",
+            index: 1,
+            rearImage: "/images/record-player.jpg",
+            size: 100,
+          },
+          1,
+          ["flipperController", "imageIsLoaded", "t"]
+        );
+      });
+    };
+
+    describe("when visible", () => {
       beforeEach(() => {
-        mockLastFMHook.userProperties.ready = false;
+        resetProps();
+        currentProps.visible = true;
         arrange();
       });
 
-      checkDataFetching();
+      checkComponents();
 
-      it("should call the BillBoardSpinner with 'true'", () => {
-        expect(BillBoardSpinner).toBeCalledTimes(1);
-        checkMockCall(BillBoardSpinner, { whileTrue: true });
+      it("the ReportTitle should be visible", async () => {
+        const title = await screen.findByText("MockReportTitle");
+        expect(title).toBeVisible();
       });
     });
 
-    describe("when the data is in a ready state", () => {
+    describe("when NOT visible", () => {
       beforeEach(() => {
-        mockLastFMHook.userProperties.ready = true;
+        resetProps();
+        currentProps.visible = false;
         arrange();
       });
 
-      checkDataFetching();
+      checkComponents();
 
-      it("should call the BillBoardSpinner with 'false'", () => {
-        expect(BillBoardSpinner).toBeCalledTimes(1);
-        checkMockCall(BillBoardSpinner, { whileTrue: false });
+      it("the ReportTitle should NOT be visible", async () => {
+        const title = await screen.findByText("MockReportTitle");
+        expect(title).not.toBeVisible();
       });
     });
   });

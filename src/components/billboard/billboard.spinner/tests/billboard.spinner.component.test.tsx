@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import BillBoard from "../../billboard.component";
 import BillBoardSpinner, { testIDs } from "../billboard.spinner.component";
 
@@ -14,45 +15,51 @@ const createMockedComponent = (name: string) => {
 };
 
 describe("BillBoardSpinner", () => {
-  const arrange = (condition: boolean) => {
-    render(
-      <BillBoardSpinner whileTrue={condition}>
-        <div data-testid="TestComponent">Test Component</div>
-      </BillBoardSpinner>
-    );
+  const testTitle = "Test Title";
+
+  const arrange = (visibility: boolean) => {
+    render(<BillBoardSpinner visible={visibility} title={testTitle} />);
   };
 
   beforeEach(() => jest.clearAllMocks());
 
-  describe("whileTrue is true", () => {
+  describe("visible is true", () => {
     beforeEach(() => arrange(true));
-
-    it("should not render the child component", async () => {
-      expect(screen.queryByTestId("TestComponent")).toBeNull();
-    });
 
     it("should render the billboard", () => {
       expect(BillBoard).toBeCalledTimes(1);
+      checkMockCall(BillBoard, { title: testTitle });
     });
 
     it("should render the spinner", async () => {
       expect(await screen.findByTestId(testIDs.BillboardSpinner)).toBeTruthy();
     });
+
+    it("should render the spinner as visible", async () => {
+      const spinner = await screen.findByTestId(
+        testIDs.BillboardSpinnerVisibilityControl
+      );
+      expect(spinner).toBeVisible();
+    });
   });
 
-  describe("whileTrue is false", () => {
+  describe("visible is false", () => {
     beforeEach(() => arrange(false));
 
-    it("should not render the billboard", () => {
-      expect(BillBoard).toBeCalledTimes(0);
+    it("should render the billboard", () => {
+      expect(BillBoard).toBeCalledTimes(1);
+      checkMockCall(BillBoard, { title: testTitle });
     });
 
-    it("should not render the spinner", () => {
-      expect(screen.queryByTestId(testIDs.BillboardSpinner)).toBeNull();
+    it("should render the spinner", () => {
+      expect(screen.queryByTestId(testIDs.BillboardSpinner)).toBeTruthy();
     });
 
-    it("should render the child component", async () => {
-      expect(await screen.findByTestId("TestComponent")).toBeTruthy();
+    it("should render the spinner as NOT visible", async () => {
+      const spinner = await screen.findByTestId(
+        testIDs.BillboardSpinnerVisibilityControl
+      );
+      expect(spinner).not.toBeVisible();
     });
   });
 });

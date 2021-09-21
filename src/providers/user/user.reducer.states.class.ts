@@ -13,10 +13,9 @@ class UserReducerStates {
     if (action.type === "FailureFetchUser") {
       return {
         data: { integration: action.integration, report: this.initialReport },
-        error: true,
+        error: action.type,
         inProgress: false,
         profileUrl: null,
-        ratelimited: false,
         ready: true,
         userName: action.userName,
       };
@@ -27,10 +26,9 @@ class UserReducerStates {
     if (action.type === "NotFoundFetchUser") {
       return {
         data: { integration: action.integration, report: this.initialReport },
-        error: false,
+        error: action.type,
         inProgress: false,
         profileUrl: null,
-        ratelimited: false,
         ready: true,
         userName: action.userName,
       };
@@ -41,10 +39,9 @@ class UserReducerStates {
     if (action.type === "RatelimitedFetchUser") {
       return {
         data: { integration: action.integration, report: this.initialReport },
+        error: action.type,
         inProgress: false,
-        error: true,
         profileUrl: null,
-        ratelimited: true,
         ready: true,
         userName: action.userName,
       };
@@ -55,10 +52,9 @@ class UserReducerStates {
     if (action.type === "ReadyFetchUser") {
       return {
         data: { integration: action.integration, report: action.data },
-        error: false,
+        error: null,
         inProgress: false,
         profileUrl: GenerateUserLink(action.userName),
-        ratelimited: false,
         ready: true,
         userName: action.userName,
       };
@@ -69,10 +65,9 @@ class UserReducerStates {
     if (action.type === "ResetState") {
       return {
         data: { integration: null, report: this.initialReport },
-        error: false,
+        error: null,
         inProgress: false,
         profileUrl: null,
-        ratelimited: false,
         ready: true,
         userName: null,
       };
@@ -83,10 +78,9 @@ class UserReducerStates {
     if (action.type === "SuccessFetchUser") {
       return {
         data: { integration: action.integration, report: action.data },
-        error: false,
+        error: null,
         inProgress: false,
         profileUrl: null,
-        ratelimited: false,
         ready: false,
         userName: action.userName,
       };
@@ -97,10 +91,9 @@ class UserReducerStates {
     if (action.type === "StartFetchUser") {
       return {
         data: { integration: action.integration, report: this.initialReport },
-        error: false,
+        error: null,
         inProgress: true,
         profileUrl: null,
-        ratelimited: false,
         ready: false,
         userName: action.userName,
       };

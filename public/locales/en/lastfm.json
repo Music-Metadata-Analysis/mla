@@ -12,9 +12,18 @@
     }
   },
   "top20": {
+    "title": "My Top 20 Albums",
     "communication": "Retrieving Results...",
     "flipCardFrontAltText": "Album Cover",
     "flipCardRearAltText": "Rank",
-    "noCover": "No Cover Art"
+    "noCover": "No Cover Art",
+    "drawer": {
+      "unknownAlbum": "Unknown Album",
+      "unknownArtist": "Unknown Artist",
+      "coverArtAltText": "Cover Art",
+      "rank": "Position",
+      "playCount": "Play Count",
+      "albumButtonText": "View on last.fm"
+    }
   }
 }
