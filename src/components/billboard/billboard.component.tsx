@@ -12,11 +12,12 @@ interface BillboardProps {
 }
 
 const Billboard = ({ children, title }: BillboardProps) => {
-  const bg = useColorModeValue("gray.200", "gray.800");
+  const bg = useColorModeValue("gray.300", "gray.900");
+  const fg = useColorModeValue("gray.800", "gray.300");
 
   return (
-    <Center height={"calc(100vh + 32px)"}>
-      <Box p={3} bg={bg} w={["90%", "80%", "70%"]}>
+    <Center height={"calc(100vh - 32px)"}>
+      <Box p={3} color={fg} bg={bg} w={["90%", "80%", "70%"]}>
         <Container centerContent={true} maxW={"medium"} textAlign={"center"}>
           <Text fontSize={["xl", "2xl", "3xl"]}>{title}</Text>
         </Container>

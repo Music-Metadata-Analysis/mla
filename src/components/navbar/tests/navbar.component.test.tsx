@@ -65,10 +65,9 @@ let mockUserProperties: UserStateInterface = {
       image: [],
     },
   },
-  error: false,
+  error: null,
   inProgress: false,
   profileUrl: null,
-  ratelimited: false,
   ready: true,
   userName: null,
 };

@@ -13,10 +13,25 @@ describe("useColour", () => {
       received = arrange();
     });
 
+    const assertIsString = (property: string) => {
+      expect(typeof property).toBe("string");
+    };
+
     it("should contain the bodyColour background color", () => {
-      expect(typeof received.result.current.bodyColour.background).toBe(
-        "string"
-      );
+      assertIsString(received.result.current.bodyColour.background);
+    });
+
+    it("should contain the componentColour properties", () => {
+      assertIsString(received.result.current.componentColour.background);
+      assertIsString(received.result.current.componentColour.foreground);
+      assertIsString(received.result.current.componentColour.details);
+      assertIsString(received.result.current.componentColour.scheme);
+    });
+
+    it("should contain the buttonColour properties", () => {
+      assertIsString(received.result.current.buttonColour.background);
+      assertIsString(received.result.current.buttonColour.foreground);
+      assertIsString(received.result.current.buttonColour.border);
     });
   });
 });
