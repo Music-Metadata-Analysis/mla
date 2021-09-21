@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { FormControl, FormLabel } from "@chakra-ui/react";
 import {
   Formik,
   Form,
@@ -7,8 +7,8 @@ import {
   FormikProps,
   FormikHelpers,
 } from "formik";
-import { useRef, useEffect } from "react";
-import AnalyticsWrapper from "../../../analytics/analytics.component";
+import StyledButton from "../../../button/button.standard/button.standard.component";
+import StyledInput from "../../common/input/input.component";
 import type { LastFMTop20SearchFormInterface } from "../../../../types/forms/lastfm/search";
 import type { TFunction } from "next-i18next";
 
@@ -26,15 +26,6 @@ export default function SearchForm({
   validateUserName,
   handleSubmit,
 }: SearchFormProps) {
-  const inputFieldRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    /* istanbul ignore else */
-    if (inputFieldRef.current) {
-      inputFieldRef.current.focus();
-    }
-  }, [inputFieldRef]);
-
   return (
     <Formik
       initialValues={{ username: "" }}
@@ -58,9 +49,8 @@ export default function SearchForm({
                 <FormLabel id={"username.label"} htmlFor="username">
                   {t("search.fieldLabel")}
                 </FormLabel>
-                <Input
-                  ref={inputFieldRef}
-                  data-testid="username.input"
+                <StyledInput
+                  autoFocus
                   {...field}
                   id="username"
                   placeholder={t("search.fieldPlaceholder")}
@@ -68,11 +58,15 @@ export default function SearchForm({
               </FormControl>
             )}
           </Field>
-          <AnalyticsWrapper buttonName="Search: last.fm">
-            <Button mb={2} mt={4} isLoading={isSubmitting} type="submit">
-              {t("search.buttonText")}
-            </Button>
-          </AnalyticsWrapper>
+          <StyledButton
+            analyticsName="Search: last.fm"
+            mb={2}
+            mt={4}
+            isLoading={isSubmitting}
+            type="submit"
+          >
+            {t("search.buttonText")}
+          </StyledButton>
         </Form>
       )}
     </Formik>

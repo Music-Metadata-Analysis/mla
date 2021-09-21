@@ -1,5 +1,7 @@
 import { Button } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
+import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../tests/fixtures/mock.router";
 import NavBarLink from "../navbar.link.component";
 
@@ -8,6 +10,10 @@ jest.mock("@chakra-ui/react", () => {
     factoryInstance,
   } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Button"]);
+});
+
+jest.mock("../../../../hooks/colour", () => {
+  return () => mockColourHook;
 });
 
 jest.mock("next/router", () => ({
@@ -19,10 +25,11 @@ describe("NavBarLink", () => {
   const linkText = "Link";
   const mockHref = "test";
   const mockClickTracker = jest.fn();
+  let selected: boolean;
 
   beforeEach(() => jest.clearAllMocks());
 
-  const arrange = (selected: boolean) => {
+  const arrange = () => {
     render(
       <NavBarLink
         href={mockHref}
@@ -35,19 +42,32 @@ describe("NavBarLink", () => {
   };
 
   const checkButtonProps = () => {
-    const call = (Button as jest.Mock).mock.calls[0];
-    expect(call[0].px).toBe(2);
-    expect(call[0].py).toBe(1);
-    expect(call[0].rounded).toBe("md");
-    expect(call[0].children).toBeDefined();
-    expect(call[0]._hover).toBeDefined();
-    expect(call[0].bg).toBeDefined();
-    expect(call[0].onClick).toBeDefined();
-    expect(Object.keys(call[0]).length).toBe(8);
+    checkMockCall(
+      Button,
+      {
+        _hover: {
+          bg: mockColourHook.navButtonColour.hoverBackground,
+          textDecoration: "none",
+        },
+        bg: mockColourHook.navButtonColour.background,
+        borderColor: selected
+          ? mockColourHook.navButtonColour.selectedBackground
+          : mockColourHook.transparent,
+        px: 2,
+        py: 1,
+        rounded: "md",
+      },
+      0,
+      ["onClick"],
+      true
+    );
   };
 
   describe("when selected is true", () => {
-    beforeEach(() => arrange(true));
+    beforeEach(() => {
+      selected = true;
+      arrange();
+    });
 
     it("should render the Button as expected", () => {
       expect(Button).toBeCalledTimes(1);
@@ -64,7 +84,10 @@ describe("NavBarLink", () => {
   });
 
   describe("when selected is false", () => {
-    beforeEach(() => arrange(false));
+    beforeEach(() => {
+      selected = false;
+      arrange();
+    });
 
     it("should render the Button as expected", () => {
       expect(Button).toBeCalledTimes(1);
@@ -78,32 +101,31 @@ describe("NavBarLink", () => {
       expect(link).not.toHaveStyleRule("border-radius", "10px");
       expect(link).not.toHaveStyleRule("border-width", "3px");
     });
-  });
 
-  describe("when a button is clicked", () => {
-    beforeEach(async () => {
-      arrange(false);
-      const link = await screen.findByText(linkText);
-      expect(link).not.toBeNull();
-      fireEvent.click(link as HTMLElement);
-    });
+    describe("when a button is clicked", () => {
+      beforeEach(async () => {
+        const link = await screen.findByText(linkText);
+        expect(link).not.toBeNull();
+        fireEvent.click(link as HTMLElement);
+      });
 
-    it("should render the Button as expected", () => {
-      expect(Button).toBeCalledTimes(1);
-      checkButtonProps();
-    });
+      it("should render the Button as expected", () => {
+        expect(Button).toBeCalledTimes(1);
+        checkButtonProps();
+      });
 
-    it("should call the click tracker", () => {
-      expect(mockClickTracker).toBeCalledTimes(1);
-      const call = mockClickTracker.mock.calls[0];
-      expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-      expect(call[1]).toBe(linkText);
-      expect(Object.keys(call).length).toBe(2);
-    });
+      it("should call the click tracker", () => {
+        expect(mockClickTracker).toBeCalledTimes(1);
+        const call = mockClickTracker.mock.calls[0];
+        expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
+        expect(call[1]).toBe(linkText);
+        expect(Object.keys(call).length).toBe(2);
+      });
 
-    it("should route to the expected page", () => {
-      expect(mockRouter.push).toBeCalledTimes(1);
-      expect(mockRouter.push).toBeCalledWith(mockHref);
+      it("should route to the expected page", () => {
+        expect(mockRouter.push).toBeCalledTimes(1);
+        expect(mockRouter.push).toBeCalledWith(mockHref);
+      });
     });
   });
 });

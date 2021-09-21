@@ -1,6 +1,7 @@
-import { Box, useColorModeValue, Img, Center, Text } from "@chakra-ui/react";
+import { Box, Img, Center, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
+import useColour from "../../hooks/colour";
 import type { TFunction } from "next-i18next";
 
 export interface FlipCardProps {
@@ -33,11 +34,7 @@ export default function FlipCard({
   imageIsLoaded,
   t,
 }: FlipCardProps) {
-  const bg = useColorModeValue("gray.900", "gray.300");
-  const fc = useColorModeValue("gray.200", "gray.800");
-  const bc = useColorModeValue("gray.500", "gray.900");
-  const frontOverlayTextColor = "gray.800";
-  const rearOverlayTextColor = useColorModeValue("gray.300", "gray.800");
+  const { flipCardColour } = useColour();
   const [hasError, setError] = useState(false);
 
   const isFlipped = currentlyFlipped === index;
@@ -59,9 +56,9 @@ export default function FlipCard({
     >
       <Box
         borderWidth={border}
-        borderColor={bc}
-        bg={bg}
-        color={fc}
+        borderColor={flipCardColour.border}
+        bg={flipCardColour.background}
+        color={flipCardColour.foreground}
         width={size}
         height={size}
         onClick={flipper}
@@ -98,7 +95,7 @@ export default function FlipCard({
                 data-testid={testIDs.flipFrontText}
                 style={{ position: "absolute" }}
                 fontSize={"sm"}
-                color={frontOverlayTextColor}
+                color={flipCardColour.textFront}
               >
                 <strong>{`${t("top20.noCover")}`}</strong>
               </Text>
@@ -109,9 +106,9 @@ export default function FlipCard({
 
       <Box
         borderWidth={border}
-        borderColor={bc}
-        bg={bg}
-        color={fc}
+        borderColor={flipCardColour.border}
+        bg={flipCardColour.background}
+        color={flipCardColour.foreground}
         width={size}
         height={size}
         onClick={flipper}
@@ -141,7 +138,7 @@ export default function FlipCard({
             />
             <Text
               data-testid={testIDs.flipRearText}
-              color={rearOverlayTextColor}
+              color={flipCardColour.textRear}
               style={{ position: "absolute" }}
               fontSize={"3xl"}
             >

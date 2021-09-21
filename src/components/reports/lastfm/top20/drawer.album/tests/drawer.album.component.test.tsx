@@ -99,6 +99,9 @@ describe("AlbumDrawer", () => {
           bg: mockColourHook.componentColour.background,
           color: mockColourHook.componentColour.foreground,
           colorScheme: mockColourHook.componentColour.scheme,
+          sx: {
+            caretColor: mockColourHook.transparent,
+          },
         },
         0
       );

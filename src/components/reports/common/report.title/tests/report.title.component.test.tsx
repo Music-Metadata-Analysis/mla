@@ -56,6 +56,9 @@ describe("ReportTitle", () => {
         centerContent: true,
         maxW: `${4 * testProps.size + 20}px`,
         textAlign: "center",
+        sx: {
+          caretColor: mockColourHook.transparent,
+        },
       });
     });
 

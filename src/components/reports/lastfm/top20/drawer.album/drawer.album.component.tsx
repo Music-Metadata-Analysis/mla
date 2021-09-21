@@ -42,7 +42,7 @@ const AlbumDrawer = ({
   onClose,
   t,
 }: AlbumDrawerInterface) => {
-  const { componentColour } = useColour();
+  const { componentColour, transparent } = useColour();
   const imageSize = "150";
   const lastFMImageSize = "large" as const;
 
@@ -76,6 +76,9 @@ const AlbumDrawer = ({
         colorScheme={componentColour.scheme}
         bg={componentColour.background}
         color={componentColour.foreground}
+        sx={{
+          caretColor: transparent,
+        }}
       >
         <DrawerCloseButton
           data-testid={testIDs.AlbumDrawerCloseButton}
