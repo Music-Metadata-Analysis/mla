@@ -45,13 +45,12 @@ describe("UserReducerStates", () => {
 
       expect(received.inProgress).toBe(false);
       expect(received.profileUrl).toBe(null);
-      expect(received.ratelimited).toBe(false);
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
         report: emptyReport,
       });
-      expect(received.error).toBe(true);
+      expect(received.error).toBe(testType);
       expect(received.ready).toBe(true);
     });
 
@@ -73,13 +72,12 @@ describe("UserReducerStates", () => {
 
       expect(received.inProgress).toBe(false);
       expect(received.profileUrl).toBe(null);
-      expect(received.ratelimited).toBe(true);
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
         report: emptyReport,
       });
-      expect(received.error).toBe(true);
+      expect(received.error).toBe(testType);
       expect(received.ready).toBe(true);
     });
 
@@ -105,12 +103,11 @@ describe("UserReducerStates", () => {
         `https://www.last.fm/user/${testUserName}`
       );
       expect(received.userName).toBe(testUserName);
-      expect(received.ratelimited).toBe(false);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
         report: mock_lastfm_data,
       });
-      expect(received.error).toBe(false);
+      expect(received.error).toBe(null);
       expect(received.ready).toBe(true);
     });
 
@@ -132,8 +129,7 @@ describe("UserReducerStates", () => {
         integration: null,
         report: emptyReport,
       });
-      expect(received.ratelimited).toBe(false);
-      expect(received.error).toBe(false);
+      expect(received.error).toBe(null);
       expect(received.profileUrl).toBe(null);
       expect(received.ready).toBe(true);
     });
@@ -156,13 +152,12 @@ describe("UserReducerStates", () => {
 
       expect(received.inProgress).toBe(false);
       expect(received.profileUrl).toBe(null);
-      expect(received.ratelimited).toBe(false);
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
         report: emptyReport,
       });
-      expect(received.error).toBe(false);
+      expect(received.error).toBe(testType);
       expect(received.ready).toBe(true);
     });
 
@@ -188,7 +183,7 @@ describe("UserReducerStates", () => {
         integration: testIntegrationType,
         report: emptyReport,
       });
-      expect(received.error).toBe(false);
+      expect(received.error).toBe(null);
       expect(received.profileUrl).toBe(null);
       expect(received.ready).toBe(false);
     });
@@ -213,12 +208,11 @@ describe("UserReducerStates", () => {
       expect(received.inProgress).toBe(false);
       expect(received.profileUrl).toBe(null);
       expect(received.userName).toBe(testUserName);
-      expect(received.ratelimited).toBe(false);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
         report: mock_lastfm_data,
       });
-      expect(received.error).toBe(false);
+      expect(received.error).toBe(null);
       expect(received.ready).toBe(false);
     });
 

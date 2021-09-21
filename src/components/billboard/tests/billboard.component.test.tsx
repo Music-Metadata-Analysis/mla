@@ -11,6 +11,9 @@ jest.mock("@chakra-ui/react", () => {
 });
 
 describe("billboard", () => {
+  const bgColor = "gray.300";
+  const fgColor = "gray.800";
+
   const mockTitle = "Title";
   const MockChild = jest.fn().mockImplementation(() => <>{"MockChild"}</>);
 
@@ -29,7 +32,7 @@ describe("billboard", () => {
 
   it("should call the Center component correctly", () => {
     expect(Center).toBeCalledTimes(1);
-    checkMockCall(Center, { height: "calc(100vh + 32px)" });
+    checkMockCall(Center, { height: "calc(100vh - 32px)" });
   });
 
   it("should call the Container component correctly", () => {
@@ -43,7 +46,12 @@ describe("billboard", () => {
 
   it("should call the Box component correctly", () => {
     expect(Box).toBeCalledTimes(1);
-    checkMockCall(Box, { bg: "gray.200", p: 3, w: ["90%", "80%", "70%"] });
+    checkMockCall(Box, {
+      bg: bgColor,
+      color: fgColor,
+      p: 3,
+      w: ["90%", "80%", "70%"],
+    });
   });
 
   it("should call the Text component correctly", () => {

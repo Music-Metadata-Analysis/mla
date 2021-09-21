@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import FourOhFour from "./404";
 import ErrorBoundary from "../components/errors/boundary/error.boundary.component";
-import Top20Report from "../components/reports/lastfm/top20/top20.component";
+import Top20Report from "../components/reports/lastfm/top20/top20.container.component";
 import Events from "../config/events";
 import settings from "../config/lastfm";
 import routes from "../config/routes";
@@ -9,17 +9,25 @@ import useLastFM from "../hooks/lastfm";
 import pagePropsGenerator from "../utils/page.props.static";
 
 export default function LastFM() {
-  const [username, setUsername] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null | undefined>(
+    undefined
+  );
   const user = useLastFM();
 
   useEffect(() => {
-    if (username === null) {
+    if (username === undefined) {
       const urlParams = new URLSearchParams(window.location.search);
       setUsername(urlParams.get(settings.search.fieldName));
     }
   }, [username]);
 
-  if (username === null) return <FourOhFour />;
+  if (username === undefined) {
+    return null;
+  }
+
+  if (username === null) {
+    return <FourOhFour />;
+  }
 
   return (
     <ErrorBoundary
@@ -32,4 +40,7 @@ export default function LastFM() {
   );
 }
 
-export const getStaticProps = pagePropsGenerator({ pageKey: "lastfm" });
+export const getStaticProps = pagePropsGenerator({
+  pageKey: "lastfm",
+  translations: ["lastfm"],
+});

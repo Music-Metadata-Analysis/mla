@@ -1,3 +1,4 @@
+import type { UserActionType } from "./action.types";
 import type { UserReportType } from "./report.types";
 
 interface UserDataInterface {
@@ -7,10 +8,9 @@ interface UserDataInterface {
 
 export interface UserStateInterface {
   data: UserDataInterface;
-  error: boolean;
+  error: null | UserActionType["type"];
   inProgress: boolean;
   profileUrl: string | null;
-  ratelimited: boolean;
   ready: boolean;
   userName: string | null;
 }
