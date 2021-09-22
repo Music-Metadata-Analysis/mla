@@ -64,7 +64,7 @@ const testIDs = {
   TriggerError: "TriggerError",
 };
 
-describe("ErrorAlbumReportLastFM", () => {
+describe("ErrorBoundary", () => {
   let consoleErrorSpy: jest.SpyInstance;
 
   beforeEach(() => {

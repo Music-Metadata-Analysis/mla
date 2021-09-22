@@ -14,7 +14,7 @@ const createMockedComponent = (name: string) => {
   return factoryInstance.create(name);
 };
 
-describe("ErrorHandler", () => {
+describe("ErrorCondition", () => {
   const mockChildren = "mockChildren";
   const mockReset = jest.fn();
   const mockErrorKey = "generic";

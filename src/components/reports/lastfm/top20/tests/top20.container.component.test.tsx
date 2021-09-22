@@ -33,7 +33,7 @@ const createMockedComponent = (name: string) => {
   return factoryInstance.create(name);
 };
 
-describe("Top20", () => {
+describe("Top20ReportContainer", () => {
   const testUsername = "niall-byrne";
   let mockHookState: ReturnType<typeof useLastFM>;
   const mockReportData = {
