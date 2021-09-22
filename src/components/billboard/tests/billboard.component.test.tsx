@@ -1,5 +1,6 @@
 import { Container, Text, Center, Box } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
+import mockColourHook from "../../../hooks/tests/colour.hook.mock";
 import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import Billboard from "../billboard.component";
 
@@ -10,10 +11,11 @@ jest.mock("@chakra-ui/react", () => {
   return factoryInstance.create(["Container", "Text", "Center", "Box"]);
 });
 
-describe("Billboard", () => {
-  const bgColor = "gray.300";
-  const fgColor = "gray.800";
+jest.mock("../../../hooks/colour", () => {
+  return () => mockColourHook;
+});
 
+describe("Billboard", () => {
   const mockTitle = "Title";
   const MockChild = jest.fn().mockImplementation(() => <>{"MockChild"}</>);
 
@@ -41,14 +43,17 @@ describe("Billboard", () => {
       centerContent: true,
       textAlign: "center",
       maxW: "medium",
+      sx: {
+        caretColor: mockColourHook.transparent,
+      },
     });
   });
 
   it("should call the Box component correctly", () => {
     expect(Box).toBeCalledTimes(1);
     checkMockCall(Box, {
-      bg: bgColor,
-      color: fgColor,
+      bg: mockColourHook.componentColour.background,
+      color: mockColourHook.componentColour.foreground,
       p: 3,
       w: ["90%", "80%", "70%"],
     });

@@ -1,9 +1,10 @@
-import { Spinner, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Spinner, Flex } from "@chakra-ui/react";
+import useColour from "../../../hooks/colour";
 import BillBoard from "../billboard.component";
 
 export const testIDs = {
   BillboardSpinner: "BillboardSpinner",
-  BillboardSpinnerVisibilityControl: "l",
+  BillboardSpinnerVisibilityControl: "BillboardSpinnerVisibilityControl",
 };
 
 interface BillBoardSpinnerProps {
@@ -12,8 +13,7 @@ interface BillBoardSpinnerProps {
 }
 
 const BillBoardSpinner = ({ visible, title }: BillBoardSpinnerProps) => {
-  const bg = useColorModeValue("gray.300", "gray.800");
-  const emptyColor = useColorModeValue("gray.300", "gray.800");
+  const { componentColour } = useColour();
 
   return (
     <div
@@ -26,8 +26,9 @@ const BillBoardSpinner = ({ visible, title }: BillBoardSpinnerProps) => {
             data-testid={testIDs.BillboardSpinner}
             style={{ transform: "scale(1.5)" }}
             thickness="8px"
-            emptyColor={emptyColor}
-            bgColor={bg}
+            color={componentColour.foreground}
+            emptyColor={componentColour.background}
+            bgColor={componentColour.background}
             size={"xl"}
           />
         </Flex>

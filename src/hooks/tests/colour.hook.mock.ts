@@ -1,18 +1,45 @@
+let colourIndex = 1;
+
+function mockColour() {
+  const colour = `mockColour${colourIndex}`;
+  colourIndex++;
+  return colour;
+}
+
 const mockColourHook = {
+  bodyColour: {
+    background: mockColour(),
+  },
   buttonColour: {
-    background: "mockColour6",
-    foreground: "mockColour7",
-    border: "mockColour8",
+    background: mockColour(),
+    border: mockColour(),
+    foreground: mockColour(),
+    hoverBackground: mockColour(),
   },
   componentColour: {
-    background: "mockColour1",
-    details: "mockColour2",
-    foreground: "mockColour3",
-    scheme: "mockColour4",
+    background: mockColour(),
+    details: mockColour(),
+    foreground: mockColour(),
+    scheme: mockColour(),
   },
-  bodyColour: {
-    background: "mockColour5",
+  flipCardColour: {
+    background: mockColour(),
+    border: mockColour(),
+    foreground: mockColour(),
+    textFront: mockColour(),
+    textRear: mockColour(),
   },
+  inputColour: {
+    background: mockColour(),
+    border: mockColour(),
+    foreground: mockColour(),
+  },
+  navButtonColour: {
+    background: mockColour(),
+    hoverBackground: mockColour(),
+    selectedBackground: mockColour(),
+  },
+  transparent: mockColour(),
 };
 
 export default mockColourHook;

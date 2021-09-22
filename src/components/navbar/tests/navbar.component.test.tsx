@@ -1,14 +1,25 @@
-import { IconButton } from "@chakra-ui/react";
+import { Box, IconButton } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import { HomePage } from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
+import mockColourHook from "../../../hooks/tests/colour.hook.mock";
 import { NavBarContext } from "../../../providers/navbar/navbar.provider";
+import checkMockCall from "../../../tests/fixtures/mock.component.call";
+import NavBarColorModeToggle from "../navbar.color.mode/navbar.color.mode.component";
 import NavBar, { testIDs } from "../navbar.component";
 import NavBarLogo from "../navbar.logo/navbar.logo.component";
 import NavBarOptions from "../navbar.options/navbar.options.component";
 import NavSpinner from "../navbar.spinner/navbar.spinner.component";
 import type { LastFMTopAlbumsReportResponseInterface } from "../../../types/clients/api/reports/lastfm.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
+
+jest.mock("../../../hooks/colour", () => {
+  return () => mockColourHook;
+});
+
+jest.mock("../navbar.color.mode/navbar.color.mode.component", () =>
+  createMockedComponent("NavBarColorModeToggle")
+);
 
 jest.mock("../navbar.logo/navbar.logo.component", () =>
   createMockedComponent("NavBarLogo")
@@ -23,16 +34,10 @@ jest.mock("../navbar.spinner/navbar.spinner.component", () =>
 );
 
 jest.mock("@chakra-ui/react", () => {
-  const original = jest.requireActual("@chakra-ui/react");
-  const OriginalButton = original["IconButton"];
-  return {
-    ...original,
-    IconButton: jest
-      .fn()
-      .mockImplementation(({ props }) => (
-        <OriginalButton data-testid={"NavBarMobileMenuButton"} {...props} />
-      )),
-  };
+  const {
+    factoryInstance,
+  } = require("../../../tests/fixtures/mock.chakra.react.factory.class");
+  return factoryInstance.create(["Box", "IconButton"]);
 });
 
 jest.mock("../../../hooks/lastfm", () => {
@@ -72,8 +77,6 @@ let mockUserProperties: UserStateInterface = {
   userName: null,
 };
 
-// todo: check all props
-
 describe("NavBar", () => {
   const config = NavConfig;
   const baseMockUserProperties = { ...mockUserProperties };
@@ -92,6 +95,22 @@ describe("NavBar", () => {
         "#text": mockImageUrl,
       },
     ],
+  };
+  const topLevelBoxProps = {
+    bg: mockColourHook.componentColour.background,
+    color: mockColourHook.componentColour.foreground,
+    "data-testid": "NavBarRoot",
+    fontSize: [18, 18, 20],
+    px: 4,
+    style: {
+      position: "fixed",
+      top: 0,
+      width: "100%",
+    },
+    sx: {
+      caretColor: mockColourHook.transparent,
+    },
+    zIndex: 100,
   };
   let visible: boolean;
 
@@ -138,6 +157,11 @@ describe("NavBar", () => {
         arrange(visible);
       });
 
+      it("should render the Box component as expected", async () => {
+        expect(Box).toBeCalledTimes(1);
+        checkMockCall(Box, topLevelBoxProps);
+      });
+
       it("should render the logo component with defaults", async () => {
         expect(
           await screen.findByTestId(mockedComponents.NavBarLogo)
@@ -160,6 +184,10 @@ describe("NavBar", () => {
       it("should render the menu once, inside the spinner", async () => {
         const spinner = await screen.findByTestId(mockedComponents.NavSpinner);
         within(spinner).findByTestId(testIDs.NavBarMenu);
+      });
+
+      it("should render the NavBarColorModeToggle", async () => {
+        expect(NavBarColorModeToggle).toBeCalledTimes(1);
       });
 
       it("should render the menu options once, inside the menu", async () => {
@@ -193,6 +221,11 @@ describe("NavBar", () => {
           arrange(true);
         });
 
+        it("should render the Box component as expected", async () => {
+          expect(Box).toBeCalledTimes(1);
+          checkMockCall(Box, topLevelBoxProps);
+        });
+
         it("should render the logo component with user data", async () => {
           expect(
             await screen.findByTestId(mockedComponents.NavBarLogo)
@@ -210,6 +243,10 @@ describe("NavBar", () => {
           expect(
             (NavSpinner as jest.Mock).mock.calls[0][0].whileTrue
           ).toBeFalsy();
+        });
+
+        it("should render the NavBarColorModeToggle", async () => {
+          expect(NavBarColorModeToggle).toBeCalledTimes(1);
         });
 
         it("should render the menu component once", async () => {
@@ -240,6 +277,11 @@ describe("NavBar", () => {
           arrange(visible);
         });
 
+        it("should render the Box component as expected", async () => {
+          expect(Box).toBeCalledTimes(1);
+          checkMockCall(Box, topLevelBoxProps);
+        });
+
         it("should render the logo component with defaults", async () => {
           expect(
             await screen.findByTestId(mockedComponents.NavBarLogo)
@@ -257,6 +299,10 @@ describe("NavBar", () => {
           expect(
             (NavSpinner as jest.Mock).mock.calls[0][0].whileTrue
           ).toBeFalsy();
+        });
+
+        it("should render the NavBarColorModeToggle", async () => {
+          expect(NavBarColorModeToggle).toBeCalledTimes(1);
         });
 
         it("should render the menu component once", async () => {
