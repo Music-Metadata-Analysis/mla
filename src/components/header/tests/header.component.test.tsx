@@ -19,7 +19,7 @@ const MockNextHeader = ({
   return <>{children}</>;
 };
 
-describe("Header Component", () => {
+describe("Header", () => {
   const testTranslationKey = "default";
 
   beforeEach(() => {

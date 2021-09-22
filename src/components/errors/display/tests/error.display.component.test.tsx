@@ -31,7 +31,7 @@ const createMockedComponent = (name: string) => {
   return factoryInstance.create(name);
 };
 
-describe("ErrorHandler", () => {
+describe("ErrorDisplay", () => {
   const mockErrorMessage = "Test Error";
   const mockError = new Error(mockErrorMessage);
   const mockReset = jest.fn();

@@ -10,7 +10,7 @@ jest.mock("@chakra-ui/react", () => {
   return factoryInstance.create(["Container", "Text", "Center", "Box"]);
 });
 
-describe("billboard", () => {
+describe("Billboard", () => {
   const bgColor = "gray.300";
   const fgColor = "gray.800";
 
