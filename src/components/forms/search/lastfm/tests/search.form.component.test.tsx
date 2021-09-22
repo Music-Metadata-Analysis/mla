@@ -1,13 +1,17 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
+import StyledButton from "../../../../button/button.standard/button.standard.component";
 import SearchForm from "../search.form.component";
 
-jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.chakra.react.factory.class");
-  const chakraMock = factoryInstance.create(["Button"]);
-  return chakraMock;
-});
+jest.mock(
+  "../../../../button/button.standard/button.standard.component",
+  () => {
+    const Original = jest.requireActual(
+      "../../../../button/button.standard/button.standard.component"
+    ).default;
+    return jest.fn((props) => <Original {...props} />);
+  }
+);
 
 describe("SearchForm", () => {
   beforeEach(() => jest.clearAllMocks());
@@ -39,9 +43,30 @@ describe("SearchForm", () => {
     expect(inputField).toHaveFocus();
   });
 
-  it("should display the correct button button text", async () => {
+  it("should display the correct button text", async () => {
     arrange();
     expect(await screen.findByText("t(search.buttonText)")).toBeTruthy();
+  });
+
+  it("should call StyledInput once", async () => {
+    arrange();
+    const inputField = (await screen.findByPlaceholderText(
+      "t(search.fieldPlaceholder)"
+    )) as HTMLInputElement & { ref: string };
+    expect(inputField.id).toBe("username");
+    expect(inputField.placeholder).toBe("t(search.fieldPlaceholder)");
+  });
+
+  it("should call Button with the correct props", async () => {
+    arrange();
+    expect(StyledButton).toBeCalledTimes(1);
+    checkMockCall(StyledButton, {
+      analyticsName: "Search: last.fm",
+      isLoading: false,
+      mb: 2,
+      mt: 4,
+      type: "submit",
+    });
   });
 
   describe("when text is entered", () => {

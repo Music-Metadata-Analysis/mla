@@ -3,8 +3,6 @@ import { render, screen } from "@testing-library/react";
 import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import BackGround from "../background.component";
 
-// todo: refactor to use mock colour hook
-
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
