@@ -22,7 +22,7 @@ jest.mock("../../../hooks/colour", () => {
 
 const MockColor = "MockColor";
 
-describe("background", () => {
+describe("Background", () => {
   const mockChildComponent = "MockChildComponent";
 
   beforeEach(() => {
