@@ -15,11 +15,14 @@ Object.defineProperty(window, "location", {
 
 const mockRouter: NextRouter = {
   ...mockRouterPrototype,
+  isLocaleDomain: true,
+  isPreview: false,
+  back: jest.fn(() => Promise.resolve()),
+  beforePopState: jest.fn(() => null),
   push: jest.fn(() => Promise.resolve(true)),
   reload: jest.fn(() => Promise.resolve()),
-  isLocaleDomain: true,
+  replace: jest.fn(() => Promise.resolve(true)),
   prefetch: jest.fn(() => Promise.resolve()),
-  isPreview: false,
 };
 
 export default mockRouter;
