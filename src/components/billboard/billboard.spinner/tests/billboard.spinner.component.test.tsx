@@ -1,4 +1,6 @@
+import { Spinner } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
+import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import BillBoard from "../../billboard.component";
 import BillBoardSpinner, { testIDs } from "../billboard.spinner.component";
@@ -6,6 +8,17 @@ import BillBoardSpinner, { testIDs } from "../billboard.spinner.component";
 jest.mock("../../billboard.component", () =>
   createMockedComponent("Billboard")
 );
+
+jest.mock("../../../../hooks/colour", () => {
+  return () => mockColourHook;
+});
+
+jest.mock("@chakra-ui/react", () => {
+  const {
+    factoryInstance,
+  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  return factoryInstance.create(["Spinner"]);
+});
 
 const createMockedComponent = (name: string) => {
   const {
@@ -16,6 +29,17 @@ const createMockedComponent = (name: string) => {
 
 describe("BillBoardSpinner", () => {
   const testTitle = "Test Title";
+  const spinnerProps = {
+    bgColor: mockColourHook.componentColour.background,
+    color: mockColourHook.componentColour.foreground,
+    "data-testid": testIDs.BillboardSpinner,
+    emptyColor: mockColourHook.componentColour.background,
+    size: "xl",
+    style: {
+      transform: "scale(1.5)",
+    },
+    thickness: "8px",
+  };
 
   const arrange = (visibility: boolean) => {
     render(<BillBoardSpinner visible={visibility} title={testTitle} />);
@@ -32,7 +56,8 @@ describe("BillBoardSpinner", () => {
     });
 
     it("should render the spinner", async () => {
-      expect(await screen.findByTestId(testIDs.BillboardSpinner)).toBeTruthy();
+      expect(Spinner).toBeCalledTimes(1);
+      checkMockCall(Spinner, spinnerProps);
     });
 
     it("should render the spinner as visible", async () => {
@@ -51,8 +76,9 @@ describe("BillBoardSpinner", () => {
       checkMockCall(BillBoard, { title: testTitle });
     });
 
-    it("should render the spinner", () => {
-      expect(screen.queryByTestId(testIDs.BillboardSpinner)).toBeTruthy();
+    it("should render the spinner", async () => {
+      expect(Spinner).toBeCalledTimes(1);
+      checkMockCall(Spinner, spinnerProps);
     });
 
     it("should render the spinner as NOT visible", async () => {

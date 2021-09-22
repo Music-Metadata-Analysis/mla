@@ -26,7 +26,6 @@ export default function Top20Container({
 
   useEffect(() => {
     user.clear();
-
     user.top20(username);
     return () => user.clear();
     // eslint-disable-next-line react-hooks/exhaustive-deps

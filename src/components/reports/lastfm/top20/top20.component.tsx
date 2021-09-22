@@ -29,13 +29,11 @@ export default function Top20Report({
     return image.getAlbumArtWork(index, size);
   };
 
-  /* istanbul ignore next */
   const flipper = (index: null | number) => {
     flipperController(index);
     onOpen();
   };
 
-  /* istanbul ignore next */
   const closeDrawer = () => {
     flipperController(null);
     onClose();

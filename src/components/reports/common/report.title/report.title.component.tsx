@@ -8,7 +8,7 @@ interface ReportTitleProps {
 }
 
 const ReportTitle = ({ size, title, userName }: ReportTitleProps) => {
-  const { componentColour } = useColour();
+  const { componentColour, transparent } = useColour();
   const maxWidth = 4 * size + 20;
 
   if (!userName) return null;
@@ -28,6 +28,9 @@ const ReportTitle = ({ size, title, userName }: ReportTitleProps) => {
         centerContent={true}
         maxW={`${maxWidth}px`}
         textAlign={"center"}
+        sx={{
+          caretColor: transparent,
+        }}
       >
         <Text fontSize={["xl", "2xl", "3xl"]}>{userName}</Text>
         <Text fontSize={["l", "xl", "2xl"]}>{title}</Text>

@@ -1,7 +1,12 @@
 import { Box, Img, Text } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import mockColourHook from "../../../hooks/tests/colour.hook.mock";
 import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import FlipCard, { FlipCardProps, testIDs } from "../flip.card.component";
+
+jest.mock("../../../hooks/colour", () => {
+  return () => mockColourHook;
+});
 
 jest.mock("@chakra-ui/react", () => {
   const {
@@ -26,17 +31,12 @@ const TestProps: FlipCardProps = {
 describe("FlipCard", () => {
   let currentProps: FlipCardProps;
   const borderSize = 1;
-  const borderColor = "gray.500";
-  const backgroundColor = "gray.900";
-  const foregroundColor = "gray.200";
-  const frontOverlayText = "gray.800";
-  const rearOverlayText = "gray.300";
 
   const expectedBoxProps = {
     borderWidth: 1,
-    borderColor: borderColor,
-    bg: backgroundColor,
-    color: foregroundColor,
+    borderColor: mockColourHook.flipCardColour.border,
+    bg: mockColourHook.flipCardColour.background,
+    color: mockColourHook.flipCardColour.foreground,
     width: TestProps.size,
     height: TestProps.size,
     cursor: "pointer",
@@ -109,7 +109,7 @@ describe("FlipCard", () => {
       it("should call Text once with the correct props", async () => {
         expect(Text).toBeCalledTimes(1);
         checkMockCall(Text, {
-          color: rearOverlayText,
+          color: mockColourHook.flipCardColour.textRear,
           "data-testid": testIDs.flipRearText,
           style: {
             position: "absolute",
@@ -201,7 +201,7 @@ describe("FlipCard", () => {
         Text,
         {
           "data-testid": testIDs.flipFrontText,
-          color: frontOverlayText,
+          color: mockColourHook.flipCardColour.textFront,
           style: {
             position: "absolute",
           },
@@ -213,7 +213,7 @@ describe("FlipCard", () => {
         Text,
         {
           "data-testid": testIDs.flipRearText,
-          color: rearOverlayText,
+          color: mockColourHook.flipCardColour.textRear,
           style: {
             position: "absolute",
           },

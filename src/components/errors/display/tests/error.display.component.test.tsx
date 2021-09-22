@@ -1,20 +1,25 @@
 import { WarningTwoIcon } from "@chakra-ui/icons";
-import { Flex, Button } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
 import translation from "../../../../../public/locales/en/main.json";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import Billboard from "../../../billboard/billboard.component";
+import StyledButton from "../../../button/button.standard/button.standard.component";
 import ErrorDisplay from "../error.display.component";
 
 jest.mock("../../../billboard/billboard.component", () =>
   createMockedComponent("BillBoard")
 );
 
+jest.mock("../../../button/button.standard/button.standard.component", () =>
+  createMockedComponent("StyledButton")
+);
+
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
   } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Flex", "Button"]);
+  return factoryInstance.create(["Flex"]);
 });
 
 jest.mock("@chakra-ui/icons", () => {
@@ -87,8 +92,8 @@ describe("ErrorDisplay", () => {
     });
 
     it("should render the Button correctly", () => {
-      expect(Button).toBeCalledTimes(1);
-      checkMockCall(Button, { bg: "gray.500", size: "sm" });
+      expect(StyledButton).toBeCalledTimes(1);
+      checkMockCall(StyledButton, { analyticsName: "Clear Error State" });
     });
 
     it("should display the Button text correctly", async () => {
@@ -98,8 +103,10 @@ describe("ErrorDisplay", () => {
     });
 
     it("should call the reset function when the Button is pressed", () => {
-      expect(Button).toBeCalledTimes(1);
-      expect((Button as jest.Mock).mock.calls[0][0].onClick).toBe(mockReset);
+      expect(StyledButton).toBeCalledTimes(1);
+      expect((StyledButton as jest.Mock).mock.calls[0][0].onClick).toBe(
+        mockReset
+      );
     });
   });
 
@@ -137,8 +144,8 @@ describe("ErrorDisplay", () => {
     });
 
     it("should render the Button correctly", () => {
-      expect(Button).toBeCalledTimes(1);
-      checkMockCall(Button, { bg: "gray.500", size: "sm" });
+      expect(StyledButton).toBeCalledTimes(1);
+      checkMockCall(StyledButton, { analyticsName: "Clear Error State" });
     });
 
     it("should display the Button text correctly", async () => {
@@ -148,8 +155,10 @@ describe("ErrorDisplay", () => {
     });
 
     it("should call the reset function when the Button is pressed", () => {
-      expect(Button).toBeCalledTimes(1);
-      expect((Button as jest.Mock).mock.calls[0][0].onClick).toBe(mockReset);
+      expect(StyledButton).toBeCalledTimes(1);
+      expect((StyledButton as jest.Mock).mock.calls[0][0].onClick).toBe(
+        mockReset
+      );
     });
   });
 });

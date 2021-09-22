@@ -1,6 +1,6 @@
-import { useColorModeValue } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { Selected, UnSelected } from "./navbar.link.styles";
+import useColour from "../../../hooks/colour";
 import type { ButtonClickHandlerType } from "../../../types/analytics.types";
 import type { MouseEvent } from "react";
 
@@ -18,8 +18,7 @@ const NavLink = ({
   trackButtonClick,
 }: NavLinkProps) => {
   const router = useRouter();
-  const hoverBackground = useColorModeValue("gray.300", "gray.700");
-  const background = useColorModeValue("gray.100", "gray.900");
+  const { navButtonColour, transparent } = useColour();
   const Element = selected ? Selected : UnSelected;
 
   const navigate = (
@@ -33,15 +32,19 @@ const NavLink = ({
 
   return (
     <Element
-      onClick={(e) => navigate(e, children as string, href)}
+      borderColor={selected ? navButtonColour.selectedBackground : transparent}
+      onClick={(e) => {
+        e.currentTarget.blur();
+        navigate(e, children as string, href);
+      }}
       px={2}
       py={1}
       rounded={"md"}
       _hover={{
         textDecoration: "none",
-        bg: hoverBackground,
+        bg: navButtonColour.hoverBackground,
       }}
-      bg={background}
+      bg={navButtonColour.background}
     >
       {children}
     </Element>

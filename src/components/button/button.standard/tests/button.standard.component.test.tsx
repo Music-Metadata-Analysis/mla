@@ -1,9 +1,15 @@
 import { Button } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
+import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
+import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import StyledButton from "../button.standard.component";
 
 jest.mock("next/link", () => createMockedComponent("NextLink"));
+
+jest.mock("../../../../hooks/colour", () => {
+  return () => mockColourHook;
+});
 
 jest.mock("@chakra-ui/react", () => {
   const {
@@ -45,14 +51,15 @@ describe("StandardButton", () => {
   it("should render Button as expected", () => {
     arrange();
     expect(Button).toBeCalledTimes(1);
-    const call = (Button as jest.Mock).mock.calls[0];
-    expect(call[0].bg).toBeDefined();
-    expect(call[0].borderWidth).toBeDefined();
-    expect(call[0].borderColor).toBeDefined();
-    expect(call[0].children).toBeDefined();
-    expect(call[0].color).toBeDefined();
-    expect(call[0].onClick).toBe(mockClickHandler);
-    expect(Object.keys(call[0]).length).toBe(6);
+    checkMockCall(Button, {
+      _hover: {
+        bg: mockColourHook.buttonColour.hoverBackground,
+      },
+      bg: mockColourHook.buttonColour.background,
+      borderColor: mockColourHook.buttonColour.border,
+      borderWidth: 1,
+      color: mockColourHook.buttonColour.foreground,
+    });
   });
 
   describe("when a button is clicked", () => {

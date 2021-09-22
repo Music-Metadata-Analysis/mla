@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import NextLink from "next/link";
 import mockAnalyticsHook from "../../../hooks/tests/analytics.mock";
-import ButtonLink from "../button.link.component";
+import ButtonLink from "../link.component";
 
 jest.mock("next/link", () => createMockedComponent("NextLink"));
 
@@ -17,7 +17,7 @@ const createMockedComponent = (name: string) => {
   return factoryInstance.create(name);
 };
 
-describe("ButtonLink", () => {
+describe("SimpleLink", () => {
   const linkText = "Link";
   const mockHref = "test'";
 

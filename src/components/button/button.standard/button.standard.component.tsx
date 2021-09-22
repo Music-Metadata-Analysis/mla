@@ -20,6 +20,9 @@ export default function StyledButton({
       <Button
         bg={buttonColour.background}
         color={buttonColour.foreground}
+        _hover={{
+          bg: buttonColour.hoverBackground,
+        }}
         borderWidth={1}
         borderColor={buttonColour.border}
         {...buttonProps}
