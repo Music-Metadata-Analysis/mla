@@ -3,8 +3,11 @@ import React from "react";
 import ReactGA from "react-ga";
 import { AnalyticsContext } from "../providers/analytics/analytics.provider";
 import Event from "../providers/analytics/event.class";
-import { isProduction } from "../utils/env";
-import type { ButtonClickHandlerType } from "../types/analytics.types";
+import { isProduction, isTest } from "../utils/env";
+import type {
+  ButtonClickHandlerType,
+  LinkClickHandlerType,
+} from "../types/analytics.types";
 import type { EventArgs } from "react-ga";
 
 const useAnalytics = () => {
@@ -29,12 +32,26 @@ const useAnalytics = () => {
     event(clickEvent);
   };
 
+  const trackExternalLinkClick: LinkClickHandlerType = (e, href) => {
+    const clickEvent = new Event({
+      category: "MAIN",
+      label: "EXTERNAL_LINK",
+      action: `VISITED: ${href}`,
+    });
+    event(clickEvent);
+  };
+
   const handleRouteChange = (url: string): void => {
     ReactGA.set({ page: url });
     ReactGA.pageview(url);
   };
 
   const event = (eventArgs: EventArgs): void => {
+    if (!isProduction() && !isTest()) {
+      console.group("EVENT");
+      console.log(eventArgs);
+      console.groupEnd();
+    }
     if (initialized) {
       ReactGA.event(eventArgs);
     }
@@ -52,6 +69,7 @@ const useAnalytics = () => {
     event,
     setup,
     trackButtonClick,
+    trackExternalLinkClick,
   };
 };
 
