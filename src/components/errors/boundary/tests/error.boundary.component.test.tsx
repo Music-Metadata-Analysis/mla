@@ -86,6 +86,10 @@ describe("ErrorBoundary", () => {
     await screen.findByTestId(testIDs.TestComponent);
   });
 
+  it("should NOT yet generate an analytics event", () => {
+    expect(mockAnalyticsHook.event).toBeCalledTimes(0);
+  });
+
   describe("when an error is thrown", () => {
     beforeEach(async () => {
       const link = await screen.findByTestId(testIDs.TriggerError);
