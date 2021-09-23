@@ -32,6 +32,12 @@ describe("useAnalytics", () => {
     category: "MAIN",
     label: "BUTTON",
   });
+  const mockExternalLink = "http://somewebsite.com";
+  const mockExternalLinkClickEvent = new Event({
+    action: `VISITED: ${mockExternalLink}`,
+    category: "MAIN",
+    label: "EXTERNAL_LINK",
+  });
 
   beforeAll(() => {
     originalEnvironment = process.env;
@@ -39,6 +45,9 @@ describe("useAnalytics", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(console, "group").mockImplementation(() => jest.fn());
+    jest.spyOn(console, "groupEnd").mockImplementation(() => jest.fn());
+    jest.spyOn(console, "log").mockImplementation(() => jest.fn());
     jest.spyOn(require("next/router"), "useRouter").mockImplementation(() => {
       return { events: { on: routerEventListener } };
     });
@@ -81,6 +90,10 @@ describe("useAnalytics", () => {
       expect(received.result.current.setup).toBeInstanceOf(Function);
       expect(received.result.current.event).toBeInstanceOf(Function);
       expect(received.result.current.trackButtonClick).toBeInstanceOf(Function);
+      expect(received.result.current.trackExternalLinkClick).toBeInstanceOf(
+        Function
+      );
+      expect(Object.keys(received.result.current).length).toBe(4);
     });
   });
 
@@ -95,7 +108,7 @@ describe("useAnalytics", () => {
         process.env.REACT_APP_UA_CODE = "";
       });
 
-      describe("when initialized", () => {
+      describe("when NOT initialized", () => {
         beforeEach(() => {
           received = arrange({
             initialized: false,
@@ -123,7 +136,7 @@ describe("useAnalytics", () => {
           });
         });
 
-        describe("buttonClick", () => {
+        describe("trackButtonClick", () => {
           beforeEach(() => {
             received.result.current.trackButtonClick(
               mockMouseEvent,
@@ -135,59 +148,89 @@ describe("useAnalytics", () => {
             expect(ReactGA.event).toBeCalledTimes(0);
           });
         });
+
+        describe("trackExternalLinkClick", () => {
+          beforeEach(() => {
+            received.result.current.trackExternalLinkClick(
+              mockMouseEvent,
+              mockExternalLink
+            );
+          });
+
+          it("should NOT process events", async () => {
+            expect(ReactGA.event).toBeCalledTimes(0);
+          });
+        });
+      });
+    });
+
+    describe("with a valid tracker code", () => {
+      beforeAll(() => {
+        process.env.REACT_APP_UA_CODE = "tracker code";
       });
 
-      describe("with a valid tracker code", () => {
-        beforeAll(() => {
-          process.env.REACT_APP_UA_CODE = "tracker code";
+      describe("when NOT initialized", () => {
+        beforeEach(() => {
+          received = arrange({
+            initialized: false,
+            setInitialized: mockSetInitialized,
+          });
         });
 
-        describe("when not initialized", () => {
-          beforeEach(() => {
-            received = arrange({
-              initialized: false,
-              setInitialized: mockSetInitialized,
-            });
-          });
+        describe("setup", () => {
+          beforeEach(() => received.result.current.setup());
 
-          describe("setup", () => {
-            beforeEach(() => received.result.current.setup());
-
-            it("should initialize analytics (with debug disabled)", async () => {
-              expect(ReactGA.initialize).toBeCalledTimes(1);
-              expect(ReactGA.initialize).toHaveBeenCalledWith(
-                process.env.REACT_APP_UA_CODE,
-                { debug: expectedDebugMode }
-              );
-            });
-
-            it("should set initialized to true", async () => {
-              expect(mockSetInitialized).toHaveBeenCalledTimes(1);
-              expect(mockSetInitialized).toHaveBeenCalledWith(true);
-            });
-          });
-
-          describe("event", () => {
-            beforeEach(() =>
-              received.result.current.event(Events.General.Test)
+          it("should initialize analytics (with debug disabled)", async () => {
+            expect(ReactGA.initialize).toBeCalledTimes(1);
+            expect(ReactGA.initialize).toHaveBeenCalledWith(
+              process.env.REACT_APP_UA_CODE,
+              { debug: expectedDebugMode }
             );
-
-            it("should NOT process events", async () => {
-              expect(ReactGA.event).toBeCalledTimes(0);
-            });
           });
 
-          describe("buttonClick", () => {
-            beforeEach(() => {
-              received.result.current.trackButtonClick(
-                mockMouseEvent,
-                mockButtonName
-              );
-            });
+          it("should set initialized to true", async () => {
+            expect(mockSetInitialized).toHaveBeenCalledTimes(1);
+            expect(mockSetInitialized).toHaveBeenCalledWith(true);
+          });
+        });
 
-            it("should NOT process events", async () => {
-              expect(ReactGA.event).toBeCalledTimes(0);
-            });
+        describe("event", () => {
+          beforeEach(() => received.result.current.event(Events.General.Test));
+
+          it("should NOT log events", async () => {
+            expect(console.log).toBeCalledTimes(0);
+            expect(console.group).toBeCalledTimes(0);
+            expect(console.groupEnd).toBeCalledTimes(0);
+          });
+
+          it("should NOT process events", async () => {
+            expect(ReactGA.event).toBeCalledTimes(0);
+          });
+        });
+
+        describe("trackButtonClick", () => {
+          beforeEach(() => {
+            received.result.current.trackButtonClick(
+              mockMouseEvent,
+              mockButtonName
+            );
+          });
+
+          it("should NOT process events", async () => {
+            expect(ReactGA.event).toBeCalledTimes(0);
+          });
+        });
+
+        describe("trackExternalLinkClick", () => {
+          beforeEach(() => {
+            received.result.current.trackExternalLinkClick(
+              mockMouseEvent,
+              mockExternalLink
+            );
+          });
+
+          it("should NOT process events", async () => {
+            expect(ReactGA.event).toBeCalledTimes(0);
           });
         });
       });
@@ -234,13 +277,19 @@ describe("useAnalytics", () => {
         describe("event", () => {
           beforeEach(() => received.result.current.event(Events.General.Test));
 
+          it("should NOT log events", async () => {
+            expect(console.log).toBeCalledTimes(0);
+            expect(console.group).toBeCalledTimes(0);
+            expect(console.groupEnd).toBeCalledTimes(0);
+          });
+
           it("should process events", async () => {
             expect(ReactGA.event).toBeCalledTimes(1);
             expect(ReactGA.event).toBeCalledWith(Events.General.Test);
           });
         });
 
-        describe("buttonClick", () => {
+        describe("trackButtonClick", () => {
           beforeEach(() => {
             received.result.current.trackButtonClick(
               mockMouseEvent,
@@ -253,14 +302,28 @@ describe("useAnalytics", () => {
             expect(ReactGA.event).toBeCalledWith(mockButtonClickEvent);
           });
         });
+
+        describe("trackExternalLinkClick", () => {
+          beforeEach(() => {
+            received.result.current.trackExternalLinkClick(
+              mockMouseEvent,
+              mockExternalLink
+            );
+          });
+
+          it("should process events as expected", async () => {
+            expect(ReactGA.event).toBeCalledTimes(1);
+            expect(ReactGA.event).toBeCalledWith(mockExternalLinkClickEvent);
+          });
+        });
       });
     });
   });
 
-  describe("when NOT in production", () => {
+  describe("when NOT in production and NOT in test", () => {
     beforeAll(() => {
       expectedDebugMode = true;
-      (process.env as MutableEnv).NODE_ENV = "test";
+      (process.env as MutableEnv).NODE_ENV = "development";
     });
 
     describe("without a valid tracker code", () => {
@@ -268,7 +331,7 @@ describe("useAnalytics", () => {
         process.env.REACT_APP_UA_CODE = "";
       });
 
-      describe("when not initialized", () => {
+      describe("when NOT initialized", () => {
         beforeEach(() => {
           received = arrange({
             initialized: false,
@@ -291,16 +354,38 @@ describe("useAnalytics", () => {
         describe("event", () => {
           beforeEach(() => received.result.current.event(Events.General.Test));
 
+          it("should log events", async () => {
+            expect(console.log).toBeCalledTimes(1);
+            expect(console.log).toBeCalledWith(Events.General.Test);
+            expect(console.group).toBeCalledTimes(1);
+            expect(console.group).toBeCalledWith("EVENT");
+            expect(console.groupEnd).toBeCalledTimes(1);
+            expect(console.groupEnd).toBeCalledWith();
+          });
+
           it("should NOT process events", async () => {
             expect(ReactGA.event).toBeCalledTimes(0);
           });
         });
 
-        describe("buttonClick", () => {
+        describe("trackButtonClick", () => {
           beforeEach(() => {
             received.result.current.trackButtonClick(
               mockMouseEvent,
               mockButtonName
+            );
+          });
+
+          it("should NOT process events", async () => {
+            expect(ReactGA.event).toBeCalledTimes(0);
+          });
+        });
+
+        describe("trackExternalLinkClick", () => {
+          beforeEach(() => {
+            received.result.current.trackExternalLinkClick(
+              mockMouseEvent,
+              mockExternalLink
             );
           });
 
@@ -316,7 +401,65 @@ describe("useAnalytics", () => {
         process.env.REACT_APP_UA_CODE = "tracker code";
       });
 
-      describe("when not initialized", () => {
+      describe("when analytics is initialized", () => {
+        beforeEach(() => {
+          received = arrange({
+            initialized: true,
+            setInitialized: mockSetInitialized,
+          });
+        });
+
+        describe("setup", () => {
+          beforeEach(() => received.result.current.setup());
+
+          it("should NOT initialize analytics", async () => {
+            expect(ReactGA.initialize).toBeCalledTimes(0);
+          });
+
+          it("should NOT set initialized to true", async () => {
+            expect(mockSetInitialized).toHaveBeenCalledTimes(0);
+          });
+
+          it("should start listening to router events", async () => {
+            expect(routerEventListener).toHaveBeenCalledTimes(1);
+          });
+
+          it("should respond to a router event by publishing the details", async () => {
+            const fakeUrl = "127.0.0.1/fake";
+
+            expect(routerEventListener).toHaveBeenCalledTimes(1);
+            const handler = routerEventListener.mock.calls[0][1];
+
+            handler(fakeUrl);
+
+            expect(ReactGA.set).toBeCalledTimes(1);
+            expect(ReactGA.set).toBeCalledWith({ page: fakeUrl });
+
+            expect(ReactGA.pageview).toBeCalledTimes(1);
+            expect(ReactGA.pageview).toBeCalledWith(fakeUrl);
+          });
+        });
+
+        describe("event", () => {
+          beforeEach(() => received.result.current.event(Events.General.Test));
+
+          it("should log events", async () => {
+            expect(console.log).toBeCalledTimes(1);
+            expect(console.log).toBeCalledWith(Events.General.Test);
+            expect(console.group).toBeCalledTimes(1);
+            expect(console.group).toBeCalledWith("EVENT");
+            expect(console.groupEnd).toBeCalledTimes(1);
+            expect(console.groupEnd).toBeCalledWith();
+          });
+
+          it("should process events", async () => {
+            expect(ReactGA.event).toBeCalledTimes(1);
+            expect(ReactGA.event).toBeCalledWith(Events.General.Test);
+          });
+        });
+      });
+
+      describe("when NOT initialized", () => {
         beforeEach(() => {
           received = arrange({
             initialized: false,
