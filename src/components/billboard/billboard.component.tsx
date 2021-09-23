@@ -10,8 +10,9 @@ const Billboard = ({ children, title }: BillboardProps) => {
   const { componentColour, transparent } = useColour();
 
   return (
-    <Center height={"calc(100vh - 32px)"}>
+    <Center height={"calc(100vh)"}>
       <Box
+        mt={16}
         p={3}
         color={componentColour.foreground}
         bg={componentColour.background}

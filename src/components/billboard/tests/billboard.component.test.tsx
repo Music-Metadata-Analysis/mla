@@ -34,7 +34,7 @@ describe("Billboard", () => {
 
   it("should call the Center component correctly", () => {
     expect(Center).toBeCalledTimes(1);
-    checkMockCall(Center, { height: "calc(100vh - 32px)" });
+    checkMockCall(Center, { height: "calc(100vh)" });
   });
 
   it("should call the Container component correctly", () => {
@@ -55,6 +55,7 @@ describe("Billboard", () => {
       bg: mockColourHook.componentColour.background,
       color: mockColourHook.componentColour.foreground,
       p: 3,
+      mt: 16,
       w: ["90%", "80%", "70%"],
     });
   });
