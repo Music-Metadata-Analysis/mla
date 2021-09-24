@@ -5,6 +5,7 @@ export type EventDefinitionType = {
   label:
     | "BUTTON"
     | "CONTACT"
+    | "DATA: ALBUM"
     | "ERROR"
     | "EXTERNAL_LINK"
     | "REQUEST"
@@ -15,17 +16,15 @@ export type EventDefinitionType = {
   value?: number;
 };
 
-export type NavBarAvatarClickSource = "AVATAR: PROFILE" | "AVATAR: LASTFM";
-
 export type EventCreatorType = (eventArgs: EventArgs) => void;
 
 export type ButtonClickHandlerType = (
-  e: React.MouseEvent<HTMLElement>,
+  e: React.BaseSyntheticEvent,
   buttonName: React.ReactNode | string
 ) => void;
 
 export type LinkClickHandlerType = (
-  e: React.MouseEvent<HTMLElement>,
+  e: React.BaseSyntheticEvent,
   href: string
 ) => void;
 

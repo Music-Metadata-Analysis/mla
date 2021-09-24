@@ -60,11 +60,11 @@ describe("NavBarAvatar", () => {
         }
       });
 
-      it("should call the button tracker correctly", () => {
-        expect(mockAnalyticsHook.trackButtonClick).toBeCalledTimes(1);
-        const call = mockAnalyticsHook.trackButtonClick.mock.calls[0];
+      it("should call the external link tracker correctly", () => {
+        expect(mockAnalyticsHook.trackExternalLinkClick).toBeCalledTimes(1);
+        const call = mockAnalyticsHook.trackExternalLinkClick.mock.calls[0];
         expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-        expect(call[1]).toBe("AVATAR: PROFILE");
+        expect(call[1]).toBe(mockHref);
         expect(Object.keys(call).length).toBe(2);
       });
     });
@@ -100,11 +100,11 @@ describe("NavBarAvatar", () => {
         }
       });
 
-      it("should call the button tracker correctly", () => {
-        expect(mockAnalyticsHook.trackButtonClick).toBeCalledTimes(1);
-        const call = mockAnalyticsHook.trackButtonClick.mock.calls[0];
+      it("should call the external link tracker correctly", () => {
+        expect(mockAnalyticsHook.trackExternalLinkClick).toBeCalledTimes(1);
+        const call = mockAnalyticsHook.trackExternalLinkClick.mock.calls[0];
         expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-        expect(call[1]).toBe("AVATAR: LASTFM");
+        expect(call[1]).toBe(mockHref);
         expect(Object.keys(call).length).toBe(2);
       });
     });

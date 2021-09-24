@@ -1,26 +1,18 @@
-import {
-  Box,
-  Divider,
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerCloseButton,
-  DrawerContent,
-  Flex,
-  Img,
-} from "@chakra-ui/react";
+import { Box, Divider, Flex, Img } from "@chakra-ui/react";
+import { useEffect } from "react";
+import useAnalytics from "../../../../../hooks/analytics";
 import useColour from "../../../../../hooks/colour";
+import Event from "../../../../../providers/analytics/event.class";
 import StyledButtonLink from "../../../../button/button.link/button.link.component";
-import type { LastFMAlbumDataInterface } from "../../../../../types/integrations/lastfm/api.types";
+import Drawer from "../../../common/drawer/drawer.component";
+import type UserAlbumState from "../../../../../providers/user/encapsulations/user.state.album.class";
 import type { TFunction } from "next-i18next";
 
 export interface AlbumDrawerInterface {
-  albums: LastFMAlbumDataInterface[];
-  albumIndex: number | null;
+  userState: UserAlbumState;
+  albumIndex: number;
   fallbackImage: string;
   isOpen: boolean;
-  top20GetAlbumArtWork: (index: number, size: string) => string;
   onClose: () => void;
   t: TFunction;
 }
@@ -34,106 +26,73 @@ export const testIDs = {
 };
 
 const AlbumDrawer = ({
-  albums,
+  userState,
   albumIndex,
   fallbackImage,
   isOpen,
-  top20GetAlbumArtWork,
   onClose,
   t,
 }: AlbumDrawerInterface) => {
-  const { componentColour, transparent } = useColour();
+  const analytics = useAnalytics();
+  const { componentColour } = useColour();
   const imageSize = "150";
   const lastFMImageSize = "large" as const;
+  const albumName = userState.getAlbumName(albumIndex);
+  const albumPlayCount = userState.getPlayCount(albumIndex);
+  const albumExternalLink = userState.getAlbumExternalLink(albumIndex);
+  const albumArtWork = userState.getAlbumArtWork(albumIndex, lastFMImageSize);
+  const artistName = userState.getArtistName(albumIndex);
 
-  if (albumIndex === null) {
-    return null;
-  }
-
-  const album = albums[albumIndex];
-  const albumName = album.name ? album.name : t("top20.drawer.unknownAlbum");
-  const artistName = album.artist
-    ? album.artist.name
-    : t("top20.drawer.unknownArtist");
-  const albumPlayCount = album.playcount ? album.playcount : 0;
-  const albumExternalLink = album.url
-    ? album.url
-    : `https://last.fm/music/${
-        encodeURIComponent(artistName as string) +
-        "/" +
-        encodeURIComponent(albumName)
-      }`;
+  useEffect(() => {
+    analytics.event(
+      new Event({
+        category: "LASTFM",
+        label: "DATA: ALBUM",
+        action: `VIEW ALBUM DETAILS: ${artistName}:${albumName}`,
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Drawer
+      title={`${artistName}: ${albumName}`}
       data-testid={testIDs.AlbumDrawer}
-      placement={"bottom"}
       isOpen={isOpen}
       onClose={onClose}
     >
-      <DrawerOverlay />
-      <DrawerContent
-        colorScheme={componentColour.scheme}
-        bg={componentColour.background}
-        color={componentColour.foreground}
-        sx={{
-          caretColor: transparent,
-        }}
-      >
-        <DrawerCloseButton
-          data-testid={testIDs.AlbumDrawerCloseButton}
-          sx={{
-            boxShadow: "none !important",
-          }}
-        />
-        <DrawerHeader>{`${artistName}: ${albumName}`}</DrawerHeader>
-        <Divider
-          style={{ background: componentColour.scheme }}
-          orientation="horizontal"
-        />
-        <DrawerBody>
-          <Flex>
-            <Box borderWidth={"1px"} borderColor={componentColour.details}>
-              <Img
-                src={top20GetAlbumArtWork(albumIndex, lastFMImageSize)}
-                alt={t("top20.drawer.coverArtAltText")}
-                width={`${imageSize}px`}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).onerror = null;
-                  (e.target as HTMLImageElement).src = fallbackImage;
-                }}
-                style={{
-                  position: "relative",
-                }}
-              />
-            </Box>
-            <Divider ml={`10px`} mr={`10px`} orientation="vertical" />
-            <Flex flexDirection={"column"} justifyContent={"space-between"}>
-              <div>
-                <p data-testid={testIDs.AlbumDrawerRank}>
-                  <strong>{t("top20.drawer.rank")}</strong>
-                  {`: ${albumIndex + 1}`}
-                </p>
-                <p data-testid={testIDs.AlbumDrawerPlayCount}>
-                  <strong>{t("top20.drawer.playCount")}</strong>
-                  {`: ${albumPlayCount}`}
-                </p>
-              </div>
-              <StyledButtonLink
-                analyticsName="LastFM Top20 Album Report: Goto Album"
-                href={albumExternalLink}
-              >
-                {t("top20.drawer.albumButtonText")}
-              </StyledButtonLink>
-            </Flex>
-          </Flex>
-        </DrawerBody>
-        <Divider
-          style={{ background: componentColour.scheme }}
-          mb={2}
-          orientation="horizontal"
-        />
-      </DrawerContent>
+      <Flex>
+        <Box borderWidth={"1px"} borderColor={componentColour.details}>
+          <Img
+            src={albumArtWork}
+            alt={t("top20.drawer.coverArtAltText")}
+            width={`${imageSize}px`}
+            onError={(e) => {
+              (e.target as HTMLImageElement).onerror = null;
+              (e.target as HTMLImageElement).src = fallbackImage;
+            }}
+            style={{
+              position: "relative",
+            }}
+          />
+        </Box>
+        <Divider ml={`10px`} mr={`10px`} orientation="vertical" />
+        <Flex flexDirection={"column"} justifyContent={"space-between"}>
+          <div>
+            <p data-testid={testIDs.AlbumDrawerRank}>
+              <strong>{t("top20.drawer.rank")}</strong>
+              {`: ${albumIndex + 1}`}
+            </p>
+            <p data-testid={testIDs.AlbumDrawerPlayCount}>
+              <strong>{t("top20.drawer.playCount")}</strong>
+              {`: ${albumPlayCount}`}
+            </p>
+          </div>
+          <StyledButtonLink href={albumExternalLink}>
+            {t("top20.drawer.albumButtonText")}
+          </StyledButtonLink>
+        </Flex>
+      </Flex>
     </Drawer>
   );
 };

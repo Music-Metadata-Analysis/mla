@@ -16,6 +16,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["*.d.ts", "src/**/*.ts", "src/**/*.tsx"],
+  "include": ["*.d.ts", "src/**/*.ts", "src/**/*.tsx", "src/components/reports/lastfm/top20/drawer.album/tests/drawer.album.component.test.off"],
   "exclude": ["node_modules"]
 }
