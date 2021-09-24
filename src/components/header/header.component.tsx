@@ -14,7 +14,7 @@ const Header = ({ pageKey }: HeaderProps) => {
       <Head>
         <title>{t(`pages.${pageKey}.title`)}</title>
         <meta name="description" content={t(`pages.${pageKey}.description`)} />
-        <link rel="icon" href={settings.favicon} />
+        <link rel="icon" href={settings.favicon} />{" "}
         <link rel="apple-touch-icon" href={settings.appleTouchIcon} />
       </Head>
     </>

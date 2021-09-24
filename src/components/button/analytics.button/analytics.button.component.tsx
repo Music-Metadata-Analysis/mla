@@ -5,7 +5,10 @@ interface AnalyticsWrapperProps {
   children: React.ReactNode;
 }
 
-const AnalyticsWrapper = ({ buttonName, children }: AnalyticsWrapperProps) => {
+const AnalyticsButtonWrapper = ({
+  buttonName,
+  children,
+}: AnalyticsWrapperProps) => {
   const analytics = useAnalytics();
 
   return (
@@ -15,4 +18,4 @@ const AnalyticsWrapper = ({ buttonName, children }: AnalyticsWrapperProps) => {
   );
 };
 
-export default AnalyticsWrapper;
+export default AnalyticsButtonWrapper;

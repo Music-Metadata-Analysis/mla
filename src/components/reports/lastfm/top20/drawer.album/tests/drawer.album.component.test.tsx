@@ -1,38 +1,27 @@
-import {
-  Box,
-  Divider,
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerCloseButton,
-  DrawerContent,
-  Img,
-} from "@chakra-ui/react";
+import { Box, Divider, Img } from "@chakra-ui/react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock";
 import mockColourHook from "../../../../../../hooks/tests/colour.hook.mock";
+import Event from "../../../../../../providers/analytics/event.class";
+import UserAlbumState from "../../../../../../providers/user/encapsulations/user.state.album.class";
 import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
 import StyledButtonLink from "../../../../../button/button.link/button.link.component";
+import Drawer from "../../../../common/drawer/drawer.component";
 import AlbumDrawer, {
   AlbumDrawerInterface,
   testIDs,
 } from "../drawer.album.component";
 
+jest.mock("../../../../../../hooks/analytics", () => ({
+  __esModule: true,
+  default: () => mockAnalyticsHook,
+}));
+
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
   } = require("../../../../../../tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create([
-    "Box",
-    "Divider",
-    "Drawer",
-    "DrawerBody",
-    "DrawerHeader",
-    "DrawerOverlay",
-    "DrawerCloseButton",
-    "DrawerContent",
-    "Img",
-  ]);
+  return factoryInstance.create(["Box", "Divider", "Img"]);
 });
 
 jest.mock("../../../../../button/button.link/button.link.component", () => {
@@ -42,34 +31,58 @@ jest.mock("../../../../../button/button.link/button.link.component", () => {
   return factoryInstance.create("StyledButtonLink");
 });
 
+jest.mock("../../../../common/drawer/drawer.component", () => {
+  const {
+    factoryInstance,
+  } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create("MockDrawer");
+});
+
 jest.mock("../../../../../../hooks/colour", () => {
   return () => mockColourHook;
 });
 
-const mockGetArtWork = jest.fn(() => "MockUrl");
 const mockOnClose = jest.fn();
+const mockT = jest.fn((arg: string) => `t(${arg})`);
+const mockBaseUserProperties = {
+  data: {
+    integration: null,
+    report: {
+      albums: [],
+      image: [],
+    },
+  },
+  error: null,
+  inProgress: false,
+  profileUrl: null,
+  ready: true,
+  userName: null,
+};
+
+const mockState = new UserAlbumState(mockBaseUserProperties, mockT);
 
 const baseProps: AlbumDrawerInterface = {
-  albumIndex: null,
-  albums: [],
-  top20GetAlbumArtWork: mockGetArtWork,
+  albumIndex: 0,
+  userState: mockState,
   fallbackImage: "/fallback.jpeg",
   isOpen: true,
   onClose: mockOnClose,
-  t: jest.fn((arg: string) => `t(${arg})`),
+  t: mockT,
 };
 
 describe("AlbumDrawer", () => {
   let currentProps: AlbumDrawerInterface;
+  const MockImageUrl = "MockImageUrl";
 
   beforeEach(() => jest.clearAllMocks());
 
   const resetProps = () => {
+    baseProps.userState = new UserAlbumState(mockBaseUserProperties, mockT);
     currentProps = { ...baseProps };
   };
 
   const arrange = () => {
-    return render(<AlbumDrawer {...currentProps} />);
+    render(<AlbumDrawer {...currentProps} />);
   };
 
   const checkBaseComponents = (externalLink: string) => {
@@ -80,57 +93,19 @@ describe("AlbumDrawer", () => {
         {
           "data-testid": testIDs.AlbumDrawer,
           isOpen: true,
-          placement: "bottom",
+          title: "t(defaults.artistName): t(defaults.albumName)",
         },
         0,
         ["onClose"]
       );
     });
 
-    it("should call DrawerOverlay once", () => {
-      expect(DrawerOverlay).toBeCalledTimes(1);
+    it("should call Drawer once", () => {
+      expect(Drawer).toBeCalledTimes(1);
     });
 
-    it("should call DrawerContent once", () => {
-      expect(DrawerContent).toBeCalledTimes(1);
-      checkMockCall(
-        DrawerContent,
-        {
-          bg: mockColourHook.componentColour.background,
-          color: mockColourHook.componentColour.foreground,
-          colorScheme: mockColourHook.componentColour.scheme,
-          sx: {
-            caretColor: mockColourHook.transparent,
-          },
-        },
-        0
-      );
-    });
-
-    it("should call DrawerBody once", () => {
-      expect(DrawerBody).toBeCalledTimes(1);
-    });
-
-    it("should call DrawerCloseButton once", () => {
-      expect(DrawerCloseButton).toBeCalledTimes(1);
-      checkMockCall(
-        DrawerCloseButton,
-        {
-          "data-testid": testIDs.AlbumDrawerCloseButton,
-          sx: {
-            boxShadow: "none !important",
-          },
-        },
-        0
-      );
-    });
-
-    it("should call DrawerHeader once", () => {
-      expect(DrawerHeader).toBeCalledTimes(1);
-    });
-
-    it("should call Divider 3 times", () => {
-      expect(Divider).toBeCalledTimes(3);
+    it("should call Divider 1 times", () => {
+      expect(Divider).toBeCalledTimes(1);
     });
 
     it("should call Box once", () => {
@@ -151,7 +126,7 @@ describe("AlbumDrawer", () => {
         Img,
         {
           alt: "t(top20.drawer.coverArtAltText)",
-          src: "MockUrl",
+          src: MockImageUrl,
           style: {
             position: "relative",
           },
@@ -175,170 +150,127 @@ describe("AlbumDrawer", () => {
       currentProps.isOpen = true;
     });
 
-    describe("when albumIndex is null", () => {
+    describe("when the album info is NOT complete", () => {
       beforeEach(() => {
-        currentProps.albumIndex = null;
-        arrange();
-      });
-
-      it("should NOT call Drawer", () => {
-        expect(Drawer).toBeCalledTimes(0);
-      });
-    });
-
-    describe("when albumIndex is NOT null", () => {
-      beforeEach(() => {
-        currentProps.albumIndex = 0;
-      });
-
-      describe("when the album info is NOT complete", () => {
-        beforeEach(() => {
-          currentProps.albums = [
-            {
-              mbid: "some_mbid",
-            },
-          ];
-          currentProps.albumIndex = 0;
-          arrange();
-        });
-
-        checkBaseComponents(
-          "https://last.fm/music/t(top20.drawer.unknownArtist)/t(top20.drawer.unknownAlbum)"
-        );
-
-        it("should render a title with defaults", async () => {
-          expect(
-            await screen.findByText(
-              "t(top20.drawer.unknownArtist): t(top20.drawer.unknownAlbum)"
-            )
-          ).toBeTruthy();
-        });
-
-        it("should render the rank correctly", async () => {
-          const rankElement = await screen.findByTestId(
-            testIDs.AlbumDrawerRank
-          );
-          expect(
-            await within(rankElement).findByText("t(top20.drawer.rank)")
-          ).toBeTruthy();
-          expect(await within(rankElement).findByText(": 1")).toBeTruthy();
-        });
-
-        it("should render the playcount correctly", async () => {
-          const playCountElement = await screen.findByTestId(
-            testIDs.AlbumDrawerPlayCount
-          );
-          expect(
-            await within(playCountElement).findByText(
-              "t(top20.drawer.playCount)"
-            )
-          ).toBeTruthy();
-          expect(await within(playCountElement).findByText(": 0")).toBeTruthy();
-        });
-
-        describe("when there is an error loading the image", () => {
-          let image: HTMLElement;
-
-          beforeEach(async () => {
-            image = await screen.findByAltText(
-              "t(top20.drawer.coverArtAltText)"
-            );
-            expect(image).toHaveAttribute("src", "MockUrl");
-            fireEvent.error(image);
-          });
-
-          it("should set the image url to the fallback", () => {
-            expect(image).toHaveAttribute("src", currentProps.fallbackImage);
-          });
-        });
-      });
-
-      describe("when the album info is complete", () => {
-        beforeEach(() => {
-          currentProps.albums = [
-            {
-              mbid: "some_mbid",
-              name: "mock_album",
-              artist: {
-                mbid: "some_mbid",
-                name: "mock_artist",
-              },
-              playcount: "100",
-              url: "http://correcturl/for/this/album",
-            },
-          ];
-          currentProps.albumIndex = 0;
-          arrange();
-        });
-
-        checkBaseComponents("http://correcturl/for/this/album");
-
-        it("should render a title with defaults", async () => {
-          expect(
-            await screen.findAllByText("mock_artist: mock_album")
-          ).toBeTruthy();
-        });
-
-        it("should render the rank correctly", async () => {
-          const rankElement = await screen.findByTestId(
-            testIDs.AlbumDrawerRank
-          );
-          expect(
-            await within(rankElement).findByText("t(top20.drawer.rank)")
-          ).toBeTruthy();
-          expect(await within(rankElement).findByText(": 1")).toBeTruthy();
-        });
-
-        it("should render the playcount correctly", async () => {
-          const playCountElement = await screen.findByTestId(
-            testIDs.AlbumDrawerPlayCount
-          );
-          expect(
-            await within(playCountElement).findByText(
-              "t(top20.drawer.playCount)"
-            )
-          ).toBeTruthy();
-          expect(
-            await within(playCountElement).findByText(": 100")
-          ).toBeTruthy();
-        });
-      });
-    });
-  });
-
-  describe("when isOpen is false", () => {
-    beforeEach(() => {
-      resetProps();
-      currentProps.isOpen = false;
-    });
-
-    describe("when albumIndex is NOT null", () => {
-      beforeEach(() => {
-        currentProps.albums = [
+        currentProps.userState.userProperties.data.report.albums = [
           {
             mbid: "some_mbid",
+            image: [
+              {
+                "#text": MockImageUrl,
+                size: "large",
+              },
+            ],
           },
         ];
         currentProps.albumIndex = 0;
         arrange();
       });
 
-      it("should call Drawer once", () => {
-        expect(Drawer).toBeCalledTimes(1);
-        checkMockCall(
-          Drawer,
-          {
-            "data-testid": testIDs.AlbumDrawer,
-            isOpen: false,
-            placement: "bottom",
-          },
-          0,
-          ["onClose"]
+      checkBaseComponents(
+        "https://last.fm/music/t(defaults.artistName)/t(defaults.albumName)"
+      );
+
+      it("should render the rank correctly", async () => {
+        const rankElement = await screen.findByTestId(testIDs.AlbumDrawerRank);
+        expect(
+          await within(rankElement).findByText("t(top20.drawer.rank)")
+        ).toBeTruthy();
+        expect(await within(rankElement).findByText(": 1")).toBeTruthy();
+      });
+
+      it("should render the playcount correctly", async () => {
+        const playCountElement = await screen.findByTestId(
+          testIDs.AlbumDrawerPlayCount
+        );
+        expect(
+          await within(playCountElement).findByText("t(top20.drawer.playCount)")
+        ).toBeTruthy();
+        expect(await within(playCountElement).findByText(": 0")).toBeTruthy();
+      });
+
+      it("should generate an analytics event", () => {
+        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
+        expect(mockAnalyticsHook.event).toBeCalledWith(
+          new Event({
+            action:
+              "VIEW ALBUM DETAILS: t(defaults.artistName):t(defaults.albumName)",
+            category: "LASTFM",
+            label: "DATA: ALBUM",
+            value: undefined,
+          })
         );
       });
 
-      it("should NOT call DrawerOverlay", () => {
-        expect(DrawerOverlay).toBeCalledTimes(0);
+      describe("when there is an error loading the image", () => {
+        let image: HTMLElement;
+
+        beforeEach(async () => {
+          image = await screen.findByAltText("t(top20.drawer.coverArtAltText)");
+          expect(image).toHaveAttribute("src", MockImageUrl);
+          fireEvent.error(image);
+        });
+
+        it("should set the image url to the fallback", () => {
+          expect(image).toHaveAttribute("src", currentProps.fallbackImage);
+        });
+      });
+    });
+
+    describe("when the album info is complete", () => {
+      beforeEach(() => {
+        currentProps.userState.userProperties.data.report.albums = [
+          {
+            mbid: "some_mbid",
+            name: "mock_album",
+            image: [
+              {
+                "#text": MockImageUrl,
+                size: "large",
+              },
+            ],
+            artist: {
+              mbid: "some_mbid",
+              name: "mock_artist",
+            },
+            playcount: "100",
+            url: "http://correcturl/for/this/album",
+          },
+        ];
+        currentProps.albumIndex = 0;
+        arrange();
+      });
+
+      checkBaseComponents("http://correcturl/for/this/album");
+
+      it("should render the rank correctly", async () => {
+        const rankElement = await screen.findByTestId(testIDs.AlbumDrawerRank);
+        expect(
+          await within(rankElement).findByText("t(top20.drawer.rank)")
+        ).toBeTruthy();
+        expect(await within(rankElement).findByText(": 1")).toBeTruthy();
+      });
+
+      it("should render the playcount correctly", async () => {
+        const playCountElement = await screen.findByTestId(
+          testIDs.AlbumDrawerPlayCount
+        );
+        expect(
+          await within(playCountElement).findByText("t(top20.drawer.playCount)")
+        ).toBeTruthy();
+        expect(await within(playCountElement).findByText(": 100")).toBeTruthy();
+      });
+
+      it("should generate an analytics event", () => {
+        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
+        expect(mockAnalyticsHook.event).toBeCalledWith(
+          new Event({
+            action: "VIEW ALBUM DETAILS: mock_artist:mock_album",
+            category: "LASTFM",
+            label: "DATA: ALBUM",
+            value: undefined,
+          })
+        );
       });
     });
   });

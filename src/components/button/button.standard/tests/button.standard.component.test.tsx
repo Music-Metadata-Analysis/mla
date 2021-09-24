@@ -1,22 +1,12 @@
-import { Button } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
-import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
+import BaseButton from "../../button.base/button.base.component";
 import StyledButton from "../button.standard.component";
 
-jest.mock("next/link", () => createMockedComponent("NextLink"));
-
-jest.mock("../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
-
-jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Button"]);
-});
+jest.mock("../../button.base/button.base.component", () =>
+  createMockedComponent("BaseButton")
+);
 
 jest.mock("../../../../hooks/analytics", () => ({
   __esModule: true,
@@ -32,6 +22,7 @@ const createMockedComponent = (name: string) => {
 
 describe("StandardButton", () => {
   const linkText = "Link";
+  const mockTestId = "mockTestId";
   const mockClickHandler = jest.fn();
   const mockAnalyticsName = "mockAnalyticsTestName";
 
@@ -40,6 +31,7 @@ describe("StandardButton", () => {
   const arrange = () => {
     render(
       <StyledButton
+        data-testid={mockTestId}
         analyticsName={mockAnalyticsName}
         onClick={mockClickHandler}
       >
@@ -48,21 +40,18 @@ describe("StandardButton", () => {
     );
   };
 
-  it("should render Button as expected", () => {
+  it("should render BaseButton as expected", () => {
     arrange();
-    expect(Button).toBeCalledTimes(1);
-    checkMockCall(Button, {
-      _hover: {
-        bg: mockColourHook.buttonColour.hoverBackground,
-      },
-      bg: mockColourHook.buttonColour.background,
-      borderColor: mockColourHook.buttonColour.border,
-      borderWidth: 1,
-      color: mockColourHook.buttonColour.foreground,
+    expect(BaseButton).toBeCalledTimes(1);
+    checkMockCall(BaseButton, {
+      "data-testid": mockTestId,
     });
+    expect((BaseButton as jest.Mock).mock.calls[0][0].onClick).toBe(
+      mockClickHandler
+    );
   });
 
-  describe("when a button is clicked", () => {
+  describe("when the button is clicked", () => {
     beforeEach(async () => {
       arrange();
       const link = await screen.findByText(linkText);
@@ -70,7 +59,7 @@ describe("StandardButton", () => {
       fireEvent.click(link as HTMLElement);
     });
 
-    it("should call the button tracker", () => {
+    it("should call the button click tracker", () => {
       expect(mockAnalyticsHook.trackButtonClick).toBeCalledTimes(1);
       const call = mockAnalyticsHook.trackButtonClick.mock.calls[0];
       expect(call[0].constructor.name).toBe("SyntheticBaseEvent");

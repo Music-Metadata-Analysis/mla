@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import translations from "../../../../../../public/locales/en/lastfm.json";
+import UserAlbumDataState from "../../../../../providers/user/encapsulations/user.state.album.class";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import FlipCard from "../../../../flip.card/flip.card.component";
 import ReportTitle from "../../../common/report.title/report.title.component";
@@ -117,19 +118,8 @@ describe("Top20Report", () => {
     });
 
     const checkComponents = () => {
-      it("should call AlbumDrawer", () => {
-        expect(AlbumDrawer).toBeCalledTimes(1);
-        checkMockCall(
-          AlbumDrawer,
-          {
-            albumIndex: null,
-            albums: currentProps.user.userProperties.data.report.albums,
-            fallbackImage: "/images/static.gif",
-            isOpen: false,
-          },
-          0,
-          ["onClose", "t", "top20GetAlbumArtWork"]
-        );
+      it("should NOT call AlbumDrawer", () => {
+        expect(AlbumDrawer).toBeCalledTimes(0);
       });
 
       it("should call ReportTitle", () => {
@@ -184,6 +174,29 @@ describe("Top20Report", () => {
       it("the ReportTitle should be visible", async () => {
         const title = await screen.findByText("MockReportTitle");
         expect(title).toBeVisible();
+      });
+
+      describe("when a card is flipped", () => {
+        beforeEach(() => {
+          const flipper = (FlipCard as jest.Mock).mock.calls[0][0]
+            .flipperController;
+          act(() => flipper(0));
+        });
+
+        it("should call AlbumDrawer", () => {
+          expect(AlbumDrawer).toBeCalledTimes(1);
+          const call = (AlbumDrawer as jest.Mock).mock.calls[0][0];
+          expect(typeof call.onClose).toBe("function");
+          expect(typeof call.t).toBe("function");
+          expect(call.albumIndex).toBe(0);
+          expect(call.fallbackImage).toBe("/images/static.gif");
+          expect(call.isOpen).toBe(true);
+          expect(call.userState).toBeInstanceOf(UserAlbumDataState);
+          expect(call.userState.userProperties).toBe(
+            currentProps.user.userProperties
+          );
+          expect(Object.keys(call).length).toBe(6);
+        });
       });
     });
 

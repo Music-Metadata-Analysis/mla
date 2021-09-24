@@ -1,4 +1,8 @@
 {
+  "defaults": {
+    "albumName": "Unknown Album",
+    "artistName": "Unknown Artist"
+  },
   "search": {
     "title": "Search",
     "fieldLabel": "Username:",
@@ -18,8 +22,6 @@
     "flipCardRearAltText": "Rank",
     "noCover": "No Cover Art",
     "drawer": {
-      "unknownAlbum": "Unknown Album",
-      "unknownArtist": "Unknown Artist",
       "coverArtAltText": "Cover Art",
       "rank": "Position",
       "playCount": "Play Count",

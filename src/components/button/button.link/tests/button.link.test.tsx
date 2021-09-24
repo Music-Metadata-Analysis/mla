@@ -1,13 +1,13 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import NextLink from "next/link";
 import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
-import StyledButton from "../../button.standard/button.standard.component";
+import BaseButton from "../../button.base/button.base.component";
 import StyledButtonLink from "../button.link.component";
 
 jest.mock("next/link", () => createMockedComponent("NextLink"));
 
-jest.mock("../../button.standard/button.standard.component", () =>
-  createMockedComponent("StyledButton")
+jest.mock("../../button.base/button.base.component", () =>
+  createMockedComponent("BaseButton")
 );
 
 jest.mock("../../../../hooks/analytics", () => ({
@@ -25,8 +25,8 @@ const createMockedComponent = (name: string) => {
 describe("ButtonLink", () => {
   const linkText = "Link";
   const mockHref = "mockTestName";
-  const mockAnalyticsName = "mockAnalyticsTestName";
   const mockColour = "mockColour";
+  const mockClickHandler = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -36,8 +36,8 @@ describe("ButtonLink", () => {
   const arrange = () => {
     render(
       <StyledButtonLink
+        onClick={mockClickHandler}
         bg={mockColour}
-        analyticsName={mockAnalyticsName}
         href={mockHref}
       >
         {linkText}
@@ -45,12 +45,12 @@ describe("ButtonLink", () => {
     );
   };
 
-  it("should render StyledButton as expected", () => {
-    expect(StyledButton).toBeCalledTimes(1);
-    const call = (StyledButton as jest.Mock).mock.calls[0];
+  it("should render BaseButton as expected", () => {
+    expect(BaseButton).toBeCalledTimes(1);
+    const call = (BaseButton as jest.Mock).mock.calls[0];
     expect(call[0].bg).toBe(mockColour);
-    expect(call[0].analyticsName).toBe(mockAnalyticsName);
     expect(call[0].children).toBeDefined();
+    expect(call[0].onClick).toBe(mockClickHandler);
     expect(Object.keys(call[0]).length).toBe(3);
   });
 
@@ -65,6 +65,25 @@ describe("ButtonLink", () => {
 
   it("should pass the correct target to the <a> tag", async () => {
     const ButtonText = await screen.findByText(linkText);
-    expect(ButtonText.parentElement).toHaveAttribute("target", "_blank");
+    expect(ButtonText.parentElement?.parentElement).toHaveAttribute(
+      "target",
+      "_blank"
+    );
+  });
+
+  describe("when the link is clicked", () => {
+    beforeEach(async () => {
+      const link = await screen.findByText(linkText);
+      expect(link).not.toBeNull();
+      fireEvent.click(link as HTMLElement);
+    });
+
+    it("should call the link click tracker", () => {
+      expect(mockAnalyticsHook.trackExternalLinkClick).toBeCalledTimes(1);
+      const call = mockAnalyticsHook.trackExternalLinkClick.mock.calls[0];
+      expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
+      expect(call[1]).toBe(mockHref);
+      expect(Object.keys(call).length).toBe(2);
+    });
   });
 });
