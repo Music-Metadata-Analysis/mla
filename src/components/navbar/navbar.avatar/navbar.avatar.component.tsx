@@ -3,7 +3,6 @@ import NextLink from "next/link";
 import { DimmingImage } from "./navbar.avatar.styles";
 import useAnalytics from "../../../hooks/analytics";
 import LastFMIcon from "../../icons/lastfm/lastfm.icon";
-import type { NavBarAvatarClickSource } from "../../../types/analytics.types";
 
 export const testIDs = {
   NavBarAvatarLink: "NavBarAvatarLink",
@@ -16,15 +15,12 @@ interface NavBarAvatarProps {
 
 const NavBarAvatar = ({ href, image }: NavBarAvatarProps) => {
   const analytics = useAnalytics();
-  const clickSource: NavBarAvatarClickSource = image
-    ? "AVATAR: PROFILE"
-    : "AVATAR: LASTFM";
 
   return (
     <NextLink href={href} passHref>
       <a data-testid={testIDs.NavBarAvatarLink} target="_blank">
         <DimmingImage
-          onClick={(e) => analytics.trackButtonClick(e, clickSource)}
+          onClick={(e) => analytics.trackExternalLinkClick(e, href)}
         >
           <Avatar
             loading={"eager"}

@@ -103,11 +103,7 @@ describe("NavBar", () => {
       if (destination === "/") {
         it(`should route to ${destination}`, async () => {
           expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(destination, destination, {
-            locale: undefined,
-            scroll: undefined,
-            shallow: undefined,
-          });
+          expect(mockRouter.push).toBeCalledWith(destination);
         });
       } else {
         it(`should route to ${destination}`, async () => {
@@ -196,10 +192,10 @@ describe("NavBar", () => {
       });
 
       it(`should produce an analytics event`, async () => {
-        expect(mockAnalyticsHook.trackButtonClick).toBeCalledTimes(1);
-        const call = mockAnalyticsHook.trackButtonClick.mock.calls[0];
+        expect(mockAnalyticsHook.trackExternalLinkClick).toBeCalledTimes(1);
+        const call = mockAnalyticsHook.trackExternalLinkClick.mock.calls[0];
         expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-        expect(call[1]).toBe("AVATAR: LASTFM");
+        expect(call[1]).toBe(HomePage);
         expect(Object.keys(call).length).toBe(2);
       });
 

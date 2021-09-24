@@ -1,7 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import translations from "../../../../../../public/locales/en/lastfm.json";
-import { testIDs as drawerTestIDs } from "../drawer.album/drawer.album.component";
+import { testIDs as drawerTestIDs } from "../../../common/drawer/drawer.component";
+import { testIDs as albumDrawerTestIDs } from "../drawer.album/drawer.album.component";
 import Top20Report, { Top20ReportProps } from "../top20.component";
 
 const mockImageIsLoaded = jest.fn();
@@ -111,7 +112,7 @@ describe("Top20Report", () => {
         arrange();
       });
 
-      it("should render the title text correctly", async () => {
+      it("should render the report title text correctly", async () => {
         expect(await screen.findByText(translations.top20.title)).toBeTruthy();
         expect(
           await screen.findByText(
@@ -191,7 +192,7 @@ describe("Top20Report", () => {
 
       it("should render the rank correctly", async () => {
         const rankElement = await screen.findByTestId(
-          drawerTestIDs.AlbumDrawerRank
+          albumDrawerTestIDs.AlbumDrawerRank
         );
         expect(
           await within(rankElement).findByText(translations.top20.drawer.rank)
@@ -201,7 +202,7 @@ describe("Top20Report", () => {
 
       it("should render the playcount correctly", async () => {
         const playCountElement = await screen.findByTestId(
-          drawerTestIDs.AlbumDrawerPlayCount
+          albumDrawerTestIDs.AlbumDrawerPlayCount
         );
         expect(
           await within(playCountElement).findByText(
@@ -219,25 +220,13 @@ describe("Top20Report", () => {
         expect(aTag.href).toBe(albumUrl);
       });
 
-      it("should close the drawer when an outside click occurs", async () => {
-        expect(
-          screen.queryByAltText(translations.top20.drawer.coverArtAltText)
-        ).not.toBeNull();
-
-        await clickCard();
-
-        expect(
-          screen.queryByAltText(translations.top20.drawer.coverArtAltText)
-        ).toBeNull();
-      });
-
       it("should close the drawer when the close drawer button is clicked", async () => {
         expect(
           screen.queryByAltText(translations.top20.drawer.coverArtAltText)
         ).not.toBeNull();
 
         const closeButton = (await screen.findByTestId(
-          drawerTestIDs.AlbumDrawerCloseButton
+          drawerTestIDs.DrawerCloseButton
         )) as HTMLButtonElement;
         fireEvent.click(closeButton);
 

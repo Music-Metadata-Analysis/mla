@@ -1,8 +1,14 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Switch, useColorMode } from "@chakra-ui/react";
 import { fireEvent, render, screen } from "@testing-library/react";
+import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import NavBarColorModeToggle, { TestIDs } from "../navbar.color.mode.component";
+
+jest.mock("../../../../hooks/analytics", () => ({
+  __esModule: true,
+  default: () => mockAnalyticsHook,
+}));
 
 jest.mock("@chakra-ui/react", () => {
   const {
@@ -77,6 +83,14 @@ describe("NavBarColorModeToggle", () => {
       it("should call the mockToggleColorMode function once", () => {
         expect(mockToggleColorMode).toBeCalledTimes(1);
       });
+
+      it("should generate an analytics event", () => {
+        expect(mockAnalyticsHook.trackButtonClick).toBeCalledTimes(1);
+        const call = mockAnalyticsHook.trackButtonClick.mock.calls[0];
+        expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
+        expect(call[1]).toBe("Colour Mode Toggle");
+        expect(Object.keys(call).length).toBe(2);
+      });
     });
   });
 
@@ -124,6 +138,14 @@ describe("NavBarColorModeToggle", () => {
 
       it("should call the mockToggleColorMode function once", () => {
         expect(mockToggleColorMode).toBeCalledTimes(1);
+      });
+
+      it("should generate an analytics event", () => {
+        expect(mockAnalyticsHook.trackButtonClick).toBeCalledTimes(1);
+        const call = mockAnalyticsHook.trackButtonClick.mock.calls[0];
+        expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
+        expect(call[1]).toBe("Colour Mode Toggle");
+        expect(Object.keys(call).length).toBe(2);
       });
     });
   });

@@ -22,7 +22,7 @@ const checkMockCall = (
   functions.forEach((functionName) => {
     call = isFunction(call, functionName);
   });
-  expect(props).toStrictEqual(call);
+  expect(call).toStrictEqual(props);
 };
 
 export default checkMockCall;
