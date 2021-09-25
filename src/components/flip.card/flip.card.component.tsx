@@ -14,6 +14,7 @@ export interface FlipCardProps {
   flipperController: (index: number | null) => void;
   imageIsLoaded: () => void;
   t: TFunction;
+  noArtWork: string;
 }
 
 export const testIDs = {
@@ -28,6 +29,7 @@ export default function FlipCard({
   fallbackImage,
   image,
   index,
+  noArtWork,
   rearImage,
   size,
   flipperController,
@@ -77,7 +79,7 @@ export default function FlipCard({
             <Img
               data-testid={testIDs.flipFrontImage}
               src={image}
-              alt={`${t("top20.flipCardFrontAltText")}: ${index + 1}`}
+              alt={`${t("frontAltText")}: ${index + 1}`}
               width={`${size - border * 2}px`}
               height={`${size - border * 2}px`}
               onLoad={() => imageIsLoaded()}
@@ -97,7 +99,7 @@ export default function FlipCard({
                 fontSize={"sm"}
                 color={flipCardColour.textFront}
               >
-                <strong>{`${t("top20.noCover")}`}</strong>
+                <strong>{noArtWork}</strong>
               </Text>
             ) : null}
           </Center>
@@ -127,7 +129,7 @@ export default function FlipCard({
             <Img
               data-testid={testIDs.flipRearImage}
               src={rearImage}
-              alt={`${t("top20.flipCardRearAltText")}: ${index + 1}`}
+              alt={`${t("rearAltText")}: ${index + 1}`}
               width={`${size - border * 2}px`}
               height={`${size - border * 2}px`}
               onLoad={() => imageIsLoaded()}

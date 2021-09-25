@@ -6,7 +6,7 @@ import { UserContext } from "../../providers/user/user.provider";
 import useLastFM from "../lastfm";
 import type { UserContextInterface } from "../../types/user/context.types";
 
-jest.mock("../../clients/api/reports/lastfm.class", () => {
+jest.mock("../../clients/api/reports/lastfm/top20.albums.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       retrieveAlbumReport: mockRetrieve,
@@ -65,7 +65,7 @@ describe("useLastFM", () => {
     });
 
     it("should contain the correct functions", () => {
-      expect(received.result.current.top20).toBeInstanceOf(Function);
+      expect(received.result.current.top20albums).toBeInstanceOf(Function);
       expect(received.result.current.clear).toBeInstanceOf(Function);
     });
   });
@@ -80,9 +80,9 @@ describe("useLastFM", () => {
     });
   });
 
-  describe("top20", () => {
+  describe("top20albums", () => {
     beforeEach(async () => {
-      act(() => received.result.current.top20(mockUserName));
+      act(() => received.result.current.top20albums(mockUserName));
     });
 
     it("should retrieve the report from lastfm", async () => {

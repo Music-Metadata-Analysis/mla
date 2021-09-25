@@ -1,6 +1,8 @@
+import routes from "./routes";
+
 const MenuConfig = {
-  about: "/about",
-  search: "/search",
+  about: routes.about,
+  search: routes.search.lastfm.top20albums,
 };
 
 export const settings = {

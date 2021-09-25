@@ -4,10 +4,10 @@
     "artistName": "Unknown Artist"
   },
   "search": {
-    "title": "Search",
+    "title": "Top20 Albums Report",
     "fieldLabel": "Username:",
     "fieldPlaceholder": "last.fm username",
-    "buttonText": "Perform Search",
+    "buttonText": "Generate Report",
     "errors": {
       "username": {
         "required": "A username is required.",
@@ -15,12 +15,10 @@
       }
     }
   },
-  "top20": {
+  "top20Albums": {
     "title": "My Top 20 Albums",
     "communication": "Retrieving Results...",
-    "flipCardFrontAltText": "Album Cover",
-    "flipCardRearAltText": "Rank",
-    "noCover": "No Cover Art",
+    "noArtWork": "No Cover Art",
     "drawer": {
       "coverArtAltText": "Cover Art",
       "rank": "Position",

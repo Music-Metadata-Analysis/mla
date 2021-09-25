@@ -25,6 +25,7 @@ const TestProps: FlipCardProps = {
   fallbackImage: "/test/fallbackImage.jpg",
   flipperController: jest.fn(),
   imageIsLoaded: jest.fn(),
+  noArtWork: "No Cover Art Found",
   t: jest.fn((arg: string) => `t(${arg})`),
 };
 
@@ -75,7 +76,7 @@ describe("FlipCard", () => {
         expect(image).toHaveAttribute("src", TestProps.image);
         expect(image).toHaveAttribute(
           "alt",
-          `t(top20.flipCardFrontAltText): ${TestProps.index + 1}`
+          `t(frontAltText): ${TestProps.index + 1}`
         );
         expect(image).toHaveAttribute("style", "position: relative;");
         expect(Img).toHaveBeenCalledTimes(2);
@@ -92,7 +93,7 @@ describe("FlipCard", () => {
         expect(image).toHaveAttribute("src", TestProps.rearImage);
         expect(image).toHaveAttribute(
           "alt",
-          `t(top20.flipCardRearAltText): ${TestProps.index + 1}`
+          `t(rearAltText): ${TestProps.index + 1}`
         );
         expect(image).toHaveAttribute(
           "style",
@@ -183,7 +184,7 @@ describe("FlipCard", () => {
       expect(image).toHaveAttribute("src", TestProps.fallbackImage);
       expect(image).toHaveAttribute(
         "alt",
-        `t(top20.flipCardFrontAltText): ${TestProps.index + 1}`
+        `t(frontAltText): ${TestProps.index + 1}`
       );
       expect(image).toHaveAttribute("style", "position: relative;");
       expect(Img).toHaveBeenCalledTimes(2);
@@ -223,7 +224,7 @@ describe("FlipCard", () => {
       );
 
       const text = await screen.findByTestId(testIDs.flipFrontText);
-      expect(text.innerHTML).toBe(`<strong>t(top20.noCover)</strong>`);
+      expect(text.innerHTML).toBe(`<strong>${currentProps.noArtWork}</strong>`);
     });
   });
 });

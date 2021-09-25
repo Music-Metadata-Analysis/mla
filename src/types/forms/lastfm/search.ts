@@ -1,3 +1,3 @@
-export interface LastFMTop20SearchFormInterface {
+export interface LastFMTop20AlbumsSearchFormInterface {
   username: string;
 }

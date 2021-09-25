@@ -1,6 +1,6 @@
 import { Box, IconButton } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import { HomePage } from "../../../config/lastfm";
+import lastFMsettings from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
 import mockColourHook from "../../../hooks/tests/colour.hook.mock";
 import { NavBarContext } from "../../../providers/navbar/navbar.provider";
@@ -168,7 +168,7 @@ describe("NavBar", () => {
         ).toBeTruthy();
         expect(NavBarLogo).toBeCalledTimes(1);
         const call = (NavBarLogo as jest.Mock).mock.calls[0][0];
-        expect(call.href).toBe(HomePage);
+        expect(call.href).toBe(lastFMsettings.homePage);
         expect(call.image).toBe("");
       });
 
@@ -288,7 +288,7 @@ describe("NavBar", () => {
           ).toBeTruthy();
           expect(NavBarLogo).toBeCalledTimes(1);
           const call = (NavBarLogo as jest.Mock).mock.calls[0][0];
-          expect(call.href).toBe(HomePage);
+          expect(call.href).toBe(lastFMsettings.homePage);
           expect(call.image).toBe("");
         });
 

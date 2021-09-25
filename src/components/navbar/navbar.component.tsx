@@ -12,7 +12,7 @@ import NavBarColorModeToggle from "./navbar.color.mode/navbar.color.mode.compone
 import NavBarLogo from "./navbar.logo/navbar.logo.component";
 import NavBarOptions from "./navbar.options/navbar.options.component";
 import Spinner from "./navbar.spinner/navbar.spinner.component";
-import { HomePage } from "../../config/lastfm";
+import lastFMSettings from "../../config/lastfm";
 import useColour from "../../hooks/colour";
 import useLastFM from "../../hooks/lastfm";
 import { NavBarContext } from "../../providers/navbar/navbar.provider";
@@ -36,6 +36,7 @@ export default function NavBar({ menuConfig }: NavBarProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useLastFM();
 
+  // TODO: create new user class to encapsulate/extract this data
   const getProfileImageUrl = (size: LastFMImageDataInterface["size"]) => {
     const image = user.userProperties.data.report.image.find(
       (thisImage) => thisImage.size == size
@@ -46,7 +47,7 @@ export default function NavBar({ menuConfig }: NavBarProps) {
 
   const getProfileUrl = () => {
     if (user.userProperties.profileUrl) return user.userProperties.profileUrl;
-    return HomePage;
+    return lastFMSettings.homePage;
   };
 
   useEffect(() => {
