@@ -36,5 +36,8 @@
     "testuser",
     "topalbums",
     "toplast"
-  ]
+  ],
+  "cSpell.ignoreRegExpList": ["node_modules"],
+  "importSorter.generalConfiguration.exclude": ["node_modules"],
+  "json.schemas": []
 }

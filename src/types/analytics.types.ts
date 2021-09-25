@@ -9,8 +9,7 @@ export type EventDefinitionType = {
     | "ERROR"
     | "EXTERNAL_LINK"
     | "REQUEST"
-    | "REPORT_CREATED"
-    | "REPORT_REQUESTED"
+    | "RESPONSE"
     | "TEST";
   action: string;
   value?: number;

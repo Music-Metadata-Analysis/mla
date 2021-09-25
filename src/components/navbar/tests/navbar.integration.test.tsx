@@ -2,7 +2,7 @@ import { render, screen, fireEvent, within } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import mainTranslations from "../../../../public/locales/en/main.json";
 import navbarTranslations from "../../../../public/locales/en/navbar.json";
-import { HomePage } from "../../../config/lastfm";
+import lastFMsettings from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
 import mockAnalyticsHook from "../../../hooks/tests/analytics.mock";
 import NavBarProvider from "../../../providers/navbar/navbar.provider";
@@ -195,7 +195,7 @@ describe("NavBar", () => {
         expect(mockAnalyticsHook.trackExternalLinkClick).toBeCalledTimes(1);
         const call = mockAnalyticsHook.trackExternalLinkClick.mock.calls[0];
         expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-        expect(call[1]).toBe(HomePage);
+        expect(call[1]).toBe(lastFMsettings.homePage);
         expect(Object.keys(call).length).toBe(2);
       });
 
@@ -203,7 +203,7 @@ describe("NavBar", () => {
         const link = (await screen.findByTestId(
           NavBarAnalyticsTestIDs.NavBarAvatarLink
         )) as HTMLElement;
-        expect(link).toHaveAttribute("href", HomePage);
+        expect(link).toHaveAttribute("href", lastFMsettings.homePage);
         expect(link).toHaveAttribute("target", "_blank");
       });
     });
