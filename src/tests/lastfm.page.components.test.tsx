@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import ErrorBoundary from "../components/errors/boundary/error.boundary.component";
 import Top20Report from "../components/reports/lastfm/top20/top20.container.component";
-import Events from "../config/events";
 import routes from "../config/routes";
+import Events from "../events/events";
 import mockLastFMHook from "../hooks/tests/lastfm.mock";
 import FourOhFour from "../pages/404";
 import Page from "../pages/lastfm";

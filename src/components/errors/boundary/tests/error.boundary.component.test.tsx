@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { useState } from "react";
-import Events from "../../../../config/events";
+import Events from "../../../../events/events";
 import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
 import mockRouter from "../../../../tests/fixtures/mock.router";
 import ErrorHandler from "../../handler/error.handler.component";

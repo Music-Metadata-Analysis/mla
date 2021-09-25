@@ -1,8 +1,8 @@
 import { Box, Divider, Flex, Img } from "@chakra-ui/react";
 import { useEffect } from "react";
+import EventDefinition from "../../../../../events/event.class";
 import useAnalytics from "../../../../../hooks/analytics";
 import useColour from "../../../../../hooks/colour";
-import Event from "../../../../../providers/analytics/event.class";
 import StyledButtonLink from "../../../../button/button.link/button.link.component";
 import Drawer from "../../../common/drawer/drawer.component";
 import type UserAlbumState from "../../../../../providers/user/encapsulations/user.state.album.class";
@@ -45,7 +45,7 @@ const AlbumDrawer = ({
 
   useEffect(() => {
     analytics.event(
-      new Event({
+      new EventDefinition({
         category: "LASTFM",
         label: "DATA: ALBUM",
         action: `VIEW ALBUM DETAILS: ${artistName}:${albumName}`,

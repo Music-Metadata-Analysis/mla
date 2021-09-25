@@ -1,8 +1,8 @@
 import { Box, Divider, Img } from "@chakra-ui/react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import EventDefinition from "../../../../../../events/event.class";
 import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock";
 import mockColourHook from "../../../../../../hooks/tests/colour.hook.mock";
-import Event from "../../../../../../providers/analytics/event.class";
 import UserAlbumState from "../../../../../../providers/user/encapsulations/user.state.album.class";
 import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
 import StyledButtonLink from "../../../../../button/button.link/button.link.component";
@@ -192,7 +192,7 @@ describe("AlbumDrawer", () => {
       it("should generate an analytics event", () => {
         expect(mockAnalyticsHook.event).toBeCalledTimes(1);
         expect(mockAnalyticsHook.event).toBeCalledWith(
-          new Event({
+          new EventDefinition({
             action:
               "VIEW ALBUM DETAILS: t(defaults.artistName):t(defaults.albumName)",
             category: "LASTFM",
@@ -264,7 +264,7 @@ describe("AlbumDrawer", () => {
       it("should generate an analytics event", () => {
         expect(mockAnalyticsHook.event).toBeCalledTimes(1);
         expect(mockAnalyticsHook.event).toBeCalledWith(
-          new Event({
+          new EventDefinition({
             action: "VIEW ALBUM DETAILS: mock_artist:mock_album",
             category: "LASTFM",
             label: "DATA: ALBUM",

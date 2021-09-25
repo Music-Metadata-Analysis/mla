@@ -1,5 +1,5 @@
 import apiEndpoints from "../../../config/apiEndpoints";
-import Events from "../../../config/events";
+import Events from "../../../events/events";
 import HTTPClient from "../../http.class";
 import type { EventCreatorType } from "../../../types/analytics.types";
 import type {

@@ -1,4 +1,4 @@
-import EventDefinition from "../providers/analytics/event.class";
+import EventDefinition from "./event.class";
 
 const Events = {
   LastFM: {
