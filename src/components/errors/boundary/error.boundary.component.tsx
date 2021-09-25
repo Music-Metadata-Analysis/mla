@@ -4,11 +4,11 @@ import useAnalytics from "../../../hooks/analytics";
 import ErrorHandler, {
   ErrorHandlerProps,
 } from "../handler/error.handler.component";
-import type Event from "../../../providers/analytics/event.class";
+import type EventDefinition from "../../../events/event.class";
 
 interface ErrorBoundaryProps {
   children: JSX.Element | JSX.Element[];
-  eventDefinition: Event;
+  eventDefinition: EventDefinition;
   route: string;
   stateReset: () => void;
 }

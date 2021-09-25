@@ -1,4 +1,4 @@
-import Events from "../../../../config/events";
+import Events from "../../../../events/events";
 import LastFMReport from "../lastfm.class";
 
 jest.mock("../../../http.class", () => {
