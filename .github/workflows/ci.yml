@@ -1,5 +1,5 @@
 ---
-name: Top20 NextJS CI
+name: Music Analytics Project CI
 
 on:
   push:

@@ -17,6 +17,11 @@
       "message": "We couldn't get your request through to last.fm!",
       "resetButton": "Give it Another Shot!"
     },
+    "lastfm_ratelimited": {
+      "title": "Eeek! A 409 Error!",
+      "message": "Can you wait a second, and retry that search?",
+      "resetButton": "Retry my Search"
+    },
     "user_with_no_listens": {
       "title": "Not much of a music fan.",
       "message": "This user hasn't listened to anything...",
@@ -26,33 +31,28 @@
       "title": "Is that your REAL name?",
       "message": "This user does not appear to exist...",
       "resetButton": "Try someone else!"
-    },
-    "lastfm_ratelimited": {
-      "title": "Eeek! A 409 Error!",
-      "message": "Can you wait a second, and retry that search?",
-      "resetButton": "Retry my Search"
     }
   },
   "pages": {
     "default": {
-      "title": "Top20",
-      "description": "Music listening data visualization tool."
+      "title": "MLA",
+      "description": "Music Listening Analytics."
     },
     "about": {
-      "title": "Top20: About",
-      "description": "Music listening data visualization tool."
+      "title": "MLA: About",
+      "description": "Music Listening Analytics."
     },
     "home": {
-      "title": "Top20: Home",
-      "description": "Music listening data visualization tool."
+      "title": "MLA: Home",
+      "description": "Music Listening Analytics."
     },
     "lastfm": {
-      "title": "Top20: Last.fm",
-      "description": "Music listening data visualization tool."
+      "title": "MLA: Last.fm",
+      "description": "Music Listening Analytics."
     },
     "search": {
-      "title": "Top20: Search",
-      "description": "Music listening data visualization tool."
+      "title": "MLA: Search",
+      "description": "Music Listening Analytics."
     }
   }
 }

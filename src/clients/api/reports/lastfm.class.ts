@@ -1,4 +1,4 @@
-import apiEndpoints from "../../../config/apiEndpoints";
+import apiRoutes from "../../../config/apiRoutes";
 import Events from "../../../events/events";
 import HTTPClient from "../../http.class";
 import type { EventCreatorType } from "../../../types/analytics.types";
@@ -15,19 +15,20 @@ import type { userDispatchType } from "../../../types/user/context.types";
 
 class LastFMReport implements LastFMTopAlbumsReportInterface {
   private dispatch: userDispatchType;
-  private event: EventCreatorType;
+  private eventDispatch: EventCreatorType;
   private client: HTTPClient;
   private integration: IntegrationTypes;
+  private events = Events.LastFM.Top20Albums;
 
   constructor(dispatch: userDispatchType, event: EventCreatorType) {
     this.dispatch = dispatch;
-    this.event = event;
+    this.eventDispatch = event;
     this.client = new HTTPClient();
     this.integration = "LAST.FM";
   }
 
   private handleBegin(userName: string): void {
-    this.event(Events.LastFM.RequestAlbumsReport);
+    this.eventDispatch(this.events.RequestAlbumsReport);
     this.dispatch({
       type: "StartFetchUser",
       userName: userName,
@@ -45,7 +46,7 @@ class LastFMReport implements LastFMTopAlbumsReportInterface {
         userName: userName,
         integration: this.integration,
       });
-      this.event(Events.LastFM.NotFound);
+      this.eventDispatch(this.events.NotFound);
     }
   }
 
@@ -60,7 +61,7 @@ class LastFMReport implements LastFMTopAlbumsReportInterface {
         data: response.response as LastFMTopAlbumsReportResponseInterface,
         integration: this.integration,
       });
-      this.event(Events.LastFM.SuccessAlbumsReport);
+      this.eventDispatch(this.events.SuccessAlbumsReport);
     }
   }
 
@@ -74,7 +75,7 @@ class LastFMReport implements LastFMTopAlbumsReportInterface {
         userName: userName,
         integration: this.integration,
       });
-      this.event(Events.LastFM.Ratelimited);
+      this.eventDispatch(this.events.Ratelimited);
     }
   }
 
@@ -84,14 +85,14 @@ class LastFMReport implements LastFMTopAlbumsReportInterface {
       userName: userName,
       integration: this.integration,
     });
-    this.event(Events.LastFM.ErrorAlbumsReport);
+    this.eventDispatch(this.events.ErrorAlbumsReport);
   }
 
   retrieveAlbumReport(userName: string): void {
     this.handleBegin(userName);
     this.client
       .post<ProxyRequestInterface, LastFMTopAlbumsReportResponseInterface>(
-        apiEndpoints.v1.reports.lastfm.albums,
+        apiRoutes.v1.reports.lastfm.top20albums,
         {
           userName,
         }

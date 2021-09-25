@@ -2,31 +2,33 @@ import EventDefinition from "./event.class";
 
 const Events = {
   LastFM: {
-    ErrorAlbumsReport: new EventDefinition({
-      category: "LASTFM",
-      label: "ERROR",
-      action: "Error when creating a user's top albums report.",
-    }),
-    NotFound: new EventDefinition({
-      category: "LASTFM",
-      label: "ERROR",
-      action: "Request was made for an unknown username.",
-    }),
-    Ratelimited: new EventDefinition({
-      category: "LASTFM",
-      label: "ERROR",
-      action: "Request was ratelimited by Last FM.",
-    }),
-    RequestAlbumsReport: new EventDefinition({
-      category: "LASTFM",
-      label: "REQUEST",
-      action: "A user requested a top album's report.",
-    }),
-    SuccessAlbumsReport: new EventDefinition({
-      category: "LASTFM",
-      label: "REPORT_CREATED",
-      action: "Created a user's top albums report.",
-    }),
+    Top20Albums: {
+      ErrorAlbumsReport: new EventDefinition({
+        category: "LASTFM",
+        label: "ERROR",
+        action: "TOP20 ALBUMS: Unable to create a report.",
+      }),
+      NotFound: new EventDefinition({
+        category: "LASTFM",
+        label: "ERROR",
+        action: "TOP20 ALBUMS: Request was made for an unknown username.",
+      }),
+      Ratelimited: new EventDefinition({
+        category: "LASTFM",
+        label: "ERROR",
+        action: "TOP20 ALBUMS: Request was ratelimited by LAST.FM.",
+      }),
+      RequestAlbumsReport: new EventDefinition({
+        category: "LASTFM",
+        label: "REQUEST",
+        action: "TOP20 ALBUMS: Request was sent to LAST.FM.",
+      }),
+      SuccessAlbumsReport: new EventDefinition({
+        category: "LASTFM",
+        label: "RESPONSE",
+        action: "TOP20 ALBUMS: Received report from LAST.FM.",
+      }),
+    },
   },
   General: {
     Error: new EventDefinition({

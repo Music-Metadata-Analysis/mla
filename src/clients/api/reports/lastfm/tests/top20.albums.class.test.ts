@@ -1,0 +1,187 @@
+import apiRoutes from "../../../../../config/apiRoutes";
+import Events from "../../../../../events/events";
+import LastFMTopAlbumsReport from "../top20.albums.class";
+
+jest.mock("../../../../http.class", () => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      post: mockPost,
+    };
+  });
+});
+
+const mockPost = jest.fn();
+
+describe("LastFMTopAlbumsReport", () => {
+  const mockUserName = "user1234";
+  const mockAPIResponse = { data: "mocked data" };
+  const integrationType = "LAST.FM";
+  const mockDispatch = jest.fn();
+  const mockEvent = jest.fn();
+  let instance: LastFMTopAlbumsReport;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const testPost = () => {
+    it("should post the expected payload", () => {
+      expect(mockPost).toBeCalledTimes(1);
+      expect(mockPost).toBeCalledWith(apiRoutes.v1.reports.lastfm.top20albums, {
+        userName: mockUserName,
+      });
+    });
+  };
+
+  const setUpRetrieve = (success: boolean, status: number) => {
+    if (success) {
+      mockPost.mockResolvedValueOnce({
+        status: status,
+        response: mockAPIResponse,
+      });
+    } else {
+      mockPost.mockRejectedValueOnce({});
+    }
+  };
+
+  const arrange = () => {
+    return new LastFMTopAlbumsReport(mockDispatch, mockEvent);
+  };
+
+  describe("retrieveTop20", () => {
+    describe("when a request is successful", () => {
+      beforeEach(() => {
+        setUpRetrieve(true, 200);
+        instance = arrange();
+        instance.retrieveAlbumReport(mockUserName);
+      });
+
+      testPost();
+
+      it("should dispatch the reducer correctly", async () => {
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "SuccessFetchUser",
+          userName: mockUserName,
+          data: mockAPIResponse,
+          integration: integrationType,
+        });
+      });
+
+      it("should register events correctly", async () => {
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.RequestAlbumsReport
+        );
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.SuccessAlbumsReport
+        );
+      });
+    });
+
+    describe("when a request is ratelimited", () => {
+      beforeEach(() => {
+        setUpRetrieve(true, 429);
+        instance = arrange();
+        instance.retrieveAlbumReport(mockUserName);
+      });
+
+      it("should dispatch the reducer correctly", async () => {
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "RatelimitedFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+      });
+
+      it("should register events correctly", async () => {
+        expect(mockEvent).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.RequestAlbumsReport
+        );
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.Ratelimited
+        );
+      });
+    });
+
+    describe("when a request returns not found", () => {
+      beforeEach(() => {
+        setUpRetrieve(true, 404);
+        instance = arrange();
+        instance.retrieveAlbumReport(mockUserName);
+      });
+
+      testPost();
+
+      it("should dispatch the reducer correctly", async () => {
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "NotFoundFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+      });
+
+      it("should register events correctly", async () => {
+        expect(mockEvent).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.RequestAlbumsReport
+        );
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.NotFound
+        );
+      });
+    });
+
+    describe("when a request fails", () => {
+      beforeEach(() => {
+        setUpRetrieve(false, 400);
+        instance = arrange();
+        instance.retrieveAlbumReport(mockUserName);
+      });
+
+      testPost();
+
+      it("should dispatch the reducer correctly", async () => {
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "FailureFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+      });
+
+      it("should register events correctly", async () => {
+        expect(mockEvent).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.RequestAlbumsReport
+        );
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.ErrorAlbumsReport
+        );
+      });
+    });
+  });
+});

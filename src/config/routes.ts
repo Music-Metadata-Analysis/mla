@@ -1,9 +1,14 @@
-import NavConfig from "./navbar";
-
 const routes = {
-  ...NavConfig,
+  about: "/about",
   home: "/",
-  lastfm: "/lastfm",
+  lastfm: {
+    top20albums: "/lastfm/top20albums",
+  },
+  search: {
+    lastfm: {
+      top20albums: "/search/lastfm/top20albums",
+    },
+  },
   404: "/not/a/valid/page",
 };
 

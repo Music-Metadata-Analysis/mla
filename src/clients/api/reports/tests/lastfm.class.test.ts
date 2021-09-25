@@ -64,10 +64,10 @@ describe("LastFMReport", () => {
       it("should register events correctly", async () => {
         expect(mockDispatch).toBeCalledTimes(2);
         expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.RequestAlbumsReport
+          Events.LastFM.Top20Albums.RequestAlbumsReport
         );
         expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.SuccessAlbumsReport
+          Events.LastFM.Top20Albums.SuccessAlbumsReport
         );
       });
     });
@@ -96,9 +96,11 @@ describe("LastFMReport", () => {
       it("should register events correctly", async () => {
         expect(mockEvent).toBeCalledTimes(2);
         expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.RequestAlbumsReport
+          Events.LastFM.Top20Albums.RequestAlbumsReport
         );
-        expect(mockEvent).toHaveBeenCalledWith(Events.LastFM.Ratelimited);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.Ratelimited
+        );
       });
     });
 
@@ -126,9 +128,11 @@ describe("LastFMReport", () => {
       it("should register events correctly", async () => {
         expect(mockEvent).toBeCalledTimes(2);
         expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.RequestAlbumsReport
+          Events.LastFM.Top20Albums.RequestAlbumsReport
         );
-        expect(mockEvent).toHaveBeenCalledWith(Events.LastFM.NotFound);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.NotFound
+        );
       });
     });
 
@@ -156,9 +160,11 @@ describe("LastFMReport", () => {
       it("should register events correctly", async () => {
         expect(mockEvent).toBeCalledTimes(2);
         expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.RequestAlbumsReport
+          Events.LastFM.Top20Albums.RequestAlbumsReport
         );
-        expect(mockEvent).toHaveBeenCalledWith(Events.LastFM.ErrorAlbumsReport);
+        expect(mockEvent).toHaveBeenCalledWith(
+          Events.LastFM.Top20Albums.ErrorAlbumsReport
+        );
       });
     });
   });

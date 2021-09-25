@@ -1,14 +1,10 @@
-export const HomePage = "https://www.last.fm";
-
 export const GenerateUserLink = (username: string) => {
-  return `${HomePage}/user/${username}`;
-};
-
-export const endPoints = {
-  apiRoot: "https://ws.audioscrobbler.com/2.0/",
+  return `${settings.homePage}/user/${username}`;
 };
 
 const settings = {
+  apiRoot: "https://ws.audioscrobbler.com/2.0/",
+  homePage: "https://www.last.fm",
   search: {
     fieldName: "username",
     maxUserLength: 60,

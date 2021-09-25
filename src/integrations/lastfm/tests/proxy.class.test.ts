@@ -31,7 +31,7 @@ describe("LastFMProxy", () => {
     process.env = originalEnvironment;
   });
 
-  describe("getTop20Response", () => {
+  describe("getTopAlbums", () => {
     describe("when requests are successful", () => {
       beforeEach(() => {
         mockGetTopAlbums.mockReturnValueOnce(Promise.resolve([]));
@@ -48,7 +48,7 @@ describe("LastFMProxy", () => {
       });
     });
 
-    describe("when getTop20 is unsuccessful", () => {
+    describe("when getTopAlbums is unsuccessful", () => {
       beforeEach(() => {
         mockGetTopAlbums.mockImplementationOnce(() => {
           throw new Error(mockError);

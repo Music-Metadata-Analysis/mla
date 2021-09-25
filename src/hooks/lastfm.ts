@@ -1,18 +1,18 @@
 import React from "react";
 import useAnalytics from "./analytics";
-import LastFMReport from "../clients/api/reports/lastfm.class";
+import LastFMTopAlbumsReport from "../clients/api/reports/lastfm/top20.albums.class";
 import { UserContext } from "../providers/user/user.provider";
 
 const useLastFM = () => {
   const analytics = useAnalytics();
   const { userProperties, dispatch } = React.useContext(UserContext);
-  const reports = new LastFMReport(dispatch, analytics.event);
+  const reports = new LastFMTopAlbumsReport(dispatch, analytics.event);
 
   const clear = (): void => {
     dispatch({ type: "ResetState" });
   };
 
-  const top20 = (userName: string): void => {
+  const top20albums = (userName: string): void => {
     reports.retrieveAlbumReport(userName);
   };
 
@@ -29,7 +29,7 @@ const useLastFM = () => {
     userProperties,
     clear,
     ready,
-    top20,
+    top20albums,
   };
 };
 

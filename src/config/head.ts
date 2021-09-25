@@ -1,6 +1,6 @@
 const settings = {
   appleTouchIcon: "/cans192.png",
-  defaultTitle: "Top20",
+  defaultTitle: "MLA",
   defaultDescription: "Music data visualization tool.",
   favicon: "/favicon.ico",
 };

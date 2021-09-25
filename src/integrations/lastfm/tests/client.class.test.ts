@@ -34,7 +34,7 @@ describe("LastFMClient", () => {
     return new LastFMClientAdapter(secretKey);
   };
 
-  describe("when a user's top20 data is requested", () => {
+  describe("getTopAlbums", () => {
     let res: LastFMAlbumDataInterface[];
 
     describe("when the request is successful", () => {
@@ -106,7 +106,7 @@ describe("LastFMClient", () => {
     });
   });
 
-  describe("when a user's profile data is requested", () => {
+  describe("getUserImage", () => {
     let res: LastFMImageDataInterface[];
 
     describe("when the request is successful", () => {
