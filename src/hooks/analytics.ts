@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React from "react";
 import ReactGA from "react-ga";
+import EventDefinition from "../events/event.class";
 import { AnalyticsContext } from "../providers/analytics/analytics.provider";
-import Event from "../providers/analytics/event.class";
 import { isProduction, isTest } from "../utils/env";
 import type {
   ButtonClickHandlerType,
@@ -24,7 +24,7 @@ const useAnalytics = () => {
   }, [initialized]);
 
   const trackButtonClick: ButtonClickHandlerType = (e, buttonName) => {
-    const clickEvent = new Event({
+    const clickEvent = new EventDefinition({
       category: "MAIN",
       label: "BUTTON",
       action: `CLICKED: ${buttonName}`,
@@ -33,7 +33,7 @@ const useAnalytics = () => {
   };
 
   const trackExternalLinkClick: LinkClickHandlerType = (e, href) => {
-    const clickEvent = new Event({
+    const clickEvent = new EventDefinition({
       category: "MAIN",
       label: "EXTERNAL_LINK",
       action: `VISITED: ${href}`,

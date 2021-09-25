@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import ErrorBoundary from "../components/errors/boundary/error.boundary.component";
 import Search from "../components/forms/search/lastfm/search.ui.component";
-import Events from "../config/events";
 import routes from "../config/routes";
+import Events from "../events/events";
 import Page from "../pages/search";
 import mockCheckCall from "../tests/fixtures/mock.component.call";
 import getPageProps from "../utils/page.props.static";

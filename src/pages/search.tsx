@@ -1,7 +1,7 @@
 import ErrorBoundary from "../components/errors/boundary/error.boundary.component";
 import SearchForm from "../components/forms/search/lastfm/search.ui.component";
-import Events from "../config/events";
 import routes from "../config/routes";
+import Events from "../events/events";
 import pagePropsGenerator from "../utils/page.props.static";
 import { voidFn } from "../utils/voids";
 

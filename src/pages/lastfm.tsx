@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import FourOhFour from "./404";
 import ErrorBoundary from "../components/errors/boundary/error.boundary.component";
 import Top20Report from "../components/reports/lastfm/top20/top20.container.component";
-import Events from "../config/events";
 import settings from "../config/lastfm";
 import routes from "../config/routes";
+import Events from "../events/events";
 import useLastFM from "../hooks/lastfm";
 import pagePropsGenerator from "../utils/page.props.static";
 

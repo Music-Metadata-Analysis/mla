@@ -1,9 +1,9 @@
 import { renderHook } from "@testing-library/react-hooks";
 import React from "react";
 import ReactGA from "react-ga";
-import Events from "../../config/events";
+import EventDefinition from "../../events/event.class";
+import Events from "../../events/events";
 import { AnalyticsContext } from "../../providers/analytics/analytics.provider";
-import Event from "../../providers/analytics/event.class";
 import useAnalytics from "../analytics";
 import type { AnalyticsContextInterface } from "../../types/analytics.types";
 import type { MutableEnv } from "../../types/process.types";
@@ -27,13 +27,13 @@ describe("useAnalytics", () => {
     currentTarget: {},
   } as React.MouseEvent<HTMLInputElement>;
   const mockButtonName = "MockButtonName";
-  const mockButtonClickEvent = new Event({
+  const mockButtonClickEvent = new EventDefinition({
     action: `CLICKED: ${mockButtonName}`,
     category: "MAIN",
     label: "BUTTON",
   });
   const mockExternalLink = "http://somewebsite.com";
-  const mockExternalLinkClickEvent = new Event({
+  const mockExternalLinkClickEvent = new EventDefinition({
     action: `VISITED: ${mockExternalLink}`,
     category: "MAIN",
     label: "EXTERNAL_LINK",

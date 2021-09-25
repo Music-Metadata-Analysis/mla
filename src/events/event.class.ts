@@ -1,10 +1,10 @@
-import type { EventDefinitionType } from "../../types/analytics.types";
+import type { EventDefinitionType } from "../types/analytics.types";
 
 class EventDefinition implements EventDefinitionType {
-  category;
-  label;
-  action;
-  value;
+  category: EventDefinitionType["category"];
+  label: EventDefinitionType["label"];
+  action: EventDefinitionType["action"];
+  value: EventDefinitionType["value"];
 
   constructor({ category, label, action, value }: EventDefinitionType) {
     this.category = category;

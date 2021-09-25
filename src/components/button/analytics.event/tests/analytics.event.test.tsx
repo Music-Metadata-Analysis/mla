@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import EventDefinition from "../../../../events/event.class";
 import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
-import Event from "../../../../providers/analytics/event.class";
 import AnalyticsEventWrapper from "../analytics.event.component";
 
 jest.mock("../../../../hooks/analytics", () => ({
@@ -10,7 +10,7 @@ jest.mock("../../../../hooks/analytics", () => ({
 
 describe("AnalyticsEventWrapper", () => {
   const buttonText = "Click Me";
-  const mockEvent = new Event({
+  const mockEvent = new EventDefinition({
     category: "TEST",
     label: "TEST",
     action: "Test Event",

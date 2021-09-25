@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import ErrorBoundary from "../components/errors/boundary/error.boundary.component";
 import ErrorDisplay from "../components/errors/display/error.display.component";
-import Events from "../config/events";
 import routes from "../config/routes";
+import Events from "../events/events";
 import Page from "../pages/404";
 import mockCheckCall from "../tests/fixtures/mock.component.call";
 import getPageProps from "../utils/page.props.static";
