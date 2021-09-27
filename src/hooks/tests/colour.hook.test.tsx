@@ -18,14 +18,17 @@ describe("useColour", () => {
     };
 
     const assertLenIs = (
-      object: Record<string, string | Record<string, string>>,
+      object: Record<
+        string,
+        string | Record<string, string | Record<string, string>>
+      >,
       length: number
     ) => {
       expect(Object.keys(object).length).toBe(length);
     };
 
     it("should contain the correct number of top level properties", () => {
-      assertLenIs(received.result.current, 7);
+      assertLenIs(received.result.current, 8);
     });
 
     it("should contain the bodyColour background color", () => {
@@ -47,6 +50,14 @@ describe("useColour", () => {
       assertIsString(received.result.current.componentColour.details);
       assertIsString(received.result.current.componentColour.scheme);
       assertLenIs(received.result.current.componentColour, 4);
+    });
+
+    it("should contain the consentColour properties", () => {
+      assertIsString(received.result.current.consentColour.accept.background);
+      assertIsString(received.result.current.consentColour.decline.background);
+      assertLenIs(received.result.current.consentColour, 2);
+      assertLenIs(received.result.current.consentColour.accept, 1);
+      assertLenIs(received.result.current.consentColour.decline, 1);
     });
 
     it("should contain the flipCardColour properties", () => {
