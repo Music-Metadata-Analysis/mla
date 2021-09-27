@@ -1,6 +1,8 @@
 import { cleanup, render, act } from "@testing-library/react";
 import lastfm from "../../../../../../public/locales/en/lastfm.json";
 import routes from "../../../../../config/routes";
+import Events from "../../../../../events/events";
+import mockAnalyticsHook from "../../../../../hooks/tests/analytics.mock";
 import mockLastFMHook from "../../../../../hooks/tests/lastfm.mock";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../../tests/fixtures/mock.router";
@@ -9,6 +11,11 @@ import ErrorDisplay from "../../../../errors/display/error.display.component";
 import Top20AlbumsReport from "../top20.albums.component";
 import Top20AlbumsReportContainer from "../top20.albums.container.component";
 import type useLastFM from "../../../../../hooks/lastfm";
+
+jest.mock("../../../../../hooks/analytics", () => ({
+  __esModule: true,
+  default: () => mockAnalyticsHook,
+}));
 
 jest.mock(
   "../../../../billboard/billboard.spinner/billboard.spinner.component",
@@ -247,6 +254,10 @@ describe("Top20ReportContainer", () => {
           it("should NOT call to set the data to the 'ready' state", () => {
             expect(mockHookState.ready).toBeCalledTimes(0);
           });
+
+          it("should NOT generate an analytics event", () => {
+            expect(mockAnalyticsHook.event).toBeCalledTimes(0);
+          });
         });
       });
 
@@ -287,6 +298,13 @@ describe("Top20ReportContainer", () => {
 
           it("should call set the data to the 'ready' state", () => {
             expect(mockHookState.ready).toBeCalledTimes(1);
+          });
+
+          it("should generate an analytics event indicating the report was viewed", () => {
+            expect(mockAnalyticsHook.event).toBeCalledTimes(1);
+            expect(mockAnalyticsHook.event).toBeCalledWith(
+              Events.LastFM.Top20Albums.ReportPresented
+            );
           });
         });
       });
