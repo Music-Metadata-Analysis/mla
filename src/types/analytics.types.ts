@@ -8,6 +8,7 @@ export type EventDefinitionType = {
     | "DATA: ALBUM"
     | "ERROR"
     | "EXTERNAL_LINK"
+    | "REPORT"
     | "REQUEST"
     | "RESPONSE"
     | "TEST";
