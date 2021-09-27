@@ -18,6 +18,11 @@ const Events = {
         label: "ERROR",
         action: "TOP20 ALBUMS: Request was ratelimited by LAST.FM.",
       }),
+      ReportPresented: new EventDefinition({
+        category: "LASTFM",
+        label: "REPORT",
+        action: "TOP20 ALBUMS: Presented report to user.",
+      }),
       RequestAlbumsReport: new EventDefinition({
         category: "LASTFM",
         label: "REQUEST",
