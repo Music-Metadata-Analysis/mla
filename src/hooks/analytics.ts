@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import { useEffect, useContext, useState } from "react";
 import ReactGA from "react-ga";
 import EventDefinition from "../events/event.class";
 import { AnalyticsContext } from "../providers/analytics/analytics.provider";
@@ -11,17 +11,18 @@ import type {
 import type { EventArgs } from "react-ga";
 
 const useAnalytics = () => {
+  const { initialized, setInitialized } = useContext(AnalyticsContext);
+  const [isTrackingRoutes, registerTrackRoutes] = useState(false);
   const router = useRouter();
-  const { initialized, setInitialized } = React.useContext(AnalyticsContext);
 
-  React.useEffect(() => {
-    if (!initialized) return;
+  useEffect(() => {
+    if (!isTrackingRoutes) return;
     router.events.on("routeChangeStart", handleRouteChange);
     return () => {
       router.events.off("routeChangeStart", handleRouteChange);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialized]);
+  }, [isTrackingRoutes]);
 
   const trackButtonClick: ButtonClickHandlerType = (e, buttonName) => {
     const clickEvent = new EventDefinition({
@@ -58,11 +59,12 @@ const useAnalytics = () => {
   };
 
   const setup = (): void => {
-    if (initialized || !process.env.REACT_APP_UA_CODE) return;
-    ReactGA.initialize(process.env.REACT_APP_UA_CODE, {
+    if (initialized || !process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE) return;
+    ReactGA.initialize(process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE, {
       debug: !isProduction(),
     });
     setInitialized(true);
+    registerTrackRoutes(true);
   };
 
   return {

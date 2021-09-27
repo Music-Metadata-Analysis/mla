@@ -22,6 +22,14 @@ const mockColourHook = {
     foreground: mockColour(),
     scheme: mockColour(),
   },
+  consentColour: {
+    accept: {
+      background: mockColour(),
+    },
+    decline: {
+      background: mockColour(),
+    },
+  },
   flipCardColour: {
     background: mockColour(),
     border: mockColour(),

@@ -1,3 +1,4 @@
+import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import React from "react";
 import ReactGA from "react-ga";
@@ -105,7 +106,7 @@ describe("useAnalytics", () => {
 
     describe("without a valid tracker code", () => {
       beforeAll(() => {
-        process.env.REACT_APP_UA_CODE = "";
+        process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE = "";
       });
 
       describe("when NOT initialized", () => {
@@ -119,11 +120,11 @@ describe("useAnalytics", () => {
         describe("setup", () => {
           beforeEach(() => received.result.current.setup());
 
-          it("should NOT initialize analytics", async () => {
+          it("should NOT initialize analytics", () => {
             expect(ReactGA.initialize).toBeCalledTimes(0);
           });
 
-          it("should NOT set initialized to true", async () => {
+          it("should NOT set initialized to true", () => {
             expect(mockSetInitialized).toHaveBeenCalledTimes(0);
           });
         });
@@ -131,7 +132,7 @@ describe("useAnalytics", () => {
         describe("event", () => {
           beforeEach(() => received.result.current.event(Events.General.Test));
 
-          it("should NOT process events", async () => {
+          it("should NOT process events", () => {
             expect(ReactGA.event).toBeCalledTimes(0);
           });
         });
@@ -144,7 +145,7 @@ describe("useAnalytics", () => {
             );
           });
 
-          it("should NOT process events", async () => {
+          it("should NOT process events", () => {
             expect(ReactGA.event).toBeCalledTimes(0);
           });
         });
@@ -157,7 +158,7 @@ describe("useAnalytics", () => {
             );
           });
 
-          it("should NOT process events", async () => {
+          it("should NOT process events", () => {
             expect(ReactGA.event).toBeCalledTimes(0);
           });
         });
@@ -166,7 +167,7 @@ describe("useAnalytics", () => {
 
     describe("with a valid tracker code", () => {
       beforeAll(() => {
-        process.env.REACT_APP_UA_CODE = "tracker code";
+        process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE = "tracker code";
       });
 
       describe("when NOT initialized", () => {
@@ -178,19 +179,42 @@ describe("useAnalytics", () => {
         });
 
         describe("setup", () => {
-          beforeEach(() => received.result.current.setup());
+          beforeEach(async () => {
+            act(() => received.result.current.setup());
+            await waitFor(() =>
+              expect(mockSetInitialized).toHaveBeenCalledTimes(1)
+            );
+          });
 
-          it("should initialize analytics (with debug disabled)", async () => {
+          it("should initialize analytics (with debug disabled)", () => {
             expect(ReactGA.initialize).toBeCalledTimes(1);
             expect(ReactGA.initialize).toHaveBeenCalledWith(
-              process.env.REACT_APP_UA_CODE,
+              process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE,
               { debug: expectedDebugMode }
             );
           });
 
-          it("should set initialized to true", async () => {
-            expect(mockSetInitialized).toHaveBeenCalledTimes(1);
+          it("should set initialized to true", () => {
             expect(mockSetInitialized).toHaveBeenCalledWith(true);
+          });
+
+          it("should start listening to router events", async () => {
+            await waitFor(() =>
+              expect(routerEventListener).toHaveBeenCalledTimes(1)
+            );
+          });
+
+          it("should respond to a router event by publishing the details", () => {
+            const fakeUrl = "127.0.0.1/fake";
+            const handler = routerEventListener.mock.calls[0][1];
+
+            handler(fakeUrl);
+
+            expect(ReactGA.set).toBeCalledTimes(1);
+            expect(ReactGA.set).toBeCalledWith({ page: fakeUrl });
+
+            expect(ReactGA.pageview).toBeCalledTimes(1);
+            expect(ReactGA.pageview).toBeCalledWith(fakeUrl);
           });
         });
 
@@ -246,31 +270,12 @@ describe("useAnalytics", () => {
         describe("setup", () => {
           beforeEach(() => received.result.current.setup());
 
-          it("should NOT initialize analytics", async () => {
+          it("should NOT initialize analytics", () => {
             expect(ReactGA.initialize).toBeCalledTimes(0);
           });
 
-          it("should NOT set initialized to true", async () => {
+          it("should NOT set initialized to true", () => {
             expect(mockSetInitialized).toHaveBeenCalledTimes(0);
-          });
-
-          it("should start listening to router events", async () => {
-            expect(routerEventListener).toHaveBeenCalledTimes(1);
-          });
-
-          it("should respond to a router event by publishing the details", async () => {
-            const fakeUrl = "127.0.0.1/fake";
-
-            expect(routerEventListener).toHaveBeenCalledTimes(1);
-            const handler = routerEventListener.mock.calls[0][1];
-
-            handler(fakeUrl);
-
-            expect(ReactGA.set).toBeCalledTimes(1);
-            expect(ReactGA.set).toBeCalledWith({ page: fakeUrl });
-
-            expect(ReactGA.pageview).toBeCalledTimes(1);
-            expect(ReactGA.pageview).toBeCalledWith(fakeUrl);
           });
         });
 
@@ -328,7 +333,7 @@ describe("useAnalytics", () => {
 
     describe("without a valid tracker code", () => {
       beforeAll(() => {
-        process.env.REACT_APP_UA_CODE = "";
+        process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE = "";
       });
 
       describe("when NOT initialized", () => {
@@ -398,7 +403,7 @@ describe("useAnalytics", () => {
 
     describe("with a valid tracker code", () => {
       beforeAll(() => {
-        process.env.REACT_APP_UA_CODE = "tracker code";
+        process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE = "tracker code";
       });
 
       describe("when analytics is initialized", () => {
@@ -418,25 +423,6 @@ describe("useAnalytics", () => {
 
           it("should NOT set initialized to true", async () => {
             expect(mockSetInitialized).toHaveBeenCalledTimes(0);
-          });
-
-          it("should start listening to router events", async () => {
-            expect(routerEventListener).toHaveBeenCalledTimes(1);
-          });
-
-          it("should respond to a router event by publishing the details", async () => {
-            const fakeUrl = "127.0.0.1/fake";
-
-            expect(routerEventListener).toHaveBeenCalledTimes(1);
-            const handler = routerEventListener.mock.calls[0][1];
-
-            handler(fakeUrl);
-
-            expect(ReactGA.set).toBeCalledTimes(1);
-            expect(ReactGA.set).toBeCalledWith({ page: fakeUrl });
-
-            expect(ReactGA.pageview).toBeCalledTimes(1);
-            expect(ReactGA.pageview).toBeCalledWith(fakeUrl);
           });
         });
 
@@ -468,14 +454,42 @@ describe("useAnalytics", () => {
         });
 
         describe("setup", () => {
-          beforeEach(() => received.result.current.setup());
+          beforeEach(async () => {
+            act(() => received.result.current.setup());
+            await waitFor(() =>
+              expect(mockSetInitialized).toHaveBeenCalledTimes(1)
+            );
+          });
 
           it("should initialize analytics (with debug enabled)", async () => {
             expect(ReactGA.initialize).toBeCalledTimes(1);
             expect(ReactGA.initialize).toHaveBeenCalledWith(
-              process.env.REACT_APP_UA_CODE,
+              process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE,
               { debug: expectedDebugMode }
             );
+          });
+
+          it("should set initialized to true", () => {
+            expect(mockSetInitialized).toHaveBeenCalledWith(true);
+          });
+
+          it("should start listening to router events", async () => {
+            await waitFor(() =>
+              expect(routerEventListener).toHaveBeenCalledTimes(1)
+            );
+          });
+
+          it("should respond to a router event by publishing the details", async () => {
+            const fakeUrl = "127.0.0.1/fake";
+            const handler = routerEventListener.mock.calls[0][1];
+
+            handler(fakeUrl);
+
+            expect(ReactGA.set).toBeCalledTimes(1);
+            expect(ReactGA.set).toBeCalledWith({ page: fakeUrl });
+
+            expect(ReactGA.pageview).toBeCalledTimes(1);
+            expect(ReactGA.pageview).toBeCalledWith(fakeUrl);
           });
         });
       });

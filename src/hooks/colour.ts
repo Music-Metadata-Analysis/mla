@@ -9,6 +9,8 @@ const useColour = () => {
     return colour2;
   };
 
+  // Add consent cookie colours, and update mock
+
   const generateColours = () => ({
     bodyColour: {
       background: chooseColour("gray.400", "gray.500"),
@@ -18,6 +20,14 @@ const useColour = () => {
       border: chooseColour("gray.500", "gray.600"),
       foreground: chooseColour("gray.900", "gray.200"),
       hoverBackground: chooseColour("gray.500", "gray.600"),
+    },
+    consentColour: {
+      accept: {
+        background: chooseColour("green.400", "green.700"),
+      },
+      decline: {
+        background: chooseColour("red.400", "red.700"),
+      },
     },
     componentColour: {
       background: chooseColour("gray.300", "gray.900"),
