@@ -7,10 +7,11 @@ import Events from "../../../../events/events";
 import useAnalytics from "../../../../hooks/analytics";
 import BillBoardSpinner from "../../../billboard/billboard.spinner/billboard.spinner.component";
 import ErrorDisplay from "../../../errors/display/error.display.component";
-import type useLastFM from "../../../../hooks/lastfm";
+import type { userHookAsLastFMTop20AlbumReport } from "../../../../types/user/hook.types";
+
 interface Top20AlbumsReportContainerProps {
   username: string;
-  user: ReturnType<typeof useLastFM>;
+  user: userHookAsLastFMTop20AlbumReport;
 }
 
 export default function Top20AlbumsContainer({

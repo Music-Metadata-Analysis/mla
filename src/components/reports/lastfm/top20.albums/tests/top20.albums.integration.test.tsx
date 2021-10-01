@@ -24,7 +24,7 @@ const Top20ReportBaseProps: Top20AlbumsReportProps = {
           albums: [],
           image: [],
         },
-        integration: null,
+        integration: "LASTFM",
       },
     },
     clear: jest.fn(),

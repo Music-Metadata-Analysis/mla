@@ -10,7 +10,7 @@ import BillBoardSpinner from "../../../../billboard/billboard.spinner/billboard.
 import ErrorDisplay from "../../../../errors/display/error.display.component";
 import Top20AlbumsReport from "../top20.albums.component";
 import Top20AlbumsReportContainer from "../top20.albums.container.component";
-import type useLastFM from "../../../../../hooks/lastfm";
+import type { userHookAsLastFMTop20AlbumReport } from "../../../../../types/user/hook.types";
 
 jest.mock("../../../../../hooks/analytics", () => ({
   __esModule: true,
@@ -42,9 +42,11 @@ const createMockedComponent = (name: string) => {
   return factoryInstance.create(name);
 };
 
+const mockTypedLastFMHook = mockLastFMHook as userHookAsLastFMTop20AlbumReport;
+
 describe("Top20ReportContainer", () => {
   const testUsername = "niall-byrne";
-  let mockHookState: ReturnType<typeof useLastFM>;
+  let mockHookState: userHookAsLastFMTop20AlbumReport;
   const mockReportData = {
     albums: [
       {
@@ -89,13 +91,13 @@ describe("Top20ReportContainer", () => {
 
   const resetHookState = () => {
     mockHookState = {
-      ...mockLastFMHook,
+      ...mockTypedLastFMHook,
       userProperties: {
-        ...mockLastFMHook.userProperties,
+        ...mockTypedLastFMHook.userProperties,
         data: {
-          ...mockLastFMHook.userProperties.data,
+          ...mockTypedLastFMHook.userProperties.data,
           report: {
-            ...mockLastFMHook.userProperties.data.report,
+            ...mockTypedLastFMHook.userProperties.data.report,
           },
         },
       },

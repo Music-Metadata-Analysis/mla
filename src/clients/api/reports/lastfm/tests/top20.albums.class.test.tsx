@@ -1,6 +1,5 @@
-import apiRoutes from "../../../../../config/apiRoutes";
-import Events from "../../../../../events/events";
-import LastFMTopAlbumsReport from "../top20.albums.class";
+import EventDefinition from "../../../../../events/event.class";
+import LastFMReport from "../top20.albums.class";
 
 jest.mock("../../../../http.class", () => {
   return jest.fn().mockImplementation(() => {
@@ -12,22 +11,32 @@ jest.mock("../../../../http.class", () => {
 
 const mockPost = jest.fn();
 
-describe("LastFMTopAlbumsReport", () => {
+describe("LastFMReport", () => {
   const mockUserName = "user1234";
   const mockAPIResponse = { data: "mocked data" };
   const integrationType = "LAST.FM";
+  const reportType = "TOP20 ALBUMS";
   const mockDispatch = jest.fn();
   const mockEvent = jest.fn();
-  let instance: LastFMTopAlbumsReport;
+  let instance: LastFMReport;
+  const requestEvent = new EventDefinition({
+    category: "LASTFM",
+    label: "REQUEST",
+    action: `${reportType}: Request was sent to LAST.FM.`,
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  const testPost = () => {
-    it("should post the expected payload", () => {
+  const arrange = () => {
+    return new LastFMReport(mockDispatch, mockEvent);
+  };
+
+  const checkUrl = () => {
+    it("should make the request with the correct url", () => {
       expect(mockPost).toBeCalledTimes(1);
-      expect(mockPost).toBeCalledWith(apiRoutes.v1.reports.lastfm.top20albums, {
+      expect(mockPost).toBeCalledWith(instance.route, {
         userName: mockUserName,
       });
     });
@@ -44,19 +53,51 @@ describe("LastFMTopAlbumsReport", () => {
     }
   };
 
-  const arrange = () => {
-    return new LastFMTopAlbumsReport(mockDispatch, mockEvent);
-  };
-
   describe("retrieveTop20", () => {
+    describe("when a request returns not found", () => {
+      beforeEach(() => {
+        setUpRetrieve(true, 404);
+        instance = arrange();
+        instance.retrieveReport(mockUserName);
+      });
+
+      checkUrl();
+
+      it("should dispatch the reducer correctly", async () => {
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "NotFoundFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+      });
+
+      it("should register events correctly", async () => {
+        expect(mockEvent).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+        expect(mockEvent).toHaveBeenCalledWith(
+          new EventDefinition({
+            category: "LASTFM",
+            label: "ERROR",
+            action: `${reportType}: Request was made for an unknown username.`,
+          })
+        );
+      });
+    });
+
     describe("when a request is successful", () => {
       beforeEach(() => {
         setUpRetrieve(true, 200);
         instance = arrange();
-        instance.retrieveAlbumReport(mockUserName);
+        instance.retrieveReport(mockUserName);
       });
 
-      testPost();
+      checkUrl();
 
       it("should dispatch the reducer correctly", async () => {
         expect(mockDispatch).toBeCalledTimes(2);
@@ -75,11 +116,13 @@ describe("LastFMTopAlbumsReport", () => {
 
       it("should register events correctly", async () => {
         expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.Top20Albums.RequestAlbumsReport
-        );
-        expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.Top20Albums.SuccessAlbumsReport
+          new EventDefinition({
+            category: "LASTFM",
+            label: "RESPONSE",
+            action: `${reportType}: Received report from LAST.FM.`,
+          })
         );
       });
     });
@@ -88,8 +131,10 @@ describe("LastFMTopAlbumsReport", () => {
       beforeEach(() => {
         setUpRetrieve(true, 429);
         instance = arrange();
-        instance.retrieveAlbumReport(mockUserName);
+        instance.retrieveReport(mockUserName);
       });
+
+      checkUrl();
 
       it("should dispatch the reducer correctly", async () => {
         expect(mockDispatch).toBeCalledTimes(2);
@@ -107,45 +152,13 @@ describe("LastFMTopAlbumsReport", () => {
 
       it("should register events correctly", async () => {
         expect(mockEvent).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.Top20Albums.RequestAlbumsReport
-        );
-        expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.Top20Albums.Ratelimited
-        );
-      });
-    });
-
-    describe("when a request returns not found", () => {
-      beforeEach(() => {
-        setUpRetrieve(true, 404);
-        instance = arrange();
-        instance.retrieveAlbumReport(mockUserName);
-      });
-
-      testPost();
-
-      it("should dispatch the reducer correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(2);
-        expect(mockDispatch).toHaveBeenCalledWith({
-          type: "StartFetchUser",
-          userName: mockUserName,
-          integration: integrationType,
-        });
-        expect(mockDispatch).toHaveBeenCalledWith({
-          type: "NotFoundFetchUser",
-          userName: mockUserName,
-          integration: integrationType,
-        });
-      });
-
-      it("should register events correctly", async () => {
-        expect(mockEvent).toBeCalledTimes(2);
-        expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.Top20Albums.RequestAlbumsReport
-        );
-        expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.Top20Albums.NotFound
+          new EventDefinition({
+            category: "LASTFM",
+            label: "ERROR",
+            action: `${reportType}: Request was ratelimited by LAST.FM.`,
+          })
         );
       });
     });
@@ -154,10 +167,10 @@ describe("LastFMTopAlbumsReport", () => {
       beforeEach(() => {
         setUpRetrieve(false, 400);
         instance = arrange();
-        instance.retrieveAlbumReport(mockUserName);
+        instance.retrieveReport(mockUserName);
       });
 
-      testPost();
+      checkUrl();
 
       it("should dispatch the reducer correctly", async () => {
         expect(mockDispatch).toBeCalledTimes(2);
@@ -175,11 +188,13 @@ describe("LastFMTopAlbumsReport", () => {
 
       it("should register events correctly", async () => {
         expect(mockEvent).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.Top20Albums.RequestAlbumsReport
-        );
-        expect(mockEvent).toHaveBeenCalledWith(
-          Events.LastFM.Top20Albums.ErrorAlbumsReport
+          new EventDefinition({
+            category: "LASTFM",
+            label: "ERROR",
+            action: `${reportType}: Unable to create a report.`,
+          })
         );
       });
     });
