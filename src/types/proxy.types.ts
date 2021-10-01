@@ -9,7 +9,8 @@ export type ProxyResponse<REPORT> = {
   response: REPORT | StatusMessageType;
 };
 
-export interface TopAlbumsReportResponseInterface {
-  albums: unknown[];
+export interface BaseReportResponseInterface {
+  artist?: unknown[];
+  albums?: unknown[];
   image: unknown[];
 }

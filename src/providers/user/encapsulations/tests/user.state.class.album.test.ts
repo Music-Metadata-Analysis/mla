@@ -3,6 +3,7 @@ import type {
   LastFMImageDataInterface,
   LastFMArtistDataInterface,
 } from "../../../../types/integrations/lastfm/api.types";
+import type { LastFMUserStateTop20AlbumReport } from "../../../../types/user/state.types";
 import type { UserStateInterface } from "../../../../types/user/state.types";
 
 const mockUrls = ["http://someurl1.com", "http://someurl2.com"];
@@ -41,7 +42,7 @@ const baseUserProperties: UserStateInterface = {
 };
 
 describe("UserAlbumState", () => {
-  let currentState: UserStateInterface;
+  let currentState: LastFMUserStateTop20AlbumReport;
   let instance: UserAlbumState;
   const mockT = jest.fn((arg: string) => `t(${arg})`);
   let index: number;
@@ -65,6 +66,12 @@ describe("UserAlbumState", () => {
     it("should have the correct translated default values", () => {
       expect(instance.defaultAlbumName).toBe("t(defaults.albumName)");
       expect(instance.defaultArtistName).toBe("t(defaults.artistName)");
+    });
+
+    it("should have the correct report value", () => {
+      expect(instance.defaultAlbumName).toBe("t(defaults.albumName)");
+      expect(instance.defaultArtistName).toBe("t(defaults.artistName)");
+      expect(instance.albums).toBe(currentState.data.report.albums);
     });
   });
 
