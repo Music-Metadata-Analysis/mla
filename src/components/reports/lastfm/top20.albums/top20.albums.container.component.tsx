@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Top20AlbumsReport from "./top20.albums.component";
 import routes from "../../../../config/routes";
 import Events from "../../../../events/events";
 import useAnalytics from "../../../../hooks/analytics";
+import useUserInterface from "../../../../hooks/ui";
 import BillBoardSpinner from "../../../billboard/billboard.spinner/billboard.spinner.component";
 import ErrorDisplay from "../../../errors/display/error.display.component";
 import type { userHookAsLastFMTop20AlbumReport } from "../../../../types/user/hook.types";
@@ -21,10 +22,11 @@ export default function Top20AlbumsContainer({
   const { t } = useTranslation("lastfm");
   const analytics = useAnalytics();
   const router = useRouter();
-  const [loadedImagesCounter, setLoadedImagesCounter] = useState(0);
+  const ui = useUserInterface();
 
   useEffect(() => {
-    setLoadedImagesCounter(0);
+    ui.reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -38,16 +40,12 @@ export default function Top20AlbumsContainer({
     if (user.userProperties.userName === null) return;
     if (user.userProperties.inProgress) return;
     if (user.userProperties.ready) return;
-    if (loadedImagesCounter >= getNumberOfImageLoads()) {
+    if (ui.count >= getNumberOfImageLoads()) {
       user.ready();
       analytics.event(Events.LastFM.ReportPresented("TOP20 ALBUMS"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadedImagesCounter, user.userProperties]);
-
-  const imageIsLoaded = () => {
-    setLoadedImagesCounter((prevState) => prevState + 1);
-  };
+  }, [ui.count, user.userProperties]);
 
   const getNumberOfAlbums = () => {
     return user.userProperties.data.report.albums.length;
@@ -110,7 +108,7 @@ export default function Top20AlbumsContainer({
       <Top20AlbumsReport
         visible={user.userProperties.ready}
         user={user}
-        imageIsLoaded={imageIsLoaded}
+        imageIsLoaded={ui.load}
       />
     </>
   );
