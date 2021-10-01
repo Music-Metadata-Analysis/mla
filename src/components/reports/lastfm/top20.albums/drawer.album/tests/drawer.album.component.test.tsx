@@ -197,7 +197,7 @@ describe("AlbumDrawer", () => {
           new EventDefinition({
             action:
               "VIEW ALBUM DETAILS: t(defaults.artistName):t(defaults.albumName)",
-            category: "LASTFM",
+            category: "LAST.FM",
             label: "DATA: ALBUM",
             value: undefined,
           })
@@ -272,7 +272,7 @@ describe("AlbumDrawer", () => {
         expect(mockAnalyticsHook.event).toBeCalledWith(
           new EventDefinition({
             action: "VIEW ALBUM DETAILS: mock_artist:mock_album",
-            category: "LASTFM",
+            category: "LAST.FM",
             label: "DATA: ALBUM",
             value: undefined,
           })
