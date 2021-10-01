@@ -3,7 +3,7 @@ import "../styles/globals.css";
 import { appWithTranslation } from "next-i18next";
 import Consent from "../components/consent/consent.component";
 import NavBar from "../components/navbar/navbar.component";
-import MenuConfig from "../config/navbar";
+import NavConfig from "../config/navbar";
 import RootProvider from "../providers/root.provider";
 import type { AppProps } from "next/app";
 
@@ -13,7 +13,7 @@ function App({
 }: AppProps) {
   return (
     <RootProvider headerProps={headerProps}>
-      <NavBar menuConfig={MenuConfig} />
+      <NavBar menuConfig={NavConfig.menuConfig} />
       <Component {...otherProps} />
       <Consent />
     </RootProvider>
