@@ -1,5 +1,5 @@
 import type HTTPClient from "../../../../clients/http.class";
-import type { EventCreatorType } from "../../../analytics.types";
+import type { EventCreatorType, ReportType } from "../../../analytics.types";
 import type { IntegrationTypes } from "../../../integration.types";
 import type {
   LastFMAlbumDataInterface,
@@ -13,7 +13,7 @@ export interface LastFMReportInterface<T> {
   client: HTTPClient;
   dispatch: userDispatchType;
   eventDispatch: EventCreatorType;
-  eventType: string;
+  eventType: ReportType;
   integration: IntegrationTypes;
   response: ProxyResponse<T> | undefined;
   route: string | undefined;

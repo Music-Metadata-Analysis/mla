@@ -40,7 +40,7 @@ export default function Top20AlbumsContainer({
     if (user.userProperties.ready) return;
     if (loadedImagesCounter >= getNumberOfImageLoads()) {
       user.ready();
-      analytics.event(Events.LastFM.Top20Albums.ReportPresented);
+      analytics.event(Events.LastFM.ReportPresented("TOP20 ALBUMS"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadedImagesCounter, user.userProperties]);

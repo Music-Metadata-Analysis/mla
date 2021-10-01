@@ -1,14 +1,14 @@
 import EventDefinition from "./event.class";
+import type { ReportType } from "../types/analytics.types";
 
 const Events = {
   LastFM: {
-    Top20Albums: {
-      ReportPresented: new EventDefinition({
-        category: "LASTFM",
+    ReportPresented: (title: ReportType) =>
+      new EventDefinition({
+        category: "LAST.FM",
         label: "REPORT",
-        action: "TOP20 ALBUMS: Presented report to user.",
+        action: `${title}: Presented report to user.`,
       }),
-    },
   },
   General: {
     Error: new EventDefinition({

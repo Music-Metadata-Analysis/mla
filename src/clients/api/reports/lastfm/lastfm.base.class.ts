@@ -1,6 +1,6 @@
 import EventDefinition from "../../../../events/event.class";
 import HTTPClient from "../../../http.class";
-import type { EventCreatorType } from "../../../../types/analytics.types";
+import type { EventCreatorType, ReportType } from "../../../../types/analytics.types";
 import type { LastFMReportInterface } from "../../../../types/clients/api/reports/lastfm.types";
 import type {
   BaseReportResponseInterface,
@@ -15,7 +15,7 @@ class LastFMBaseReport<ResponseType>
   client: HTTPClient;
   dispatch: userDispatchType;
   eventDispatch: EventCreatorType;
-  eventType = "BaseType";
+  eventType = "BASE REPORT" as ReportType;
   integration = "LAST.FM" as const;
   response: ProxyResponse<ResponseType> | undefined;
   route: string | undefined;
@@ -29,7 +29,7 @@ class LastFMBaseReport<ResponseType>
   handleBegin(userName: string): void {
     this.eventDispatch(
       new EventDefinition({
-        category: "LASTFM",
+        category: "LAST.FM",
         label: "REQUEST",
         action: `${this.eventType}: Request was sent to LAST.FM.`,
       })
@@ -50,7 +50,7 @@ class LastFMBaseReport<ResponseType>
       });
       this.eventDispatch(
         new EventDefinition({
-          category: "LASTFM",
+          category: "LAST.FM",
           label: "ERROR",
           action: `${this.eventType}: Request was made for an unknown username.`,
         })
@@ -68,7 +68,7 @@ class LastFMBaseReport<ResponseType>
       });
       this.eventDispatch(
         new EventDefinition({
-          category: "LASTFM",
+          category: "LAST.FM",
           label: "RESPONSE",
           action: `${this.eventType}: Received report from LAST.FM.`,
         })
@@ -85,7 +85,7 @@ class LastFMBaseReport<ResponseType>
       });
       this.eventDispatch(
         new EventDefinition({
-          category: "LASTFM",
+          category: "LAST.FM",
           label: "ERROR",
           action: `${this.eventType}: Request was ratelimited by LAST.FM.`,
         })
@@ -101,7 +101,7 @@ class LastFMBaseReport<ResponseType>
     });
     this.eventDispatch(
       new EventDefinition({
-        category: "LASTFM",
+        category: "LAST.FM",
         label: "ERROR",
         action: `${this.eventType}: Unable to create a report.`,
       })
