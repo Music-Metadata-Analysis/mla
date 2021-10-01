@@ -1,6 +1,9 @@
 import EventDefinition from "../../../../events/event.class";
 import HTTPClient from "../../../http.class";
-import type { EventCreatorType, ReportType } from "../../../../types/analytics.types";
+import type {
+  EventCreatorType,
+  ReportType,
+} from "../../../../types/analytics.types";
 import type { LastFMReportInterface } from "../../../../types/clients/api/reports/lastfm.types";
 import type {
   BaseReportResponseInterface,

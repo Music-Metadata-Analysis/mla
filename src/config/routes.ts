@@ -1,8 +1,10 @@
 const routes = {
   about: "/about",
   home: "/",
-  lastfm: {
-    top20albums: "/lastfm/top20albums",
+  reports: {
+    lastfm: {
+      top20albums: "/lastfm/top20albums",
+    },
   },
   search: {
     lastfm: {

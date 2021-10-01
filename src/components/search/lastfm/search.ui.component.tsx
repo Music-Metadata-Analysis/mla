@@ -1,12 +1,17 @@
 import { Box, Flex, useToast, Avatar } from "@chakra-ui/react";
-import { useTranslation } from "next-i18next";
 import SearchContainer from "./search.container.component";
-import Billboard from "../../../../billboard/billboard.component";
-import LastFMIcon from "../../../../icons/lastfm/lastfm.icon";
+import Billboard from "../../billboard/billboard.component";
+import LastFMIcon from "../../icons/lastfm/lastfm.icon";
+import type { TFunction } from "next-i18next";
 
-export default function SearchUI() {
+interface SearchUIProps {
+  route: string;
+  title: string;
+  t: TFunction;
+}
+
+export default function SearchUI({ route, title, t }: SearchUIProps) {
   const toast = useToast();
-  const { t } = useTranslation("lastfm");
 
   const closeError = (fieldname: string) => {
     if (toast.isActive(fieldname)) {
@@ -34,7 +39,7 @@ export default function SearchUI() {
   };
 
   return (
-    <Billboard title={t("search.title")}>
+    <Billboard title={title}>
       <Flex justify={"space-between"} align={"center"}>
         <Box mb={10}>
           <Avatar
@@ -44,6 +49,7 @@ export default function SearchUI() {
         </Box>
         <Box pl={[5, 5, 10]} w={"100%"}>
           <SearchContainer
+            route={route}
             closeError={closeError}
             openError={openError}
             t={t}

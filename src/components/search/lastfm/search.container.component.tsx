@@ -1,20 +1,21 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import SearchForm from "./search.form.component";
-import settings from "../../../../../config/lastfm";
-import routes from "../../../../../config/routes";
-import useNavBar from "../../../../../hooks/navbar";
-import type { LastFMTop20AlbumsSearchFormInterface } from "../../../../../types/forms/lastfm/search";
+import settings from "../../../config/lastfm";
+import useNavBar from "../../../hooks/navbar";
+import type { LastFMUserSearchInterface } from "../../../types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
 import type { TFunction } from "next-i18next";
 
 interface SearchContainerProps {
+  route: string;
   closeError: (fieldName: string) => void;
   openError: (fieldName: string, message: string) => void;
   t: TFunction;
 }
 
 export default function SearchContainer({
+  route,
   closeError,
   openError,
   t,
@@ -49,15 +50,15 @@ export default function SearchContainer({
   };
 
   const handleSubmit = (
-    values: LastFMTop20AlbumsSearchFormInterface,
-    actions: FormikHelpers<LastFMTop20AlbumsSearchFormInterface>
+    values: LastFMUserSearchInterface,
+    actions: FormikHelpers<LastFMUserSearchInterface>
   ) => {
     actions.setSubmitting(true);
     const params = {
       username: values.username,
     };
     const query = new URLSearchParams(params);
-    router.push(`${routes.lastfm.top20albums}?${query.toString()}`);
+    router.push(`${route}?${query.toString()}`);
   };
 
   return (

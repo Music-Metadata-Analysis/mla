@@ -1,28 +1,29 @@
 import { render, waitFor, cleanup } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import settings from "../../../../../../config/lastfm";
-import mockNavBarHook from "../../../../../../hooks/tests/navbar.mock";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import mockRouter from "../../../../../../tests/fixtures/mock.router";
+import settings from "../../../../config/lastfm";
+import mockNavBarHook from "../../../../hooks/tests/navbar.mock";
+import checkMockCall from "../../../../tests/fixtures/mock.component.call";
+import mockRouter from "../../../../tests/fixtures/mock.router";
 import SearchContainer from "../search.container.component";
 import SearchForm from "../search.form.component";
-import type { LastFMTop20AlbumsSearchFormInterface } from "../../../../../../types/forms/lastfm/search";
+import type { LastFMUserSearchInterface } from "../../../../types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
 
 jest.mock("../search.form.component", () => {
   return jest.fn().mockImplementation(() => <div>MockSearchForm</div>);
 });
 
-jest.mock("../../../../../../hooks/navbar", () => {
+jest.mock("../../../../hooks/navbar", () => {
   return jest.fn().mockImplementation(() => mockNavBarHook);
 });
 
 describe("SearchContainer", () => {
   let validateUserName: (username: string) => string | undefined;
   let handleSubmit: (
-    values: LastFMTop20AlbumsSearchFormInterface,
-    actions: FormikHelpers<LastFMTop20AlbumsSearchFormInterface>
+    values: LastFMUserSearchInterface,
+    actions: FormikHelpers<LastFMUserSearchInterface>
   ) => void;
+  const mockRoute = "/a/very/fancy/route/to/something";
   const mockOpenError = jest.fn();
   const mockCloseError = jest.fn();
   const mockT = jest.fn((arg: string) => `t(${arg})`);
@@ -35,6 +36,7 @@ describe("SearchContainer", () => {
         <SearchContainer
           closeError={mockCloseError}
           openError={mockOpenError}
+          route={mockRoute}
           t={mockT}
         />
       </RouterContext.Provider>
@@ -145,7 +147,7 @@ describe("SearchContainer", () => {
 
     const mockAction = {
       setSubmitting: jest.fn(),
-    } as never as FormikHelpers<LastFMTop20AlbumsSearchFormInterface>;
+    } as never as FormikHelpers<LastFMUserSearchInterface>;
     const mockFormContent = { username: "validUsername" };
 
     describe("when called with a username", () => {
@@ -154,6 +156,14 @@ describe("SearchContainer", () => {
       it("should call setSubmitting as expected", () => {
         expect(mockAction.setSubmitting).toBeCalledTimes(1);
         expect(mockAction.setSubmitting).toBeCalledWith(true);
+      });
+
+      it("should redirect to the expected route", () => {
+        const query = new URLSearchParams(mockFormContent);
+        expect(mockRouter.push).toBeCalledTimes(1);
+        expect(mockRouter.push).toBeCalledWith(
+          `${mockRoute}?${query.toString()}`
+        );
       });
     });
   });
