@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import BackGround from "../../../components/background/background.component";
 import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import UserInterfaceChakraProvider from "../ui.chakra/ui.chakra.provider";
+import UserInterfaceImagesProvider from "../ui.images/ui.images.provider";
 import UserInterfaceRootProvider from "../ui.root.provider";
 
 jest.mock("../../../components/background/background.component", () => {
@@ -10,6 +11,10 @@ jest.mock("../../../components/background/background.component", () => {
 
 jest.mock("../ui.chakra/ui.chakra.provider", () => {
   return createMockedComponent("UserInterfaceChakraProvider");
+});
+
+jest.mock("../ui.images/ui.images.provider", () => {
+  return createMockedComponent("UserInterfaceImagesProvider");
 });
 
 const createMockedComponent = (name: string) => {
@@ -40,6 +45,11 @@ describe("UserInterfaceRootProvider", () => {
     it("should call BackGround with the correct props", () => {
       expect(BackGround).toBeCalledTimes(1);
       checkMockCall(BackGround, {});
+    });
+
+    it("should call UserInterfaceImagesProvider with the correct props", () => {
+      expect(UserInterfaceImagesProvider).toBeCalledTimes(1);
+      checkMockCall(UserInterfaceImagesProvider, {});
     });
 
     it("should call UserInterfaceChakraProvider with the correct props", () => {

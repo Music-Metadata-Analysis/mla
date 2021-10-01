@@ -4,6 +4,7 @@ import routes from "../../../../../config/routes";
 import Events from "../../../../../events/events";
 import mockAnalyticsHook from "../../../../../hooks/tests/analytics.mock";
 import mockLastFMHook from "../../../../../hooks/tests/lastfm.mock";
+import UserInterfaceImageProvider from "../../../../../providers/ui/ui.images/ui.images.provider";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../../tests/fixtures/mock.router";
 import BillBoardSpinner from "../../../../billboard/billboard.spinner/billboard.spinner.component";
@@ -106,10 +107,12 @@ describe("Top20ReportContainer", () => {
 
   const arrange = () => {
     render(
-      <Top20AlbumsReportContainer
-        username={testUsername}
-        user={mockHookState}
-      />
+      <UserInterfaceImageProvider>
+        <Top20AlbumsReportContainer
+          username={testUsername}
+          user={mockHookState}
+        />
+      </UserInterfaceImageProvider>
     );
   };
 
@@ -298,7 +301,7 @@ describe("Top20ReportContainer", () => {
             act(() => imageLoader());
           });
 
-          it("should call set the data to the 'ready' state", () => {
+          it("should call set the images to the 'ready' state", () => {
             expect(mockHookState.ready).toBeCalledTimes(1);
           });
 
