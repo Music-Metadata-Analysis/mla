@@ -46,7 +46,7 @@ const AlbumDrawer = ({
   useEffect(() => {
     analytics.event(
       new EventDefinition({
-        category: "LASTFM",
+        category: "LAST.FM",
         label: "DATA: ALBUM",
         action: `VIEW ALBUM DETAILS: ${artistName}:${albumName}`,
       })

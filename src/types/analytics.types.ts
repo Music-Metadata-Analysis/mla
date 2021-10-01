@@ -1,7 +1,7 @@
 import type { EventArgs } from "react-ga";
 
 export type EventDefinitionType = {
-  category: "LASTFM" | "MAIN" | "TEST";
+  category: "LAST.FM" | "MAIN" | "TEST";
   label:
     | "BUTTON"
     | "CONTACT"
@@ -35,3 +35,5 @@ export interface AnalyticsContextInterface {
 export interface AnalyticsProviderInterface {
   children: React.ReactNode;
 }
+
+export type ReportType = "BASE REPORT" | "TOP20 ALBUMS";

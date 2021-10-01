@@ -20,7 +20,7 @@ describe("LastFMReport", () => {
   const mockEvent = jest.fn();
   let instance: LastFMReport;
   const requestEvent = new EventDefinition({
-    category: "LASTFM",
+    category: "LAST.FM",
     label: "REQUEST",
     action: `${reportType}: Request was sent to LAST.FM.`,
   });
@@ -82,7 +82,7 @@ describe("LastFMReport", () => {
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
           new EventDefinition({
-            category: "LASTFM",
+            category: "LAST.FM",
             label: "ERROR",
             action: `${reportType}: Request was made for an unknown username.`,
           })
@@ -119,7 +119,7 @@ describe("LastFMReport", () => {
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
           new EventDefinition({
-            category: "LASTFM",
+            category: "LAST.FM",
             label: "RESPONSE",
             action: `${reportType}: Received report from LAST.FM.`,
           })
@@ -155,7 +155,7 @@ describe("LastFMReport", () => {
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
           new EventDefinition({
-            category: "LASTFM",
+            category: "LAST.FM",
             label: "ERROR",
             action: `${reportType}: Request was ratelimited by LAST.FM.`,
           })
@@ -191,7 +191,7 @@ describe("LastFMReport", () => {
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
           new EventDefinition({
-            category: "LASTFM",
+            category: "LAST.FM",
             label: "ERROR",
             action: `${reportType}: Unable to create a report.`,
           })

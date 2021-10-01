@@ -305,7 +305,7 @@ describe("Top20ReportContainer", () => {
           it("should generate an analytics event indicating the report was viewed", () => {
             expect(mockAnalyticsHook.event).toBeCalledTimes(1);
             expect(mockAnalyticsHook.event).toBeCalledWith(
-              Events.LastFM.Top20Albums.ReportPresented
+              Events.LastFM.ReportPresented("TOP20 ALBUMS")
             );
           });
         });
