@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react";
-import React from "react";
 import NavBarProvider, { NavBarContext } from "../navbar.provider";
 import type { NavBarContextInterface } from "../../../types/navbar.types";
 
