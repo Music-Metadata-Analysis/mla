@@ -7,17 +7,17 @@ import {
   FormikProps,
   FormikHelpers,
 } from "formik";
-import StyledButton from "../../../../button/button.standard/button.standard.component";
-import StyledInput from "../../../common/input/input.component";
-import type { LastFMTop20AlbumsSearchFormInterface } from "../../../../../types/forms/lastfm/search";
+import StyledButton from "../../button/button.standard/button.standard.component";
+import StyledInput from "../common/input/input.component";
+import type { LastFMUserSearchInterface } from "../../../types/search/lastfm/search";
 import type { TFunction } from "next-i18next";
 
 interface SearchFormProps {
   t: TFunction;
   validateUserName: (username: string) => string | undefined;
   handleSubmit: (
-    values: LastFMTop20AlbumsSearchFormInterface,
-    actions: FormikHelpers<LastFMTop20AlbumsSearchFormInterface>
+    values: LastFMUserSearchInterface,
+    actions: FormikHelpers<LastFMUserSearchInterface>
   ) => void;
 }
 
@@ -40,10 +40,8 @@ export default function SearchForm({
               field,
               form,
             }: {
-              field: FieldInputProps<
-                LastFMTop20AlbumsSearchFormInterface["username"]
-              >;
-              form: FormikProps<LastFMTop20AlbumsSearchFormInterface>;
+              field: FieldInputProps<LastFMUserSearchInterface["username"]>;
+              form: FormikProps<LastFMUserSearchInterface>;
             }) => (
               <FormControl isInvalid={form.errors.username !== undefined}>
                 <FormLabel id={"username.label"} htmlFor="username">

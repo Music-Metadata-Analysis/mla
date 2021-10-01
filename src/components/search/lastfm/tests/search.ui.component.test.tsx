@@ -1,24 +1,23 @@
 import { Box, Flex, Avatar, useToast } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
-import translations from "../../../../../../../public/locales/en/lastfm.json";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import Billboard from "../../../../../billboard/billboard.component";
-import LastFMIcon from "../../../../../icons/lastfm/lastfm.icon";
+import checkMockCall from "../../../../tests/fixtures/mock.component.call";
+import Billboard from "../../../billboard/billboard.component";
+import LastFMIcon from "../../../icons/lastfm/lastfm.icon";
 import SearchContainer from "../search.container.component";
 import SearchUI from "../search.ui.component";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
   const chakraMock = factoryInstance.create(["Box", "Flex"]);
   chakraMock.useToast = jest.fn();
   chakraMock.Avatar = jest.fn().mockImplementation(() => <div>MockAvatar</div>);
   return chakraMock;
 });
 
-jest.mock("../../../../../billboard/billboard.component", () =>
+jest.mock("../../../billboard/billboard.component", () =>
   createMockedComponent("BillBoard")
 );
 
@@ -29,7 +28,7 @@ jest.mock("../search.container.component", () => {
   };
 });
 
-jest.mock("../../../../../icons/lastfm/lastfm.icon", () => {
+jest.mock("../../../icons/lastfm/lastfm.icon", () => {
   return {
     __esModule: true,
     default: createMock("LastFMIcon"),
@@ -39,7 +38,7 @@ jest.mock("../../../../../icons/lastfm/lastfm.icon", () => {
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
@@ -51,13 +50,16 @@ const createMock = (name: string) =>
 describe("SearchUI", () => {
   const testField = "test_field";
   const testMessage = "test_message";
+  const mockTitle = "Mock Title";
+  const mockRoute = "/some/fancy/route/here";
+  const mockT = jest.fn((arg: string) => `t(${arg})`);
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = () => {
-    render(<SearchUI />);
+    render(<SearchUI t={mockT} title={mockTitle} route={mockRoute} />);
   };
 
   describe("when rendered", () => {
@@ -66,7 +68,7 @@ describe("SearchUI", () => {
     });
 
     it("should call Billboard with the correct props", () => {
-      checkMockCall(Billboard, { title: translations.search.title }, 0, []);
+      checkMockCall(Billboard, { title: mockTitle }, 0, []);
     });
 
     it("should call Flex as expected to center content", () => {
@@ -90,7 +92,11 @@ describe("SearchUI", () => {
 
     it("should call SearchContainer to display the search form", () => {
       expect(SearchContainer).toBeCalledTimes(1);
-      checkMockCall(SearchContainer, {}, 0, ["openError", "closeError", "t"]);
+      checkMockCall(SearchContainer, { route: mockRoute }, 0, [
+        "openError",
+        "closeError",
+        "t",
+      ]);
     });
   });
 

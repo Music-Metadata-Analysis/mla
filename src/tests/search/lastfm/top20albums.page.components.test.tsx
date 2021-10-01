@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
+import lastfmTranslations from "../../../../public/locales/en/lastfm.json";
 import ErrorBoundary from "../../../components/errors/boundary/error.boundary.component";
-import SearchUI from "../../../components/forms/search/lastfm/top20.albums/search.ui.component";
+import SearchUI from "../../../components/search/lastfm/search.ui.component";
 import routes from "../../../config/routes";
 import Events from "../../../events/events";
 import Page from "../../../pages/search/lastfm/top20albums";
@@ -13,9 +14,8 @@ jest.mock("../../../components/errors/boundary/error.boundary.component", () =>
   createMockedComponent("ErrorBoundary")
 );
 
-jest.mock(
-  "../../../components/forms/search/lastfm/top20.albums/search.ui.component",
-  () => createMockedComponent("SearchUI")
+jest.mock("../../../components/search/lastfm/search.ui.component", () =>
+  createMockedComponent("SearchUI")
 );
 
 const createMockedComponent = (name: string) => {
@@ -60,7 +60,15 @@ describe("Search", () => {
 
     it("should call the ErrorDisplay correctly", () => {
       expect(SearchUI).toBeCalledTimes(1);
-      mockCheckCall(SearchUI, {});
+      mockCheckCall(
+        SearchUI,
+        {
+          route: routes.reports.lastfm.top20albums,
+          title: lastfmTranslations.top20Albums.searchTitle,
+        },
+        0,
+        ["t"]
+      );
     });
   });
 });

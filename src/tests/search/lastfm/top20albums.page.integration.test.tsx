@@ -25,7 +25,7 @@ describe("Search", () => {
 
   it("should display the correct title", async () => {
     expect(
-      await screen.findByText(lastfmTranslations.search.title)
+      await screen.findByText(lastfmTranslations.top20Albums.searchTitle)
     ).toBeTruthy();
   });
 
@@ -131,7 +131,7 @@ describe("Search", () => {
         const query = new URLSearchParams(params);
         expect(mockRouter.push).toBeCalledTimes(1);
         expect(mockRouter.push).toBeCalledWith(
-          `${routes.lastfm.top20albums}?${query.toString()}`
+          `${routes.reports.lastfm.top20albums}?${query.toString()}`
         );
       });
     });
