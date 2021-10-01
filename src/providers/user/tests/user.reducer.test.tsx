@@ -1,6 +1,6 @@
 import InitialValues from "../user.initial";
 import { UserReducer } from "../user.reducer";
-import type { TopAlbumsReportResponseInterface } from "../../../types/proxy.types";
+import type { BaseReportResponseInterface } from "../../../types/proxy.types";
 import type { UserActionType } from "../../../types/user/action.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
 
@@ -62,7 +62,7 @@ describe("UserReducer", () => {
     const action = {
       type: "ReadyFetchUser",
       userName: "someguy",
-      data: mock_lastfm_data as TopAlbumsReportResponseInterface,
+      data: mock_lastfm_data as BaseReportResponseInterface,
       integration: testIntegrationType,
     } as UserActionType;
     received = arrange(action, { ...InitialValues.userProperties });
@@ -106,7 +106,7 @@ describe("UserReducer", () => {
     const action = {
       type: "SuccessFetchUser",
       userName: "someguy",
-      data: mock_lastfm_data as TopAlbumsReportResponseInterface,
+      data: mock_lastfm_data as BaseReportResponseInterface,
       integration: testIntegrationType,
     } as UserActionType;
     received = arrange(action, { ...InitialValues.userProperties });

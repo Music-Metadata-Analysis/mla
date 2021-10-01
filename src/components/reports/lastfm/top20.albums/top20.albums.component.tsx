@@ -6,10 +6,10 @@ import UserAlbumDataState from "../../../../providers/user/encapsulations/user.s
 import Condition from "../../../condition/condition.component";
 import FlipCard from "../../../flip.card/flip.card.component";
 import ReportTitle from "../../common/report.title/report.title.component";
-import type useLastFM from "../../../../hooks/lastfm";
+import type { userHookAsLastFMTop20AlbumReport } from "../../../../types/user/hook.types";
 
 export interface Top20AlbumsReportProps {
-  user: ReturnType<typeof useLastFM>;
+  user: userHookAsLastFMTop20AlbumReport;
   imageIsLoaded: () => void;
   visible: boolean;
 }

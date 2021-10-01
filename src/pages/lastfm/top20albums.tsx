@@ -7,12 +7,13 @@ import Events from "../../events/events";
 import useLastFM from "../../hooks/lastfm";
 import pagePropsGenerator from "../../utils/page.props.static";
 import FourOhFour from "../404";
+import type { userHookAsLastFMTop20AlbumReport } from "../../types/user/hook.types";
 
 export default function LastFMTop20Albums() {
   const [username, setUsername] = useState<string | null | undefined>(
     undefined
   );
-  const user = useLastFM();
+  const user = useLastFM() as userHookAsLastFMTop20AlbumReport;
 
   useEffect(() => {
     if (username === undefined) {

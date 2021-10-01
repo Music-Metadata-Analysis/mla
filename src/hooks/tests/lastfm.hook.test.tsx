@@ -9,7 +9,7 @@ import type { UserContextInterface } from "../../types/user/context.types";
 jest.mock("../../clients/api/reports/lastfm/top20.albums.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
-      retrieveAlbumReport: mockRetrieve,
+      retrieveReport: mockRetrieve,
     };
   });
 });
