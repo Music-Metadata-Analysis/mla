@@ -1,12 +1,11 @@
 import routes from "./routes";
 
-const MenuConfig = {
-  about: routes.about,
-  search: routes.search.lastfm.top20albums,
-};
-
-export const settings = {
+const settings = {
   heightDuringInput: 350,
+  menuConfig: {
+    about: routes.about,
+    search: routes.search.lastfm.top20albums,
+  },
 };
 
-export default MenuConfig;
+export default settings;

@@ -78,7 +78,7 @@ let mockUserProperties: UserStateInterface = {
 };
 
 describe("NavBar", () => {
-  const config = NavConfig;
+  const config = NavConfig.menuConfig;
   const baseMockUserProperties = { ...mockUserProperties };
   let thisMockUserProperties = { ...baseMockUserProperties };
   const mockProfileUrl = "http://profile.com/image";

@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import React from "react";
-import { settings } from "../../config/navbar";
+import NavConfig from "../../config/navbar";
 import { NavBarContext } from "../../providers/navbar/navbar.provider";
 import useNavBar from "../navbar";
 import type { NavBarContextInterface } from "../../types/navbar.types";
@@ -63,7 +63,7 @@ describe("useNavBar", () => {
 
   describe("when on a larger screen", () => {
     beforeAll(() => {
-      global.innerHeight = settings.heightDuringInput;
+      global.innerHeight = NavConfig.heightDuringInput;
       received = arrange({
         isVisible: true,
         setIsVisible: mockSetIsVisible,
@@ -91,7 +91,7 @@ describe("useNavBar", () => {
 
   describe("when on a smaller screen", () => {
     beforeAll(() => {
-      global.innerHeight = settings.heightDuringInput - 1;
+      global.innerHeight = NavConfig.heightDuringInput - 1;
       received = arrange({
         isVisible: true,
         setIsVisible: mockSetIsVisible,
