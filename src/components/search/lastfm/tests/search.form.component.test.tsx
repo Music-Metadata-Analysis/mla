@@ -1,17 +1,14 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import StyledButton from "../../../../../button/button.standard/button.standard.component";
+import checkMockCall from "../../../../tests/fixtures/mock.component.call";
+import StyledButton from "../../../button/button.standard/button.standard.component";
 import SearchForm from "../search.form.component";
 
-jest.mock(
-  "../../../../../button/button.standard/button.standard.component",
-  () => {
-    const Original = jest.requireActual(
-      "../../../../../button/button.standard/button.standard.component"
-    ).default;
-    return jest.fn((props) => <Original {...props} />);
-  }
-);
+jest.mock("../../../button/button.standard/button.standard.component", () => {
+  const Original = jest.requireActual(
+    "../../../button/button.standard/button.standard.component"
+  ).default;
+  return jest.fn((props) => <Original {...props} />);
+});
 
 describe("SearchForm", () => {
   beforeEach(() => jest.clearAllMocks());

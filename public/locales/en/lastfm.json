@@ -4,7 +4,6 @@
     "artistName": "Unknown Artist"
   },
   "search": {
-    "title": "Top20 Albums Report",
     "fieldLabel": "Username:",
     "fieldPlaceholder": "last.fm username",
     "buttonText": "Generate Report",
@@ -16,6 +15,7 @@
     }
   },
   "top20Albums": {
+    "searchTitle": "Top20 Albums Report",
     "title": "My Top 20 Albums",
     "communication": "Retrieving Results...",
     "noArtWork": "No Cover Art",
