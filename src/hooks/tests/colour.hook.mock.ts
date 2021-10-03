@@ -37,6 +37,11 @@ const mockColourHook = {
     textFront: mockColour(),
     textRear: mockColour(),
   },
+  highlightColour: {
+    background: mockColour(),
+    foreground: mockColour(),
+    border: mockColour(),
+  },
   inputColour: {
     background: mockColour(),
     border: mockColour(),
