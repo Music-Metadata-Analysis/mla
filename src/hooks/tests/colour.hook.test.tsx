@@ -28,7 +28,7 @@ describe("useColour", () => {
     };
 
     it("should contain the correct number of top level properties", () => {
-      assertLenIs(received.result.current, 8);
+      assertLenIs(received.result.current, 9);
     });
 
     it("should contain the bodyColour background color", () => {
@@ -67,6 +67,13 @@ describe("useColour", () => {
       assertIsString(received.result.current.flipCardColour.textFront);
       assertIsString(received.result.current.flipCardColour.textRear);
       assertLenIs(received.result.current.flipCardColour, 5);
+    });
+
+    it("should contain the highlightColour properties", () => {
+      assertIsString(received.result.current.highlightColour.background);
+      assertIsString(received.result.current.highlightColour.border);
+      assertIsString(received.result.current.highlightColour.foreground);
+      assertLenIs(received.result.current.highlightColour, 3);
     });
 
     it("should contain the inputColour properties", () => {

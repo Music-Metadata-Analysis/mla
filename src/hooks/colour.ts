@@ -42,6 +42,11 @@ const useColour = () => {
       textFront: "gray.800",
       textRear: chooseColour("gray.300", "gray.800"),
     },
+    highlightColour: {
+      background: chooseColour("gray.400", "gray.800"),
+      foreground: chooseColour("gray.800", "gray.300"),
+      border: chooseColour("gray.500", "gray.700"),
+    },
     inputColour: {
       background: chooseColour("gray.400", "gray.700"),
       border: chooseColour("gray.500", "gray.600"),

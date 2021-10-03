@@ -5,6 +5,7 @@ import cards from "../../public/locales/en/cards.json";
 import lastfm from "../../public/locales/en/lastfm.json";
 import main from "../../public/locales/en/main.json";
 import navbar from "../../public/locales/en/navbar.json";
+import splash from "../../public/locales/en/splash.json";
 
 i18n.use(initReactI18next).init({
   ...i18nConfig,
@@ -15,6 +16,7 @@ i18n.use(initReactI18next).init({
       lastfm,
       main,
       navbar,
+      splash,
     },
   },
 });
