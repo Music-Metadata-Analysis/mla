@@ -1,8 +1,10 @@
 import { Avatar } from "@chakra-ui/react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
+import checkMockCall from "../../../../tests/fixtures/mock.component.call";
+import ClickLink from "../../../clickable/click.external.link/click.external.link.component";
 import LastFMIcon from "../../../icons/lastfm/lastfm.icon";
+import DimOnHover from "../../../styles/hover.dim/hover.dim.styles";
 import NavBarAvatar, { testIDs } from "../navbar.avatar.component";
 
 jest.mock("@chakra-ui/react", () => {
@@ -12,13 +14,23 @@ jest.mock("@chakra-ui/react", () => {
   };
 });
 
-jest.mock("../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+jest.mock(
+  "../../../clickable/click.external.link/click.external.link.component",
+  () => createMockedComponent("ClickLink")
+);
+
+jest.mock("../../../styles/hover.dim/hover.dim.styles", () =>
+  createMockedComponent("DimOnHover")
+);
+
+const createMockedComponent = (name: string) => {
+  const {
+    factoryInstance,
+  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
+};
 
 describe("NavBarAvatar", () => {
-  let link: HTMLElement;
   const mockHref = "https://google.ca";
   const mockImage = "https://imagesite.com/image.jpeg";
 
@@ -36,10 +48,14 @@ describe("NavBarAvatar", () => {
       arrange(mockImage);
     });
 
-    it("should render the <a> tag component correctly", async () => {
-      expect(
-        await screen.findByTestId(testIDs.NavBarAvatarLink)
-      ).toHaveAttribute("target", "_blank");
+    it("should call DimOnHover with the correct props", async () => {
+      expect(DimOnHover).toBeCalledTimes(1);
+      checkMockCall(DimOnHover, { "data-testid": testIDs.NavBarAvatarLink });
+    });
+
+    it("should call ClickLink with the correct props", async () => {
+      expect(ClickLink).toBeCalledTimes(1);
+      checkMockCall(ClickLink, { href: mockHref });
     });
 
     it("should render the Avatar component correctly", () => {
@@ -51,23 +67,6 @@ describe("NavBarAvatar", () => {
       expect(call.src).toBe(mockImage);
       expect(renderToString(call.icon)).toBe(renderToString(<LastFMIcon />));
     });
-
-    describe("when clicked", () => {
-      beforeEach(async () => {
-        link = await screen.findByTestId(testIDs.NavBarAvatarLink);
-        if (link && link.firstChild) {
-          fireEvent.click(link.firstChild);
-        }
-      });
-
-      it("should call the external link tracker correctly", () => {
-        expect(mockAnalyticsHook.trackExternalLinkClick).toBeCalledTimes(1);
-        const call = mockAnalyticsHook.trackExternalLinkClick.mock.calls[0];
-        expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-        expect(call[1]).toBe(mockHref);
-        expect(Object.keys(call).length).toBe(2);
-      });
-    });
   });
 
   describe("with no image specified", () => {
@@ -76,10 +75,14 @@ describe("NavBarAvatar", () => {
       arrange("");
     });
 
-    it("should render the <a> tag component correctly", async () => {
-      expect(
-        await screen.findByTestId(testIDs.NavBarAvatarLink)
-      ).toHaveAttribute("target", "_blank");
+    it("should call DimOnHover with the correct props", async () => {
+      expect(DimOnHover).toBeCalledTimes(1);
+      checkMockCall(DimOnHover, { "data-testid": testIDs.NavBarAvatarLink });
+    });
+
+    it("should call ClickLink with the correct props", async () => {
+      expect(ClickLink).toBeCalledTimes(1);
+      checkMockCall(ClickLink, { href: mockHref });
     });
 
     it("should render the Avatar component correctly", () => {
@@ -90,23 +93,6 @@ describe("NavBarAvatar", () => {
       expect(call.size).toBe("sm");
       expect(call.src).toBe("");
       expect(renderToString(call.icon)).toBe(renderToString(<LastFMIcon />));
-    });
-
-    describe("when clicked", () => {
-      beforeEach(async () => {
-        link = await screen.findByTestId(testIDs.NavBarAvatarLink);
-        if (link && link.firstChild) {
-          fireEvent.click(link.firstChild);
-        }
-      });
-
-      it("should call the external link tracker correctly", () => {
-        expect(mockAnalyticsHook.trackExternalLinkClick).toBeCalledTimes(1);
-        const call = mockAnalyticsHook.trackExternalLinkClick.mock.calls[0];
-        expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-        expect(call[1]).toBe(mockHref);
-        expect(Object.keys(call).length).toBe(2);
-      });
     });
   });
 });
