@@ -5,7 +5,7 @@ import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock";
 import mockColourHook from "../../../../../../hooks/tests/colour.hook.mock";
 import UserAlbumState from "../../../../../../providers/user/encapsulations/user.state.album.class";
 import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import StyledButtonLink from "../../../../../button/button.link/button.link.component";
+import StyledButtonLink from "../../../../../button/button.external.link/button.external.link.component";
 import Drawer from "../../../../common/drawer/drawer.component";
 import AlbumDrawer, {
   AlbumDrawerInterface,
@@ -24,12 +24,15 @@ jest.mock("@chakra-ui/react", () => {
   return factoryInstance.create(["Box", "Divider", "Img"]);
 });
 
-jest.mock("../../../../../button/button.link/button.link.component", () => {
-  const {
-    factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create("StyledButtonLink");
-});
+jest.mock(
+  "../../../../../button/button.external.link/button.external.link.component",
+  () => {
+    const {
+      factoryInstance,
+    } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+    return factoryInstance.create("StyledButtonLink");
+  }
+);
 
 jest.mock("../../../../common/drawer/drawer.component", () => {
   const {

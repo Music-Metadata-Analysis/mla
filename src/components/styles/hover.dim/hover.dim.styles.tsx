@@ -1,8 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
-export const DimmingImage = styled(Box)`
+const DimOnHover = styled(Box)`
   &:hover {
     filter: opacity(50%);
   }
 `;
+
+export default DimOnHover;

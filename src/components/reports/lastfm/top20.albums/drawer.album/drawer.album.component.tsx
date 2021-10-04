@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import EventDefinition from "../../../../../events/event.class";
 import useAnalytics from "../../../../../hooks/analytics";
 import useColour from "../../../../../hooks/colour";
-import StyledButtonLink from "../../../../button/button.link/button.link.component";
+import StyledButtonLink from "../../../../button/button.external.link/button.external.link.component";
 import Drawer from "../../../common/drawer/drawer.component";
 import type UserAlbumState from "../../../../../providers/user/encapsulations/user.state.album.class";
 import type { TFunction } from "next-i18next";

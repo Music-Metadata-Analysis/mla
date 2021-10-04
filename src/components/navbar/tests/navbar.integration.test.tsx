@@ -203,8 +203,11 @@ describe("NavBar", () => {
         const link = (await screen.findByTestId(
           NavBarAnalyticsTestIDs.NavBarAvatarLink
         )) as HTMLElement;
-        expect(link).toHaveAttribute("href", lastFMsettings.homePage);
-        expect(link).toHaveAttribute("target", "_blank");
+        expect(link.firstChild).toHaveAttribute(
+          "href",
+          lastFMsettings.homePage
+        );
+        expect(link.firstChild).toHaveAttribute("target", "_blank");
       });
     });
   });
