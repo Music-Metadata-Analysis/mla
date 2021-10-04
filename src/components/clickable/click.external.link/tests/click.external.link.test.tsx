@@ -1,14 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import NextLink from "next/link";
 import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
-import BaseButton from "../../button.base/button.base.component";
-import StyledButtonLink from "../button.link.component";
+import ClickExternalLink from "../click.external.link.component";
 
 jest.mock("next/link", () => createMockedComponent("NextLink"));
-
-jest.mock("../../button.base/button.base.component", () =>
-  createMockedComponent("BaseButton")
-);
 
 jest.mock("../../../../hooks/analytics", () => ({
   __esModule: true,
@@ -25,8 +20,6 @@ const createMockedComponent = (name: string) => {
 describe("ButtonLink", () => {
   const linkText = "Link";
   const mockHref = "mockTestName";
-  const mockColour = "mockColour";
-  const mockClickHandler = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -34,25 +27,8 @@ describe("ButtonLink", () => {
   });
 
   const arrange = () => {
-    render(
-      <StyledButtonLink
-        onClick={mockClickHandler}
-        bg={mockColour}
-        href={mockHref}
-      >
-        {linkText}
-      </StyledButtonLink>
-    );
+    render(<ClickExternalLink href={mockHref}>{linkText}</ClickExternalLink>);
   };
-
-  it("should render BaseButton as expected", () => {
-    expect(BaseButton).toBeCalledTimes(1);
-    const call = (BaseButton as jest.Mock).mock.calls[0];
-    expect(call[0].bg).toBe(mockColour);
-    expect(call[0].children).toBeDefined();
-    expect(call[0].onClick).toBe(mockClickHandler);
-    expect(Object.keys(call[0]).length).toBe(3);
-  });
 
   it("should render NextLink as expected", () => {
     expect(NextLink).toBeCalledTimes(1);
@@ -64,11 +40,8 @@ describe("ButtonLink", () => {
   });
 
   it("should pass the correct target to the <a> tag", async () => {
-    const ButtonText = await screen.findByText(linkText);
-    expect(ButtonText.parentElement?.parentElement).toHaveAttribute(
-      "target",
-      "_blank"
-    );
+    const LinkText = await screen.findByText(linkText);
+    expect(LinkText.parentElement).toHaveAttribute("target", "_blank");
   });
 
   describe("when the link is clicked", () => {
