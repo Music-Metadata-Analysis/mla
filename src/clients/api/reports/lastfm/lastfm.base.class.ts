@@ -1,15 +1,13 @@
 import EventDefinition from "../../../../events/event.class";
-import HTTPClient from "../../../http.class";
+import HTTPClient from "../../api.client.class";
 import type {
   EventCreatorType,
   ReportType,
 } from "../../../../types/analytics.types";
-import type { LastFMReportInterface } from "../../../../types/clients/api/reports/lastfm.types";
-import type {
-  BaseReportResponseInterface,
-  ProxyRequestInterface,
-  ProxyResponse,
-} from "../../../../types/proxy.types";
+import type { ApiResponse } from "../../../../types/clients/api/api.client.types";
+import type { LastFMReportInterface } from "../../../../types/clients/api/reports/lastfm.client.types";
+import type { BaseReportResponseInterface } from "../../../../types/integrations/base.types";
+import type { LastFMProxyRequestInterface } from "../../../../types/integrations/lastfm/proxy.types";
 import type { userDispatchType } from "../../../../types/user/context.types";
 
 class LastFMBaseReport<ResponseType>
@@ -20,7 +18,7 @@ class LastFMBaseReport<ResponseType>
   eventDispatch: EventCreatorType;
   eventType = "BASE REPORT" as ReportType;
   integration = "LAST.FM" as const;
-  response: ProxyResponse<ResponseType> | undefined;
+  response: ApiResponse<ResponseType> | undefined;
   route: string | undefined;
 
   constructor(dispatch: userDispatchType, event: EventCreatorType) {
@@ -114,7 +112,7 @@ class LastFMBaseReport<ResponseType>
   retrieveReport(userName: string): void {
     this.handleBegin(userName);
     this.client
-      .post<ProxyRequestInterface, ResponseType>(this.route as string, {
+      .post<LastFMProxyRequestInterface, ResponseType>(this.route as string, {
         userName,
       })
       .then((response) => {

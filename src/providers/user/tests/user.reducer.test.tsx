@@ -1,6 +1,6 @@
 import InitialValues from "../user.initial";
 import { UserReducer } from "../user.reducer";
-import type { BaseReportResponseInterface } from "../../../types/proxy.types";
+import type { BaseReportResponseInterface } from "../../../types/integrations/base.types";
 import type { UserActionType } from "../../../types/user/action.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
 

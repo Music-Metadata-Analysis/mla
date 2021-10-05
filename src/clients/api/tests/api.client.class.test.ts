@@ -1,8 +1,8 @@
-import * as status from "../../config/status";
-import HTTPClient from "../http.class";
+import * as status from "../../../config/status";
+import APIClient from "../api.client.class";
 
-describe("HTTPClient", () => {
-  const client = new HTTPClient();
+describe("APIClient", () => {
+  const client = new APIClient();
   const remotesite = "https://remotesite.com/";
   const postContent = { info: "Love this website!" };
   type responseType = { success: boolean };

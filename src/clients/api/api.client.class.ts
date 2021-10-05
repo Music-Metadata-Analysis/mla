@@ -1,12 +1,12 @@
-import { knownStatuses } from "../config/http";
+import { knownStatuses } from "../../config/api";
 import type {
+  ApiResponse,
   FetchResponse,
   HttpMethodType,
   StatusMessageType,
-} from "../types/clients/https.types";
-import type { ProxyResponse } from "../types/proxy.types";
+} from "../../types/clients/api/api.client.types";
 
-class HTTPClient {
+class APIClient {
   private handleUnsuccessful(
     response: FetchResponse,
     method: HttpMethodType,
@@ -32,7 +32,7 @@ class HTTPClient {
   post = async <POSTDATA, RESPONSE>(
     url: string,
     postData: POSTDATA
-  ): Promise<ProxyResponse<RESPONSE>> => {
+  ): Promise<ApiResponse<RESPONSE>> => {
     let fetchResponse = await fetch(url, {
       method: "POST",
       mode: "cors",
@@ -56,4 +56,4 @@ class HTTPClient {
   };
 }
 
-export default HTTPClient;
+export default APIClient;

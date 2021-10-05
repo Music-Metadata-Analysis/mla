@@ -4,7 +4,7 @@ import * as status from "../../../../../config/status";
 import albumHandler from "../../../../../pages/api/v1/reports/lastfm/top20albums";
 import testResponses from "../../../../fixtures/lastfm.topalbums";
 import testAccounts from "../../../../fixtures/lastfm.users";
-import type { HttpMethodType } from "../../../../../types/clients/https.types";
+import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type ArrangeArgs = {

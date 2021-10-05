@@ -3,7 +3,7 @@ import apiRoutes from "../../../../../config/apiRoutes";
 import * as status from "../../../../../config/status";
 import { ProxyError } from "../../../../../errors/proxy.error.class";
 import handleProxy from "../../../../../pages/api/v1/reports/lastfm/top20albums";
-import type { HttpMethodType } from "../../../../../types/clients/https.types";
+import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 jest.mock("../../../../../integrations/lastfm/proxy.class.ts", () => {
