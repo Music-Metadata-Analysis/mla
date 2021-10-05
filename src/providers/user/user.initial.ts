@@ -1,4 +1,4 @@
-import { voidDispatch } from "../../utils/voids";
+import { voidFn } from "../../utils/voids";
 import type { UserContextInterface } from "../../types/user/context.types";
 import type { UserStateInterface } from "../../types/user/state.types";
 
@@ -19,7 +19,7 @@ export const InitialState = <UserStateInterface>{
 
 const InitialContext = <UserContextInterface>{
   userProperties: InitialState,
-  dispatch: voidDispatch,
+  dispatch: voidFn,
 };
 
 export default InitialContext;
