@@ -98,6 +98,9 @@ describe("NavBar", () => {
   };
   const topLevelBoxProps = {
     bg: mockColourHook.componentColour.background,
+    borderBottomStyle: "solid",
+    borderBottomWidth: "1px",
+    borderColor: mockColourHook.componentColour.border,
     color: mockColourHook.componentColour.foreground,
     "data-testid": "NavBarRoot",
     fontSize: [18, 18, 20],

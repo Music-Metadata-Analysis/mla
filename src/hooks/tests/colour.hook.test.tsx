@@ -41,15 +41,16 @@ describe("useColour", () => {
       assertIsString(received.result.current.buttonColour.border);
       assertIsString(received.result.current.buttonColour.foreground);
       assertIsString(received.result.current.buttonColour.hoverBackground);
-      assertLenIs(received.result.current.componentColour, 4);
+      assertLenIs(received.result.current.buttonColour, 4);
     });
 
     it("should contain the componentColour properties", () => {
       assertIsString(received.result.current.componentColour.background);
+      assertIsString(received.result.current.componentColour.border);
       assertIsString(received.result.current.componentColour.foreground);
       assertIsString(received.result.current.componentColour.details);
       assertIsString(received.result.current.componentColour.scheme);
-      assertLenIs(received.result.current.componentColour, 4);
+      assertLenIs(received.result.current.componentColour, 5);
     });
 
     it("should contain the consentColour properties", () => {
