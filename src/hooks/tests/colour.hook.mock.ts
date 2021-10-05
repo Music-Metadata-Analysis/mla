@@ -18,6 +18,7 @@ const mockColourHook = {
   },
   componentColour: {
     background: mockColour(),
+    border: mockColour(),
     details: mockColour(),
     foreground: mockColour(),
     scheme: mockColour(),
