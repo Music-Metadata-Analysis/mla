@@ -1,5 +1,6 @@
 import { Flex, Spacer } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 import routes from "../../../config/routes";
 import useAnalytics from "../../../hooks/analytics";
 import NavBarAvatar from "../navbar.avatar/navbar.avatar.component";
@@ -13,17 +14,18 @@ interface NavBarLogoProps {
 const NavBarLogo = ({ href, image }: NavBarLogoProps) => {
   const analytics = useAnalytics();
   const { t } = useTranslation("navbar");
+  const router = useRouter();
 
   return (
     <Flex h={16} alignItems={"center"}>
       <NavBarLink
         trackButtonClick={analytics.trackButtonClick}
-        selected={false}
+        selected={router.pathname === routes.home}
         href={routes.home}
       >
         {t("title")}
       </NavBarLink>
-      <Spacer w="10px" />
+      <Spacer pl="10px" />
       <NavBarAvatar href={href} image={image} />
     </Flex>
   );
