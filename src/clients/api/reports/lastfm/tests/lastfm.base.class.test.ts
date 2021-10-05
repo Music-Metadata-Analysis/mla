@@ -1,8 +1,8 @@
 import EventDefinition from "../../../../../events/event.class";
 import LastFMReport from "../lastfm.base.class";
-import type { LastFMTopAlbumsReportResponseInterface } from "../../../../../types/clients/api/reports/lastfm.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "../../../../../types/clients/api/reports/lastfm.client.types";
 
-jest.mock("../../../../http.class", () => {
+jest.mock("../../../api.client.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       post: mockPost,
