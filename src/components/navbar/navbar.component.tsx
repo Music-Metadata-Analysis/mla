@@ -65,10 +65,13 @@ export default function NavBar({ menuConfig }: NavBarProps) {
         data-testid={testIDs.NavBarRoot}
         bg={componentColour.background}
         color={componentColour.foreground}
+        borderColor={componentColour.border}
         px={4}
         sx={{
           caretColor: transparent,
         }}
+        borderBottomWidth={"1px"}
+        borderBottomStyle={"solid"}
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <NavBarLogo

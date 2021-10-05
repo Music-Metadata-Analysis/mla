@@ -31,6 +31,7 @@ const useColour = () => {
     },
     componentColour: {
       background: chooseColour("gray.300", "gray.900"),
+      border: chooseColour("gray.500", "gray.600"),
       details: "gray.900",
       foreground: chooseColour("gray.700", "gray.300"),
       scheme: "gray",
