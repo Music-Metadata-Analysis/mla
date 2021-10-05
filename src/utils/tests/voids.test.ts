@@ -1,6 +1,6 @@
 import { voidFn } from "../voids";
 
-describe("when the voidFn function is used", () => {
+describe("voidFn", () => {
   it("should return a null", () => {
     expect(voidFn()).toBeNull();
   });
