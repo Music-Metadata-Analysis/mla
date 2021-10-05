@@ -1,9 +1,9 @@
-import { voidSetter } from "../../utils/voids";
+import { voidFn } from "../../utils/voids";
 import type { NavBarContextInterface } from "../../types/navbar.types";
 
 const InitialValues = <NavBarContextInterface>{
   isVisible: true,
-  setIsVisible: voidSetter,
+  setIsVisible: voidFn,
 };
 
 export default InitialValues;
