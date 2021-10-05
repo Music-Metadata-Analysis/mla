@@ -1,7 +1,7 @@
 import EventDefinition from "../../../../../events/event.class";
 import LastFMReport from "../top20.albums.class";
 
-jest.mock("../../../../http.class", () => {
+jest.mock("../../../api.client.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       post: mockPost,

@@ -10,7 +10,7 @@ import NavBar, { testIDs } from "../navbar.component";
 import NavBarLogo from "../navbar.logo/navbar.logo.component";
 import NavBarOptions from "../navbar.options/navbar.options.component";
 import NavSpinner from "../navbar.spinner/navbar.spinner.component";
-import type { LastFMTopAlbumsReportResponseInterface } from "../../../types/clients/api/reports/lastfm.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "../../../types/clients/api/reports/lastfm.client.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
 
 jest.mock("../../../hooks/colour", () => {

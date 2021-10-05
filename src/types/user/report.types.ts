@@ -1,5 +1,5 @@
-import type { LastFMTopAlbumsReportResponseInterface } from "../clients/api/reports/lastfm.types";
-import type { BaseReportResponseInterface } from "../proxy.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "../clients/api/reports/lastfm.client.types";
+import type { BaseReportResponseInterface } from "../integrations/base.types";
 
 export type UserReportType =
   | LastFMTopAlbumsReportResponseInterface

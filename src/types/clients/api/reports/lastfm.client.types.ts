@@ -1,21 +1,21 @@
-import type HTTPClient from "../../../../clients/http.class";
+import type APIClient from "../../../../clients/api/api.client.class";
 import type { EventCreatorType, ReportType } from "../../../analytics.types";
+import type { ApiResponse } from "../../../clients/api/api.client.types";
 import type { IntegrationTypes } from "../../../integration.types";
+import type { BaseReportResponseInterface } from "../../../integrations/base.types";
 import type {
   LastFMAlbumDataInterface,
   LastFMImageDataInterface,
 } from "../../../integrations/lastfm/api.types";
-import type { BaseReportResponseInterface } from "../../../proxy.types";
-import type { ProxyResponse } from "../../../proxy.types";
 import type { userDispatchType } from "../../../user/context.types";
 
 export interface LastFMReportInterface<T> {
-  client: HTTPClient;
+  client: APIClient;
   dispatch: userDispatchType;
   eventDispatch: EventCreatorType;
   eventType: ReportType;
   integration: IntegrationTypes;
-  response: ProxyResponse<T> | undefined;
+  response: ApiResponse<T> | undefined;
   route: string | undefined;
   handleBegin: (userName: string) => void;
   handleNotFound: (userName: string) => void;

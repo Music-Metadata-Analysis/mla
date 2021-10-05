@@ -1,7 +1,7 @@
 import type {
   LastFMTopBaseReportResponseInterface,
   LastFMTopAlbumsReportResponseInterface,
-} from "../clients/api/reports/lastfm.types";
+} from "../clients/api/reports/lastfm.client.types";
 import type { UserActionType } from "./action.types";
 import type { UserReportType } from "./report.types";
 
