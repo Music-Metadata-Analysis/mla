@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import ErrorBoundary from "../../components/errors/boundary/error.boundary.component";
-import Top20AlbumReport from "../../components/reports/lastfm/top20.albums/top20.albums.container.component";
+import Top20AlbumReport from "../../components/reports/lastfm/top20.albums/top20.albums.container";
 import routes from "../../config/routes";
 import Events from "../../events/events";
 import mockLastFMHook from "../../hooks/tests/lastfm.mock";
@@ -16,7 +16,7 @@ jest.mock("../../components/errors/boundary/error.boundary.component", () =>
 );
 
 jest.mock(
-  "../../components/reports/lastfm/top20.albums/top20.albums.container.component",
+  "../../components/reports/lastfm/top20.albums/top20.albums.container",
   () => createMockedComponent("Top20AlbumReport")
 );
 
@@ -90,7 +90,7 @@ describe("lastfm", () => {
         mockCheckCall(
           Top20AlbumReport,
           {
-            username: testUser,
+            userName: testUser,
             user: mockLastFMHook,
           },
           0,

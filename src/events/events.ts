@@ -7,7 +7,13 @@ const Events = {
       new EventDefinition({
         category: "LAST.FM",
         label: "REPORT",
-        action: `${title}: Presented report to user.`,
+        action: `REPORT PRESENTED TO USER: ${title}.`,
+      }),
+    AlbumViewed: (artistName: string, albumName: string) =>
+      new EventDefinition({
+        category: "LAST.FM",
+        label: "DATA: ALBUM",
+        action: `VIEWED ALBUM DETAILS: ${artistName}:${albumName}.`,
       }),
   },
   General: {

@@ -2,41 +2,49 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import cardTranslations from "../../../../../../public/locales/en/cards.json";
 import translations from "../../../../../../public/locales/en/lastfm.json";
+import UserAlbumDataState from "../../../../../providers/user/encapsulations/user.state.album.class";
+import translationLookUp from "../../../../../tests/fixtures/mock.translation";
 import { testIDs as drawerTestIDs } from "../../../common/drawer/drawer.component";
+import LastFMFlipCardReport, {
+  LastFMFlipCardReportProps,
+} from "../../common/flip.card.report/flip.card.report.component";
+import AlbumDrawer from "../drawer.album/drawer.album.component";
 import { testIDs as albumDrawerTestIDs } from "../drawer.album/drawer.album.component";
-import Top20AlbumsReport, {
-  Top20AlbumsReportProps,
-} from "../top20.albums.component";
 
 const mockImageIsLoaded = jest.fn();
 const mockUsername = "test-username";
-
-const Top20ReportBaseProps: Top20AlbumsReportProps = {
-  user: {
-    userProperties: {
-      error: null,
-      inProgress: false,
-      profileUrl: null,
-      ready: true,
-      userName: mockUsername,
-      data: {
-        report: {
-          albums: [],
-          image: [],
-        },
-        integration: "LASTFM",
-      },
+const mockUserProperties = {
+  error: null,
+  inProgress: false,
+  profileUrl: null,
+  ready: true,
+  userName: mockUsername,
+  data: {
+    report: {
+      albums: [],
+      image: [],
     },
-    clear: jest.fn(),
-    ready: jest.fn(),
-    top20albums: jest.fn(),
+    integration: "LASTFM" as const,
   },
+};
+
+const mockTranslation = jest.fn((translationKey: string) => {
+  const lastfmTranslations = require("../../../../../../public/locales/en/lastfm.json");
+  return translationLookUp(translationKey, lastfmTranslations);
+});
+
+const Top20ReportBaseProps: LastFMFlipCardReportProps<UserAlbumDataState> = {
+  DrawerComponent: AlbumDrawer,
   imageIsLoaded: mockImageIsLoaded,
+  flipCardData: [],
+  reportTranslationKey: "top20Albums",
+  userState: new UserAlbumDataState(mockUserProperties, mockTranslation),
   visible: true,
+  t: mockTranslation,
 };
 
 describe("Top20AlbumsReport", () => {
-  let currentProps: Top20AlbumsReportProps;
+  let currentProps: LastFMFlipCardReportProps<UserAlbumDataState>;
   const albumUrl = "https://thecorrect/url";
   const mockAlbumData = [
     {
@@ -79,9 +87,11 @@ describe("Top20AlbumsReport", () => {
   };
 
   const arrange = () => {
+    currentProps.flipCardData = currentProps.userState.userProperties.data
+      .report.albums as unknown[];
     return render(
       <ChakraProvider>
-        <Top20AlbumsReport {...currentProps} />
+        <LastFMFlipCardReport {...currentProps} />
       </ChakraProvider>
     );
   };
@@ -97,8 +107,8 @@ describe("Top20AlbumsReport", () => {
   describe("when data is available", () => {
     beforeEach(() => {
       resetProps();
-      currentProps.user.userProperties.inProgress = false;
-      currentProps.user.userProperties.data.report.albums = mockAlbumData;
+      currentProps.userState.userProperties.inProgress = false;
+      currentProps.userState.userProperties.data.report.albums = mockAlbumData;
     });
 
     it("when an image is loaded", async () => {
@@ -121,7 +131,7 @@ describe("Top20AlbumsReport", () => {
         ).toBeTruthy();
         expect(
           await screen.findByText(
-            currentProps.user.userProperties.userName as string
+            currentProps.userState.userProperties.userName as string
           )
         ).toBeTruthy();
       });
@@ -243,12 +253,8 @@ describe("Top20AlbumsReport", () => {
   describe("when data is unavailable", () => {
     beforeEach(() => {
       resetProps();
-      currentProps.user.userProperties.inProgress = true;
+      currentProps.userState.userProperties.inProgress = true;
       arrange();
-    });
-
-    it("should NOT render the title text", () => {
-      expect(screen.queryByText(translations.top20Albums.title)).toBeNull();
     });
 
     it("should NOT render the title text", () => {
