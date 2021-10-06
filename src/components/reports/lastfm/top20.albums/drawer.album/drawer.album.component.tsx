@@ -1,10 +1,11 @@
 import { Box, Divider, Flex, Img } from "@chakra-ui/react";
 import { useEffect } from "react";
-import EventDefinition from "../../../../../events/event.class";
+import Events from "../../../../../events/events";
 import useAnalytics from "../../../../../hooks/analytics";
 import useColour from "../../../../../hooks/colour";
 import StyledButtonLink from "../../../../button/button.external.link/button.external.link.component";
 import Drawer from "../../../common/drawer/drawer.component";
+import drawerSettings from "../../common/settings/drawer";
 import type UserAlbumState from "../../../../../providers/user/encapsulations/user.state.album.class";
 import type { TFunction } from "next-i18next";
 
@@ -35,22 +36,17 @@ const AlbumDrawer = ({
 }: AlbumDrawerInterface) => {
   const analytics = useAnalytics();
   const { componentColour } = useColour();
-  const imageSize = "150";
-  const lastFMImageSize = "large" as const;
-  const albumName = userState.getAlbumName(albumIndex);
+  const albumName = userState.getName(albumIndex);
   const albumPlayCount = userState.getPlayCount(albumIndex);
-  const albumExternalLink = userState.getAlbumExternalLink(albumIndex);
-  const albumArtWork = userState.getAlbumArtWork(albumIndex, lastFMImageSize);
-  const artistName = userState.getArtistName(albumIndex);
+  const albumExternalLink = userState.getExternalLink(albumIndex);
+  const albumArtWork = userState.getArtwork(
+    albumIndex,
+    drawerSettings.lastFMImageSize
+  );
+  const artistName = userState.getRelatedArtistName(albumIndex);
 
   useEffect(() => {
-    analytics.event(
-      new EventDefinition({
-        category: "LAST.FM",
-        label: "DATA: ALBUM",
-        action: `VIEW ALBUM DETAILS: ${artistName}:${albumName}`,
-      })
-    );
+    analytics.event(Events.LastFM.AlbumViewed(artistName, albumName));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -66,7 +62,7 @@ const AlbumDrawer = ({
           <Img
             src={albumArtWork}
             alt={t("top20Albums.drawer.coverArtAltText")}
-            width={`${imageSize}px`}
+            width={`${drawerSettings.imageSize}px`}
             onError={(e) => {
               (e.target as HTMLImageElement).onerror = null;
               (e.target as HTMLImageElement).src = fallbackImage;

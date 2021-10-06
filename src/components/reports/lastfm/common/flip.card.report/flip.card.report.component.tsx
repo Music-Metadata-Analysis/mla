@@ -1,29 +1,35 @@
 import { Flex, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import AlbumDrawer from "./drawer.album/drawer.album.component";
-import UserAlbumDataState from "../../../../providers/user/encapsulations/user.state.album.class";
-import Condition from "../../../condition/condition.component";
-import FlipCard from "../../../flip.card/flip.card.component";
-import ReportTitle from "../../common/report.title/report.title.component";
-import type { userHookAsLastFMTop20AlbumReport } from "../../../../types/user/hook.types";
+import { useTranslation } from "next-i18next";
+import { useState, FC } from "react";
+import Condition from "../../../../condition/condition.component";
+import FlipCard from "../../../../flip.card/flip.card.component";
+import ReportTitle from "../../../common/report.title/report.title.component";
+import type UserState from "../../../../../providers/user/encapsulations/user.state.base.class";
+import type { LastFMFlipCardCommonDrawerInterface } from "../../../../../types/clients/api/reports/lastfm.client.types";
+import type { TFunction } from "next-i18next";
 
-export interface Top20AlbumsReportProps {
-  user: userHookAsLastFMTop20AlbumReport;
+export interface LastFMFlipCardReportProps<T> {
   imageIsLoaded: () => void;
+  DrawerComponent: FC<LastFMFlipCardCommonDrawerInterface<T>>;
+  flipCardData: unknown[];
+  reportTranslationKey: string;
+  userState: UserState & T;
   visible: boolean;
+  t: TFunction;
 }
 
-export default function Top20AlbumsReport({
-  user,
+export default function LastFMFlipCardReport<UserStateType>({
   imageIsLoaded,
+  DrawerComponent,
+  reportTranslationKey,
+  userState,
+  flipCardData,
   visible,
-}: Top20AlbumsReportProps) {
+  t,
+}: LastFMFlipCardReportProps<UserStateType>) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentlyFlipped, flipCard] = useState<null | number>(null);
   const { t: cardTranslations } = useTranslation("cards");
-  const { t } = useTranslation("lastfm");
-  const userState = new UserAlbumDataState(user.userProperties, t);
   const cardSize = 100;
   const maxWidth = 4 * cardSize + 20;
 
@@ -37,7 +43,7 @@ export default function Top20AlbumsReport({
     onClose();
   };
 
-  if (user.userProperties.inProgress) return null;
+  if (userState.userProperties.inProgress) return null;
 
   return (
     <Flex
@@ -51,7 +57,7 @@ export default function Top20AlbumsReport({
       height={"calc(100vh - 80px)"}
     >
       <Condition isTrue={isOpen}>
-        <AlbumDrawer
+        <DrawerComponent
           userState={userState}
           albumIndex={currentlyFlipped as number}
           fallbackImage={"/images/static.gif"}
@@ -68,20 +74,20 @@ export default function Top20AlbumsReport({
           maxWidth={`${maxWidth}px`}
         >
           <ReportTitle
-            title={t("top20Albums.title")}
-            userName={user.userProperties.userName}
+            title={t(`${String(reportTranslationKey)}.title`)}
+            userName={userState.userProperties.userName}
             size={cardSize}
           />
-          {user.userProperties.data.report.albums.map((_, index) => (
+          {flipCardData.map((_, index) => (
             <FlipCard
               key={index}
               currentlyFlipped={currentlyFlipped}
               fallbackImage={"/images/static.gif"}
               flipperController={flipper}
               imageIsLoaded={imageIsLoaded}
-              image={userState.getAlbumArtWork(index, "large")}
+              image={userState.getArtwork(index, "large")}
               index={index}
-              noArtWork={t("top20Albums.noArtWork")}
+              noArtWork={t(`${String(reportTranslationKey)}.noArtWork`)}
               rearImage={"/images/record-player.jpg"}
               size={cardSize}
               t={cardTranslations}

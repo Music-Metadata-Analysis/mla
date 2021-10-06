@@ -1,6 +1,6 @@
 import { Box, Divider, Img } from "@chakra-ui/react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import EventDefinition from "../../../../../../events/event.class";
+import Events from "../../../../../../events/events";
 import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock";
 import mockColourHook from "../../../../../../hooks/tests/colour.hook.mock";
 import UserAlbumState from "../../../../../../providers/user/encapsulations/user.state.album.class";
@@ -49,7 +49,7 @@ const mockOnClose = jest.fn();
 const mockT = jest.fn((arg: string) => `t(${arg})`);
 const mockBaseUserProperties = {
   data: {
-    integration: null,
+    integration: "LASTFM" as const,
     report: {
       albums: [],
       image: [],
@@ -88,7 +88,7 @@ describe("AlbumDrawer", () => {
     render(<AlbumDrawer {...currentProps} />);
   };
 
-  const checkBaseComponents = (externalLink: string) => {
+  const checkBaseComponents = (externalLink: string, title: string) => {
     it("should call Drawer once", () => {
       expect(Drawer).toBeCalledTimes(1);
       checkMockCall(
@@ -96,7 +96,7 @@ describe("AlbumDrawer", () => {
         {
           "data-testid": testIDs.AlbumDrawer,
           isOpen: true,
-          title: "t(defaults.artistName): t(defaults.albumName)",
+          title,
         },
         0,
         ["onClose"]
@@ -171,7 +171,8 @@ describe("AlbumDrawer", () => {
       });
 
       checkBaseComponents(
-        "https://last.fm/music/t(defaults.artistName)/t(defaults.albumName)"
+        "https://last.fm/music/t(defaults.artistName)/t(defaults.albumName)",
+        "t(defaults.artistName): t(defaults.albumName)"
       );
 
       it("should render the rank correctly", async () => {
@@ -197,13 +198,10 @@ describe("AlbumDrawer", () => {
       it("should generate an analytics event", () => {
         expect(mockAnalyticsHook.event).toBeCalledTimes(1);
         expect(mockAnalyticsHook.event).toBeCalledWith(
-          new EventDefinition({
-            action:
-              "VIEW ALBUM DETAILS: t(defaults.artistName):t(defaults.albumName)",
-            category: "LAST.FM",
-            label: "DATA: ALBUM",
-            value: undefined,
-          })
+          Events.LastFM.AlbumViewed(
+            "t(defaults.artistName)",
+            "t(defaults.albumName)"
+          )
         );
       });
 
@@ -248,7 +246,10 @@ describe("AlbumDrawer", () => {
         arrange();
       });
 
-      checkBaseComponents("http://correcturl/for/this/album");
+      checkBaseComponents(
+        "http://correcturl/for/this/album",
+        "mock_artist: mock_album"
+      );
 
       it("should render the rank correctly", async () => {
         const rankElement = await screen.findByTestId(testIDs.AlbumDrawerRank);
@@ -273,12 +274,7 @@ describe("AlbumDrawer", () => {
       it("should generate an analytics event", () => {
         expect(mockAnalyticsHook.event).toBeCalledTimes(1);
         expect(mockAnalyticsHook.event).toBeCalledWith(
-          new EventDefinition({
-            action: "VIEW ALBUM DETAILS: mock_artist:mock_album",
-            category: "LAST.FM",
-            label: "DATA: ALBUM",
-            value: undefined,
-          })
+          Events.LastFM.AlbumViewed("mock_artist", "mock_album")
         );
       });
     });

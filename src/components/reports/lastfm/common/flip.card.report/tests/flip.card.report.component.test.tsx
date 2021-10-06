@@ -1,75 +1,92 @@
 import { act, render, screen } from "@testing-library/react";
-import translations from "../../../../../../public/locales/en/lastfm.json";
-import UserAlbumDataState from "../../../../../providers/user/encapsulations/user.state.album.class";
-import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
-import FlipCard from "../../../../flip.card/flip.card.component";
-import ReportTitle from "../../../common/report.title/report.title.component";
-import AlbumDrawer from "../drawer.album/drawer.album.component";
-import Top20AlbumsReport, {
-  Top20AlbumsReportProps,
-} from "../top20.albums.component";
+import {
+  mockImageUrl,
+  mockGetReportArtWork,
+  MockUserStateEncapsulation,
+  MockDrawerComponent,
+} from "./mock.last.fm.report.class";
+import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
+import FlipCard from "../../../../../flip.card/flip.card.component";
+import ReportTitle from "../../../../common/report.title/report.title.component";
+import LastFMFlipCardReport, {
+  LastFMFlipCardReportProps,
+} from "../flip.card.report.component";
+import type UserState from "../../../../../../providers/user/encapsulations/user.state.base.class";
 
-jest.mock("../drawer.album/drawer.album.component", () => {
-  return jest.fn(() => <div>{"MockAlbumDrawer"}</div>);
-});
-
-jest.mock("../../../../flip.card/flip.card.component", () => {
+jest.mock("../../../../../flip.card/flip.card.component", () => {
   return jest.fn(() => <div>{"MockFlipCard"}</div>);
 });
 
-jest.mock("../../../common/report.title/report.title.component", () => {
+jest.mock("../../../../common/report.title/report.title.component", () => {
   return jest.fn(() => <div>{"MockReportTitle"}</div>);
+});
+
+jest.mock("next-i18next", () => {
+  return {
+    useTranslation: () => {
+      return { t: (translationKey: string) => `t(${translationKey})` };
+    },
+  };
 });
 
 const mockImageIsLoaded = jest.fn();
 const mockUsername = "test-username";
 
-const Top20ReportBaseProps: Top20AlbumsReportProps = {
-  user: {
-    userProperties: {
-      error: null,
-      inProgress: false,
-      profileUrl: null,
-      ready: true,
-      userName: mockUsername,
-      data: {
-        report: {
-          albums: [],
-          image: [],
-        },
-        integration: "LASTFM",
-      },
+const mockUserProperties = {
+  error: null,
+  inProgress: false,
+  profileUrl: null,
+  ready: true,
+  userName: mockUsername,
+  data: {
+    report: {
+      albums: [],
+      image: [],
     },
-    clear: jest.fn(),
-    ready: jest.fn(),
-    top20albums: jest.fn(),
+    integration: "LASTFM" as const,
   },
+};
+const mockTranslation = jest.fn(
+  (translationKey: string) => `t(${translationKey})`
+);
+
+const FlipCardReportBaseProps: LastFMFlipCardReportProps<UserState> = {
+  userState: new MockUserStateEncapsulation(
+    mockUserProperties,
+    mockTranslation
+  ),
+  DrawerComponent: MockDrawerComponent,
   imageIsLoaded: mockImageIsLoaded,
+  flipCardData: [],
+  reportTranslationKey: "top20Albums",
   visible: true,
+  t: mockTranslation,
 };
 
-describe("Top20Report", () => {
-  let currentProps: Top20AlbumsReportProps;
+describe("LastFMFlipCardReport", () => {
+  let currentProps: LastFMFlipCardReportProps<UserState>;
 
   beforeEach(() => jest.clearAllMocks());
 
   const resetProps = () => {
-    currentProps = { ...Top20ReportBaseProps };
+    currentProps = { ...FlipCardReportBaseProps };
+    currentProps.flipCardData = currentProps.userState.userProperties.data
+      .report.albums as unknown[];
   };
 
   const arrange = () => {
-    return render(<Top20AlbumsReport {...currentProps} />);
+    return render(<LastFMFlipCardReport {...currentProps} />);
   };
 
   describe("when a data fetch is in progress", () => {
     beforeEach(() => {
       resetProps();
-      currentProps.user.userProperties.inProgress = true;
+      currentProps.userState.userProperties.inProgress = true;
       arrange();
     });
 
-    it("should NOT call AlbumDrawer", () => {
-      expect(AlbumDrawer).toBeCalledTimes(0);
+    it("should NOT call MockDrawerComponent", () => {
+      expect(MockDrawerComponent).toBeCalledTimes(0);
     });
 
     it("should NOT call ReportTitle", () => {
@@ -84,8 +101,8 @@ describe("Top20Report", () => {
   describe("when a data fetch is NOT in progress", () => {
     beforeEach(() => {
       resetProps();
-      currentProps.user.userProperties.inProgress = false;
-      currentProps.user.userProperties.data.report.albums = [
+      currentProps.userState.userProperties.inProgress = false;
+      currentProps.userState.userProperties.data.report.albums = [
         {
           mbid: "some_mbid1",
           name: "mock_album1",
@@ -120,17 +137,23 @@ describe("Top20Report", () => {
     });
 
     const checkComponents = () => {
-      it("should NOT call AlbumDrawer", () => {
-        expect(AlbumDrawer).toBeCalledTimes(0);
+      it("should NOT call MockDrawerComponent", () => {
+        expect(MockDrawerComponent).toBeCalledTimes(0);
       });
 
       it("should call ReportTitle", () => {
         expect(ReportTitle).toBeCalledTimes(1);
         checkMockCall(ReportTitle, {
           size: 100,
-          title: translations.top20Albums.title,
+          title: `t(${String(currentProps.reportTranslationKey)}.title)`,
           userName: mockUsername,
         });
+      });
+
+      it("should call getReportArtwork method of the user state encapsulation", () => {
+        expect(mockGetReportArtWork).toBeCalledTimes(2);
+        expect(mockGetReportArtWork).toBeCalledWith(0, "large");
+        expect(mockGetReportArtWork).toBeCalledWith(1, "large");
       });
 
       it("should call FlipCard", () => {
@@ -140,11 +163,13 @@ describe("Top20Report", () => {
           {
             currentlyFlipped: null,
             fallbackImage: "/images/static.gif",
-            image: "http://someurl1.com",
+            image: `${mockImageUrl}/0/large`,
             index: 0,
             rearImage: "/images/record-player.jpg",
             size: 100,
-            noArtWork: translations.top20Albums.noArtWork,
+            noArtWork: `t(${String(
+              currentProps.reportTranslationKey
+            )}.noArtWork)`,
           },
           0,
           ["flipperController", "imageIsLoaded", "t"]
@@ -154,11 +179,13 @@ describe("Top20Report", () => {
           {
             currentlyFlipped: null,
             fallbackImage: "/images/static.gif",
-            image: "http://someurl2.com",
+            image: `${mockImageUrl}/1/large`,
             index: 1,
             rearImage: "/images/record-player.jpg",
             size: 100,
-            noArtWork: translations.top20Albums.noArtWork,
+            noArtWork: `t(${String(
+              currentProps.reportTranslationKey
+            )}.noArtWork)`,
           },
           1,
           ["flipperController", "imageIsLoaded", "t"]
@@ -188,16 +215,16 @@ describe("Top20Report", () => {
         });
 
         it("should call AlbumDrawer", () => {
-          expect(AlbumDrawer).toBeCalledTimes(1);
-          const call = (AlbumDrawer as jest.Mock).mock.calls[0][0];
+          expect(MockDrawerComponent).toBeCalledTimes(1);
+          const call = (MockDrawerComponent as jest.Mock).mock.calls[0][0];
           expect(typeof call.onClose).toBe("function");
           expect(typeof call.t).toBe("function");
           expect(call.albumIndex).toBe(0);
           expect(call.fallbackImage).toBe("/images/static.gif");
           expect(call.isOpen).toBe(true);
-          expect(call.userState).toBeInstanceOf(UserAlbumDataState);
+          expect(call.userState).toBeInstanceOf(MockUserStateEncapsulation);
           expect(call.userState.userProperties).toBe(
-            currentProps.user.userProperties
+            currentProps.userState.userProperties
           );
           expect(Object.keys(call).length).toBe(6);
         });
