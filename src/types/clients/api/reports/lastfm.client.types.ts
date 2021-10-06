@@ -8,6 +8,7 @@ import type {
   LastFMImageDataInterface,
 } from "../../../integrations/lastfm/api.types";
 import type { userDispatchType } from "../../../user/context.types";
+import type { TFunction } from "next-i18next";
 
 export interface LastFMReportInterface<T> {
   client: APIClient;
@@ -23,6 +24,15 @@ export interface LastFMReportInterface<T> {
   handleRatelimited: (userName: string) => void;
   handleFailure: (userName: string) => void;
   retrieveReport: (userName: string) => void;
+}
+
+export interface LastFMFlipCardCommonDrawerInterface<T> {
+  userState: T;
+  albumIndex: number;
+  fallbackImage: string;
+  isOpen: boolean;
+  onClose: () => void;
+  t: TFunction;
 }
 
 export interface LastFMTopBaseReportResponseInterface

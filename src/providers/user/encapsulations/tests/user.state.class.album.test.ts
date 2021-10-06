@@ -71,7 +71,6 @@ describe("UserAlbumState", () => {
     it("should have the correct report value", () => {
       expect(instance.defaultAlbumName).toBe("t(defaults.albumName)");
       expect(instance.defaultArtistName).toBe("t(defaults.artistName)");
-      expect(instance.albums).toBe(currentState.data.report.albums);
     });
   });
 
@@ -81,11 +80,11 @@ describe("UserAlbumState", () => {
     describe("with a VALID size", () => {
       beforeEach(() => (size = "large"));
 
-      describe("getAlbumArtWork", () => {
+      describe("getArtwork", () => {
         beforeEach(() => arrange());
 
         it("should return the expected url", () => {
-          expect(instance.getAlbumArtWork(index, size)).toBe(mockUrls[0]);
+          expect(instance.getArtwork(index, size)).toBe(mockUrls[0]);
         });
       });
     });
@@ -95,14 +94,14 @@ describe("UserAlbumState", () => {
         () => (size = "not-a-valid_size" as LastFMImageDataInterface["size"])
       );
 
-      describe("getAlbumArtWork", () => {
+      describe("getArtwork", () => {
         it("should return an empty string", () => {
-          expect(instance.getAlbumArtWork(index, size)).toBe("");
+          expect(instance.getArtwork(index, size)).toBe("");
         });
       });
     });
 
-    describe("getAlbumName", () => {
+    describe("getName", () => {
       const mockAlbumName = "mockAlbumName";
 
       describe("when an album name is defined", () => {
@@ -112,7 +111,7 @@ describe("UserAlbumState", () => {
         });
 
         it("should return the name", () => {
-          expect(instance.getAlbumName(index)).toBe(mockAlbumName);
+          expect(instance.getName(index)).toBe(mockAlbumName);
         });
       });
 
@@ -123,12 +122,12 @@ describe("UserAlbumState", () => {
         });
 
         it("should return the default name", () => {
-          expect(instance.getAlbumName(index)).toBe(instance.defaultAlbumName);
+          expect(instance.getName(index)).toBe(instance.defaultAlbumName);
         });
       });
     });
 
-    describe("getArtistName", () => {
+    describe("getRelatedArtistName", () => {
       const mockArtistName = "mockArtistName";
 
       describe("when an artist name is defined", () => {
@@ -141,7 +140,7 @@ describe("UserAlbumState", () => {
         });
 
         it("should return the name", () => {
-          expect(instance.getArtistName(index)).toBe(mockArtistName);
+          expect(instance.getRelatedArtistName(index)).toBe(mockArtistName);
         });
       });
 
@@ -155,14 +154,14 @@ describe("UserAlbumState", () => {
         });
 
         it("should return the default name", () => {
-          expect(instance.getArtistName(index)).toBe(
+          expect(instance.getRelatedArtistName(index)).toBe(
             instance.defaultArtistName
           );
         });
       });
     });
 
-    describe("getAlbumExternalLink", () => {
+    describe("getExternalLink", () => {
       const mockUrl = "http://some.com/url";
 
       describe("when the album link is defined", () => {
@@ -172,7 +171,7 @@ describe("UserAlbumState", () => {
         });
 
         it("should return the name", () => {
-          expect(instance.getAlbumExternalLink(index)).toBe(mockUrl);
+          expect(instance.getExternalLink(index)).toBe(mockUrl);
         });
       });
 
@@ -184,7 +183,7 @@ describe("UserAlbumState", () => {
 
         it("should return the default name (url encoded)", () => {
           instance.defaultAlbumName = "has a space";
-          expect(instance.getAlbumExternalLink(index)).toBe(
+          expect(instance.getExternalLink(index)).toBe(
             `${instance.lastfmPrefix}/${
               instance.defaultArtistName
             }/${encodeURIComponent(instance.defaultAlbumName)}`
@@ -226,11 +225,11 @@ describe("UserAlbumState", () => {
     describe("with a VALID size", () => {
       beforeEach(() => (size = "large"));
 
-      describe("getAlbumArtWork", () => {
+      describe("getArtwork", () => {
         beforeEach(() => arrange());
 
         it("should return an empty string", () => {
-          expect(instance.getAlbumArtWork(index, size)).toBe("");
+          expect(instance.getArtwork(index, size)).toBe("");
         });
       });
     });
@@ -240,43 +239,45 @@ describe("UserAlbumState", () => {
         () => (size = "not-a-valid_size" as LastFMImageDataInterface["size"])
       );
 
-      describe("getAlbumArtWork", () => {
+      describe("getArtwork", () => {
         beforeEach(() => arrange());
 
         it("should return an empty string", () => {
-          expect(instance.getAlbumArtWork(index, size)).toBe("");
+          expect(instance.getArtwork(index, size)).toBe("");
         });
       });
     });
 
-    describe("getAlbumName", () => {
+    describe("getName", () => {
       beforeEach(() => {
         arrange();
       });
 
       it("should return the default name", () => {
-        expect(instance.getAlbumName(index)).toBe(instance.defaultAlbumName);
+        expect(instance.getName(index)).toBe(instance.defaultAlbumName);
       });
     });
 
-    describe("getArtistName", () => {
+    describe("getRelatedArtistName", () => {
       beforeEach(() => {
         arrange();
       });
 
       it("should return the default name", () => {
-        expect(instance.getArtistName(index)).toBe(instance.defaultArtistName);
+        expect(instance.getRelatedArtistName(index)).toBe(
+          instance.defaultArtistName
+        );
       });
     });
 
-    describe("getAlbumExternalLink", () => {
+    describe("getExternalLink", () => {
       beforeEach(() => {
         arrange();
       });
 
       it("should return the default name (url encoded)", () => {
         instance.defaultAlbumName = "has a space";
-        expect(instance.getAlbumExternalLink(index)).toBe(
+        expect(instance.getExternalLink(index)).toBe(
           `${instance.lastfmPrefix}/${
             instance.defaultArtistName
           }/${encodeURIComponent(instance.defaultAlbumName)}`

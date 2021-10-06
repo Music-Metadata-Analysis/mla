@@ -1,62 +1,34 @@
 import UserState from "./user.state.base.class";
-import type {
-  LastFMImageDataInterface,
-  LastFMAlbumDataInterface,
-} from "../../../types/integrations/lastfm/api.types";
-import type { UserStateInterface } from "../../../types/user/state.types";
+import type { LastFMArtistDataInterface } from "../../../types/integrations/lastfm/api.types";
+import type { LastFMUserStateTop20AlbumReport } from "../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
 
 export default class UserAlbumState extends UserState {
-  albums: LastFMAlbumDataInterface[];
+  userProperties: LastFMUserStateTop20AlbumReport;
 
-  constructor(userProperties: UserStateInterface, t: TFunction) {
+  constructor(userProperties: LastFMUserStateTop20AlbumReport, t: TFunction) {
     super(userProperties, t);
-    this.albums = userProperties.data.report
-      .albums as LastFMAlbumDataInterface[];
+    this.userProperties = userProperties;
   }
 
-  getAlbumArtWork = (
-    index: number,
-    size: LastFMImageDataInterface["size"]
-  ): string => {
-    let image = "";
-    const album = this.albums[index];
-    if (album && album.image) {
-      const result = album.image.find(
-        (img: LastFMImageDataInterface) => img.size === size
-      );
-      if (result) image = result["#text"];
-    }
-    return image;
-  };
+  getDataSource = () => this.userProperties.data.report.albums;
 
-  getAlbumExternalLink = (index: number) => {
-    const album = this.albums[index];
-    const encodedAlbumName = encodeURIComponent(this.getAlbumName(index));
-    const encodedArtistName = encodeURIComponent(this.getArtistName(index));
+  getExternalLink = (index: number) => {
+    const apiObject = this.getDataSource()[index] as { url?: string };
+    const encodedAlbumName = encodeURIComponent(this.getName(index));
+    const encodedArtistName = encodeURIComponent(
+      this.getRelatedArtistName(index)
+    );
     return this.withDefault(
-      album?.url,
+      apiObject?.url,
       `${this.lastfmPrefix}/${encodedArtistName}/${encodedAlbumName}`
     );
   };
 
-  getAlbumName = (index: number) => {
-    const album = this.albums[index];
-    return this.withDefault(album?.name, this.defaultAlbumName);
-  };
-
-  getArtistName = (index: number) => {
-    const artist = this.albums[index]?.artist;
-    return this.withDefault(artist?.name, this.defaultArtistName);
-  };
-
-  getPlayCount = (index: number) => {
-    const playCount = this.albums[index]?.playcount;
-    return this.withDefault(playCount, "0");
-  };
-
-  private withDefault = (value?: string, defaultValue?: string) => {
-    if (value) return value;
-    return defaultValue as string;
+  getRelatedArtistName = (index: number) => {
+    const apiObject = (
+      this.getDataSource()[index] as { artist: LastFMArtistDataInterface }
+    )?.artist;
+    return this.withDefault(apiObject?.name, this.defaultArtistName);
   };
 }
