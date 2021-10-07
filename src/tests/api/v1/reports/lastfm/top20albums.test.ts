@@ -6,7 +6,7 @@ import handleProxy from "../../../../../pages/api/v1/reports/lastfm/top20albums"
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-jest.mock("../../../../../integrations/lastfm/proxy.class.ts", () => {
+jest.mock("../../../../../integrations/lastfm/proxy.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       getTopAlbums: mockBackendResponse,
