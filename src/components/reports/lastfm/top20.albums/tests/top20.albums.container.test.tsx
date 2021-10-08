@@ -5,7 +5,7 @@ import Events from "../../../../../events/events";
 import mockAnalyticsHook from "../../../../../hooks/tests/analytics.mock";
 import mockLastFMHook from "../../../../../hooks/tests/lastfm.mock";
 import UserInterfaceImageProvider from "../../../../../providers/ui/ui.images/ui.images.provider";
-import UserAlbumDataState from "../../../../../providers/user/encapsulations/user.state.album.class";
+import UserAlbumDataState from "../../../../../providers/user/encapsulations/lastfm/user.state.album.class";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../../tests/fixtures/mock.router";
 import BillBoardSpinner from "../../../../billboard/billboard.spinner/billboard.spinner.component";

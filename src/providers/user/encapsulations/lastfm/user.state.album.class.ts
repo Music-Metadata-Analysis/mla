@@ -1,6 +1,6 @@
 import UserState from "./user.state.base.class";
-import type { LastFMArtistDataInterface } from "../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateTop20AlbumReport } from "../../../types/user/state.types";
+import type { LastFMArtistDataInterface } from "../../../../types/integrations/lastfm/api.types";
+import type { LastFMUserStateTop20AlbumReport } from "../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
 
 export default class UserAlbumState extends UserState {

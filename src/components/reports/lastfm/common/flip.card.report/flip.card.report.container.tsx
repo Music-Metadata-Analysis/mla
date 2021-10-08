@@ -7,7 +7,7 @@ import useAnalytics from "../../../../../hooks/analytics";
 import useUserInterface from "../../../../../hooks/ui";
 import BillBoardSpinner from "../../../../billboard/billboard.spinner/billboard.spinner.component";
 import ErrorDisplay from "../../../../errors/display/error.display.component";
-import type UserState from "../../../../../providers/user/encapsulations/user.state.base.class";
+import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
 import type { ReportType } from "../../../../../types/analytics.types";
 import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
 import type LastFMBaseReport from "../flip.card.report/flip.card.report.base.class";

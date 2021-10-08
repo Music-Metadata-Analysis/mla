@@ -2,9 +2,9 @@ import UserAlbumState from "../user.state.album.class";
 import type {
   LastFMImageDataInterface,
   LastFMArtistDataInterface,
-} from "../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateTop20AlbumReport } from "../../../../types/user/state.types";
-import type { UserStateInterface } from "../../../../types/user/state.types";
+} from "../../../../../types/integrations/lastfm/api.types";
+import type { LastFMUserStateTop20AlbumReport } from "../../../../../types/user/state.types";
+import type { UserStateInterface } from "../../../../../types/user/state.types";
 
 const mockUrls = ["http://someurl1.com", "http://someurl2.com"];
 

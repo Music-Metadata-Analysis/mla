@@ -1,5 +1,5 @@
-import type { LastFMImageDataInterface } from "../../../types/integrations/lastfm/api.types";
-import type { UserStateInterface } from "../../../types/user/state.types";
+import type { LastFMImageDataInterface } from "../../../../types/integrations/lastfm/api.types";
+import type { UserStateInterface } from "../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
 
 export default abstract class UserState {
