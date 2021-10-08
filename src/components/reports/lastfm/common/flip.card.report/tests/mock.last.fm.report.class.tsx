@@ -1,5 +1,5 @@
 import routes from "../../../../../../config/routes";
-import UserAlbumState from "../../../../../../providers/user/encapsulations/user.state.album.class";
+import UserAlbumState from "../../../../../../providers/user/encapsulations/lastfm/user.state.album.class";
 import LastFMBaseReport from "../flip.card.report.base.class";
 import type { userHookAsLastFMTop20AlbumReport } from "../../../../../../types/user/hook.types";
 

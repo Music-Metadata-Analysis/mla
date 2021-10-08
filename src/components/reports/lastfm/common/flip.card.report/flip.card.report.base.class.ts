@@ -1,6 +1,6 @@
 import type translations from "../../../../../../public/locales/en/lastfm.json";
 import type useUserInterface from "../../../../../hooks/ui";
-import type UserState from "../../../../../providers/user/encapsulations/user.state.base.class";
+import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
 import type { ReportType } from "../../../../../types/analytics.types";
 import type { LastFMFlipCardCommonDrawerInterface } from "../../../../../types/clients/api/reports/lastfm.client.types";
 import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
