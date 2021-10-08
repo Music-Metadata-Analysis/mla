@@ -6,7 +6,7 @@ import useColour from "../../../../../hooks/colour";
 import StyledButtonLink from "../../../../button/button.external.link/button.external.link.component";
 import Drawer from "../../../common/drawer/drawer.component";
 import drawerSettings from "../../common/settings/drawer";
-import type UserAlbumState from "../../../../../providers/user/encapsulations/user.state.album.class";
+import type UserAlbumState from "../../../../../providers/user/encapsulations/lastfm/user.state.album.class";
 import type { TFunction } from "next-i18next";
 
 export interface AlbumDrawerInterface {

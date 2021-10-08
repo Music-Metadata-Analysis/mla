@@ -4,7 +4,7 @@ import { useState, FC } from "react";
 import Condition from "../../../../condition/condition.component";
 import FlipCard from "../../../../flip.card/flip.card.component";
 import ReportTitle from "../../../common/report.title/report.title.component";
-import type UserState from "../../../../../providers/user/encapsulations/user.state.base.class";
+import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
 import type { LastFMFlipCardCommonDrawerInterface } from "../../../../../types/clients/api/reports/lastfm.client.types";
 import type { TFunction } from "next-i18next";
 

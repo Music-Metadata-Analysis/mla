@@ -11,7 +11,7 @@ import ReportTitle from "../../../../common/report.title/report.title.component"
 import LastFMFlipCardReport, {
   LastFMFlipCardReportProps,
 } from "../flip.card.report.component";
-import type UserState from "../../../../../../providers/user/encapsulations/user.state.base.class";
+import type UserState from "../../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
 
 jest.mock("../../../../../flip.card/flip.card.component", () => {
   return jest.fn(() => <div>{"MockFlipCard"}</div>);

@@ -1,6 +1,6 @@
 import AlbumDrawer from "./drawer.album/drawer.album.component";
 import routes from "../../../../config/routes";
-import UserAlbumDataState from "../../../../providers/user/encapsulations/user.state.album.class";
+import UserAlbumDataState from "../../../../providers/user/encapsulations/lastfm/user.state.album.class";
 import LastFMBaseReport from "../common/flip.card.report/flip.card.report.base.class";
 import type { userHookAsLastFMTop20AlbumReport } from "../../../../types/user/hook.types";
 
