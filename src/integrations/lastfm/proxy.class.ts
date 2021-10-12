@@ -9,11 +9,24 @@ class LastFMProxy implements LastFMProxyInterface {
   }
 
   async getTopAlbums(username: string) {
-    const albums = await this.internalClient.getTopAlbums(username);
-    const image = await this.internalClient.getUserImage(username);
+    const [albums, image] = await Promise.all([
+      this.internalClient.getTopAlbums(username),
+      this.internalClient.getUserImage(username),
+    ]);
 
     return {
       albums,
+      image,
+    };
+  }
+
+  async getTopArtists(username: string) {
+    const [artists, image] = await Promise.all([
+      this.internalClient.getTopArtists(username),
+      this.internalClient.getUserImage(username),
+    ]);
+    return {
+      artists,
       image,
     };
   }

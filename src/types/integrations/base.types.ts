@@ -1,5 +1,5 @@
 export interface BaseReportResponseInterface {
-  artist?: unknown[];
+  artists?: unknown[];
   albums?: unknown[];
   image: unknown[];
 }
