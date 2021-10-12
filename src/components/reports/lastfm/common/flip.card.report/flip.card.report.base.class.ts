@@ -2,14 +2,15 @@ import type translations from "../../../../../../public/locales/en/lastfm.json";
 import type useUserInterface from "../../../../../hooks/ui";
 import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
 import type { ReportType } from "../../../../../types/analytics.types";
-import type { LastFMFlipCardCommonDrawerInterface } from "../../../../../types/clients/api/reports/lastfm.client.types";
 import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
+import type { LastFMDrawerInterface } from "../flip.card.report.drawer/flip.card.report.drawer.component";
 import type { TFunction } from "next-i18next";
 import type { FC } from "react";
 
-export default abstract class LastFMBaseReport<T extends UserState> {
+export default abstract class FlipCardBaseReport<T extends UserState> {
+  drawerArtWorkAltText!: string;
   analyticsReportType!: ReportType;
-  drawerComponent!: FC<LastFMFlipCardCommonDrawerInterface<T>>;
+  drawerComponent!: FC<LastFMDrawerInterface<T>>;
   encapsulationClass!: new (
     userProperties: T["userProperties"],
     t: TFunction
@@ -17,8 +18,12 @@ export default abstract class LastFMBaseReport<T extends UserState> {
   retryRoute!: string;
   translationKey!: keyof typeof translations;
 
+  getDrawerArtWorkAltText() {
+    return this.drawerArtWorkAltText;
+  }
+
   getDrawerComponent() {
-    return this.drawerComponent as FC<LastFMFlipCardCommonDrawerInterface<T>>;
+    return this.drawerComponent as FC<LastFMDrawerInterface<T>>;
   }
 
   getEncapsulatedUserState(userProperties: T["userProperties"], t: TFunction) {
@@ -28,8 +33,6 @@ export default abstract class LastFMBaseReport<T extends UserState> {
   getFlipCardData(userProperties: T["userProperties"]) {
     return this.getReportData(userProperties);
   }
-
-  abstract getReportData(userProperties: T["userProperties"]): unknown[];
 
   getRetryRoute() {
     return this.retryRoute;
@@ -57,8 +60,9 @@ export default abstract class LastFMBaseReport<T extends UserState> {
       this.getReportData(userProperties).length === 0
     );
   }
-
   abstract getNumberOfImageLoads(userProperties: T["userProperties"]): number;
+
+  abstract getReportData(userProperties: T["userProperties"]): unknown[];
 
   abstract startDataFetch(user: userHookAsLastFM, userName: string): void;
 }

@@ -5,13 +5,13 @@ import {
   MockUserStateEncapsulation,
   MockDrawerComponent,
 } from "./mock.last.fm.report.class";
+import { MockReportClass } from "./mock.last.fm.report.class";
 import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
 import FlipCard from "../../../../../flip.card/flip.card.component";
 import ReportTitle from "../../../../common/report.title/report.title.component";
-import LastFMFlipCardReport, {
-  LastFMFlipCardReportProps,
+import FlipCardReport, {
+  FlipCardReportProps,
 } from "../flip.card.report.component";
-import type UserState from "../../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
 
 jest.mock("../../../../../flip.card/flip.card.component", () => {
   return jest.fn(() => <div>{"MockFlipCard"}</div>);
@@ -50,32 +50,29 @@ const mockTranslation = jest.fn(
   (translationKey: string) => `t(${translationKey})`
 );
 
-const FlipCardReportBaseProps: LastFMFlipCardReportProps<UserState> = {
-  userState: new MockUserStateEncapsulation(
-    mockUserProperties,
-    mockTranslation
-  ),
-  DrawerComponent: MockDrawerComponent,
-  imageIsLoaded: mockImageIsLoaded,
-  flipCardData: [],
-  reportTranslationKey: "top20Albums",
-  visible: true,
-  t: mockTranslation,
-};
+const FlipCardReportBaseProps: FlipCardReportProps<MockUserStateEncapsulation> =
+  {
+    userState: new MockUserStateEncapsulation(
+      mockUserProperties,
+      mockTranslation
+    ),
+    report: new MockReportClass(),
+    imageIsLoaded: mockImageIsLoaded,
+    visible: true,
+    t: mockTranslation,
+  };
 
-describe("LastFMFlipCardReport", () => {
-  let currentProps: LastFMFlipCardReportProps<UserState>;
+describe("FlipCardReport", () => {
+  let currentProps: FlipCardReportProps<MockUserStateEncapsulation>;
 
   beforeEach(() => jest.clearAllMocks());
 
   const resetProps = () => {
     currentProps = { ...FlipCardReportBaseProps };
-    currentProps.flipCardData = currentProps.userState.userProperties.data
-      .report.albums as unknown[];
   };
 
   const arrange = () => {
-    return render(<LastFMFlipCardReport {...currentProps} />);
+    return render(<FlipCardReport {...currentProps} />);
   };
 
   describe("when a data fetch is in progress", () => {
@@ -145,7 +142,7 @@ describe("LastFMFlipCardReport", () => {
         expect(ReportTitle).toBeCalledTimes(1);
         checkMockCall(ReportTitle, {
           size: 100,
-          title: `t(${String(currentProps.reportTranslationKey)}.title)`,
+          title: `t(${String(currentProps.report.translationKey)}.title)`,
           userName: mockUsername,
         });
       });
@@ -168,7 +165,7 @@ describe("LastFMFlipCardReport", () => {
             rearImage: "/images/record-player.jpg",
             size: 100,
             noArtWork: `t(${String(
-              currentProps.reportTranslationKey
+              currentProps.report.translationKey
             )}.noArtWork)`,
           },
           0,
@@ -184,7 +181,7 @@ describe("LastFMFlipCardReport", () => {
             rearImage: "/images/record-player.jpg",
             size: 100,
             noArtWork: `t(${String(
-              currentProps.reportTranslationKey
+              currentProps.report.translationKey
             )}.noArtWork)`,
           },
           1,
@@ -217,16 +214,19 @@ describe("LastFMFlipCardReport", () => {
         it("should call AlbumDrawer", () => {
           expect(MockDrawerComponent).toBeCalledTimes(1);
           const call = (MockDrawerComponent as jest.Mock).mock.calls[0][0];
-          expect(typeof call.onClose).toBe("function");
-          expect(typeof call.t).toBe("function");
-          expect(call.albumIndex).toBe(0);
+          expect(call.artWorkAltText).toBe(
+            currentProps.report.getDrawerArtWorkAltText()
+          );
+          expect(call.objectIndex).toBe(0);
           expect(call.fallbackImage).toBe("/images/static.gif");
           expect(call.isOpen).toBe(true);
+          expect(typeof call.onClose).toBe("function");
           expect(call.userState).toBeInstanceOf(MockUserStateEncapsulation);
           expect(call.userState.userProperties).toBe(
             currentProps.userState.userProperties
           );
-          expect(Object.keys(call).length).toBe(6);
+          expect(call.t).toBe(currentProps.t);
+          expect(Object.keys(call).length).toBe(7);
         });
       });
     });

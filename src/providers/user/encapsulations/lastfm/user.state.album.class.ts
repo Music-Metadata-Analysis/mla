@@ -1,4 +1,5 @@
 import UserState from "./user.state.base.class";
+import Events from "../../../../events/events";
 import type { LastFMArtistDataInterface } from "../../../../types/integrations/lastfm/api.types";
 import type { LastFMUserStateTop20AlbumReport } from "../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
@@ -12,6 +13,17 @@ export default class UserAlbumState extends UserState {
   }
 
   getDataSource = () => this.userProperties.data.report.albums;
+
+  getDrawerTitle = (index: number) => {
+    return `${this.getRelatedArtistName(index)}: ${this.getName(index)}`;
+  };
+
+  getDrawerEvent = (index: number) => {
+    return Events.LastFM.AlbumViewed(
+      this.getRelatedArtistName(index),
+      this.getName(index)
+    );
+  };
 
   getExternalLink = (index: number) => {
     const apiObject = this.getDataSource()[index] as { url?: string };

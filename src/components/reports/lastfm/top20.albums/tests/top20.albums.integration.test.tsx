@@ -5,11 +5,11 @@ import translations from "../../../../../../public/locales/en/lastfm.json";
 import UserAlbumDataState from "../../../../../providers/user/encapsulations/lastfm/user.state.album.class";
 import translationLookUp from "../../../../../tests/fixtures/mock.translation";
 import { testIDs as drawerTestIDs } from "../../../common/drawer/drawer.component";
-import LastFMFlipCardReport, {
-  LastFMFlipCardReportProps,
+import { testIDs as albumDrawerTestIDs } from "../../common/flip.card.report.drawer/flip.card.report.drawer.component";
+import FlipCardReport, {
+  FlipCardReportProps,
 } from "../../common/flip.card.report/flip.card.report.component";
-import AlbumDrawer from "../drawer.album/drawer.album.component";
-import { testIDs as albumDrawerTestIDs } from "../drawer.album/drawer.album.component";
+import Top20AlbumsReport from "../top20.albums.report.class";
 
 const mockImageIsLoaded = jest.fn();
 const mockUsername = "test-username";
@@ -33,18 +33,16 @@ const mockTranslation = jest.fn((translationKey: string) => {
   return translationLookUp(translationKey, lastfmTranslations);
 });
 
-const Top20ReportBaseProps: LastFMFlipCardReportProps<UserAlbumDataState> = {
-  DrawerComponent: AlbumDrawer,
+const Top20ReportBaseProps: FlipCardReportProps<UserAlbumDataState> = {
+  report: new Top20AlbumsReport(),
   imageIsLoaded: mockImageIsLoaded,
-  flipCardData: [],
-  reportTranslationKey: "top20Albums",
   userState: new UserAlbumDataState(mockUserProperties, mockTranslation),
   visible: true,
   t: mockTranslation,
 };
 
 describe("Top20AlbumsReport", () => {
-  let currentProps: LastFMFlipCardReportProps<UserAlbumDataState>;
+  let currentProps: FlipCardReportProps<UserAlbumDataState>;
   const albumUrl = "https://thecorrect/url";
   const mockAlbumData = [
     {
@@ -87,11 +85,9 @@ describe("Top20AlbumsReport", () => {
   };
 
   const arrange = () => {
-    currentProps.flipCardData = currentProps.userState.userProperties.data
-      .report.albums as unknown[];
     return render(
       <ChakraProvider>
-        <LastFMFlipCardReport {...currentProps} />
+        <FlipCardReport {...currentProps} />
       </ChakraProvider>
     );
   };
@@ -174,7 +170,7 @@ describe("Top20AlbumsReport", () => {
         it("should open the drawer", async () => {
           expect(
             screen.queryByAltText(
-              translations.top20Albums.drawer.coverArtAltText
+              translations.top20Albums.drawer.artWorkAltText
             )
           ).toBeNull();
 
@@ -182,7 +178,7 @@ describe("Top20AlbumsReport", () => {
 
           expect(
             screen.queryByAltText(
-              translations.top20Albums.drawer.coverArtAltText
+              translations.top20Albums.drawer.artWorkAltText
             )
           ).not.toBeNull();
         });
@@ -203,11 +199,11 @@ describe("Top20AlbumsReport", () => {
 
       it("should render the rank correctly", async () => {
         const rankElement = await screen.findByTestId(
-          albumDrawerTestIDs.AlbumDrawerRank
+          albumDrawerTestIDs.LastFMDrawerRank
         );
         expect(
           await within(rankElement).findByText(
-            translations.top20Albums.drawer.rank
+            translations.flipCardReport.drawer.rank
           )
         ).toBeTruthy();
         expect(await within(rankElement).findByText(": 1")).toBeTruthy();
@@ -215,11 +211,11 @@ describe("Top20AlbumsReport", () => {
 
       it("should render the playcount correctly", async () => {
         const playCountElement = await screen.findByTestId(
-          albumDrawerTestIDs.AlbumDrawerPlayCount
+          albumDrawerTestIDs.LastFMDrawerPlayCount
         );
         expect(
           await within(playCountElement).findByText(
-            translations.top20Albums.drawer.playCount
+            translations.flipCardReport.drawer.playCount
           )
         ).toBeTruthy();
         expect(await within(playCountElement).findByText(": 101")).toBeTruthy();
@@ -227,7 +223,7 @@ describe("Top20AlbumsReport", () => {
 
       it("should open the correct link when the button is pressed", async () => {
         const button = await screen.findByText(
-          translations.top20Albums.drawer.albumButtonText
+          translations.flipCardReport.drawer.buttonText
         );
         const aTag = button?.parentElement?.parentElement as HTMLAnchorElement;
         expect(aTag.href).toBe(albumUrl);
@@ -235,7 +231,7 @@ describe("Top20AlbumsReport", () => {
 
       it("should close the drawer when the close drawer button is clicked", async () => {
         expect(
-          screen.queryByAltText(translations.top20Albums.drawer.coverArtAltText)
+          screen.queryByAltText(translations.top20Albums.drawer.artWorkAltText)
         ).not.toBeNull();
 
         const closeButton = (await screen.findByTestId(
@@ -244,7 +240,7 @@ describe("Top20AlbumsReport", () => {
         fireEvent.click(closeButton);
 
         expect(
-          screen.queryByAltText(translations.top20Albums.drawer.coverArtAltText)
+          screen.queryByAltText(translations.top20Albums.drawer.artWorkAltText)
         ).toBeNull();
       });
     });
