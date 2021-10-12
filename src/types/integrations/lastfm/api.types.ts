@@ -1,5 +1,5 @@
 export interface LastFMImageDataInterface {
-  size: "small" | "medium" | "large" | "extralarge";
+  size: "small" | "medium" | "large" | "extralarge" | "mega";
   "#text": string;
 }
 
@@ -10,7 +10,9 @@ export interface LastFMArtistDataInterface {
   playcount?: string;
   streamable?: string;
   url?: string;
-  "@attr"?: string;
+  "@attr"?: {
+    rank: string;
+  };
   "#text"?: string;
 }
 
