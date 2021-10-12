@@ -7,10 +7,10 @@ import UserAlbumState from "../../../../../../providers/user/encapsulations/last
 import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
 import StyledButtonLink from "../../../../../button/button.external.link/button.external.link.component";
 import Drawer from "../../../../common/drawer/drawer.component";
-import AlbumDrawer, {
-  AlbumDrawerInterface,
+import FlipCardDrawer, {
+  LastFMDrawerInterface,
   testIDs,
-} from "../drawer.album.component";
+} from "../flip.card.report.drawer.component";
 
 jest.mock("../../../../../../hooks/analytics", () => ({
   __esModule: true,
@@ -64,8 +64,9 @@ const mockBaseUserProperties = {
 
 const mockState = new UserAlbumState(mockBaseUserProperties, mockT);
 
-const baseProps: AlbumDrawerInterface = {
-  albumIndex: 0,
+const baseProps: LastFMDrawerInterface<UserAlbumState> = {
+  objectIndex: 0,
+  artWorkAltText: "artWorkAltText",
   userState: mockState,
   fallbackImage: "/fallback.jpeg",
   isOpen: true,
@@ -73,8 +74,8 @@ const baseProps: AlbumDrawerInterface = {
   t: mockT,
 };
 
-describe("AlbumDrawer", () => {
-  let currentProps: AlbumDrawerInterface;
+describe("FlipCardReportDrawer", () => {
+  let currentProps: LastFMDrawerInterface<UserAlbumState>;
   const MockImageUrl = "MockImageUrl";
 
   beforeEach(() => jest.clearAllMocks());
@@ -85,7 +86,7 @@ describe("AlbumDrawer", () => {
   };
 
   const arrange = () => {
-    render(<AlbumDrawer {...currentProps} />);
+    render(<FlipCardDrawer {...currentProps} />);
   };
 
   const checkBaseComponents = (externalLink: string, title: string) => {
@@ -94,7 +95,7 @@ describe("AlbumDrawer", () => {
       checkMockCall(
         Drawer,
         {
-          "data-testid": testIDs.AlbumDrawer,
+          "data-testid": testIDs.LastFMDrawer,
           isOpen: true,
           title,
         },
@@ -128,7 +129,7 @@ describe("AlbumDrawer", () => {
       checkMockCall(
         Img,
         {
-          alt: "t(top20Albums.drawer.coverArtAltText)",
+          alt: `t(${currentProps.artWorkAltText})`,
           src: MockImageUrl,
           style: {
             position: "relative",
@@ -166,7 +167,7 @@ describe("AlbumDrawer", () => {
             ],
           },
         ];
-        currentProps.albumIndex = 0;
+        currentProps.objectIndex = 0;
         arrange();
       });
 
@@ -176,20 +177,20 @@ describe("AlbumDrawer", () => {
       );
 
       it("should render the rank correctly", async () => {
-        const rankElement = await screen.findByTestId(testIDs.AlbumDrawerRank);
+        const rankElement = await screen.findByTestId(testIDs.LastFMDrawerRank);
         expect(
-          await within(rankElement).findByText("t(top20Albums.drawer.rank)")
+          await within(rankElement).findByText("t(flipCardReport.drawer.rank)")
         ).toBeTruthy();
         expect(await within(rankElement).findByText(": 1")).toBeTruthy();
       });
 
       it("should render the playcount correctly", async () => {
         const playCountElement = await screen.findByTestId(
-          testIDs.AlbumDrawerPlayCount
+          testIDs.LastFMDrawerPlayCount
         );
         expect(
           await within(playCountElement).findByText(
-            "t(top20Albums.drawer.playCount)"
+            "t(flipCardReport.drawer.playCount)"
           )
         ).toBeTruthy();
         expect(await within(playCountElement).findByText(": 0")).toBeTruthy();
@@ -210,7 +211,7 @@ describe("AlbumDrawer", () => {
 
         beforeEach(async () => {
           image = await screen.findByAltText(
-            "t(top20Albums.drawer.coverArtAltText)"
+            `t(${currentProps.artWorkAltText})`
           );
           expect(image).toHaveAttribute("src", MockImageUrl);
           fireEvent.error(image);
@@ -242,7 +243,7 @@ describe("AlbumDrawer", () => {
             url: "http://correcturl/for/this/album",
           },
         ];
-        currentProps.albumIndex = 0;
+        currentProps.objectIndex = 0;
         arrange();
       });
 
@@ -252,20 +253,20 @@ describe("AlbumDrawer", () => {
       );
 
       it("should render the rank correctly", async () => {
-        const rankElement = await screen.findByTestId(testIDs.AlbumDrawerRank);
+        const rankElement = await screen.findByTestId(testIDs.LastFMDrawerRank);
         expect(
-          await within(rankElement).findByText("t(top20Albums.drawer.rank)")
+          await within(rankElement).findByText("t(flipCardReport.drawer.rank)")
         ).toBeTruthy();
         expect(await within(rankElement).findByText(": 1")).toBeTruthy();
       });
 
       it("should render the playcount correctly", async () => {
         const playCountElement = await screen.findByTestId(
-          testIDs.AlbumDrawerPlayCount
+          testIDs.LastFMDrawerPlayCount
         );
         expect(
           await within(playCountElement).findByText(
-            "t(top20Albums.drawer.playCount)"
+            "t(flipCardReport.drawer.playCount)"
           )
         ).toBeTruthy();
         expect(await within(playCountElement).findByText(": 100")).toBeTruthy();

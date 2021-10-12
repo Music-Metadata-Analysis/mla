@@ -1,6 +1,6 @@
 import routes from "../../../../../../config/routes";
 import UserAlbumState from "../../../../../../providers/user/encapsulations/lastfm/user.state.album.class";
-import LastFMBaseReport from "../flip.card.report.base.class";
+import FlipCardBaseReport from "../flip.card.report.base.class";
 import type { userHookAsLastFMTop20AlbumReport } from "../../../../../../types/user/hook.types";
 
 export const mockImageUrl = "http://someurl";
@@ -19,12 +19,13 @@ export const MockDrawerComponent = jest.fn(() => (
   <div>MockDrawerComponent</div>
 ));
 
-export class MockReportClass extends LastFMBaseReport<MockUserStateEncapsulation> {
+export class MockReportClass extends FlipCardBaseReport<MockUserStateEncapsulation> {
   retryRoute = routes.search.lastfm.top20albums;
   drawerComponent = MockDrawerComponent;
   translationKey = "top20Albums" as const;
   analyticsReportType = "TOP20 ALBUMS" as const;
   encapsulationClass = MockUserStateEncapsulation;
+  drawerArtWorkAltText = "top20Albums.drawer.artWorkAltText";
 
   getNumberOfImageLoads = (
     userProperties: MockUserStateEncapsulation["userProperties"]

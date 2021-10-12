@@ -1,3 +1,4 @@
+import type EventDefinition from "../../../../events/event.class";
 import type { LastFMImageDataInterface } from "../../../../types/integrations/lastfm/api.types";
 import type { UserStateInterface } from "../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
@@ -13,8 +14,11 @@ export default abstract class UserState {
     this.defaultAlbumName = t("defaults.albumName");
     this.defaultArtistName = t("defaults.artistName");
   }
-
   abstract getDataSource(): unknown[];
+
+  abstract getDrawerTitle(index: number): string;
+
+  abstract getDrawerEvent(index: number): EventDefinition;
 
   abstract getExternalLink(index: number): string;
 
