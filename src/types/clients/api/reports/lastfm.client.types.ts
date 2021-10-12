@@ -5,6 +5,7 @@ import type { IntegrationTypes } from "../../../integration.types";
 import type { BaseReportResponseInterface } from "../../../integrations/base.types";
 import type {
   LastFMAlbumDataInterface,
+  LastFMArtistDataInterface,
   LastFMImageDataInterface,
 } from "../../../integrations/lastfm/api.types";
 import type { userDispatchType } from "../../../user/context.types";
@@ -43,4 +44,9 @@ export interface LastFMTopBaseReportResponseInterface
 export interface LastFMTopAlbumsReportResponseInterface
   extends LastFMTopBaseReportResponseInterface {
   albums: LastFMAlbumDataInterface[];
+}
+
+export interface LastFMTopArtistsReportResponseInterface
+  extends LastFMTopBaseReportResponseInterface {
+  artists: LastFMArtistDataInterface[];
 }

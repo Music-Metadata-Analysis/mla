@@ -36,6 +36,7 @@
     "testid",
     "testuser",
     "topalbums",
+    "topartists",
     "toplast"
   ],
   "cSpell.ignoreRegExpList": ["node_modules"],
