@@ -3,6 +3,13 @@
     "albumName": "Unknown Album",
     "artistName": "Unknown Artist"
   },
+  "flipCardReport": {
+    "drawer": {
+      "rank": "Position",
+      "playCount": "Play Count",
+      "buttonText": "View on last.fm"
+    }
+  },
   "search": {
     "fieldLabel": "Username:",
     "fieldPlaceholder": "last.fm username",
@@ -20,10 +27,7 @@
     "communication": "Retrieving Results...",
     "noArtWork": "No Cover Art",
     "drawer": {
-      "coverArtAltText": "Cover Art",
-      "rank": "Position",
-      "playCount": "Play Count",
-      "albumButtonText": "View on last.fm"
+      "artWorkAltText": "Cover Art"
     }
   }
 }

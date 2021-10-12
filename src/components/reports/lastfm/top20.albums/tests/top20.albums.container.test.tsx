@@ -10,9 +10,9 @@ import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../../tests/fixtures/mock.router";
 import BillBoardSpinner from "../../../../billboard/billboard.spinner/billboard.spinner.component";
 import ErrorDisplay from "../../../../errors/display/error.display.component";
-import LastFMFlipCardReport from "../../common/flip.card.report/flip.card.report.component";
-import AlbumDrawer from "../drawer.album/drawer.album.component";
+import FlipCardReport from "../../common/flip.card.report/flip.card.report.component";
 import Top20AlbumsContainer from "../top20.albums.container";
+import Top20AlbumsReport from "../top20.albums.report.class";
 import type { userHookAsLastFMTop20AlbumReport } from "../../../../../types/user/hook.types";
 
 jest.mock("../../../../../hooks/analytics", () => ({
@@ -93,18 +93,14 @@ describe("Top20ReportContainer", () => {
   };
 
   const checkFlipCardReportProps = (visible: boolean) => {
-    const call = (LastFMFlipCardReport as jest.Mock).mock.calls[0][0];
+    const call = (FlipCardReport as jest.Mock).mock.calls[0][0];
     expect(call.userState).toBeInstanceOf(UserAlbumDataState);
     expect(call.userState.userProperties).toBe(mockHookState.userProperties);
-    expect(call.flipCardData).toBe(
-      mockHookState.userProperties.data.report.albums
-    );
     expect(call.visible).toBe(visible);
-    expect(call.DrawerComponent).toBe(AlbumDrawer);
-    expect(call.reportTranslationKey).toBe("top20Albums");
     expect(typeof call.imageIsLoaded).toBe("function");
     expect(typeof call.t).toBe("function");
-    expect(Object.keys(call).length).toBe(7);
+    expect(call.report).toBeInstanceOf(Top20AlbumsReport);
+    expect(Object.keys(call).length).toBe(5);
   };
 
   const resetHookState = () => {
@@ -145,7 +141,7 @@ describe("Top20ReportContainer", () => {
       });
 
       it("should NOT call the FlipCardReport component", () => {
-        expect(LastFMFlipCardReport).toBeCalledTimes(0);
+        expect(FlipCardReport).toBeCalledTimes(0);
       });
 
       describe("when resetError is called on ErrorDisplay", () => {
@@ -177,7 +173,7 @@ describe("Top20ReportContainer", () => {
       });
 
       it("should NOT call the FlipCardReport component", () => {
-        expect(LastFMFlipCardReport).toBeCalledTimes(0);
+        expect(FlipCardReport).toBeCalledTimes(0);
       });
 
       describe("when resetError is called on ErrorDisplay", () => {
@@ -205,7 +201,7 @@ describe("Top20ReportContainer", () => {
       });
 
       it("should NOT call the FlipCardReport component", () => {
-        expect(LastFMFlipCardReport).toBeCalledTimes(0);
+        expect(FlipCardReport).toBeCalledTimes(0);
       });
 
       checkErrorDisplay("user_not_found");
@@ -233,8 +229,7 @@ describe("Top20ReportContainer", () => {
       });
 
       const getImageLoader = () => {
-        return (LastFMFlipCardReport as jest.Mock).mock.calls[0][0]
-          .imageIsLoaded;
+        return (FlipCardReport as jest.Mock).mock.calls[0][0].imageIsLoaded;
       };
 
       describe("when data loading is in progress", () => {
@@ -341,7 +336,7 @@ describe("Top20ReportContainer", () => {
           });
 
           it("should NOT call the FlipCardReport component", () => {
-            expect(LastFMFlipCardReport).toBeCalledTimes(0);
+            expect(FlipCardReport).toBeCalledTimes(0);
           });
 
           checkErrorDisplay("user_with_no_listens");

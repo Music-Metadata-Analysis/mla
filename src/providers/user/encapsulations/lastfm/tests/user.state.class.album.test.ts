@@ -127,6 +127,90 @@ describe("UserAlbumState", () => {
       });
     });
 
+    describe("getDrawerEvent", () => {
+      const mockAlbumName = "mockAlbumName";
+      const mockArtistName = "mockArtistName";
+
+      describe("when an album name and artist name are defined", () => {
+        beforeEach(() => {
+          currentState.data.report.albums[0].name = mockAlbumName;
+          (
+            currentState.data.report.albums[0]
+              .artist as LastFMArtistDataInterface
+          ).name = mockArtistName;
+          arrange();
+        });
+
+        it("should return the correct event", () => {
+          expect(instance.getDrawerEvent(index)).toEqual({
+            category: "LAST.FM",
+            label: "DATA: ALBUM",
+            action: `VIEWED ALBUM DETAILS: ${mockArtistName}:${mockAlbumName}.`,
+            value: undefined,
+          });
+        });
+      });
+
+      describe("when an album name and artist name are NOT defined", () => {
+        beforeEach(() => {
+          currentState.data.report.albums[0].name = undefined;
+          (
+            currentState.data.report.albums[0]
+              .artist as LastFMArtistDataInterface
+          ).name = undefined;
+          arrange();
+        });
+
+        it("should return the correct event", () => {
+          expect(instance.getDrawerEvent(index)).toEqual({
+            category: "LAST.FM",
+            label: "DATA: ALBUM",
+            action: `VIEWED ALBUM DETAILS: ${instance.defaultArtistName}:${instance.defaultAlbumName}.`,
+            value: undefined,
+          });
+        });
+      });
+    });
+
+    describe("getDrawerTitle", () => {
+      const mockAlbumName = "mockAlbumName";
+      const mockArtistName = "mockArtistName";
+
+      describe("when an album name and artist name are defined", () => {
+        beforeEach(() => {
+          currentState.data.report.albums[0].name = mockAlbumName;
+          (
+            currentState.data.report.albums[0]
+              .artist as LastFMArtistDataInterface
+          ).name = mockArtistName;
+          arrange();
+        });
+
+        it("should return the correct title", () => {
+          expect(instance.getDrawerTitle(index)).toBe(
+            `${mockArtistName}: ${mockAlbumName}`
+          );
+        });
+      });
+
+      describe("when an album name and artist name are NOT defined", () => {
+        beforeEach(() => {
+          currentState.data.report.albums[0].name = undefined;
+          (
+            currentState.data.report.albums[0]
+              .artist as LastFMArtistDataInterface
+          ).name = undefined;
+          arrange();
+        });
+
+        it("should return the default title", () => {
+          expect(instance.getDrawerTitle(index)).toBe(
+            `${instance.defaultArtistName}: ${instance.defaultAlbumName}`
+          );
+        });
+      });
+    });
+
     describe("getRelatedArtistName", () => {
       const mockArtistName = "mockArtistName";
 
@@ -245,6 +329,33 @@ describe("UserAlbumState", () => {
         it("should return an empty string", () => {
           expect(instance.getArtwork(index, size)).toBe("");
         });
+      });
+    });
+
+    describe("getDrawerEvent", () => {
+      beforeEach(() => {
+        arrange();
+      });
+
+      it("should return the correct event", () => {
+        expect(instance.getDrawerEvent(index)).toEqual({
+          category: "LAST.FM",
+          label: "DATA: ALBUM",
+          action: `VIEWED ALBUM DETAILS: ${instance.defaultArtistName}:${instance.defaultAlbumName}.`,
+          value: undefined,
+        });
+      });
+    });
+
+    describe("getDrawerTitle", () => {
+      beforeEach(() => {
+        arrange();
+      });
+
+      it("should return the default title", () => {
+        expect(instance.getDrawerTitle(index)).toBe(
+          `${instance.defaultArtistName}: ${instance.defaultAlbumName}`
+        );
       });
     });
 

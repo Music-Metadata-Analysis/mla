@@ -1,37 +1,34 @@
 import { Flex, useDisclosure } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
-import { useState, FC } from "react";
+import { useState } from "react";
 import Condition from "../../../../condition/condition.component";
 import FlipCard from "../../../../flip.card/flip.card.component";
 import ReportTitle from "../../../common/report.title/report.title.component";
 import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
-import type { LastFMFlipCardCommonDrawerInterface } from "../../../../../types/clients/api/reports/lastfm.client.types";
+import type FlipCardBaseReport from "../flip.card.report/flip.card.report.base.class";
 import type { TFunction } from "next-i18next";
 
-export interface LastFMFlipCardReportProps<T> {
+export interface FlipCardReportProps<T extends UserState> {
   imageIsLoaded: () => void;
-  DrawerComponent: FC<LastFMFlipCardCommonDrawerInterface<T>>;
-  flipCardData: unknown[];
-  reportTranslationKey: string;
-  userState: UserState & T;
-  visible: boolean;
+  report: FlipCardBaseReport<T>;
   t: TFunction;
+  userState: T;
+  visible: boolean;
 }
 
-export default function LastFMFlipCardReport<UserStateType>({
+export default function FlipCardReport<UserStateType extends UserState>({
   imageIsLoaded,
-  DrawerComponent,
-  reportTranslationKey,
-  userState,
-  flipCardData,
-  visible,
+  report,
   t,
-}: LastFMFlipCardReportProps<UserStateType>) {
+  userState,
+  visible,
+}: FlipCardReportProps<UserStateType>) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentlyFlipped, flipCard] = useState<null | number>(null);
   const { t: cardTranslations } = useTranslation("cards");
   const cardSize = 100;
   const maxWidth = 4 * cardSize + 20;
+  const DrawerComponent = report.getDrawerComponent();
 
   const flipper = (index: null | number) => {
     flipCard(index);
@@ -58,12 +55,13 @@ export default function LastFMFlipCardReport<UserStateType>({
     >
       <Condition isTrue={isOpen}>
         <DrawerComponent
-          userState={userState}
-          albumIndex={currentlyFlipped as number}
+          artWorkAltText={report.getDrawerArtWorkAltText()}
+          objectIndex={currentlyFlipped as number}
           fallbackImage={"/images/static.gif"}
           isOpen={isOpen}
           onClose={closeDrawer}
           t={t}
+          userState={userState}
         />
       </Condition>
       <Flex alignItems={"baseline"} justifyContent={"center"}>
@@ -74,11 +72,11 @@ export default function LastFMFlipCardReport<UserStateType>({
           maxWidth={`${maxWidth}px`}
         >
           <ReportTitle
-            title={t(`${String(reportTranslationKey)}.title`)}
+            title={t(`${String(report.getReportTranslationKey())}.title`)}
             userName={userState.userProperties.userName}
             size={cardSize}
           />
-          {flipCardData.map((_, index) => (
+          {report.getFlipCardData(userState.userProperties).map((_, index) => (
             <FlipCard
               key={index}
               currentlyFlipped={currentlyFlipped}
@@ -87,7 +85,9 @@ export default function LastFMFlipCardReport<UserStateType>({
               imageIsLoaded={imageIsLoaded}
               image={userState.getArtwork(index, "large")}
               index={index}
-              noArtWork={t(`${String(reportTranslationKey)}.noArtWork`)}
+              noArtWork={t(
+                `${String(report.getReportTranslationKey())}.noArtWork`
+              )}
               rearImage={"/images/record-player.jpg"}
               size={cardSize}
               t={cardTranslations}

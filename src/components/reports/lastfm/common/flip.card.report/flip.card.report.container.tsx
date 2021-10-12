@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import LastFMFlipCardReport from "./flip.card.report.component";
+import FlipCardReport from "./flip.card.report.component";
 import Events from "../../../../../events/events";
 import useAnalytics from "../../../../../hooks/analytics";
 import useUserInterface from "../../../../../hooks/ui";
@@ -10,27 +10,22 @@ import ErrorDisplay from "../../../../errors/display/error.display.component";
 import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
 import type { ReportType } from "../../../../../types/analytics.types";
 import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
-import type LastFMBaseReport from "../flip.card.report/flip.card.report.base.class";
+import type FlipCardBaseReport from "../flip.card.report/flip.card.report.base.class";
 
-interface LastFMFlipCardReportContainerProps<T extends UserState> {
+interface FlipCardReportProps<T extends UserState> {
   userName: string;
   user: userHookAsLastFM;
-  reportClass: new () => LastFMBaseReport<T>;
+  reportClass: new () => FlipCardBaseReport<T>;
 }
 
-export default function LastFMFlipCardReportContainer<
+export default function FlipCardReportContainer<
   UserStateType extends UserState
->({
-  user,
-  userName,
-  reportClass,
-}: LastFMFlipCardReportContainerProps<UserStateType>) {
+>({ user, userName, reportClass }: FlipCardReportProps<UserStateType>) {
   const analytics = useAnalytics();
   const { t } = useTranslation("lastfm");
   const router = useRouter();
   const ui = useUserInterface();
   const report = new reportClass();
-  const userState = report.getEncapsulatedUserState(user.userProperties, t);
 
   useEffect(() => {
     ui.reset();
@@ -96,13 +91,11 @@ export default function LastFMFlipCardReportContainer<
         title={t(`${String(report.getReportTranslationKey())}.communication`)}
         visible={!user.userProperties.ready}
       />
-      <LastFMFlipCardReport<UserStateType>
-        DrawerComponent={report.getDrawerComponent()}
-        flipCardData={report.getFlipCardData(user.userProperties)}
+      <FlipCardReport<UserStateType>
+        report={report}
         imageIsLoaded={ui.load}
-        reportTranslationKey={report.getReportTranslationKey() as string}
-        userState={userState}
         visible={user.userProperties.ready}
+        userState={report.getEncapsulatedUserState(user.userProperties, t)}
         t={t}
       />
     </>
