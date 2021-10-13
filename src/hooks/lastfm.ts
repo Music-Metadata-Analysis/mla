@@ -1,6 +1,7 @@
 import React from "react";
 import useAnalytics from "./analytics";
 import LastFMTopAlbumsReport from "../clients/api/reports/lastfm/top20.albums.class";
+import LastFMTopArtistsReport from "../clients/api/reports/lastfm/top20.artists.class";
 import { UserContext } from "../providers/user/user.provider";
 import type { LastFMUserStateBase } from "../types/user/state.types";
 
@@ -11,6 +12,10 @@ const useLastFM = () => {
     dispatch,
     analytics.event
   );
+  const top20ArtistsReport = new LastFMTopArtistsReport(
+    dispatch,
+    analytics.event
+  );
 
   const clear = (): void => {
     dispatch({ type: "ResetState" });
@@ -18,6 +23,10 @@ const useLastFM = () => {
 
   const top20albums = (userName: string): void => {
     top20AlbumsReport.retrieveReport(userName);
+  };
+
+  const top20artists = (userName: string): void => {
+    top20ArtistsReport.retrieveReport(userName);
   };
 
   const ready = (): void => {
@@ -34,6 +43,7 @@ const useLastFM = () => {
     clear,
     ready,
     top20albums,
+    top20artists,
   };
 };
 
