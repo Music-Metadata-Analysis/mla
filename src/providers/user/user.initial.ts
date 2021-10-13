@@ -6,6 +6,7 @@ export const InitialState = <UserStateInterface>{
   data: {
     integration: null,
     report: {
+      artists: [],
       albums: [],
       image: [],
     },

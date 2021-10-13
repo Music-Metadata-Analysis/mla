@@ -16,6 +16,8 @@ export default abstract class UserState {
   }
   abstract getDataSource(): unknown[];
 
+  abstract getDefaultEntityName(): string;
+
   abstract getDrawerTitle(index: number): string;
 
   abstract getDrawerEvent(index: number): EventDefinition;
@@ -43,7 +45,7 @@ export default abstract class UserState {
     const apiObject = this.getDataSource()[index] as {
       name?: string;
     };
-    return this.withDefault(apiObject?.name, this.defaultAlbumName);
+    return this.withDefault(apiObject?.name, this.getDefaultEntityName());
   };
 
   getPlayCount = (index: number) => {

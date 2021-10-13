@@ -9,12 +9,21 @@ import type { UserContextInterface } from "../../types/user/context.types";
 jest.mock("../../clients/api/reports/lastfm/top20.albums.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
-      retrieveReport: mockRetrieve,
+      retrieveReport: mockRetrieveTopAlbums,
     };
   });
 });
 
-const mockRetrieve = jest.fn();
+jest.mock("../../clients/api/reports/lastfm/top20.artists.class", () => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      retrieveReport: mockRetrieveTopArtists,
+    };
+  });
+});
+
+const mockRetrieveTopAlbums = jest.fn();
+const mockRetrieveTopArtists = jest.fn();
 
 interface MockUserContextWithChildren {
   children?: React.ReactNode;
@@ -65,8 +74,10 @@ describe("useLastFM", () => {
     });
 
     it("should contain the correct functions", () => {
-      expect(received.result.current.top20albums).toBeInstanceOf(Function);
       expect(received.result.current.clear).toBeInstanceOf(Function);
+      expect(received.result.current.top20albums).toBeInstanceOf(Function);
+      expect(received.result.current.top20artists).toBeInstanceOf(Function);
+      expect(received.result.current.ready).toBeInstanceOf(Function);
     });
   });
 
@@ -86,12 +97,23 @@ describe("useLastFM", () => {
     });
 
     it("should retrieve the report from lastfm", async () => {
-      await waitFor(() => expect(mockRetrieve).toBeCalledTimes(1));
-      expect(mockRetrieve).toHaveBeenCalledWith(mockUserName);
+      await waitFor(() => expect(mockRetrieveTopAlbums).toBeCalledTimes(1));
+      expect(mockRetrieveTopAlbums).toHaveBeenCalledWith(mockUserName);
     });
   });
 
-  describe("clear", () => {
+  describe("top20artists", () => {
+    beforeEach(async () => {
+      act(() => received.result.current.top20artists(mockUserName));
+    });
+
+    it("should retrieve the report from lastfm", async () => {
+      await waitFor(() => expect(mockRetrieveTopArtists).toBeCalledTimes(1));
+      expect(mockRetrieveTopArtists).toHaveBeenCalledWith(mockUserName);
+    });
+  });
+
+  describe("ready", () => {
     it("should dispatch the reducer correctly", async () => {
       act(() => received.result.current.ready());
       await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));

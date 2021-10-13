@@ -29,5 +29,14 @@
     "drawer": {
       "artWorkAltText": "Cover Art"
     }
+  },
+  "top20Artists": {
+    "searchTitle": "Top20 Artists Report",
+    "title": "My Top 20 Artists",
+    "communication": "Retrieving Results...",
+    "noArtWork": "No Art Work",
+    "drawer": {
+      "artWorkAltText": "Promo Art Work"
+    }
   }
 }

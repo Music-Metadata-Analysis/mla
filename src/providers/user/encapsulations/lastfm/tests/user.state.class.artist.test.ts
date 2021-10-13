@@ -1,9 +1,6 @@
-import UserAlbumState from "../user.state.album.class";
-import type {
-  LastFMImageDataInterface,
-  LastFMArtistDataInterface,
-} from "../../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateAlbumReport } from "../../../../../types/user/state.types";
+import UserArtistState from "../user.state.artist.class";
+import type { LastFMImageDataInterface } from "../../../../../types/integrations/lastfm/api.types";
+import type { LastFMUserStateArtistReport } from "../../../../../types/user/state.types";
 import type { UserStateInterface } from "../../../../../types/user/state.types";
 
 const mockUrls = ["http://someurl1.com", "http://someurl2.com"];
@@ -12,7 +9,7 @@ const baseUserProperties: UserStateInterface = {
   data: {
     integration: null,
     report: {
-      albums: [
+      artists: [
         {
           mbid: "Mock mbid value.",
           artist: {
@@ -41,9 +38,9 @@ const baseUserProperties: UserStateInterface = {
   userName: null,
 };
 
-describe("UserAlbumState", () => {
-  let currentState: LastFMUserStateAlbumReport;
-  let instance: UserAlbumState;
+describe("UserArtistState", () => {
+  let currentState: LastFMUserStateArtistReport;
+  let instance: UserArtistState;
   const mockT = jest.fn((arg: string) => `t(${arg})`);
   let index: number;
   let size: LastFMImageDataInterface["size"];
@@ -53,7 +50,7 @@ describe("UserAlbumState", () => {
   };
 
   const arrange = () => {
-    instance = new UserAlbumState(currentState, mockT);
+    instance = new UserArtistState(currentState, mockT);
   };
 
   beforeEach(() => {
@@ -74,7 +71,7 @@ describe("UserAlbumState", () => {
     });
   });
 
-  describe("with a VALID album index value", () => {
+  describe("with a VALID artist index value", () => {
     beforeEach(() => (index = 0));
 
     describe("with a VALID size", () => {
@@ -102,70 +99,61 @@ describe("UserAlbumState", () => {
     });
 
     describe("getName", () => {
-      const mockAlbumName = "mockAlbumName";
+      const mockArtistName = "mockArtistName";
 
-      describe("when an album name is defined", () => {
+      describe("when an artist name is defined", () => {
         beforeEach(() => {
-          currentState.data.report.albums[0].name = mockAlbumName;
+          currentState.data.report.artists[0].name = mockArtistName;
           arrange();
         });
 
         it("should return the name", () => {
-          expect(instance.getName(index)).toBe(mockAlbumName);
+          expect(instance.getName(index)).toBe(mockArtistName);
         });
       });
 
-      describe("when an album name is NOT defined", () => {
+      describe("when an artist name is NOT defined", () => {
         beforeEach(() => {
-          currentState.data.report.albums[0].name = undefined;
+          currentState.data.report.artists[0].name = undefined;
           arrange();
         });
 
         it("should return the default name", () => {
-          expect(instance.getName(index)).toBe(instance.defaultAlbumName);
+          expect(instance.getName(index)).toBe(instance.defaultArtistName);
         });
       });
     });
 
     describe("getDrawerEvent", () => {
-      const mockAlbumName = "mockAlbumName";
       const mockArtistName = "mockArtistName";
 
-      describe("when an album name and artist name are defined", () => {
+      describe("when an artist name is defined", () => {
         beforeEach(() => {
-          currentState.data.report.albums[0].name = mockAlbumName;
-          (
-            currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
-          ).name = mockArtistName;
+          currentState.data.report.artists[0].name = mockArtistName;
           arrange();
         });
 
         it("should return the correct event", () => {
           expect(instance.getDrawerEvent(index)).toEqual({
             category: "LAST.FM",
-            label: "DATA: ALBUM",
-            action: `VIEWED ALBUM DETAILS: ${mockArtistName}:${mockAlbumName}.`,
+            label: "DATA: ARTIST",
+            action: `VIEWED ARTIST DETAILS: ${mockArtistName}.`,
             value: undefined,
           });
         });
       });
 
-      describe("when an album name and artist name are NOT defined", () => {
+      describe("when an artist name is NOT defined", () => {
         beforeEach(() => {
-          currentState.data.report.albums[0].name = undefined;
-          (
-            currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
-          ).name = undefined;
+          currentState.data.report.artists[0].name = undefined;
           arrange();
         });
 
         it("should return the correct event", () => {
           expect(instance.getDrawerEvent(index)).toEqual({
             category: "LAST.FM",
-            label: "DATA: ALBUM",
-            action: `VIEWED ALBUM DETAILS: ${instance.defaultArtistName}:${instance.defaultAlbumName}.`,
+            label: "DATA: ARTIST",
+            action: `VIEWED ARTIST DETAILS: ${instance.defaultArtistName}.`,
             value: undefined,
           });
         });
@@ -173,73 +161,28 @@ describe("UserAlbumState", () => {
     });
 
     describe("getDrawerTitle", () => {
-      const mockAlbumName = "mockAlbumName";
-      const mockArtistName = "mockArtistName";
-
-      describe("when an album name and artist name are defined", () => {
-        beforeEach(() => {
-          currentState.data.report.albums[0].name = mockAlbumName;
-          (
-            currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
-          ).name = mockArtistName;
-          arrange();
-        });
-
-        it("should return the correct title", () => {
-          expect(instance.getDrawerTitle(index)).toBe(
-            `${mockArtistName}: ${mockAlbumName}`
-          );
-        });
-      });
-
-      describe("when an album name and artist name are NOT defined", () => {
-        beforeEach(() => {
-          currentState.data.report.albums[0].name = undefined;
-          (
-            currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
-          ).name = undefined;
-          arrange();
-        });
-
-        it("should return the default title", () => {
-          expect(instance.getDrawerTitle(index)).toBe(
-            `${instance.defaultArtistName}: ${instance.defaultAlbumName}`
-          );
-        });
-      });
-    });
-
-    describe("getRelatedArtistName", () => {
       const mockArtistName = "mockArtistName";
 
       describe("when an artist name is defined", () => {
         beforeEach(() => {
-          (
-            currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
-          ).name = mockArtistName;
+          currentState.data.report.artists[0].name = mockArtistName;
           arrange();
         });
 
-        it("should return the name", () => {
-          expect(instance.getRelatedArtistName(index)).toBe(mockArtistName);
+        it("should return the correct title", () => {
+          expect(instance.getDrawerTitle(index)).toBe(`${mockArtistName}`);
         });
       });
 
       describe("when an artist name is NOT defined", () => {
         beforeEach(() => {
-          (
-            currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
-          ).name = undefined;
+          currentState.data.report.artists[0].name = undefined;
           arrange();
         });
 
-        it("should return the default name", () => {
-          expect(instance.getRelatedArtistName(index)).toBe(
-            instance.defaultArtistName
+        it("should return the default title", () => {
+          expect(instance.getDrawerTitle(index)).toBe(
+            `${instance.defaultArtistName}`
           );
         });
       });
@@ -248,29 +191,29 @@ describe("UserAlbumState", () => {
     describe("getExternalLink", () => {
       const mockUrl = "http://some.com/url";
 
-      describe("when the album link is defined", () => {
+      describe("when the artist link is defined", () => {
         beforeEach(() => {
-          currentState.data.report.albums[0].url = mockUrl;
+          currentState.data.report.artists[0].url = mockUrl;
           arrange();
         });
 
-        it("should return the name", () => {
+        it("should return the url", () => {
           expect(instance.getExternalLink(index)).toBe(mockUrl);
         });
       });
 
-      describe("when the album link is NOT defined", () => {
+      describe("when the artist link is NOT defined", () => {
         beforeEach(() => {
-          currentState.data.report.albums[0].url = undefined;
+          currentState.data.report.artists[0].url = undefined;
           arrange();
         });
 
         it("should return the default name (url encoded)", () => {
-          instance.defaultAlbumName = "has a space";
+          instance.defaultArtistName = "has a space";
           expect(instance.getExternalLink(index)).toBe(
-            `${instance.lastfmPrefix}/${
+            `${instance.lastfmPrefix}/${encodeURIComponent(
               instance.defaultArtistName
-            }/${encodeURIComponent(instance.defaultAlbumName)}`
+            )}`
           );
         });
       });
@@ -281,7 +224,7 @@ describe("UserAlbumState", () => {
 
       describe("when the playCount is defined", () => {
         beforeEach(() => {
-          currentState.data.report.albums[0].playcount = mockPlayCount;
+          currentState.data.report.artists[0].playcount = mockPlayCount;
           arrange();
         });
 
@@ -292,7 +235,7 @@ describe("UserAlbumState", () => {
 
       describe("when the playCount is NOT defined", () => {
         beforeEach(() => {
-          currentState.data.report.albums[0].playcount = undefined;
+          currentState.data.report.artists[0].playcount = undefined;
           arrange();
         });
 
@@ -303,7 +246,7 @@ describe("UserAlbumState", () => {
     });
   });
 
-  describe("with an INVALID album index value", () => {
+  describe("with an INVALID artist index value", () => {
     beforeEach(() => (index = 1));
 
     describe("with a VALID size", () => {
@@ -340,8 +283,8 @@ describe("UserAlbumState", () => {
       it("should return the correct event", () => {
         expect(instance.getDrawerEvent(index)).toEqual({
           category: "LAST.FM",
-          label: "DATA: ALBUM",
-          action: `VIEWED ALBUM DETAILS: ${instance.defaultArtistName}:${instance.defaultAlbumName}.`,
+          label: "DATA: ARTIST",
+          action: `VIEWED ARTIST DETAILS: ${instance.defaultArtistName}.`,
           value: undefined,
         });
       });
@@ -354,7 +297,7 @@ describe("UserAlbumState", () => {
 
       it("should return the default title", () => {
         expect(instance.getDrawerTitle(index)).toBe(
-          `${instance.defaultArtistName}: ${instance.defaultAlbumName}`
+          `${instance.defaultArtistName}`
         );
       });
     });
@@ -365,19 +308,7 @@ describe("UserAlbumState", () => {
       });
 
       it("should return the default name", () => {
-        expect(instance.getName(index)).toBe(instance.defaultAlbumName);
-      });
-    });
-
-    describe("getRelatedArtistName", () => {
-      beforeEach(() => {
-        arrange();
-      });
-
-      it("should return the default name", () => {
-        expect(instance.getRelatedArtistName(index)).toBe(
-          instance.defaultArtistName
-        );
+        expect(instance.getName(index)).toBe(instance.defaultArtistName);
       });
     });
 
@@ -387,11 +318,11 @@ describe("UserAlbumState", () => {
       });
 
       it("should return the default name (url encoded)", () => {
-        instance.defaultAlbumName = "has a space";
+        instance.defaultArtistName = "has a space";
         expect(instance.getExternalLink(index)).toBe(
-          `${instance.lastfmPrefix}/${
+          `${instance.lastfmPrefix}/${encodeURIComponent(
             instance.defaultArtistName
-          }/${encodeURIComponent(instance.defaultAlbumName)}`
+          )}`
         );
       });
     });

@@ -49,6 +49,13 @@ class LastFmClientAdapter implements LastFMClientInterface {
         limit: this.reportCount,
         page: 1,
       });
+      // TODO: solution for artist artwork
+      // user music brainz to get the artist image
+      // http://musicbrainz.org/ws/2/artist/f27ec8db-af05-4f36-916e-3d57f91ecf5e?inc=url-rels
+
+      // for each artist, query music brainz, get the spotify id
+      // query spotify, get the image...
+
       return response.topartists.artist as LastFMArtistDataInterface[];
     } catch (err) {
       throw this.createProxyCompatibleError(err as LastFMExternalClientError);

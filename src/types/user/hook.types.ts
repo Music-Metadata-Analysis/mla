@@ -1,7 +1,8 @@
 import type useLastFM from "../../hooks/lastfm";
 import type {
   LastFMUserStateBase,
-  LastFMUserStateTop20AlbumReport,
+  LastFMUserStateAlbumReport,
+  LastFMUserStateArtistReport,
 } from "./state.types";
 
 export interface userHookAsLastFM extends ReturnType<typeof useLastFM> {
@@ -10,5 +11,10 @@ export interface userHookAsLastFM extends ReturnType<typeof useLastFM> {
 
 export interface userHookAsLastFMTop20AlbumReport
   extends ReturnType<typeof useLastFM> {
-  userProperties: LastFMUserStateTop20AlbumReport;
+  userProperties: LastFMUserStateAlbumReport;
+}
+
+export interface userHookAsLastFMTop20ArtistReport
+  extends ReturnType<typeof useLastFM> {
+  userProperties: LastFMUserStateArtistReport;
 }
