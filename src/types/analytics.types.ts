@@ -6,6 +6,7 @@ export type EventDefinitionType = {
     | "BUTTON"
     | "CONTACT"
     | "DATA: ALBUM"
+    | "DATA: ARTIST"
     | "ERROR"
     | "EXTERNAL_LINK"
     | "REPORT"
@@ -36,4 +37,4 @@ export interface AnalyticsProviderInterface {
   children: React.ReactNode;
 }
 
-export type ReportType = "BASE REPORT" | "TOP20 ALBUMS";
+export type ReportType = "BASE REPORT" | "TOP20 ALBUMS" | "TOP20 ARTISTS";

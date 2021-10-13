@@ -1,18 +1,22 @@
 import UserState from "./user.state.base.class";
 import Events from "../../../../events/events";
 import type { LastFMArtistDataInterface } from "../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateTop20AlbumReport } from "../../../../types/user/state.types";
+import type { LastFMUserStateAlbumReport } from "../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
 
 export default class UserAlbumState extends UserState {
-  userProperties: LastFMUserStateTop20AlbumReport;
+  userProperties: LastFMUserStateAlbumReport;
 
-  constructor(userProperties: LastFMUserStateTop20AlbumReport, t: TFunction) {
+  constructor(userProperties: LastFMUserStateAlbumReport, t: TFunction) {
     super(userProperties, t);
     this.userProperties = userProperties;
   }
 
   getDataSource = () => this.userProperties.data.report.albums;
+
+  getDefaultEntityName = () => {
+    return this.defaultAlbumName;
+  };
 
   getDrawerTitle = (index: number) => {
     return `${this.getRelatedArtistName(index)}: ${this.getName(index)}`;

@@ -6,7 +6,7 @@ describe("UserReducerStates", () => {
   let reducerStates: UserReducerStates;
   const testIntegrationType = "TEST";
   const testUserName = "somebody";
-  const emptyReport = { albums: [], image: [] };
+  const emptyReport = { albums: [], artists: [], image: [] };
   const mock_lastfm_data = {
     albums: [],
     image: [
