@@ -3,7 +3,7 @@ const routes = {
   home: "/",
   reports: {
     lastfm: {
-      top20albums: "/lastfm/top20albums",
+      top20albums: "/reports/lastfm/top20albums",
     },
   },
   search: {
