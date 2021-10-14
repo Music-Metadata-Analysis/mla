@@ -4,7 +4,7 @@ import ErrorBoundary from "../../../components/errors/boundary/error.boundary.co
 import SearchUI from "../../../components/search/lastfm/search.ui.component";
 import routes from "../../../config/routes";
 import Events from "../../../events/events";
-import Page from "../../../pages/search/lastfm/top20albums";
+import Page from "../../../pages/search/lastfm/top20artists";
 import mockCheckCall from "../../../tests/fixtures/mock.component.call";
 import getPageProps from "../../../utils/page.props.static";
 
@@ -35,7 +35,7 @@ describe("getStaticProps", () => {
   });
 });
 
-describe("SearchTopAlbums", () => {
+describe("SearchTopArtists", () => {
   const arrange = () => {
     render(<Page />);
   };
@@ -63,8 +63,8 @@ describe("SearchTopAlbums", () => {
       mockCheckCall(
         SearchUI,
         {
-          route: routes.reports.lastfm.top20albums,
-          title: lastfmTranslations.top20Albums.searchTitle,
+          route: routes.reports.lastfm.top20artists,
+          title: lastfmTranslations.top20Artists.searchTitle,
         },
         0,
         ["t"]

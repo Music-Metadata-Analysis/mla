@@ -21,6 +21,17 @@
       }
     }
   },
+  "select": {
+    "title": "Which analysis are you interested in?",
+    "reports": {
+      "topAlbums": "Top Albums",
+      "topArtists": "Top Artists"
+    },
+    "indicators": {
+      "topAlbums": "Report 1",
+      "topArtists": "Report 2"
+    }
+  },
   "top20Albums": {
     "searchTitle": "Top20 Albums Report",
     "title": "My Top 20 Albums",
