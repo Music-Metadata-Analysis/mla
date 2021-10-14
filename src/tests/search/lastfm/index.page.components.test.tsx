@@ -1,21 +1,25 @@
 import { render } from "@testing-library/react";
-import lastfmTranslations from "../../../../public/locales/en/lastfm.json";
 import ErrorBoundary from "../../../components/errors/boundary/error.boundary.component";
-import SearchUI from "../../../components/search/lastfm/search.ui.component";
+import Select from "../../../components/search/lastfm/select/select.report.component";
 import routes from "../../../config/routes";
 import Events from "../../../events/events";
-import Page from "../../../pages/search/lastfm/top20albums";
+import Page from "../../../pages/search/lastfm/index";
 import mockCheckCall from "../../../tests/fixtures/mock.component.call";
 import getPageProps from "../../../utils/page.props.static";
 
 jest.mock("../../../utils/page.props.static", () => jest.fn());
 
+jest.mock(
+  "../../../components/search/lastfm/select/select.report.component",
+  () => jest.fn(() => <div>SelectComponent</div>)
+);
+
 jest.mock("../../../components/errors/boundary/error.boundary.component", () =>
   createMockedComponent("ErrorBoundary")
 );
 
-jest.mock("../../../components/search/lastfm/search.ui.component", () =>
-  createMockedComponent("SearchUI")
+jest.mock("../../../components/errors/display/error.display.component", () =>
+  createMockedComponent("ErrorDisplay")
 );
 
 const createMockedComponent = (name: string) => {
@@ -35,7 +39,7 @@ describe("getStaticProps", () => {
   });
 });
 
-describe("SearchTopAlbums", () => {
+describe("SearchSelectionPage", () => {
   const arrange = () => {
     render(<Page />);
   };
@@ -58,17 +62,9 @@ describe("SearchTopAlbums", () => {
       );
     });
 
-    it("should call the ErrorDisplay correctly", () => {
-      expect(SearchUI).toBeCalledTimes(1);
-      mockCheckCall(
-        SearchUI,
-        {
-          route: routes.reports.lastfm.top20albums,
-          title: lastfmTranslations.top20Albums.searchTitle,
-        },
-        0,
-        ["t"]
-      );
+    it("should call the Select correctly", () => {
+      expect(Select).toBeCalledTimes(1);
+      mockCheckCall(Select, {}, 0);
     });
   });
 });

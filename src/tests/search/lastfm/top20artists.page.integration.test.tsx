@@ -3,7 +3,7 @@ import lastfmTranslations from "../../../../public/locales/en/lastfm.json";
 import mainTranslations from "../../../../public/locales/en/main.json";
 import settings from "../../../config/lastfm";
 import routes from "../../../config/routes";
-import Page from "../../../pages/search/lastfm/top20albums";
+import Page from "../../../pages/search/lastfm/top20artists";
 import mockRouter from "../../../tests/fixtures/mock.router";
 
 jest.mock("next/router", () => ({
@@ -11,7 +11,7 @@ jest.mock("next/router", () => ({
   useRouter: () => mockRouter,
 }));
 
-describe("SearchTopAlbums", () => {
+describe("SearchTopArtists", () => {
   let enteredUsername: string;
 
   beforeEach(() => {
@@ -25,7 +25,7 @@ describe("SearchTopAlbums", () => {
 
   it("should display the correct title", async () => {
     expect(
-      await screen.findByText(lastfmTranslations.top20Albums.searchTitle)
+      await screen.findByText(lastfmTranslations.top20Artists.searchTitle)
     ).toBeTruthy();
   });
 
@@ -131,7 +131,7 @@ describe("SearchTopAlbums", () => {
         const query = new URLSearchParams(params);
         expect(mockRouter.push).toBeCalledTimes(1);
         expect(mockRouter.push).toBeCalledWith(
-          `${routes.reports.lastfm.top20albums}?${query.toString()}`
+          `${routes.reports.lastfm.top20artists}?${query.toString()}`
         );
       });
     });
