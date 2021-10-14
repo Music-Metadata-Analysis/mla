@@ -9,6 +9,7 @@ const routes = {
   },
   search: {
     lastfm: {
+      selection: "/search/lastfm",
       top20albums: "/search/lastfm/top20albums",
       top20artists: "/search/lastfm/top20artists",
     },

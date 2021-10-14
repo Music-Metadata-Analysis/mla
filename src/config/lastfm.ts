@@ -10,6 +10,9 @@ const settings = {
     maxUserLength: 60,
     minUserLength: 1,
   },
+  select: {
+    indicatorWidth: 625,
+  },
 };
 
 export default settings;

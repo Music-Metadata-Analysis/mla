@@ -4,7 +4,7 @@ const settings = {
   heightDuringInput: 350,
   menuConfig: {
     about: routes.about,
-    search: routes.search.lastfm.top20albums,
+    search: routes.search.lastfm.selection,
   },
 };
 
