@@ -64,9 +64,7 @@ describe("Splash", () => {
 
       it("should redirect to the search page", async () => {
         await waitFor(() => expect(mockRouter.push).toBeCalledTimes(1));
-        expect(mockRouter.push).toBeCalledWith(
-          routes.search.lastfm.top20albums
-        );
+        expect(mockRouter.push).toBeCalledWith(routes.search.lastfm.selection);
       });
     });
 
