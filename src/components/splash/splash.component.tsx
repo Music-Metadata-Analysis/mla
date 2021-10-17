@@ -31,7 +31,7 @@ export default function Splash() {
   const [listVisible, setListVisible] = useState(true);
 
   const handleClick = () => {
-    router.push(routes.search.lastfm.top20albums);
+    router.push(routes.search.lastfm.selection);
   };
 
   const recalculateHeight = () => {
