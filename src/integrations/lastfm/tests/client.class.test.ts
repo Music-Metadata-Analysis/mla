@@ -15,6 +15,12 @@ jest.mock("@toplast/lastfm", () => {
   });
 });
 
+jest.mock("../s3cache.class", () => jest.fn(() => MockCache));
+
+const MockCache = {
+  lookup: jest.fn(),
+};
+
 const mockApiCalls = {
   getTopAlbums: jest.fn(),
   getTopArtists: jest.fn(),
@@ -25,7 +31,16 @@ describe("LastFMClient", () => {
   let secretKey: "123VerySecret";
   let username: "testuser";
   const mockTopAlbumsResponse = { topalbums: { album: "response" } };
-  const mockTopArtistsResponse = { topartists: { artist: "response" } };
+  const mockTopArtistsResponseComplete = {
+    topartists: {
+      artist: [{ name: "mockArtist", image: [{ "#text": "none" }] }],
+    },
+  };
+  const mockTopArtistsResponseIncomplete = {
+    topartists: {
+      artist: [{ name: "mockArtist" }],
+    },
+  };
   const mockProfileResponse = { user: { image: "response" } };
   let instance: LastFMClientAdapter;
 
@@ -43,7 +58,7 @@ describe("LastFMClient", () => {
     describe("when the request is successful", () => {
       beforeEach(async () => {
         mockApiCalls["getTopAlbums"].mockReturnValueOnce(
-          Promise.resolve(mockTopAlbumsResponse)
+          Promise.resolve(JSON.parse(JSON.stringify(mockTopAlbumsResponse)))
         );
         instance = arrange(secretKey);
       });
@@ -117,25 +132,64 @@ describe("LastFMClient", () => {
 
   describe("getTopArtists", () => {
     let res: LastFMArtistDataInterface[];
+    let mockImageUrl: string;
 
     describe("when the request is successful", () => {
-      beforeEach(async () => {
-        mockApiCalls["getTopArtists"].mockReturnValueOnce(
-          Promise.resolve(mockTopArtistsResponse)
-        );
-        instance = arrange(secretKey);
+      describe("with complete artist information", () => {
+        beforeEach(async () => {
+          mockImageUrl = "http://not/a/real/image";
+          mockApiCalls["getTopArtists"].mockReturnValueOnce(
+            Promise.resolve(
+              JSON.parse(JSON.stringify(mockTopArtistsResponseComplete))
+            )
+          );
+          MockCache.lookup.mockReturnValueOnce(mockImageUrl);
+          instance = arrange(secretKey);
+        });
+
+        it("should call the external library correctly", async () => {
+          res = await instance.getTopArtists(username);
+          expect(mockApiCalls["getTopArtists"]).toBeCalledTimes(1);
+          expect(mockApiCalls["getTopArtists"]).toBeCalledWith({
+            user: username,
+            period: instance.reportPeriod,
+            limit: instance.reportCount,
+            page: 1,
+          });
+          const expected_response = JSON.parse(
+            JSON.stringify(mockTopArtistsResponseComplete)
+          ).topartists.artist;
+          expected_response[0].image[0]["#text"] = mockImageUrl;
+          expect(res).toStrictEqual(expected_response);
+        });
       });
 
-      it("should call the external library correctly", async () => {
-        res = await instance.getTopArtists(username);
-        expect(mockApiCalls["getTopArtists"]).toBeCalledTimes(1);
-        expect(mockApiCalls["getTopArtists"]).toBeCalledWith({
-          user: username,
-          period: instance.reportPeriod,
-          limit: instance.reportCount,
-          page: 1,
+      describe("with incomplete artist information", () => {
+        beforeEach(async () => {
+          mockImageUrl = "http://not/a/real/image";
+          mockApiCalls["getTopArtists"].mockReturnValueOnce(
+            Promise.resolve(
+              JSON.parse(JSON.stringify(mockTopArtistsResponseIncomplete))
+            )
+          );
+          MockCache.lookup.mockReturnValueOnce(mockImageUrl);
+          instance = arrange(secretKey);
         });
-        expect(res).toBe(mockTopArtistsResponse.topartists.artist);
+
+        it("should call the external library correctly", async () => {
+          res = await instance.getTopArtists(username);
+          expect(mockApiCalls["getTopArtists"]).toBeCalledTimes(1);
+          expect(mockApiCalls["getTopArtists"]).toBeCalledWith({
+            user: username,
+            period: instance.reportPeriod,
+            limit: instance.reportCount,
+            page: 1,
+          });
+          const expected_response = JSON.parse(
+            JSON.stringify(mockTopArtistsResponseIncomplete)
+          ).topartists.artist;
+          expect(res).toStrictEqual(expected_response);
+        });
       });
     });
 
@@ -199,7 +253,7 @@ describe("LastFMClient", () => {
     describe("when the request is successful", () => {
       beforeEach(async () => {
         mockApiCalls["getInfo"].mockReturnValueOnce(
-          Promise.resolve(mockProfileResponse)
+          Promise.resolve(JSON.parse(JSON.stringify(mockProfileResponse)))
         );
         instance = arrange(secretKey);
       });

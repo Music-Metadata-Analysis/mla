@@ -18,12 +18,15 @@
     "axios": ">=0.21.2"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.37.0",
+    "@aws-sdk/signature-v4-crt": "^3.37.0",
     "@chakra-ui/clickable": "^1.1.7",
     "@chakra-ui/icons": "^1.0.15",
     "@chakra-ui/react": "^1.6.8",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@toplast/lastfm": "^0.1.5",
+    "cheerio": "^1.0.0-rc.10",
     "eslint-plugin-jest-formatting": "^3.0.0",
     "express-validator": "^6.12.1",
     "formik": "^2.2.9",

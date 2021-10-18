@@ -1,4 +1,5 @@
 import LastFm from "@toplast/lastfm";
+import S3Cache from "./s3cache.class";
 import { ProxyError } from "../../errors/proxy.error.class";
 import type {
   LastFMAlbumDataInterface,
@@ -9,9 +10,11 @@ import type {
   LastFMClientInterface,
   LastFMExternalClientError,
 } from "../../types/integrations/lastfm/client.types";
+import type { Await } from "../../types/promise.types";
 
 class LastFmClientAdapter implements LastFMClientInterface {
   externalClient: LastFm;
+  cache: S3Cache;
   secret_key: string;
   reportCount = 20;
   reportPeriod = "overall" as const;
@@ -19,6 +22,7 @@ class LastFmClientAdapter implements LastFMClientInterface {
   constructor(secret_key: string) {
     this.secret_key = secret_key;
     this.externalClient = new LastFm(this.secret_key);
+    this.cache = new S3Cache();
   }
 
   private createProxyCompatibleError(
@@ -49,17 +53,31 @@ class LastFmClientAdapter implements LastFMClientInterface {
         limit: this.reportCount,
         page: 1,
       });
-      // TODO: solution for artist artwork
-      // user music brainz to get the artist image
-      // http://musicbrainz.org/ws/2/artist/f27ec8db-af05-4f36-916e-3d57f91ecf5e?inc=url-rels
-
-      // for each artist, query music brainz, get the spotify id
-      // query spotify, get the image...
-
+      await this.attachArtistArtwork(
+        response.topartists.artist as LastFMArtistDataInterface[]
+      );
       return response.topartists.artist as LastFMArtistDataInterface[];
     } catch (err) {
       throw this.createProxyCompatibleError(err as LastFMExternalClientError);
     }
+  }
+
+  private async attachArtistArtwork(artists: LastFMAlbumDataInterface[]) {
+    const cacheLookups: Promise<string>[] = [];
+    artists.map((artist) => {
+      cacheLookups.push(this.cache.lookup(artist.name));
+    });
+
+    await Promise.all(cacheLookups).then((urls) => {
+      artists.map((artist) => {
+        const artistImage = urls.shift() as Await<string>;
+        if (artist.name && artist.image) {
+          artist.image.map((image) => {
+            image["#text"] = artistImage;
+          });
+        }
+      });
+    });
   }
 
   async getUserImage(username: string): Promise<LastFMImageDataInterface[]> {
