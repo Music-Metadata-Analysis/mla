@@ -5,6 +5,7 @@ export const GenerateUserLink = (username: string) => {
 const settings = {
   apiRoot: "https://ws.audioscrobbler.com/2.0/",
   homePage: "https://www.last.fm",
+  prefixPath: "https://www.last.fm/music",
   search: {
     fieldName: "username",
     maxUserLength: 60,
