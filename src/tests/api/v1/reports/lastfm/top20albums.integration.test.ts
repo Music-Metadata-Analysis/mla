@@ -7,6 +7,10 @@ import testAccounts from "../../../../fixtures/lastfm.users";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+jest.mock("../../../../../api/lastfm/endpoint.logger", () => {
+  return jest.fn((req, res, next) => next());
+});
+
 type ArrangeArgs = {
   body: Record<string, unknown>;
   method: HttpMethodType;
