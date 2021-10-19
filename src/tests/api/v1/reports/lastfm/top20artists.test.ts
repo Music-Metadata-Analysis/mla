@@ -14,6 +14,10 @@ jest.mock("../../../../../integrations/lastfm/proxy.class", () => {
   });
 });
 
+jest.mock("../../../../../api/lastfm/endpoint.logger", () => {
+  return jest.fn((req, res, next) => next());
+});
+
 const mockBackendResponse = jest.fn();
 
 type ArrangeArgs = {
