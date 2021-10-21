@@ -28,7 +28,7 @@ describe("useColour", () => {
     };
 
     it("should contain the correct number of top level properties", () => {
-      assertLenIs(received.result.current, 9);
+      assertLenIs(received.result.current, 10);
     });
 
     it("should contain the bodyColour background color", () => {
@@ -78,6 +78,13 @@ describe("useColour", () => {
     });
 
     it("should contain the inputColour properties", () => {
+      assertIsString(received.result.current.inputColour.background);
+      assertIsString(received.result.current.inputColour.border);
+      assertIsString(received.result.current.inputColour.foreground);
+      assertLenIs(received.result.current.inputColour, 3);
+    });
+
+    it("should contain the modalColour properties", () => {
       assertIsString(received.result.current.inputColour.background);
       assertIsString(received.result.current.inputColour.border);
       assertIsString(received.result.current.inputColour.foreground);

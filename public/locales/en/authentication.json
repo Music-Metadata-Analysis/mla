@@ -1,0 +1,8 @@
+{
+  "title": "Please Sign-In to Continue.",
+  "buttons": {
+    "facebook": "Sign-In with Facebook",
+    "github": "Sign-In with Github",
+    "google": "Sign-In with Google"
+  }
+}
