@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import translation from "../../../../../public/locales/en/navbar.json";
 import routes from "../../../../config/routes";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
+import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
 import mockRouter from "../../../../tests/fixtures/mock.router";
 import NavBarAvatar from "../../navbar.avatar/navbar.avatar.component";
 import NavBarLink from "../../navbar.link/navbar.link.component";

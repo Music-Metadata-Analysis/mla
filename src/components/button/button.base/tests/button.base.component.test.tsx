@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
+import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
 import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import BaseButton from "../button.base.component";
