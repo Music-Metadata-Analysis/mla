@@ -1,10 +1,16 @@
 import { waitFor, screen, render } from "@testing-library/react";
+import { Provider as SessionProvider } from "next-auth/client";
 import Header from "../../components/header/header.component";
+import checkMockCall from "../../tests/fixtures/mock.component.call";
 import AnalyticsProvider from "../analytics/analytics.provider";
 import NavBarProvider from "../navbar/navbar.provider";
 import RootProvider from "../root.provider";
 import UserInterfaceRootProvider from "../ui/ui.root.provider";
 import UserProvider from "../user/user.provider";
+
+jest.mock("next-auth/client", () =>
+  createProviderMock(providers.SessionProvider, "Provider")
+);
 
 jest.mock("../../components/header/header.component", () =>
   createProviderMock(providers.Header)
@@ -26,11 +32,11 @@ jest.mock("../ui/ui.root.provider", () =>
   createProviderMock(providers.UserInterfaceRootProvider)
 );
 
-const createProviderMock = (name: string) => {
+const createProviderMock = (name: string, exportName = "default") => {
   const {
     factoryInstance,
   } = require("../../tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
+  return factoryInstance.create(name, exportName);
 };
 
 const providers = {
@@ -38,12 +44,14 @@ const providers = {
   Header: "Header",
   NavBarProvider: "NavBarProvider",
   RootProvider: "RootProvider",
+  SessionProvider: "SessionProvider",
   UserProvider: "UserProvider",
   UserInterfaceRootProvider: "UserInterfaceRootProvider",
 };
 
 describe("RootProvider", () => {
   const testPageKey = "test";
+  const mockSession = { testSession: true };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -52,7 +60,7 @@ describe("RootProvider", () => {
   const arrange = async (pageKey?: string) => {
     const headerProps = pageKey ? { pageKey } : undefined;
     render(
-      <RootProvider headerProps={headerProps}>
+      <RootProvider session={mockSession} headerProps={headerProps}>
         <div data-testid={providers.RootProvider}>Test</div>
       </RootProvider>
     );
@@ -89,6 +97,12 @@ describe("RootProvider", () => {
     it("should initialize the NavBar Provider", async () => {
       await waitFor(() => expect(NavBarProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.NavBarProvider)).toBeTruthy;
+    });
+
+    it("should initialize the SessionProvider", async () => {
+      await waitFor(() => expect(SessionProvider).toBeCalledTimes(1));
+      checkMockCall(SessionProvider, { session: mockSession });
+      expect(await screen.findByTestId(providers.SessionProvider)).toBeTruthy;
     });
 
     it("should initialize the UserProvider", async () => {
