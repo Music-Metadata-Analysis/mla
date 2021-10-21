@@ -1,4 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
+import dk from "deep-keys";
+import mockUseNavBar from "./navbar.mock.hook";
 import NavConfig from "../../config/navbar";
 import { NavBarContext } from "../../providers/navbar/navbar.provider";
 import useNavBar from "../navbar";
@@ -58,6 +60,12 @@ describe("useNavBar", () => {
     it("should contain the correct functions", () => {
       expect(received.result.current.hideNavBar).toBeInstanceOf(Function);
       expect(received.result.current.showNavBar).toBeInstanceOf(Function);
+    });
+
+    it("should contain all the same properties as the mock hook", () => {
+      const mockObjectKeys = dk(mockUseNavBar).sort();
+      const hookKeys = dk(received.result.current).sort();
+      expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
   });
 

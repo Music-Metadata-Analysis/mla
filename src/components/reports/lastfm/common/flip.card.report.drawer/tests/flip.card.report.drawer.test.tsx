@@ -1,7 +1,7 @@
 import { Box, Divider, Img } from "@chakra-ui/react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import Events from "../../../../../../events/events";
-import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock";
+import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock.hook";
 import mockColourHook from "../../../../../../hooks/tests/colour.hook.mock";
 import UserAlbumState from "../../../../../../providers/user/encapsulations/lastfm/user.state.album.class";
 import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";

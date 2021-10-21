@@ -4,7 +4,7 @@ import mainTranslations from "../../../../public/locales/en/main.json";
 import navbarTranslations from "../../../../public/locales/en/navbar.json";
 import lastFMsettings from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
-import mockAnalyticsHook from "../../../hooks/tests/analytics.mock";
+import mockAnalyticsHook from "../../../hooks/tests/analytics.mock.hook";
 import NavBarProvider from "../../../providers/navbar/navbar.provider";
 import mockRouter from "../../../tests/fixtures/mock.router";
 import { testIDs as NavBarAnalyticsTestIDs } from "../navbar.avatar/navbar.avatar.component";

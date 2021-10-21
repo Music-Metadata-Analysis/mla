@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
+import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import BaseButton from "../../button.base/button.base.component";
 import StyledButton from "../button.standard.component";

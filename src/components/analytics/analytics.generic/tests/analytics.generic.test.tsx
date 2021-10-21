@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import Event from "../../../../events/event.class";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
+import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
 import AnalyticsGenericWrapper from "../analytics.generic.component";
 
 jest.mock("../../../../hooks/analytics", () => ({

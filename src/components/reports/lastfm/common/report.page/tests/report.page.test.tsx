@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import routes from "../../../../../../config/routes";
 import Events from "../../../../../../events/events";
-import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock";
+import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
 import mockCheckCall from "../../../../../../tests/fixtures/mock.component.call";
 import ErrorBoundary from "../../../../../errors/boundary/error.boundary.component";
 import Page from "../report.page";

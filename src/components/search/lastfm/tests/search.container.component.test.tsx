@@ -1,7 +1,7 @@
 import { render, waitFor, cleanup } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import settings from "../../../../config/lastfm";
-import mockNavBarHook from "../../../../hooks/tests/navbar.mock";
+import mockNavBarHook from "../../../../hooks/tests/navbar.mock.hook";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../tests/fixtures/mock.router";
 import SearchContainer from "../search.container.component";

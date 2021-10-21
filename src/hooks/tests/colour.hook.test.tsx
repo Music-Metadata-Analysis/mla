@@ -1,4 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
+import dk from "deep-keys";
+import mockUseColour from "./colour.hook.mock";
 import useColour from "../colour";
 
 describe("useColour", () => {
@@ -102,6 +104,12 @@ describe("useColour", () => {
 
     it("should contain an entry for transparent", () => {
       assertIsString(received.result.current.transparent);
+    });
+
+    it("should contain all the same properties as the mock colour hook", () => {
+      const mockObjectKeys = dk(mockUseColour).sort();
+      const hookKeys = dk(received.result.current).sort();
+      expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
   });
 });
