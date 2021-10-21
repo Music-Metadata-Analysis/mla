@@ -1,11 +1,14 @@
 class MockComponentWithChildrenFactory {
-  create = (name: string) => {
-    return {
+  create = (name: string, exportName = "default") => {
+    const mockModule: { [index: string]: jest.Mock | string | boolean } = {
       __esModule: true,
-      default: jest.fn(({ children }: { children: React.ReactChildren }) => {
-        return <div data-testid={name}>{children}</div>;
-      }),
     };
+    mockModule[exportName] = jest.fn(
+      ({ children }: { children: React.ReactChildren }) => {
+        return <div data-testid={name}>{children}</div>;
+      }
+    );
+    return mockModule;
   };
 }
 
