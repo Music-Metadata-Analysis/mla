@@ -1,7 +1,7 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Switch, useColorMode } from "@chakra-ui/react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
+import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import NavBarColorModeToggle, { TestIDs } from "../navbar.color.mode.component";
 

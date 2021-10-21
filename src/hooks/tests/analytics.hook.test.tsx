@@ -1,7 +1,9 @@
 import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
+import dk from "deep-keys";
 import React from "react";
 import ReactGA from "react-ga";
+import mockUseAnalytics from "./analytics.mock.hook";
 import EventDefinition from "../../events/event.class";
 import Events from "../../events/events";
 import { AnalyticsContext } from "../../providers/analytics/analytics.provider";
@@ -95,6 +97,12 @@ describe("useAnalytics", () => {
         Function
       );
       expect(Object.keys(received.result.current).length).toBe(4);
+    });
+
+    it("should contain all the same properties as the mock hook", () => {
+      const mockObjectKeys = dk(mockUseAnalytics).sort();
+      const hookKeys = dk(received.result.current).sort();
+      expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
   });
 

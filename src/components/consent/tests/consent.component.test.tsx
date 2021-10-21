@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import CookieConsent from "react-cookie-consent";
 import translations from "../../../../public/locales/en/main.json";
 import { settings } from "../../../config/cookies";
-import mockAnalyticsHook from "../../../hooks/tests/analytics.mock";
+import mockAnalyticsHook from "../../../hooks/tests/analytics.mock.hook";
 import mockColourHook from "../../../hooks/tests/colour.hook.mock";
 import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import Consent, { testIDs } from "../consent.component";

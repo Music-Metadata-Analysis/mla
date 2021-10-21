@@ -1,6 +1,8 @@
 import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
+import dk from "deep-keys";
 import React from "react";
+import mockUseLastFMHook from "./lastfm.mock.hook";
 import { InitialState } from "../../providers/user/user.initial";
 import { UserContext } from "../../providers/user/user.provider";
 import useLastFM from "../lastfm";
@@ -78,6 +80,12 @@ describe("useLastFM", () => {
       expect(received.result.current.top20albums).toBeInstanceOf(Function);
       expect(received.result.current.top20artists).toBeInstanceOf(Function);
       expect(received.result.current.ready).toBeInstanceOf(Function);
+    });
+
+    it("should contain all the same properties as the mock hook", () => {
+      const mockObjectKeys = dk(mockUseLastFMHook).sort();
+      const hookKeys = dk(received.result.current).sort();
+      expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
   });
 

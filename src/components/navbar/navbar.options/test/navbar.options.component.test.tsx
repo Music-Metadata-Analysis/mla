@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import * as router from "next/router";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
+import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
 import NavLink from "../../navbar.link/navbar.link.component";
 import NavLinkOptions from "../navbar.options.component";
 

@@ -6,8 +6,8 @@ import {
 import lastfm from "../../../../../../../public/locales/en/lastfm.json";
 import routes from "../../../../../../config/routes";
 import Events from "../../../../../../events/events";
-import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock";
-import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock";
+import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock.hook";
+import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
 import UserInterfaceImageProvider from "../../../../../../providers/ui/ui.images/ui.images.provider";
 import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../../../tests/fixtures/mock.router";

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock";
+import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
 import AnalyticsButtonWrapper from "../analytics.button.component";
 
 jest.mock("../../../../hooks/analytics", () => ({
