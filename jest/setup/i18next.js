@@ -2,6 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { i18n as i18nConfig } from "../../next-i18next.config";
 import about from "../../public/locales/en/about.json";
+import authentication from "../../public/locales/en/authentication.json";
 import cards from "../../public/locales/en/cards.json";
 import lastfm from "../../public/locales/en/lastfm.json";
 import main from "../../public/locales/en/main.json";
@@ -14,6 +15,7 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       about,
+      authentication,
       cards,
       lastfm,
       main,

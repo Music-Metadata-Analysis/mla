@@ -48,6 +48,11 @@ const mockColourHook = {
     border: mockColour(),
     foreground: mockColour(),
   },
+  modalColour: {
+    background: mockColour(),
+    border: mockColour(),
+    foreground: mockColour(),
+  },
   navButtonColour: {
     background: mockColour(),
     hoverBackground: mockColour(),
