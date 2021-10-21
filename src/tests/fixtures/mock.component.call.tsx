@@ -10,7 +10,7 @@ const isFunction = (call: { [index: string]: () => void }, name: string) => {
 };
 
 const checkMockCall = (
-  component: React.FC<AnyProps>,
+  component: React.FC<AnyProps> | React.ComponentClass<AnyProps, AnyProps>,
   props: Record<string, unknown>,
   index = 0,
   functions: string[] = ["onClick"],
