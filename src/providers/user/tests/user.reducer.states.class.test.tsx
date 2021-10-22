@@ -220,4 +220,31 @@ describe("UserReducerStates", () => {
       expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
     });
   });
+
+  describe("UnauthorizedFetchUser", () => {
+    let received: UserStateInterface;
+    const testType = "UnauthorizedFetchUser" as const;
+
+    it("should return the the expected state", () => {
+      received = arrange({
+        type: testType,
+        userName: testUserName,
+        integration: testIntegrationType,
+      });
+
+      expect(received.inProgress).toBe(false);
+      expect(received.profileUrl).toBe(null);
+      expect(received.userName).toBe(testUserName);
+      expect(received.data).toStrictEqual({
+        integration: testIntegrationType,
+        report: emptyReport,
+      });
+      expect(received.error).toBe(testType);
+      expect(received.ready).toBe(true);
+    });
+
+    it("should not accept incompatible types", () => {
+      expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
+    });
+  });
 });
