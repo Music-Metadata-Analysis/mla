@@ -17,6 +17,14 @@ jest.mock("../../../../hooks/navbar", () => {
   return jest.fn().mockImplementation(() => mockNavBarHook);
 });
 
+jest.mock("next-auth/client", () => ({
+  useSession: () => mockUseSession(),
+  signIn: jest.fn(),
+  signOut: jest.fn(),
+}));
+
+const mockUseSession = jest.fn().mockReturnValue([{}, true]);
+
 describe("SearchContainer", () => {
   let validateUserName: (username: string) => string | undefined;
   let handleSubmit: (
@@ -139,31 +147,66 @@ describe("SearchContainer", () => {
   });
 
   describe("handleSubmit", () => {
-    beforeEach(() => {
+    const arrangeHandleSubmit = () => {
       arrange();
       expect(SearchForm).toBeCalledTimes(1);
       handleSubmit = (SearchForm as jest.Mock).mock.calls[0][0].handleSubmit;
-    });
+    };
 
     const mockAction = {
       setSubmitting: jest.fn(),
     } as never as FormikHelpers<LastFMUserSearchInterface>;
     const mockFormContent = { username: "validUsername" };
 
-    describe("when called with a username", () => {
-      beforeEach(() => handleSubmit(mockFormContent, mockAction));
-
-      it("should call setSubmitting as expected", () => {
-        expect(mockAction.setSubmitting).toBeCalledTimes(1);
-        expect(mockAction.setSubmitting).toBeCalledWith(true);
+    describe("when the user is logged in", () => {
+      beforeEach(() => {
+        mockUseSession.mockReturnValue([{ user: true }, true]);
+        arrangeHandleSubmit();
       });
 
-      it("should redirect to the expected route", () => {
-        const query = new URLSearchParams(mockFormContent);
-        expect(mockRouter.push).toBeCalledTimes(1);
-        expect(mockRouter.push).toBeCalledWith(
-          `${mockRoute}?${query.toString()}`
-        );
+      describe("when submitted with a username", () => {
+        beforeEach(() => handleSubmit(mockFormContent, mockAction));
+
+        it("should NOT call setSubmitting as expected", () => {
+          expect(mockAction.setSubmitting).toBeCalledTimes(0);
+        });
+
+        it("should redirect to the expected route", () => {
+          const query = new URLSearchParams(mockFormContent);
+          expect(mockRouter.push).toBeCalledTimes(1);
+          expect(mockRouter.push).toBeCalledWith(
+            `${mockRoute}?${query.toString()}`
+          );
+        });
+      });
+    });
+
+    describe("when the user is not logged in", () => {
+      beforeEach(() => {
+        mockUseSession.mockReturnValue([null, false]);
+        arrangeHandleSubmit();
+      });
+
+      describe("when submitted with a username", () => {
+        beforeEach(() => handleSubmit(mockFormContent, mockAction));
+
+        it("should call setSubmitting as expected", () => {
+          expect(mockAction.setSubmitting).toBeCalledTimes(1);
+          expect(mockAction.setSubmitting).toBeCalledWith(false);
+        });
+
+        it("should generate an error", () => {
+          expect(mockOpenError).toBeCalledTimes(1);
+          expect(mockOpenError).toBeCalledWith(
+            "session",
+            "t(search.errors.session.notLoggedIn)"
+          );
+          expect(mockT).toBeCalledWith("search.errors.session.notLoggedIn");
+        });
+
+        it("should NOT redirect to the expected route", () => {
+          expect(mockRouter.push).toBeCalledTimes(0);
+        });
       });
     });
   });

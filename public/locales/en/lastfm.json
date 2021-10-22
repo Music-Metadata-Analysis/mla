@@ -18,6 +18,9 @@
       "username": {
         "required": "A username is required.",
         "valid": "A proper username is required."
+      },
+      "session": {
+        "notLoggedIn": "You must be logged in to use this service."
       }
     }
   },
