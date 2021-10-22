@@ -3,9 +3,16 @@ import { useSession, signIn } from "next-auth/client";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import AuthenticationComponent from "./authentication.component";
-import routes from "../../config/routes";
 
-export default function Authentication() {
+export interface AuthenticationProps {
+  onModalClose?: () => void;
+  hidden?: boolean;
+}
+
+export default function Authentication({
+  hidden = false,
+  onModalClose = undefined,
+}: AuthenticationProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [authSession, authStatus] = useSession();
   const router = useRouter();
@@ -21,8 +28,11 @@ export default function Authentication() {
   }, [authSession, authStatus]);
 
   const handleClose = () => {
-    router.push(routes.home);
+    if (onModalClose) onModalClose();
+    if (!onModalClose) router.back();
   };
+
+  if (hidden) return null;
 
   return (
     <AuthenticationComponent
