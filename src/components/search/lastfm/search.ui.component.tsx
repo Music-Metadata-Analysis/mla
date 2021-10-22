@@ -1,5 +1,6 @@
 import { Box, Flex, useToast, Avatar } from "@chakra-ui/react";
 import SearchContainer from "./search.container.component";
+import Authentication from "../../authentication/authentication.container";
 import Billboard from "../../billboard/billboard.component";
 import LastFMIcon from "../../icons/lastfm/lastfm.icon";
 import type { TFunction } from "next-i18next";
@@ -40,6 +41,7 @@ export default function SearchUI({ route, title, t }: SearchUIProps) {
 
   return (
     <Billboard title={title}>
+      <Authentication />
       <Flex justify={"space-between"} align={"center"}>
         <Box mb={10}>
           <Avatar
