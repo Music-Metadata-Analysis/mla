@@ -34,10 +34,9 @@ describe("SearchForm", () => {
 
   it("should display the correct username placeholder text", async () => {
     arrange();
-    const inputField = await screen.findByPlaceholderText(
-      "t(search.fieldPlaceholder)"
-    );
-    expect(inputField).toHaveFocus();
+    expect(
+      await screen.findByPlaceholderText("t(search.fieldPlaceholder)")
+    ).toBeTruthy();
   });
 
   it("should display the correct button text", async () => {

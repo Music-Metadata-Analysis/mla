@@ -10,7 +10,9 @@ import type { LastFMUserSearchInterface } from "../../../../types/search/lastfm/
 import type { FormikHelpers } from "formik";
 
 jest.mock("../search.form.component", () => {
-  return jest.fn().mockImplementation(() => <div>MockSearchForm</div>);
+  return jest
+    .fn()
+    .mockImplementation(() => <div id="username">MockSearchForm</div>);
 });
 
 jest.mock("../../../../hooks/navbar", () => {
