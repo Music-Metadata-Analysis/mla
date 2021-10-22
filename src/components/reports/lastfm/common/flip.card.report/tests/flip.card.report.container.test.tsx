@@ -141,7 +141,7 @@ describe("FlipCardReportContainer", () => {
       });
 
       checkDataFetching();
-      checkErrorDisplay("lastfm_communications");
+      checkErrorDisplay("lastfmCommunications");
 
       it("should NOT call the BillBoardSpinner", () => {
         expect(BillBoardSpinner).toBeCalledTimes(0);
@@ -173,7 +173,7 @@ describe("FlipCardReportContainer", () => {
       });
 
       checkDataFetching();
-      checkErrorDisplay("lastfm_ratelimited");
+      checkErrorDisplay("lastfmRatelimited");
 
       it("should NOT call the BillBoardSpinner", () => {
         expect(BillBoardSpinner).toBeCalledTimes(0);
@@ -211,7 +211,7 @@ describe("FlipCardReportContainer", () => {
         expect(FlipCardReport).toBeCalledTimes(0);
       });
 
-      checkErrorDisplay("user_not_found");
+      checkErrorDisplay("userNotFound");
 
       describe("when resetError is called on ErrorDisplay", () => {
         beforeEach(() => {
@@ -346,7 +346,7 @@ describe("FlipCardReportContainer", () => {
             expect(FlipCardReport).toBeCalledTimes(0);
           });
 
-          checkErrorDisplay("user_with_no_listens");
+          checkErrorDisplay("userWithNoListens");
 
           describe("when resetError is called on ErrorDisplay", () => {
             beforeEach(() => {
