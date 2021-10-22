@@ -1,3 +1,4 @@
+import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../../config/apiRoutes";
 import * as status from "../../../../../config/status";
@@ -17,6 +18,10 @@ jest.mock("../../../../../integrations/lastfm/proxy.class", () => {
 jest.mock("../../../../../api/lastfm/endpoint.logger", () => {
   return jest.fn((req, res, next) => next());
 });
+
+jest.mock("next-auth/jwt", () => ({
+  getToken: jest.fn(),
+}));
 
 const mockBackendResponse = jest.fn();
 
@@ -47,94 +52,156 @@ describe(apiRoutes.v1.reports.lastfm.top20artists, () => {
     await handleProxy(req, res);
   };
 
-  describe("receives a GET request", () => {
-    beforeEach(async () => {
-      await arrange({ body: {}, method: "GET" });
+  describe("with a valid jwt token", () => {
+    beforeEach(() =>
+      (getToken as jest.Mock).mockReturnValue(
+        Promise.resolve({
+          token: "testToken",
+        })
+      )
+    );
+
+    describe("receives a GET request", () => {
+      beforeEach(async () => {
+        await arrange({ body: {}, method: "GET" });
+      });
+
+      it("should return a 405", () => {
+        expect(res._getStatusCode()).toBe(405);
+        expect(res._getJSONData()).toStrictEqual(status.STATUS_405_MESSAGE);
+      });
     });
 
-    it("should return a 405", () => {
-      expect(res._getStatusCode()).toBe(405);
-      expect(res._getJSONData()).toStrictEqual(status.STATUS_405_MESSAGE);
+    describe("receives a POST request", () => {
+      describe("with no data", () => {
+        beforeEach(async () => {
+          await arrange({ body: {}, method: "POST" });
+        });
+
+        it("should return a 400 status code", () => {
+          expect(res._getStatusCode()).toBe(400);
+          expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
+        });
+      });
+
+      describe("with invalid data", () => {
+        beforeEach(async () => {
+          await arrange({ body: { userName: 1234 }, method: "POST" });
+        });
+
+        it("should return a 400 status code", () => {
+          expect(res._getStatusCode()).toBe(400);
+          expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
+        });
+      });
+
+      describe("with valid data", () => {
+        describe("with a lastfm error", () => {
+          beforeEach(async () => {
+            mockBackendResponse.mockImplementationOnce(() => {
+              throw new Error(mockError);
+            });
+            await arrange({ body: { userName: "string" }, method: "POST" });
+          });
+
+          it("should return a 502 status code", () => {
+            expect(res._getStatusCode()).toBe(502);
+            expect(res._getJSONData()).toStrictEqual(status.STATUS_502_MESSAGE);
+          });
+        });
+
+        describe("with a lastfm ratelimiting error", () => {
+          beforeEach(async () => {
+            mockBackendResponse.mockImplementationOnce(() => {
+              throw new ProxyError(mockError, 429);
+            });
+            await arrange({ body: { userName: "string" }, method: "POST" });
+          });
+
+          it("should return a 429 status code", () => {
+            expect(res._getStatusCode()).toBe(429);
+            expect(res._getJSONData()).toStrictEqual(status.STATUS_429_MESSAGE);
+          });
+        });
+
+        describe("with a lastfm 404 error", () => {
+          beforeEach(async () => {
+            mockBackendResponse.mockImplementationOnce(() => {
+              throw new ProxyError(mockError, 404);
+            });
+            await arrange({ body: { userName: "string" }, method: "POST" });
+          });
+
+          it("should return a 404 status code", () => {
+            expect(res._getStatusCode()).toBe(404);
+            expect(res._getJSONData()).toStrictEqual(status.STATUS_404_MESSAGE);
+          });
+        });
+
+        describe("with a valid lastfm response", () => {
+          beforeEach(async () => {
+            mockBackendResponse.mockReturnValueOnce(
+              Promise.resolve(mockResponse)
+            );
+            await arrange({ body: { userName: "string" }, method: "POST" });
+          });
+
+          it("should return a 200 status code", () => {
+            expect(res._getStatusCode()).toBe(200);
+            expect(res._getJSONData()).toStrictEqual(mockResponse);
+          });
+        });
+      });
     });
   });
 
-  describe("receives a POST request", () => {
-    describe("with no data", () => {
+  describe("without a valid jwt token", () => {
+    beforeEach(() =>
+      (getToken as jest.Mock).mockReturnValue(Promise.resolve(null))
+    );
+
+    describe("receives a GET request", () => {
       beforeEach(async () => {
-        await arrange({ body: {}, method: "POST" });
+        await arrange({ body: {}, method: "GET" });
       });
 
-      it("should return a 400 status code", () => {
-        expect(res._getStatusCode()).toBe(400);
-        expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
+      it("should return a 405", () => {
+        expect(res._getStatusCode()).toBe(405);
+        expect(res._getJSONData()).toStrictEqual(status.STATUS_405_MESSAGE);
       });
     });
 
-    describe("with invalid data", () => {
-      beforeEach(async () => {
-        await arrange({ body: { userName: 1234 }, method: "POST" });
-      });
-
-      it("should return a 400 status code", () => {
-        expect(res._getStatusCode()).toBe(400);
-        expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
-      });
-    });
-
-    describe("with valid data", () => {
-      describe("with a lastfm error", () => {
+    describe("receives a POST request", () => {
+      describe("with no data", () => {
         beforeEach(async () => {
-          mockBackendResponse.mockImplementationOnce(() => {
-            throw new Error(mockError);
-          });
+          await arrange({ body: {}, method: "POST" });
+        });
+
+        it("should return a 401 status code", () => {
+          expect(res._getStatusCode()).toBe(401);
+          expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
+        });
+      });
+
+      describe("with invalid data", () => {
+        beforeEach(async () => {
+          await arrange({ body: { userName: 1234 }, method: "POST" });
+        });
+
+        it("should return a 401 status code", () => {
+          expect(res._getStatusCode()).toBe(401);
+          expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
+        });
+      });
+
+      describe("with valid data", () => {
+        beforeEach(async () => {
           await arrange({ body: { userName: "string" }, method: "POST" });
         });
 
-        it("should return a 502 status code", () => {
-          expect(res._getStatusCode()).toBe(502);
-          expect(res._getJSONData()).toStrictEqual(status.STATUS_502_MESSAGE);
-        });
-      });
-
-      describe("with a lastfm ratelimiting error", () => {
-        beforeEach(async () => {
-          mockBackendResponse.mockImplementationOnce(() => {
-            throw new ProxyError(mockError, 429);
-          });
-          await arrange({ body: { userName: "string" }, method: "POST" });
-        });
-
-        it("should return a 429 status code", () => {
-          expect(res._getStatusCode()).toBe(429);
-          expect(res._getJSONData()).toStrictEqual(status.STATUS_429_MESSAGE);
-        });
-      });
-
-      describe("with a lastfm 404 error", () => {
-        beforeEach(async () => {
-          mockBackendResponse.mockImplementationOnce(() => {
-            throw new ProxyError(mockError, 404);
-          });
-          await arrange({ body: { userName: "string" }, method: "POST" });
-        });
-
-        it("should return a 404 status code", () => {
-          expect(res._getStatusCode()).toBe(404);
-          expect(res._getJSONData()).toStrictEqual(status.STATUS_404_MESSAGE);
-        });
-      });
-
-      describe("with a valid lastfm response", () => {
-        beforeEach(async () => {
-          mockBackendResponse.mockReturnValueOnce(
-            Promise.resolve(mockResponse)
-          );
-          await arrange({ body: { userName: "string" }, method: "POST" });
-        });
-
-        it("should return a 200 status code", () => {
-          expect(res._getStatusCode()).toBe(200);
-          expect(res._getJSONData()).toStrictEqual(mockResponse);
+        it("should return a 401 status code", () => {
+          expect(res._getStatusCode()).toBe(401);
+          expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
         });
       });
     });
