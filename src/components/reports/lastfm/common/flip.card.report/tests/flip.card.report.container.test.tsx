@@ -11,6 +11,7 @@ import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
 import UserInterfaceImageProvider from "../../../../../../providers/ui/ui.images/ui.images.provider";
 import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../../../tests/fixtures/mock.router";
+import Authentication from "../../../../../authentication/authentication.container";
 import BillBoardSpinner from "../../../../../billboard/billboard.spinner/billboard.spinner.component";
 import ErrorDisplay from "../../../../../errors/display/error.display.component";
 import FlipCardBaseReport from "../flip.card.report.base.class";
@@ -22,6 +23,10 @@ jest.mock("../../../../../../hooks/analytics", () => ({
   __esModule: true,
   default: () => mockAnalyticsHook,
 }));
+
+jest.mock("../../../../../authentication/authentication.container", () =>
+  jest.fn(() => <div>MockedAuthenticationComponent</div>)
+);
 
 jest.mock(
   "../../../../../billboard/billboard.spinner/billboard.spinner.component",
@@ -143,6 +148,10 @@ describe("FlipCardReportContainer", () => {
       checkDataFetching();
       checkErrorDisplay("lastfmCommunications");
 
+      it("should NOT call the Authentication component", () => {
+        expect(Authentication).toBeCalledTimes(0);
+      });
+
       it("should NOT call the BillBoardSpinner", () => {
         expect(BillBoardSpinner).toBeCalledTimes(0);
       });
@@ -166,6 +175,28 @@ describe("FlipCardReportContainer", () => {
       });
     });
 
+    describe("when the request is unauthorized", () => {
+      beforeEach(() => {
+        mockHookState.userProperties.error = "UnauthorizedFetchUser";
+        arrange();
+      });
+
+      checkDataFetching();
+
+      it("should call the Authentication component", () => {
+        expect(Authentication).toBeCalledTimes(1);
+        checkMockCall(Authentication, {});
+      });
+
+      it("should NOT call the BillBoardSpinner", () => {
+        expect(BillBoardSpinner).toBeCalledTimes(0);
+      });
+
+      it("should NOT call the FlipCardReport component", () => {
+        expect(FlipCardReport).toBeCalledTimes(0);
+      });
+    });
+
     describe("when the request has been ratelimited", () => {
       beforeEach(() => {
         mockHookState.userProperties.error = "RatelimitedFetchUser";
@@ -174,6 +205,10 @@ describe("FlipCardReportContainer", () => {
 
       checkDataFetching();
       checkErrorDisplay("lastfmRatelimited");
+
+      it("should NOT call the Authentication component", () => {
+        expect(Authentication).toBeCalledTimes(0);
+      });
 
       it("should NOT call the BillBoardSpinner", () => {
         expect(BillBoardSpinner).toBeCalledTimes(0);
@@ -202,6 +237,10 @@ describe("FlipCardReportContainer", () => {
       });
 
       checkDataFetching();
+
+      it("should NOT call the Authentication component", () => {
+        expect(Authentication).toBeCalledTimes(0);
+      });
 
       it("should NOT call the BillBoardSpinner", () => {
         expect(BillBoardSpinner).toBeCalledTimes(0);
@@ -248,6 +287,10 @@ describe("FlipCardReportContainer", () => {
 
         checkDataFetching();
 
+        it("should NOT call the Authentication component", () => {
+          expect(Authentication).toBeCalledTimes(0);
+        });
+
         it("should call the BillBoardSpinner with 'true'", () => {
           expect(BillBoardSpinner).toBeCalledTimes(1);
           checkMockCall(BillBoardSpinner, {
@@ -286,6 +329,10 @@ describe("FlipCardReportContainer", () => {
         });
 
         checkDataFetching();
+
+        it("should NOT call the Authentication component", () => {
+          expect(Authentication).toBeCalledTimes(0);
+        });
 
         it("should call the BillBoardSpinner with 'true'", () => {
           expect(BillBoardSpinner).toBeCalledTimes(1);
@@ -338,6 +385,10 @@ describe("FlipCardReportContainer", () => {
 
           checkDataFetching();
 
+          it("should NOT call the Authentication component", () => {
+            expect(Authentication).toBeCalledTimes(0);
+          });
+
           it("should NOT call the BillBoardSpinner", () => {
             expect(BillBoardSpinner).toBeCalledTimes(0);
           });
@@ -370,6 +421,10 @@ describe("FlipCardReportContainer", () => {
           });
 
           checkDataFetching();
+
+          it("should NOT call the Authentication component", () => {
+            expect(Authentication).toBeCalledTimes(0);
+          });
 
           it("should toggle the BillBoardSpinner off", () => {
             expect(BillBoardSpinner).toBeCalledTimes(1);
