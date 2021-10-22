@@ -1,4 +1,5 @@
 import { body, validationResult } from "express-validator";
+import { getToken } from "next-auth/jwt";
 import nextConnect from "next-connect";
 import Logger from "./endpoint.logger";
 import { knownStatuses } from "../../config/api";
@@ -27,8 +28,14 @@ export default abstract class LastFMApiEndpointFactory {
       body("userName").isString(),
       body("userName").isLength({ min: 1 }),
       async (req, res, next) => {
+        const token = await getToken({
+          req,
+          secret: process.env.AUTH_MASTER_JWT_SECRET,
+        });
         const errors = validationResult(req);
-        if (!errors.isEmpty()) {
+        if (!token) {
+          res.status(401).json(status.STATUS_401_MESSAGE);
+        } else if (!errors.isEmpty()) {
           res.status(400).json(status.STATUS_400_MESSAGE);
         } else {
           this.proxy = new LastFMProxy();

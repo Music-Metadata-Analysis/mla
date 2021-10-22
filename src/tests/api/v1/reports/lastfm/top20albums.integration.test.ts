@@ -11,6 +11,14 @@ jest.mock("../../../../../api/lastfm/endpoint.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 
+jest.mock("next-auth/jwt", () => ({
+  getToken: jest.fn().mockReturnValue(
+    Promise.resolve({
+      token: "testToken",
+    })
+  ),
+}));
+
 type ArrangeArgs = {
   body: Record<string, unknown>;
   method: HttpMethodType;
