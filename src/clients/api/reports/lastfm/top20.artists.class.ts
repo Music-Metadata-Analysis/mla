@@ -4,7 +4,6 @@ import type { LastFMTopArtistsReportResponseInterface } from "../../../../types/
 
 class LastFMTopArtistsReport extends LastFMBaseReport<LastFMTopArtistsReportResponseInterface> {
   route = apiRoutes.v1.reports.lastfm.top20artists;
-  integration = "LAST.FM" as const;
   eventType = "TOP20 ARTISTS" as const;
 }
 
