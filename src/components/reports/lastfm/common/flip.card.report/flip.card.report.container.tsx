@@ -52,7 +52,7 @@ export default function FlipCardReportContainer<
   if (user.userProperties.error === "RatelimitedFetchUser") {
     return (
       <ErrorDisplay
-        errorKey={"lastfm_ratelimited"}
+        errorKey={"lastfmRatelimited"}
         resetError={() => router.reload()}
       />
     );
@@ -61,7 +61,7 @@ export default function FlipCardReportContainer<
   if (user.userProperties.error === "NotFoundFetchUser") {
     return (
       <ErrorDisplay
-        errorKey={"user_not_found"}
+        errorKey={"userNotFound"}
         resetError={() => router.push(report.getRetryRoute())}
       />
     );
@@ -70,7 +70,7 @@ export default function FlipCardReportContainer<
   if (user.userProperties.error === "FailureFetchUser") {
     return (
       <ErrorDisplay
-        errorKey={"lastfm_communications"}
+        errorKey={"lastfmCommunications"}
         resetError={() => router.push(report.getRetryRoute())}
       />
     );
@@ -79,12 +79,11 @@ export default function FlipCardReportContainer<
   if (!report.queryUserHasData(user.userProperties)) {
     return (
       <ErrorDisplay
-        errorKey={"user_with_no_listens"}
+        errorKey={"userWithNoListens"}
         resetError={() => router.push(report.getRetryRoute())}
       />
     );
   }
-
   return (
     <>
       <BillBoardSpinner
