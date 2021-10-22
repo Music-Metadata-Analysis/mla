@@ -1,10 +1,10 @@
-import UserState from "./user.state.base.class";
+import BaseUserStateWithReport from "./user.state.base.report.class";
 import Events from "../../../../events/events";
 import type { LastFMArtistDataInterface } from "../../../../types/integrations/lastfm/api.types";
 import type { LastFMUserStateAlbumReport } from "../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
 
-export default class UserAlbumState extends UserState {
+export default class UserAlbumState extends BaseUserStateWithReport {
   userProperties: LastFMUserStateAlbumReport;
 
   constructor(userProperties: LastFMUserStateAlbumReport, t: TFunction) {

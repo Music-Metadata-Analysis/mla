@@ -16,8 +16,8 @@ import lastFMSettings from "../../config/lastfm";
 import useColour from "../../hooks/colour";
 import useLastFM from "../../hooks/lastfm";
 import { NavBarContext } from "../../providers/navbar/navbar.provider";
+import UserBaseState from "../../providers/user/encapsulations/lastfm/user.state.base.class";
 import Condition from "../condition/condition.component";
-import type { LastFMImageDataInterface } from "../../types/integrations/lastfm/api.types";
 
 export const testIDs = {
   NavBarRoot: "NavBarRoot",
@@ -35,14 +35,7 @@ export default function NavBar({ menuConfig }: NavBarProps) {
   const { isVisible } = useContext(NavBarContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useLastFM();
-
-  // TODO: create new user class to encapsulate/extract this data
-  const getProfileImageUrl = (size: LastFMImageDataInterface["size"]) => {
-    const profileImage = user.userProperties.data.report.image;
-    const image = profileImage.find((thisImage) => thisImage.size == size);
-    if (image) return image["#text"];
-    return "";
-  };
+  const userState = new UserBaseState(user.userProperties);
 
   const getProfileUrl = () => {
     if (user.userProperties.profileUrl) return user.userProperties.profileUrl;
@@ -76,7 +69,7 @@ export default function NavBar({ menuConfig }: NavBarProps) {
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <NavBarLogo
             href={getProfileUrl()}
-            image={getProfileImageUrl("small")}
+            image={userState.getProfileImageUrl("small")}
           />
           <Spinner whileTrue={!user.userProperties.ready}>
             <Flex
