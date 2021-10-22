@@ -5,7 +5,7 @@ import useAnalytics from "../../../../../hooks/analytics";
 import useColour from "../../../../../hooks/colour";
 import StyledButtonLink from "../../../../button/button.external.link/button.external.link.component";
 import Drawer from "../../../common/drawer/drawer.component";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
+import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.report.class";
 import type { TFunction } from "next-i18next";
 
 export interface LastFMDrawerInterface<T extends UserState> {

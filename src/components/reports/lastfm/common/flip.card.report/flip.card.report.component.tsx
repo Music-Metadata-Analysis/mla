@@ -4,7 +4,7 @@ import { useState } from "react";
 import Condition from "../../../../condition/condition.component";
 import FlipCard from "../../../../flip.card/flip.card.component";
 import ReportTitle from "../../../common/report.title/report.title.component";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
+import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.report.class";
 import type FlipCardBaseReport from "../flip.card.report/flip.card.report.base.class";
 import type { TFunction } from "next-i18next";
 
