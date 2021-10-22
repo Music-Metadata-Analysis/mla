@@ -101,6 +101,19 @@ class UserReducerStates {
     }
     throw new Error(this.wrongTypeError);
   }
+  UnauthorizedFetchUser(action: UserActionType): UserStateInterface {
+    if (action.type === "UnauthorizedFetchUser") {
+      return {
+        data: { integration: action.integration, report: this.initialReport },
+        error: action.type,
+        inProgress: false,
+        profileUrl: null,
+        ready: true,
+        userName: action.userName,
+      };
+    }
+    throw new Error(this.wrongTypeError);
+  }
 }
 
 export default UserReducerStates;
