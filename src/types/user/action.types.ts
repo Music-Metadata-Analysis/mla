@@ -34,4 +34,9 @@ export type UserActionType =
       userName: string;
       data: UserReportType;
       integration: IntegrationTypes;
+    }
+  | {
+      type: "UnauthorizedFetchUser";
+      userName: string;
+      integration: IntegrationTypes;
     };
