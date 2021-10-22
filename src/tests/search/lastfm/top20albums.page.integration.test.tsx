@@ -11,6 +11,14 @@ jest.mock("next/router", () => ({
   useRouter: () => mockRouter,
 }));
 
+jest.mock("next-auth/client", () => ({
+  useSession: jest.fn().mockReturnValue([{}, true]),
+}));
+
+jest.mock("../../../components/authentication/authentication.container", () =>
+  jest.fn(() => <div>MockedAuthenticationComponent</div>)
+);
+
 describe("SearchTopAlbums", () => {
   let enteredUsername: string;
 

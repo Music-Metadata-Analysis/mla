@@ -2,6 +2,7 @@ import { Box, Flex, Avatar, useToast } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
+import Authentication from "../../../authentication/authentication.container";
 import Billboard from "../../../billboard/billboard.component";
 import LastFMIcon from "../../../icons/lastfm/lastfm.icon";
 import SearchContainer from "../search.container.component";
@@ -16,6 +17,10 @@ jest.mock("@chakra-ui/react", () => {
   chakraMock.Avatar = jest.fn().mockImplementation(() => <div>MockAvatar</div>);
   return chakraMock;
 });
+
+jest.mock("../../../authentication/authentication.container", () =>
+  jest.fn(() => <div>MockedAuthenticationComponent</div>)
+);
 
 jest.mock("../../../billboard/billboard.component", () =>
   createMockedComponent("BillBoard")
@@ -67,7 +72,13 @@ describe("SearchUI", () => {
       arrange();
     });
 
+    it("should call Authentication with the correct props", () => {
+      expect(Authentication).toBeCalledTimes(1);
+      checkMockCall(Authentication, {});
+    });
+
     it("should call Billboard with the correct props", () => {
+      expect(Billboard).toBeCalledTimes(1);
       checkMockCall(Billboard, { title: mockTitle }, 0, []);
     });
 

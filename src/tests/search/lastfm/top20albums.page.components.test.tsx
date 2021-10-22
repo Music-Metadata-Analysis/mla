@@ -30,7 +30,7 @@ describe("getStaticProps", () => {
     expect(getPageProps).toBeCalledTimes(1);
     expect(getPageProps).toBeCalledWith({
       pageKey: "search",
-      translations: ["lastfm"],
+      translations: ["authentication", "lastfm"],
     });
   });
 });
