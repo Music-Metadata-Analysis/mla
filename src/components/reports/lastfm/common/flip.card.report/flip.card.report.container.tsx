@@ -8,7 +8,7 @@ import useUserInterface from "../../../../../hooks/ui";
 import Authentication from "../../../../authentication/authentication.container";
 import BillBoardSpinner from "../../../../billboard/billboard.spinner/billboard.spinner.component";
 import ErrorDisplay from "../../../../errors/display/error.display.component";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.class";
+import type UserState from "../../../../../providers/user/encapsulations/lastfm/user.state.base.report.class";
 import type { ReportType } from "../../../../../types/analytics.types";
 import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
 import type FlipCardBaseReport from "../flip.card.report/flip.card.report.base.class";
