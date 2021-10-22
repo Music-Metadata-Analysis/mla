@@ -48,7 +48,6 @@ export default function SearchForm({
                   {t("search.fieldLabel")}
                 </FormLabel>
                 <StyledInput
-                  autoFocus
                   {...field}
                   id="username"
                   placeholder={t("search.fieldPlaceholder")}

@@ -35,6 +35,16 @@ export default function SearchContainer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (authSession) {
+      const element = document.querySelector(
+        '[id="username"]'
+      ) as HTMLInputElement;
+      element.focus();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authSession]);
+
   const validateUserName = (value: string) => {
     if (!value) {
       openError("username", t("search.errors.username.required"));
