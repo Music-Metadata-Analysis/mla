@@ -57,7 +57,7 @@ describe("LastFMReport", () => {
     }
   };
 
-  describe("retrieveTop20", () => {
+  describe("retrieveReport", () => {
     describe("when a request returns not found", () => {
       beforeEach(() => {
         setUpRetrieve(true, 404);
@@ -196,6 +196,42 @@ describe("LastFMReport", () => {
             category: "LAST.FM",
             label: "ERROR",
             action: `${reportType}: Unable to create a report.`,
+          })
+        );
+      });
+    });
+
+    describe("when a request is unauthorized", () => {
+      beforeEach(() => {
+        setUpRetrieve(true, 401);
+        instance = arrange();
+        instance.retrieveReport(mockUserName);
+      });
+
+      checkUrl();
+
+      it("should dispatch the reducer correctly", async () => {
+        expect(mockDispatch).toBeCalledTimes(2);
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "UnauthorizedFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
+      });
+
+      it("should register events correctly", async () => {
+        expect(mockEvent).toBeCalledTimes(2);
+        expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+        expect(mockEvent).toHaveBeenCalledWith(
+          new EventDefinition({
+            category: "LAST.FM",
+            label: "ERROR",
+            action: `${reportType}: An unauthorized report request was made.`,
           })
         );
       });

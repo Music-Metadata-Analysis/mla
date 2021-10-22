@@ -94,6 +94,23 @@ class LastFMBaseReport<ResponseType>
     }
   }
 
+  handleUnauthorized(userName: string): void {
+    if (this.response?.status === 401) {
+      this.dispatch({
+        type: "UnauthorizedFetchUser",
+        userName: userName,
+        integration: this.integration,
+      });
+      this.eventDispatch(
+        new EventDefinition({
+          category: "LAST.FM",
+          label: "ERROR",
+          action: `${this.eventType}: An unauthorized report request was made.`,
+        })
+      );
+    }
+  }
+
   handleFailure(userName: string): void {
     this.dispatch({
       type: "FailureFetchUser",
@@ -123,6 +140,11 @@ class LastFMBaseReport<ResponseType>
       .then((response) => {
         this.response = response;
         this.handleRatelimited(userName);
+        return Promise.resolve(response);
+      })
+      .then((response) => {
+        this.response = response;
+        this.handleUnauthorized(userName);
         return Promise.resolve(response);
       })
       .then((response) => {
