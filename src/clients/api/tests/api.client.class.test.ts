@@ -6,6 +6,17 @@ describe("APIClient", () => {
   const remotesite = "https://remotesite.com/";
   const postContent = { info: "Love this website!" };
   type responseType = { success: boolean };
+  const mockFetchParams = {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    referrerPolicy: "same-origin",
+    body: JSON.stringify(postContent),
+  };
 
   beforeAll(() => {
     jest.spyOn(window, "fetch");
@@ -50,17 +61,7 @@ describe("APIClient", () => {
       it("should call the underlying fetch function correctly", async () => {
         await arrange();
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          referrerPolicy: "same-origin",
-          body: JSON.stringify(postContent),
-        });
+        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
       });
 
       it("should return a success message", async () => {
@@ -72,30 +73,20 @@ describe("APIClient", () => {
       });
     });
 
-    describe("when a '429' status code is returned", () => {
-      beforeEach(() => setupFetch({ success: false, status: 429 }));
+    describe("when a '401' status code is returned", () => {
+      beforeEach(() => setupFetch({ success: false, status: 401 }));
 
       it("should call the underlying fetch function correctly", () => {
         arrange();
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          referrerPolicy: "same-origin",
-          body: JSON.stringify(postContent),
-        });
+        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
       });
 
       it("should return the correct error message", async () => {
         const response = await arrange();
         expect(response).toStrictEqual({
-          status: 429,
-          response: status.STATUS_429_MESSAGE,
+          status: 401,
+          response: status.STATUS_401_MESSAGE,
         });
       });
     });
@@ -106,17 +97,7 @@ describe("APIClient", () => {
       it("should call the underlying fetch function correctly", () => {
         arrange();
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          referrerPolicy: "same-origin",
-          body: JSON.stringify(postContent),
-        });
+        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
       });
 
       it("should return the correct error message", async () => {
@@ -128,23 +109,31 @@ describe("APIClient", () => {
       });
     });
 
+    describe("when a '429' status code is returned", () => {
+      beforeEach(() => setupFetch({ success: false, status: 429 }));
+
+      it("should call the underlying fetch function correctly", () => {
+        arrange();
+        expect(fetch).toBeCalledTimes(1);
+        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
+      });
+
+      it("should return the correct error message", async () => {
+        const response = await arrange();
+        expect(response).toStrictEqual({
+          status: 429,
+          response: status.STATUS_429_MESSAGE,
+        });
+      });
+    });
+
     describe("when a 'not ok' status is returned", () => {
       beforeEach(() => setupFetch({ success: false, status: 400 }));
 
       it("should call the underlying fetch function correctly", () => {
         arrange().catch(() => null);
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          referrerPolicy: "same-origin",
-          body: JSON.stringify(postContent),
-        });
+        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
       });
 
       it("should throw the correct error message", async () => {
@@ -159,17 +148,7 @@ describe("APIClient", () => {
       it("should call the underlying fetch function correctly", () => {
         arrange().catch(() => null);
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          referrerPolicy: "same-origin",
-          body: JSON.stringify(postContent),
-        });
+        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
       });
 
       it("should throw the correct error message", async () => {
