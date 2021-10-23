@@ -49,12 +49,12 @@ const Events = {
     Error: new EventDefinition({
       category: "MAIN",
       label: "ERROR",
-      action: "Unspecified error was caught by the error boundary.",
+      action: "UNSPECIFIED ERROR WAS CAUGHT BY THE ERROR BOUNDARY.",
     }),
     Test: new EventDefinition({
       category: "TEST",
       label: "TEST",
-      action: "test event was processed.",
+      action: "TEST EVENT WAS PROCESSED.",
     }),
   },
 };
