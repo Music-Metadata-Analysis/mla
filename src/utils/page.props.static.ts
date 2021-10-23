@@ -18,7 +18,7 @@ const pagePropsGenerator = ({
       props: {
         ...(await serverSideTranslations(
           locale,
-          ["main", "navbar"].concat(translations)
+          ["authentication", "main", "navbar"].concat(translations)
         )),
         headerProps: { pageKey },
       },

@@ -11,6 +11,7 @@ import { useEffect, useContext } from "react";
 import NavBarColorModeToggle from "./navbar.color.mode/navbar.color.mode.component";
 import NavBarLogo from "./navbar.logo/navbar.logo.component";
 import NavBarOptions from "./navbar.options/navbar.options.component";
+import NavBarSessionControl from "./navbar.session.control/navbar.session.control.component";
 import Spinner from "./navbar.spinner/navbar.spinner.component";
 import lastFMSettings from "../../config/lastfm";
 import useColour from "../../hooks/colour";
@@ -79,7 +80,9 @@ export default function NavBar({ menuConfig }: NavBarProps) {
               justifyContent={"flex-end"}
             >
               <NavBarColorModeToggle />
+              <NavBarSessionControl />
               <IconButton
+                ml={1}
                 data-testid={testIDs.NavBarMobileMenuButton}
                 size={"md"}
                 icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -90,7 +93,7 @@ export default function NavBar({ menuConfig }: NavBarProps) {
               <HStack spacing={8} alignItems={"center"}>
                 <HStack
                   as={"nav"}
-                  spacing={4}
+                  spacing={2}
                   display={{ base: "none", sm: "flex" }}
                 >
                   <NavBarOptions menuConfig={menuConfig} />

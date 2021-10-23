@@ -28,7 +28,7 @@ export default function NavBarColorModeToggle() {
       <Switch
         data-testid={TestIDs.ColorModeToggle}
         ml={2}
-        mr={5}
+        mr={3}
         colorScheme={"yellow"}
         isChecked={colorMode !== "dark"}
         onChange={changeHandler}

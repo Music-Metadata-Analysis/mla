@@ -26,5 +26,5 @@ export default function SearchLastFMTop20Albums() {
 
 export const getStaticProps = pagePropsGenerator({
   pageKey: "search",
-  translations: ["authentication", "lastfm"],
+  translations: ["lastfm"],
 });

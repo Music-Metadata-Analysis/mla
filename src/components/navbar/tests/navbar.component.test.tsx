@@ -9,6 +9,7 @@ import NavBarColorModeToggle from "../navbar.color.mode/navbar.color.mode.compon
 import NavBar, { testIDs } from "../navbar.component";
 import NavBarLogo from "../navbar.logo/navbar.logo.component";
 import NavBarOptions from "../navbar.options/navbar.options.component";
+import NavBarSessionControl from "../navbar.session.control/navbar.session.control.component";
 import NavSpinner from "../navbar.spinner/navbar.spinner.component";
 import type { LastFMTopAlbumsReportResponseInterface } from "../../../types/clients/api/reports/lastfm.client.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
@@ -27,6 +28,10 @@ jest.mock("../navbar.logo/navbar.logo.component", () =>
 
 jest.mock("../navbar.options/navbar.options.component", () =>
   createMockedComponent("NavBarOptions")
+);
+
+jest.mock("../navbar.session.control/navbar.session.control.component", () =>
+  createMockedComponent("NavBarSession")
 );
 
 jest.mock("../navbar.spinner/navbar.spinner.component", () =>
@@ -208,6 +213,11 @@ describe("NavBar", () => {
         const call = (IconButton as jest.Mock).mock.calls[0][0];
         expect(call.display).toStrictEqual({ sm: "none" });
       });
+
+      it("should render the session controller with the right props", () => {
+        expect(NavBarSessionControl).toBeCalledTimes(1);
+        expect(NavBarSessionControl).toBeCalledWith({}, {});
+      });
     });
 
     describe("when data is not pending", () => {
@@ -270,6 +280,11 @@ describe("NavBar", () => {
           const call = (IconButton as jest.Mock).mock.calls[0][0];
           expect(call.display).toStrictEqual({ sm: "none" });
         });
+
+        it("should render the session controller with the right props", () => {
+          expect(NavBarSessionControl).toBeCalledTimes(1);
+          expect(NavBarSessionControl).toBeCalledWith({}, {});
+        });
       });
 
       describe("with no user data", () => {
@@ -325,6 +340,11 @@ describe("NavBar", () => {
           expect(IconButton).toBeCalledTimes(1);
           const call = (IconButton as jest.Mock).mock.calls[0][0];
           expect(call.display).toStrictEqual({ sm: "none" });
+        });
+
+        it("should render the session controller with the right props", () => {
+          expect(NavBarSessionControl).toBeCalledTimes(1);
+          expect(NavBarSessionControl).toBeCalledWith({}, {});
         });
       });
     });

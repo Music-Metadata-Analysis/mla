@@ -3,5 +3,9 @@
     "about": "About",
     "search": "Search"
   },
+  "authentication": {
+    "signIn": "Login",
+    "signOut": "Logout"
+  },
   "title": "MLA"
 }
