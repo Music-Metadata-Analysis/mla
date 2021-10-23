@@ -8,6 +8,7 @@ declare namespace NodeJS {
     AUTH_GOOGLE_ID: string;
     AUTH_GOOGLE_SECRET: string;
     AUTH_MASTER_JWT_SECRET: string;
+    AUTH_MASTER_JWT_SIGNING_KEY: string;
     AUTH_MASTER_SECRET_KEY: string;
     LASTFM_CACHE_AWS_ACCESS_KEY_ID: string;
     LASTFM_CACHE_AWS_SECRET_ACCESS_KEY: string;

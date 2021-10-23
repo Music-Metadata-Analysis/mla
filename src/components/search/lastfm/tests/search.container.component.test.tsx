@@ -19,13 +19,15 @@ jest.mock("../../../../hooks/navbar", () => {
   return jest.fn().mockImplementation(() => mockNavBarHook);
 });
 
-jest.mock("next-auth/client", () => ({
+jest.mock("next-auth/react", () => ({
   useSession: () => mockUseSession(),
   signIn: jest.fn(),
   signOut: jest.fn(),
 }));
 
-const mockUseSession = jest.fn().mockReturnValue([{}, true]);
+const mockUseSession = jest
+  .fn()
+  .mockReturnValue({ data: {}, status: "authenticated" });
 
 describe("SearchContainer", () => {
   let validateUserName: (username: string) => string | undefined;
@@ -162,7 +164,7 @@ describe("SearchContainer", () => {
 
     describe("when the user is logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue([{ user: true }, true]);
+        mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
         arrangeHandleSubmit();
       });
 
@@ -185,7 +187,10 @@ describe("SearchContainer", () => {
 
     describe("when the user is not logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue([null, false]);
+        mockUseSession.mockReturnValue({
+          data: null,
+          status: "unauthenticated",
+        });
         arrangeHandleSubmit();
       });
 

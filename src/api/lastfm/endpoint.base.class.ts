@@ -31,6 +31,7 @@ export default abstract class LastFMApiEndpointFactory {
         const token = await getToken({
           req,
           secret: process.env.AUTH_MASTER_JWT_SECRET,
+          signingKey: process.env.AUTH_MASTER_JWT_SIGNING_KEY,
         });
         const errors = validationResult(req);
         if (!token) {
