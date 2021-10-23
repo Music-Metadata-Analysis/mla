@@ -11,8 +11,8 @@ jest.mock("next/router", () => ({
   useRouter: () => mockRouter,
 }));
 
-jest.mock("next-auth/client", () => ({
-  useSession: jest.fn().mockReturnValue([{}, true]),
+jest.mock("next-auth/react", () => ({
+  useSession: jest.fn().mockReturnValue({ data: {}, status: "authenticated" }),
 }));
 
 jest.mock("../../../components/authentication/authentication.container", () =>

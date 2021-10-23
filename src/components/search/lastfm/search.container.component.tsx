@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import SearchForm from "./search.form.component";
@@ -21,7 +21,7 @@ export default function SearchContainer({
   openError,
   t,
 }: SearchContainerProps) {
-  const [authSession, authStatus] = useSession();
+  const { data: authSession, status: authStatus } = useSession();
   const { hideNavBar, showNavBar } = useNavBar();
   const router = useRouter();
 
@@ -65,7 +65,7 @@ export default function SearchContainer({
     values: LastFMUserSearchInterface,
     actions: FormikHelpers<LastFMUserSearchInterface>
   ) => {
-    if (!authSession && !authStatus) {
+    if (!authSession && authStatus === "unauthenticated") {
       actions.setSubmitting(false);
       openError("session", t("search.errors.session.notLoggedIn"));
       return;

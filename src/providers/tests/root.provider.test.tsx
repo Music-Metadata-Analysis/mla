@@ -1,5 +1,5 @@
 import { waitFor, screen, render } from "@testing-library/react";
-import { Provider as SessionProvider } from "next-auth/client";
+import { SessionProvider } from "next-auth/react";
 import Header from "../../components/header/header.component";
 import checkMockCall from "../../tests/fixtures/mock.component.call";
 import AnalyticsProvider from "../analytics/analytics.provider";
@@ -8,8 +8,8 @@ import RootProvider from "../root.provider";
 import UserInterfaceRootProvider from "../ui/ui.root.provider";
 import UserProvider from "../user/user.provider";
 
-jest.mock("next-auth/client", () =>
-  createProviderMock(providers.SessionProvider, "Provider")
+jest.mock("next-auth/react", () =>
+  createProviderMock(providers.SessionProvider, "SessionProvider")
 );
 
 jest.mock("../../components/header/header.component", () =>
@@ -51,7 +51,10 @@ const providers = {
 
 describe("RootProvider", () => {
   const testPageKey = "test";
-  const mockSession = { testSession: true };
+  const mockSession = {
+    testSession: true,
+    expires: new Date(Date.now() + 1000).toISOString(),
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
