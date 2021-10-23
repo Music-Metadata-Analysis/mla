@@ -8,6 +8,8 @@ import {
 import * as authClient from "next-auth/client";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import translations from "../../../../public/locales/en/authentication.json";
+import Events from "../../../events/events";
+import mockAnalyticsHook from "../../../hooks/tests/analytics.mock.hook";
 import ChakraProvider from "../../../providers/ui/ui.chakra/ui.chakra.provider";
 import mockRouter from "../../../tests/fixtures/mock.router";
 import { testIDs } from "../authentication.component";
@@ -26,6 +28,11 @@ jest.mock("@chakra-ui/react", () => {
     useDisclosure: () => mockUseDisclosure(),
   };
 });
+
+jest.mock("../../../hooks/analytics", () => ({
+  __esModule: true,
+  default: () => mockAnalyticsHook,
+}));
 
 const mockUseDisclosure = jest.fn();
 const mockUseSession = jest.fn();
@@ -59,6 +66,11 @@ describe("AuthenticationContainer", () => {
         testIDs.AuthenticationModalCloseButton
       );
       await waitFor(() => expect(button).toBeVisible());
+    });
+
+    it("should generate an analytics event", async () => {
+      expect(mockAnalyticsHook.event).toBeCalledTimes(1);
+      expect(mockAnalyticsHook.event).toBeCalledWith(Events.Auth.OpenModal);
     });
   };
 
@@ -95,6 +107,7 @@ describe("AuthenticationContainer", () => {
 
     describe("when the facebook button is clicked", () => {
       beforeEach(async () => {
+        jest.clearAllMocks();
         const button = await screen.findByText(translations.buttons.facebook);
         await waitFor(() => expect(button).toBeVisible());
         fireEvent.click(button);
@@ -103,10 +116,18 @@ describe("AuthenticationContainer", () => {
       it("should start the sign-in sequence", () => {
         expect(authClient.signIn).toBeCalledWith("facebook");
       });
+
+      it("should generate an analytics event", () => {
+        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
+        expect(mockAnalyticsHook.event).toBeCalledWith(
+          Events.Auth.HandleLogin("facebook")
+        );
+      });
     });
 
     describe("when the github button is clicked", () => {
       beforeEach(async () => {
+        jest.clearAllMocks();
         const button = await screen.findByText(translations.buttons.github);
         await waitFor(() => expect(button).toBeVisible());
         fireEvent.click(button);
@@ -115,10 +136,18 @@ describe("AuthenticationContainer", () => {
       it("should start the sign-in sequence", () => {
         expect(authClient.signIn).toBeCalledWith("github");
       });
+
+      it("should generate an analytics event", () => {
+        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
+        expect(mockAnalyticsHook.event).toBeCalledWith(
+          Events.Auth.HandleLogin("github")
+        );
+      });
     });
 
     describe("when the google button is clicked", () => {
       beforeEach(async () => {
+        jest.clearAllMocks();
         const button = await screen.findByText(translations.buttons.google);
         await waitFor(() => expect(button).toBeVisible());
         fireEvent.click(button);
@@ -126,6 +155,13 @@ describe("AuthenticationContainer", () => {
 
       it("should start the sign-in sequence", () => {
         expect(authClient.signIn).toBeCalledWith("google");
+      });
+
+      it("should generate an analytics event", () => {
+        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
+        expect(mockAnalyticsHook.event).toBeCalledWith(
+          Events.Auth.HandleLogin("google")
+        );
       });
     });
   };
@@ -182,8 +218,9 @@ describe("AuthenticationContainer", () => {
         checkModal();
         checkLoginButtons();
 
-        describe("when the close button is clicked", () => {
+        describe("when the modal close button is clicked", () => {
           beforeEach(async () => {
+            jest.clearAllMocks();
             const button = await screen.findByTestId(
               testIDs.AuthenticationModalCloseButton
             );
@@ -198,6 +235,13 @@ describe("AuthenticationContainer", () => {
           it("should route to the correct url", () => {
             expect(mockRouter.back).toBeCalledTimes(1);
             expect(mockRouter.back).toBeCalledWith();
+          });
+
+          it("should generate an analytics event", () => {
+            expect(mockAnalyticsHook.event).toBeCalledTimes(1);
+            expect(mockAnalyticsHook.event).toBeCalledWith(
+              Events.Auth.CloseModal
+            );
           });
         });
       });

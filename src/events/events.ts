@@ -2,6 +2,29 @@ import EventDefinition from "./event.class";
 import type { ReportType } from "../types/analytics.types";
 
 const Events = {
+  Auth: {
+    CloseModal: new EventDefinition({
+      category: "AUTH",
+      label: "MODAL",
+      action: "AUTHENTICATION MODAL WAS CLOSED.",
+    }),
+    HandleLogin: (provider: string) =>
+      new EventDefinition({
+        category: "AUTH",
+        label: "LOGIN",
+        action: `LOGIN FLOW STARTED USING PROVIDER: ${provider}.`,
+      }),
+    Logout: new EventDefinition({
+      category: "AUTH",
+      label: "LOGOUT",
+      action: `LOGOUT FLOW STARTED.`,
+    }),
+    OpenModal: new EventDefinition({
+      category: "AUTH",
+      label: "MODAL",
+      action: "AUTHENTICATION MODAL WAS OPENED.",
+    }),
+  },
   LastFM: {
     ReportPresented: (title: ReportType) =>
       new EventDefinition({
@@ -27,11 +50,6 @@ const Events = {
       category: "MAIN",
       label: "ERROR",
       action: "Unspecified error was caught by the error boundary.",
-    }),
-    Contact: new EventDefinition({
-      category: "MAIN",
-      label: "CONTACT",
-      action: "Pressed contact button for external site.",
     }),
     Test: new EventDefinition({
       category: "TEST",

@@ -18,6 +18,7 @@ import {
   GoogleLoginButton,
 } from "react-social-login-buttons";
 import useColours from "../../hooks/colour";
+import AnalyticsWrapper from "../analytics/analytics.button/analytics.button.component";
 
 export const testIDs = {
   AuthenticationModalCloseButton: "AuthenticationCloseButton",
@@ -72,24 +73,30 @@ export default function Authentication({
                   direction={"column"}
                   data-testid={testIDs.AuthenticationLoginButtons}
                 >
-                  <FacebookLoginButton
-                    style={{ width: buttonWidth }}
-                    align={"center"}
-                    onClick={() => signIn("facebook")}
-                    text={t("buttons.facebook")}
-                  />
-                  <GithubLoginButton
-                    style={{ width: buttonWidth }}
-                    align={"center"}
-                    onClick={() => signIn("github")}
-                    text={t("buttons.github")}
-                  />
-                  <GoogleLoginButton
-                    style={{ width: buttonWidth }}
-                    align={"center"}
-                    onClick={() => signIn("google")}
-                    text={t("buttons.google")}
-                  />
+                  <AnalyticsWrapper buttonName={"Facebook Login"}>
+                    <FacebookLoginButton
+                      style={{ width: buttonWidth }}
+                      align={"center"}
+                      onClick={() => signIn("facebook")}
+                      text={t("buttons.facebook")}
+                    />
+                  </AnalyticsWrapper>
+                  <AnalyticsWrapper buttonName={"Github Login"}>
+                    <GithubLoginButton
+                      style={{ width: buttonWidth }}
+                      align={"center"}
+                      onClick={() => signIn("github")}
+                      text={t("buttons.github")}
+                    />
+                  </AnalyticsWrapper>
+                  <AnalyticsWrapper buttonName={"Google Login"}>
+                    <GoogleLoginButton
+                      style={{ width: buttonWidth }}
+                      align={"center"}
+                      onClick={() => signIn("google")}
+                      text={t("buttons.google")}
+                    />
+                  </AnalyticsWrapper>
                 </Flex>
               </Center>
             </ModalBody>
