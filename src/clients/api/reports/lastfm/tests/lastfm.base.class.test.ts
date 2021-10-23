@@ -23,7 +23,7 @@ describe("LastFMReport", () => {
   const requestEvent = new EventDefinition({
     category: "LAST.FM",
     label: "REQUEST",
-    action: `${reportType}: Request was sent to LAST.FM.`,
+    action: `${reportType}: REQUEST WAS SENT TO LAST.FM.`,
   });
 
   beforeEach(() => {
@@ -86,7 +86,7 @@ describe("LastFMReport", () => {
           new EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
-            action: `${reportType}: Request was made for an unknown username.`,
+            action: `${reportType}: REQUEST WAS MADE FOR AN UNKNOWN USERNAME.`,
           })
         );
       });
@@ -123,7 +123,7 @@ describe("LastFMReport", () => {
           new EventDefinition({
             category: "LAST.FM",
             label: "RESPONSE",
-            action: `${reportType}: Received report from LAST.FM.`,
+            action: `${reportType}: RECEIVED REPORT FROM LAST.FM.`,
           })
         );
       });
@@ -159,7 +159,7 @@ describe("LastFMReport", () => {
           new EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
-            action: `${reportType}: Request was ratelimited by LAST.FM.`,
+            action: `${reportType}: REQUEST WAS RATELIMITED BY LAST.FM.`,
           })
         );
       });
@@ -195,7 +195,7 @@ describe("LastFMReport", () => {
           new EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
-            action: `${reportType}: Unable to create a report.`,
+            action: `${reportType}: ERROR CREATING REPORT.`,
           })
         );
       });
@@ -231,7 +231,7 @@ describe("LastFMReport", () => {
           new EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
-            action: `${reportType}: An unauthorized report request was made.`,
+            action: `${reportType}: AN UNAUTHORIZED REPORT REQUEST WAS MADE.`,
           })
         );
       });
