@@ -15,7 +15,7 @@ jest.mock(
   () => createMockedComponent("AnalyticsWrapper")
 );
 
-jest.mock("next-auth/client", () => ({
+jest.mock("next-auth/react", () => ({
   useSession: () => mockUseSession(),
   signIn: jest.fn(),
   signOut: jest.fn(),
@@ -69,7 +69,7 @@ describe("NavSessionControl", () => {
 
   describe("when the user is logged in", () => {
     beforeEach(() => {
-      mockUseSession.mockReturnValue([{ user: true }, true]);
+      mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
       arrange();
     });
 
@@ -100,7 +100,7 @@ describe("NavSessionControl", () => {
 
   describe("when the user is NOT logged in", () => {
     beforeEach(() => {
-      mockUseSession.mockReturnValue([null, false]);
+      mockUseSession.mockReturnValue({ data: null, status: "unauthenticated" });
       arrange();
     });
 

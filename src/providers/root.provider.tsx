@@ -1,4 +1,4 @@
-import { Provider as SessionProvider } from "next-auth/client";
+import { SessionProvider } from "next-auth/react";
 import AnalyticsProvider from "./analytics/analytics.provider";
 import NavBarProvider from "./navbar/navbar.provider";
 import UserInterfaceRootProvider from "./ui/ui.root.provider";

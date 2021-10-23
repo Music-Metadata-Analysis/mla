@@ -5,7 +5,7 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
-import * as authClient from "next-auth/client";
+import * as authClient from "next-auth/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import translations from "../../../../public/locales/en/authentication.json";
 import Events from "../../../events/events";
@@ -15,7 +15,7 @@ import mockRouter from "../../../tests/fixtures/mock.router";
 import { testIDs } from "../authentication.component";
 import AuthenticationContainer from "../authentication.container";
 
-jest.mock("next-auth/client", () => ({
+jest.mock("next-auth/react", () => ({
   useSession: () => mockUseSession(),
   signIn: jest.fn(),
   signOut: jest.fn(),
@@ -177,7 +177,7 @@ describe("AuthenticationContainer", () => {
 
     describe("user is logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue([{}, true]);
+        mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
       });
 
       describe("when a callback is specified", () => {
@@ -259,7 +259,10 @@ describe("AuthenticationContainer", () => {
 
     describe("user is NOT logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue([null, false]);
+        mockUseSession.mockReturnValue({
+          data: null,
+          status: "unauthenticated",
+        });
         arrange();
       });
 
