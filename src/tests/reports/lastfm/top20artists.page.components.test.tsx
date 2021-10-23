@@ -33,7 +33,7 @@ describe("getStaticProps", () => {
     expect(getPageProps).toBeCalledTimes(1);
     expect(getPageProps).toBeCalledWith({
       pageKey: "lastfm",
-      translations: ["authentication", "cards", "lastfm"],
+      translations: ["cards", "lastfm"],
     });
   });
 });
