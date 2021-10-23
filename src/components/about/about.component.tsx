@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Container,
   Flex,
@@ -58,7 +59,14 @@ export default function About() {
             display: listVisible ? "inherit" : "none",
           }}
         >
-          <Container centerContent p={5} ml={2} fontSize={[12, 14, 14, "md"]}>
+          <Container
+            centerContent
+            pl={5}
+            pr={5}
+            pb={5}
+            ml={2}
+            fontSize={[12, 14, 14, "md"]}
+          >
             <UnorderedList data-testid={testIDs.AboutList}>
               <ListItem p={[0.5, 0.5, 0, 0]}>{t("aboutText1")}</ListItem>
               <ListItem p={[0.5, 0.5, 0, 0]}>{t("aboutText2")}</ListItem>
@@ -66,7 +74,7 @@ export default function About() {
             </UnorderedList>
           </Container>
         </div>
-        <Box mb={[3, 3, 7]}>
+        <Box mb={3}>
           <Text ml={2} fontSize={["xxs"]}>
             {t("creditText")}
           </Text>
@@ -75,7 +83,10 @@ export default function About() {
           <Flex align={"center"} justifyContent={"center"}>
             <ClickLink href={externalLinks.svs}>
               <DimOnHover>
-                <SVSIcon width={75} height={75} />
+                <Avatar
+                  icon={<SVSIcon width={75} height={75} />}
+                  width={[50, 50, 75]}
+                />
               </DimOnHover>
             </ClickLink>
             <Text ml={2} fontSize={["l", "xl", "2xl"]}>

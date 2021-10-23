@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Container,
   ListItem,
@@ -6,6 +7,7 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
+import { renderToString } from "react-dom/server";
 import translations from "../../../../public/locales/en/about.json";
 import externalLinks from "../../../config/external";
 import checkMockCall from "../../../tests/fixtures/mock.component.call";
@@ -72,9 +74,14 @@ describe("About", () => {
   describe("when rendered", () => {
     beforeEach(() => arrange());
 
-    it("should call SVSIcon as expected to display the logo", () => {
-      expect(SVSIcon).toBeCalledTimes(1);
-      checkMockCall(SVSIcon, { height: 75, width: 75 });
+    it("should call Avatar as expected to display the logo", () => {
+      expect(Avatar).toBeCalledTimes(1);
+      const call = (Avatar as jest.Mock).mock.calls[0][0];
+      expect(call.width).toStrictEqual([50, 50, 75]);
+      expect(renderToString(call.icon)).toBe(
+        renderToString(<SVSIcon width={75} height={75} />)
+      );
+      expect(Object.keys(call).length).toBe(2);
     });
 
     it("should call Billboard with the correct props", () => {
@@ -106,7 +113,7 @@ describe("About", () => {
       checkMockCall(
         Box,
         {
-          mb: [3, 3, 7],
+          mb: 3,
         },
         0
       );
@@ -125,7 +132,9 @@ describe("About", () => {
         Container,
         {
           centerContent: true,
-          p: 5,
+          pb: 5,
+          pl: 5,
+          pr: 5,
           ml: 2,
           fontSize: [12, 14, 14, "md"],
         },
