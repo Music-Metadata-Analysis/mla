@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Selected, UnSelected } from "./navbar.link.styles";
+import { StyledSelection } from "./navbar.link.styles";
 import useColour from "../../../hooks/colour";
 import type { ButtonClickHandlerType } from "../../../types/analytics.types";
 import type { MouseEvent } from "react";
@@ -19,7 +19,6 @@ const NavLink = ({
 }: NavLinkProps) => {
   const router = useRouter();
   const { navButtonColour, transparent } = useColour();
-  const Element = selected ? Selected : UnSelected;
 
   const navigate = (
     e: MouseEvent<HTMLElement>,
@@ -31,14 +30,14 @@ const NavLink = ({
   };
 
   return (
-    <Element
+    <StyledSelection
       borderColor={selected ? navButtonColour.selectedBackground : transparent}
       onClick={(e) => {
         e.currentTarget.blur();
         navigate(e, children as string, href);
       }}
-      px={2}
-      py={1}
+      pl={2}
+      pr={2}
       rounded={"md"}
       _hover={{
         textDecoration: "none",
@@ -47,7 +46,7 @@ const NavLink = ({
       bg={navButtonColour.background}
     >
       {children}
-    </Element>
+    </StyledSelection>
   );
 };
 

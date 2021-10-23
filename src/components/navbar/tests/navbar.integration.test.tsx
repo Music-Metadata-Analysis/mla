@@ -25,6 +25,10 @@ jest.mock("../../../hooks/analytics", () => ({
   default: () => mockAnalyticsHook,
 }));
 
+jest.mock("../navbar.session.control/navbar.session.control.component", () =>
+  jest.fn(() => <div>MockNavBarSessionController</div>)
+);
+
 const getMockedUserProperties = () => mockUserProperties;
 let mockUserProperties: UserStateInterface = {
   data: {

@@ -53,8 +53,8 @@ describe("NavBarLink", () => {
         borderColor: selected
           ? mockColourHook.navButtonColour.selectedBackground
           : mockColourHook.transparent,
-        px: 2,
-        py: 1,
+        pr: 2,
+        pl: 2,
         rounded: "md",
       },
       0,
@@ -77,7 +77,6 @@ describe("NavBarLink", () => {
     it("should have the correct styles", async () => {
       const link = await screen.findByText(linkText);
       expect(link).toHaveStyleRule("width", "100%");
-      expect(link).not.toHaveStyleRule("margin", "3px");
       expect(link).toHaveStyleRule("border-radius", "10px");
       expect(link).toHaveStyleRule("border-width", "3px");
     });
@@ -97,9 +96,8 @@ describe("NavBarLink", () => {
     it("should have the correct styles", async () => {
       const link = await screen.findByText(linkText);
       expect(link).toHaveStyleRule("width", "100%");
-      expect(link).toHaveStyleRule("margin", "3px");
-      expect(link).not.toHaveStyleRule("border-radius", "10px");
-      expect(link).not.toHaveStyleRule("border-width", "3px");
+      expect(link).toHaveStyleRule("border-radius", "10px");
+      expect(link).toHaveStyleRule("border-width", "3px");
     });
 
     describe("when a button is clicked", () => {
