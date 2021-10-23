@@ -1,14 +1,17 @@
 import type { EventArgs } from "react-ga";
 
 export type EventDefinitionType = {
-  category: "LAST.FM" | "MAIN" | "TEST";
+  category: "AUTH" | "LAST.FM" | "MAIN" | "TEST";
   label:
+    | "MODAL"
     | "BUTTON"
     | "CONTACT"
     | "DATA: ALBUM"
     | "DATA: ARTIST"
     | "ERROR"
     | "EXTERNAL_LINK"
+    | "LOGIN"
+    | "LOGOUT"
     | "REPORT"
     | "REQUEST"
     | "RESPONSE"
