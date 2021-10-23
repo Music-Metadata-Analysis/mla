@@ -26,7 +26,7 @@ describe("pageProps", () => {
   let generatedFunction: ReturnType<typeof pagePropsGenerator>;
   let returnValue: mockReturnValueType;
   const mockLocale = "en";
-  const mockDefaultTranslations = ["main", "navbar"];
+  const mockDefaultTranslations = ["authentication", "main", "navbar"];
   const mockTranslations = ["one", "two"];
   const mockPageKey = "test";
 

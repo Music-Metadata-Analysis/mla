@@ -66,7 +66,7 @@ describe("NavBarColorModeToggle", () => {
           colorScheme: "yellow",
           isChecked: true,
           ml: 2,
-          mr: 5,
+          mr: 3,
         },
         0,
         ["onChange"]
@@ -122,7 +122,7 @@ describe("NavBarColorModeToggle", () => {
           colorScheme: "yellow",
           isChecked: false,
           ml: 2,
-          mr: 5,
+          mr: 3,
         },
         0,
         ["onChange"]
