@@ -20,6 +20,7 @@ import {
 import translations from "../../../../public/locales/en/authentication.json";
 import mockColourHook from "../../../hooks/tests/colour.hook.mock";
 import checkMockCall from "../../../tests/fixtures/mock.component.call";
+import AnalyticsWrapper from "../../analytics/analytics.button/analytics.button.component";
 import AuthenticationComponent, { testIDs } from "../authentication.component";
 
 jest.mock("@chakra-ui/react", () => {
@@ -51,6 +52,17 @@ jest.mock("react-social-login-buttons", () => ({
 jest.mock("../../../hooks/colour", () => {
   return () => mockColourHook;
 });
+
+jest.mock("../../analytics/analytics.button/analytics.button.component", () =>
+  createMockedComponent("AnalyticsWrapper")
+);
+
+const createMockedComponent = (name: string) => {
+  const {
+    factoryInstance,
+  } = require("../../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
+};
 
 const mockOnClose = jest.fn();
 const mockSignIn = jest.fn();
@@ -144,6 +156,31 @@ describe("AuthenticationComponent", () => {
       "data-testid": testIDs.AuthenticationLoginButtons,
       direction: "column",
     });
+  });
+
+  it("should call the AnalyticsWrapper component correctly", () => {
+    expect(AnalyticsWrapper).toBeCalledTimes(3);
+    checkMockCall(
+      AnalyticsWrapper,
+      {
+        buttonName: "Facebook Login",
+      },
+      0
+    );
+    checkMockCall(
+      AnalyticsWrapper,
+      {
+        buttonName: "Github Login",
+      },
+      1
+    );
+    checkMockCall(
+      AnalyticsWrapper,
+      {
+        buttonName: "Google Login",
+      },
+      2
+    );
   });
 
   it("should call the FacebookLoginButton component correctly", () => {
