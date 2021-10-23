@@ -1,5 +1,5 @@
 import { useDisclosure } from "@chakra-ui/react";
-import { useSession, signIn } from "next-auth/client";
+import { useSession, signIn, RedirectableProvider } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import AuthenticationComponent from "./authentication.component";
@@ -17,7 +17,9 @@ export default function Authentication({
 }: AuthenticationProps) {
   const analytics = useAnalytics();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [authSession, authStatus] = useSession();
+  const { data: authSession, status: authStatus } = useSession({
+    required: false,
+  });
   const router = useRouter();
 
   useEffect(() => {
@@ -28,10 +30,10 @@ export default function Authentication({
   }, [hidden, isOpen]);
 
   useEffect(() => {
-    if (!authSession && !isOpen && !authStatus) {
+    if (!authSession && !isOpen && authStatus === "unauthenticated") {
       onOpen();
     }
-    if (authSession && isOpen && authStatus) {
+    if (authSession && isOpen && authStatus !== "unauthenticated") {
       onClose();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,7 +47,7 @@ export default function Authentication({
 
   const handleSignIn = (provider: string) => {
     analytics.event(Events.Auth.HandleLogin(provider));
-    signIn(provider);
+    signIn(provider as RedirectableProvider);
   };
 
   if (hidden) return null;

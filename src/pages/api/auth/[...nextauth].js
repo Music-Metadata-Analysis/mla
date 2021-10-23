@@ -6,9 +6,11 @@ import GoogleProvider from "next-auth/providers/google";
 export default NextAuth({
   jwt: {
     secret: process.env.AUTH_MASTER_JWT_SECRET,
-    verificationOptions: {
-      algorithms: ["HS512"],
-    },
+    signingKey: process.env.AUTH_MASTER_JWT_SIGNING_KEY,
+  },
+  session: {
+    maxAge: 7 * 24 * 60 * 60,
+    jwt: true,
   },
   providers: [
     FacebookProvider({

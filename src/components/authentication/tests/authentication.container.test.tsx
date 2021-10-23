@@ -3,7 +3,7 @@ import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import AuthenticationComponent from "../authentication.component";
 import AuthenticationContainer from "../authentication.container";
 
-jest.mock("next-auth/client", () => ({
+jest.mock("next-auth/react", () => ({
   useSession: () => mockUseSession(),
   signIn: jest.fn(),
   signOut: jest.fn(),
@@ -42,7 +42,7 @@ describe("AuthenticationContainer", () => {
 
     describe("user is logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue([{ user: true }, true]);
+        mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
         arrange();
       });
 
@@ -70,7 +70,10 @@ describe("AuthenticationContainer", () => {
 
     describe("user is NOT logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue([null, false]);
+        mockUseSession.mockReturnValue({
+          data: null,
+          status: "unauthenticated",
+        });
         arrange();
       });
 
@@ -107,7 +110,7 @@ describe("AuthenticationContainer", () => {
 
     describe("user is logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue([{ user: true }, true]);
+        mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
         arrange();
       });
 
@@ -134,7 +137,10 @@ describe("AuthenticationContainer", () => {
 
     describe("user is NOT logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue([null, false]);
+        mockUseSession.mockReturnValue({
+          data: null,
+          status: "unauthenticated",
+        });
         arrange();
       });
 
