@@ -2,17 +2,20 @@ import { render } from "@testing-library/react";
 import {
   FacebookLoginButton,
   GithubLoginButton,
-  GoogleLoginButton,
 } from "react-social-login-buttons";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import AnalyticsWrapper from "../../../analytics/analytics.button/analytics.button.component";
+import SpotifyLoginButton from "../../../button/button.spotify/spotify.login";
 import SignInButtons from "../signin.buttons";
 
 jest.mock("react-social-login-buttons", () => ({
   FacebookLoginButton: jest.fn(() => "FacebookLoginButton"),
   GithubLoginButton: jest.fn(() => "GithubLoginButton"),
-  GoogleLoginButton: jest.fn(() => "GoogleLoginButton"),
 }));
+
+jest.mock("../../../button/button.spotify/spotify.login", () =>
+  jest.fn(() => "SpotifyLoginButton")
+);
 
 jest.mock(
   "../../../analytics/analytics.button/analytics.button.component",
@@ -67,7 +70,7 @@ describe("AuthenticationComponent", () => {
     checkMockCall(
       AnalyticsWrapper,
       {
-        buttonName: "Google Login",
+        buttonName: "Spotify Login",
       },
       2
     );
@@ -101,14 +104,14 @@ describe("AuthenticationComponent", () => {
     );
   });
 
-  it("should call the GoogleLoginButton component correctly", () => {
-    expect(GoogleLoginButton).toBeCalledTimes(1);
+  it("should call the SpotifyLoginButton component correctly", () => {
+    expect(SpotifyLoginButton).toBeCalledTimes(1);
     checkMockCall(
-      GoogleLoginButton,
+      SpotifyLoginButton,
       {
         style: { width: buttonWidth },
         align: "center",
-        text: "t(buttons.google)",
+        text: "t(buttons.spotify)",
       },
       0,
       ["onClick"]
