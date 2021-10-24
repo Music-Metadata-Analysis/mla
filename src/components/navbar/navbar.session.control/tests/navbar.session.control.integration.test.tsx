@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { signOut } from "next-auth/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import routes from "../../../../config/routes";
 import mockRouter from "../../../../tests/fixtures/mock.router";
-import { testIDs as modalIDs } from "../../../authentication/authentication.component";
 import Authentication from "../../../authentication/authentication.container";
+import { testIDs as modalIDs } from "../../../authentication/modals/modal.signin.component";
 import NavBarSessionControl from "../navbar.session.control.component";
 
 jest.mock(
@@ -58,9 +58,9 @@ describe("NavSessionControl", () => {
         fireEvent.click(button);
       });
 
-      it("should route to home ", async () => {
-        expect(mockRouter.push).toBeCalledTimes(1);
-        expect(mockRouter.push).toBeCalledWith(routes.home);
+      it("should call signOut once", async () => {
+        expect(signOut).toBeCalledTimes(1);
+        expect(signOut).toBeCalledWith();
       });
     });
   });

@@ -12,13 +12,8 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
-import {
-  FacebookLoginButton,
-  GithubLoginButton,
-  GoogleLoginButton,
-} from "react-social-login-buttons";
-import useColours from "../../hooks/colour";
-import AnalyticsWrapper from "../analytics/analytics.button/analytics.button.component";
+import useColours from "../../../hooks/colour";
+import SignInButtons from "../buttons/signin.buttons";
 
 export const testIDs = {
   AuthenticationModalCloseButton: "AuthenticationCloseButton",
@@ -29,16 +24,17 @@ export const testIDs = {
 export interface AuthenticationProps {
   isOpen: boolean;
   onClose: () => void;
+  setClicked: (value: boolean) => void;
   signIn: (provider: string) => void;
 }
 
-export default function Authentication({
+export default function ModalComponent({
   isOpen,
   onClose,
+  setClicked,
   signIn,
 }: AuthenticationProps) {
   const { t } = useTranslation("authentication");
-  const buttonWidth = 250;
   const { modalColour } = useColours();
 
   return (
@@ -73,30 +69,11 @@ export default function Authentication({
                   direction={"column"}
                   data-testid={testIDs.AuthenticationLoginButtons}
                 >
-                  <AnalyticsWrapper buttonName={"Facebook Login"}>
-                    <FacebookLoginButton
-                      style={{ width: buttonWidth }}
-                      align={"center"}
-                      onClick={() => signIn("facebook")}
-                      text={t("buttons.facebook")}
-                    />
-                  </AnalyticsWrapper>
-                  <AnalyticsWrapper buttonName={"Github Login"}>
-                    <GithubLoginButton
-                      style={{ width: buttonWidth }}
-                      align={"center"}
-                      onClick={() => signIn("github")}
-                      text={t("buttons.github")}
-                    />
-                  </AnalyticsWrapper>
-                  <AnalyticsWrapper buttonName={"Google Login"}>
-                    <GoogleLoginButton
-                      style={{ width: buttonWidth }}
-                      align={"center"}
-                      onClick={() => signIn("google")}
-                      text={t("buttons.google")}
-                    />
-                  </AnalyticsWrapper>
+                  <SignInButtons
+                    t={t}
+                    signIn={signIn}
+                    setClicked={setClicked}
+                  />
                 </Flex>
               </Center>
             </ModalBody>

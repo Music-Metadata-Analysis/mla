@@ -12,21 +12,15 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import {
-  FacebookLoginButton,
-  GithubLoginButton,
-  GoogleLoginButton,
-} from "react-social-login-buttons";
-import translations from "../../../../public/locales/en/authentication.json";
-import mockColourHook from "../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../tests/fixtures/mock.component.call";
-import AnalyticsWrapper from "../../analytics/analytics.button/analytics.button.component";
-import AuthenticationComponent, { testIDs } from "../authentication.component";
+import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
+import checkMockCall from "../../../../tests/fixtures/mock.component.call";
+import SignInButtons from "../../buttons/signin.buttons";
+import ModalComponent, { testIDs } from "../modal.signin.component";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
   const instance = factoryInstance.create([
     "Box",
     "Center",
@@ -43,33 +37,19 @@ jest.mock("@chakra-ui/react", () => {
   return instance;
 });
 
-jest.mock("react-social-login-buttons", () => ({
-  FacebookLoginButton: jest.fn(() => "FacebookLoginButton"),
-  GithubLoginButton: jest.fn(() => "GithubLoginButton"),
-  GoogleLoginButton: jest.fn(() => "GoogleLoginButton"),
-}));
+jest.mock("../../buttons/signin.buttons", () =>
+  jest.fn(() => <div>MockSignInButtons</div>)
+);
 
-jest.mock("../../../hooks/colour", () => {
+jest.mock("../../../../hooks/colour", () => {
   return () => mockColourHook;
 });
 
-jest.mock("../../analytics/analytics.button/analytics.button.component", () =>
-  createMockedComponent("AnalyticsWrapper")
-);
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("../../../tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
-
 const mockOnClose = jest.fn();
 const mockSignIn = jest.fn();
+const mockSetClicked = jest.fn();
 
-describe("AuthenticationComponent", () => {
-  const buttonWidth = 250;
-
+describe("AuthenticationModal", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     arrange(true);
@@ -77,9 +57,10 @@ describe("AuthenticationComponent", () => {
 
   const arrange = (isOpen: boolean) => {
     render(
-      <AuthenticationComponent
+      <ModalComponent
         isOpen={isOpen}
         signIn={mockSignIn}
+        setClicked={mockSetClicked}
         onClose={mockOnClose}
       />
     );
@@ -158,71 +139,13 @@ describe("AuthenticationComponent", () => {
     });
   });
 
-  it("should call the AnalyticsWrapper component correctly", () => {
-    expect(AnalyticsWrapper).toBeCalledTimes(3);
-    checkMockCall(
-      AnalyticsWrapper,
-      {
-        buttonName: "Facebook Login",
-      },
-      0
-    );
-    checkMockCall(
-      AnalyticsWrapper,
-      {
-        buttonName: "Github Login",
-      },
-      1
-    );
-    checkMockCall(
-      AnalyticsWrapper,
-      {
-        buttonName: "Google Login",
-      },
-      2
-    );
-  });
-
-  it("should call the FacebookLoginButton component correctly", () => {
-    expect(FacebookLoginButton).toBeCalledTimes(1);
-    checkMockCall(
-      FacebookLoginButton,
-      {
-        style: { width: buttonWidth },
-        align: "center",
-        text: translations.buttons.facebook,
-      },
-      0,
-      ["onClick"]
-    );
-  });
-
-  it("should call the FacebookLoginButton component correctly", () => {
-    expect(GithubLoginButton).toBeCalledTimes(1);
-    checkMockCall(
-      GithubLoginButton,
-      {
-        style: { width: buttonWidth },
-        align: "center",
-        text: translations.buttons.github,
-      },
-      0,
-      ["onClick"]
-    );
-  });
-
-  it("should call the FacebookLoginButton component correctly", () => {
-    expect(GoogleLoginButton).toBeCalledTimes(1);
-    checkMockCall(
-      GoogleLoginButton,
-      {
-        style: { width: buttonWidth },
-        align: "center",
-        text: translations.buttons.google,
-      },
-      0,
-      ["onClick"]
-    );
+  it("should call the SignInButtons component correctly", () => {
+    expect(SignInButtons).toBeCalledTimes(1);
+    const call = (SignInButtons as jest.Mock).mock.calls[0][0];
+    expect(call.signIn).toBe(mockSignIn);
+    expect(call.setClicked).toBe(mockSetClicked);
+    expect(typeof call.t).toBe("function");
+    expect(Object.keys(call).length).toBe(3);
   });
 
   it("should call the ModalFooter component correctly", () => {
