@@ -1,0 +1,35 @@
+import NextAuth from "next-auth";
+import FacebookProvider from "next-auth/providers/facebook";
+import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
+import type { NextApiRequest, NextApiResponse } from "next";
+
+export default async function auth(req: NextApiRequest, res: NextApiResponse) {
+  return await NextAuth(req, res, {
+    jwt: {
+      secret: process.env.AUTH_MASTER_JWT_SECRET,
+      signingKey: process.env.AUTH_MASTER_JWT_SIGNING_KEY,
+    },
+    session: {
+      maxAge: 7 * 24 * 60 * 60,
+      jwt: true,
+    },
+    providers: [
+      // @ts-expect-error next-auth library has some typing issues they are working on
+      FacebookProvider({
+        clientId: process.env.AUTH_FACEBOOK_ID,
+        clientSecret: process.env.AUTH_FACEBOOK_SECRET,
+      }),
+      GithubProvider({
+        clientId: process.env.AUTH_GITHUB_ID,
+        clientSecret: process.env.AUTH_GITHUB_SECRET,
+      }),
+      // @ts-expect-error next-auth library has some typing issues they are working on
+      GoogleProvider({
+        clientId: process.env.AUTH_GOOGLE_ID,
+        clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      }),
+    ],
+    secret: process.env.AUTH_MASTER_SECRET_KEY,
+  });
+}
