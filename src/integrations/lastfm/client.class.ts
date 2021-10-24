@@ -22,7 +22,7 @@ class LastFmClientAdapter implements LastFMClientInterface {
   constructor(secret_key: string) {
     this.secret_key = secret_key;
     this.externalClient = new LastFm(this.secret_key);
-    this.cache = new S3Cache();
+    this.cache = new S3Cache(process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME);
   }
 
   private createProxyCompatibleError(
