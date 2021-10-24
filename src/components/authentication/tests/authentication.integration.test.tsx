@@ -10,10 +10,10 @@ import { RouterContext } from "next/dist/shared/lib/router-context";
 import translations from "../../../../public/locales/en/authentication.json";
 import Events from "../../../events/events";
 import mockAnalyticsHook from "../../../hooks/tests/analytics.mock.hook";
-import ChakraProvider from "../../../providers/ui/ui.chakra/ui.chakra.provider";
 import mockRouter from "../../../tests/fixtures/mock.router";
-import { testIDs } from "../authentication.component";
 import AuthenticationContainer from "../authentication.container";
+import { testIDs as AuthModalTestIDs } from "../modals/modal.signin.component";
+import { testIDs as SpinnerModalTestIDs } from "../modals/modal.spinner.component";
 
 jest.mock("next-auth/react", () => ({
   useSession: () => mockUseSession(),
@@ -47,23 +47,23 @@ describe("AuthenticationContainer", () => {
   const arrange = () => {
     render(
       <RouterContext.Provider value={mockRouter}>
-        <ChakraProvider>
-          <AuthenticationContainer onModalClose={mockCallBack} />
-        </ChakraProvider>
+        <AuthenticationContainer onModalClose={mockCallBack} />
       </RouterContext.Provider>
     );
   };
 
   const checkModal = () => {
     it("should display the modal title text", async () => {
-      const title = await screen.findByTestId(testIDs.AuthenticationModalTitle);
+      const title = await screen.findByTestId(
+        AuthModalTestIDs.AuthenticationModalTitle
+      );
       await waitFor(() => expect(title).toBeVisible());
       expect(await within(title).findByText(translations.title)).toBeTruthy();
     });
 
     it("should display the modal close button", async () => {
       const button = await screen.findByTestId(
-        testIDs.AuthenticationModalCloseButton
+        AuthModalTestIDs.AuthenticationModalCloseButton
       );
       await waitFor(() => expect(button).toBeVisible());
     });
@@ -77,7 +77,7 @@ describe("AuthenticationContainer", () => {
   const checkLoginButtons = () => {
     it("should display the modal facebook button", async () => {
       const buttons = await screen.findByTestId(
-        testIDs.AuthenticationLoginButtons
+        AuthModalTestIDs.AuthenticationLoginButtons
       );
       await waitFor(() => expect(buttons).toBeVisible());
       expect(
@@ -87,7 +87,7 @@ describe("AuthenticationContainer", () => {
 
     it("should display the modal github button", async () => {
       const buttons = await screen.findByTestId(
-        testIDs.AuthenticationLoginButtons
+        AuthModalTestIDs.AuthenticationLoginButtons
       );
       await waitFor(() => expect(buttons).toBeVisible());
       expect(
@@ -97,13 +97,40 @@ describe("AuthenticationContainer", () => {
 
     it("should display the modal google button", async () => {
       const buttons = await screen.findByTestId(
-        testIDs.AuthenticationLoginButtons
+        AuthModalTestIDs.AuthenticationLoginButtons
       );
       await waitFor(() => expect(buttons).toBeVisible());
       expect(
         await within(buttons).findByText(translations.buttons.google)
       ).toBeTruthy();
     });
+
+    const checkModalSwitch = () => {
+      it("should close the authentication modal", async () => {
+        await waitFor(
+          () =>
+            expect(
+              screen.queryByTestId(AuthModalTestIDs.AuthenticationModalTitle)
+            ).toBeNull
+        );
+      });
+
+      it("should open the spinner modal, and display the title", async () => {
+        expect(
+          await screen.findByTestId(
+            SpinnerModalTestIDs.AuthenticationSpinnerModalTitle
+          )
+        ).toBeTruthy();
+      });
+
+      it("should open the spinner modal, and display the spinner", async () => {
+        expect(
+          await screen.findByTestId(
+            SpinnerModalTestIDs.AuthenticationSpinnerModalSpinner
+          )
+        ).toBeTruthy();
+      });
+    };
 
     describe("when the facebook button is clicked", () => {
       beforeEach(async () => {
@@ -123,6 +150,8 @@ describe("AuthenticationContainer", () => {
           Events.Auth.HandleLogin("facebook")
         );
       });
+
+      checkModalSwitch();
     });
 
     describe("when the github button is clicked", () => {
@@ -143,6 +172,8 @@ describe("AuthenticationContainer", () => {
           Events.Auth.HandleLogin("github")
         );
       });
+
+      checkModalSwitch();
     });
 
     describe("when the google button is clicked", () => {
@@ -163,6 +194,8 @@ describe("AuthenticationContainer", () => {
           Events.Auth.HandleLogin("google")
         );
       });
+
+      checkModalSwitch();
     });
   };
 
@@ -192,7 +225,7 @@ describe("AuthenticationContainer", () => {
         describe("when the close button is clicked", () => {
           beforeEach(async () => {
             const button = await screen.findByTestId(
-              testIDs.AuthenticationModalCloseButton
+              AuthModalTestIDs.AuthenticationModalCloseButton
             );
             await waitFor(() => expect(button).toBeVisible());
             fireEvent.click(button);
@@ -222,7 +255,7 @@ describe("AuthenticationContainer", () => {
           beforeEach(async () => {
             jest.clearAllMocks();
             const button = await screen.findByTestId(
-              testIDs.AuthenticationModalCloseButton
+              AuthModalTestIDs.AuthenticationModalCloseButton
             );
             await waitFor(() => expect(button).toBeVisible());
             fireEvent.click(button);
@@ -268,7 +301,7 @@ describe("AuthenticationContainer", () => {
 
       it("should NOT display the modal title text", async () => {
         expect(
-          screen.queryByTestId(testIDs.AuthenticationModalTitle)
+          screen.queryByTestId(AuthModalTestIDs.AuthenticationModalTitle)
         ).toBeNull();
       });
     });
