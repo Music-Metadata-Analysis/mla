@@ -1,8 +1,9 @@
 import { useDisclosure } from "@chakra-ui/react";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import AuthenticationComponent from "./authentication.component";
+import { useEffect, useState } from "react";
+import SignInModal from "./modals/modal.signin.component";
+import SpinnerModal from "./modals/modal.spinner.component";
 import Events from "../../events/events";
 import useAnalytics from "../../hooks/analytics";
 
@@ -17,8 +18,9 @@ export default function Authentication({
 }: AuthenticationProps) {
   const analytics = useAnalytics();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data: authSession, status: authStatus } = useSession();
+  const { status: authStatus } = useSession();
   const router = useRouter();
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     if (isOpen && !hidden) {
@@ -28,14 +30,14 @@ export default function Authentication({
   }, [hidden, isOpen]);
 
   useEffect(() => {
-    if (!authSession && !isOpen && authStatus === "unauthenticated") {
+    if (!isOpen && authStatus === "unauthenticated") {
       onOpen();
     }
-    if (authSession && isOpen && authStatus !== "unauthenticated") {
+    if (authStatus !== "unauthenticated") {
       onClose();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authSession, authStatus]);
+  }, [authStatus]);
 
   const handleClose = () => {
     analytics.event(Events.Auth.CloseModal);
@@ -50,11 +52,14 @@ export default function Authentication({
 
   if (hidden) return null;
 
+  if (clicked) return <SpinnerModal onClose={onClose} />;
+
   return (
-    <AuthenticationComponent
+    <SignInModal
       signIn={handleSignIn}
       isOpen={isOpen}
       onClose={handleClose}
+      setClicked={setClicked}
     />
   );
 }
