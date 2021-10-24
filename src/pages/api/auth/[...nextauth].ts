@@ -2,7 +2,9 @@ import NextAuth from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import S3Profile from "../../../clients/s3/s3profile.class";
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { extendedTypes } from "next-auth";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   return await NextAuth(req, res, {
@@ -31,5 +33,11 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       }),
     ],
     secret: process.env.AUTH_MASTER_SECRET_KEY,
+    events: {
+      async signIn(message: extendedTypes.SignInMessageInterface) {
+        const s3Client = new S3Profile(process.env.AUTH_EMAILS_BUCKET_NAME);
+        await s3Client.writeProfileToS3(message.profile);
+      },
+    },
   });
 }

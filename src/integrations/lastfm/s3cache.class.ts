@@ -1,27 +1,17 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 import Scraper from "./scraper.class";
+import S3BaseClient from "../../clients/s3/s3.base.client.class";
 
-export default class S3Cache {
-  awsRegion: string;
-  cacheBucketName: string;
+export default class S3Cache extends S3BaseClient {
   cloudFrontDomainName: string;
-  s3client: S3Client;
   scraper: Scraper;
   scraperRetries = 2;
   defaultResponse = "";
 
-  constructor() {
-    this.awsRegion = process.env.LASTFM_CACHE_AWS_REGION;
-    this.cacheBucketName = process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME;
+  constructor(bucketName: string) {
+    super(bucketName);
     this.cloudFrontDomainName =
       process.env.LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME;
-    this.s3client = new S3Client({
-      region: process.env.LASTFM_CACHE_AWS_REGION,
-      credentials: {
-        accessKeyId: process.env.LASTFM_CACHE_AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.LASTFM_CACHE_AWS_SECRET_ACCESS_KEY,
-      },
-    });
     this.scraper = new Scraper();
   }
 
@@ -43,7 +33,7 @@ export default class S3Cache {
             .then(async (response) => {
               const command = new PutObjectCommand({
                 Body: response,
-                Bucket: this.cacheBucketName,
+                Bucket: this.bucketName,
                 Key: artistName,
                 ContentType: "text/plain",
               });
