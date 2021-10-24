@@ -1,9 +1,9 @@
 import {
   FacebookLoginButton,
   GithubLoginButton,
-  GoogleLoginButton,
 } from "react-social-login-buttons";
 import AnalyticsWrapper from "../../analytics/analytics.button/analytics.button.component";
+import SpotifyLoginButton from "../../button/button.spotify/spotify.login";
 import type { TFunction } from "next-i18next";
 
 export interface AuthenticationProviderProps {
@@ -42,12 +42,12 @@ export default function SignInButtons({
           text={t("buttons.github")}
         />
       </AnalyticsWrapper>
-      <AnalyticsWrapper buttonName={"Google Login"}>
-        <GoogleLoginButton
+      <AnalyticsWrapper buttonName={"Spotify Login"}>
+        <SpotifyLoginButton
           style={{ width: buttonWidth }}
           align={"center"}
-          onClick={() => handleSignIn("google")}
-          text={t("buttons.google")}
+          onClick={() => handleSignIn("spotify")}
+          text={t("buttons.spotify")}
         />
       </AnalyticsWrapper>
     </>
