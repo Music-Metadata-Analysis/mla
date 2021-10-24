@@ -10,7 +10,7 @@ import type { MouseEvent } from "react";
 
 const NavSessionControl = () => {
   const { navButtonColour, transparent } = useColour();
-  const { data: authSession } = useSession();
+  const { data: authSession } = useSession({ required: false });
   const [showModal, setShowModal] = useState(false);
   const [buttonType, setButtonType] =
     useState<keyof typeof operations>("signIn");

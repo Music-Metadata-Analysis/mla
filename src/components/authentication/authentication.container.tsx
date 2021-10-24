@@ -18,7 +18,7 @@ export default function Authentication({
 }: AuthenticationProps) {
   const analytics = useAnalytics();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { status: authStatus } = useSession();
+  const { status: authStatus } = useSession({ required: false });
   const router = useRouter();
   const [clicked, setClicked] = useState(false);
 
