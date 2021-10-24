@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 import S3Cache from "../s3cache.class";
 import Scraper from "../scraper.class";
 
@@ -46,9 +46,9 @@ describe("S3Cache", () => {
   });
 
   const setupEnv = () => {
-    process.env.LASTFM_CACHE_AWS_ACCESS_KEY_ID = "MockValue1";
-    process.env.LASTFM_CACHE_AWS_SECRET_ACCESS_KEY = "MockValue2";
-    process.env.LASTFM_CACHE_AWS_REGION = "MockValue3";
+    process.env.MLA_AWS_ACCESS_KEY_ID = "MockValue1";
+    process.env.MLA_AWS_SECRET_ACCESS_KEY = "MockValue2";
+    process.env.MLA_AWS_REGION = "MockValue3";
     process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME = "MockValue4";
     process.env.LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME = "MockValue5";
   };
@@ -68,7 +68,7 @@ describe("S3Cache", () => {
   };
 
   const arrange = () => {
-    instance = new S3Cache();
+    instance = new S3Cache(process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME);
   };
 
   describe("when initialized", () => {
@@ -77,26 +77,12 @@ describe("S3Cache", () => {
     });
 
     it("should have the correct instance variables", () => {
-      expect(instance.awsRegion).toBe(process.env.LASTFM_CACHE_AWS_REGION);
-      expect(instance.cacheBucketName).toBe(
-        process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME
-      );
       expect(instance.cloudFrontDomainName).toBe(
         process.env.LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME
       );
-      expect(instance.s3client).toBe(MockS3Client);
       expect(instance.scraper).toBe(MockScraper);
-    });
-
-    it("should instantiate the S3 client correctly", () => {
-      expect(S3Client).toBeCalledTimes(1);
-      expect(S3Client).toBeCalledWith({
-        region: process.env.LASTFM_CACHE_AWS_REGION,
-        credentials: {
-          accessKeyId: process.env.LASTFM_CACHE_AWS_ACCESS_KEY_ID,
-          secretAccessKey: process.env.LASTFM_CACHE_AWS_SECRET_ACCESS_KEY,
-        },
-      });
+      expect(instance.scraperRetries).toBe(2);
+      expect(instance.defaultResponse).toBe("");
     });
 
     it("should instantiate the Scraper correctly", () => {
