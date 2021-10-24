@@ -1,6 +1,9 @@
 ---
 name: Music Analytics Project CI
 
+# CI_ENVIRONMENT_CONTENT - .env file content for the ci environment
+# STAGE_ENVIRONMENT_CONTENT - .env file content for the ci environment
+
 on:
   push:
   schedule:
@@ -29,19 +32,11 @@ jobs:
         run: |
           npm install
 
-      - name: Build -- Append AWS Environment Content
+      - name: Build -- Append CI Environment Content
         run: |
-          echo "LASTFM_CACHE_AWS_ACCESS_KEY_ID=\"${LASTFM_CACHE_AWS_ACCESS_KEY_ID}\"" >> .env.test
-          echo "LASTFM_CACHE_AWS_SECRET_ACCESS_KEY=\"${LASTFM_CACHE_AWS_SECRET_ACCESS_KEY}\"" >> .env.test
-          echo "LASTFM_CACHE_AWS_REGION=\"${LASTFM_CACHE_AWS_REGION}\"" >> .env.test
-          echo "LASTFM_CACHE_AWS_S3_BUCKET_NAME=\"${LASTFM_CACHE_AWS_S3_BUCKET_NAME}\"" >> .env.test
-          echo "LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME=\"${LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME}\"" >> .env.test
+          echo "${CI_ENVIRONMENT_CONTENT}" > .env.test
         env:
-          LASTFM_CACHE_AWS_ACCESS_KEY_ID: ${{ secrets.LASTFM_CACHE_AWS_ACCESS_KEY_ID }}
-          LASTFM_CACHE_AWS_SECRET_ACCESS_KEY: ${{ secrets.LASTFM_CACHE_AWS_SECRET_ACCESS_KEY }}
-          LASTFM_CACHE_AWS_REGION: ${{ secrets.LASTFM_CACHE_AWS_REGION }}
-          LASTFM_CACHE_AWS_S3_BUCKET_NAME: ${{ secrets.LASTFM_CACHE_AWS_S3_BUCKET_NAME }}
-          LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME: ${{ secrets.LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME }}
+          CI_ENVIRONMENT_CONTENT: ${{ secrets.CI_ENVIRONMENT_CONTENT }}
 
       - name: Build -- Unit Tests and Coverage
         run: |
@@ -69,19 +64,11 @@ jobs:
         env:
           WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
-      - name: Build -- Append AWS Environment Content
+      - name: Build -- Append Stage Environment Content
         run: |
-          echo "LASTFM_CACHE_AWS_ACCESS_KEY_ID=\"${LASTFM_CACHE_AWS_ACCESS_KEY_ID}\"" >> .env.test
-          echo "LASTFM_CACHE_AWS_SECRET_ACCESS_KEY=\"${LASTFM_CACHE_AWS_SECRET_ACCESS_KEY}\"" >> .env.test
-          echo "LASTFM_CACHE_AWS_REGION=\"${LASTFM_CACHE_AWS_REGION}\"" >> .env.test
-          echo "LASTFM_CACHE_AWS_S3_BUCKET_NAME=\"${LASTFM_CACHE_AWS_S3_BUCKET_NAME}\"" >> .env.test
-          echo "LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME=\"${LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME}\"" >> .env.test
+          echo "${STAGE_ENVIRONMENT_CONTENT}" > .env.local
         env:
-          LASTFM_CACHE_AWS_ACCESS_KEY_ID: ${{ secrets.LASTFM_CACHE_AWS_ACCESS_KEY_ID }}
-          LASTFM_CACHE_AWS_SECRET_ACCESS_KEY: ${{ secrets.LASTFM_CACHE_AWS_SECRET_ACCESS_KEY }}
-          LASTFM_CACHE_AWS_REGION: ${{ secrets.LASTFM_CACHE_AWS_REGION }}
-          LASTFM_CACHE_AWS_S3_BUCKET_NAME: ${{ secrets.LASTFM_CACHE_AWS_S3_BUCKET_NAME }}
-          LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME: ${{ secrets.LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME }}
+          STAGE_ENVIRONMENT_CONTENT: ${{ secrets.STAGE_ENVIRONMENT_CONTENT }}
 
       - name: Deploy Stage -- Trigger Netlify API
         if: github.ref == 'refs/heads/master'
