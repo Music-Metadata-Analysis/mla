@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import checkMockCall from "../../../tests/fixtures/mock.component.call";
-import AuthenticationComponent from "../authentication.component";
 import AuthenticationContainer from "../authentication.container";
+import ModalSignInComponent from "../modals/modal.signin.component";
 
 jest.mock("next-auth/react", () => ({
   useSession: () => mockUseSession(),
@@ -13,7 +13,7 @@ jest.mock("@chakra-ui/react", () => ({
   useDisclosure: () => mockUseDisclosure(),
 }));
 
-jest.mock("../authentication.component", () => {
+jest.mock("../modals/modal.signin.component", () => {
   return jest.fn(() => <div>MockComponent</div>);
 });
 
@@ -23,12 +23,17 @@ const mockUseSession = jest.fn();
 describe("AuthenticationContainer", () => {
   const mockOnOpen = jest.fn();
   const mockOnClose = jest.fn();
-  const authenticationComponentFunctionProps = ["signIn", "onOpen", "onClose"];
+  const ModalComponentFunctionProps = [
+    "signIn",
+    "onOpen",
+    "onClose",
+    "setClicked",
+  ];
 
   beforeEach(() => jest.clearAllMocks());
 
-  const arrange = () => {
-    render(<AuthenticationContainer />);
+  const arrange = (hidden = false) => {
+    render(<AuthenticationContainer hidden={hidden} />);
   };
 
   describe("modal is open", () => {
@@ -46,15 +51,15 @@ describe("AuthenticationContainer", () => {
         arrange();
       });
 
-      it("should call the AuthenticationComponent with the correct props", () => {
-        expect(AuthenticationComponent).toBeCalledTimes(1);
+      it("should call the ModalComponent with the correct props", () => {
+        expect(ModalSignInComponent).toBeCalledTimes(1);
         checkMockCall(
-          AuthenticationComponent,
+          ModalSignInComponent,
           {
             isOpen: true,
           },
           0,
-          ["signIn", "onOpen", "onClose"]
+          ModalComponentFunctionProps
         );
       });
 
@@ -77,15 +82,15 @@ describe("AuthenticationContainer", () => {
         arrange();
       });
 
-      it("should call the AuthenticationComponent with the correct props", () => {
-        expect(AuthenticationComponent).toBeCalledTimes(1);
+      it("should call the ModalComponent with the correct props", () => {
+        expect(ModalSignInComponent).toBeCalledTimes(1);
         checkMockCall(
-          AuthenticationComponent,
+          ModalSignInComponent,
           {
             isOpen: true,
           },
           0,
-          authenticationComponentFunctionProps
+          ModalComponentFunctionProps
         );
       });
 
@@ -114,20 +119,20 @@ describe("AuthenticationContainer", () => {
         arrange();
       });
 
-      it("should call the AuthenticationComponent with the correct props", () => {
-        expect(AuthenticationComponent).toBeCalledTimes(1);
+      it("should call the ModalComponent with the correct props", () => {
+        expect(ModalSignInComponent).toBeCalledTimes(1);
         checkMockCall(
-          AuthenticationComponent,
+          ModalSignInComponent,
           {
             isOpen: false,
           },
           0,
-          authenticationComponentFunctionProps
+          ModalComponentFunctionProps
         );
       });
 
-      it("should NOT close the modal on render", () => {
-        expect(mockOnClose).toBeCalledTimes(0);
+      it("should close the modal on render", () => {
+        expect(mockOnClose).toBeCalledTimes(1);
       });
 
       it("should NOT open the modal on render", () => {
@@ -144,15 +149,15 @@ describe("AuthenticationContainer", () => {
         arrange();
       });
 
-      it("should call the AuthenticationComponent with the correct props", () => {
-        expect(AuthenticationComponent).toBeCalledTimes(1);
+      it("should call the ModalComponent with the correct props", () => {
+        expect(ModalSignInComponent).toBeCalledTimes(1);
         checkMockCall(
-          AuthenticationComponent,
+          ModalSignInComponent,
           {
             isOpen: false,
           },
           0,
-          authenticationComponentFunctionProps
+          ModalComponentFunctionProps
         );
       });
 
@@ -163,6 +168,57 @@ describe("AuthenticationContainer", () => {
       it("should open the modal on render", () => {
         expect(mockOnOpen).toBeCalledTimes(1);
         expect(mockOnOpen).toBeCalledWith();
+      });
+    });
+  });
+
+  describe("modal is hidden", () => {
+    beforeEach(() => {
+      mockUseDisclosure.mockReturnValue({
+        isOpen: true,
+        onOpen: mockOnOpen,
+        onClose: mockOnClose,
+      });
+    });
+
+    describe("user is logged in", () => {
+      beforeEach(() => {
+        mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
+        arrange(true);
+      });
+
+      it("should NOT call the ModalComponent", () => {
+        expect(ModalSignInComponent).toBeCalledTimes(0);
+      });
+
+      it("should close the modal on render", () => {
+        expect(mockOnClose).toBeCalledTimes(1);
+      });
+
+      it("should NOT open the modal on render", () => {
+        expect(mockOnOpen).toBeCalledTimes(0);
+      });
+    });
+
+    describe("user is NOT logged in", () => {
+      beforeEach(() => {
+        mockUseSession.mockReturnValue({
+          data: null,
+          status: "unauthenticated",
+        });
+        arrange(true);
+      });
+
+      it("should NOT call the ModalComponent", () => {
+        expect(ModalSignInComponent).toBeCalledTimes(0);
+      });
+
+      it("should NOT close the modal on render", () => {
+        expect(mockOnClose).toBeCalledTimes(0);
+      });
+
+      it("should NOT open the modal on render", () => {
+        expect(mockOnOpen).toBeCalledTimes(0);
       });
     });
   });
