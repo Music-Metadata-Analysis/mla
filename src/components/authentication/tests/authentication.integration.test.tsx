@@ -95,13 +95,13 @@ describe("AuthenticationContainer", () => {
       ).toBeTruthy();
     });
 
-    it("should display the modal google button", async () => {
+    it("should display the modal spotify button", async () => {
       const buttons = await screen.findByTestId(
         AuthModalTestIDs.AuthenticationLoginButtons
       );
       await waitFor(() => expect(buttons).toBeVisible());
       expect(
-        await within(buttons).findByText(translations.buttons.google)
+        await within(buttons).findByText(translations.buttons.spotify)
       ).toBeTruthy();
     });
 
@@ -176,22 +176,22 @@ describe("AuthenticationContainer", () => {
       checkModalSwitch();
     });
 
-    describe("when the google button is clicked", () => {
+    describe("when the spotify button is clicked", () => {
       beforeEach(async () => {
         jest.clearAllMocks();
-        const button = await screen.findByText(translations.buttons.google);
+        const button = await screen.findByText(translations.buttons.spotify);
         await waitFor(() => expect(button).toBeVisible());
         fireEvent.click(button);
       });
 
       it("should start the sign-in sequence", () => {
-        expect(authClient.signIn).toBeCalledWith("google");
+        expect(authClient.signIn).toBeCalledWith("spotify");
       });
 
       it("should generate an analytics event", () => {
         expect(mockAnalyticsHook.event).toBeCalledTimes(1);
         expect(mockAnalyticsHook.event).toBeCalledWith(
-          Events.Auth.HandleLogin("google")
+          Events.Auth.HandleLogin("spotify")
         );
       });
 
