@@ -1,4 +1,4 @@
-import LastFMApiEndpointFactory from "../../../../../api/lastfm/endpoint.base.class";
+import LastFMApiEndpointFactory from "../../../../../backend/api/lastfm/endpoint.base.class";
 import apiRoutes from "../../../../../config/apiRoutes";
 
 class Top20AlbumsEndpointFactory extends LastFMApiEndpointFactory {

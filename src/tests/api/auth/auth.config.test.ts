@@ -3,7 +3,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
 import SpotifyProvider from "next-auth/providers/spotify";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
-import S3Profile from "../../../clients/s3/s3profile.class";
+import S3Profile from "../../../backend/integrations/auth/s3profile.class";
 import NextAuthConfig from "../../../pages/api/auth/[...nextauth]";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -11,7 +11,7 @@ jest.mock("next-auth", () => jest.fn());
 jest.mock("next-auth/providers/facebook", () => jest.fn());
 jest.mock("next-auth/providers/github", () => jest.fn());
 jest.mock("next-auth/providers/spotify", () => jest.fn());
-jest.mock("../../../clients/s3/s3profile.class", () =>
+jest.mock("../../../backend/integrations/auth/s3profile.class", () =>
   jest.fn(() => ({
     writeProfileToS3: mockWriteProfileToS3,
   }))
