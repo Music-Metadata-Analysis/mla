@@ -13,8 +13,10 @@ export interface APIEndpointRequest extends NextApiRequest {
 }
 
 export default abstract class LastFMApiEndpointFactory {
+  timeOut = 8000;
   proxy!: LastFMProxy;
   route!: string;
+  abort!: ReturnType<typeof setTimeout>;
 
   abstract getProxyResponse(userName: string): void;
 
@@ -39,10 +41,12 @@ export default abstract class LastFMApiEndpointFactory {
         } else if (!errors.isEmpty()) {
           res.status(400).json(status.STATUS_400_MESSAGE);
         } else {
+          this.createTimeout(req, res, next);
           this.proxy = new LastFMProxy();
           const proxyResponse = await this.getProxyResponse(req.body.userName);
           req.proxyResponse = "Success!";
           res.status(200).json(proxyResponse);
+          clearTimeout(this.abort);
         }
         next();
       }
@@ -70,5 +74,18 @@ export default abstract class LastFMApiEndpointFactory {
       res.status(502).json(status.STATUS_502_MESSAGE);
     }
     next();
+  }
+
+  createTimeout(
+    req: APIEndpointRequest,
+    res: NextApiResponse,
+    next: () => void
+  ) {
+    this.abort = setTimeout(() => {
+      req.proxyResponse = "Timed out! Please retry this request!";
+      res.setHeader("retry-after", 0);
+      res.status(503).json(status.STATUS_503_MESSAGE);
+      next();
+    }, this.timeOut);
   }
 }
