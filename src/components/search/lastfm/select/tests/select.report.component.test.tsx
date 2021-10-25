@@ -45,6 +45,8 @@ const createMock = (name: string) =>
   });
 
 describe("SearchSelection", () => {
+  const selectButtonWidths = [150, 150, 200];
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -64,7 +66,7 @@ describe("SearchSelection", () => {
 
     it("should call Flex as expected to center content", () => {
       expect(Flex).toBeCalledTimes(4);
-      checkMockCall(Flex, { align: "center", justify: "space-between" }, 0);
+      checkMockCall(Flex, { align: "center", justify: "center" }, 0);
       checkMockCall(
         Flex,
         {
@@ -72,7 +74,6 @@ describe("SearchSelection", () => {
           direction: "column",
           justify: "center",
           mb: 5,
-          w: "100%",
         },
         1
       );
@@ -98,7 +99,7 @@ describe("SearchSelection", () => {
 
     it("should call Box as expected to create a margin around the form", () => {
       expect(Box).toBeCalledTimes(3);
-      checkMockCall(Box, { mb: 5 }, 0);
+      checkMockCall(Box, { mb: 5, mr: 10 }, 0);
       checkMockCall(Box, { mr: 5 }, 1);
       checkMockCall(Box, { mr: 5 }, 1);
     });
@@ -113,8 +114,16 @@ describe("SearchSelection", () => {
 
     it("should call Button as expected", () => {
       expect(Button).toBeCalledTimes(2);
-      checkMockCall(Button, { analyticsName: "Top Albums", w: 200 }, 0);
-      checkMockCall(Button, { analyticsName: "Top Artists", w: 200 }, 1);
+      checkMockCall(
+        Button,
+        { analyticsName: "Top Albums", w: selectButtonWidths },
+        0
+      );
+      checkMockCall(
+        Button,
+        { analyticsName: "Top Artists", w: selectButtonWidths },
+        1
+      );
     });
   });
 });
