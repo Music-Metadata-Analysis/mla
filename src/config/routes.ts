@@ -1,6 +1,9 @@
 const routes = {
   about: "/about",
   home: "/",
+  legal: {
+    privacy: "/legal/privacy",
+  },
   reports: {
     lastfm: {
       top20albums: "/reports/lastfm/top20albums",
