@@ -12,6 +12,7 @@ export default function SearchSelection() {
   const { t } = useTranslation("lastfm");
   const router = useRouter();
   const [visibleIndicators, setVisibleIndicators] = useState(true);
+  const selectButtonWidths = [150, 150, 200];
 
   const hideIndicators = () => {
     if (window.innerWidth < config.select.indicatorWidth) {
@@ -43,27 +44,21 @@ export default function SearchSelection() {
 
   return (
     <Billboard title={t("select.title")}>
-      <Flex justify={"space-between"} align={"center"}>
-        <Box mb={5}>
+      <Flex justify={"center"} align={"center"}>
+        <Box mr={10} mb={5}>
           <Avatar
             icon={<LastFMIcon width={100} height={100} />}
             width={[50, 50, 75]}
           />
         </Box>
-        <Flex
-          w={"100%"}
-          direction={"column"}
-          justify={"center"}
-          align={"center"}
-          mb={5}
-        >
+        <Flex direction={"column"} justify={"center"} align={"center"} mb={5}>
           <Flex mb={2} align={"center"} justify={"center"}>
             <Indicator
               visible={visibleIndicators}
               indication={t("select.indicators.topAlbums") + ":"}
             />
             <Button
-              w={200}
+              w={selectButtonWidths}
               analyticsName={"Top Albums"}
               onClick={() => router.push(routes.search.lastfm.top20albums)}
             >
@@ -76,7 +71,7 @@ export default function SearchSelection() {
               indication={t("select.indicators.topArtists") + ":"}
             />
             <Button
-              w={200}
+              w={selectButtonWidths}
               analyticsName={"Top Artists"}
               onClick={() => router.push(routes.search.lastfm.top20artists)}
             >

@@ -1,4 +1,4 @@
-import { FormControl, FormLabel } from "@chakra-ui/react";
+import { Flex, FormControl, FormLabel } from "@chakra-ui/react";
 import {
   Formik,
   Form,
@@ -35,35 +35,40 @@ export default function SearchForm({
     >
       {({ isSubmitting }) => (
         <Form>
-          <Field name="username" validate={validateUserName}>
-            {({
-              field,
-              form,
-            }: {
-              field: FieldInputProps<LastFMUserSearchInterface["username"]>;
-              form: FormikProps<LastFMUserSearchInterface>;
-            }) => (
-              <FormControl isInvalid={form.errors.username !== undefined}>
-                <FormLabel id={"username.label"} htmlFor="username">
-                  {t("search.fieldLabel")}
-                </FormLabel>
-                <StyledInput
-                  {...field}
-                  id="username"
-                  placeholder={t("search.fieldPlaceholder")}
-                />
-              </FormControl>
-            )}
-          </Field>
-          <StyledButton
-            analyticsName="Search: last.fm"
-            mb={2}
-            mt={4}
-            isLoading={isSubmitting}
-            type="submit"
-          >
-            {t("search.buttonText")}
-          </StyledButton>
+          <Flex justify={"center"} maxWidth={"700px"}>
+            <Field name="username" validate={validateUserName}>
+              {({
+                field,
+                form,
+              }: {
+                field: FieldInputProps<LastFMUserSearchInterface["username"]>;
+                form: FormikProps<LastFMUserSearchInterface>;
+              }) => (
+                <FormControl isInvalid={form.errors.username !== undefined}>
+                  <FormLabel id={"username.label"} htmlFor="username">
+                    {t("search.fieldLabel")}
+                  </FormLabel>
+                  <StyledInput
+                    {...field}
+                    id="username"
+                    placeholder={t("search.fieldPlaceholder")}
+                    maxWidth={"700px"}
+                  />
+                </FormControl>
+              )}
+            </Field>
+            <StyledButton
+              width={["50px", "100px", "100px"]}
+              analyticsName="Search: last.fm"
+              mb={12}
+              mt={8}
+              ml={3}
+              isLoading={isSubmitting}
+              type="submit"
+            >
+              {t("search.buttonText")}
+            </StyledButton>
+          </Flex>
         </Form>
       )}
     </Formik>

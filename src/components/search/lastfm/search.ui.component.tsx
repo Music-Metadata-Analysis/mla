@@ -42,14 +42,14 @@ export default function SearchUI({ route, title, t }: SearchUIProps) {
   return (
     <Billboard title={title}>
       <Authentication />
-      <Flex justify={"space-between"} align={"center"}>
+      <Flex justify={"center"} align={"center"} w={"100%"}>
         <Box mb={10}>
           <Avatar
             icon={<LastFMIcon width={100} height={100} />}
             width={[50, 50, 75]}
           />
         </Box>
-        <Box pl={[5, 5, 10]} w={"100%"}>
+        <Box pl={5}>
           <SearchContainer
             route={route}
             closeError={closeError}
