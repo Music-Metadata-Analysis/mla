@@ -7,7 +7,7 @@ import handleProxy from "../../../../../pages/api/v1/reports/lastfm/top20artists
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-jest.mock("../../../../../integrations/lastfm/proxy.class", () => {
+jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       getTopArtists: mockBackendResponse,
@@ -15,7 +15,7 @@ jest.mock("../../../../../integrations/lastfm/proxy.class", () => {
   });
 });
 
-jest.mock("../../../../../api/lastfm/endpoint.logger", () => {
+jest.mock("../../../../../backend/api/lastfm/endpoint.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 

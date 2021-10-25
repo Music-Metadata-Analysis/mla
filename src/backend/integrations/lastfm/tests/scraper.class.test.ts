@@ -1,4 +1,4 @@
-import lastFMConfig from "../../../config/lastfm";
+import lastFMConfig from "../../../../config/lastfm";
 import Scraper from "../scraper.class";
 
 const mockValidExpectedHTML = `
