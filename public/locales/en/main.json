@@ -57,6 +57,10 @@
       "title": "MLA: Last.fm",
       "description": "Music Listening Analytics."
     },
+    "privacy": {
+      "title": "MLA: Privacy",
+      "description": "Music Listening Analytics."
+    },
     "search": {
       "title": "MLA: Search",
       "description": "Music Listening Analytics."

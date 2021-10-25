@@ -7,10 +7,10 @@ import {
 } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import translations from "../../../../public/locales/en/about.json";
-import aboutSettings from "../../../config/about";
 import routes from "../../../config/routes";
 import mockRouter from "../../../tests/fixtures/mock.router";
-import About, { testIDs } from "../about.component";
+import { testIDs } from "../../dialogues/resizable/dialogue.resizable.component";
+import About from "../about.component";
 
 describe("About", () => {
   beforeEach(() => {
@@ -29,7 +29,9 @@ describe("About", () => {
     beforeEach(() => arrange());
 
     it("should render the correct text inside the visible UnorderedList", async () => {
-      const aboutList = await screen.findByTestId(testIDs.AboutList);
+      const aboutList = await screen.findByTestId(
+        testIDs.DialogueToggleComponent
+      );
       expect(aboutList).toBeVisible();
       expect(
         await within(aboutList).findByText(translations.aboutText1)
@@ -50,15 +52,29 @@ describe("About", () => {
       expect(await screen.findByText(translations.company)).toBeTruthy();
     });
 
-    it("should render button text inside the button", async () => {
-      const button = await screen.findByTestId(testIDs.AboutStartButton);
-      expect(await within(button).findByText(translations.button)).toBeTruthy();
+    it("should render button text inside the start button", async () => {
+      const footer = await screen.findByTestId(testIDs.DialogueFooterComponent);
+      expect(
+        await within(footer).findByText(translations.buttons.start)
+      ).toBeTruthy();
     });
 
-    describe("clicking on the button", () => {
+    it("should render button text inside the privacy button", async () => {
+      const footer = await screen.findByTestId(testIDs.DialogueFooterComponent);
+      expect(
+        await within(footer).findByText(translations.buttons.privacy)
+      ).toBeTruthy();
+    });
+
+    describe("clicking on the start button", () => {
       beforeEach(async () => {
         expect(mockRouter.push).toBeCalledTimes(0);
-        const button = await screen.findByTestId(testIDs.AboutStartButton);
+        const footer = await screen.findByTestId(
+          testIDs.DialogueFooterComponent
+        );
+        const button = await within(footer).findByText(
+          translations.buttons.start
+        );
         fireEvent.click(button);
       });
 
@@ -68,30 +84,21 @@ describe("About", () => {
       });
     });
 
-    describe("when the screen is resized vertically", () => {
-      const originalWindowInnerHeight = window.innerHeight;
-
-      beforeAll(() => {
-        Object.defineProperty(window, "innerHeight", {
-          writable: true,
-          configurable: true,
-          value: aboutSettings.listMinimumHeight - 1,
-        });
-      });
-
+    describe("clicking on the privacy button", () => {
       beforeEach(async () => {
-        fireEvent.resize(window.document);
+        expect(mockRouter.push).toBeCalledTimes(0);
+        const footer = await screen.findByTestId(
+          testIDs.DialogueFooterComponent
+        );
+        const button = await within(footer).findByText(
+          translations.buttons.privacy
+        );
+        fireEvent.click(button);
       });
 
-      afterAll(() => {
-        Object.defineProperty(window, "innerHeight", {
-          value: originalWindowInnerHeight,
-        });
-      });
-
-      it("should hide the UnorderedList", async () => {
-        const splashList = await screen.findByTestId(testIDs.AboutList);
-        expect(splashList).not.toBeVisible();
+      it("should redirect to the privacy page", async () => {
+        await waitFor(() => expect(mockRouter.push).toBeCalledTimes(1));
+        expect(mockRouter.push).toBeCalledWith(routes.legal.privacy);
       });
     });
   });

@@ -4,5 +4,7 @@
   "splashText2": "Create shareable links to show your friends",
   "splashText3": "Discover your own musical quirks",
   "creditText": "Powered By:",
-  "button": "Analyze My Listening Habits"
+  "buttons": {
+    "start": "Analyze My Listening Habits"
+  }
 }

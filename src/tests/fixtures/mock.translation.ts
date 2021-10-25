@@ -1,9 +1,10 @@
-type translationStringType = Record<string, string>;
-type translationNestedType = Record<string, Record<string, string>>;
+type translationStringType = {
+  [index: string]: string | translationStringType;
+};
 
 const translationKeyLookup = (
   translationDotKey: string,
-  content: translationStringType | translationNestedType
+  content: translationStringType
 ): string | translationStringType => {
   const splitKeys = translationDotKey.split(".");
   if (splitKeys.length === 1) return content[translationDotKey];
