@@ -1,6 +1,6 @@
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import Scraper from "./scraper.class";
-import S3BaseClient from "../../clients/s3/s3.base.client.class";
+import S3BaseClient from "../s3/s3.base.client.class";
 
 export default class S3Cache extends S3BaseClient {
   cloudFrontDomainName: string;

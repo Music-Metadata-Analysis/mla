@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
 import SpotifyProvider from "next-auth/providers/spotify";
-import S3Profile from "../../../clients/s3/s3profile.class";
+import S3Profile from "../../../backend/integrations/auth/s3profile.class";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { extendedTypes } from "next-auth";
 

@@ -1,5 +1,5 @@
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import S3BaseClient from "./s3.base.client.class";
+import S3BaseClient from "../s3/s3.base.client.class";
 import type { Profile } from "next-auth";
 
 export default class S3Profile extends S3BaseClient {
