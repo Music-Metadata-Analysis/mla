@@ -1,5 +1,5 @@
 const settings = {
-  listMinimumHeight: 400,
+  minimumHeight: 400,
 };
 
 export default settings;

@@ -1,0 +1,11 @@
+{
+  "privacy": {
+    "title": "Privacy Policy",
+    "company": "Shared Vision Solutions",
+    "privacyText1": "We collect some basic information about you when you use our site.  Please review our privacy policy, and reach out if you have any questions or concerns.",
+    "buttons": {
+      "policy": "View Policy",
+      "contact": "Contact Us"
+    }
+  }
+}
