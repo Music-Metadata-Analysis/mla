@@ -3,6 +3,7 @@ import { getToken } from "next-auth/jwt";
 import nextConnect from "next-connect";
 import Logger from "./endpoint.logger";
 import { knownStatuses } from "../../../config/api";
+import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
 import LastFMProxy from "../../integrations/lastfm/proxy.class";
 import type { ProxyError } from "../../../errors/proxy.error.class";
@@ -13,6 +14,7 @@ export interface APIEndpointRequest extends NextApiRequest {
 }
 
 export default abstract class LastFMApiEndpointFactory {
+  timeOut = requestSettings.timeout;
   proxy!: LastFMProxy;
   route!: string;
 
@@ -40,7 +42,9 @@ export default abstract class LastFMApiEndpointFactory {
           res.status(400).json(status.STATUS_400_MESSAGE);
         } else {
           this.proxy = new LastFMProxy();
+          const abort = this.createTimeout(req, res, next);
           const proxyResponse = await this.getProxyResponse(req.body.userName);
+          clearTimeout(abort);
           req.proxyResponse = "Success!";
           res.status(200).json(proxyResponse);
         }
@@ -70,5 +74,18 @@ export default abstract class LastFMApiEndpointFactory {
       res.status(502).json(status.STATUS_502_MESSAGE);
     }
     next();
+  }
+
+  createTimeout(
+    req: APIEndpointRequest,
+    res: NextApiResponse,
+    next: () => void
+  ) {
+    return setTimeout(() => {
+      req.proxyResponse = "Timed out! Please retry this request!";
+      res.setHeader("retry-after", 0);
+      res.status(503).json(status.STATUS_503_MESSAGE);
+      next();
+    }, this.timeOut);
   }
 }

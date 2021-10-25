@@ -21,3 +21,6 @@ export const STATUS_429_MESSAGE: StatusMessageType = {
 export const STATUS_502_MESSAGE: StatusMessageType = {
   detail: "Received error from Last FM.",
 };
+export const STATUS_503_MESSAGE: StatusMessageType = {
+  detail: "Request timed out, please retry.",
+};
