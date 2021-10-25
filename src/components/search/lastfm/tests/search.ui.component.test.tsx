@@ -84,13 +84,13 @@ describe("SearchUI", () => {
 
     it("should call Flex as expected to center content", () => {
       expect(Flex).toBeCalledTimes(1);
-      checkMockCall(Flex, { align: "center", justify: "space-between" });
+      checkMockCall(Flex, { align: "center", justify: "center", w: "100%" });
     });
 
     it("should call Box as expected to create a margin around the form", () => {
       expect(Box).toBeCalledTimes(2);
       checkMockCall(Box, { mb: 10 }, 0, []);
-      checkMockCall(Box, { pl: [5, 5, 10], w: "100%" }, 1, []);
+      checkMockCall(Box, { pl: 5 }, 1, []);
     });
 
     it("should call Avatar as expected to display the logo", () => {

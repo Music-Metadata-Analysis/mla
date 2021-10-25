@@ -1,3 +1,4 @@
+import { Flex } from "@chakra-ui/react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import StyledButton from "../../../button/button.standard/button.standard.component";
@@ -8,6 +9,13 @@ jest.mock("../../../button/button.standard/button.standard.component", () => {
     "../../../button/button.standard/button.standard.component"
   ).default;
   return jest.fn((props) => <Original {...props} />);
+});
+
+jest.mock("@chakra-ui/react", () => {
+  const {
+    factoryInstance,
+  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  return factoryInstance.create(["Flex"]);
 });
 
 describe("SearchForm", () => {
@@ -26,6 +34,12 @@ describe("SearchForm", () => {
       />
     );
   };
+
+  it("should call Flex as expected to center content", () => {
+    arrange();
+    expect(Flex).toBeCalledTimes(1);
+    checkMockCall(Flex, { justify: "center", maxWidth: "700px" });
+  });
 
   it("should display the correct username field label", async () => {
     arrange();
@@ -57,10 +71,12 @@ describe("SearchForm", () => {
     arrange();
     expect(StyledButton).toBeCalledTimes(1);
     checkMockCall(StyledButton, {
+      width: ["50px", "100px", "100px"],
       analyticsName: "Search: last.fm",
       isLoading: false,
-      mb: 2,
-      mt: 4,
+      mb: 12,
+      mt: 8,
+      ml: 3,
       type: "submit",
     });
   });
