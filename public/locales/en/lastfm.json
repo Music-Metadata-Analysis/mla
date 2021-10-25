@@ -13,7 +13,7 @@
   "search": {
     "fieldLabel": "Username:",
     "fieldPlaceholder": "last.fm username",
-    "buttonText": "Generate Report",
+    "buttonText": "Go!",
     "errors": {
       "username": {
         "required": "A username is required.",
