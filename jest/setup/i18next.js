@@ -5,6 +5,7 @@ import about from "../../public/locales/en/about.json";
 import authentication from "../../public/locales/en/authentication.json";
 import cards from "../../public/locales/en/cards.json";
 import lastfm from "../../public/locales/en/lastfm.json";
+import legal from "../../public/locales/en/legal.json";
 import main from "../../public/locales/en/main.json";
 import navbar from "../../public/locales/en/navbar.json";
 import splash from "../../public/locales/en/splash.json";
@@ -17,6 +18,7 @@ i18n.use(initReactI18next).init({
       about,
       authentication,
       cards,
+      legal,
       lastfm,
       main,
       navbar,
