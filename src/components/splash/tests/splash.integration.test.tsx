@@ -8,9 +8,9 @@ import {
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import translations from "../../../../public/locales/en/splash.json";
 import routes from "../../../config/routes";
-import splashSettings from "../../../config/splash";
 import mockRouter from "../../../tests/fixtures/mock.router";
-import Splash, { testIDs } from "../splash.component";
+import { testIDs } from "../../dialogues/resizable/dialogue.resizable.component";
+import Splash from "../splash.component";
 
 describe("Splash", () => {
   beforeEach(() => {
@@ -28,70 +28,54 @@ describe("Splash", () => {
   describe("when rendered", () => {
     beforeEach(() => arrange());
 
-    it("should render the correct text inside the visible UnorderedList", async () => {
-      const splashList = await screen.findByTestId(testIDs.SplashList);
-      expect(splashList).toBeVisible();
+    it("should render the correct text inside the DialogueToggleComponent", async () => {
+      const toggle = await screen.findByTestId(testIDs.DialogueToggleComponent);
+      expect(toggle).toBeVisible();
       expect(
-        await within(splashList).findByText(translations.splashText1)
+        await within(toggle).findByText(translations.splashText1)
       ).toBeTruthy();
       expect(
-        await within(splashList).findByText(translations.splashText2)
+        await within(toggle).findByText(translations.splashText2)
       ).toBeTruthy();
       expect(
-        await within(splashList).findByText(translations.splashText3)
+        await within(toggle).findByText(translations.splashText3)
       ).toBeTruthy();
     });
 
-    it("should render the credit text on the screen", async () => {
-      expect(await screen.findByText(translations.creditText)).toBeTruthy();
+    it("should render the credit text on the screen, inside the DialogueBodyComponent", async () => {
+      const body = await screen.findByTestId(testIDs.DialogueBodyComponent);
+      expect(
+        await within(body).findByText(translations.creditText)
+      ).toBeTruthy();
     });
 
-    it("should render LAST.FM on the screen", async () => {
-      expect(await screen.findByText("LAST.FM")).toBeTruthy();
+    it("should render LAST.FM on the screen, inside the DialogueBodyComponent", async () => {
+      const body = await screen.findByTestId(testIDs.DialogueBodyComponent);
+      expect(await within(body).findByText("LAST.FM")).toBeTruthy();
     });
 
-    it("should render button text inside the button", async () => {
-      const button = await screen.findByTestId(testIDs.SplashStartButton);
-      expect(await within(button).findByText(translations.button)).toBeTruthy();
+    it("should render button text inside the button,inside the DialogueFooterComponent ", async () => {
+      const footer = await screen.findByTestId(testIDs.DialogueFooterComponent);
+      expect(
+        await within(footer).findByText(translations.buttons.start)
+      ).toBeTruthy();
     });
 
-    describe("clicking on the button", () => {
+    describe("clicking on the start button", () => {
       beforeEach(async () => {
         expect(mockRouter.push).toBeCalledTimes(0);
-        const button = await screen.findByTestId(testIDs.SplashStartButton);
+        const footer = await screen.findByTestId(
+          testIDs.DialogueFooterComponent
+        );
+        const button = await within(footer).findByText(
+          translations.buttons.start
+        );
         fireEvent.click(button);
       });
 
       it("should redirect to the search page", async () => {
         await waitFor(() => expect(mockRouter.push).toBeCalledTimes(1));
         expect(mockRouter.push).toBeCalledWith(routes.search.lastfm.selection);
-      });
-    });
-
-    describe("when the screen is resized vertically", () => {
-      const originalWindowInnerHeight = window.innerHeight;
-
-      beforeAll(() => {
-        Object.defineProperty(window, "innerHeight", {
-          writable: true,
-          configurable: true,
-          value: splashSettings.listMinimumHeight - 1,
-        });
-      });
-
-      beforeEach(async () => {
-        fireEvent.resize(window.document);
-      });
-
-      afterAll(() => {
-        Object.defineProperty(window, "innerHeight", {
-          value: originalWindowInnerHeight,
-        });
-      });
-
-      it("should hide the UnorderedList", async () => {
-        const splashList = await screen.findByTestId(testIDs.SplashList);
-        expect(splashList).not.toBeVisible();
       });
     });
   });
