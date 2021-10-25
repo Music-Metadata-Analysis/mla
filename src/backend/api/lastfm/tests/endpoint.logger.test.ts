@@ -1,5 +1,5 @@
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
-import apiRoutes from "../../../config/apiRoutes";
+import apiRoutes from "../../../../config/apiRoutes";
 import Logger from "../endpoint.logger";
 import type { APIEndpointRequest } from "../endpoint.base.class";
 import type { NextApiResponse } from "next";

@@ -1,11 +1,11 @@
 import LastFMClientAdapter from "../client.class";
-import type { ProxyError } from "../../../errors/proxy.error.class";
+import type { ProxyError } from "../../../../errors/proxy.error.class";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
   LastFMImageDataInterface,
-} from "../../../types/integrations/lastfm/api.types";
-import type { LastFMExternalClientError } from "../../../types/integrations/lastfm/client.types";
+} from "../../../../types/integrations/lastfm/api.types";
+import type { LastFMExternalClientError } from "../../../../types/integrations/lastfm/client.types";
 
 jest.mock("@toplast/lastfm", () => {
   return jest.fn().mockImplementation(() => {
