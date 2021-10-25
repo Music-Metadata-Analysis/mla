@@ -1,16 +1,16 @@
 import LastFm from "@toplast/lastfm";
 import S3Cache from "./s3cache.class";
-import { ProxyError } from "../../errors/proxy.error.class";
+import { ProxyError } from "../../../errors/proxy.error.class";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
   LastFMImageDataInterface,
-} from "../../types/integrations/lastfm/api.types";
+} from "../../../types/integrations/lastfm/api.types";
 import type {
   LastFMClientInterface,
   LastFMExternalClientError,
-} from "../../types/integrations/lastfm/client.types";
-import type { Await } from "../../types/promise.types";
+} from "../../../types/integrations/lastfm/client.types";
+import type { Await } from "../../../types/promise.types";
 
 class LastFmClientAdapter implements LastFMClientInterface {
   externalClient: LastFm;

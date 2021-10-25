@@ -2,10 +2,10 @@ import { body, validationResult } from "express-validator";
 import { getToken } from "next-auth/jwt";
 import nextConnect from "next-connect";
 import Logger from "./endpoint.logger";
-import { knownStatuses } from "../../config/api";
-import * as status from "../../config/status";
+import { knownStatuses } from "../../../config/api";
+import * as status from "../../../config/status";
 import LastFMProxy from "../../integrations/lastfm/proxy.class";
-import type { ProxyError } from "../../errors/proxy.error.class";
+import type { ProxyError } from "../../../errors/proxy.error.class";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export interface APIEndpointRequest extends NextApiRequest {

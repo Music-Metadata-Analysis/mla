@@ -1,5 +1,5 @@
 import * as cheerio from "cheerio";
-import lastFMConfig from "../../config/lastfm";
+import lastFMConfig from "../../../config/lastfm";
 
 export default class Scraper {
   defaultArtistImageResponse = "";
