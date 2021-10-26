@@ -5,6 +5,7 @@ const mockLastFMHook = {
   clear: jest.fn(),
   top20albums: jest.fn(),
   top20artists: jest.fn(),
+  top20tracks: jest.fn(),
   ready: jest.fn(),
 };
 
