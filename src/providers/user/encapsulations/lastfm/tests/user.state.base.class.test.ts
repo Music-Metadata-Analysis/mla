@@ -25,7 +25,7 @@ const baseUserProperties: UserStateInterface = {
   userName: null,
 };
 
-describe("UserAlbumState", () => {
+describe("UserBaseState", () => {
   let currentState: LastFMUserStateBase;
   let instance: UserBaseState;
   let size: LastFMImageDataInterface["size"];

@@ -1,9 +1,9 @@
-import BaseUserStateWithReport from "./user.state.base.report.class";
+import UserBaseReportState from "./user.state.base.report.class";
 import Events from "../../../../events/events";
 import type { LastFMUserStateArtistReport } from "../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
 
-export default class UserArtistState extends BaseUserStateWithReport {
+export default class UserArtistState extends UserBaseReportState {
   userProperties: LastFMUserStateArtistReport;
 
   constructor(userProperties: LastFMUserStateArtistReport, t: TFunction) {

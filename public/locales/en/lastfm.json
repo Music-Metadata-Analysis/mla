@@ -1,7 +1,8 @@
 {
   "defaults": {
     "albumName": "Unknown Album",
-    "artistName": "Unknown Artist"
+    "artistName": "Unknown Artist",
+    "trackName": "Unknown Track"
   },
   "flipCardReport": {
     "drawer": {

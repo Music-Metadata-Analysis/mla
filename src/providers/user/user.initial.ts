@@ -9,6 +9,7 @@ export const InitialState = <UserStateInterface>{
     report: {
       artists: [],
       albums: [],
+      tracks: [],
       image: [],
     },
   },
