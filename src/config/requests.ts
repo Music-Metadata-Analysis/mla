@@ -1,6 +1,6 @@
 const settings = {
-  timeout: 8000,
   retries: 3,
+  timeout: 8000,
 };
 
 export default settings;

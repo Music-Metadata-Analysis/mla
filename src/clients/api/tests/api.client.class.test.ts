@@ -26,15 +26,19 @@ describe("APIClient", () => {
 
   afterEach(() => jest.clearAllMocks());
 
-  const setupFetch = ({
-    success,
-    status,
-  }: {
-    success: boolean;
-    status: number;
-  }) => {
+  const setupFetch = (
+    {
+      success,
+      status,
+    }: {
+      success: boolean;
+      status: number;
+    },
+    headers: [string, string][] = []
+  ) => {
     (window.fetch as jest.Mock).mockResolvedValueOnce({
       status,
+      headers,
       url: remotesite,
       ok: success,
       json: async () => ({ success }),
@@ -68,6 +72,7 @@ describe("APIClient", () => {
         const response = await arrange();
         expect(response).toStrictEqual({
           status: 200,
+          headers: {},
           response: { success: true },
         });
       });
@@ -86,6 +91,7 @@ describe("APIClient", () => {
         const response = await arrange();
         expect(response).toStrictEqual({
           status: 401,
+          headers: {},
           response: status.STATUS_401_MESSAGE,
         });
       });
@@ -104,6 +110,7 @@ describe("APIClient", () => {
         const response = await arrange();
         expect(response).toStrictEqual({
           status: 404,
+          headers: {},
           response: status.STATUS_404_MESSAGE,
         });
       });
@@ -122,7 +129,29 @@ describe("APIClient", () => {
         const response = await arrange();
         expect(response).toStrictEqual({
           status: 429,
+          headers: {},
           response: status.STATUS_429_MESSAGE,
+        });
+      });
+    });
+
+    describe("when a '503' status code is returned", () => {
+      beforeEach(() =>
+        setupFetch({ success: false, status: 503 }, [["retry-after", "0"]])
+      );
+
+      it("should call the underlying fetch function correctly", () => {
+        arrange();
+        expect(fetch).toBeCalledTimes(1);
+        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
+      });
+
+      it("should return the correct error message", async () => {
+        const response = await arrange();
+        expect(response).toStrictEqual({
+          status: 503,
+          headers: { "retry-after": "0" },
+          response: status.STATUS_503_MESSAGE,
         });
       });
     });

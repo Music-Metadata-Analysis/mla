@@ -10,5 +10,6 @@ export type StatusMessageType = {
 
 export type ApiResponse<REPORT> = {
   status: number;
+  headers: Record<string, string>;
   response: REPORT | StatusMessageType;
 };

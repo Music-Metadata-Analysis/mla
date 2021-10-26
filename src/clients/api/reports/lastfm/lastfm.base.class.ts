@@ -20,6 +20,7 @@ class LastFMBaseReport<ResponseType>
   integration = "LAST.FM" as const;
   response: ApiResponse<ResponseType> | undefined;
   route: string | undefined;
+  invalidRetryHeaderError = "TimeoutFetchUser, with invalid retry header.";
 
   constructor(dispatch: userDispatchType, event: EventCreatorType) {
     this.dispatch = dispatch;
@@ -94,6 +95,23 @@ class LastFMBaseReport<ResponseType>
     }
   }
 
+  handleTimeout(userName: string): void {
+    if (this.response?.status === 503) {
+      const backOff = parseInt(this.response?.headers["retry-after"]);
+      if (!isNaN(backOff)) {
+        setTimeout(() => {
+          this.dispatch({
+            type: "TimeoutFetchUser",
+            userName: userName,
+            integration: this.integration,
+          });
+        }, backOff * 1000);
+      } else {
+        throw new Error(this.invalidRetryHeaderError);
+      }
+    }
+  }
+
   handleUnauthorized(userName: string): void {
     if (this.response?.status === 401) {
       this.dispatch({
@@ -140,6 +158,11 @@ class LastFMBaseReport<ResponseType>
       .then((response) => {
         this.response = response;
         this.handleRatelimited(userName);
+        return Promise.resolve(response);
+      })
+      .then((response) => {
+        this.response = response;
+        this.handleTimeout(userName);
         return Promise.resolve(response);
       })
       .then((response) => {

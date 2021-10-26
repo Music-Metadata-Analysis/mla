@@ -2,9 +2,9 @@ import { render } from "@testing-library/react";
 import mockLastFMHook from "../../../../../hooks/tests/lastfm.mock.hook";
 import UserInterfaceImageProvider from "../../../../../providers/ui/ui.images/ui.images.provider";
 import FlipCardReportContainer from "../../common/flip.card.report/flip.card.report.container";
-import Top20AlbumsContainer from "../top20.albums.container";
-import Top20AlbumsReport from "../top20.albums.report.class";
-import type { userHookAsLastFMTop20AlbumReport } from "../../../../../types/user/hook.types";
+import Top20ArtistsContainer from "../top20.artists.container";
+import Top20ArtistsReport from "../top20.artists.report.class";
+import type { userHookAsLastFMTop20ArtistReport } from "../../../../../types/user/hook.types";
 
 jest.mock("../../common/flip.card.report/flip.card.report.container", () =>
   createMockedComponent("FlipCardReport")
@@ -20,7 +20,7 @@ const createMockedComponent = (name: string) => {
 describe("Top20ReportContainer", () => {
   const mockUsername = "niall-byrne";
   const mockTypedLastFMHook =
-    mockLastFMHook as userHookAsLastFMTop20AlbumReport;
+    mockLastFMHook as userHookAsLastFMTop20ArtistReport;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -30,7 +30,7 @@ describe("Top20ReportContainer", () => {
   const arrange = () => {
     render(
       <UserInterfaceImageProvider>
-        <Top20AlbumsContainer
+        <Top20ArtistsContainer
           userName={mockUsername}
           user={mockTypedLastFMHook}
         />
@@ -42,6 +42,6 @@ describe("Top20ReportContainer", () => {
     const call = (FlipCardReportContainer as jest.Mock).mock.calls[0][0];
     expect(call.user).toBe(mockTypedLastFMHook);
     expect(call.userName).toBe(mockUsername);
-    expect(call.reportClass).toBe(Top20AlbumsReport);
+    expect(call.reportClass).toBe(Top20ArtistsReport);
   });
 });

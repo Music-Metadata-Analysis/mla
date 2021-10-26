@@ -1,7 +1,6 @@
 import routes from "../../../../../../config/routes";
 import UserAlbumState from "../../../../../../providers/user/encapsulations/lastfm/user.state.album.class";
 import FlipCardBaseReport from "../flip.card.report.base.class";
-import type { userHookAsLastFMTop20AlbumReport } from "../../../../../../types/user/hook.types";
 
 export const mockImageUrl = "http://someurl";
 
@@ -26,6 +25,7 @@ export class MockReportClass extends FlipCardBaseReport<MockUserStateEncapsulati
   analyticsReportType = "TOP20 ALBUMS" as const;
   encapsulationClass = MockUserStateEncapsulation;
   drawerArtWorkAltText = "top20Albums.drawer.artWorkAltText";
+  hookMethod = "top20albums" as const;
 
   getNumberOfImageLoads = (
     userProperties: MockUserStateEncapsulation["userProperties"]
@@ -35,9 +35,5 @@ export class MockReportClass extends FlipCardBaseReport<MockUserStateEncapsulati
 
   getReportData(userProperties: MockUserStateEncapsulation["userProperties"]) {
     return userProperties.data.report.albums;
-  }
-
-  startDataFetch(user: userHookAsLastFMTop20AlbumReport, userName: string) {
-    user.top20albums(userName);
   }
 }

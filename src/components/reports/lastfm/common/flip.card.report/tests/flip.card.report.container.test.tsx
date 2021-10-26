@@ -4,7 +4,6 @@ import {
   MockUserStateEncapsulation,
 } from "./mock.last.fm.report.class";
 import lastfm from "../../../../../../../public/locales/en/lastfm.json";
-import routes from "../../../../../../config/routes";
 import Events from "../../../../../../events/events";
 import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock.hook";
 import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
@@ -56,6 +55,7 @@ const createMockedComponent = (name: string) => {
 describe("FlipCardReportContainer", () => {
   const testUsername = "niall-byrne";
   let mockHookState: userHookAsLastFMTop20AlbumReport;
+  const report = new MockReportClass();
   const mockReportData = {
     albums: [
       {
@@ -75,11 +75,15 @@ describe("FlipCardReportContainer", () => {
     resetHookState();
   });
 
+  const getImageLoader = () => {
+    return (FlipCardReport as jest.Mock).mock.calls[0][0].imageIsLoaded;
+  };
+
   const checkDataFetching = () => {
     it("should clear the state and request new data", () => {
       expect(mockHookState.clear).toBeCalledTimes(1);
-      expect(mockHookState.top20albums).toBeCalledTimes(1);
-      expect(mockHookState.top20albums).toBeCalledWith(testUsername);
+      expect(mockHookState[report.hookMethod]).toBeCalledTimes(1);
+      expect(mockHookState[report.hookMethod]).toBeCalledWith(testUsername);
     });
 
     it("should clear the state during cleanup", () => {
@@ -139,6 +143,11 @@ describe("FlipCardReportContainer", () => {
   };
 
   describe("when there has been an error", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      mockHookState.userProperties.ready = false;
+    });
+
     describe("when the request has failed", () => {
       beforeEach(() => {
         mockHookState.userProperties.error = "FailureFetchUser";
@@ -168,9 +177,60 @@ describe("FlipCardReportContainer", () => {
 
         it("should change urls to the search route", () => {
           expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(
-            routes.search.lastfm.top20albums
-          );
+          expect(mockRouter.push).toBeCalledWith(report.retryRoute);
+        });
+      });
+    });
+
+    describe("when the request has timed out", () => {
+      beforeEach(() => {
+        mockHookState.userProperties.error = "TimeoutFetchUser";
+        arrange();
+      });
+
+      it("should NOT clear the state", () => {
+        expect(mockHookState.clear).toBeCalledTimes(1);
+        expect(mockHookState.clear).toBeCalledWith();
+      });
+
+      it("should request new data", () => {
+        expect(mockHookState[report.hookMethod]).toBeCalledTimes(2);
+        expect(mockHookState[report.hookMethod]).toHaveBeenNthCalledWith(
+          1,
+          testUsername
+        );
+        expect(mockHookState[report.hookMethod]).toHaveBeenNthCalledWith(
+          2,
+          testUsername
+        );
+      });
+
+      it("should clear the state during cleanup", () => {
+        cleanup();
+        expect(mockHookState.clear).toBeCalledTimes(2);
+      });
+
+      it("should NOT call the Authentication component", () => {
+        expect(Authentication).toBeCalledTimes(0);
+      });
+
+      it("should NOT call the BillBoardSpinner", () => {
+        expect(BillBoardSpinner).toBeCalledTimes(1);
+      });
+
+      it("should call the FlipCardReport component", () => {
+        checkFlipCardReportProps(false);
+      });
+
+      describe("when the images are all loaded", () => {
+        beforeEach(() => {
+          const imageLoader = getImageLoader();
+          act(() => imageLoader());
+          act(() => imageLoader());
+        });
+
+        it("should NOT call set the images to the 'ready' state", () => {
+          expect(mockHookState.ready).toBeCalledTimes(0);
         });
       });
     });
@@ -204,6 +264,7 @@ describe("FlipCardReportContainer", () => {
       });
 
       checkDataFetching();
+
       checkErrorDisplay("lastfmRatelimited");
 
       it("should NOT call the Authentication component", () => {
@@ -260,9 +321,7 @@ describe("FlipCardReportContainer", () => {
 
         it("should change urls to the search route", () => {
           expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(
-            routes.search.lastfm.top20albums
-          );
+          expect(mockRouter.push).toBeCalledWith(report.retryRoute);
         });
       });
     });
@@ -273,10 +332,6 @@ describe("FlipCardReportContainer", () => {
       beforeEach(() => {
         mockHookState.userProperties.ready = false;
       });
-
-      const getImageLoader = () => {
-        return (FlipCardReport as jest.Mock).mock.calls[0][0].imageIsLoaded;
-      };
 
       describe("when data loading is in progress", () => {
         beforeEach(() => {
@@ -295,7 +350,7 @@ describe("FlipCardReportContainer", () => {
           expect(BillBoardSpinner).toBeCalledTimes(1);
           checkMockCall(BillBoardSpinner, {
             visible: true,
-            title: lastfm.top20Albums.communication,
+            title: lastfm[report.translationKey].communication,
           });
         });
 
@@ -338,7 +393,7 @@ describe("FlipCardReportContainer", () => {
           expect(BillBoardSpinner).toBeCalledTimes(1);
           checkMockCall(BillBoardSpinner, {
             visible: true,
-            title: lastfm.top20Albums.communication,
+            title: lastfm[report.translationKey].communication,
           });
         });
 
@@ -374,7 +429,7 @@ describe("FlipCardReportContainer", () => {
 
       describe("when a valid user has been found", () => {
         beforeEach(() => {
-          mockHookState.userProperties.userName = "User";
+          mockHookState.userProperties.userName = testUsername;
           mockHookState.userProperties.profileUrl = "http://myprofile.com";
         });
 
@@ -407,9 +462,7 @@ describe("FlipCardReportContainer", () => {
 
             it("should change urls to the search route", () => {
               expect(mockRouter.push).toBeCalledTimes(1);
-              expect(mockRouter.push).toBeCalledWith(
-                routes.search.lastfm.top20albums
-              );
+              expect(mockRouter.push).toBeCalledWith(report.retryRoute);
             });
           });
         });
@@ -432,7 +485,7 @@ describe("FlipCardReportContainer", () => {
               BillBoardSpinner,
               {
                 visible: false,
-                title: lastfm.top20Albums.communication,
+                title: lastfm[report.translationKey].communication,
               },
               0
             );
