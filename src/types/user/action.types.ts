@@ -36,6 +36,11 @@ export type UserActionType =
       integration: IntegrationTypes;
     }
   | {
+      type: "TimeoutFetchUser";
+      userName: string;
+      integration: IntegrationTypes;
+    }
+  | {
       type: "UnauthorizedFetchUser";
       userName: string;
       integration: IntegrationTypes;

@@ -35,6 +35,7 @@ describe("UserReducer", () => {
     error: "FailureFetchUser" as const,
     profileUrl: "http://localhost",
     ready: true,
+    retries: 3,
   };
 
   beforeEach(() => {
@@ -67,7 +68,10 @@ describe("UserReducer", () => {
     } as UserActionType;
     received = arrange(action, { ...InitialValues.userProperties });
     expect(mockStates.ReadyFetchUser).toBeCalledTimes(1);
-    expect(mockStates.ReadyFetchUser).toBeCalledWith(action);
+    expect(mockStates.ReadyFetchUser).toBeCalledWith(
+      InitialValues.userProperties,
+      action
+    );
     expect(received).toBe(mockReturn);
   });
 
@@ -77,7 +81,7 @@ describe("UserReducer", () => {
     } as UserActionType;
     received = arrange({ type: "ResetState" }, badInitialUserState);
     expect(mockStates.ResetState).toBeCalledTimes(1);
-    expect(mockStates.ResetState).toBeCalledWith(action);
+    expect(mockStates.ResetState).toBeCalledWith(badInitialUserState, action);
     expect(received).toBe(mockReturn);
   });
 
@@ -89,7 +93,10 @@ describe("UserReducer", () => {
     } as UserActionType;
     received = arrange(action, badInitialUserState);
     expect(mockStates.StartFetchUser).toBeCalledTimes(1);
-    expect(mockStates.StartFetchUser).toBeCalledWith(action);
+    expect(mockStates.StartFetchUser).toBeCalledWith(
+      badInitialUserState,
+      action
+    );
     expect(received).toBe(mockReturn);
   });
 
@@ -111,7 +118,10 @@ describe("UserReducer", () => {
     } as UserActionType;
     received = arrange(action, { ...InitialValues.userProperties });
     expect(mockStates.SuccessFetchUser).toBeCalledTimes(1);
-    expect(mockStates.SuccessFetchUser).toBeCalledWith(action);
+    expect(mockStates.SuccessFetchUser).toBeCalledWith(
+      InitialValues.userProperties,
+      action
+    );
     expect(received).toBe(mockReturn);
   });
 
@@ -123,7 +133,10 @@ describe("UserReducer", () => {
     } as UserActionType;
     received = arrange(action, { ...InitialValues.userProperties });
     expect(mockStates.FailureFetchUser).toBeCalledTimes(1);
-    expect(mockStates.FailureFetchUser).toBeCalledWith(action);
+    expect(mockStates.FailureFetchUser).toBeCalledWith(
+      InitialValues.userProperties,
+      action
+    );
     expect(received).toBe(mockReturn);
   });
 
@@ -135,7 +148,10 @@ describe("UserReducer", () => {
     } as UserActionType;
     received = arrange(action, { ...InitialValues.userProperties });
     expect(mockStates.RatelimitedFetchUser).toBeCalledTimes(1);
-    expect(mockStates.RatelimitedFetchUser).toBeCalledWith(action);
+    expect(mockStates.RatelimitedFetchUser).toBeCalledWith(
+      InitialValues.userProperties,
+      action
+    );
     expect(received).toBe(mockReturn);
   });
 });
