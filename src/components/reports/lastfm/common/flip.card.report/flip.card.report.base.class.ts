@@ -17,6 +17,7 @@ export default abstract class FlipCardBaseReport<T extends UserState> {
   ) => T;
   retryRoute!: string;
   translationKey!: keyof typeof translations;
+  hookMethod!: "top20albums" | "top20artists";
 
   getDrawerArtWorkAltText() {
     return this.drawerArtWorkAltText;
@@ -46,9 +47,9 @@ export default abstract class FlipCardBaseReport<T extends UserState> {
     userProperties: T["userProperties"],
     ui: ReturnType<typeof useUserInterface>
   ) {
-    if (userProperties.userName === null) return false;
     if (userProperties.inProgress) return false;
     if (userProperties.ready) return false;
+    if (userProperties.error) return false;
     if (ui.count < this.getNumberOfImageLoads(userProperties)) return false;
     return true;
   }
@@ -64,5 +65,7 @@ export default abstract class FlipCardBaseReport<T extends UserState> {
 
   abstract getReportData(userProperties: T["userProperties"]): unknown[];
 
-  abstract startDataFetch(user: userHookAsLastFM, userName: string): void;
+  startDataFetch(user: userHookAsLastFM, userName: string) {
+    user[this.hookMethod](userName);
+  }
 }

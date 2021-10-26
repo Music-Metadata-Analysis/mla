@@ -22,6 +22,7 @@ class APIClient {
     if (response.status in knownStatuses) {
       return {
         ok: true,
+        headers: response.headers,
         status: response.status,
         json: () => Promise.resolve(knownStatuses[response.status]),
       } as FetchResponse;
@@ -51,9 +52,18 @@ class APIClient {
     const json: RESPONSE | StatusMessageType = await fetchResponse.json();
     return {
       status: fetchResponse.status,
+      headers: this.getHeaders(fetchResponse),
       response: json,
     };
   };
+
+  private getHeaders(response: FetchResponse) {
+    const headers: Record<string, string> = {};
+    for (const [key, value] of response.headers) {
+      headers[key] = value;
+    }
+    return headers;
+  }
 }
 
 export default APIClient;
