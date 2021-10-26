@@ -5,6 +5,7 @@ jest.mock("../client.class", () => {
     return {
       getTopAlbums: mockGetTopAlbums,
       getTopArtists: mockGetTopArtists,
+      getTopTracks: mockGetTopTracks,
       getUserImage: mockGetUserImage,
     };
   });
@@ -12,6 +13,7 @@ jest.mock("../client.class", () => {
 
 const mockGetTopAlbums = jest.fn();
 const mockGetTopArtists = jest.fn();
+const mockGetTopTracks = jest.fn();
 const mockGetUserImage = jest.fn();
 
 describe("LastFMProxy", () => {
@@ -132,6 +134,60 @@ describe("LastFMProxy", () => {
     describe("when getUserImage is unsuccessful", () => {
       beforeEach(() => {
         mockGetTopArtists.mockReturnValueOnce(Promise.resolve([]));
+        mockGetUserImage.mockImplementationOnce(() =>
+          Promise.reject(() => {
+            throw new Error(mockError);
+          })
+        );
+      });
+
+      it("should throw an error", async () => {
+        const test = async () => await methodCall();
+        await expect(test).rejects.toThrow(mockError);
+      });
+    });
+  });
+
+  describe("getTopTracks", () => {
+    beforeEach(() => {
+      method = "getTopTracks";
+    });
+
+    describe("when requests are successful", () => {
+      beforeEach(() => {
+        mockGetTopTracks.mockReturnValueOnce(Promise.resolve([]));
+        mockGetUserImage.mockReturnValueOnce(Promise.resolve([]));
+      });
+
+      it("should return a valid response", async () => {
+        const response = await methodCall();
+        expect(mockGetTopTracks).toBeCalledTimes(1);
+        expect(mockGetTopTracks).toBeCalledWith(username);
+        expect(mockGetUserImage).toBeCalledTimes(1);
+        expect(mockGetUserImage).toBeCalledWith(username);
+        expect(response).toStrictEqual({ tracks: [], image: [] });
+      });
+    });
+
+    describe("when getTopTracks is unsuccessful", () => {
+      beforeEach(() => {
+        mockGetTopTracks.mockImplementationOnce(() =>
+          Promise.reject(() => {
+            throw new Error(mockError);
+          })
+        );
+        mockGetUserImage.mockReturnValueOnce(Promise.resolve([]));
+      });
+
+      it("should throw an error", async () => {
+        const test = async () => await methodCall();
+        await expect(test).rejects.toThrow(mockError);
+      });
+    });
+
+    describe("when getUserImage is unsuccessful", () => {
+      beforeEach(() => {
+        mockGetTopTracks.mockReturnValueOnce(Promise.resolve([]));
         mockGetUserImage.mockImplementationOnce(() =>
           Promise.reject(() => {
             throw new Error(mockError);

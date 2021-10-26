@@ -7,6 +7,7 @@ import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
   LastFMImageDataInterface,
+  LastFMTrackDataInterface,
 } from "../../../integrations/lastfm/api.types";
 import type { userDispatchType } from "../../../user/context.types";
 import type { TFunction } from "next-i18next";
@@ -49,4 +50,9 @@ export interface LastFMTopAlbumsReportResponseInterface
 export interface LastFMTopArtistsReportResponseInterface
   extends LastFMTopBaseReportResponseInterface {
   artists: LastFMArtistDataInterface[];
+}
+
+export interface LastFMTopTracksReportResponseInterface
+  extends LastFMTopBaseReportResponseInterface {
+  tracks: LastFMTrackDataInterface[];
 }
