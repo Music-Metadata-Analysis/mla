@@ -20,6 +20,7 @@ class LastFMBaseReport<ResponseType>
   integration = "LAST.FM" as const;
   response: ApiResponse<ResponseType> | undefined;
   route: string | undefined;
+  missingRetryHeaderError = "TimeoutFetchUser, with no retries.";
 
   constructor(dispatch: userDispatchType, event: EventCreatorType) {
     this.dispatch = dispatch;
@@ -94,6 +95,20 @@ class LastFMBaseReport<ResponseType>
     }
   }
 
+  handleTimeout(userName: string): void {
+    if (this.response?.status === 503) {
+      if (this.response?.headers["retry-after"] !== undefined) {
+        this.dispatch({
+          type: "TimeoutFetchUser",
+          userName: userName,
+          integration: this.integration,
+        });
+      } else {
+        throw new Error(this.missingRetryHeaderError);
+      }
+    }
+  }
+
   handleUnauthorized(userName: string): void {
     if (this.response?.status === 401) {
       this.dispatch({
@@ -140,6 +155,11 @@ class LastFMBaseReport<ResponseType>
       .then((response) => {
         this.response = response;
         this.handleRatelimited(userName);
+        return Promise.resolve(response);
+      })
+      .then((response) => {
+        this.response = response;
+        this.handleTimeout(userName);
         return Promise.resolve(response);
       })
       .then((response) => {
