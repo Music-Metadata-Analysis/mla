@@ -17,6 +17,7 @@ export interface UserStateInterface {
   inProgress: boolean;
   profileUrl: string | null;
   ready: boolean;
+  retries: number;
   userName: string | null;
 }
 

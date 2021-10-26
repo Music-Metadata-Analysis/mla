@@ -7,7 +7,7 @@ import type { UserStateInterface } from "../../types/user/state.types";
 const userReducer = (state: UserStateInterface, action: UserActionType) => {
   const stateMethod = action.type;
   const stateGenerator = new UserReducerStates();
-  const newState = stateGenerator[stateMethod](action);
+  const newState = stateGenerator[stateMethod](state, action);
   return newState;
 };
 
