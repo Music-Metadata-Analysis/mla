@@ -1,10 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import lastfmTranslations from "../../../../public/locales/en/lastfm.json";
-import mainTranslations from "../../../../public/locales/en/main.json";
-import settings from "../../../config/lastfm";
-import routes from "../../../config/routes";
-import Page from "../../../pages/search/lastfm/top20artists";
-import mockRouter from "../../../tests/fixtures/mock.router";
+import lastfmTranslations from "../../../../../public/locales/en/lastfm.json";
+import mainTranslations from "../../../../../public/locales/en/main.json";
+import settings from "../../../../config/lastfm";
+import routes from "../../../../config/routes";
+import mockRouter from "../../../../tests/fixtures/mock.router";
+import tLookup from "../../../../tests/fixtures/mock.translation";
+import SearchUI from "../search.ui.component";
 
 jest.mock("next/router", () => ({
   __esModule: true,
@@ -15,12 +16,15 @@ jest.mock("next-auth/react", () => ({
   useSession: jest.fn().mockReturnValue({ data: {}, status: "authenticated" }),
 }));
 
-jest.mock("../../../components/authentication/authentication.container", () =>
-  jest.fn(() => <div>MockedAuthenticationComponent</div>)
+jest.mock(
+  "../../../../components/authentication/authentication.container",
+  () => jest.fn(() => <div>MockedAuthenticationComponent</div>)
 );
 
-describe("SearchTopArtists", () => {
+describe("SearchTopTracks", () => {
   let enteredUsername: string;
+  const mockT = jest.fn((key) => tLookup(key, lastfmTranslations));
+  const mockTitle = "mockTitle";
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -28,13 +32,17 @@ describe("SearchTopArtists", () => {
   });
 
   const arrange = () => {
-    render(<Page />);
+    render(
+      <SearchUI
+        t={mockT}
+        title={mockTitle}
+        route={routes.reports.lastfm.top20tracks}
+      />
+    );
   };
 
   it("should display the correct title", async () => {
-    expect(
-      await screen.findByText(lastfmTranslations.top20Artists.searchTitle)
-    ).toBeTruthy();
+    expect(await screen.findByText(mockTitle)).toBeTruthy();
   });
 
   it("should display the correct field label", async () => {
@@ -139,7 +147,7 @@ describe("SearchTopArtists", () => {
         const query = new URLSearchParams(params);
         expect(mockRouter.push).toBeCalledTimes(1);
         expect(mockRouter.push).toBeCalledWith(
-          `${routes.reports.lastfm.top20artists}?${query.toString()}`
+          `${routes.reports.lastfm.top20tracks}?${query.toString()}`
         );
       });
     });
