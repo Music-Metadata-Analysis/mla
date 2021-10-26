@@ -1,3 +1,4 @@
+import requestSettings from "../../config/requests";
 import { voidFn } from "../../utils/voids";
 import type { UserContextInterface } from "../../types/user/context.types";
 import type { UserStateInterface } from "../../types/user/state.types";
@@ -11,6 +12,7 @@ export const InitialState = <UserStateInterface>{
       image: [],
     },
   },
+  retries: requestSettings.retries,
   error: null,
   inProgress: false,
   profileUrl: null,
