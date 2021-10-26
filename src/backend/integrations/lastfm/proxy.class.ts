@@ -30,6 +30,17 @@ class LastFMProxy implements LastFMProxyInterface {
       image,
     };
   }
+
+  async getTopTracks(username: string) {
+    const [tracks, image] = await Promise.all([
+      this.internalClient.getTopTracks(username),
+      this.internalClient.getUserImage(username),
+    ]);
+    return {
+      tracks,
+      image,
+    };
+  }
 }
 
 export default LastFMProxy;
