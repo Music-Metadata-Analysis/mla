@@ -17,7 +17,7 @@ const createMockedComponent = (name: string) => {
   return factoryInstance.create(name);
 };
 
-describe("Top20ReportContainer", () => {
+describe("Top20AlbumsReportContainer", () => {
   const mockUsername = "niall-byrne";
   const mockTypedLastFMHook =
     mockLastFMHook as userHookAsLastFMTop20AlbumReport;
