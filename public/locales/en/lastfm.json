@@ -29,11 +29,13 @@
     "title": "Which analysis are you interested in?",
     "reports": {
       "topAlbums": "Top Albums",
-      "topArtists": "Top Artists"
+      "topArtists": "Top Artists",
+      "topTracks": "Top Tracks"
     },
     "indicators": {
       "topAlbums": "Report 1",
-      "topArtists": "Report 2"
+      "topArtists": "Report 2",
+      "topTracks": "Report 3"
     }
   },
   "top20Albums": {
