@@ -8,6 +8,7 @@ export type EventDefinitionType = {
     | "CONTACT"
     | "DATA: ALBUM"
     | "DATA: ARTIST"
+    | "DATA: TRACK"
     | "ERROR"
     | "EXTERNAL_LINK"
     | "LOGIN"

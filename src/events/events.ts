@@ -44,6 +44,12 @@ const Events = {
         label: "DATA: ARTIST",
         action: `VIEWED ARTIST DETAILS: ${artistName}.`,
       }),
+    TrackViewed: (artistName: string, trackName: string) =>
+      new EventDefinition({
+        category: "LAST.FM",
+        label: "DATA: TRACK",
+        action: `VIEWED TRACK DETAILS: ${artistName}:${trackName}.`,
+      }),
   },
   General: {
     Error: new EventDefinition({
