@@ -2,14 +2,14 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import cardTranslations from "../../../../../../public/locales/en/cards.json";
 import translations from "../../../../../../public/locales/en/lastfm.json";
-import UserAlbumDataState from "../../../../../providers/user/encapsulations/lastfm/user.state.album.class";
+import UserTrackDataState from "../../../../../providers/user/encapsulations/lastfm/user.state.track.class";
 import translationLookUp from "../../../../../tests/fixtures/mock.translation";
 import { testIDs as drawerTestIDs } from "../../../common/drawer/drawer.component";
 import { testIDs as lastFMDrawerIDs } from "../../common/flip.card.report.drawer/flip.card.report.drawer.component";
 import FlipCardReport, {
   FlipCardReportProps,
 } from "../../common/flip.card.report/flip.card.report.component";
-import Top20AlbumsReport from "../top20.albums.report.class";
+import Top20TracksReport from "../top20.tracks.report.class";
 
 const mockTranslation = jest.fn((translationKey: string) => {
   const lastfmTranslations = require("../../../../../../public/locales/en/lastfm.json");
@@ -27,7 +27,7 @@ const mockUserProperties = {
   userName: mockUsername,
   data: {
     report: {
-      albums: [],
+      tracks: [],
       image: [],
     },
     integration: "LASTFM" as const,
@@ -35,10 +35,10 @@ const mockUserProperties = {
 };
 let mockPropertyIndex = 1;
 
-const Top20ReportBaseProps: FlipCardReportProps<UserAlbumDataState> = {
-  report: new Top20AlbumsReport(),
+const Top20ReportBaseProps: FlipCardReportProps<UserTrackDataState> = {
+  report: new Top20TracksReport(),
   imageIsLoaded: mockImageIsLoaded,
-  userState: new UserAlbumDataState(mockUserProperties, mockTranslation),
+  userState: new UserTrackDataState(mockUserProperties, mockTranslation),
   visible: true,
   t: mockTranslation,
 };
@@ -49,13 +49,13 @@ const generateMockProperty = () => {
   return colour;
 };
 
-describe("Top20AlbumsReport", () => {
-  let currentProps: FlipCardReportProps<UserAlbumDataState>;
-  const reportKey = "albums";
-  const translationKey = "top20Albums";
+describe("Top20TracksReport", () => {
+  let currentProps: FlipCardReportProps<UserTrackDataState>;
+  const reportKey = "tracks";
+  const translationKey = "top20Tracks";
   const testUrl = "https://thecorrect/url";
   const mockPlayCounts = ["101", "102"];
-  const mockAlbumData = [
+  const mockTrackData = [
     {
       mbid: generateMockProperty(),
       name: generateMockProperty(),
@@ -121,7 +121,7 @@ describe("Top20AlbumsReport", () => {
     beforeEach(() => {
       resetProps();
       currentProps.userState.userProperties.inProgress = false;
-      getReport()[reportKey] = mockAlbumData;
+      getReport()[reportKey] = mockTrackData;
     });
 
     it("when an image is loaded", async () => {
