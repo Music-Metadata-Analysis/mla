@@ -9,7 +9,7 @@ describe("UserReducerStates", () => {
   let mockRetries: number;
   const testIntegrationType = "TEST";
   const testUserName = "somebody";
-  const emptyReport = { albums: [], artists: [], image: [] };
+  const emptyReport = { albums: [], artists: [], image: [], tracks: [] };
   const mock_lastfm_data = {
     albums: [],
     image: [

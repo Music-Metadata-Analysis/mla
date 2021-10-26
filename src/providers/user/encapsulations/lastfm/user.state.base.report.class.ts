@@ -1,18 +1,20 @@
-import BaseUserState from "./user.state.base.class";
+import UserBaseState from "./user.state.base.class";
 import type EventDefinition from "../../../../events/event.class";
 import type { LastFMImageDataInterface } from "../../../../types/integrations/lastfm/api.types";
 import type { LastFMUserStateBase } from "../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
 
-export default abstract class BaseUserStateWithReport extends BaseUserState {
+export default abstract class UserBaseReportState extends UserBaseState {
   defaultAlbumName: string;
   defaultArtistName: string;
+  defaultTrackName: string;
   lastfmPrefix = "https://last.fm/music";
 
   constructor(userProperties: LastFMUserStateBase, t: TFunction) {
     super(userProperties);
     this.defaultAlbumName = t("defaults.albumName");
     this.defaultArtistName = t("defaults.artistName");
+    this.defaultTrackName = t("defaults.trackName");
   }
 
   abstract getDataSource(): unknown[];

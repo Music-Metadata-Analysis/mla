@@ -1,7 +1,7 @@
 import type { LastFMImageDataInterface } from "../../../../types/integrations/lastfm/api.types";
 import type { LastFMUserStateBase } from "../../../../types/user/state.types";
 
-export default class BaseUserState {
+export default class UserBaseState {
   userProperties: LastFMUserStateBase;
 
   constructor(userProperties: LastFMUserStateBase) {
