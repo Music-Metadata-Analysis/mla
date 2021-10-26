@@ -24,8 +24,17 @@ jest.mock("../../clients/api/reports/lastfm/top20.artists.class", () => {
   });
 });
 
+jest.mock("../../clients/api/reports/lastfm/top20.tracks.class", () => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      retrieveReport: mockRetrieveTopTracks,
+    };
+  });
+});
+
 const mockRetrieveTopAlbums = jest.fn();
 const mockRetrieveTopArtists = jest.fn();
+const mockRetrieveTopTracks = jest.fn();
 
 interface MockUserContextWithChildren {
   children?: React.ReactNode;
@@ -79,6 +88,7 @@ describe("useLastFM", () => {
       expect(received.result.current.clear).toBeInstanceOf(Function);
       expect(received.result.current.top20albums).toBeInstanceOf(Function);
       expect(received.result.current.top20artists).toBeInstanceOf(Function);
+      expect(received.result.current.top20tracks).toBeInstanceOf(Function);
       expect(received.result.current.ready).toBeInstanceOf(Function);
     });
 
@@ -95,6 +105,19 @@ describe("useLastFM", () => {
       await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
       expect(mockDispatch).toHaveBeenCalledWith({
         type: "ResetState",
+      });
+    });
+  });
+
+  describe("ready", () => {
+    it("should dispatch the reducer correctly", async () => {
+      act(() => received.result.current.ready());
+      await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: "ReadyFetchUser",
+        userName: received.result.current.userProperties.userName,
+        data: received.result.current.userProperties.data.report,
+        integration: received.result.current.userProperties.data.integration,
       });
     });
   });
@@ -121,16 +144,14 @@ describe("useLastFM", () => {
     });
   });
 
-  describe("ready", () => {
-    it("should dispatch the reducer correctly", async () => {
-      act(() => received.result.current.ready());
-      await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: "ReadyFetchUser",
-        userName: received.result.current.userProperties.userName,
-        data: received.result.current.userProperties.data.report,
-        integration: received.result.current.userProperties.data.integration,
-      });
+  describe("top20artists", () => {
+    beforeEach(async () => {
+      act(() => received.result.current.top20tracks(mockUserName));
+    });
+
+    it("should retrieve the report from lastfm", async () => {
+      await waitFor(() => expect(mockRetrieveTopTracks).toBeCalledTimes(1));
+      expect(mockRetrieveTopTracks).toHaveBeenCalledWith(mockUserName);
     });
   });
 });
