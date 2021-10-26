@@ -41,4 +41,8 @@ export interface AnalyticsProviderInterface {
   children: React.ReactNode;
 }
 
-export type ReportType = "BASE REPORT" | "TOP20 ALBUMS" | "TOP20 ARTISTS";
+export type ReportType =
+  | "BASE REPORT"
+  | "TOP20 ALBUMS"
+  | "TOP20 ARTISTS"
+  | "TOP20 TRACKS";
