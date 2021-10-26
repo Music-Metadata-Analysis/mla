@@ -21,6 +21,7 @@ const baseUserProperties: UserStateInterface = {
   inProgress: false,
   profileUrl: null,
   ready: true,
+  retries: 3,
   userName: null,
 };
 
