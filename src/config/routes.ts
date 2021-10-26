@@ -15,6 +15,7 @@ const routes = {
       selection: "/search/lastfm",
       top20albums: "/search/lastfm/top20albums",
       top20artists: "/search/lastfm/top20artists",
+      top20tracks: "/search/lastfm/top20tracks",
     },
   },
   404: "/not/a/valid/page",

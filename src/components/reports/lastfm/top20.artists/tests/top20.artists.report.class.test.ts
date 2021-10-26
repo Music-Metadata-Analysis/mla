@@ -4,7 +4,7 @@ import FlipCardDrawer from "../../common/flip.card.report.drawer/flip.card.repor
 import Report from "../top20.artists.report.class";
 import type { LastFMArtistDataInterface } from "../../../../../types/integrations/lastfm/api.types";
 
-describe("top20ArtistsReport", () => {
+describe("Top20ArtistsReport", () => {
   let report: Report;
   const mockArtistData = [
     {

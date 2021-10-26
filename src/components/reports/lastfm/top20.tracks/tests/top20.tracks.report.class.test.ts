@@ -1,12 +1,12 @@
 import routes from "../../../../../config/routes";
-import UserAlbumDataState from "../../../../../providers/user/encapsulations/lastfm/user.state.album.class";
+import UserTrackDataState from "../../../../../providers/user/encapsulations/lastfm/user.state.track.class";
 import FlipCardDrawer from "../../common/flip.card.report.drawer/flip.card.report.drawer.component";
-import Report from "../top20.albums.report.class";
-import type { LastFMAlbumDataInterface } from "../../../../../types/integrations/lastfm/api.types";
+import Report from "../top20.tracks.report.class";
+import type { LastFMTrackDataInterface } from "../../../../../types/integrations/lastfm/api.types";
 
-describe("Top20AlbumsReport", () => {
+describe("Top20TracksReport", () => {
   let report: Report;
-  const mockAlbumData = [
+  const mockTrackData = [
     {
       mbid: "some_mbid1",
       name: "mock_artist1",
@@ -25,7 +25,7 @@ describe("Top20AlbumsReport", () => {
     retries: 3,
     data: {
       report: {
-        albums: mockAlbumData,
+        tracks: mockTrackData,
         image: [],
       },
       integration: "LASTFM" as const,
@@ -37,15 +37,15 @@ describe("Top20AlbumsReport", () => {
   });
 
   it("should have the correct instaces values", () => {
-    expect(report.analyticsReportType).toBe("TOP20 ALBUMS");
+    expect(report.analyticsReportType).toBe("TOP20 TRACKS");
     expect(report.drawerArtWorkAltText).toBe(
-      "top20Albums.drawer.artWorkAltText"
+      "top20Tracks.drawer.artWorkAltText"
     );
     expect(report.drawerComponent).toBe(FlipCardDrawer);
-    expect(report.encapsulationClass).toBe(UserAlbumDataState);
-    expect(report.retryRoute).toBe(routes.search.lastfm.top20albums);
-    expect(report.translationKey).toBe("top20Albums");
-    expect(report.hookMethod).toBe("top20albums");
+    expect(report.encapsulationClass).toBe(UserTrackDataState);
+    expect(report.retryRoute).toBe(routes.search.lastfm.top20tracks);
+    expect(report.translationKey).toBe("top20Tracks");
+    expect(report.hookMethod).toBe("top20tracks");
   });
 
   describe("getNumberOfImageLoads", () => {
@@ -61,14 +61,14 @@ describe("Top20AlbumsReport", () => {
   });
 
   describe("getReportData", () => {
-    let value: LastFMAlbumDataInterface[];
+    let value: LastFMTrackDataInterface[];
 
     beforeEach(() => {
       value = report.getReportData(mockUserProperties);
     });
 
     it("should match the expected value", () => {
-      expect(value).toBe(mockAlbumData);
+      expect(value).toBe(mockTrackData);
     });
   });
 });
