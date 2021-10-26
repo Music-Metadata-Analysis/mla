@@ -2,17 +2,15 @@ import { Box, Flex, Avatar } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Option from "./inlay/select.option.component";
 import config from "../../../../config/lastfm";
-import routes from "../../../../config/routes";
 import Billboard from "../../../billboard/billboard.component";
-import Button from "../../../button/button.standard/button.standard.component";
 import LastFMIcon from "../../../icons/lastfm/lastfm.icon";
 
 export default function SearchSelection() {
   const { t } = useTranslation("lastfm");
   const router = useRouter();
   const [visibleIndicators, setVisibleIndicators] = useState(true);
-  const selectButtonWidths = [150, 150, 200];
 
   const hideIndicators = () => {
     if (window.innerWidth < config.select.indicatorWidth) {
@@ -31,17 +29,6 @@ export default function SearchSelection() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const Indicator = ({
-    indication,
-    visible,
-  }: {
-    indication: string;
-    visible: boolean;
-  }) => {
-    if (!visible) return null;
-    return <Box mr={5}>{indication}</Box>;
-  };
-
   return (
     <Billboard title={t("select.title")}>
       <Flex justify={"center"} align={"center"}>
@@ -52,32 +39,18 @@ export default function SearchSelection() {
           />
         </Box>
         <Flex direction={"column"} justify={"center"} align={"center"} mb={5}>
-          <Flex mb={2} align={"center"} justify={"center"}>
-            <Indicator
-              visible={visibleIndicators}
-              indication={t("select.indicators.topAlbums") + ":"}
-            />
-            <Button
-              w={selectButtonWidths}
-              analyticsName={"Top Albums"}
-              onClick={() => router.push(routes.search.lastfm.top20albums)}
-            >
-              {t("select.reports.topAlbums")}
-            </Button>
-          </Flex>
-          <Flex mt={2} align={"center"} justify={"center"}>
-            <Indicator
-              visible={visibleIndicators}
-              indication={t("select.indicators.topArtists") + ":"}
-            />
-            <Button
-              w={selectButtonWidths}
-              analyticsName={"Top Artists"}
-              onClick={() => router.push(routes.search.lastfm.top20artists)}
-            >
-              {t("select.reports.topArtists")}
-            </Button>
-          </Flex>
+          {config.select.options.map((option, index) => {
+            return (
+              <Option
+                key={index}
+                analyticsName={option.analyticsName}
+                buttonText={t(option.buttonTextKey)}
+                clickHandler={() => router.push(option.route)}
+                indicatorText={t(option.indicatorTextKey)}
+                visibleIndicators={visibleIndicators}
+              />
+            );
+          })}
         </Flex>
       </Flex>
     </Billboard>
