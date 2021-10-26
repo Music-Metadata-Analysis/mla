@@ -2,6 +2,7 @@ import type {
   LastFMTopBaseReportResponseInterface,
   LastFMTopAlbumsReportResponseInterface,
   LastFMTopArtistsReportResponseInterface,
+  LastFMTopTracksReportResponseInterface,
 } from "../clients/api/reports/lastfm.client.types";
 import type { UserActionType } from "./action.types";
 import type { UserReportType } from "./report.types";
@@ -38,6 +39,13 @@ export interface LastFMUserStateAlbumReport extends UserStateInterface {
 export interface LastFMUserStateArtistReport extends UserStateInterface {
   data: {
     report: LastFMTopArtistsReportResponseInterface;
+    integration: "LASTFM";
+  };
+}
+
+export interface LastFMUserStateTrackReport extends UserStateInterface {
+  data: {
+    report: LastFMTopTracksReportResponseInterface;
     integration: "LASTFM";
   };
 }

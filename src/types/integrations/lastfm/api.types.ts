@@ -30,15 +30,15 @@ export interface LastFMImageDataInterface {
 }
 
 export interface LastFMTrackDataInterface {
-  artist: LastFMArtistDataInterface;
+  artist?: LastFMArtistDataInterface;
   date?: LastFMTrackDateInterface;
   duration?: string;
-  image: LastFMImageDataInterface[];
+  image?: LastFMImageDataInterface[];
   mbid: string;
-  name: string;
+  name?: string;
   playcount?: string;
-  streamable: LastFMTrackStreamableInterface | string;
-  url: string;
+  streamable?: LastFMTrackStreamableInterface | string;
+  url?: string;
   "@attr"?: {
     rank: string;
   };
