@@ -1,21 +1,21 @@
 import UserBaseReportState from "./user.state.base.report.class";
 import Events from "../../../../events/events";
 import type { LastFMArtistDataInterface } from "../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateAlbumReport } from "../../../../types/user/state.types";
+import type { LastFMUserStateTrackReport } from "../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
 
-export default class UserAlbumState extends UserBaseReportState {
-  userProperties: LastFMUserStateAlbumReport;
+export default class UserTrackState extends UserBaseReportState {
+  userProperties: LastFMUserStateTrackReport;
 
-  constructor(userProperties: LastFMUserStateAlbumReport, t: TFunction) {
+  constructor(userProperties: LastFMUserStateTrackReport, t: TFunction) {
     super(userProperties, t);
     this.userProperties = userProperties;
   }
 
-  getDataSource = () => this.userProperties.data.report.albums;
+  getDataSource = () => this.userProperties.data.report.tracks;
 
   getDefaultEntityName = () => {
-    return this.defaultAlbumName;
+    return this.defaultTrackName;
   };
 
   getDrawerTitle = (index: number) => {
@@ -23,7 +23,7 @@ export default class UserAlbumState extends UserBaseReportState {
   };
 
   getDrawerEvent = (index: number) => {
-    return Events.LastFM.AlbumViewed(
+    return Events.LastFM.TrackViewed(
       this.getRelatedArtistName(index),
       this.getName(index)
     );
@@ -31,13 +31,13 @@ export default class UserAlbumState extends UserBaseReportState {
 
   getExternalLink = (index: number) => {
     const apiObject = this.getDataSource()[index] as { url?: string };
-    const encodedAlbumName = encodeURIComponent(this.getName(index));
+    const encodedTrackName = encodeURIComponent(this.getName(index));
     const encodedArtistName = encodeURIComponent(
       this.getRelatedArtistName(index)
     );
     return this.withDefault(
       apiObject?.url,
-      `${this.lastfmPrefix}/${encodedArtistName}/${encodedAlbumName}`
+      `${this.lastfmPrefix}/${encodedArtistName}/_/${encodedTrackName}`
     );
   };
 

@@ -5,11 +5,7 @@ import type { UserStateInterface } from "../../types/user/state.types";
 
 class UserReducerStates {
   wrongTypeError = "Received wrong action type.";
-  initialReport = {
-    artists: [],
-    albums: [],
-    image: [],
-  };
+  initialReport = { ...InitialState.data.report };
   initalRetries = InitialState.retries;
 
   FailureFetchUser(
