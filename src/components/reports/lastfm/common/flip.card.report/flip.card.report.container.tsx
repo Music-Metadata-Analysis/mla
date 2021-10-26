@@ -38,7 +38,14 @@ export default function FlipCardReportContainer<
     report.startDataFetch(user, userName);
     return () => user.clear();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userName]);
+  }, []);
+
+  useEffect(() => {
+    if (user.userProperties.error === "TimeoutFetchUser") {
+      report.startDataFetch(user, userName);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   useEffect(() => {
     if (report.queryIsDataReady(user.userProperties, ui)) {
