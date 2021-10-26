@@ -53,5 +53,14 @@
     "drawer": {
       "artWorkAltText": "Promo Art Work"
     }
+  },
+  "top20Tracks": {
+    "searchTitle": "Top20 Tracks Report",
+    "title": "My Top 20 Tracks",
+    "communication": "Retrieving Results...",
+    "noArtWork": "No Art Work",
+    "drawer": {
+      "artWorkAltText": "Promo Art Work"
+    }
   }
 }

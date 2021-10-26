@@ -17,7 +17,7 @@ export default abstract class FlipCardBaseReport<T extends UserState> {
   ) => T;
   retryRoute!: string;
   translationKey!: keyof typeof translations;
-  hookMethod!: "top20albums" | "top20artists";
+  hookMethod!: "top20albums" | "top20artists" | "top20tracks";
 
   getDrawerArtWorkAltText() {
     return this.drawerArtWorkAltText;
