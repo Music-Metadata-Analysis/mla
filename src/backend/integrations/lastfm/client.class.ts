@@ -5,6 +5,7 @@ import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
   LastFMImageDataInterface,
+  LastFMTrackDataInterface,
 } from "../../../types/integrations/lastfm/api.types";
 import type {
   LastFMClientInterface,
@@ -73,6 +74,41 @@ class LastFmClientAdapter implements LastFMClientInterface {
         const artistImage = urls.shift() as Await<string>;
         if (artist.name && artist.image) {
           artist.image.map((image) => {
+            image["#text"] = artistImage;
+          });
+        }
+      });
+    });
+  }
+
+  async getTopTracks(username: string): Promise<LastFMTrackDataInterface[]> {
+    try {
+      const response = await this.externalClient.user.getTopTracks({
+        user: username,
+        period: this.reportPeriod,
+        limit: this.reportCount,
+        page: 1,
+      });
+      await this.attachTrackArtistArtwork(
+        response.toptracks.track as LastFMTrackDataInterface[]
+      );
+      return response.toptracks.track as LastFMTrackDataInterface[];
+    } catch (err) {
+      throw this.createProxyCompatibleError(err as LastFMExternalClientError);
+    }
+  }
+
+  private async attachTrackArtistArtwork(tracks: LastFMTrackDataInterface[]) {
+    const cacheLookups: Promise<string>[] = [];
+    tracks.map((track) => {
+      cacheLookups.push(this.cache.lookup(track.artist?.name));
+    });
+
+    await Promise.all(cacheLookups).then((urls) => {
+      tracks.map((track) => {
+        const artistImage = urls.shift() as Await<string>;
+        if (track.name && track.image) {
+          track.image.map((image) => {
             image["#text"] = artistImage;
           });
         }

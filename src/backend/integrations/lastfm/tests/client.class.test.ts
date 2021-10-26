@@ -4,6 +4,7 @@ import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
   LastFMImageDataInterface,
+  LastFMTrackDataInterface,
 } from "../../../../types/integrations/lastfm/api.types";
 import type { LastFMExternalClientError } from "../../../../types/integrations/lastfm/client.types";
 
@@ -25,6 +26,7 @@ const mockApiCalls = {
   getTopAlbums: jest.fn(),
   getTopArtists: jest.fn(),
   getInfo: jest.fn(),
+  getTopTracks: jest.fn(),
 };
 
 describe("LastFMClient", () => {
@@ -39,6 +41,22 @@ describe("LastFMClient", () => {
   const mockTopArtistsResponseIncomplete = {
     topartists: {
       artist: [{ name: "mockArtist" }],
+    },
+  };
+  const mockTopTracksResponseComplete = {
+    toptracks: {
+      track: [
+        {
+          name: "mockTrack",
+          image: [{ "#text": "none" }],
+          artist: { name: "mockArtist" },
+        },
+      ],
+    },
+  };
+  const mockTopTracksResponseIncomplete = {
+    toptracks: {
+      track: [{ name: "mockTrack" }],
     },
   };
   const mockProfileResponse = { user: { image: "response" } };
@@ -147,6 +165,14 @@ describe("LastFMClient", () => {
           instance = arrange(secretKey);
         });
 
+        it("should performe a cache lookup with the correct params", async () => {
+          res = await instance.getTopArtists(username);
+          expect(MockCache.lookup).toBeCalledTimes(1);
+          expect(MockCache.lookup).toBeCalledWith(
+            mockTopArtistsResponseComplete.topartists.artist[0].name
+          );
+        });
+
         it("should call the external library correctly", async () => {
           res = await instance.getTopArtists(username);
           expect(mockApiCalls["getTopArtists"]).toBeCalledTimes(1);
@@ -174,6 +200,14 @@ describe("LastFMClient", () => {
           );
           MockCache.lookup.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
+        });
+
+        it("should performe a cache lookup with the correct params", async () => {
+          res = await instance.getTopArtists(username);
+          expect(MockCache.lookup).toBeCalledTimes(1);
+          expect(MockCache.lookup).toBeCalledWith(
+            mockTopArtistsResponseComplete.topartists.artist[0].name
+          );
         });
 
         it("should call the external library correctly", async () => {
@@ -309,6 +343,137 @@ describe("LastFMClient", () => {
         it("should embed the status code as expected", async () => {
           try {
             await instance.getUserImage(username);
+          } catch (receivedError) {
+            expect((receivedError as ProxyError).message).toBe(
+              `${err.message}`
+            );
+            expect(
+              (receivedError as ProxyError).clientStatusCode
+            ).toBeUndefined();
+          }
+        });
+      });
+    });
+  });
+
+  describe("getTopTracks", () => {
+    let res: LastFMTrackDataInterface[];
+    let mockImageUrl: string;
+
+    describe("when the request is successful", () => {
+      describe("with complete track information", () => {
+        beforeEach(async () => {
+          mockImageUrl = "http://not/a/real/image";
+          mockApiCalls["getTopTracks"].mockReturnValueOnce(
+            Promise.resolve(
+              JSON.parse(JSON.stringify(mockTopTracksResponseComplete))
+            )
+          );
+          MockCache.lookup.mockReturnValueOnce(mockImageUrl);
+          instance = arrange(secretKey);
+        });
+
+        it("should performe a cache lookup with the correct params", async () => {
+          res = await instance.getTopTracks(username);
+          expect(MockCache.lookup).toBeCalledTimes(1);
+          expect(MockCache.lookup).toBeCalledWith(
+            mockTopTracksResponseComplete.toptracks.track[0].artist.name
+          );
+        });
+
+        it("should call the external library correctly", async () => {
+          res = await instance.getTopTracks(username);
+          expect(mockApiCalls["getTopTracks"]).toBeCalledTimes(1);
+          expect(mockApiCalls["getTopTracks"]).toBeCalledWith({
+            user: username,
+            period: instance.reportPeriod,
+            limit: instance.reportCount,
+            page: 1,
+          });
+          const expected_response = JSON.parse(
+            JSON.stringify(mockTopTracksResponseComplete)
+          ).toptracks.track;
+          expected_response[0].image[0]["#text"] = mockImageUrl;
+          expect(res).toStrictEqual(expected_response);
+        });
+      });
+
+      describe("with incomplete track information", () => {
+        beforeEach(async () => {
+          mockImageUrl = "http://not/a/real/image";
+          mockApiCalls["getTopTracks"].mockReturnValueOnce(
+            Promise.resolve(
+              JSON.parse(JSON.stringify(mockTopTracksResponseIncomplete))
+            )
+          );
+          MockCache.lookup.mockReturnValueOnce(mockImageUrl);
+          instance = arrange(secretKey);
+        });
+
+        it("should performe a cache lookup with the correct params", async () => {
+          res = await instance.getTopTracks(username);
+          expect(MockCache.lookup).toBeCalledTimes(1);
+          expect(MockCache.lookup).toBeCalledWith(undefined);
+        });
+
+        it("should call the external library correctly", async () => {
+          res = await instance.getTopTracks(username);
+          expect(mockApiCalls["getTopTracks"]).toBeCalledTimes(1);
+          expect(mockApiCalls["getTopTracks"]).toBeCalledWith({
+            user: username,
+            period: instance.reportPeriod,
+            limit: instance.reportCount,
+            page: 1,
+          });
+          const expected_response = JSON.parse(
+            JSON.stringify(mockTopTracksResponseIncomplete)
+          ).toptracks.track;
+          expect(res).toStrictEqual(expected_response);
+        });
+      });
+    });
+
+    describe("when the request errors", () => {
+      let err: LastFMExternalClientError;
+
+      beforeEach(() => {
+        err = new Error("Test Error") as LastFMExternalClientError;
+      });
+
+      describe("with a status code", () => {
+        beforeEach(async () => {
+          err.statusCode = 999;
+          mockApiCalls["getTopTracks"].mockImplementationOnce(() =>
+            Promise.reject(err)
+          );
+          instance = arrange(secretKey);
+        });
+
+        it("should embed the status code as expected", async () => {
+          try {
+            await instance.getTopTracks(username);
+          } catch (receivedError) {
+            expect((receivedError as ProxyError).message).toBe(
+              `${err.message}`
+            );
+            expect((receivedError as ProxyError).clientStatusCode).toBe(
+              err.statusCode
+            );
+          }
+        });
+      });
+
+      describe("without a status code", () => {
+        beforeEach(async () => {
+          mockApiCalls["getTopArtists"].mockImplementationOnce(() =>
+            Promise.reject(err)
+          );
+          instance = arrange(secretKey);
+        });
+
+        it("should embed the status code as expected", async () => {
+          try {
+            await instance.getTopArtists(username);
           } catch (receivedError) {
             expect((receivedError as ProxyError).message).toBe(
               `${err.message}`
