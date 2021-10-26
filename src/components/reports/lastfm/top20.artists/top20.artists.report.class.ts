@@ -2,7 +2,6 @@ import routes from "../../../../config/routes";
 import UserArtistDataState from "../../../../providers/user/encapsulations/lastfm/user.state.artist.class";
 import FlipCardDrawer from "../common/flip.card.report.drawer/flip.card.report.drawer.component";
 import FlipCardBaseReport from "../common/flip.card.report/flip.card.report.base.class";
-import type { userHookAsLastFMTop20ArtistReport } from "../../../../types/user/hook.types";
 
 export default class Top20AlbumsReport extends FlipCardBaseReport<UserArtistDataState> {
   analyticsReportType = "TOP20 ARTISTS" as const;
@@ -11,6 +10,7 @@ export default class Top20AlbumsReport extends FlipCardBaseReport<UserArtistData
   encapsulationClass = UserArtistDataState;
   retryRoute = routes.search.lastfm.top20artists;
   translationKey = "top20Artists" as const;
+  hookMethod = "top20artists" as const;
 
   getNumberOfImageLoads = (
     userProperties: UserArtistDataState["userProperties"]
@@ -20,9 +20,5 @@ export default class Top20AlbumsReport extends FlipCardBaseReport<UserArtistData
 
   getReportData(userProperties: UserArtistDataState["userProperties"]) {
     return userProperties.data.report.artists;
-  }
-
-  startDataFetch(user: userHookAsLastFMTop20ArtistReport, userName: string) {
-    user.top20artists(userName);
   }
 }
