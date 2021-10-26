@@ -8,6 +8,7 @@ const routes = {
     lastfm: {
       top20albums: "/reports/lastfm/top20albums",
       top20artists: "/reports/lastfm/top20artists",
+      top20tracks: "/reports/lastfm/top20tracks",
     },
   },
   search: {
