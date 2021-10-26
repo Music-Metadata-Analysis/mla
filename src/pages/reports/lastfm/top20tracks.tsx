@@ -1,14 +1,14 @@
 import ReportPage from "../../../components/reports/lastfm/common/report.page/report.page";
-import Top20ArtistsReport from "../../../components/reports/lastfm/top20.artists/top20.artists.container";
+import Top20TracksReport from "../../../components/reports/lastfm/top20.tracks/top20.tracks.container";
 import pagePropsGenerator from "../../../utils/page.props.static";
 import FourOhFour from "../../404";
-import type { userHookAsLastFMTop20ArtistReport } from "../../../types/user/hook.types";
+import type { userHookAsLastFMTop20TrackReport } from "../../../types/user/hook.types";
 
-export default function LastFMTop20Artists() {
+export default function LastFMTop20Tracks() {
   return (
-    <ReportPage<userHookAsLastFMTop20ArtistReport>
+    <ReportPage<userHookAsLastFMTop20TrackReport>
       NoUserComponent={FourOhFour}
-      ReportContainer={Top20ArtistsReport}
+      ReportContainer={Top20TracksReport}
     />
   );
 }
