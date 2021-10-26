@@ -1,6 +1,14 @@
-export interface LastFMImageDataInterface {
-  size: "small" | "medium" | "large" | "extralarge" | "mega";
-  "#text": string;
+export interface LastFMAlbumDataInterface {
+  artist?: LastFMArtistDataInterface;
+  image?: LastFMImageDataInterface[];
+  mbid: string;
+  name?: string;
+  playcount?: string;
+  url?: string;
+  "@attr"?: {
+    rank: string;
+  };
+  "#text"?: string;
 }
 
 export interface LastFMArtistDataInterface {
@@ -16,15 +24,32 @@ export interface LastFMArtistDataInterface {
   "#text"?: string;
 }
 
-export interface LastFMAlbumDataInterface {
-  artist?: LastFMArtistDataInterface;
-  image?: LastFMImageDataInterface[];
+export interface LastFMImageDataInterface {
+  size: "small" | "medium" | "large" | "extralarge" | "mega";
+  "#text": string;
+}
+
+export interface LastFMTrackDataInterface {
+  artist: LastFMArtistDataInterface;
+  date?: LastFMTrackDateInterface;
+  duration?: string;
+  image: LastFMImageDataInterface[];
   mbid: string;
-  name?: string;
+  name: string;
   playcount?: string;
-  url?: string;
+  streamable: LastFMTrackStreamableInterface | string;
+  url: string;
   "@attr"?: {
     rank: string;
   };
-  "#text"?: string;
+}
+
+interface LastFMTrackDateInterface {
+  uts: string;
+  "#text": string;
+}
+
+interface LastFMTrackStreamableInterface {
+  fulltrack: string;
+  "#text": string;
 }
