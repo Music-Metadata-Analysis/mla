@@ -3,6 +3,7 @@ const routes = {
   home: "/",
   legal: {
     privacy: "/legal/privacy",
+    terms: "/legal/terms",
   },
   reports: {
     lastfm: {
