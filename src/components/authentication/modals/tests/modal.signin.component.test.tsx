@@ -12,8 +12,10 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
+import routes from "../../../../config/routes";
 import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
+import ClickLink from "../../../clickable/click.link.internal/click.link.internal.component";
 import SignInButtons from "../../buttons/signin.buttons";
 import ModalComponent, { testIDs } from "../modal.signin.component";
 
@@ -44,6 +46,18 @@ jest.mock("../../buttons/signin.buttons", () =>
 jest.mock("../../../../hooks/colour", () => {
   return () => mockColourHook;
 });
+
+jest.mock(
+  "../../../clickable/click.link.internal/click.link.internal.component",
+  () => createMockedComponent("ClickLink")
+);
+
+const createMockedComponent = (name: string) => {
+  const {
+    factoryInstance,
+  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
+};
 
 const mockOnClose = jest.fn();
 const mockSignIn = jest.fn();
@@ -132,11 +146,27 @@ describe("AuthenticationModal", () => {
   });
 
   it("should call the Flex component correctly", () => {
-    expect(Flex).toBeCalledTimes(1);
-    checkMockCall(Flex, {
-      "data-testid": testIDs.AuthenticationLoginButtons,
-      direction: "column",
-    });
+    expect(Flex).toBeCalledTimes(2);
+    checkMockCall(
+      Flex,
+      {
+        "data-testid": testIDs.AuthenticationLoginButtons,
+        direction: "column",
+      },
+      0
+    );
+    checkMockCall(
+      Flex,
+      {
+        "data-testid": testIDs.AuthenticationModalFooter,
+        textDecoration: "underline",
+        justify: "center",
+        align: "center",
+        w: "100%",
+      },
+      1,
+      ["onClick"]
+    );
   });
 
   it("should call the SignInButtons component correctly", () => {
@@ -151,5 +181,12 @@ describe("AuthenticationModal", () => {
   it("should call the ModalFooter component correctly", () => {
     expect(ModalFooter).toBeCalledTimes(1);
     checkMockCall(ModalFooter, {});
+  });
+
+  it("should call the ClickLink component correctly", () => {
+    expect(ClickLink).toBeCalledTimes(1);
+    checkMockCall(ClickLink, {
+      href: routes.legal.terms,
+    });
   });
 });
