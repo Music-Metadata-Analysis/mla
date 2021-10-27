@@ -5,13 +5,13 @@ import translations from "../../../../../public/locales/en/about.json";
 import externalLinks from "../../../../config/external";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../tests/fixtures/mock.translation";
-import ClickLink from "../../../clickable/click.external.link/click.external.link.component";
+import ClickLink from "../../../clickable/click.link.external/click.link.external.component";
 import SVSIcon from "../../../icons/svs/svs.icon";
 import DimOnHover from "../../../styles/hover.dim/hover.dim.styles";
 import Body from "../about.body.component";
 
 jest.mock(
-  "../../../clickable/click.external.link/click.external.link.component",
+  "../../../clickable/click.link.external/click.link.external.component",
   () => createMockedComponent("ClickLink")
 );
 
