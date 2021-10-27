@@ -1,5 +1,5 @@
 import { Avatar } from "@chakra-ui/react";
-import ClickLink from "../../clickable/click.external.link/click.external.link.component";
+import ClickLink from "../../clickable/click.link.external/click.link.external.component";
 import LastFMIcon from "../../icons/lastfm/lastfm.icon";
 import DimOnHover from "../../styles/hover.dim/hover.dim.styles";
 
