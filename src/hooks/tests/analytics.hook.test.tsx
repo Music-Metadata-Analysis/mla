@@ -41,6 +41,12 @@ describe("useAnalytics", () => {
     category: "MAIN",
     label: "EXTERNAL_LINK",
   });
+  const mockInternalLink = "http://somewebsite.com";
+  const mockInternalLinkClickEvent = new EventDefinition({
+    action: `VISITED: ${mockInternalLink}`,
+    category: "MAIN",
+    label: "INTERNAL_LINK",
+  });
 
   beforeAll(() => {
     originalEnvironment = process.env;
@@ -96,7 +102,10 @@ describe("useAnalytics", () => {
       expect(received.result.current.trackExternalLinkClick).toBeInstanceOf(
         Function
       );
-      expect(Object.keys(received.result.current).length).toBe(4);
+      expect(received.result.current.trackInternalLinkClick).toBeInstanceOf(
+        Function
+      );
+      expect(Object.keys(received.result.current).length).toBe(5);
     });
 
     it("should contain all the same properties as the mock hook", () => {
@@ -163,6 +172,19 @@ describe("useAnalytics", () => {
             received.result.current.trackExternalLinkClick(
               mockMouseEvent,
               mockExternalLink
+            );
+          });
+
+          it("should NOT process events", () => {
+            expect(ReactGA.event).toBeCalledTimes(0);
+          });
+        });
+
+        describe("trackInternalLinkClick", () => {
+          beforeEach(() => {
+            received.result.current.trackInternalLinkClick(
+              mockMouseEvent,
+              mockInternalLink
             );
           });
 
@@ -265,6 +287,19 @@ describe("useAnalytics", () => {
             expect(ReactGA.event).toBeCalledTimes(0);
           });
         });
+
+        describe("trackInternalLinkClick", () => {
+          beforeEach(() => {
+            received.result.current.trackInternalLinkClick(
+              mockMouseEvent,
+              mockInternalLink
+            );
+          });
+
+          it("should NOT process events", async () => {
+            expect(ReactGA.event).toBeCalledTimes(0);
+          });
+        });
       });
 
       describe("when analytics is initialized", () => {
@@ -327,6 +362,20 @@ describe("useAnalytics", () => {
           it("should process events as expected", async () => {
             expect(ReactGA.event).toBeCalledTimes(1);
             expect(ReactGA.event).toBeCalledWith(mockExternalLinkClickEvent);
+          });
+        });
+
+        describe("trackInternalLinkClick", () => {
+          beforeEach(() => {
+            received.result.current.trackInternalLinkClick(
+              mockMouseEvent,
+              mockInternalLink
+            );
+          });
+
+          it("should process events as expected", async () => {
+            expect(ReactGA.event).toBeCalledTimes(1);
+            expect(ReactGA.event).toBeCalledWith(mockInternalLinkClickEvent);
           });
         });
       });
@@ -399,6 +448,19 @@ describe("useAnalytics", () => {
             received.result.current.trackExternalLinkClick(
               mockMouseEvent,
               mockExternalLink
+            );
+          });
+
+          it("should NOT process events", async () => {
+            expect(ReactGA.event).toBeCalledTimes(0);
+          });
+        });
+
+        describe("trackInternalLinkClick", () => {
+          beforeEach(() => {
+            received.result.current.trackInternalLinkClick(
+              mockMouseEvent,
+              mockInternalLink
             );
           });
 
