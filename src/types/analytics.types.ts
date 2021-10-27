@@ -11,6 +11,7 @@ export type EventDefinitionType = {
     | "DATA: TRACK"
     | "ERROR"
     | "EXTERNAL_LINK"
+    | "INTERNAL_LINK"
     | "LOGIN"
     | "LOGOUT"
     | "REPORT"
