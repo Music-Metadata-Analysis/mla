@@ -5,5 +5,6 @@
     "spotify": "Sign-In with Spotify"
   },
   "title": "Please Sign-In to Continue.",
-  "spinnerTitle": "Logging you in ..."
+  "spinnerTitle": "Logging you in ...",
+  "terms": "Terms of Service"
 }
