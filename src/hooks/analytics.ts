@@ -42,6 +42,15 @@ const useAnalytics = () => {
     event(clickEvent);
   };
 
+  const trackInternalLinkClick: LinkClickHandlerType = (e, href) => {
+    const clickEvent = new EventDefinition({
+      category: "MAIN",
+      label: "INTERNAL_LINK",
+      action: `VISITED: ${href}`,
+    });
+    event(clickEvent);
+  };
+
   const handleRouteChange = (url: string): void => {
     ReactGA.set({ page: url });
     ReactGA.pageview(url);
@@ -72,6 +81,7 @@ const useAnalytics = () => {
     setup,
     trackButtonClick,
     trackExternalLinkClick,
+    trackInternalLinkClick,
   };
 };
 

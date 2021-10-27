@@ -3,6 +3,7 @@ const mockAnalyticsHook = {
   setup: jest.fn(),
   trackButtonClick: jest.fn(),
   trackExternalLinkClick: jest.fn(),
+  trackInternalLinkClick: jest.fn(),
 };
 
 export default mockAnalyticsHook;
