@@ -8,6 +8,7 @@ import {
 import * as authClient from "next-auth/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import translations from "../../../../public/locales/en/authentication.json";
+import routes from "../../../config/routes";
 import Events from "../../../events/events";
 import mockAnalyticsHook from "../../../hooks/tests/analytics.mock.hook";
 import mockRouter from "../../../tests/fixtures/mock.router";
@@ -40,6 +41,11 @@ const mockUseSession = jest.fn();
 describe("AuthenticationContainer", () => {
   const mockOnOpen = jest.fn();
   const mockOnClose = jest.fn();
+  const providers: (keyof typeof translations.buttons)[] = [
+    "facebook",
+    "github",
+    "spotify",
+  ];
   let mockCallBack: (() => void) | undefined;
 
   beforeEach(() => jest.clearAllMocks());
@@ -74,128 +80,58 @@ describe("AuthenticationContainer", () => {
     });
   };
 
+  const checkModalSwitch = () => {
+    it("should close the authentication modal", async () => {
+      await waitFor(
+        () =>
+          expect(
+            screen.queryByTestId(AuthModalTestIDs.AuthenticationModalTitle)
+          ).toBeNull
+      );
+    });
+
+    it("should open the spinner modal, and display the title", async () => {
+      expect(
+        await screen.findByTestId(
+          SpinnerModalTestIDs.AuthenticationSpinnerModalTitle
+        )
+      ).toBeTruthy();
+    });
+
+    it("should open the spinner modal, and display the spinner", async () => {
+      expect(
+        await screen.findByTestId(
+          SpinnerModalTestIDs.AuthenticationSpinnerModalSpinner
+        )
+      ).toBeTruthy();
+    });
+  };
+
   const checkLoginButtons = () => {
-    it("should display the modal facebook button", async () => {
-      const buttons = await screen.findByTestId(
-        AuthModalTestIDs.AuthenticationLoginButtons
-      );
-      await waitFor(() => expect(buttons).toBeVisible());
-      expect(
-        await within(buttons).findByText(translations.buttons.facebook)
-      ).toBeTruthy();
-    });
+    providers.map((provider) => {
+      describe(`when the ${provider} button is clicked`, () => {
+        beforeEach(async () => {
+          jest.clearAllMocks();
+          const button = await screen.findByText(
+            translations.buttons[provider]
+          );
+          await waitFor(() => expect(button).toBeVisible());
+          fireEvent.click(button);
+        });
 
-    it("should display the modal github button", async () => {
-      const buttons = await screen.findByTestId(
-        AuthModalTestIDs.AuthenticationLoginButtons
-      );
-      await waitFor(() => expect(buttons).toBeVisible());
-      expect(
-        await within(buttons).findByText(translations.buttons.github)
-      ).toBeTruthy();
-    });
+        it("should start the sign-in sequence", () => {
+          expect(authClient.signIn).toBeCalledWith(provider);
+        });
 
-    it("should display the modal spotify button", async () => {
-      const buttons = await screen.findByTestId(
-        AuthModalTestIDs.AuthenticationLoginButtons
-      );
-      await waitFor(() => expect(buttons).toBeVisible());
-      expect(
-        await within(buttons).findByText(translations.buttons.spotify)
-      ).toBeTruthy();
-    });
+        it("should generate an analytics event", () => {
+          expect(mockAnalyticsHook.event).toBeCalledTimes(1);
+          expect(mockAnalyticsHook.event).toBeCalledWith(
+            Events.Auth.HandleLogin(provider)
+          );
+        });
 
-    const checkModalSwitch = () => {
-      it("should close the authentication modal", async () => {
-        await waitFor(
-          () =>
-            expect(
-              screen.queryByTestId(AuthModalTestIDs.AuthenticationModalTitle)
-            ).toBeNull
-        );
+        checkModalSwitch();
       });
-
-      it("should open the spinner modal, and display the title", async () => {
-        expect(
-          await screen.findByTestId(
-            SpinnerModalTestIDs.AuthenticationSpinnerModalTitle
-          )
-        ).toBeTruthy();
-      });
-
-      it("should open the spinner modal, and display the spinner", async () => {
-        expect(
-          await screen.findByTestId(
-            SpinnerModalTestIDs.AuthenticationSpinnerModalSpinner
-          )
-        ).toBeTruthy();
-      });
-    };
-
-    describe("when the facebook button is clicked", () => {
-      beforeEach(async () => {
-        jest.clearAllMocks();
-        const button = await screen.findByText(translations.buttons.facebook);
-        await waitFor(() => expect(button).toBeVisible());
-        fireEvent.click(button);
-      });
-
-      it("should start the sign-in sequence", () => {
-        expect(authClient.signIn).toBeCalledWith("facebook");
-      });
-
-      it("should generate an analytics event", () => {
-        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-        expect(mockAnalyticsHook.event).toBeCalledWith(
-          Events.Auth.HandleLogin("facebook")
-        );
-      });
-
-      checkModalSwitch();
-    });
-
-    describe("when the github button is clicked", () => {
-      beforeEach(async () => {
-        jest.clearAllMocks();
-        const button = await screen.findByText(translations.buttons.github);
-        await waitFor(() => expect(button).toBeVisible());
-        fireEvent.click(button);
-      });
-
-      it("should start the sign-in sequence", () => {
-        expect(authClient.signIn).toBeCalledWith("github");
-      });
-
-      it("should generate an analytics event", () => {
-        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-        expect(mockAnalyticsHook.event).toBeCalledWith(
-          Events.Auth.HandleLogin("github")
-        );
-      });
-
-      checkModalSwitch();
-    });
-
-    describe("when the spotify button is clicked", () => {
-      beforeEach(async () => {
-        jest.clearAllMocks();
-        const button = await screen.findByText(translations.buttons.spotify);
-        await waitFor(() => expect(button).toBeVisible());
-        fireEvent.click(button);
-      });
-
-      it("should start the sign-in sequence", () => {
-        expect(authClient.signIn).toBeCalledWith("spotify");
-      });
-
-      it("should generate an analytics event", () => {
-        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-        expect(mockAnalyticsHook.event).toBeCalledWith(
-          Events.Auth.HandleLogin("spotify")
-        );
-      });
-
-      checkModalSwitch();
     });
   };
 
@@ -221,6 +157,34 @@ describe("AuthenticationContainer", () => {
 
         checkModal();
         checkLoginButtons();
+
+        describe("when the terms of service link is clicked", () => {
+          beforeEach(async () => {
+            const footer = await screen.findByTestId(
+              AuthModalTestIDs.AuthenticationModalFooter
+            );
+            const link = await within(footer).findByText(translations.terms);
+            fireEvent.click(link);
+          });
+
+          it("should close the modal", () => {
+            expect(mockOnClose).toBeCalledTimes(1);
+            expect(mockOnClose).toBeCalledWith();
+          });
+
+          it("should route the the correct url", () => {
+            expect(mockRouter.push).toBeCalledTimes(1);
+            expect(mockRouter.push).toBeCalledWith(
+              routes.legal.terms,
+              routes.legal.terms,
+              {
+                locale: undefined,
+                scroll: undefined,
+                shallow: undefined,
+              }
+            );
+          });
+        });
 
         describe("when the close button is clicked", () => {
           beforeEach(async () => {

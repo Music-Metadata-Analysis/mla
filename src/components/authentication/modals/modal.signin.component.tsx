@@ -12,11 +12,14 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
+import routes from "../../../config/routes";
 import useColours from "../../../hooks/colour";
+import ClickLink from "../../clickable/click.link.internal/click.link.internal.component";
 import SignInButtons from "../buttons/signin.buttons";
 
 export const testIDs = {
   AuthenticationModalCloseButton: "AuthenticationCloseButton",
+  AuthenticationModalFooter: "AuthenticationModalFooter",
   AuthenticationModalTitle: "AuthenticationModalTitle",
   AuthenticationLoginButtons: "AuthenticationLoginButtons",
 };
@@ -77,7 +80,18 @@ export default function ModalComponent({
                 </Flex>
               </Center>
             </ModalBody>
-            <ModalFooter></ModalFooter>
+            <ModalFooter>
+              <Flex
+                data-testid={testIDs.AuthenticationModalFooter}
+                textDecoration={"underline"}
+                justify={"center"}
+                align={"center"}
+                w={"100%"}
+                onClick={onClose}
+              >
+                <ClickLink href={routes.legal.terms}>{t("terms")}</ClickLink>
+              </Flex>
+            </ModalFooter>
           </Box>
         </ModalContent>
       </Modal>
