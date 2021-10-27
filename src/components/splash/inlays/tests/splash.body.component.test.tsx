@@ -5,7 +5,7 @@ import translations from "../../../../../public/locales/en/splash.json";
 import lastFMConfig from "../../../../config/lastfm";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../tests/fixtures/mock.translation";
-import ClickLink from "../../../clickable/click.external.link/click.external.link.component";
+import ClickLink from "../../../clickable/click.link.external/click.link.external.component";
 import LastFMIcon from "../../../icons/lastfm/lastfm.icon";
 import DimOnHover from "../../../styles/hover.dim/hover.dim.styles";
 import SplashBody from "../splash.body.component";
@@ -15,7 +15,7 @@ jest.mock("../../../button/button.standard/button.standard.component", () =>
 );
 
 jest.mock(
-  "../../../clickable/click.external.link/click.external.link.component",
+  "../../../clickable/click.link.external/click.link.external.component",
   () => createMockedComponent("ClickLink")
 );
 

@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import lastFMConfig from "../../../config/lastfm";
-import ClickLink from "../../clickable/click.external.link/click.external.link.component";
+import ClickLink from "../../clickable/click.link.external/click.link.external.component";
 import LastFMIcon from "../../icons/lastfm/lastfm.icon";
 import DimOnHover from "../../styles/hover.dim/hover.dim.styles";
 import type { TFunction } from "next-i18next";

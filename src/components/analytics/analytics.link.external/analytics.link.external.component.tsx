@@ -1,11 +1,14 @@
 import useAnalytics from "../../../hooks/analytics";
 
-interface AnalyticsWrapperProps {
+interface AnalyticsLinkWrapperProps {
   href: string;
   children: React.ReactNode;
 }
 
-const LinkAnalyticsWrapper = ({ href, children }: AnalyticsWrapperProps) => {
+const AnalyticsLinkWrapper = ({
+  href,
+  children,
+}: AnalyticsLinkWrapperProps) => {
   const analytics = useAnalytics();
 
   return (
@@ -15,4 +18,4 @@ const LinkAnalyticsWrapper = ({ href, children }: AnalyticsWrapperProps) => {
   );
 };
 
-export default LinkAnalyticsWrapper;
+export default AnalyticsLinkWrapper;
