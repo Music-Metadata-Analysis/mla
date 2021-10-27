@@ -12,11 +12,6 @@ jest.mock(
   () => createMockedComponent("Button")
 );
 
-jest.mock(
-  "../../../../clickable/click.external.link/click.external.link.component",
-  () => createMockedComponent("ClickLink")
-);
-
 jest.mock("../../../../styles/hover.dim/hover.dim.styles", () =>
   createMockedComponent("DimOnHover")
 );

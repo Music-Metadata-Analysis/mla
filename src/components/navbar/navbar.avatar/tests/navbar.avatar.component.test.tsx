@@ -2,7 +2,7 @@ import { Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import ClickLink from "../../../clickable/click.external.link/click.external.link.component";
+import ClickLink from "../../../clickable/click.link.external/click.link.external.component";
 import LastFMIcon from "../../../icons/lastfm/lastfm.icon";
 import DimOnHover from "../../../styles/hover.dim/hover.dim.styles";
 import NavBarAvatar, { testIDs } from "../navbar.avatar.component";
@@ -15,7 +15,7 @@ jest.mock("@chakra-ui/react", () => {
 });
 
 jest.mock(
-  "../../../clickable/click.external.link/click.external.link.component",
+  "../../../clickable/click.link.external/click.link.external.component",
   () => createMockedComponent("ClickLink")
 );
 

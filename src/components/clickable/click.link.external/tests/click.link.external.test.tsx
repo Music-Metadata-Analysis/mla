@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import NextLink from "next/link";
 import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
-import ClickExternalLink from "../click.external.link.component";
+import ClickExternalLink from "../click.link.external.component";
 
 jest.mock("next/link", () => createMockedComponent("NextLink"));
 
