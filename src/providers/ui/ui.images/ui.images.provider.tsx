@@ -1,13 +1,16 @@
-import { createContext, useState } from "react";
-import InitialValues from "./ui.images.initial";
-import type { UserInterfaceImagesProviderInterface } from "../../../types/ui.types";
+import { createContext, ReactNode, useState } from "react";
+import InitialContext from "./ui.images.initial";
 
-export const UserInterfaceImagesContext = createContext(InitialValues);
+export const UserInterfaceImagesContext = createContext(InitialContext);
+
+interface UserInterfaceImagesProviderInterface {
+  children: ReactNode;
+}
 
 const UserInterfaceImagesProvider = ({
   children,
 }: UserInterfaceImagesProviderInterface) => {
-  const [loadedCount, setLoadedCount] = useState(0);
+  const [loadedCount, setLoadedCount] = useState(InitialContext.loadedCount);
 
   return (
     <UserInterfaceImagesContext.Provider
