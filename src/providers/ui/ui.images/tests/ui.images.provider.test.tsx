@@ -2,9 +2,9 @@ import { render } from "@testing-library/react";
 import UserInterfaceProviderInterface, {
   UserInterfaceImagesContext,
 } from "../ui.images.provider";
-import type { UserInterfaceImagesContextInterface } from "../../../../types/ui.types";
+import type { UserInterfaceImagesContextInterface } from "../../../../types/ui/images/ui.images.context.types";
 
-describe("NavBarProvider", () => {
+describe("UserInterfaceChakraProvider", () => {
   const received: Partial<UserInterfaceImagesContextInterface> = {};
 
   const arrange = () => {

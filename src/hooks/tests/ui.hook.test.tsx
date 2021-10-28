@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { UserInterfaceImagesContext } from "../../providers/ui/ui.images/ui.images.provider";
 import useUserInterface from "../ui";
-import type { UserInterfaceImagesContextInterface } from "../../types/ui.types";
+import type { UserInterfaceImagesContextInterface } from "../../types/ui/images/ui.images.context.types";
 import type { ReactNode } from "react";
 
 interface MockInterfaceContextWithChildren {
