@@ -1,5 +1,6 @@
 import { SessionProvider } from "next-auth/react";
 import AnalyticsProvider from "./analytics/analytics.provider";
+import MetricsProvider from "./metrics/metrics.provider";
 import NavBarProvider from "./navbar/navbar.provider";
 import UserInterfaceRootProvider from "./ui/ui.root.provider";
 import UserProvider from "./user/user.provider";
@@ -20,14 +21,16 @@ const RootProvider = ({
   return (
     <UserInterfaceRootProvider>
       <SessionProvider session={session}>
-        <UserProvider>
-          <AnalyticsProvider>
-            <NavBarProvider>
-              <Header pageKey={headerProps.pageKey} />
-              {children}
-            </NavBarProvider>
-          </AnalyticsProvider>
-        </UserProvider>
+        <MetricsProvider>
+          <UserProvider>
+            <AnalyticsProvider>
+              <NavBarProvider>
+                <Header pageKey={headerProps.pageKey} />
+                {children}
+              </NavBarProvider>
+            </AnalyticsProvider>
+          </UserProvider>
+        </MetricsProvider>
       </SessionProvider>
     </UserInterfaceRootProvider>
   );
