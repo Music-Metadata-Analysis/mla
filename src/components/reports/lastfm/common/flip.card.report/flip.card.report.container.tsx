@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import FlipCardReport from "./flip.card.report.component";
 import Events from "../../../../../events/events";
 import useAnalytics from "../../../../../hooks/analytics";
+import useMetrics from "../../../../../hooks/metrics";
 import useUserInterface from "../../../../../hooks/ui";
 import Authentication from "../../../../authentication/authentication.container";
 import BillBoardSpinner from "../../../../billboard/billboard.spinner/billboard.spinner.component";
@@ -24,6 +25,7 @@ export default function FlipCardReportContainer<
 >({ user, userName, reportClass }: FlipCardReportProps<UserStateType>) {
   const analytics = useAnalytics();
   const { t } = useTranslation("lastfm");
+  const metrics = useMetrics();
   const report = new reportClass();
   const router = useRouter();
   const ui = useUserInterface();
@@ -50,6 +52,7 @@ export default function FlipCardReportContainer<
   useEffect(() => {
     if (report.queryIsDataReady(user.userProperties, ui)) {
       user.ready();
+      metrics.increment("SearchMetric");
       analytics.event(
         Events.LastFM.ReportPresented(report.analyticsReportType as ReportType)
       );
