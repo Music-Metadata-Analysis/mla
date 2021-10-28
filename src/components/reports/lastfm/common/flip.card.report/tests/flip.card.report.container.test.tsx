@@ -7,6 +7,7 @@ import lastfm from "../../../../../../../public/locales/en/lastfm.json";
 import Events from "../../../../../../events/events";
 import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock.hook";
 import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
+import mockMetricsHook from "../../../../../../hooks/tests/metrics.mock.hook";
 import UserInterfaceImageProvider from "../../../../../../providers/ui/ui.images/ui.images.provider";
 import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../../../tests/fixtures/mock.router";
@@ -21,6 +22,11 @@ import type { userHookAsLastFMTop20AlbumReport } from "../../../../../../types/u
 jest.mock("../../../../../../hooks/analytics", () => ({
   __esModule: true,
   default: () => mockAnalyticsHook,
+}));
+
+jest.mock("../../../../../../hooks/metrics", () => ({
+  __esModule: true,
+  default: () => mockMetricsHook,
 }));
 
 jest.mock("../../../../../authentication/authentication.container", () =>
@@ -229,8 +235,16 @@ describe("FlipCardReportContainer", () => {
           act(() => imageLoader());
         });
 
-        it("should NOT call set the images to the 'ready' state", () => {
+        it("should NOT set the images to the 'ready' state", () => {
           expect(mockHookState.ready).toBeCalledTimes(0);
+        });
+
+        it("should NOT increment any metrics", () => {
+          expect(mockMetricsHook.increment).toBeCalledTimes(0);
+        });
+
+        it("should NOT generate an analytics event", () => {
+          expect(mockAnalyticsHook.event).toBeCalledTimes(0);
         });
       });
     });
@@ -369,6 +383,10 @@ describe("FlipCardReportContainer", () => {
             expect(mockHookState.ready).toBeCalledTimes(0);
           });
 
+          it("should NOT increment any metrics", () => {
+            expect(mockMetricsHook.increment).toBeCalledTimes(0);
+          });
+
           it("should NOT generate an analytics event", () => {
             expect(mockAnalyticsHook.event).toBeCalledTimes(0);
           });
@@ -410,6 +428,11 @@ describe("FlipCardReportContainer", () => {
 
           it("should call set the images to the 'ready' state", () => {
             expect(mockHookState.ready).toBeCalledTimes(1);
+          });
+
+          it("should increment any the SearchMetric count", () => {
+            expect(mockMetricsHook.increment).toBeCalledTimes(1);
+            expect(mockMetricsHook.increment).toBeCalledWith("SearchMetric");
           });
 
           it("should generate an analytics event indicating the report was viewed", () => {
