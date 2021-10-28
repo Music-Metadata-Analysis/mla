@@ -3,6 +3,7 @@ import BackGround from "../../../components/background/background.component";
 import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import UserInterfaceChakraProvider from "../ui.chakra/ui.chakra.provider";
 import UserInterfaceImagesProvider from "../ui.images/ui.images.provider";
+import UserInterfacePopUpsProvider from "../ui.popups/ui.popups.provider";
 import UserInterfaceRootProvider from "../ui.root.provider";
 
 jest.mock("../../../components/background/background.component", () => {
@@ -11,6 +12,10 @@ jest.mock("../../../components/background/background.component", () => {
 
 jest.mock("../ui.chakra/ui.chakra.provider", () => {
   return createMockedComponent("UserInterfaceChakraProvider");
+});
+
+jest.mock("../ui.popups/ui.popups.provider", () => {
+  return createMockedComponent("UserInterfacePopUpsProvider");
 });
 
 jest.mock("../ui.images/ui.images.provider", () => {
@@ -47,14 +52,19 @@ describe("UserInterfaceRootProvider", () => {
       checkMockCall(BackGround, {});
     });
 
-    it("should call UserInterfaceImagesProvider with the correct props", () => {
-      expect(UserInterfaceImagesProvider).toBeCalledTimes(1);
-      checkMockCall(UserInterfaceImagesProvider, {});
-    });
-
     it("should call UserInterfaceChakraProvider with the correct props", () => {
       expect(UserInterfaceChakraProvider).toBeCalledTimes(1);
       checkMockCall(UserInterfaceChakraProvider, {});
+    });
+
+    it("should call UserInterfacePopupProvider with the correct props", () => {
+      expect(UserInterfacePopUpsProvider).toBeCalledTimes(1);
+      checkMockCall(UserInterfacePopUpsProvider, {});
+    });
+
+    it("should call UserInterfaceImagesProvider with the correct props", () => {
+      expect(UserInterfaceImagesProvider).toBeCalledTimes(1);
+      checkMockCall(UserInterfaceImagesProvider, {});
     });
 
     it("should return the mock child component", async () => {
