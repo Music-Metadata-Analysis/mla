@@ -31,6 +31,11 @@ const mockColourHook = {
       background: mockColour(),
     },
   },
+  feedbackColour: {
+    background: mockColour(),
+    border: mockColour(),
+    foreground: mockColour(),
+  },
   flipCardColour: {
     background: mockColour(),
     border: mockColour(),
