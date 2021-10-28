@@ -34,6 +34,11 @@ const useColour = () => {
       foreground: chooseColour("gray.700", "gray.300"),
       scheme: "gray",
     },
+    feedbackColour: {
+      background: chooseColour("blue.300", "blue.300"),
+      border: chooseColour("gray.900", "gray.900"),
+      foreground: chooseColour("gray.800", "gray.800"),
+    },
     flipCardColour: {
       background: chooseColour("gray.900", "gray.300"),
       border: chooseColour("gray.500", "gray.900"),

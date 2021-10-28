@@ -30,7 +30,7 @@ describe("useColour", () => {
     };
 
     it("should contain the correct number of top level properties", () => {
-      assertLenIs(received.result.current, 10);
+      assertLenIs(received.result.current, 11);
     });
 
     it("should contain the bodyColour background color", () => {
@@ -61,6 +61,13 @@ describe("useColour", () => {
       assertLenIs(received.result.current.consentColour, 2);
       assertLenIs(received.result.current.consentColour.accept, 1);
       assertLenIs(received.result.current.consentColour.decline, 1);
+    });
+
+    it("should contain the feedbackColour properties", () => {
+      assertIsString(received.result.current.feedbackColour.background);
+      assertIsString(received.result.current.feedbackColour.border);
+      assertIsString(received.result.current.feedbackColour.foreground);
+      assertLenIs(received.result.current.feedbackColour, 3);
     });
 
     it("should contain the flipCardColour properties", () => {

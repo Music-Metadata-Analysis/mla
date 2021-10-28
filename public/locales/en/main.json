@@ -40,6 +40,9 @@
       "resetButton": "Try someone else!"
     }
   },
+  "popups": {
+    "feedback": "How can we make this app better?  Click the eye and let us know!"
+  },
   "pages": {
     "default": {
       "title": "MLA",
