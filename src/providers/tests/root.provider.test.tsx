@@ -3,6 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import Header from "../../components/header/header.component";
 import checkMockCall from "../../tests/fixtures/mock.component.call";
 import AnalyticsProvider from "../analytics/analytics.provider";
+import MetricsProvider from "../metrics/metrics.provider";
 import NavBarProvider from "../navbar/navbar.provider";
 import RootProvider from "../root.provider";
 import UserInterfaceRootProvider from "../ui/ui.root.provider";
@@ -18,6 +19,10 @@ jest.mock("../../components/header/header.component", () =>
 
 jest.mock("../../providers/analytics/analytics.provider", () =>
   createProviderMock(providers.AnalyticsProvider)
+);
+
+jest.mock("../../providers/metrics/metrics.provider", () =>
+  createProviderMock(providers.MetricsProvider)
 );
 
 jest.mock("../../providers/navbar/navbar.provider", () =>
@@ -42,6 +47,7 @@ const createProviderMock = (name: string, exportName = "default") => {
 const providers = {
   AnalyticsProvider: "AnalyticsProvider",
   Header: "Header",
+  MetricsProvider: "MetricsProvider",
   NavBarProvider: "NavBarProvider",
   RootProvider: "RootProvider",
   SessionProvider: "SessionProvider",
@@ -95,6 +101,11 @@ describe("RootProvider", () => {
     it("should initialize the Analytics Provider", async () => {
       await waitFor(() => expect(AnalyticsProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.AnalyticsProvider)).toBeTruthy;
+    });
+
+    it("should initialize the MetricsProvider", async () => {
+      await waitFor(() => expect(MetricsProvider).toBeCalledTimes(1));
+      expect(await screen.findByTestId(providers.MetricsProvider)).toBeTruthy;
     });
 
     it("should initialize the NavBar Provider", async () => {
