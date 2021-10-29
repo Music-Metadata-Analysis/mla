@@ -50,7 +50,8 @@ export default abstract class FlipCardBaseReport<T extends UserState> {
     if (userProperties.inProgress) return false;
     if (userProperties.ready) return false;
     if (userProperties.error) return false;
-    if (ui.count < this.getNumberOfImageLoads(userProperties)) return false;
+    if (ui.images.count < this.getNumberOfImageLoads(userProperties))
+      return false;
     return true;
   }
 

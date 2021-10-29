@@ -29,7 +29,7 @@ export default function FlipCardReportContainer<
   const ui = useUserInterface();
 
   useEffect(() => {
-    ui.reset();
+    ui.images.reset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -55,7 +55,7 @@ export default function FlipCardReportContainer<
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ui.count, user.userProperties]);
+  }, [ui.images.count, user.userProperties]);
 
   if (user.userProperties.error === "RatelimitedFetchUser") {
     return (
@@ -105,7 +105,7 @@ export default function FlipCardReportContainer<
       />
       <FlipCardReport<UserStateType>
         report={report}
-        imageIsLoaded={ui.load}
+        imageIsLoaded={ui.images.load}
         visible={user.userProperties.ready}
         userState={report.getEncapsulatedUserState(user.userProperties, t)}
         t={t}
