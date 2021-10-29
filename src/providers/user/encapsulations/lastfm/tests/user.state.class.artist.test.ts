@@ -1,47 +1,13 @@
+import { baseUserProperties } from "./fixtures/mock.user.state.data";
 import UserArtistState from "../user.state.artist.class";
 import type { LastFMArtistDataInterface } from "../../../../../types/integrations/lastfm/api.types";
 import type { LastFMUserStateArtistReport } from "../../../../../types/user/state.types";
-import type { UserStateInterface } from "../../../../../types/user/state.types";
 
 describe("UserArtistState", () => {
   let currentState: LastFMUserStateArtistReport;
   let instance: UserArtistState;
   const mockT = jest.fn((arg: string) => `t(${arg})`);
   let index: number;
-  const mockUrls = ["http://someurl1.com", "http://someurl2.com"];
-  const baseUserProperties: UserStateInterface = {
-    data: {
-      integration: null,
-      report: {
-        artists: [
-          {
-            mbid: "Mock mbid value.",
-            artist: {
-              mbid: "Another mock mbid value",
-            },
-            image: [
-              {
-                size: "large" as const,
-                "#text": mockUrls[0],
-              },
-            ],
-          },
-        ],
-        image: [
-          {
-            size: "small" as const,
-            "#text": mockUrls[1],
-          },
-        ],
-      },
-    },
-    error: null,
-    inProgress: false,
-    profileUrl: null,
-    ready: true,
-    retries: 3,
-    userName: null,
-  };
 
   const resetState = () => {
     currentState = JSON.parse(JSON.stringify(baseUserProperties));
