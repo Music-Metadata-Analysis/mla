@@ -1,29 +1,7 @@
+import { baseUserProperties, mockUrls } from "./fixtures/mock.user.state.data";
 import UserBaseState from "../user.state.base.class";
 import type { LastFMImageDataInterface } from "../../../../../types/integrations/lastfm/api.types";
 import type { LastFMUserStateBase } from "../../../../../types/user/state.types";
-import type { UserStateInterface } from "../../../../../types/user/state.types";
-
-const mockUrls = ["http://someurl1.com", "http://someurl2.com"];
-
-const baseUserProperties: UserStateInterface = {
-  data: {
-    integration: null,
-    report: {
-      image: [
-        {
-          size: "large" as const,
-          "#text": mockUrls[1],
-        },
-      ],
-    },
-  },
-  error: null,
-  inProgress: false,
-  profileUrl: null,
-  ready: true,
-  retries: 3,
-  userName: null,
-};
 
 describe("UserBaseState", () => {
   let currentState: LastFMUserStateBase;
@@ -43,7 +21,7 @@ describe("UserBaseState", () => {
   });
 
   describe("with a VALID size", () => {
-    beforeEach(() => (size = "large"));
+    beforeEach(() => (size = "small"));
 
     describe("getProfileImageUrl", () => {
       beforeEach(() => arrange());

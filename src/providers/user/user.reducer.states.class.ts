@@ -6,7 +6,7 @@ import type { UserStateInterface } from "../../types/user/state.types";
 class UserReducerStates {
   wrongTypeError = "Received wrong action type.";
   initialReport = { ...InitialState.data.report };
-  initalRetries = InitialState.retries;
+  initialRetries = InitialState.retries;
 
   FailureFetchUser(
     state: UserStateInterface,
@@ -22,7 +22,7 @@ class UserReducerStates {
         inProgress: false,
         profileUrl: null,
         ready: true,
-        retries: this.initalRetries,
+        retries: this.initialRetries,
         userName: action.userName,
       };
     }
@@ -42,7 +42,7 @@ class UserReducerStates {
         inProgress: false,
         profileUrl: null,
         ready: true,
-        retries: this.initalRetries,
+        retries: this.initialRetries,
         userName: action.userName,
       };
     }
@@ -62,7 +62,7 @@ class UserReducerStates {
         inProgress: false,
         profileUrl: null,
         ready: true,
-        retries: this.initalRetries,
+        retries: this.initialRetries,
         userName: action.userName,
       };
     }
@@ -82,7 +82,7 @@ class UserReducerStates {
         inProgress: false,
         profileUrl: GenerateUserLink(action.userName),
         ready: true,
-        retries: this.initalRetries,
+        retries: this.initialRetries,
         userName: action.userName,
       };
     }
@@ -102,7 +102,7 @@ class UserReducerStates {
         inProgress: false,
         profileUrl: null,
         ready: true,
-        retries: this.initalRetries,
+        retries: this.initialRetries,
         userName: null,
       };
     }
@@ -142,7 +142,7 @@ class UserReducerStates {
         inProgress: false,
         profileUrl: null,
         ready: false,
-        retries: this.initalRetries,
+        retries: this.initialRetries,
         userName: action.userName,
       };
     }
@@ -182,7 +182,7 @@ class UserReducerStates {
         inProgress: false,
         profileUrl: null,
         ready: true,
-        retries: this.initalRetries,
+        retries: this.initialRetries,
         userName: action.userName,
       };
     }

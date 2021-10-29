@@ -1,3 +1,7 @@
+import {
+  mockAlbumsReport,
+  mockInitialReportData,
+} from "./fixtures/mock.user.state.data";
 import { InitialState } from "../user.initial";
 import UserReducerStates from "../user.reducer.states.class";
 import type { UserActionType } from "../../../types/user/action.types";
@@ -8,29 +12,21 @@ describe("UserReducerStates", () => {
   let received: UserStateInterface;
   let mockRetries: number;
   const testIntegrationType = "TEST";
-  const testUserName = "somebody";
-  const emptyReport = { albums: [], artists: [], image: [], tracks: [] };
-  const mock_lastfm_data = {
-    albums: [],
-    image: [
-      {
-        size: "large" as const,
-        "#text": "http://someurl.com",
-      },
-    ],
-  };
+  const testUserName = "testUserName";
 
   beforeEach(() => {
     reducerStates = new UserReducerStates();
   });
 
-  const arrange = (action: UserActionType, state = { ...InitialState }) => {
+  const getInitialState = () => JSON.parse(JSON.stringify(InitialState));
+
+  const arrange = (action: UserActionType, state = getInitialState()) => {
     return reducerStates[action.type](state, action);
   };
 
   const arrangeError = (testType: UserActionType["type"]) => {
     return () =>
-      reducerStates[testType]({ ...InitialState }, {
+      reducerStates[testType]({ ...getInitialState() }, {
         type: "InvalidAction",
       } as never as UserActionType);
   };
@@ -50,11 +46,11 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
-        report: emptyReport,
+        report: mockInitialReportData,
       });
       expect(received.error).toBe(testType);
       expect(received.ready).toBe(true);
-      expect(received.retries).toBe(reducerStates.initalRetries);
+      expect(received.retries).toBe(reducerStates.initialRetries);
     });
 
     it("should not accept incompatible types", () => {
@@ -77,11 +73,11 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
-        report: emptyReport,
+        report: mockInitialReportData,
       });
       expect(received.error).toBe(testType);
       expect(received.ready).toBe(true);
-      expect(received.retries).toBe(reducerStates.initalRetries);
+      expect(received.retries).toBe(reducerStates.initialRetries);
     });
 
     it("should not accept incompatible types", () => {
@@ -104,11 +100,11 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
-        report: emptyReport,
+        report: mockInitialReportData,
       });
       expect(received.error).toBe(testType);
       expect(received.ready).toBe(true);
-      expect(received.retries).toBe(reducerStates.initalRetries);
+      expect(received.retries).toBe(reducerStates.initialRetries);
     });
 
     it("should not accept incompatible types", () => {
@@ -123,7 +119,7 @@ describe("UserReducerStates", () => {
       received = arrange({
         type: testType,
         userName: testUserName,
-        data: mock_lastfm_data,
+        data: mockAlbumsReport,
         integration: testIntegrationType,
       });
 
@@ -134,11 +130,11 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
-        report: mock_lastfm_data,
+        report: mockAlbumsReport,
       });
       expect(received.error).toBe(null);
       expect(received.ready).toBe(true);
-      expect(received.retries).toBe(reducerStates.initalRetries);
+      expect(received.retries).toBe(reducerStates.initialRetries);
     });
 
     it("should not accept incompatible types", () => {
@@ -156,12 +152,12 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(null);
       expect(received.data).toStrictEqual({
         integration: null,
-        report: emptyReport,
+        report: mockInitialReportData,
       });
       expect(received.error).toBe(null);
       expect(received.profileUrl).toBe(null);
       expect(received.ready).toBe(true);
-      expect(received.retries).toBe(reducerStates.initalRetries);
+      expect(received.retries).toBe(reducerStates.initialRetries);
     });
 
     it("should not accept incompatible types", () => {
@@ -184,19 +180,19 @@ describe("UserReducerStates", () => {
             userName: testUserName,
             integration: testIntegrationType,
           },
-          { ...InitialState, retries: mockRetries }
+          { ...getInitialState(), retries: mockRetries }
         );
 
         expect(received.inProgress).toBe(true);
         expect(received.userName).toBe(testUserName);
         expect(received.data).toStrictEqual({
           integration: testIntegrationType,
-          report: emptyReport,
+          report: mockInitialReportData,
         });
         expect(received.error).toBe(null);
         expect(received.profileUrl).toBe(null);
         expect(received.ready).toBe(false);
-        expect(received.retries).toBe(reducerStates.initalRetries);
+        expect(received.retries).toBe(reducerStates.initialRetries);
       });
 
       it("should not accept incompatible types", () => {
@@ -212,7 +208,7 @@ describe("UserReducerStates", () => {
       received = arrange({
         type: testType,
         userName: testUserName,
-        data: mock_lastfm_data,
+        data: mockAlbumsReport,
         integration: testIntegrationType,
       });
 
@@ -221,11 +217,11 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
-        report: mock_lastfm_data,
+        report: mockAlbumsReport,
       });
       expect(received.error).toBe(null);
       expect(received.ready).toBe(false);
-      expect(received.retries).toBe(reducerStates.initalRetries);
+      expect(received.retries).toBe(reducerStates.initialRetries);
     });
 
     it("should not accept incompatible types", () => {
@@ -248,7 +244,7 @@ describe("UserReducerStates", () => {
             userName: testUserName,
             integration: testIntegrationType,
           },
-          { ...InitialState, retries: mockRetries }
+          { ...getInitialState(), retries: mockRetries }
         );
 
         expect(received.inProgress).toBe(false);
@@ -256,7 +252,7 @@ describe("UserReducerStates", () => {
         expect(received.userName).toBe(testUserName);
         expect(received.data).toStrictEqual({
           integration: testIntegrationType,
-          report: emptyReport,
+          report: mockInitialReportData,
         });
         expect(received.error).toBe(testType);
         expect(received.ready).toBe(false);
@@ -280,7 +276,7 @@ describe("UserReducerStates", () => {
             userName: testUserName,
             integration: testIntegrationType,
           },
-          { ...InitialState, retries: mockRetries }
+          { ...getInitialState(), retries: mockRetries }
         );
 
         expect(received.inProgress).toBe(false);
@@ -288,7 +284,7 @@ describe("UserReducerStates", () => {
         expect(received.userName).toBe(testUserName);
         expect(received.data).toStrictEqual({
           integration: testIntegrationType,
-          report: emptyReport,
+          report: mockInitialReportData,
         });
         expect(received.error).toBe("FailureFetchUser");
         expect(received.ready).toBe(true);
@@ -316,11 +312,11 @@ describe("UserReducerStates", () => {
       expect(received.userName).toBe(testUserName);
       expect(received.data).toStrictEqual({
         integration: testIntegrationType,
-        report: emptyReport,
+        report: mockInitialReportData,
       });
       expect(received.error).toBe(testType);
       expect(received.ready).toBe(true);
-      expect(received.retries).toBe(reducerStates.initalRetries);
+      expect(received.retries).toBe(reducerStates.initialRetries);
     });
 
     it("should not accept incompatible types", () => {
