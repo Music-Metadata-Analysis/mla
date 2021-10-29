@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import InitialValues from "../user.initial";
+import { InitialState } from "../user.initial";
 import UserProvider, { UserContext } from "../user.provider";
 import type { UserContextInterface } from "../../../types/user/context.types";
 
@@ -30,7 +30,7 @@ describe("UserProvider", () => {
     it("should contain the expected properties", () => {
       const properties = received as UserContextInterface;
       expect(properties.dispatch).toBeInstanceOf(Function);
-      expect(properties.userProperties).toBe(InitialValues.userProperties);
+      expect(properties.userProperties).toStrictEqual(InitialState);
     });
   });
 });
