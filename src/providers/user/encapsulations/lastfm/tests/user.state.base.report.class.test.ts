@@ -1,32 +1,8 @@
-import EventDefinition from "../../../../../events/event.class";
-import UserBaseReportState from "../user.state.base.report.class";
+import ConcreteBaseReportState from "./fixtures/mock.user.state.base.report.concrete.class";
+import { baseUserProperties, mockUrls } from "./fixtures/mock.user.state.data";
 import type { LastFMImageDataInterface } from "../../../../../types/integrations/lastfm/api.types";
 import type { LastFMUserStateAlbumReport } from "../../../../../types/user/state.types";
-import type { UserStateInterface } from "../../../../../types/user/state.types";
-
-class ConcreteBaseReportState extends UserBaseReportState {
-  getDataSource = () => this.userProperties.data.report.albums as unknown[];
-
-  getDefaultEntityName = () => {
-    return this.defaultAlbumName;
-  };
-
-  getDrawerTitle = (index: number) => {
-    return `Mock Title: ${this.getName(index)}`;
-  };
-
-  getExternalLink = (index: number) => {
-    return `Mock Url: ${this.getName(index)}`;
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getDrawerEvent = (index: number) =>
-    new EventDefinition({
-      category: "LAST.FM",
-      label: "TEST",
-      action: "TEST",
-    });
-}
+import type UserBaseReportState from "../user.state.base.report.class";
 
 describe("UserBaseReportState", () => {
   let currentState: LastFMUserStateAlbumReport;
@@ -34,40 +10,6 @@ describe("UserBaseReportState", () => {
   const mockT = jest.fn((arg: string) => `t(${arg})`);
   let index: number;
   let size: LastFMImageDataInterface["size"];
-  const mockUrls = ["http://someurl1.com", "http://someurl2.com"];
-  const baseUserProperties: UserStateInterface = {
-    data: {
-      integration: null,
-      report: {
-        albums: [
-          {
-            mbid: "Mock mbid value.",
-            artist: {
-              mbid: "Another mock mbid value",
-            },
-            image: [
-              {
-                size: "large" as const,
-                "#text": mockUrls[0],
-              },
-            ],
-          },
-        ],
-        image: [
-          {
-            size: "small" as const,
-            "#text": mockUrls[1],
-          },
-        ],
-      },
-    },
-    error: null,
-    inProgress: false,
-    profileUrl: null,
-    ready: true,
-    retries: 3,
-    userName: null,
-  };
 
   const resetState = () => {
     currentState = JSON.parse(JSON.stringify(baseUserProperties));

@@ -82,15 +82,15 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}"
+      "<rootDir>/src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/src/**/fixtures/*.{js,jsx,ts,tsx}"
     ],
     "coveragePathIgnorePatterns": [
-      "src/pages/_app.tsx",
-      "src/pages/_document.tsx",
-      "src/pages/index.tsx",
-      "src/pages/about.tsx",
-      "src/pages/api/auth",
-      "src/tests/fixtures/mock.router.ts"
+      "<rootDir>/src/pages/_app.tsx",
+      "<rootDir>/src/pages/_document.tsx",
+      "<rootDir>/src/pages/index.tsx",
+      "<rootDir>/src/pages/about.tsx",
+      "<rootDir>/src/pages/api/auth"
     ],
     "coverageReporters": [
       "text",
