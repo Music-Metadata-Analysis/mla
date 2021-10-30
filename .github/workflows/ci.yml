@@ -1,8 +1,11 @@
 ---
-name: Music Analytics Project CI
+name: Music Analytics Project CI/CD
 
-# CI_ENVIRONMENT_CONTENT - .env file content for the ci environment
-# STAGE_ENVIRONMENT_CONTENT - .env file content for the ci environment
+# CI_ENVIRONMENT_CONTENT            - Environment file content for the ci environment
+# STAGE_ENVIRONMENT_CONTENT         - Environment file content for the ci environment
+# STAGE_NETLIFY_SITE_ID            - Netlify Stage Site ID
+# PRODUCTION_ENVIRONMENT_CONTENT    - Environment file content for the ci environment
+# PRODUCTION_NETLIFY_SITE_ID        - Netlify Production Site ID
 
 on:
   push:
@@ -11,7 +14,8 @@ on:
   workflow_dispatch:
 
 env:
-  NETLIFY_NAME: "stage-mla"
+  STAGE_NETLIFY_NAME: "stage-mla"
+  PRODUCTION_NETLIFY_NAME: "production-mla"
   PROJECT_NAME: "mla"
   INTEGRATION_TEST_LAST_FM_KEY: ${{ secrets.INTEGRATION_TEST_LAST_FM_KEY }}
   NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
@@ -47,6 +51,55 @@ jobs:
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: error during build!"
 
+  deploy_production:
+    needs: [success_notification]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Production -- Checkout Repository
+        if: github.ref == 'refs/heads/production'
+        uses: actions/checkout@v1
+
+      - name: Deploy Production -- Setup Environment
+        if: github.ref == 'refs/heads/production'
+        run: |
+          source ./.github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Deploy Production -- Report Intention to Deploy
+        if: github.ref == 'refs/heads/production'
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":warning: beginning production deployment!"
+
+      - name: Build -- Append Production Environment Content
+        if: github.ref == 'refs/heads/production'
+        run: |
+          echo "${PRODUCTION_ENVIRONMENT_CONTENT}" > .env.local
+        env:
+          PRODUCTION_ENVIRONMENT_CONTENT: ${{ secrets.PRODUCTION_ENVIRONMENT_CONTENT }}
+
+      - name: Deploy Production -- Trigger Netlify API
+        if: github.ref == 'refs/heads/production'
+        run: |
+          sudo npm install netlify-cli -g
+          npm install
+          netlify deploy --build --prod -s ${NETLIFY_SITE_ID}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.PRODUCTION_NETLIFY_SITE_ID }}
+
+      - name: Deploy Production -- Report Job Status on Success
+        if: github.ref == 'refs/heads/production'
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: deployed https://${PRODUCTION_NETLIFY_NAME}.netlify.app"
+
+      - name: Deploy Production -- Report Job Status on Failure
+        if: failure()
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: error deploying branch!"
+
   deploy_stage:
     needs: [success_notification]
 
@@ -78,12 +131,12 @@ jobs:
           netlify deploy --build --prod -s ${NETLIFY_SITE_ID}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_SITE_ID: ${{ secrets.STAGE_NETLIFY_SITE_ID }}
 
       - name: Deploy Stage -- Report Job Status on Success
         if: github.ref == 'refs/heads/master'
         run: |
-          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: deployed https://${NETLIFY_NAME}.netlify.app"
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: deployed https://${STAGE_NETLIFY_NAME}.netlify.app"
 
       - name: Deploy Stage -- Report Job Status on Failure
         if: failure()
