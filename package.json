@@ -19,7 +19,7 @@
     "axios": ">=0.21.2"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.38.0",
+    "@aws-sdk/client-s3": "^3.39.0",
     "@aws-sdk/signature-v4-crt": "^3.38.0",
     "@chakra-ui/clickable": "^1.1.8",
     "@chakra-ui/icons": "^1.0.16",
