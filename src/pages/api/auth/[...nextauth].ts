@@ -3,6 +3,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
 import SpotifyProvider from "next-auth/providers/spotify";
 import S3Profile from "../../../backend/integrations/auth/s3profile.class";
+import settings from "../../../config/auth";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
@@ -12,7 +13,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       signingKey: process.env.AUTH_MASTER_JWT_SIGNING_KEY,
     },
     session: {
-      maxAge: 7 * 24 * 60 * 60,
+      maxAge: settings.maxAge,
       jwt: true,
     },
     providers: [

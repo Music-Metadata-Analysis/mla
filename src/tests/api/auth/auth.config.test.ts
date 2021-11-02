@@ -4,6 +4,7 @@ import GithubProvider from "next-auth/providers/github";
 import SpotifyProvider from "next-auth/providers/spotify";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import S3Profile from "../../../backend/integrations/auth/s3profile.class";
+import settings from "../../../config/auth";
 import NextAuthConfig from "../../../pages/api/auth/[...nextauth]";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -107,7 +108,7 @@ describe("NextAuthConfig", () => {
     it("should initialize the Session", async () => {
       expect(NextAuth).toBeCalledTimes(1);
       const call = (NextAuth as jest.Mock).mock.calls[0][2];
-      expect(call.session.maxAge).toBe(7 * 24 * 60 * 60);
+      expect(call.session.maxAge).toBe(settings.maxAge);
       expect(call.session.jwt).toBe(true);
     });
 
