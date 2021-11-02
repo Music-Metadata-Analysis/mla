@@ -37,7 +37,7 @@
     "framer-motion": "^4.1.17",
     "js-cookie": "^3.0.1",
     "next": "^11.1.2",
-    "next-auth": "^4.0.0-beta.4",
+    "next-auth": "^4.0.0-next.26",
     "next-connect": "^0.11.0",
     "next-i18next": "^8.9.0",
     "node-fetch": "^2.6.6",
