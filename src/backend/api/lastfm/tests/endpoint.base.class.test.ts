@@ -1,5 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
+import settings from "../../../../config/auth";
 import * as status from "../../../../config/status";
 import { ProxyError } from "../../../../errors/proxy.error.class";
 import BaseClass from "../endpoint.base.class";
@@ -51,6 +52,18 @@ describe("EndpointBaseClass", () => {
     jest.clearAllMocks();
   });
 
+  const checkJWT = () => {
+    it("should call getToken with the correct props", () => {
+      expect(getToken).toBeCalledTimes(1);
+      const call = (getToken as jest.Mock).mock.calls[0][0];
+      expect(call.maxAge).toBe(settings.maxAge);
+      expect(call.req).toBe(req);
+      expect(call.secret).toBe(process.env.AUTH_MASTER_JWT_SECRET);
+      expect(call.signingKey).toBe(process.env.AUTH_MASTER_JWT_SIGNING_KEY);
+      expect(Object.keys(call).length).toBe(4);
+    });
+  };
+
   const arrange = async () => {
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: factory.route,
@@ -90,6 +103,8 @@ describe("EndpointBaseClass", () => {
             expect(res._getStatusCode()).toBe(502);
             expect(res._getJSONData()).toStrictEqual(status.STATUS_502_MESSAGE);
           });
+
+          checkJWT();
         });
 
         describe("receives a request that generates an ratelimited proxy error", () => {
@@ -103,6 +118,8 @@ describe("EndpointBaseClass", () => {
             expect(res._getStatusCode()).toBe(429);
             expect(res._getJSONData()).toStrictEqual(status.STATUS_429_MESSAGE);
           });
+
+          checkJWT();
         });
 
         describe("receives a request that generates an not found proxy error", () => {
@@ -116,6 +133,8 @@ describe("EndpointBaseClass", () => {
             expect(res._getStatusCode()).toBe(404);
             expect(res._getJSONData()).toStrictEqual(status.STATUS_404_MESSAGE);
           });
+
+          checkJWT();
         });
 
         describe("receives a TIMED OUT request", () => {
@@ -132,6 +151,8 @@ describe("EndpointBaseClass", () => {
           it("should set a retry-after header", () => {
             expect(res.getHeader("retry-after")).toBe(0);
           });
+
+          checkJWT();
         });
       });
 
@@ -150,6 +171,8 @@ describe("EndpointBaseClass", () => {
             expect(res._getStatusCode()).toBe(400);
             expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
           });
+
+          checkJWT();
         });
       });
 
@@ -168,6 +191,8 @@ describe("EndpointBaseClass", () => {
             expect(res._getStatusCode()).toBe(400);
             expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
           });
+
+          checkJWT();
         });
       });
     });
@@ -222,6 +247,8 @@ describe("EndpointBaseClass", () => {
             expect(res._getStatusCode()).toBe(401);
             expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
           });
+
+          checkJWT();
         });
 
         describe("receives a TIMED OUT request", () => {
@@ -238,6 +265,8 @@ describe("EndpointBaseClass", () => {
           it("should NOT set a retry-after header", () => {
             expect(res.getHeader("retry-after")).toBeUndefined();
           });
+
+          checkJWT();
         });
       });
 
@@ -256,6 +285,8 @@ describe("EndpointBaseClass", () => {
             expect(res._getStatusCode()).toBe(401);
             expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
           });
+
+          checkJWT();
         });
       });
 
@@ -274,6 +305,8 @@ describe("EndpointBaseClass", () => {
             expect(res._getStatusCode()).toBe(401);
             expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
           });
+
+          checkJWT();
         });
       });
     });
