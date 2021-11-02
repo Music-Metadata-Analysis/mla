@@ -3,6 +3,7 @@ import { getToken } from "next-auth/jwt";
 import nextConnect from "next-connect";
 import Logger from "./endpoint.logger";
 import { knownStatuses } from "../../../config/api";
+import settings from "../../../config/auth";
 import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
 import LastFMProxy from "../../integrations/lastfm/proxy.class";
@@ -34,6 +35,7 @@ export default abstract class LastFMApiEndpointFactory {
           req,
           secret: process.env.AUTH_MASTER_JWT_SECRET,
           signingKey: process.env.AUTH_MASTER_JWT_SIGNING_KEY,
+          maxAge: settings.maxAge,
         });
         const errors = validationResult(req);
         if (!token) {
