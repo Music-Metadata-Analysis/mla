@@ -24,7 +24,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Build -- Setup Environment
+        uses: actions/checkout@v1
 
       - name: Build -- Setup Environment
         run: |
@@ -34,7 +35,7 @@ jobs:
 
       - name: Build -- Install Node Modules
         run: |
-          npm install
+          npm ci
 
       - name: Build -- Append CI Environment Content
         run: |
@@ -84,7 +85,7 @@ jobs:
         if: github.ref == 'refs/heads/production'
         run: |
           sudo npm install netlify-cli -g
-          npm install
+          npm ci
           netlify deploy --build --prod -s ${NETLIFY_SITE_ID}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
@@ -127,7 +128,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           sudo npm install netlify-cli -g
-          npm install
+          npm ci
           netlify deploy --build --prod -s ${NETLIFY_SITE_ID}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
@@ -146,7 +147,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Lint -- Checkout Repository
+        uses: actions/checkout@v1
 
       - name: Lint -- Setup Environment
         run: |
@@ -156,7 +158,7 @@ jobs:
 
       - name: Lint -- Install Node Modules
         run: |
-          npm install
+          npm ci
 
       - name: Lint -- Run Linter
         run: |
@@ -182,7 +184,7 @@ jobs:
 
       - name: Security Test -- Install Node Modules
         run: |
-          npm install
+          npm ci
 
       - name: Security Test -- Dependency Audit
         run: |
@@ -218,6 +220,102 @@ jobs:
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: shellcheck checks failed!"
 
+  smoke_tests_production:
+    needs: [deploy_production]
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Smoke Test Production -- Checkout Repository
+        if: github.ref == 'refs/heads/production'
+        uses: actions/checkout@v1
+
+      - name: Smoke Test Production -- Setup Environment
+        if: github.ref == 'refs/heads/production'
+        run: |
+          source .github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Smoke Test Production -- Install Node Modules
+        if: github.ref == 'refs/heads/production'
+        run: |
+          npm ci
+
+      - name: Smoke Test Production -- Append Production Environment Content
+        if: github.ref == 'refs/heads/production'
+        run: |
+          echo "${PRODUCTION_ENVIRONMENT_CONTENT}" > .env.local
+        env:
+          PRODUCTION_ENVIRONMENT_CONTENT: ${{ secrets.PRODUCTION_ENVIRONMENT_CONTENT }}
+
+      - name: Smoke Test Production -- Generate Cypress Environment
+        if: github.ref == 'refs/heads/production'
+        run: |
+          npm run smoke:env
+
+      - name: Smoke Test Production -- Run Cypress
+        if: github.ref == 'refs/heads/production'
+        run: |
+          npm run smoke:run
+
+      - name: Smoke Test Production -- Report Job Status on Success
+        if: github.ref == 'refs/heads/production'
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: smoke test passed for https://${PRODUCTION_NETLIFY_NAME}.netlify.app"
+
+      - name: Smoke Test Stage -- Report Job Status on Failure
+        if: failure()
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: smoke test failed for https://${PRODUCTION_NETLIFY_NAME}.netlify.app!"
+
+  smoke_tests_stage:
+    needs: [deploy_stage]
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Smoke Test Stage -- Checkout Repository
+        if: github.ref == 'refs/heads/master'
+        uses: actions/checkout@v1
+
+      - name: Smoke Test Stage -- Setup Environment
+        if: github.ref == 'refs/heads/master'
+        run: |
+          source .github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Smoke Test Stage -- Install Node Modules
+        if: github.ref == 'refs/heads/master'
+        run: |
+          npm ci
+
+      - name: Smoke Test Stage -- Append Stage Environment Content
+        if: github.ref == 'refs/heads/master'
+        run: |
+          echo "${STAGE_ENVIRONMENT_CONTENT}" > .env.local
+        env:
+          STAGE_ENVIRONMENT_CONTENT: ${{ secrets.STAGE_ENVIRONMENT_CONTENT }}
+
+      - name: Smoke Test Stage -- Generate Cypress Environment
+        if: github.ref == 'refs/heads/master'
+        run: |
+          npm run smoke:env
+
+      - name: Smoke Test Stage -- Run Cypress
+        if: github.ref == 'refs/heads/master'
+        run: |
+          npm run smoke:run
+
+      - name: Smoke Test Stage -- Report Job Status on Success
+        if: github.ref == 'refs/heads/master'
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: smoke test passed for https://${STAGE_NETLIFY_NAME}.netlify.app"
+
+      - name: Smoke Test Stage -- Report Job Status on Failure
+        if: failure()
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: smoke test failed for https://${STAGE_NETLIFY_NAME}.netlify.app!"
+
   start_notification:
     runs-on: ubuntu-latest
 
@@ -239,32 +337,6 @@ jobs:
         if: failure()
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: error reporting job status!"
-
-  type_validation:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Type Validation -- Checkout Repository
-        uses: actions/checkout@v1
-
-      - name: Type Validation -- Setup Environment
-        run: |
-          source ./.github/scripts/setup.sh
-        env:
-          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-
-      - name: Type Validation -- Install Node Modules
-        run: |
-          npm install
-
-      - name: Type Validation -- Compile Typescript
-        run: |
-          npm run compile
-
-      - name: Type Validation -- Report Job Status on Failure
-        if: failure()
-        run: |
-          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: type validation failed!"
 
   success_notification:
     needs:
@@ -298,6 +370,32 @@ jobs:
         if: failure()
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: error reporting job status!"
+
+  type_validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Type Validation -- Checkout Repository
+        uses: actions/checkout@v1
+
+      - name: Type Validation -- Setup Environment
+        run: |
+          source ./.github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Type Validation -- Install Node Modules
+        run: |
+          npm ci
+
+      - name: Type Validation -- Compile Typescript
+        run: |
+          npm run compile
+
+      - name: Type Validation -- Report Job Status on Failure
+        if: failure()
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: type validation failed!"
 
   workflow_lint_test:
     runs-on: ubuntu-latest
