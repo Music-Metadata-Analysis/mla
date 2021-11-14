@@ -172,7 +172,7 @@ describe("AuthenticationContainer", () => {
             expect(mockOnClose).toBeCalledWith();
           });
 
-          it("should route the the correct url", () => {
+          it("should route to the correct url", () => {
             expect(mockRouter.push).toBeCalledTimes(1);
             expect(mockRouter.push).toBeCalledWith(
               routes.legal.terms,
@@ -200,8 +200,8 @@ describe("AuthenticationContainer", () => {
             expect(mockCallBack).toBeCalledWith();
           });
 
-          it("should NOT route back", () => {
-            expect(mockRouter.back).toBeCalledTimes(0);
+          it("should NOT change the route", () => {
+            expect(mockRouter.push).toBeCalledTimes(0);
           });
         });
       });
@@ -229,9 +229,9 @@ describe("AuthenticationContainer", () => {
             expect(mockCallBack).toBe(undefined);
           });
 
-          it("should route to the correct url", () => {
-            expect(mockRouter.back).toBeCalledTimes(1);
-            expect(mockRouter.back).toBeCalledWith();
+          it("should push the correct url", () => {
+            expect(mockRouter.push).toBeCalledTimes(1);
+            expect(mockRouter.push).toBeCalledWith(routes.home);
           });
 
           it("should generate an analytics event", () => {
