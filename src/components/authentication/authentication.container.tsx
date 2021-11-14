@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SignInModal from "./modals/modal.signin.component";
 import SpinnerModal from "./modals/modal.spinner.component";
+import routes from "../../config/routes";
 import Events from "../../events/events";
 import useAnalytics from "../../hooks/analytics";
 
@@ -39,10 +40,10 @@ export default function Authentication({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authStatus]);
 
-  const handleClose = () => {
+  const handleClose = (overrideCloseBehavior = false) => {
     analytics.event(Events.Auth.CloseModal);
     if (onModalClose) onModalClose();
-    if (!onModalClose) router.back();
+    if (!onModalClose && !overrideCloseBehavior) router.push(routes.home);
   };
 
   const handleSignIn = (provider: string) => {

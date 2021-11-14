@@ -26,7 +26,7 @@ export const testIDs = {
 
 export interface AuthenticationProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (overrideCloseBehavior?: boolean) => void;
   setClicked: (value: boolean) => void;
   signIn: (provider: string) => void;
 }
@@ -87,7 +87,7 @@ export default function ModalComponent({
                 justify={"center"}
                 align={"center"}
                 w={"100%"}
-                onClick={onClose}
+                onClick={() => onClose(true)}
               >
                 <ClickLink href={routes.legal.terms}>{t("terms")}</ClickLink>
               </Flex>
