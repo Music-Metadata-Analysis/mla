@@ -26,7 +26,7 @@
     "@aws-sdk/signature-v4-crt": "^3.41.0",
     "@chakra-ui/clickable": "^1.2.1",
     "@chakra-ui/icons": "^1.1.1",
-    "@chakra-ui/react": "^1.7.1",
+    "@chakra-ui/react": "^1.7.2",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@toplast/lastfm": "^0.1.5",
