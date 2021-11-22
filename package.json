@@ -39,7 +39,7 @@
     "next": "^11.1.2",
     "next-auth": "^4.0.0-beta.4",
     "next-connect": "^0.11.0",
-    "next-i18next": "^8.10.0",
+    "next-i18next": "^9.1.0",
     "node-fetch": "^2.6.6",
     "react": "^17.0.2",
     "react-card-flip": "^1.1.3",
