@@ -12,4 +12,7 @@ const metricsReducer = (state: MetricsStateType, action: MetricsActionType) => {
 };
 
 const middlewares = [reducerLoggingMiddleware];
-export const MetricsReducer = withMiddleware(metricsReducer, middlewares);
+export const MetricsReducer = withMiddleware<
+  MetricsStateType,
+  MetricsActionType
+>(metricsReducer, middlewares);

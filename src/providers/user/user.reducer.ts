@@ -12,4 +12,7 @@ const userReducer = (state: UserStateInterface, action: UserActionType) => {
 };
 
 const middlewares = [reducerLoggingMiddleware];
-export const UserReducer = withMiddleware(userReducer, middlewares);
+export const UserReducer = withMiddleware<UserStateInterface, UserActionType>(
+  userReducer,
+  middlewares
+);

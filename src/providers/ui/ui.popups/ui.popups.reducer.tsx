@@ -15,7 +15,7 @@ const userInterfacePopUpsReducer = (
 };
 
 const middlewares = [reducerLoggingMiddleware];
-export const UserInterfacePopUpsReducer = withMiddleware(
-  userInterfacePopUpsReducer,
-  middlewares
-);
+export const UserInterfacePopUpsReducer = withMiddleware<
+  UserInterfacePopUpsStateInterface,
+  UserInterfacePopUpsActionType
+>(userInterfacePopUpsReducer, middlewares);
