@@ -1,4 +1,5 @@
 import { ColorModeScript } from "@chakra-ui/react";
+import { getSession } from "next-auth/react";
 import Document, {
   DocumentContext,
   Html,
@@ -8,9 +9,14 @@ import Document, {
 } from "next/document";
 
 class BaseDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
+  static async getServerSideProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
+    return {
+      props: {
+        session: await getSession(),
+        ...initialProps,
+      },
+    };
   }
 
   render() {
@@ -18,7 +24,7 @@ class BaseDocument extends Document {
       <Html>
         <Head />
         <body>
-          <ColorModeScript initialColorMode="dark" />
+          <ColorModeScript />
           <Main />
           <NextScript />
         </body>

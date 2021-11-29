@@ -41,3 +41,6 @@ cypress.env.json
 
 # Local Netlify folder
 .netlify
+
+# Typescript
+*.tsbuildinfo

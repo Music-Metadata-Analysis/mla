@@ -1,6 +1,5 @@
 import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
-import settings from "../../../../config/auth";
 import * as status from "../../../../config/status";
 import { ProxyError } from "../../../../errors/proxy.error.class";
 import BaseClass from "../endpoint.base.class";
@@ -56,11 +55,9 @@ describe("EndpointBaseClass", () => {
     it("should call getToken with the correct props", () => {
       expect(getToken).toBeCalledTimes(1);
       const call = (getToken as jest.Mock).mock.calls[0][0];
-      expect(call.maxAge).toBe(settings.maxAge);
       expect(call.req).toBe(req);
       expect(call.secret).toBe(process.env.AUTH_MASTER_JWT_SECRET);
-      expect(call.signingKey).toBe(process.env.AUTH_MASTER_JWT_SIGNING_KEY);
-      expect(Object.keys(call).length).toBe(4);
+      expect(Object.keys(call).length).toBe(2);
     });
   };
 

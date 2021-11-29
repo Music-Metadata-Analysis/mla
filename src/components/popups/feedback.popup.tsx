@@ -11,7 +11,7 @@ const popUpName = "FeedBack" as const;
 
 export default function FeedbackPopUp() {
   const { metrics } = useMetrics();
-  const { status: authStatus } = useSession({ required: false });
+  const { status: authStatus } = useSession();
   const ui = useUserInterface();
   const { t } = useTranslation("main");
 

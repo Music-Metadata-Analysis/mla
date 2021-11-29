@@ -1,3 +1,5 @@
+const path = require("path");
+
 const isNotProductionOrTest = () =>
   process.env.NODE_ENV !== "production" && process.env.NODE_ENV !== "test";
 
@@ -14,6 +16,8 @@ const i18n = {
     escapeValue: false,
     formatSeparator: ",",
   },
+  localePath: path.resolve("./public/locales"),
+  reloadOnPrerender: isNotProductionOrTest(),
 };
 
 module.exports = {

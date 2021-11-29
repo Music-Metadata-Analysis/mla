@@ -21,9 +21,7 @@ export default function SearchContainer({
   openError,
   t,
 }: SearchContainerProps) {
-  const { data: authSession, status: authStatus } = useSession({
-    required: false,
-  });
+  const { data: authSession, status: authStatus } = useSession();
   const { hideNavBar, showNavBar } = useNavBar();
   const router = useRouter();
 
