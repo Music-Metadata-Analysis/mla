@@ -11,7 +11,6 @@ const loadEnvironment = async () => {
 async function generateToken() {
   const settings = {
     secret: process.env.AUTH_MASTER_JWT_SECRET,
-    signingKey: process.env.AUTH_MASTER_JWT_SIGNING_KEY,
   };
 
   const defaultJwtPayload = {

@@ -7,7 +7,6 @@ declare namespace NodeJS {
     AUTH_GITHUB_ID: string;
     AUTH_GITHUB_SECRET: string;
     AUTH_MASTER_JWT_SECRET: string;
-    AUTH_MASTER_JWT_SIGNING_KEY: string;
     AUTH_MASTER_SECRET_KEY: string;
     AUTH_SPOTIFY_ID: string;
     AUTH_SPOTIFY_SECRET: string;
