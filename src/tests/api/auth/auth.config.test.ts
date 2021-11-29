@@ -40,7 +40,6 @@ describe("NextAuthConfig", () => {
     process.env.AUTH_GITHUB_SECRET = mockValue();
     process.env.AUTH_MASTER_SECRET_KEY = mockValue();
     process.env.AUTH_MASTER_JWT_SECRET = mockValue();
-    process.env.AUTH_MASTER_JWT_SIGNING_KEY = mockValue();
     process.env.AUTH_SPOTIFY_ID = mockValue();
     process.env.AUTH_SPOTIFY_SECRET = mockValue();
   });
@@ -96,7 +95,6 @@ describe("NextAuthConfig", () => {
       expect(NextAuth).toBeCalledTimes(1);
       const call = (NextAuth as jest.Mock).mock.calls[0][2];
       expect(call.jwt.secret).toBe(process.env.AUTH_MASTER_JWT_SECRET);
-      expect(call.jwt.signingKey).toBe(process.env.AUTH_MASTER_JWT_SIGNING_KEY);
     });
 
     it("should initialize the Secret hash value", async () => {
@@ -109,10 +107,10 @@ describe("NextAuthConfig", () => {
       expect(NextAuth).toBeCalledTimes(1);
       const call = (NextAuth as jest.Mock).mock.calls[0][2];
       expect(call.session.maxAge).toBe(settings.maxAge);
-      expect(call.session.jwt).toBe(true);
+      expect(call.session.strategy).toBe("jwt");
     });
 
-    it("should initalize a signIn event handler", async () => {
+    it("should initialize a signIn event handler", async () => {
       expect(NextAuth).toBeCalledTimes(1);
       const call = (NextAuth as jest.Mock).mock.calls[0][2];
       expect(typeof call.events.signIn).toBe("function");

@@ -1,5 +1,5 @@
 import { useDisclosure } from "@chakra-ui/react";
-import { useSession, signIn, RedirectableProvider } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SignInModal from "./modals/modal.signin.component";
@@ -19,7 +19,7 @@ export default function Authentication({
 }: AuthenticationProps) {
   const analytics = useAnalytics();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { status: authStatus } = useSession({ required: false });
+  const { status: authStatus } = useSession();
   const router = useRouter();
   const [clicked, setClicked] = useState(false);
 
@@ -48,7 +48,7 @@ export default function Authentication({
 
   const handleSignIn = (provider: string) => {
     analytics.event(Events.Auth.HandleLogin(provider));
-    signIn(provider as RedirectableProvider);
+    signIn(provider);
   };
 
   if (hidden) return null;

@@ -10,7 +10,7 @@ import type { MouseEvent } from "react";
 
 const NavSessionControl = () => {
   const { navButtonColour, transparent } = useColour();
-  const { data: authSession } = useSession({ required: false });
+  const { status: authStatus } = useSession();
   const [showModal, setShowModal] = useState(false);
   const [buttonType, setButtonType] =
     useState<keyof typeof operations>("signIn");
@@ -29,13 +29,12 @@ const NavSessionControl = () => {
   }, []);
 
   useEffect(() => {
-    if (!authSession) {
+    if (authStatus === "unauthenticated") {
       setButtonType("signIn");
-    }
-    if (authSession) {
+    } else {
       setButtonType("signOut");
     }
-  }, [authSession]);
+  }, [authStatus]);
 
   const handleOperation = (e: MouseEvent<HTMLElement>) => {
     operations[buttonType]();
