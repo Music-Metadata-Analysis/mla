@@ -33,7 +33,7 @@
     "@toplast/lastfm": "^0.1.5",
     "cheerio": "^1.0.0-rc.10",
     "ci": "^2.1.1",
-    "express-validator": "^6.13.0",
+    "express-validator": "^6.14.0",
     "formik": "^2.2.9",
     "framer-motion": "^5.4.5",
     "js-cookie": "^3.0.1",
