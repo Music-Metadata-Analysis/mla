@@ -43,7 +43,7 @@
     "next-i18next": "^8.10.0",
     "node-fetch": "^2.6.6",
     "react": "^17.0.2",
-    "react-card-flip": "^1.1.4",
+    "react-card-flip": "^1.1.5",
     "react-cookie-consent": "^6.4.1",
     "react-dom": "^17.0.2",
     "react-error-boundary": "^3.1.4",
