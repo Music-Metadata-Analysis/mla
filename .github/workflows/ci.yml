@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build -- Setup Environment
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Build -- Setup Environment
         run: |
@@ -60,7 +60,7 @@ jobs:
     steps:
       - name: Deploy Production -- Checkout Repository
         if: github.ref == 'refs/heads/production'
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Deploy Production -- Setup Environment
         if: github.ref == 'refs/heads/production'
@@ -109,7 +109,7 @@ jobs:
     steps:
       - name: Deploy Stage -- Checkout Repository
         if: github.ref == 'refs/heads/master'
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Deploy Stage -- Setup Environment
         if: github.ref == 'refs/heads/master'
@@ -148,7 +148,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Lint -- Checkout Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Lint -- Setup Environment
         run: |
@@ -174,7 +174,7 @@ jobs:
 
     steps:
       - name: Security Test -- Checkout Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Documentation Test -- Setup Environment
         run: |
@@ -203,7 +203,7 @@ jobs:
 
     steps:
       - name: Shellcheck -- Checkout Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Shellcheck -- Setup Environment
         run: |
@@ -227,7 +227,7 @@ jobs:
     steps:
       - name: Smoke Test Production -- Checkout Repository
         if: github.ref == 'refs/heads/production'
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Smoke Test Production -- Setup Environment
         if: github.ref == 'refs/heads/production'
@@ -275,7 +275,7 @@ jobs:
     steps:
       - name: Smoke Test Stage -- Checkout Repository
         if: github.ref == 'refs/heads/master'
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Smoke Test Stage -- Setup Environment
         if: github.ref == 'refs/heads/master'
@@ -321,7 +321,7 @@ jobs:
 
     steps:
       - name: Start -- Checkout Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Start -- Setup Environment
         run: |
@@ -354,7 +354,7 @@ jobs:
 
     steps:
       - name: Success -- Checkout Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Success -- Setup Environment
         run: |
@@ -376,7 +376,7 @@ jobs:
 
     steps:
       - name: Type Validation -- Checkout Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Type Validation -- Setup Environment
         run: |
@@ -411,7 +411,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Workflow Lint -- Checkout Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.4.0
 
       - name: Workflow Lint -- Setup Environment
         run: |
