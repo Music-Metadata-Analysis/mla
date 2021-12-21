@@ -19,6 +19,7 @@ env:
   PROJECT_NAME: "mla"
   INTEGRATION_TEST_LAST_FM_KEY: ${{ secrets.INTEGRATION_TEST_LAST_FM_KEY }}
   NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+  NETLIFY_CLI: netlify-cli
 
 jobs:
   build:
@@ -84,7 +85,7 @@ jobs:
       - name: Deploy Production -- Trigger Netlify API
         if: github.ref == 'refs/heads/production'
         run: |
-          sudo npm install netlify-cli -g
+          npm install --unsafe-perm=true ${NETLIFY_CLI} -g
           npm ci
           netlify deploy --build --prod -s ${NETLIFY_SITE_ID}
         env:
@@ -127,7 +128,7 @@ jobs:
       - name: Deploy Stage -- Trigger Netlify API
         if: github.ref == 'refs/heads/master'
         run: |
-          sudo npm install netlify-cli -g
+          npm install --unsafe-perm=true ${NETLIFY_CLI} -g
           npm ci
           netlify deploy --build --prod -s ${NETLIFY_SITE_ID}
         env:
