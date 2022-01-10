@@ -41,7 +41,9 @@ jest.mock("next-auth/jwt", () => ({
 }));
 
 describe("EndpointBaseClass", () => {
+  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let req: MockRequest<NextApiRequest>;
+  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let res: MockResponse<NextApiResponse>;
   let payload: undefined | Record<string, string>;
   let factory: BaseClass | ConcreteTimeoutClass | ConcreteErrorClass;
@@ -62,6 +64,7 @@ describe("EndpointBaseClass", () => {
   };
 
   const arrange = async () => {
+    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: factory.route,
       method,

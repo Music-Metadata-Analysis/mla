@@ -29,7 +29,9 @@ type ArrangeArgs = {
 };
 
 describe(apiRoutes.v1.reports.lastfm.top20artists, () => {
+  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let req: MockRequest<NextApiRequest>;
+  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let res: MockResponse<NextApiResponse>;
   const mockResponse = {
     artists: [],
@@ -43,6 +45,7 @@ describe(apiRoutes.v1.reports.lastfm.top20artists, () => {
   });
 
   const arrange = async ({ body, method = "POST" }: ArrangeArgs) => {
+    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: apiRoutes.v1.reports.lastfm.top20artists,
       method,
