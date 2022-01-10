@@ -5,7 +5,9 @@ import type { APIEndpointRequest } from "../endpoint.base.class";
 import type { NextApiResponse } from "next";
 
 describe("endpointLogger", () => {
+  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let req: MockRequest<APIEndpointRequest>;
+  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let res: MockResponse<NextApiResponse>;
   const next = jest.fn();
   let testRemoteAddress: string | string[] | undefined;
@@ -23,6 +25,7 @@ describe("endpointLogger", () => {
   });
 
   const arrange = async (socketDefinedRemoteAddress?: string) => {
+    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     ({ req: req, res: res } = createMocks<APIEndpointRequest, NextApiResponse>({
       headers: {
         referer: testReferer,

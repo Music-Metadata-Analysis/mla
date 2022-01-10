@@ -33,7 +33,9 @@ if (process.env[integrationEnvironmentVariable]) {
     let scenario: string;
     let testUser: string;
     let originalEnvironment: typeof process.env;
+    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     let req: MockRequest<NextApiRequest>;
+    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     let res: MockResponse<NextApiResponse>;
 
     beforeAll(() => {
@@ -50,6 +52,7 @@ if (process.env[integrationEnvironmentVariable]) {
     });
 
     const arrange = async ({ body, method = "POST" }: ArrangeArgs) => {
+      // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
       ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
         url: endpointUnderTest,
         method,
