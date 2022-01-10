@@ -22,7 +22,9 @@ const mockWriteProfileToS3 = jest.fn();
 
 describe("NextAuthConfig", () => {
   let originalEnvironment: typeof process.env;
+  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let req: MockRequest<NextApiRequest>;
+  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let res: MockResponse<NextApiResponse>;
   let mockValueIndex = 0;
 
@@ -53,6 +55,7 @@ describe("NextAuthConfig", () => {
   });
 
   const arrange = async () => {
+    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: "/",
       method: "GET",
