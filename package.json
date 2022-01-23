@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.46.0",
-    "@aws-sdk/signature-v4-crt": "^3.46.0",
+    "@aws-sdk/signature-v4-crt": "^3.47.2",
     "@chakra-ui/clickable": "^1.2.1",
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.4",
