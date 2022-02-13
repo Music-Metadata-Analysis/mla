@@ -69,7 +69,7 @@ const NavSessionControl = () => {
             bg={navButtonColour.background}
           >
             {buttonType === "signIn" ? (
-              <LockIcon data-testid={buttonType} />
+              <LockIcon data-testid={buttonType} w={5} h={5} />
             ) : (
               <RiLogoutBoxRLine size={20} data-testid={buttonType} />
             )}

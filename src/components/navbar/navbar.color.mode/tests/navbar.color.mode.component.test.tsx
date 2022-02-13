@@ -50,7 +50,7 @@ describe("NavBarColorModeToggle", () => {
 
     it("should render the SunIcon", () => {
       expect(SunIcon).toBeCalledTimes(1);
-      checkMockCall(SunIcon, { color: "yellow.500", size: "md" });
+      checkMockCall(SunIcon, { color: "yellow.500", w: 5, h: 5 });
     });
 
     it("should NOT render the MoonIcon", () => {
@@ -106,7 +106,7 @@ describe("NavBarColorModeToggle", () => {
 
     it("should render the MoonIcon", () => {
       expect(MoonIcon).toBeCalledTimes(1);
-      checkMockCall(MoonIcon, { size: "md" });
+      checkMockCall(MoonIcon, { w: 5, h: 5 });
     });
 
     it("should render the SunIcon", () => {
