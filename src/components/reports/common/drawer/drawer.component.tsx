@@ -40,7 +40,6 @@ const AlbumDrawer = ({
     >
       <DrawerOverlay />
       <DrawerContent
-        colorScheme={componentColour.scheme}
         bg={componentColour.background}
         color={componentColour.foreground}
         sx={{

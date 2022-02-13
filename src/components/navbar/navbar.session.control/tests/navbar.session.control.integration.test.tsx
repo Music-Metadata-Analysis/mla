@@ -1,6 +1,9 @@
+import { LockIcon } from "@chakra-ui/icons";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { signOut } from "next-auth/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
+import { RiLogoutBoxRLine } from "react-icons/ri";
+import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../tests/fixtures/mock.router";
 import Authentication from "../../../authentication/authentication.container";
 import { testIDs as modalIDs } from "../../../authentication/modals/modal.signin.component";
@@ -22,6 +25,21 @@ jest.mock("next-auth/react", () => ({
   useSession: () => mockUseSession(),
   signIn: jest.fn(),
   signOut: jest.fn(),
+}));
+
+jest.mock("@chakra-ui/icons", () => {
+  const {
+    factoryInstance,
+  } = require("../../../../tests/fixtures/mock.chakra.icon.factory.class");
+  const instance = factoryInstance.create(["LockIcon"]);
+  instance.useColorMode = jest.fn();
+  return instance;
+});
+
+jest.mock("react-icons/ri", () => ({
+  RiLogoutBoxRLine: jest
+    .fn()
+    .mockImplementation((props) => <div {...props}>MockRiLogoutBoxRLine</div>),
 }));
 
 const createMockedComponent = (name: string) => {
@@ -52,6 +70,11 @@ describe("NavSessionControl", () => {
       arrange();
     });
 
+    it("should render the RiLogoutBoxRLine icon.", () => {
+      expect(RiLogoutBoxRLine).toBeCalledTimes(1);
+      checkMockCall(RiLogoutBoxRLine, { size: 20, "data-testid": "signOut" });
+    });
+
     describe("when the button is clicked", () => {
       beforeEach(async () => {
         const button = await screen.findByTestId("signOut");
@@ -69,6 +92,11 @@ describe("NavSessionControl", () => {
     beforeEach(() => {
       mockUseSession.mockReturnValue({ data: null, status: "unauthenticated" });
       arrange();
+    });
+
+    it("should render the LockIcon", () => {
+      expect(LockIcon).toBeCalledTimes(1);
+      checkMockCall(LockIcon, { w: 5, h: 5, "data-testid": "signIn" });
     });
 
     describe("when the button is clicked", () => {

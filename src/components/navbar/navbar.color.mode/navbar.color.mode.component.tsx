@@ -12,8 +12,8 @@ export default function NavBarColorModeToggle() {
   const { toggleColorMode, colorMode } = useColorMode();
 
   const Icon = () => {
-    if (colorMode !== "light") return <MoonIcon size={"md"} />;
-    return <SunIcon color="yellow.500" size={"md"} />;
+    if (colorMode !== "light") return <MoonIcon w={5} h={5} />;
+    return <SunIcon color="yellow.500" w={5} h={5} />;
   };
 
   const changeHandler = (e: ChangeEvent<HTMLElement>) => {
