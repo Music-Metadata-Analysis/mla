@@ -3,7 +3,7 @@ import type { ProxyError } from "../../../../errors/proxy.error.class";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
-  LastFMImageDataInterface,
+  LastFMUserProfileInterface,
   LastFMTrackDataInterface,
 } from "../../../../types/integrations/lastfm/api.types";
 import type { LastFMExternalClientError } from "../../../../types/integrations/lastfm/client.types";
@@ -59,7 +59,9 @@ describe("LastFMClient", () => {
       track: [{ name: "mockTrack" }],
     },
   };
-  const mockProfileResponse = { user: { image: "response" } };
+  const mockProfileResponse = {
+    user: { image: "response", playcount: "0000" },
+  };
   let instance: LastFMClientAdapter;
 
   beforeEach(() => {
@@ -165,7 +167,7 @@ describe("LastFMClient", () => {
           instance = arrange(secretKey);
         });
 
-        it("should performe a cache lookup with the correct params", async () => {
+        it("should perform a cache lookup with the correct params", async () => {
           res = await instance.getTopArtists(username);
           expect(MockCache.lookup).toBeCalledTimes(1);
           expect(MockCache.lookup).toBeCalledWith(
@@ -202,7 +204,7 @@ describe("LastFMClient", () => {
           instance = arrange(secretKey);
         });
 
-        it("should performe a cache lookup with the correct params", async () => {
+        it("should perform a cache lookup with the correct params", async () => {
           res = await instance.getTopArtists(username);
           expect(MockCache.lookup).toBeCalledTimes(1);
           expect(MockCache.lookup).toBeCalledWith(
@@ -281,8 +283,8 @@ describe("LastFMClient", () => {
     });
   });
 
-  describe("getUserImage", () => {
-    let res: LastFMImageDataInterface[];
+  describe("getUserProfile", () => {
+    let res: LastFMUserProfileInterface;
 
     describe("when the request is successful", () => {
       beforeEach(async () => {
@@ -293,12 +295,15 @@ describe("LastFMClient", () => {
       });
 
       it("should call the external library correctly", async () => {
-        res = await instance.getUserImage(username);
+        res = await instance.getUserProfile(username);
         expect(mockApiCalls["getInfo"]).toBeCalledTimes(1);
         expect(mockApiCalls["getInfo"]).toBeCalledWith({
           user: username,
         });
-        expect(res).toBe(mockProfileResponse.user.image);
+        expect(res).toStrictEqual({
+          image: mockProfileResponse.user.image,
+          playcount: parseInt(mockProfileResponse.user.playcount),
+        });
       });
     });
 
@@ -320,7 +325,7 @@ describe("LastFMClient", () => {
 
         it("should embed the status code as expected", async () => {
           try {
-            await instance.getUserImage(username);
+            await instance.getUserProfile(username);
           } catch (receivedError) {
             expect((receivedError as ProxyError).message).toBe(
               `${err.message}`
@@ -342,7 +347,7 @@ describe("LastFMClient", () => {
 
         it("should embed the status code as expected", async () => {
           try {
-            await instance.getUserImage(username);
+            await instance.getUserProfile(username);
           } catch (receivedError) {
             expect((receivedError as ProxyError).message).toBe(
               `${err.message}`
@@ -373,7 +378,7 @@ describe("LastFMClient", () => {
           instance = arrange(secretKey);
         });
 
-        it("should performe a cache lookup with the correct params", async () => {
+        it("should perform a cache lookup with the correct params", async () => {
           res = await instance.getTopTracks(username);
           expect(MockCache.lookup).toBeCalledTimes(1);
           expect(MockCache.lookup).toBeCalledWith(
@@ -410,7 +415,7 @@ describe("LastFMClient", () => {
           instance = arrange(secretKey);
         });
 
-        it("should performe a cache lookup with the correct params", async () => {
+        it("should perform a cache lookup with the correct params", async () => {
           res = await instance.getTopTracks(username);
           expect(MockCache.lookup).toBeCalledTimes(1);
           expect(MockCache.lookup).toBeCalledWith(undefined);

@@ -27,6 +27,7 @@ describe("Top20ArtistsReport", () => {
       report: {
         artists: mockArtistData,
         image: [],
+        playcount: 0,
       },
       integration: "LASTFM" as const,
     },

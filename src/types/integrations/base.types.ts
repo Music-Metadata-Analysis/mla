@@ -3,4 +3,5 @@ export interface BaseReportResponseInterface {
   albums?: unknown[];
   tracks?: unknown[];
   image: unknown[];
+  playcount: number;
 }

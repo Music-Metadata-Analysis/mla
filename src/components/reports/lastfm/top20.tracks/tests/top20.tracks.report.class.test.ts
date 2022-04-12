@@ -27,6 +27,7 @@ describe("Top20TracksReport", () => {
       report: {
         tracks: mockTrackData,
         image: [],
+        playcount: 0,
       },
       integration: "LASTFM" as const,
     },

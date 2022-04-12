@@ -11,6 +11,7 @@ export const InitialState = <UserStateInterface>{
       albums: [],
       tracks: [],
       image: [],
+      playcount: 0,
     },
   },
   retries: requestSettings.retries,

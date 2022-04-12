@@ -36,6 +36,7 @@ let mockUserProperties: UserStateInterface = {
     report: {
       albums: [],
       image: [],
+      playcount: 0,
     },
   },
   error: null,

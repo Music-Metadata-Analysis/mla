@@ -6,7 +6,7 @@ jest.mock("../client.class", () => {
       getTopAlbums: mockGetTopAlbums,
       getTopArtists: mockGetTopArtists,
       getTopTracks: mockGetTopTracks,
-      getUserImage: mockGetUserImage,
+      getUserProfile: mockGetUserProfile,
     };
   });
 });
@@ -14,13 +14,14 @@ jest.mock("../client.class", () => {
 const mockGetTopAlbums = jest.fn();
 const mockGetTopArtists = jest.fn();
 const mockGetTopTracks = jest.fn();
-const mockGetUserImage = jest.fn();
+const mockGetUserProfile = jest.fn();
 
 describe("LastFMProxy", () => {
   let originalEnvironment: typeof process.env;
   const mockError = "Mock Error";
   const username = "testuser";
   const instance = new LastFMProxy();
+  const mockProfileResponse = { image: [], playcount: 0 };
   let method: keyof LastFMProxy;
 
   beforeAll(() => {
@@ -48,16 +49,22 @@ describe("LastFMProxy", () => {
     describe("when requests are successful", () => {
       beforeEach(() => {
         mockGetTopAlbums.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserImage.mockReturnValueOnce(Promise.resolve([]));
+        mockGetUserProfile.mockReturnValueOnce(
+          Promise.resolve(mockProfileResponse)
+        );
       });
 
       it("should return a valid response", async () => {
         const response = await methodCall();
         expect(mockGetTopAlbums).toBeCalledTimes(1);
         expect(mockGetTopAlbums).toBeCalledWith(username);
-        expect(mockGetUserImage).toBeCalledTimes(1);
-        expect(mockGetUserImage).toBeCalledWith(username);
-        expect(response).toStrictEqual({ albums: [], image: [] });
+        expect(mockGetUserProfile).toBeCalledTimes(1);
+        expect(mockGetUserProfile).toBeCalledWith(username);
+        expect(response).toStrictEqual({
+          albums: [],
+          image: mockProfileResponse.image,
+          playcount: mockProfileResponse.playcount,
+        });
       });
     });
 
@@ -68,7 +75,7 @@ describe("LastFMProxy", () => {
             throw new Error(mockError);
           })
         );
-        mockGetUserImage.mockReturnValueOnce(Promise.resolve([]));
+        mockGetUserProfile.mockReturnValueOnce(Promise.resolve([]));
       });
 
       it("should throw an error", async () => {
@@ -80,7 +87,7 @@ describe("LastFMProxy", () => {
     describe("when getUserImage is unsuccessful", () => {
       beforeEach(() => {
         mockGetTopAlbums.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserImage.mockImplementationOnce(() =>
+        mockGetUserProfile.mockImplementationOnce(() =>
           Promise.reject(() => {
             throw new Error(mockError);
           })
@@ -102,16 +109,22 @@ describe("LastFMProxy", () => {
     describe("when requests are successful", () => {
       beforeEach(() => {
         mockGetTopArtists.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserImage.mockReturnValueOnce(Promise.resolve([]));
+        mockGetUserProfile.mockReturnValueOnce(
+          Promise.resolve(mockProfileResponse)
+        );
       });
 
       it("should return a valid response", async () => {
         const response = await methodCall();
         expect(mockGetTopArtists).toBeCalledTimes(1);
         expect(mockGetTopArtists).toBeCalledWith(username);
-        expect(mockGetUserImage).toBeCalledTimes(1);
-        expect(mockGetUserImage).toBeCalledWith(username);
-        expect(response).toStrictEqual({ artists: [], image: [] });
+        expect(mockGetUserProfile).toBeCalledTimes(1);
+        expect(mockGetUserProfile).toBeCalledWith(username);
+        expect(response).toStrictEqual({
+          artists: [],
+          image: mockProfileResponse.image,
+          playcount: mockProfileResponse.playcount,
+        });
       });
     });
 
@@ -122,7 +135,7 @@ describe("LastFMProxy", () => {
             throw new Error(mockError);
           })
         );
-        mockGetUserImage.mockReturnValueOnce(Promise.resolve([]));
+        mockGetUserProfile.mockReturnValueOnce(Promise.resolve([]));
       });
 
       it("should throw an error", async () => {
@@ -134,7 +147,7 @@ describe("LastFMProxy", () => {
     describe("when getUserImage is unsuccessful", () => {
       beforeEach(() => {
         mockGetTopArtists.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserImage.mockImplementationOnce(() =>
+        mockGetUserProfile.mockImplementationOnce(() =>
           Promise.reject(() => {
             throw new Error(mockError);
           })
@@ -156,16 +169,22 @@ describe("LastFMProxy", () => {
     describe("when requests are successful", () => {
       beforeEach(() => {
         mockGetTopTracks.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserImage.mockReturnValueOnce(Promise.resolve([]));
+        mockGetUserProfile.mockReturnValueOnce(
+          Promise.resolve(mockProfileResponse)
+        );
       });
 
       it("should return a valid response", async () => {
         const response = await methodCall();
         expect(mockGetTopTracks).toBeCalledTimes(1);
         expect(mockGetTopTracks).toBeCalledWith(username);
-        expect(mockGetUserImage).toBeCalledTimes(1);
-        expect(mockGetUserImage).toBeCalledWith(username);
-        expect(response).toStrictEqual({ tracks: [], image: [] });
+        expect(mockGetUserProfile).toBeCalledTimes(1);
+        expect(mockGetUserProfile).toBeCalledWith(username);
+        expect(response).toStrictEqual({
+          tracks: [],
+          image: mockProfileResponse.image,
+          playcount: mockProfileResponse.playcount,
+        });
       });
     });
 
@@ -176,7 +195,7 @@ describe("LastFMProxy", () => {
             throw new Error(mockError);
           })
         );
-        mockGetUserImage.mockReturnValueOnce(Promise.resolve([]));
+        mockGetUserProfile.mockReturnValueOnce(Promise.resolve([]));
       });
 
       it("should throw an error", async () => {
@@ -188,7 +207,7 @@ describe("LastFMProxy", () => {
     describe("when getUserImage is unsuccessful", () => {
       beforeEach(() => {
         mockGetTopTracks.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserImage.mockImplementationOnce(() =>
+        mockGetUserProfile.mockImplementationOnce(() =>
           Promise.reject(() => {
             throw new Error(mockError);
           })

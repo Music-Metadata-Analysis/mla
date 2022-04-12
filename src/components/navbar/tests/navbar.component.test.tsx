@@ -73,6 +73,7 @@ let mockUserProperties: UserStateInterface = {
     report: {
       albums: [],
       image: [],
+      playcount: 0,
     },
   },
   error: null,
@@ -92,6 +93,7 @@ describe("NavBar", () => {
   const mockLastFMReportNoData: LastFMTopAlbumsReportResponseInterface = {
     albums: [],
     image: [],
+    playcount: 0,
   };
   const mockLastFMReportData: LastFMTopAlbumsReportResponseInterface = {
     albums: [],
@@ -101,6 +103,7 @@ describe("NavBar", () => {
         "#text": mockImageUrl,
       },
     ],
+    playcount: 0,
   };
   const topLevelBoxProps = {
     bg: mockColourHook.componentColour.background,

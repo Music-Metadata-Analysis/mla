@@ -6,13 +6,15 @@ export const mockAlbumsReport = {
       "#text": "http://someurl.com",
     },
   ],
+  playcount: 0,
 };
 
 export const mockInitialReportData = {
   albums: [],
   artists: [],
-  image: [],
   tracks: [],
+  image: [],
+  playcount: 0,
 };
 
 export const mockUserStateWithError = {
