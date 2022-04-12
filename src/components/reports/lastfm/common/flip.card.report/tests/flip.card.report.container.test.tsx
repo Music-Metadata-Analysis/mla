@@ -74,6 +74,7 @@ describe("FlipCardReportContainer", () => {
         "#text": "http://someurl.com",
       },
     ],
+    playcount: 0,
   };
 
   beforeEach(() => {

@@ -29,6 +29,7 @@ const mockUserProperties = {
     report: {
       tracks: [],
       image: [],
+      playcount: 0,
     },
     integration: "LASTFM" as const,
   },

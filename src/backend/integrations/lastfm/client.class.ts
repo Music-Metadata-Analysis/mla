@@ -6,6 +6,7 @@ import type {
   LastFMArtistDataInterface,
   LastFMImageDataInterface,
   LastFMTrackDataInterface,
+  LastFMUserProfileInterface,
 } from "../../../types/integrations/lastfm/api.types";
 import type {
   LastFMClientInterface,
@@ -116,12 +117,15 @@ class LastFmClientAdapter implements LastFMClientInterface {
     });
   }
 
-  async getUserImage(username: string): Promise<LastFMImageDataInterface[]> {
+  async getUserProfile(username: string): Promise<LastFMUserProfileInterface> {
     try {
       const response = await this.externalClient.user.getInfo({
         user: username,
       });
-      return response.user.image as LastFMImageDataInterface[];
+      return {
+        image: response.user.image as LastFMImageDataInterface[],
+        playcount: parseInt(response.user.playcount),
+      };
     } catch (err) {
       throw this.createProxyCompatibleError(err as LastFMExternalClientError);
     }

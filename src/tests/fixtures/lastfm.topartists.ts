@@ -29,6 +29,7 @@ const testResponses: TestData = {
           "https://lastfm.freetls.fastly.net/i/u/300x300/ed8121273747692b2509dbda32f2d516.png",
       },
     ],
+    playcount: 0,
   },
   hasListens: {
     artists: [
@@ -87,6 +88,7 @@ const testResponses: TestData = {
           "https://lastfm.freetls.fastly.net/i/u/300x300/632f1fc23f8010119928baa64ae9f44b.png",
       },
     ],
+    playcount: 1,
   },
 };
 

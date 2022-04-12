@@ -40,6 +40,7 @@ export interface LastFMFlipCardCommonDrawerInterface<T> {
 export interface LastFMTopBaseReportResponseInterface
   extends BaseReportResponseInterface {
   image: LastFMImageDataInterface[];
+  playcount: number;
 }
 
 export interface LastFMTopAlbumsReportResponseInterface

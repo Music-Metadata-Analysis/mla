@@ -54,6 +54,7 @@ export const baseUserProperties: UserStateInterface = {
           "#text": mockUrls[1],
         },
       ],
+      playcount: 0,
     },
   },
   error: null,

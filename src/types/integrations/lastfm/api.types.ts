@@ -44,6 +44,11 @@ export interface LastFMTrackDataInterface {
   };
 }
 
+export interface LastFMUserProfileInterface {
+  image: LastFMImageDataInterface[];
+  playcount: number;
+}
+
 interface LastFMTrackDateInterface {
   uts: string;
   "#text": string;

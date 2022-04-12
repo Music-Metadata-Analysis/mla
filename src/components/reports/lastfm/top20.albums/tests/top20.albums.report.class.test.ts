@@ -27,6 +27,7 @@ describe("Top20AlbumsReport", () => {
       report: {
         albums: mockAlbumData,
         image: [],
+        playcount: 0,
       },
       integration: "LASTFM" as const,
     },
