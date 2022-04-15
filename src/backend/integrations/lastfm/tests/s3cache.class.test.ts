@@ -1,33 +1,24 @@
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-import S3Cache from "../s3cache.class";
+import S3BaseCache from "../../s3/s3.base.cache.class";
+import S3ArtistCache from "../s3.artist.cache.class";
 import Scraper from "../scraper.class";
 
-jest.mock("@aws-sdk/client-s3", () => {
-  return {
-    S3Client: jest.fn(() => MockS3Client),
-    PutObjectCommand: jest.fn(() => MockBucketCommand),
-  };
-});
-
 jest.mock("../scraper.class", () => jest.fn(() => MockScraper));
-
-const MockS3Client = {
-  send: jest.fn(async () => null),
-};
-
-const MockBucketCommand = { MockCommand: "MockCommand" };
 
 const MockScraper = {
   getArtistImage: jest.fn(),
 };
 
-describe("S3Cache", () => {
-  let instance: S3Cache;
+describe("S3ArtistCache", () => {
+  let instance: S3ArtistCache;
   let originalEnvironment: typeof process.env;
-  const cacheResponse = "http://cached/url";
-  let response: Promise<string>;
-  let mockArtistName: string | undefined;
-  const mockImage = "http://link/to/image.jpg";
+  const testString = "test string";
+  const mockScraperResponse = "created artist";
+  const mockFetchResponse = {
+    status: 200,
+    ok: true,
+    text: async () => Promise.resolve(testString),
+  };
+  let actualScraperResponse: Promise<string>;
 
   beforeAll(() => {
     originalEnvironment = process.env;
@@ -46,30 +37,16 @@ describe("S3Cache", () => {
   });
 
   const setupEnv = () => {
-    process.env.MLA_AWS_ACCESS_KEY_ID = "MockValue1";
-    process.env.MLA_AWS_SECRET_ACCESS_KEY = "MockValue2";
-    process.env.MLA_AWS_REGION = "MockValue3";
-    process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME = "MockValue4";
-    process.env.LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME = "MockValue5";
-  };
-
-  const setupFetch = ({
-    success,
-    status,
-  }: {
-    success: boolean;
-    status: number;
-  }) => {
-    (window.fetch as jest.Mock).mockResolvedValue({
-      status,
-      ok: success,
-      text: async () => cacheResponse,
-    });
+    process.env.LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME = "MockValue1";
   };
 
   const arrange = () => {
-    instance = new S3Cache(process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME);
+    instance = new S3ArtistCache(process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME);
   };
+
+  it("should inherit from the S3BaseCache class", () => {
+    S3ArtistCache.prototype instanceof S3BaseCache;
+  });
 
   describe("when initialized", () => {
     beforeEach(() => {
@@ -80,6 +57,8 @@ describe("S3Cache", () => {
       expect(instance.cloudFrontDomainName).toBe(
         process.env.LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME
       );
+      expect(instance.cacheFolderName).toBe("lastfm/artists");
+      expect(instance.cacheContentType).toBe("text/plain");
       expect(instance.scraper).toBe(MockScraper);
       expect(instance.scraperRetries).toBe(2);
       expect(instance.defaultResponse).toBe("");
@@ -89,157 +68,40 @@ describe("S3Cache", () => {
       expect(Scraper).toBeCalledTimes(1);
       expect(Scraper).toBeCalledWith();
     });
+  });
 
-    describe("getCloudFrontPrefix", () => {
-      it("should return the correct value", () => {
-        expect(instance.getCloudFrontPrefix()).toBe(
-          "https://" + process.env.LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME + "/"
-        );
-      });
+  describe("when stringifyObject is called on a string", () => {
+    it("should return the string", () => {
+      expect(instance.stringifyObject(testString)).toBe(testString);
     });
   });
 
-  describe("when the cache is empty", () => {
+  describe("when getResponseValue is called on a fetch response", () => {
+    it("should return the output of the text method", async () => {
+      expect(
+        await instance.getResponseValue(mockFetchResponse as Response)
+      ).toBe(testString);
+    });
+  });
+
+  describe("when createEntry is called on an object", () => {
     beforeEach(() => {
-      arrange();
-      setupFetch({
-        success: false,
-        status: 404,
-      });
-      MockScraper.getArtistImage.mockImplementation(() =>
-        Promise.resolve(mockImage)
+      MockScraper.getArtistImage.mockImplementationOnce(() =>
+        Promise.resolve(mockScraperResponse)
+      );
+      actualScraperResponse = instance.createEntry(testString);
+    });
+
+    it("should call the Scraper getArtistImage method", () => {
+      expect(instance.scraper.getArtistImage).toBeCalledTimes(1);
+      expect(instance.scraper.getArtistImage).toBeCalledWith(
+        testString,
+        instance.scraperRetries
       );
     });
 
-    describe("lookup", () => {
-      describe("when given a valid artist name", () => {
-        beforeEach(() => {
-          mockArtistName = "mockArtistName";
-          response = instance.lookup(mockArtistName);
-        });
-
-        it("should attempt to fetch the data from the cache", () => {
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(
-            instance.getCloudFrontPrefix() + mockArtistName,
-            {
-              method: "GET",
-            }
-          );
-        });
-
-        it("should call the scraper to generate the data", () => {
-          expect(instance.scraper.getArtistImage).toBeCalledTimes(1);
-          expect(instance.scraper.getArtistImage).toBeCalledWith(
-            mockArtistName,
-            instance.scraperRetries
-          );
-        });
-
-        it("should update the cache with the scraper response", () => {
-          const expectedCommand = {
-            Body: mockImage,
-            Bucket: process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME,
-            Key: mockArtistName,
-            ContentType: "text/plain",
-          };
-          expect(PutObjectCommand).toBeCalledTimes(1);
-          expect(PutObjectCommand).toBeCalledWith(expectedCommand);
-          expect(instance.s3client.send).toBeCalledTimes(1);
-          expect(instance.s3client.send).toBeCalledWith(MockBucketCommand);
-        });
-
-        it("should return a promise that resolves to scraped value", async () => {
-          expect(await response).toBe(mockImage);
-        });
-      });
-
-      describe("when given an invalid artist name", () => {
-        beforeEach(() => {
-          mockArtistName = undefined;
-          response = instance.lookup(mockArtistName);
-        });
-
-        it("should NOT attempt to fetch the data from the cache", () => {
-          expect(fetch).toBeCalledTimes(0);
-        });
-
-        it("should NOT call the scraper to generate the data", () => {
-          expect(instance.scraper.getArtistImage).toBeCalledTimes(0);
-        });
-
-        it("should NOT update the cache", () => {
-          expect(instance.s3client.send).toBeCalledTimes(0);
-        });
-
-        it("should return a promise that resolves to the default value", async () => {
-          expect(await response).toBe(instance.defaultResponse);
-        });
-      });
-    });
-  });
-
-  describe("when the cache is populated", () => {
-    beforeEach(() => {
-      arrange();
-      setupFetch({
-        success: true,
-        status: 200,
-      });
-    });
-
-    describe("lookup", () => {
-      describe("when given a valid artist name", () => {
-        beforeEach(() => {
-          mockArtistName = "mockArtistName";
-          response = instance.lookup(mockArtistName);
-        });
-
-        it("should attempt to fetch the data from the cache", () => {
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(
-            instance.getCloudFrontPrefix() + mockArtistName,
-            {
-              method: "GET",
-            }
-          );
-        });
-
-        it("should NOT call the scraper to generate the data", () => {
-          expect(instance.scraper.getArtistImage).toBeCalledTimes(0);
-        });
-
-        it("should NOT update the cache ", () => {
-          expect(instance.s3client.send).toBeCalledTimes(0);
-        });
-
-        it("should return a promise that resolves to cache value", async () => {
-          expect(await response).toBe(cacheResponse);
-        });
-      });
-
-      describe("when given an invalid artist name", () => {
-        beforeEach(() => {
-          mockArtistName = undefined;
-          response = instance.lookup(mockArtistName);
-        });
-
-        it("should NOT attempt to fetch the data from the cache", () => {
-          expect(fetch).toBeCalledTimes(0);
-        });
-
-        it("should NOT call the scraper to generate the data", () => {
-          expect(instance.scraper.getArtistImage).toBeCalledTimes(0);
-        });
-
-        it("should NOT update the cache", () => {
-          expect(instance.s3client.send).toBeCalledTimes(0);
-        });
-
-        it("should return a promise that resolves to the default value", async () => {
-          expect(await response).toBe(instance.defaultResponse);
-        });
-      });
+    it("should return the Scraper getArtistImage's return value", async () => {
+      expect(await actualScraperResponse).toBe(mockScraperResponse);
     });
   });
 });

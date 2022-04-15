@@ -1,5 +1,5 @@
 import LastFm from "@toplast/lastfm";
-import S3Cache from "./s3cache.class";
+import S3ArtistCache from "./s3.artist.cache.class";
 import { ProxyError } from "../../../errors/proxy.error.class";
 import type {
   LastFMAlbumDataInterface,
@@ -16,7 +16,7 @@ import type { Await } from "../../../types/promise.types";
 
 class LastFmClientAdapter implements LastFMClientInterface {
   externalClient: LastFm;
-  cache: S3Cache;
+  cache: S3ArtistCache;
   secret_key: string;
   reportCount = 20;
   reportPeriod = "overall" as const;
@@ -24,7 +24,7 @@ class LastFmClientAdapter implements LastFMClientInterface {
   constructor(secret_key: string) {
     this.secret_key = secret_key;
     this.externalClient = new LastFm(this.secret_key);
-    this.cache = new S3Cache(process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME);
+    this.cache = new S3ArtistCache(process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME);
   }
 
   private createProxyCompatibleError(
@@ -58,6 +58,7 @@ class LastFmClientAdapter implements LastFMClientInterface {
       await this.attachArtistArtwork(
         response.topartists.artist as LastFMArtistDataInterface[]
       );
+      this.cache.logCacheHitRate();
       return response.topartists.artist as LastFMArtistDataInterface[];
     } catch (err) {
       throw this.createProxyCompatibleError(err as LastFMExternalClientError);
@@ -93,6 +94,7 @@ class LastFmClientAdapter implements LastFMClientInterface {
       await this.attachTrackArtistArtwork(
         response.toptracks.track as LastFMTrackDataInterface[]
       );
+      this.cache.logCacheHitRate();
       return response.toptracks.track as LastFMTrackDataInterface[];
     } catch (err) {
       throw this.createProxyCompatibleError(err as LastFMExternalClientError);

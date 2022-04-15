@@ -16,10 +16,11 @@ jest.mock("@toplast/lastfm", () => {
   });
 });
 
-jest.mock("../s3cache.class", () => jest.fn(() => MockCache));
+jest.mock("../s3.artist.cache.class", () => jest.fn(() => MockCache));
 
 const MockCache = {
   lookup: jest.fn(),
+  logCacheHitRate: jest.fn(),
 };
 
 const mockApiCalls = {
@@ -165,18 +166,17 @@ describe("LastFMClient", () => {
           );
           MockCache.lookup.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
+          res = await instance.getTopArtists(username);
         });
 
-        it("should perform a cache lookup with the correct params", async () => {
-          res = await instance.getTopArtists(username);
+        it("should perform a cache lookup with the correct params", () => {
           expect(MockCache.lookup).toBeCalledTimes(1);
           expect(MockCache.lookup).toBeCalledWith(
             mockTopArtistsResponseComplete.topartists.artist[0].name
           );
         });
 
-        it("should call the external library correctly", async () => {
-          res = await instance.getTopArtists(username);
+        it("should call the external library correctly", () => {
           expect(mockApiCalls["getTopArtists"]).toBeCalledTimes(1);
           expect(mockApiCalls["getTopArtists"]).toBeCalledWith({
             user: username,
@@ -190,6 +190,11 @@ describe("LastFMClient", () => {
           expected_response[0].image[0]["#text"] = mockImageUrl;
           expect(res).toStrictEqual(expected_response);
         });
+
+        it("should log the cache hit rate", () => {
+          expect(MockCache.logCacheHitRate).toBeCalledTimes(1);
+          expect(MockCache.logCacheHitRate).toBeCalledWith();
+        });
       });
 
       describe("with incomplete artist information", () => {
@@ -202,18 +207,17 @@ describe("LastFMClient", () => {
           );
           MockCache.lookup.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
+          res = await instance.getTopArtists(username);
         });
 
-        it("should perform a cache lookup with the correct params", async () => {
-          res = await instance.getTopArtists(username);
+        it("should perform a cache lookup with the correct params", () => {
           expect(MockCache.lookup).toBeCalledTimes(1);
           expect(MockCache.lookup).toBeCalledWith(
             mockTopArtistsResponseComplete.topartists.artist[0].name
           );
         });
 
-        it("should call the external library correctly", async () => {
-          res = await instance.getTopArtists(username);
+        it("should call the external library correctly", () => {
           expect(mockApiCalls["getTopArtists"]).toBeCalledTimes(1);
           expect(mockApiCalls["getTopArtists"]).toBeCalledWith({
             user: username,
@@ -225,6 +229,11 @@ describe("LastFMClient", () => {
             JSON.stringify(mockTopArtistsResponseIncomplete)
           ).topartists.artist;
           expect(res).toStrictEqual(expected_response);
+        });
+
+        it("should log the cache hit rate", () => {
+          expect(MockCache.logCacheHitRate).toBeCalledTimes(1);
+          expect(MockCache.logCacheHitRate).toBeCalledWith();
         });
       });
     });
@@ -292,10 +301,10 @@ describe("LastFMClient", () => {
           Promise.resolve(JSON.parse(JSON.stringify(mockProfileResponse)))
         );
         instance = arrange(secretKey);
+        res = await instance.getUserProfile(username);
       });
 
-      it("should call the external library correctly", async () => {
-        res = await instance.getUserProfile(username);
+      it("should call the external library correctly", () => {
         expect(mockApiCalls["getInfo"]).toBeCalledTimes(1);
         expect(mockApiCalls["getInfo"]).toBeCalledWith({
           user: username,
@@ -376,18 +385,17 @@ describe("LastFMClient", () => {
           );
           MockCache.lookup.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
+          res = await instance.getTopTracks(username);
         });
 
-        it("should perform a cache lookup with the correct params", async () => {
-          res = await instance.getTopTracks(username);
+        it("should perform a cache lookup with the correct params", () => {
           expect(MockCache.lookup).toBeCalledTimes(1);
           expect(MockCache.lookup).toBeCalledWith(
             mockTopTracksResponseComplete.toptracks.track[0].artist.name
           );
         });
 
-        it("should call the external library correctly", async () => {
-          res = await instance.getTopTracks(username);
+        it("should call the external library correctly", () => {
           expect(mockApiCalls["getTopTracks"]).toBeCalledTimes(1);
           expect(mockApiCalls["getTopTracks"]).toBeCalledWith({
             user: username,
@@ -401,6 +409,11 @@ describe("LastFMClient", () => {
           expected_response[0].image[0]["#text"] = mockImageUrl;
           expect(res).toStrictEqual(expected_response);
         });
+
+        it("should log the cache hit rate", () => {
+          expect(MockCache.logCacheHitRate).toBeCalledTimes(1);
+          expect(MockCache.logCacheHitRate).toBeCalledWith();
+        });
       });
 
       describe("with incomplete track information", () => {
@@ -413,16 +426,15 @@ describe("LastFMClient", () => {
           );
           MockCache.lookup.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
+          res = await instance.getTopTracks(username);
         });
 
-        it("should perform a cache lookup with the correct params", async () => {
-          res = await instance.getTopTracks(username);
+        it("should perform a cache lookup with the correct params", () => {
           expect(MockCache.lookup).toBeCalledTimes(1);
           expect(MockCache.lookup).toBeCalledWith(undefined);
         });
 
-        it("should call the external library correctly", async () => {
-          res = await instance.getTopTracks(username);
+        it("should call the external library correctly", () => {
           expect(mockApiCalls["getTopTracks"]).toBeCalledTimes(1);
           expect(mockApiCalls["getTopTracks"]).toBeCalledWith({
             user: username,
@@ -434,6 +446,11 @@ describe("LastFMClient", () => {
             JSON.stringify(mockTopTracksResponseIncomplete)
           ).toptracks.track;
           expect(res).toStrictEqual(expected_response);
+        });
+
+        it("should log the cache hit rate", () => {
+          expect(MockCache.logCacheHitRate).toBeCalledTimes(1);
+          expect(MockCache.logCacheHitRate).toBeCalledWith();
         });
       });
     });
