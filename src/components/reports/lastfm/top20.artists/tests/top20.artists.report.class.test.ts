@@ -37,7 +37,7 @@ describe("Top20ArtistsReport", () => {
     report = new Report();
   });
 
-  it("should have the correct instaces values", () => {
+  it("should have the correct instance values", () => {
     expect(report.analyticsReportType).toBe("TOP20 ARTISTS");
     expect(report.drawerArtWorkAltText).toBe(
       "top20Artists.drawer.artWorkAltText"
