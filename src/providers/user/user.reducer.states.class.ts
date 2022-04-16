@@ -28,6 +28,26 @@ class UserReducerStates {
     }
     throw new Error(this.wrongTypeError);
   }
+  FoundInLocalStorage(
+    state: UserStateInterface,
+    action: UserActionType
+  ): UserStateInterface {
+    if (action.type === "FoundInLocalStorage") {
+      return {
+        data: {
+          integration: action.integration,
+          report: action.data,
+        },
+        error: null,
+        inProgress: false,
+        profileUrl: null,
+        ready: false,
+        retries: this.initialRetries,
+        userName: action.userName,
+      };
+    }
+    throw new Error(this.wrongTypeError);
+  }
   NotFoundFetchUser(
     state: UserStateInterface,
     action: UserActionType

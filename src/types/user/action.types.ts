@@ -8,6 +8,12 @@ export type UserActionType =
       integration: IntegrationTypes;
     }
   | {
+      type: "FoundInLocalStorage";
+      userName: string;
+      data: UserReportType;
+      integration: IntegrationTypes;
+    }
+  | {
       type: "NotFoundFetchUser";
       userName: string;
       integration: IntegrationTypes;

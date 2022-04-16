@@ -58,6 +58,34 @@ describe("UserReducerStates", () => {
     });
   });
 
+  describe("FoundInLocalStorage", () => {
+    const testType = "FoundInLocalStorage" as const;
+
+    it("should return the the expected state", () => {
+      received = arrange({
+        type: testType,
+        userName: testUserName,
+        data: mockAlbumsReport,
+        integration: testIntegrationType,
+      });
+
+      expect(received.inProgress).toBe(false);
+      expect(received.profileUrl).toBe(null);
+      expect(received.userName).toBe(testUserName);
+      expect(received.data).toStrictEqual({
+        integration: testIntegrationType,
+        report: mockAlbumsReport,
+      });
+      expect(received.error).toBe(null);
+      expect(received.ready).toBe(false);
+      expect(received.retries).toBe(reducerStates.initialRetries);
+    });
+
+    it("should not accept incompatible types", () => {
+      expect(arrangeError(testType)).toThrow(reducerStates.wrongTypeError);
+    });
+  });
+
   describe("NotFoundFetchUser", () => {
     const testType = "NotFoundFetchUser" as const;
 
