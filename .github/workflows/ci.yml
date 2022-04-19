@@ -41,7 +41,7 @@ jobs:
 
       - name: Build -- Install Node Modules
         run: |
-          npm ci
+          npm install
 
       - name: Build -- Append CI Environment Content
         run: |
@@ -96,7 +96,7 @@ jobs:
         if: github.ref == 'refs/heads/production'
         run: |
           npm install --unsafe-perm=true ${NETLIFY_CLI} -g
-          npm ci
+          npm install
           netlify deploy --build --prod -s ${NETLIFY_SITE_ID}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
@@ -144,7 +144,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           npm install --unsafe-perm=true ${NETLIFY_CLI} -g
-          npm ci
+          npm install
           netlify deploy --build --prod -s ${NETLIFY_SITE_ID}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
@@ -179,7 +179,7 @@ jobs:
 
       - name: Lint -- Install Node Modules
         run: |
-          npm ci
+          npm install
 
       - name: Lint -- Run Linter
         run: |
@@ -210,7 +210,7 @@ jobs:
 
       - name: Security Test -- Install Node Modules
         run: |
-          npm i
+          npm install
 
       - name: Security Test -- Dependency Audit
         run: |
@@ -270,7 +270,7 @@ jobs:
       - name: Smoke Test Production -- Install Node Modules
         if: github.ref == 'refs/heads/production'
         run: |
-          npm ci
+          npm install
 
       - name: Smoke Test Production -- Append Production Environment Content
         if: github.ref == 'refs/heads/production'
@@ -323,7 +323,7 @@ jobs:
       - name: Smoke Test Stage -- Install Node Modules
         if: github.ref == 'refs/heads/master'
         run: |
-          npm ci
+          npm install
 
       - name: Smoke Test Stage -- Append Stage Environment Content
         if: github.ref == 'refs/heads/master'
@@ -427,7 +427,7 @@ jobs:
 
       - name: Type Validation -- Install Node Modules
         run: |
-          npm ci
+          npm install
 
       - name: Type Validation -- Compile Typescript
         run: |
