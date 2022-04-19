@@ -30,7 +30,7 @@ describe("LastFMTopTracksReport", () => {
     });
 
     it("should have the correct api route configured", () => {
-      expect(instance.route).toBe(apiRoutes.v1.reports.lastfm.top20tracks);
+      expect(instance.route).toBe(apiRoutes.v2.reports.lastfm.top20tracks);
     });
 
     it("should have the correct integration configured", () => {

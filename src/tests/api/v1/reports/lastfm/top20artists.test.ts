@@ -1,7 +1,9 @@
 import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../../config/apiRoutes";
-import handleProxy from "../../../../../pages/api/v1/reports/lastfm/top20artists";
+import handleProxy, {
+  endpointFactory,
+} from "../../../../../pages/api/v1/reports/lastfm/top20artists";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -13,7 +15,7 @@ jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
   });
 });
 
-jest.mock("../../../../../backend/api/lastfm/endpoint.logger", () => {
+jest.mock("../../../../../backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 
@@ -22,13 +24,14 @@ jest.mock("next-auth/jwt", () => ({
 }));
 
 const mockProxyMethod = jest.fn();
+const testUrl = apiRoutes.v1.reports.lastfm.top20artists;
 
 type ArrangeArgs = {
   body: Record<string, unknown>;
   method: HttpMethodType;
 };
 
-describe(apiRoutes.v1.reports.lastfm.top20artists, () => {
+describe(testUrl, () => {
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let req: MockRequest<NextApiRequest>;
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
@@ -47,7 +50,7 @@ describe(apiRoutes.v1.reports.lastfm.top20artists, () => {
   const arrange = async ({ body, method = "POST" }: ArrangeArgs) => {
     // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
-      url: apiRoutes.v1.reports.lastfm.top20artists,
+      url: testUrl,
       method,
       body,
     }));
@@ -82,6 +85,12 @@ describe(apiRoutes.v1.reports.lastfm.top20artists, () => {
           it("should return a 200 status code", () => {
             expect(res._getStatusCode()).toBe(200);
             expect(res._getJSONData()).toStrictEqual(mockResponse);
+          });
+
+          it("should set a sunset header", () => {
+            expect(res._getHeaders().sunset).toBe(
+              endpointFactory.sunsetDate.toDateString()
+            );
           });
 
           it("should call the proxy method with the correct params", () => {

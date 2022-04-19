@@ -30,24 +30,20 @@ class APIClient {
     return response;
   }
 
-  post = async <POSTDATA, RESPONSE>(
-    url: string,
-    postData: POSTDATA
-  ): Promise<ApiResponse<RESPONSE>> => {
+  get = async <RESPONSE>(url: string): Promise<ApiResponse<RESPONSE>> => {
     let fetchResponse = await fetch(url, {
-      method: "POST",
+      method: "GET",
       mode: "cors",
-      cache: "no-cache",
+      cache: "default",
       credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
       },
       referrerPolicy: "same-origin",
-      body: JSON.stringify(postData),
     });
 
     fetchResponse = this.handleKnownStatuses(fetchResponse);
-    fetchResponse = this.handleUnsuccessful(fetchResponse, "POST", url);
+    fetchResponse = this.handleUnsuccessful(fetchResponse, "GET", url);
 
     const json: RESPONSE | StatusMessageType = await fetchResponse.json();
     return {

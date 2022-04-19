@@ -1,12 +1,12 @@
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../config/apiRoutes";
-import Logger from "../endpoint.logger";
-import type { APIEndpointRequest } from "../endpoint.base.class";
-import type { NextApiResponse } from "next";
+import Logger from "../endpoint.common.logger";
+import type { LastFMEndpointRequest } from "../../../../types/api.endpoint.types";
+import type { NextApiResponse, NextApiRequest } from "next";
 
 describe("endpointLogger", () => {
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let req: MockRequest<APIEndpointRequest>;
+  let req: MockRequest<LastFMEndpointRequest>;
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let res: MockResponse<NextApiResponse>;
   const next = jest.fn();
@@ -26,7 +26,7 @@ describe("endpointLogger", () => {
 
   const arrange = async (socketDefinedRemoteAddress?: string) => {
     // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-    ({ req: req, res: res } = createMocks<APIEndpointRequest, NextApiResponse>({
+    ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       headers: {
         referer: testReferer,
         "user-agent": testUserAgent,

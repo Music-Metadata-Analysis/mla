@@ -1,8 +1,8 @@
-import type { APIEndpointRequest } from "./endpoint.base.class";
+import type { LastFMEndpointRequest } from "../../../types/api.endpoint.types";
 import type { NextApiResponse } from "next";
 
 const logger = (
-  req: APIEndpointRequest,
+  req: LastFMEndpointRequest,
   res: NextApiResponse,
   next: () => void
 ) => {
@@ -22,7 +22,7 @@ const logger = (
   next();
 };
 
-const getRemoteIpAddress = (req: APIEndpointRequest) => {
+const getRemoteIpAddress = (req: LastFMEndpointRequest) => {
   if (req.socket?.remoteAddress) return req.socket.remoteAddress;
 
   const fromForwardedHeader = req.headers["x-forwarded-for"];

@@ -6,7 +6,7 @@ import type { LastFMTopAlbumsReportResponseInterface } from "../../../../../type
 jest.mock("../../../api.client.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
-      post: mockPost,
+      get: mockPost,
     };
   });
 });
@@ -32,18 +32,20 @@ describe("LastFMReport", () => {
   });
 
   const arrange = () => {
-    return new LastFMReport<LastFMTopAlbumsReportResponseInterface>(
+    const report = new LastFMReport<LastFMTopAlbumsReportResponseInterface>(
       mockDispatch,
       mockEvent
     );
+    report.route = "/api/v2/someroute/:username";
+    return report;
   };
 
   const checkUrl = () => {
     it("should make the request with the correct url", () => {
       expect(mockPost).toBeCalledTimes(1);
-      expect(mockPost).toBeCalledWith(instance.route, {
-        userName: mockUserName,
-      });
+      expect(mockPost).toBeCalledWith(
+        instance.route?.replace(":username", mockUserName)
+      );
     });
   };
 

@@ -4,10 +4,6 @@ import type {
   LastFMTopTracksReportResponseInterface,
 } from "../../clients/api/reports/lastfm.client.types";
 
-export interface LastFMProxyRequestInterface {
-  userName: string;
-}
-
 export interface LastFMProxyInterface {
   getTopAlbums: (
     username: string

@@ -1,8 +1,8 @@
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../../config/apiRoutes";
 import * as status from "../../../../../config/status";
-import artistHandler from "../../../../../pages/api/v1/reports/lastfm/top20artists";
-import testResponses from "../../../../fixtures/lastfm.topartists";
+import trackHandler from "../../../../../pages/api/v2/reports/lastfm/top20tracks/[...username]";
+import testResponses from "../../../../fixtures/lastfm.toptracks";
 import testAccounts from "../../../../fixtures/lastfm.users";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -20,13 +20,13 @@ jest.mock("next-auth/jwt", () => ({
 }));
 
 type ArrangeArgs = {
-  body: Record<string, unknown>;
+  username: string;
   method: HttpMethodType;
 };
 
 const integrationEnvironmentVariable = "INTEGRATION_TEST_LAST_FM_KEY";
-const endpointUnderTest = apiRoutes.v1.reports.lastfm.top20artists;
-const handler = artistHandler;
+const endpointUnderTest = apiRoutes.v2.reports.lastfm.top20tracks;
+const handler = trackHandler;
 
 if (process.env[integrationEnvironmentVariable]) {
   describe(endpointUnderTest, () => {
@@ -51,19 +51,19 @@ if (process.env[integrationEnvironmentVariable]) {
       process.env = originalEnvironment;
     });
 
-    const arrange = async ({ body, method = "POST" }: ArrangeArgs) => {
+    const arrange = async ({ username, method = "GET" }: ArrangeArgs) => {
       // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
       ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
         url: endpointUnderTest,
         method,
-        body,
+        query: { username: [username] },
       }));
       await handler(req, res);
     };
 
-    describe("receives a GET request", () => {
+    describe("receives a POST request", () => {
       beforeEach(async () => {
-        await arrange({ body: {}, method: "GET" });
+        await arrange({ username: "mockUserName", method: "POST" });
       });
 
       it("should return a 405", () => {
@@ -72,7 +72,7 @@ if (process.env[integrationEnvironmentVariable]) {
       });
     });
 
-    describe("receives a POST request", () => {
+    describe("receives a GET request", () => {
       describe("for a user with no listens", () => {
         beforeEach(() => {
           scenario = "noListens";
@@ -82,8 +82,8 @@ if (process.env[integrationEnvironmentVariable]) {
           beforeEach(async () => {
             testUser = testAccounts[scenario];
             await arrange({
-              body: { userName: testUser },
-              method: "POST",
+              username: testUser,
+              method: "GET",
             });
           });
 
@@ -103,8 +103,8 @@ if (process.env[integrationEnvironmentVariable]) {
           beforeEach(async () => {
             testUser = testAccounts[scenario];
             await arrange({
-              body: { userName: testUser },
-              method: "POST",
+              username: testUser,
+              method: "GET",
             });
           });
 

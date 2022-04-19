@@ -2,12 +2,12 @@ import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import * as status from "../../../../config/status";
 import { ProxyError } from "../../../../errors/proxy.error.class";
-import BaseClass from "../endpoint.base.class";
+import LastFMApiEndpointFactoryV2 from "../endpoint.v2.base.class";
 import type { HttpMethodType } from "../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-class ConcreteTimeoutClass extends BaseClass {
-  route = "/api/v1/endpoint";
+class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV2 {
+  route = "/api/v2/endpoint/:username";
   timeOut = 100;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -21,8 +21,8 @@ class ConcreteTimeoutClass extends BaseClass {
   }
 }
 
-class ConcreteErrorClass extends BaseClass {
-  route = "/api/v1/endpoint";
+class ConcreteErrorClass extends LastFMApiEndpointFactoryV2 {
+  route = "/api/v2/endpoint/:username";
   mockError = "mockError";
   errorCode?: number;
 
@@ -32,7 +32,7 @@ class ConcreteErrorClass extends BaseClass {
   }
 }
 
-jest.mock("../../../../backend/api/lastfm/endpoint.logger", () => {
+jest.mock("../../../../backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 
@@ -40,14 +40,17 @@ jest.mock("next-auth/jwt", () => ({
   getToken: jest.fn(),
 }));
 
-describe("EndpointBaseClass", () => {
+describe("LastFMApiEndpointFactoryV2", () => {
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let req: MockRequest<NextApiRequest>;
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let res: MockResponse<NextApiResponse>;
-  let payload: undefined | Record<string, string>;
-  let factory: BaseClass | ConcreteTimeoutClass | ConcreteErrorClass;
+  let factory:
+    | LastFMApiEndpointFactoryV2
+    | ConcreteTimeoutClass
+    | ConcreteErrorClass;
   let method: HttpMethodType;
+  let username: [string] | null;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -68,7 +71,7 @@ describe("EndpointBaseClass", () => {
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: factory.route,
       method,
-      body: payload,
+      query: { username },
     }));
     await factory.create()(req, res);
   };
@@ -83,14 +86,14 @@ describe("EndpointBaseClass", () => {
       );
     });
 
-    describe("with a POST request", () => {
+    describe("with a GET request", () => {
       beforeEach(() => {
-        method = "POST" as const;
+        method = "GET" as const;
       });
 
-      describe("with a valid payload", () => {
+      describe("with a valid username", () => {
         beforeEach(() => {
-          payload = { userName: "validUser" };
+          username = ["validUser"];
         });
 
         describe("receives a request that generates an unknown proxy error", () => {
@@ -156,29 +159,9 @@ describe("EndpointBaseClass", () => {
         });
       });
 
-      describe("with an invalid payload", () => {
+      describe("with an invalid username", () => {
         beforeEach(() => {
-          payload = { incorrectField: "validUser" };
-        });
-
-        describe("receives a request", () => {
-          beforeEach(async () => {
-            factory = new ConcreteTimeoutClass();
-            await arrange();
-          });
-
-          it("should return a 400", () => {
-            expect(res._getStatusCode()).toBe(400);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
-          });
-
-          checkJWT();
-        });
-      });
-
-      describe("with no data", () => {
-        beforeEach(async () => {
-          payload = { incorrectField: "validUser" };
+          username = null;
         });
 
         describe("receives a request", () => {
@@ -197,14 +180,14 @@ describe("EndpointBaseClass", () => {
       });
     });
 
-    describe("with a GET request", () => {
+    describe("with a POST request", () => {
       beforeEach(() => {
-        method = "GET" as const;
+        method = "POST" as const;
       });
 
-      describe("with no payload", () => {
-        beforeEach(async () => {
-          payload = undefined;
+      describe("with a valid username", () => {
+        beforeEach(() => {
+          username = ["validUsername"];
         });
 
         describe("receives a request", () => {
@@ -227,14 +210,14 @@ describe("EndpointBaseClass", () => {
       (getToken as jest.Mock).mockReturnValue(Promise.resolve(null))
     );
 
-    describe("with a POST request", () => {
+    describe("with a GET request", () => {
       beforeEach(() => {
-        method = "POST" as const;
+        method = "GET" as const;
       });
 
-      describe("with a valid payload", () => {
+      describe("with a valid username", () => {
         beforeEach(() => {
-          payload = { userName: "validUser" };
+          username = ["validUser"];
         });
 
         describe("receives a request that generates any proxy error", () => {
@@ -270,29 +253,9 @@ describe("EndpointBaseClass", () => {
         });
       });
 
-      describe("with an invalid payload", () => {
+      describe("with an invalid username", () => {
         beforeEach(() => {
-          payload = { incorrectField: "validUser" };
-        });
-
-        describe("receives a request", () => {
-          beforeEach(async () => {
-            factory = new ConcreteTimeoutClass();
-            await arrange();
-          });
-
-          it("should return a 401", () => {
-            expect(res._getStatusCode()).toBe(401);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
-          });
-
-          checkJWT();
-        });
-      });
-
-      describe("with no data", () => {
-        beforeEach(async () => {
-          payload = { incorrectField: "validUser" };
+          username = null;
         });
 
         describe("receives a request", () => {
@@ -311,14 +274,14 @@ describe("EndpointBaseClass", () => {
       });
     });
 
-    describe("with a GET request", () => {
+    describe("with a POST request", () => {
       beforeEach(() => {
-        method = "GET" as const;
+        method = "POST" as const;
       });
 
-      describe("with no payload", () => {
+      describe("with a valid username", () => {
         beforeEach(async () => {
-          payload = undefined;
+          username = ["validUser"];
         });
 
         describe("receives a request", () => {

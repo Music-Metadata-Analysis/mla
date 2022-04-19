@@ -3,7 +3,7 @@ import apiRoutes from "../../../../config/apiRoutes";
 import type { LastFMTopArtistsReportResponseInterface } from "../../../../types/clients/api/reports/lastfm.client.types";
 
 class LastFMTopArtistsReport extends LastFMBaseReport<LastFMTopArtistsReportResponseInterface> {
-  route = apiRoutes.v1.reports.lastfm.top20artists;
+  route = apiRoutes.v2.reports.lastfm.top20artists;
   eventType = "TOP20 ARTISTS" as const;
 }
 

@@ -7,7 +7,7 @@ import testAccounts from "../../../../fixtures/lastfm.users";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-jest.mock("../../../../../backend/api/lastfm/endpoint.logger", () => {
+jest.mock("../../../../../backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 

@@ -7,7 +7,6 @@ import type {
 import type { ApiResponse } from "../../../../types/clients/api/api.client.types";
 import type { LastFMReportInterface } from "../../../../types/clients/api/reports/lastfm.client.types";
 import type { BaseReportResponseInterface } from "../../../../types/integrations/base.types";
-import type { LastFMProxyRequestInterface } from "../../../../types/integrations/lastfm/proxy.types";
 import type { userDispatchType } from "../../../../types/user/context.types";
 
 class LastFMBaseReport<ResponseType>
@@ -147,9 +146,7 @@ class LastFMBaseReport<ResponseType>
   retrieveReport(userName: string): void {
     this.handleBegin(userName);
     this.client
-      .post<LastFMProxyRequestInterface, ResponseType>(this.route as string, {
-        userName,
-      })
+      .get<ResponseType>((this.route as string).replace(":username", userName))
       .then((response) => {
         this.response = response;
         this.handleNotFound(userName);
