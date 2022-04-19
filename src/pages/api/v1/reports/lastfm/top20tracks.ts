@@ -1,7 +1,7 @@
-import LastFMApiEndpointFactory from "../../../../../backend/api/lastfm/endpoint.base.class";
+import LastFMApiEndpointFactoryV1 from "../../../../../backend/api/lastfm/endpoint.v1.base.class";
 import apiRoutes from "../../../../../config/apiRoutes";
 
-class Top20TracksEndpointFactory extends LastFMApiEndpointFactory {
+class Top20TracksEndpointFactoryV1 extends LastFMApiEndpointFactoryV1 {
   route = apiRoutes.v1.reports.lastfm.top20tracks;
 
   getProxyResponse = async (userName: string) => {
@@ -9,5 +9,5 @@ class Top20TracksEndpointFactory extends LastFMApiEndpointFactory {
   };
 }
 
-export const endpointFactory = new Top20TracksEndpointFactory();
+export const endpointFactory = new Top20TracksEndpointFactoryV1();
 export default endpointFactory.create();

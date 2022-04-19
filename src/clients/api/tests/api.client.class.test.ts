@@ -4,18 +4,14 @@ import APIClient from "../api.client.class";
 describe("APIClient", () => {
   const client = new APIClient();
   const remotesite = "https://remotesite.com/";
-  const postContent = { info: "Love this website!" };
   type responseType = { success: boolean };
   const mockFetchParams = {
-    method: "POST",
     mode: "cors",
-    cache: "no-cache",
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
     },
     referrerPolicy: "same-origin",
-    body: JSON.stringify(postContent),
   };
 
   beforeAll(() => {
@@ -51,12 +47,15 @@ describe("APIClient", () => {
     });
   };
 
-  describe("post", () => {
+  describe("get", () => {
+    const getParams = {
+      ...mockFetchParams,
+      cache: "default",
+      method: "GET",
+    };
+
     const arrange = () => {
-      return client.post<typeof postContent, responseType>(
-        remotesite,
-        postContent
-      );
+      return client.get<responseType>(remotesite);
     };
 
     describe("when an 'ok' status is returned", () => {
@@ -65,7 +64,7 @@ describe("APIClient", () => {
       it("should call the underlying fetch function correctly", async () => {
         await arrange();
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
+        expect(fetch).toBeCalledWith(remotesite, getParams);
       });
 
       it("should return a success message", async () => {
@@ -84,7 +83,7 @@ describe("APIClient", () => {
       it("should call the underlying fetch function correctly", () => {
         arrange();
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
+        expect(fetch).toBeCalledWith(remotesite, getParams);
       });
 
       it("should return the correct error message", async () => {
@@ -103,7 +102,7 @@ describe("APIClient", () => {
       it("should call the underlying fetch function correctly", () => {
         arrange();
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
+        expect(fetch).toBeCalledWith(remotesite, getParams);
       });
 
       it("should return the correct error message", async () => {
@@ -122,7 +121,7 @@ describe("APIClient", () => {
       it("should call the underlying fetch function correctly", () => {
         arrange();
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
+        expect(fetch).toBeCalledWith(remotesite, getParams);
       });
 
       it("should return the correct error message", async () => {
@@ -143,7 +142,7 @@ describe("APIClient", () => {
       it("should call the underlying fetch function correctly", () => {
         arrange();
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
+        expect(fetch).toBeCalledWith(remotesite, getParams);
       });
 
       it("should return the correct error message", async () => {
@@ -162,12 +161,12 @@ describe("APIClient", () => {
       it("should call the underlying fetch function correctly", () => {
         arrange().catch(() => null);
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
+        expect(fetch).toBeCalledWith(remotesite, getParams);
       });
 
       it("should throw the correct error message", async () => {
         const test = async () => await arrange();
-        expect(test).rejects.toThrow(`POST: ${remotesite}`);
+        expect(test).rejects.toThrow(`GET: ${remotesite}`);
       });
     });
 
@@ -177,12 +176,12 @@ describe("APIClient", () => {
       it("should call the underlying fetch function correctly", () => {
         arrange().catch(() => null);
         expect(fetch).toBeCalledTimes(1);
-        expect(fetch).toBeCalledWith(remotesite, mockFetchParams);
+        expect(fetch).toBeCalledWith(remotesite, getParams);
       });
 
       it("should throw the correct error message", async () => {
         const test = async () => arrange();
-        expect(test).rejects.toThrow(`POST: ${remotesite}`);
+        expect(test).rejects.toThrow(`GET: ${remotesite}`);
       });
     });
   });

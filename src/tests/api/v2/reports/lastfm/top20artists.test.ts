@@ -3,14 +3,14 @@ import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../../config/apiRoutes";
 import handleProxy, {
   endpointFactory,
-} from "../../../../../pages/api/v1/reports/lastfm/top20albums";
+} from "../../../../../pages/api/v2/reports/lastfm/top20artists/[...username]";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
-      getTopAlbums: mockProxyMethod,
+      getTopArtists: mockProxyMethod,
     };
   });
 });
@@ -24,10 +24,10 @@ jest.mock("next-auth/jwt", () => ({
 }));
 
 const mockProxyMethod = jest.fn();
-const testUrl = apiRoutes.v1.reports.lastfm.top20albums;
+const testUrl = apiRoutes.v2.reports.lastfm.top20artists;
 
 type ArrangeArgs = {
-  body: Record<string, unknown>;
+  username: string;
   method: HttpMethodType;
 };
 
@@ -37,22 +37,22 @@ describe(testUrl, () => {
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let res: MockResponse<NextApiResponse>;
   const mockResponse = {
-    albums: [],
+    artists: [],
     image: [],
   };
-  let payload: Record<string, string>;
+  let username: string;
   let method: HttpMethodType;
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  const arrange = async ({ body, method = "POST" }: ArrangeArgs) => {
+  const arrange = async ({ username, method = "GET" }: ArrangeArgs) => {
     // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: testUrl,
       method,
-      body,
+      query: { username: [username] },
     }));
     await handleProxy(req, res);
   };
@@ -66,20 +66,20 @@ describe(testUrl, () => {
       )
     );
 
-    describe("with valid data", () => {
+    describe("receives a GET request", () => {
       beforeEach(() => {
-        payload = { userName: "valid" };
+        method = "GET" as const;
       });
 
-      describe("receives a POST request", () => {
-        beforeEach(() => {
-          method = "POST" as const;
+      describe("with valid data", () => {
+        beforeEach(async () => {
+          username = "test_user";
         });
 
         describe("with a valid lastfm response", () => {
           beforeEach(async () => {
             mockProxyMethod.mockReturnValueOnce(Promise.resolve(mockResponse));
-            await arrange({ body: payload, method });
+            await arrange({ username, method });
           });
 
           it("should return a 200 status code", () => {
@@ -87,14 +87,15 @@ describe(testUrl, () => {
             expect(res._getJSONData()).toStrictEqual(mockResponse);
           });
 
-          it("should set a sunset header", () => {
-            expect(res._getHeaders().sunset).toBe(
-              endpointFactory.sunsetDate.toDateString()
-            );
+          it("should set a Cache-Control header", () => {
+            expect(res._getHeaders()["cache-control"]).toStrictEqual([
+              "public",
+              `max-age=${endpointFactory.maxAgeValue}`,
+            ]);
           });
 
           it("should call the proxy method with the correct params", () => {
-            expect(mockProxyMethod).toBeCalledWith(payload.userName);
+            expect(mockProxyMethod).toBeCalledWith(username);
           });
         });
       });

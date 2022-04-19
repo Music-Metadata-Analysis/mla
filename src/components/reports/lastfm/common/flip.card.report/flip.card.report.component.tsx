@@ -29,6 +29,7 @@ export default function FlipCardReport<UserStateType extends UserState>({
   const cardSize = 100;
   const maxWidth = 4 * cardSize + 20;
   const DrawerComponent = report.getDrawerComponent();
+  const flipCardImageSize = "large";
 
   const flipper = (index: null | number) => {
     flipCard(index);
@@ -83,7 +84,7 @@ export default function FlipCardReport<UserStateType extends UserState>({
               fallbackImage={"/images/static.gif"}
               flipperController={flipper}
               imageIsLoaded={imageIsLoaded}
-              image={userState.getArtwork(index, "large")}
+              image={userState.getArtwork(index, flipCardImageSize)}
               index={index}
               noArtWork={t(
                 `${String(report.getReportTranslationKey())}.noArtWork`

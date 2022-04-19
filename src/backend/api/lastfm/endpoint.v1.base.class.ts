@@ -1,19 +1,16 @@
 import { body, validationResult } from "express-validator";
 import { getToken } from "next-auth/jwt";
 import nextConnect from "next-connect";
-import Logger from "./endpoint.logger";
-import { knownStatuses } from "../../../config/api";
+import LastFMEndpointBase from "./endpoint.common.base";
+import Logger from "./endpoint.common.logger";
 import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
 import LastFMProxy from "../../integrations/lastfm/proxy.class";
-import type { ProxyError } from "../../../errors/proxy.error.class";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { LastFMEndpointRequest } from "../../../types/api.endpoint.types";
+import type { NextApiResponse } from "next";
 
-export interface APIEndpointRequest extends NextApiRequest {
-  proxyResponse?: string;
-}
-
-export default abstract class LastFMApiEndpointFactory {
+export default abstract class LastFMApiEndpointFactoryV1 extends LastFMEndpointBase {
+  sunsetDate = new Date("Wed, 1 Jan 2023 00:00:00 GMT");
   timeOut = requestSettings.timeout;
   proxy!: LastFMProxy;
   route!: string;
@@ -21,7 +18,7 @@ export default abstract class LastFMApiEndpointFactory {
   abstract getProxyResponse(userName: string): void;
 
   create() {
-    const handler = nextConnect<APIEndpointRequest, NextApiResponse>({
+    const handler = nextConnect<LastFMEndpointRequest, NextApiResponse>({
       onError: this.onError,
       onNoMatch: this.onNoMatch,
     });
@@ -45,6 +42,7 @@ export default abstract class LastFMApiEndpointFactory {
           const proxyResponse = await this.getProxyResponse(req.body.userName);
           clearTimeout(abort);
           req.proxyResponse = "Success!";
+          res.setHeader("Sunset", this.sunsetDate.toDateString());
           res.status(200).json(proxyResponse);
         }
         next();
@@ -52,39 +50,5 @@ export default abstract class LastFMApiEndpointFactory {
     );
     handler.use(Logger);
     return handler;
-  }
-
-  onNoMatch(req: NextApiRequest, res: NextApiResponse) {
-    res.status(405).json(status.STATUS_405_MESSAGE);
-  }
-
-  onError(
-    err: ProxyError,
-    req: APIEndpointRequest,
-    res: NextApiResponse,
-    next: () => void
-  ) {
-    req.proxyResponse = err.toString();
-    if (err.clientStatusCode && knownStatuses[err.clientStatusCode]) {
-      res
-        .status(err.clientStatusCode)
-        .json(knownStatuses[err.clientStatusCode]);
-    } else {
-      res.status(502).json(status.STATUS_502_MESSAGE);
-    }
-    next();
-  }
-
-  createTimeout(
-    req: APIEndpointRequest,
-    res: NextApiResponse,
-    next: () => void
-  ) {
-    return setTimeout(() => {
-      req.proxyResponse = "Timed out! Please retry this request!";
-      res.setHeader("retry-after", 0);
-      res.status(503).json(status.STATUS_503_MESSAGE);
-      next();
-    }, this.timeOut);
   }
 }
