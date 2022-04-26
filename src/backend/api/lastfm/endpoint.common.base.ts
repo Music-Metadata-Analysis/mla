@@ -2,19 +2,20 @@ import { knownStatuses } from "../../../config/api";
 import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
 import type { ProxyError } from "../../../errors/proxy.error.class";
-import type { LastFMEndpointRequest } from "../../../types/api.endpoint.types";
+import type {
+  LastFMEndpointRequest,
+  QueryParamType,
+  BodyType,
+} from "../../../types/api.endpoint.types";
 import type LastFMProxy from "../../integrations/lastfm/proxy.class";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { NextConnect } from "next-connect";
 
 export default abstract class LastFMEndpointBase {
   timeOut = requestSettings.timeout;
   proxy!: LastFMProxy;
   route!: string;
 
-  abstract getProxyResponse(userName: string): void;
-
-  abstract create(): NextConnect<LastFMEndpointRequest, NextApiResponse>;
+  abstract getProxyResponse(params: QueryParamType | BodyType): void;
 
   onNoMatch(req: NextApiRequest, res: NextApiResponse) {
     res.status(405).json(status.STATUS_405_MESSAGE);
@@ -26,6 +27,7 @@ export default abstract class LastFMEndpointBase {
     res: NextApiResponse,
     next: () => void
   ) {
+
     req.proxyResponse = err.toString();
     if (err.clientStatusCode && knownStatuses[err.clientStatusCode]) {
       res

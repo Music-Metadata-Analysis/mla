@@ -5,7 +5,10 @@ import Logger from "./endpoint.common.logger";
 import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
 import LastFMProxy from "../../integrations/lastfm/proxy.class";
-import type { LastFMEndpointRequest } from "../../../types/api.endpoint.types";
+import type {
+  LastFMEndpointRequest,
+  PathParamType,
+} from "../../../types/api.endpoint.types";
 import type { NextApiResponse } from "next";
 
 export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointBase {
@@ -14,7 +17,11 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
   route!: string;
   maxAgeValue!: number;
 
-  abstract getProxyResponse(userName: string): void;
+  getParams(req: LastFMEndpointRequest): [PathParamType, boolean] {
+    const params = req.query as PathParamType;
+    const error = !params.username;
+    return [params, error];
+  }
 
   create() {
     const handler = nextConnect<LastFMEndpointRequest, NextApiResponse>({
@@ -26,15 +33,15 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
         req,
         secret: process.env.AUTH_MASTER_JWT_SECRET,
       });
-      const { username } = req.query as { [key: string]: string[] };
+      const [params, error] = this.getParams(req);
       if (!token) {
         res.status(401).json(status.STATUS_401_MESSAGE);
-      } else if (!username || username.length !== 1) {
+      } else if (error) {
         res.status(400).json(status.STATUS_400_MESSAGE);
       } else {
         this.proxy = new LastFMProxy();
         const abort = this.createTimeout(req, res, next);
-        const proxyResponse = await this.getProxyResponse(username[0]);
+        const proxyResponse = await this.getProxyResponse(params);
         clearTimeout(abort);
         req.proxyResponse = "Success!";
         res.setHeader("Cache-Control", [
