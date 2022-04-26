@@ -1,5 +1,5 @@
 import routes from "../../../../../config/routes";
-import UserTrackDataState from "../../../../../providers/user/encapsulations/lastfm/user.state.track.class";
+import UserTrackDataState from "../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.track.flipcard.report.class";
 import FlipCardDrawer from "../../common/flip.card.report.drawer/flip.card.report.drawer.component";
 import Report from "../top20.tracks.report.class";
 import type { LastFMTrackDataInterface } from "../../../../../types/integrations/lastfm/api.types";
