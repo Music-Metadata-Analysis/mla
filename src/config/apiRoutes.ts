@@ -1,6 +1,4 @@
-// TODO: Rename
-
-const apiEndpoints = {
+const apiRoutes = {
   v1: {
     reports: {
       lastfm: {
@@ -21,4 +19,4 @@ const apiEndpoints = {
   },
 };
 
-export default apiEndpoints;
+export default apiRoutes;
