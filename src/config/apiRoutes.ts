@@ -9,6 +9,13 @@ const apiRoutes = {
     },
   },
   v2: {
+    data: {
+      artists: {
+        albumsList: "/api/v2/data/artists/:artist/albums",
+        albumsGet: "/api/v2/data/artists/:artist/albums/:album",
+        tracksGet: "/api/v2/data/artists/:artist/albums/:album/tracks/:track",
+      },
+    },
     reports: {
       lastfm: {
         top20albums: "/api/v2/reports/lastfm/top20albums/:username",

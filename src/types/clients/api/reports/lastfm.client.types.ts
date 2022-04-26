@@ -60,7 +60,7 @@ export interface LastFMTopTracksReportResponseInterface
   extends LastFMTopBaseReportResponseInterface {
   tracks: LastFMTrackDataInterface[];
 }
-export interface LastFMAggregatePlaycountByArtistResponseInterface
+export interface LastFMAggregatePlaycountByArtistReportResponseInterface
   extends LastFMTopBaseReportResponseInterface {
   aggregates: {
     playcountByArtists: AggregateBaseReportResponseInterface & {
@@ -70,19 +70,17 @@ export interface LastFMAggregatePlaycountByArtistResponseInterface
 }
 
 export interface LastFMPlaycountByArtistResponseInterface {
-  created: Date;
-  created_by: string;
-  topArtists: [
-    {
-      playcount: number;
-      albums: [
-        {
-          playcount: number;
-          tracks: {
-            playcount: number;
-          };
-        }
-      ];
-    }
-  ];
+  created: string;
+  topArtists: {
+    name: string;
+    playcount: number | null;
+    albums: {
+      name: string;
+      playcount: number | null;
+      tracks: {
+        name: string;
+        playcount: number | null;
+      }[];
+    }[];
+  }[];
 }
