@@ -1,12 +1,12 @@
-import LastFMClientAdapter from "../client.class";
-import type { ProxyError } from "../../../../errors/proxy.error.class";
+import LastFMUserClientAdapter from "../user.class";
+import type { ProxyError } from "../../../../../errors/proxy.error.class";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
   LastFMUserProfileInterface,
   LastFMTrackDataInterface,
-} from "../../../../types/integrations/lastfm/api.types";
-import type { LastFMExternalClientError } from "../../../../types/integrations/lastfm/client.types";
+} from "../../../../../types/integrations/lastfm/api.types";
+import type { LastFMExternalClientError } from "../../../../../types/integrations/lastfm/client.types";
 
 jest.mock("@toplast/lastfm", () => {
   return jest.fn().mockImplementation(() => {
@@ -16,7 +16,7 @@ jest.mock("@toplast/lastfm", () => {
   });
 });
 
-jest.mock("../s3.artist.cache.class", () => jest.fn(() => MockCache));
+jest.mock("../../s3.artist.cache.class", () => jest.fn(() => MockCache));
 
 const MockCache = {
   lookup: jest.fn(),
@@ -30,9 +30,9 @@ const mockApiCalls = {
   getTopTracks: jest.fn(),
 };
 
-describe("LastFMClient", () => {
-  let secretKey: "123VerySecret";
-  let username: "testuser";
+describe("LastFMUserClientAdapter", () => {
+  const secretKey = "123VerySecret";
+  const username = "testuser";
   const mockTopAlbumsResponse = { topalbums: { album: "response" } };
   const mockTopArtistsResponseComplete = {
     topartists: {
@@ -63,21 +63,21 @@ describe("LastFMClient", () => {
   const mockProfileResponse = {
     user: { image: "response", playcount: "0000" },
   };
-  let instance: LastFMClientAdapter;
+  let instance: LastFMUserClientAdapter;
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = (secretKey: string) => {
-    return new LastFMClientAdapter(secretKey);
+    return new LastFMUserClientAdapter(secretKey);
   };
 
   describe("getTopAlbums", () => {
     let res: LastFMAlbumDataInterface[];
 
     describe("when the request is successful", () => {
-      beforeEach(async () => {
+      beforeEach(() => {
         mockApiCalls["getTopAlbums"].mockReturnValueOnce(
           Promise.resolve(JSON.parse(JSON.stringify(mockTopAlbumsResponse)))
         );
@@ -105,7 +105,7 @@ describe("LastFMClient", () => {
       });
 
       describe("with a status code", () => {
-        beforeEach(async () => {
+        beforeEach(() => {
           err.statusCode = 999;
           mockApiCalls["getTopAlbums"].mockImplementationOnce(() =>
             Promise.reject(err)
@@ -128,7 +128,7 @@ describe("LastFMClient", () => {
       });
 
       describe("without a status code", () => {
-        beforeEach(async () => {
+        beforeEach(() => {
           mockApiCalls["getTopAlbums"].mockImplementationOnce(() =>
             Promise.reject(err)
           );
@@ -246,7 +246,7 @@ describe("LastFMClient", () => {
       });
 
       describe("with a status code", () => {
-        beforeEach(async () => {
+        beforeEach(() => {
           err.statusCode = 999;
           mockApiCalls["getTopArtists"].mockImplementationOnce(() =>
             Promise.reject(err)
@@ -324,7 +324,7 @@ describe("LastFMClient", () => {
       });
 
       describe("with a status code", () => {
-        beforeEach(async () => {
+        beforeEach(() => {
           err.statusCode = 999;
           mockApiCalls["getInfo"].mockImplementationOnce(() =>
             Promise.reject(err)
@@ -347,7 +347,7 @@ describe("LastFMClient", () => {
       });
 
       describe("without a status code", () => {
-        beforeEach(async () => {
+        beforeEach(() => {
           mockApiCalls["getInfo"].mockImplementationOnce(() =>
             Promise.reject(err)
           );
@@ -463,7 +463,7 @@ describe("LastFMClient", () => {
       });
 
       describe("with a status code", () => {
-        beforeEach(async () => {
+        beforeEach(() => {
           err.statusCode = 999;
           mockApiCalls["getTopTracks"].mockImplementationOnce(() =>
             Promise.reject(err)
@@ -486,7 +486,7 @@ describe("LastFMClient", () => {
       });
 
       describe("without a status code", () => {
-        beforeEach(async () => {
+        beforeEach(() => {
           mockApiCalls["getTopArtists"].mockImplementationOnce(() =>
             Promise.reject(err)
           );
