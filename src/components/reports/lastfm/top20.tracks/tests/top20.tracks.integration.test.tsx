@@ -2,7 +2,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import cardTranslations from "../../../../../../public/locales/en/cards.json";
 import translations from "../../../../../../public/locales/en/lastfm.json";
-import UserTrackDataState from "../../../../../providers/user/encapsulations/lastfm/user.state.track.class";
+import UserTrackDataState from "../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.track.flipcard.report.class";
 import translationLookUp from "../../../../../tests/fixtures/mock.translation";
 import { testIDs as drawerTestIDs } from "../../../common/drawer/drawer.component";
 import { testIDs as lastFMDrawerIDs } from "../../common/flip.card.report.drawer/flip.card.report.drawer.component";

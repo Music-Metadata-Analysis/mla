@@ -1,5 +1,5 @@
 import routes from "../../../../config/routes";
-import UserArtistDataState from "../../../../providers/user/encapsulations/lastfm/user.state.artist.class";
+import UserArtistDataState from "../../../../providers/user/encapsulations/lastfm/flipcard/user.state.artist.flipcard.report.class";
 import FlipCardDrawer from "../common/flip.card.report.drawer/flip.card.report.drawer.component";
 import FlipCardBaseReport from "../common/flip.card.report/flip.card.report.base.class";
 
