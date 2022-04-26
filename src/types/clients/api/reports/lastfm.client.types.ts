@@ -2,7 +2,10 @@ import type APIClient from "../../../../clients/api/api.client.class";
 import type { EventCreatorType, ReportType } from "../../../analytics.types";
 import type { ApiResponse } from "../../../clients/api/api.client.types";
 import type { IntegrationTypes } from "../../../integration.types";
-import type { BaseReportResponseInterface } from "../../../integrations/base.types";
+import type {
+  BaseReportResponseInterface,
+  AggregateBaseReportResponseInterface,
+} from "../../../integrations/base.types";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
@@ -56,4 +59,30 @@ export interface LastFMTopArtistsReportResponseInterface
 export interface LastFMTopTracksReportResponseInterface
   extends LastFMTopBaseReportResponseInterface {
   tracks: LastFMTrackDataInterface[];
+}
+export interface LastFMAggregatePlaycountByArtistResponseInterface
+  extends LastFMTopBaseReportResponseInterface {
+  aggregates: {
+    playcountByArtists: AggregateBaseReportResponseInterface & {
+      content: LastFMPlaycountByArtistResponseInterface;
+    };
+  };
+}
+
+export interface LastFMPlaycountByArtistResponseInterface {
+  created: Date;
+  created_by: string;
+  topArtists: [
+    {
+      playcount: number;
+      albums: [
+        {
+          playcount: number;
+          tracks: {
+            playcount: number;
+          };
+        }
+      ];
+    }
+  ];
 }

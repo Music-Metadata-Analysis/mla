@@ -10,6 +10,7 @@ export const mockAlbumsReport = {
 };
 
 export const mockInitialReportData = {
+  aggregates: {},
   albums: [],
   artists: [],
   tracks: [],

@@ -7,8 +7,9 @@ export const InitialState = <UserStateInterface>{
   data: {
     integration: null,
     report: {
-      artists: [],
+      aggregates: {},
       albums: [],
+      artists: [],
       tracks: [],
       image: [],
       playcount: 0,
