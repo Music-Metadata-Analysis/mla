@@ -1,7 +1,7 @@
-import { baseUserProperties } from "./fixtures/mock.user.state.data";
-import UserArtistState from "../user.state.artist.class";
-import type { LastFMArtistDataInterface } from "../../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateArtistReport } from "../../../../../types/user/state.types";
+import { baseUserProperties } from "../../tests/fixtures/mock.user.state.data";
+import UserArtistState from "../user.state.artist.flipcard.report.class";
+import type { LastFMArtistDataInterface } from "../../../../../../types/integrations/lastfm/api.types";
+import type { LastFMUserStateArtistReport } from "../../../../../../types/user/state.types";
 
 describe("UserArtistState", () => {
   let currentState: LastFMUserStateArtistReport;

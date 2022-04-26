@@ -1,6 +1,6 @@
 import Top20AlbumsReport from "./top20.albums.report.class";
 import FlipCardReportContainer from "../common/flip.card.report/flip.card.report.container";
-import type UserAlbumDataState from "../../../../providers/user/encapsulations/lastfm/user.state.album.class";
+import type UserAlbumDataState from "../../../../providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 import type { userHookAsLastFMTop20AlbumReport } from "../../../../types/user/hook.types";
 
 interface Top20AlbumsReportContainerProps {

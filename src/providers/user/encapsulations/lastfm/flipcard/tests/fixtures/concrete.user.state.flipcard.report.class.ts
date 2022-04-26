@@ -1,7 +1,7 @@
-import EventDefinition from "../../../../../../events/event.class";
-import UserBaseReportState from "../../user.state.base.report.class";
+import EventDefinition from "../../../../../../../events/event.class";
+import UserFlipCardBaseReportState from "../../user.state.base.flipcard.report.class";
 
-export default class ConcreteBaseReportState extends UserBaseReportState {
+export default class ConcreteBaseReportState extends UserFlipCardBaseReportState {
   getDataSource = () => this.userProperties.data.report.albums as unknown[];
 
   getDefaultEntityName = () => {

@@ -1,10 +1,10 @@
-import UserBaseState from "./user.state.base.class";
-import type EventDefinition from "../../../../events/event.class";
-import type { LastFMImageDataInterface } from "../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateBase } from "../../../../types/user/state.types";
+import UserBaseState from "../user.state.base.class";
+import type EventDefinition from "../../../../../events/event.class";
+import type { LastFMImageDataInterface } from "../../../../../types/integrations/lastfm/api.types";
+import type { LastFMUserStateBase } from "../../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
 
-export default abstract class UserBaseReportState extends UserBaseState {
+export default abstract class UserFlipCardBaseReportState extends UserBaseState {
   defaultAlbumName: string;
   defaultArtistName: string;
   defaultTrackName: string;

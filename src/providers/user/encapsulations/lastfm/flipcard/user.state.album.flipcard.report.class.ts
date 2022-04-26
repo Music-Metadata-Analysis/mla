@@ -1,21 +1,21 @@
-import UserBaseReportState from "./user.state.base.report.class";
-import Events from "../../../../events/events";
-import type { LastFMArtistDataInterface } from "../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateTrackReport } from "../../../../types/user/state.types";
+import UserFlipCardBaseReportState from "./user.state.base.flipcard.report.class";
+import Events from "../../../../../events/events";
+import type { LastFMArtistDataInterface } from "../../../../../types/integrations/lastfm/api.types";
+import type { LastFMUserStateAlbumReport } from "../../../../../types/user/state.types";
 import type { TFunction } from "next-i18next";
 
-export default class UserTrackState extends UserBaseReportState {
-  userProperties: LastFMUserStateTrackReport;
+export default class UserAlbumState extends UserFlipCardBaseReportState {
+  userProperties: LastFMUserStateAlbumReport;
 
-  constructor(userProperties: LastFMUserStateTrackReport, t: TFunction) {
+  constructor(userProperties: LastFMUserStateAlbumReport, t: TFunction) {
     super(userProperties, t);
     this.userProperties = userProperties;
   }
 
-  getDataSource = () => this.userProperties.data.report.tracks;
+  getDataSource = () => this.userProperties.data.report.albums;
 
   getDefaultEntityName = () => {
-    return this.defaultTrackName;
+    return this.defaultAlbumName;
   };
 
   getDrawerTitle = (index: number) => {
@@ -23,7 +23,7 @@ export default class UserTrackState extends UserBaseReportState {
   };
 
   getDrawerEvent = (index: number) => {
-    return Events.LastFM.TrackViewed(
+    return Events.LastFM.AlbumViewed(
       this.getRelatedArtistName(index),
       this.getName(index)
     );
@@ -31,13 +31,13 @@ export default class UserTrackState extends UserBaseReportState {
 
   getExternalLink = (index: number) => {
     const apiObject = this.getDataSource()[index] as { url?: string };
-    const encodedTrackName = encodeURIComponent(this.getName(index));
+    const encodedAlbumName = encodeURIComponent(this.getName(index));
     const encodedArtistName = encodeURIComponent(
       this.getRelatedArtistName(index)
     );
     return this.withDefault(
       apiObject?.url,
-      `${this.lastfmPrefix}/${encodedArtistName}/_/${encodedTrackName}`
+      `${this.lastfmPrefix}/${encodedArtistName}/${encodedAlbumName}`
     );
   };
 
