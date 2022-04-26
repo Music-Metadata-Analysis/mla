@@ -17,8 +17,8 @@ class LastFMBaseReport<ResponseType>
   eventDispatch: EventCreatorType;
   eventType = "BASE REPORT" as ReportType;
   integration = "LAST.FM" as const;
-  response: ApiResponse<ResponseType> | undefined;
-  route: string | undefined;
+  response!: ApiResponse<ResponseType>;
+  route!: string;
   invalidRetryHeaderError = "TimeoutFetchUser, with invalid retry header.";
 
   constructor(dispatch: userDispatchType, event: EventCreatorType) {
@@ -43,7 +43,7 @@ class LastFMBaseReport<ResponseType>
   }
 
   handleNotFound(userName: string): void {
-    if (this.response?.status === 404) {
+    if (this.response.status === 404) {
       this.dispatch({
         type: "NotFoundFetchUser",
         userName: userName,
@@ -60,7 +60,7 @@ class LastFMBaseReport<ResponseType>
   }
 
   handleSuccessful(userName: string): void {
-    if (this.response?.status === 200) {
+    if (this.response.status === 200) {
       this.dispatch({
         type: "SuccessFetchUser",
         userName: userName,
@@ -78,7 +78,7 @@ class LastFMBaseReport<ResponseType>
   }
 
   handleRatelimited(userName: string): void {
-    if (this.response?.status === 429) {
+    if (this.response.status === 429) {
       this.dispatch({
         type: "RatelimitedFetchUser",
         userName: userName,
@@ -95,7 +95,7 @@ class LastFMBaseReport<ResponseType>
   }
 
   handleTimeout(userName: string): void {
-    if (this.response?.status === 503) {
+    if (this.response.status === 503) {
       const backOff = parseInt(this.response?.headers["retry-after"]);
       if (!isNaN(backOff)) {
         setTimeout(() => {
@@ -112,7 +112,7 @@ class LastFMBaseReport<ResponseType>
   }
 
   handleUnauthorized(userName: string): void {
-    if (this.response?.status === 401) {
+    if (this.response.status === 401) {
       this.dispatch({
         type: "UnauthorizedFetchUser",
         userName: userName,
@@ -146,9 +146,7 @@ class LastFMBaseReport<ResponseType>
   retrieveReport(userName: string): void {
     this.handleBegin(userName);
     this.client
-      .request<ResponseType>(
-        (this.route as string).replace(":username", userName)
-      )
+      .request<ResponseType>(this.route.replace(":username", userName))
       .then((response) => {
         this.response = response;
         this.handleNotFound(userName);

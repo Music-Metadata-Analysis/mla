@@ -1,12 +1,12 @@
 import * as status from "../../../config/status";
 import APIClient from "../api.client.class";
+import type { HttpMethodType } from "../../../types/clients/api/api.client.types";
 
 describe("APIClient", () => {
   const client = new APIClient();
   const remotesite = "https://remotesite.com/";
   type responseType = { success: boolean };
   const mockFetchParams = {
-    body: null,
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
@@ -190,18 +190,17 @@ describe("APIClient", () => {
   describe("post", () => {
     const postParams = {
       ...mockFetchParams,
-      method: "POST",
+      method: "POST" as HttpMethodType,
       cache: "no-cache",
       body: JSON.stringify({ test: "post body" }),
     };
 
     const arrange = () => {
-      return client.request<responseType>(
-        remotesite,
-        "POST",
-        "no-cache",
-        JSON.parse(postParams.body)
-      );
+      return client.request<responseType>(remotesite, {
+        method: postParams.method,
+        cache: "no-cache",
+        body: JSON.parse(postParams.body),
+      });
     };
 
     describe("when an 'ok' status is returned", () => {
