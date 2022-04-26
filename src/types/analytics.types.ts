@@ -44,6 +44,7 @@ export interface AnalyticsProviderInterface {
 
 export type ReportType =
   | "BASE REPORT"
+  | "PLAYCOUNT BY ARTIST"
   | "TOP20 ALBUMS"
   | "TOP20 ARTISTS"
   | "TOP20 TRACKS";
