@@ -2,16 +2,17 @@ import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import * as status from "../../../../config/status";
 import { ProxyError } from "../../../../errors/proxy.error.class";
-import LastFMApiEndpointFactoryV2 from "../endpoint.v2.base.class";
+import LastFMApiEndpointFactoryV1 from "../v1.endpoint.base.class";
+import type { BodyType } from "../../../../types/api.endpoint.types";
 import type { HttpMethodType } from "../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV2 {
-  route = "/api/v2/endpoint/:username";
+class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV1 {
+  route = "/api/v1/endpoint";
   timeOut = 100;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getProxyResponse(_: string) {
+  getProxyResponse(_: BodyType) {
     function sleep(ms: number) {
       return new Promise((resolve) => {
         setTimeout(resolve, ms * 2);
@@ -21,13 +22,13 @@ class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV2 {
   }
 }
 
-class ConcreteErrorClass extends LastFMApiEndpointFactoryV2 {
-  route = "/api/v2/endpoint/:username";
+class ConcreteErrorClass extends LastFMApiEndpointFactoryV1 {
+  route = "/api/v1/endpoint";
   mockError = "mockError";
   errorCode?: number;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getProxyResponse(_: string) {
+  getProxyResponse(_: BodyType) {
     throw new ProxyError(this.mockError, this.errorCode);
   }
 }
@@ -40,17 +41,17 @@ jest.mock("next-auth/jwt", () => ({
   getToken: jest.fn(),
 }));
 
-describe("LastFMApiEndpointFactoryV2", () => {
+describe("LastFMApiEndpointFactoryV1", () => {
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let req: MockRequest<NextApiRequest>;
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let res: MockResponse<NextApiResponse>;
+  let payload: undefined | Record<string, string>;
   let factory:
-    | LastFMApiEndpointFactoryV2
+    | LastFMApiEndpointFactoryV1
     | ConcreteTimeoutClass
     | ConcreteErrorClass;
   let method: HttpMethodType;
-  let username: [string] | null;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -71,7 +72,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: factory.route,
       method,
-      query: { username },
+      body: payload,
     }));
     await factory.create()(req, res);
   };
@@ -86,14 +87,14 @@ describe("LastFMApiEndpointFactoryV2", () => {
       );
     });
 
-    describe("with a GET request", () => {
+    describe("with a POST request", () => {
       beforeEach(() => {
-        method = "GET" as const;
+        method = "POST" as const;
       });
 
-      describe("with a valid username", () => {
+      describe("with a valid payload", () => {
         beforeEach(() => {
-          username = ["validUser"];
+          payload = { userName: "validUser" };
         });
 
         describe("receives a request that generates an unknown proxy error", () => {
@@ -159,9 +160,29 @@ describe("LastFMApiEndpointFactoryV2", () => {
         });
       });
 
-      describe("with an invalid username", () => {
+      describe("with an invalid payload", () => {
         beforeEach(() => {
-          username = null;
+          payload = { incorrectField: "validUser" };
+        });
+
+        describe("receives a request", () => {
+          beforeEach(async () => {
+            factory = new ConcreteTimeoutClass();
+            await arrange();
+          });
+
+          it("should return a 400", () => {
+            expect(res._getStatusCode()).toBe(400);
+            expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
+          });
+
+          checkJWT();
+        });
+      });
+
+      describe("with no data", () => {
+        beforeEach(async () => {
+          payload = { incorrectField: "validUser" };
         });
 
         describe("receives a request", () => {
@@ -180,14 +201,14 @@ describe("LastFMApiEndpointFactoryV2", () => {
       });
     });
 
-    describe("with a POST request", () => {
+    describe("with a GET request", () => {
       beforeEach(() => {
-        method = "POST" as const;
+        method = "GET" as const;
       });
 
-      describe("with a valid username", () => {
-        beforeEach(() => {
-          username = ["validUsername"];
+      describe("with no payload", () => {
+        beforeEach(async () => {
+          payload = undefined;
         });
 
         describe("receives a request", () => {
@@ -210,14 +231,14 @@ describe("LastFMApiEndpointFactoryV2", () => {
       (getToken as jest.Mock).mockReturnValue(Promise.resolve(null))
     );
 
-    describe("with a GET request", () => {
+    describe("with a POST request", () => {
       beforeEach(() => {
-        method = "GET" as const;
+        method = "POST" as const;
       });
 
-      describe("with a valid username", () => {
+      describe("with a valid payload", () => {
         beforeEach(() => {
-          username = ["validUser"];
+          payload = { userName: "validUser" };
         });
 
         describe("receives a request that generates any proxy error", () => {
@@ -253,9 +274,29 @@ describe("LastFMApiEndpointFactoryV2", () => {
         });
       });
 
-      describe("with an invalid username", () => {
+      describe("with an invalid payload", () => {
         beforeEach(() => {
-          username = null;
+          payload = { incorrectField: "validUser" };
+        });
+
+        describe("receives a request", () => {
+          beforeEach(async () => {
+            factory = new ConcreteTimeoutClass();
+            await arrange();
+          });
+
+          it("should return a 401", () => {
+            expect(res._getStatusCode()).toBe(401);
+            expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
+          });
+
+          checkJWT();
+        });
+      });
+
+      describe("with no data", () => {
+        beforeEach(async () => {
+          payload = { incorrectField: "validUser" };
         });
 
         describe("receives a request", () => {
@@ -274,14 +315,14 @@ describe("LastFMApiEndpointFactoryV2", () => {
       });
     });
 
-    describe("with a POST request", () => {
+    describe("with a GET request", () => {
       beforeEach(() => {
-        method = "POST" as const;
+        method = "GET" as const;
       });
 
-      describe("with a valid username", () => {
+      describe("with no payload", () => {
         beforeEach(async () => {
-          username = ["validUser"];
+          payload = undefined;
         });
 
         describe("receives a request", () => {

@@ -1,16 +1,18 @@
 import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../../config/apiRoutes";
+import { STATUS_400_MESSAGE } from "../../../../../config/status";
 import handleProxy, {
   endpointFactory,
-} from "../../../../../pages/api/v1/reports/lastfm/top20tracks";
+} from "../../../../../pages/api/v2/data/artists/[artist]/albums/[album]";
+import type { QueryParamType } from "../../../../../types/api.endpoint.types";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
-      getUserTopTracks: mockProxyMethod,
+      getAlbumInfo: mockProxyMethod,
     };
   });
 });
@@ -24,10 +26,10 @@ jest.mock("next-auth/jwt", () => ({
 }));
 
 const mockProxyMethod = jest.fn();
-const testUrl = apiRoutes.v1.reports.lastfm.top20tracks;
+const testUrl = apiRoutes.v2.data.artists.albumsGet;
 
 type ArrangeArgs = {
-  body: Record<string, unknown>;
+  query: QueryParamType;
   method: HttpMethodType;
 };
 
@@ -36,23 +38,20 @@ describe(testUrl, () => {
   let req: MockRequest<NextApiRequest>;
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let res: MockResponse<NextApiResponse>;
-  const mockResponse = {
-    tracks: [],
-    image: [],
-  };
-  let payload: Record<string, string>;
+  const mockResponse = { mock: "response" };
+  let query: QueryParamType;
   let method: HttpMethodType;
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  const arrange = async ({ body, method = "POST" }: ArrangeArgs) => {
+  const arrange = async ({ query, method = "GET" }: ArrangeArgs) => {
     // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: testUrl,
       method,
-      body,
+      query,
     }));
     await handleProxy(req, res);
   };
@@ -66,20 +65,21 @@ describe(testUrl, () => {
       )
     );
 
-    describe("receives a POST request", () => {
-      beforeEach(() => {
-        method = "POST" as const;
-      });
-
-      describe("with valid data", () => {
-        beforeEach(async () => {
-          payload = { userName: "valid" };
+    describe("with valid data", () => {
+      describe("receives a GET request", () => {
+        beforeEach(() => {
+          method = "GET" as const;
         });
 
-        describe("with a valid lastfm response", () => {
+        describe("with a valid payload", () => {
           beforeEach(async () => {
+            query = {
+              artist: "The%20Cure",
+              album: "Wish",
+              username: "niall-byrne",
+            };
             mockProxyMethod.mockReturnValueOnce(Promise.resolve(mockResponse));
-            await arrange({ body: payload, method });
+            await arrange({ query, method });
           });
 
           it("should return a 200 status code", () => {
@@ -87,16 +87,37 @@ describe(testUrl, () => {
             expect(res._getJSONData()).toStrictEqual(mockResponse);
           });
 
-          it("should set a sunset header", () => {
-            expect(res._getHeaders().sunset).toBe(
-              endpointFactory.sunsetDate.toDateString()
-            );
+          it("should set a Cache-Control header", () => {
+            expect(res._getHeaders()["cache-control"]).toStrictEqual([
+              "public",
+              `max-age=${endpointFactory.maxAgeValue}`,
+            ]);
           });
 
           it("should call the proxy method with the correct params", () => {
-            expect(mockProxyMethod).toBeCalledWith(payload.userName);
+            expect(mockProxyMethod).toBeCalledWith(
+              query.artist,
+              query.album,
+              query.username
+            );
           });
         });
+      });
+    });
+
+    describe("with an invalid payload", () => {
+      beforeEach(async () => {
+        query = {};
+        await arrange({ query, method });
+      });
+
+      it("should return a 400 status code", () => {
+        expect(res._getStatusCode()).toBe(400);
+        expect(res._getJSONData()).toStrictEqual(STATUS_400_MESSAGE);
+      });
+
+      it("should NOT call the proxy method", () => {
+        expect(mockProxyMethod).toBeCalledTimes(0);
       });
     });
   });

@@ -46,6 +46,7 @@ export default abstract class S3Cache<ObjectType> extends S3BaseClient {
         method: "GET",
       }
     ).then(async (response) => {
+      // todo: validate response is not empty?
       if (!response.ok) {
         const newEntry = await this.createEntry(objectName);
         await this.populateS3Cache(objectName, this.stringifyObject(newEntry));
