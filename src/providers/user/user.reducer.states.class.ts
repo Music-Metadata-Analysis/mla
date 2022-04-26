@@ -48,6 +48,26 @@ class UserReducerStates {
     }
     throw new Error(this.wrongTypeError);
   }
+  PartialFetchUser(
+    state: UserStateInterface,
+    action: UserActionType
+  ): UserStateInterface {
+    if (action.type === "PartialFetchUser") {
+      return {
+        data: {
+          integration: action.integration,
+          report: action.data,
+        },
+        error: null,
+        inProgress: false,
+        profileUrl: null,
+        ready: false,
+        retries: this.initialRetries,
+        userName: action.userName,
+      };
+    }
+    throw new Error(this.wrongTypeError);
+  }
   RatelimitedFetchUser(
     state: UserStateInterface,
     action: UserActionType
