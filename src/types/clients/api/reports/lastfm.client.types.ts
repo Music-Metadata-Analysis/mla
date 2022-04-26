@@ -2,7 +2,10 @@ import type APIClient from "../../../../clients/api/api.client.class";
 import type { EventCreatorType, ReportType } from "../../../analytics.types";
 import type { ApiResponse } from "../../../clients/api/api.client.types";
 import type { IntegrationTypes } from "../../../integration.types";
-import type { BaseReportResponseInterface } from "../../../integrations/base.types";
+import type {
+  BaseReportResponseInterface,
+  AggregateBaseReportResponseInterface,
+} from "../../../integrations/base.types";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
@@ -11,6 +14,13 @@ import type {
 } from "../../../integrations/lastfm/api.types";
 import type { userDispatchType } from "../../../user/context.types";
 import type { TFunction } from "next-i18next";
+
+export interface LastFMClientParamsInterface {
+  userName: string;
+  artist?: string;
+  album?: string;
+  track?: string;
+}
 
 export interface LastFMReportInterface<T> {
   client: APIClient;
@@ -56,4 +66,31 @@ export interface LastFMTopArtistsReportResponseInterface
 export interface LastFMTopTracksReportResponseInterface
   extends LastFMTopBaseReportResponseInterface {
   tracks: LastFMTrackDataInterface[];
+}
+
+export interface LastFMPlayCountByArtistResponseInterface
+  extends LastFMTopBaseReportResponseInterface {
+  playCountByArtist: AggregateBaseReportResponseInterface<
+    PlayCountByArtistReportInterface[]
+  >;
+}
+
+export interface PlayCountByArtistReportInterface {
+  name: string;
+  playcount: number | null;
+  albums: PlayCountByArtistReportInterface_Artist[];
+  fetched: boolean;
+}
+
+interface PlayCountByArtistReportInterface_Artist {
+  name: string;
+  playcount: number | null;
+  tracks: PlayCountByArtistReportInterface_Track[];
+  fetched: boolean;
+}
+
+interface PlayCountByArtistReportInterface_Track {
+  name: string;
+  rank: number;
+  fetched: boolean;
 }

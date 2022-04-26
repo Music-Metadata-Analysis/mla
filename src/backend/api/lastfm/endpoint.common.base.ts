@@ -27,7 +27,6 @@ export default abstract class LastFMEndpointBase {
     res: NextApiResponse,
     next: () => void
   ) {
-
     req.proxyResponse = err.toString();
     if (err.clientStatusCode && knownStatuses[err.clientStatusCode]) {
       res

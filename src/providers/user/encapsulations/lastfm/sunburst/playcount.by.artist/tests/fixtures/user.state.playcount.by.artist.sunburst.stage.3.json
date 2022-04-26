@@ -1,0 +1,599 @@
+{
+  "data": {
+    "integration": "LASTFM",
+    "report": {
+      "albums": [],
+      "artists": [],
+      "playCountByArtist": {
+        "status": {
+          "complete": false,
+          "steps_total": 72,
+          "steps_complete": 2,
+          "operation": { "type": "Top Albums", "resource": "Lights & Motion" }
+        },
+        "created": "",
+        "content": [
+          {
+            "fetched": true,
+            "name": "Lights & Motion",
+            "playcount": 5709,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Caspian",
+            "playcount": 4461,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Bon Iver",
+            "playcount": 3587,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "God Is an Astronaut",
+            "playcount": 3288,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Cloudkicker",
+            "playcount": 2750,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "The Stone Roses",
+            "playcount": 2600,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Maybeshewill",
+            "playcount": 2567,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Chevelle",
+            "playcount": 2484,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Japandroids",
+            "playcount": 2366,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "U2",
+            "playcount": 2358,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Radiohead",
+            "playcount": 2268,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Sigur Rós",
+            "playcount": 2236,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "The Cure",
+            "playcount": 1946,
+            "albums": [
+              {
+                "name": "Greatest Hits",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Wish",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Disintegration",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Kiss Me, Kiss Me, Kiss Me",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Three Imaginary Boys",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "The Head on the Door",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Seventeen Seconds",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Disintegration (Deluxe Edition)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Pornography",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Boys Don't Cry",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Kiss Me Kiss Me Kiss Me",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Galore",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Faith",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "The Cure",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Three Imaginary Boys (Deluxe Edition)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Bloodflowers",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Japanese Whispers",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Staring At The Sea - The Singles",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "The Head On The Door (Remastered)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "4:13 Dream",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Wild Mood Swings",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Galore (The Singles 1987-1997)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Seventeen Seconds (Deluxe Edition)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Disintegration (Remastered)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Mixed Up",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "The Top",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "The Cure - Greatest Hits (Deluxe Sound & Vision) PAL",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Just Like Heaven Hit Pac",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Bestival Live 2011",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Show",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "The Head On The Door (Remastered Version)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Three Imaginary Boys [Deluxe Edition]",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "(null)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Staring at the Sea: The Singles",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Disintegration (Deluxe Edition [Remastered])",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Greatest Hits (CD1)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "The Crow Original Motion Picture Soundtrack",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Paris",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "The Head on the Door (Deluxed Edition)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "100 Essential Love Songs",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "The Head On The Door (Deluxe Edition)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Entreat",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "The Cure: Greatest Hits",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Staring At The Sea - The Singl",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Faith (Deluxe Edition)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Staring At The Sea",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Disintegration (2010 Remaster)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Join The Dots - The B-Sides & Rarities",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Kiss Me, Kiss Me, Kiss Me (Deluxe Edition)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
+                "name": "Pornography (Deluxe Edition)",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Plini",
+            "playcount": 1800,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Matthew Good Band",
+            "playcount": 1580,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "The Echelon Effect",
+            "playcount": 1568,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Jimmy Eat World",
+            "playcount": 1507,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Skyharbor",
+            "playcount": 1455,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "The Smashing Pumpkins",
+            "playcount": 1443,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "New Order",
+            "playcount": 1442,
+            "albums": [
+              {
+                "name": "Mock Album",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          }
+        ]
+      },
+      "image": [
+        {
+          "size": "small",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/34s/3045c415a689785ec440988170f4d015.png"
+        },
+        {
+          "size": "medium",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/64s/3045c415a689785ec440988170f4d015.png"
+        },
+        {
+          "size": "large",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/174s/3045c415a689785ec440988170f4d015.png"
+        },
+        {
+          "size": "extralarge",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/3045c415a689785ec440988170f4d015.png"
+        }
+      ],
+      "playcount": 182518
+    }
+  },
+  "retries": 3,
+  "error": null,
+  "inProgress": false,
+  "profileUrl": null,
+  "ready": true,
+  "userName": null
+}

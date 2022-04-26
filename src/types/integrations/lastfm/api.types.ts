@@ -83,6 +83,14 @@ export type LastFMArtistTopAlbumsInterface = Omit<
   artist: LastFMArtistDataInterface;
 };
 
+type LASTFMAlbumInfoTrackType = Omit<
+  LastFMTrackDataInterface,
+  "duration" | "image"
+> & {
+  duration?: number;
+  "@attr": LastFMAttrInterface;
+};
+
 export type LastFMAlbumInfoInterface = Omit<
   LastFMAlbumDataInterface,
   "artist"
@@ -94,13 +102,8 @@ export type LastFMAlbumInfoInterface = Omit<
         tag: LastFMTagInterface[];
       }
     | "";
-  tracks: {
-    track: Array<
-      Omit<LastFMTrackDataInterface, "duration" | "image"> & {
-        duration?: number;
-        "@attr": LastFMAttrInterface;
-      }
-    >;
+  tracks?: {
+    track: Array<LASTFMAlbumInfoTrackType> | LASTFMAlbumInfoTrackType;
   };
   userplaycount: number;
   wiki?: {
