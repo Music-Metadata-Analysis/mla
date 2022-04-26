@@ -4,6 +4,7 @@ import type {
   LastFMUserStateAlbumReport,
   LastFMUserStateArtistReport,
   LastFMUserStateTrackReport,
+  LastFMUserStatePlayCountByArtistReport,
 } from "./state.types";
 
 export interface userHookAsLastFM extends ReturnType<typeof useLastFM> {
@@ -23,4 +24,9 @@ export interface userHookAsLastFMTop20ArtistReport
 export interface userHookAsLastFMTop20TrackReport
   extends ReturnType<typeof useLastFM> {
   userProperties: LastFMUserStateTrackReport;
+}
+
+export interface userHookAsLastFMPlayCountByArtistReport
+  extends ReturnType<typeof useLastFM> {
+  userProperties: LastFMUserStatePlayCountByArtistReport;
 }

@@ -1,0 +1,302 @@
+{
+  "data": {
+    "integration": "LASTFM",
+    "report": {
+      "albums": [],
+      "artists": [],
+      "playCountByArtist": {
+        "status": {
+          "complete": false,
+          "steps_total": 22,
+          "steps_complete": 1,
+          "operation": {
+            "type": "Album Details",
+            "resource": "Lights & Motion"
+          }
+        },
+        "created": "",
+        "content": [
+          {
+            "fetched": true,
+            "name": "Lights & Motion",
+            "playcount": 5709,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Caspian",
+            "playcount": 4461,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Bon Iver",
+            "playcount": 3587,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "God Is an Astronaut",
+            "playcount": 3288,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Cloudkicker",
+            "playcount": 2750,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "The Stone Roses",
+            "playcount": 2600,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Maybeshewill",
+            "playcount": 2567,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Chevelle",
+            "playcount": 2484,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Japandroids",
+            "playcount": 2366,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "U2",
+            "playcount": 2358,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Radiohead",
+            "playcount": 2268,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Sigur Rós",
+            "playcount": 2236,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": false,
+            "name": "The Cure",
+            "playcount": 1946,
+            "albums": []
+          },
+          {
+            "fetched": true,
+            "name": "Plini",
+            "playcount": 1800,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Matthew Good Band",
+            "playcount": 1580,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "The Echelon Effect",
+            "playcount": 1568,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Jimmy Eat World",
+            "playcount": 1507,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "Skyharbor",
+            "playcount": 1455,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "The Smashing Pumpkins",
+            "playcount": 1443,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          },
+          {
+            "fetched": true,
+            "name": "New Order",
+            "playcount": 1442,
+            "albums": [
+              {
+                "fetched": true,
+                "name": "Mock Album",
+                "playcount": 100,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              }
+            ]
+          }
+        ]
+      },
+      "tracks": [],
+      "image": [
+        {
+          "size": "small",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/34s/3045c415a689785ec440988170f4d015.png"
+        },
+        {
+          "size": "medium",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/64s/3045c415a689785ec440988170f4d015.png"
+        },
+        {
+          "size": "large",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/174s/3045c415a689785ec440988170f4d015.png"
+        },
+        {
+          "size": "extralarge",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/3045c415a689785ec440988170f4d015.png"
+        }
+      ],
+      "playcount": 182518
+    }
+  },
+  "retries": 3,
+  "error": null,
+  "inProgress": false,
+  "profileUrl": null,
+  "ready": true,
+  "userName": null
+}
