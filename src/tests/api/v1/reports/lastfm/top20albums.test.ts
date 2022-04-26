@@ -10,7 +10,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
-      getTopAlbums: mockProxyMethod,
+      getUserTopAlbums: mockProxyMethod,
     };
   });
 });

@@ -72,7 +72,7 @@ describe("LastFMReport", () => {
       checkUrl();
 
       it("should dispatch the reducer correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(2);
+        await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "StartFetchUser",
           userName: mockUserName,
@@ -87,7 +87,7 @@ describe("LastFMReport", () => {
       });
 
       it("should register events correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(2);
+        await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
           new EventDefinition({
@@ -109,7 +109,7 @@ describe("LastFMReport", () => {
       checkUrl();
 
       it("should dispatch the reducer correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(2);
+        await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "StartFetchUser",
           userName: mockUserName,
@@ -123,7 +123,7 @@ describe("LastFMReport", () => {
       });
 
       it("should register events correctly", async () => {
-        expect(mockEvent).toBeCalledTimes(2);
+        await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
           new EventDefinition({
@@ -145,8 +145,12 @@ describe("LastFMReport", () => {
       checkUrl();
 
       it("should dispatch the reducer correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(2);
-        expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+        await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "UnauthorizedFetchUser",
           userName: mockUserName,
@@ -155,7 +159,7 @@ describe("LastFMReport", () => {
       });
 
       it("should register events correctly", async () => {
-        expect(mockEvent).toBeCalledTimes(2);
+        await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
           new EventDefinition({
@@ -175,8 +179,12 @@ describe("LastFMReport", () => {
       });
 
       it("should dispatch the reducer correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(2);
-        expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+        await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "NotFoundFetchUser",
           userName: mockUserName,
@@ -185,7 +193,7 @@ describe("LastFMReport", () => {
       });
 
       it("should register events correctly", async () => {
-        expect(mockEvent).toBeCalledTimes(2);
+        await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
           new EventDefinition({
@@ -207,8 +215,12 @@ describe("LastFMReport", () => {
       checkUrl();
 
       it("should dispatch the reducer correctly", async () => {
-        expect(mockDispatch).toBeCalledTimes(2);
-        expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+        await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: "StartFetchUser",
+          userName: mockUserName,
+          integration: integrationType,
+        });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "RatelimitedFetchUser",
           userName: mockUserName,
@@ -217,7 +229,7 @@ describe("LastFMReport", () => {
       });
 
       it("should register events correctly", async () => {
-        expect(mockEvent).toBeCalledTimes(2);
+        await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
           new EventDefinition({
@@ -245,6 +257,7 @@ describe("LastFMReport", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
+          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetchUser",
             userName: mockUserName,
@@ -258,6 +271,7 @@ describe("LastFMReport", () => {
         });
 
         it("should NOT register events", async () => {
+          await waitFor(() => expect(mockEvent).toBeCalledTimes(1));
           expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         });
@@ -273,7 +287,7 @@ describe("LastFMReport", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          expect(mockDispatch).toBeCalledTimes(2);
+          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetchUser",
             userName: mockUserName,
@@ -286,14 +300,16 @@ describe("LastFMReport", () => {
           });
         });
 
-        it("should NOT register events", async () => {
-          expect(mockEvent).toBeCalledTimes(2);
+        it("should register a failure event", async () => {
+          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
           expect(mockEvent).toHaveBeenCalledWith(requestEvent);
-          expect(mockDispatch).toHaveBeenCalledWith({
-            type: "FailureFetchUser",
-            userName: mockUserName,
-            integration: integrationType,
-          });
+          expect(mockEvent).toHaveBeenCalledWith(
+            new EventDefinition({
+              category: "LAST.FM",
+              label: "ERROR",
+              action: `${reportType}: ERROR CREATING REPORT.`,
+            })
+          );
         });
       });
     });

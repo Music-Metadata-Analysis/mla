@@ -1,3 +1,19 @@
+export interface LastFMAttrInterface {
+  album?: string;
+  artist?: string;
+  from?: string;
+  position?: string;
+  page?: string;
+  perPage?: string;
+  rank?: string | number;
+  tag?: string;
+  to?: string;
+  total?: string;
+  totalPages?: string;
+  track?: string;
+  user?: string;
+}
+
 export interface LastFMAlbumDataInterface {
   artist?: LastFMArtistDataInterface;
   image?: LastFMImageDataInterface[];
@@ -5,9 +21,7 @@ export interface LastFMAlbumDataInterface {
   name?: string;
   playcount?: string;
   url?: string;
-  "@attr"?: {
-    rank: string;
-  };
+  "@attr"?: LastFMAttrInterface;
   "#text"?: string;
 }
 
@@ -18,15 +32,19 @@ export interface LastFMArtistDataInterface {
   playcount?: string;
   streamable?: string;
   url?: string;
-  "@attr"?: {
-    rank: string;
-  };
+  "@attr"?: LastFMAttrInterface;
   "#text"?: string;
 }
 
 export interface LastFMImageDataInterface {
   size: "small" | "medium" | "large" | "extralarge" | "mega";
   "#text": string;
+}
+
+export interface LastFMTagInterface {
+  name: string;
+  count?: string;
+  url: string;
 }
 
 export interface LastFMTrackDataInterface {
@@ -39,9 +57,7 @@ export interface LastFMTrackDataInterface {
   playcount?: string;
   streamable?: LastFMTrackStreamableInterface | string;
   url?: string;
-  "@attr"?: {
-    rank: string;
-  };
+  "@attr"?: LastFMAttrInterface;
 }
 
 export interface LastFMUserProfileInterface {
@@ -58,3 +74,60 @@ interface LastFMTrackStreamableInterface {
   fulltrack: string;
   "#text": string;
 }
+
+export type LastFMArtistTopAlbumsInterface = Omit<
+  LastFMAlbumDataInterface,
+  "playcount"
+> & {
+  playcount?: number;
+  artist: LastFMArtistDataInterface;
+};
+
+export type LastFMAlbumInfoInterface = Omit<
+  LastFMAlbumDataInterface,
+  "artist"
+> & {
+  artist: string;
+  listeners: string;
+  tags:
+    | {
+        tag: LastFMTagInterface[];
+      }
+    | "";
+  tracks: {
+    track: Array<
+      Omit<LastFMTrackDataInterface, "duration" | "image"> & {
+        duration?: number;
+        "@attr": LastFMAttrInterface;
+      }
+    >;
+  };
+  userplaycount: number;
+  wiki?: {
+    published?: string;
+    summary?: string;
+    content?: string;
+  };
+};
+
+export type LastFMTrackInfoInterface = Omit<
+  LastFMTrackDataInterface,
+  "image" | "title"
+> & {
+  album: Omit<LastFMAlbumDataInterface, "artist" | "name"> & {
+    artist: string;
+    title: string;
+  };
+  listeners?: string;
+  toptags:
+    | {
+        tag: LastFMTagInterface[];
+      }
+    | "";
+  userplaycount: string;
+  wiki?: {
+    published?: string;
+    summary?: string;
+    content?: string;
+  };
+};

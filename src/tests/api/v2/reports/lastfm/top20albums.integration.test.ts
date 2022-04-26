@@ -1,7 +1,7 @@
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../../config/apiRoutes";
 import * as status from "../../../../../config/status";
-import albumHandler from "../../../../../pages/api/v2/reports/lastfm/top20albums/[...username]";
+import albumHandler from "../../../../../pages/api/v2/reports/lastfm/top20albums/[username]";
 import testResponses from "../../../../fixtures/lastfm.topalbums";
 import testAccounts from "../../../../fixtures/lastfm.users";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
@@ -56,7 +56,7 @@ if (process.env[integrationEnvironmentVariable]) {
       ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
         url: endpointUnderTest,
         method,
-        query: { username: [username] },
+        query: { username },
       }));
       await handler(req, res);
     };
