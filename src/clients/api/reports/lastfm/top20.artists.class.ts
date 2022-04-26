@@ -1,4 +1,4 @@
-import LastFMBaseReport from "./lastfm.base.class";
+import LastFMBaseReport from "./report.base.class";
 import apiRoutes from "../../../../config/apiRoutes";
 import type { LastFMTopArtistsReportResponseInterface } from "../../../../types/clients/api/reports/lastfm.client.types";
 

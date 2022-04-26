@@ -1,6 +1,6 @@
 import { waitFor } from "@testing-library/react";
 import EventDefinition from "../../../../../events/event.class";
-import LastFMReport from "../lastfm.base.class";
+import LastFMReport from "../report.base.class";
 import type { LastFMTopAlbumsReportResponseInterface } from "../../../../../types/clients/api/reports/lastfm.client.types";
 
 jest.mock("../../../api.client.class", () => {
