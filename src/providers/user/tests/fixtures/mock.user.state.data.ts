@@ -12,6 +12,15 @@ export const mockAlbumsReport = {
 export const mockInitialReportData = {
   albums: [],
   artists: [],
+  playCountByArtist: {
+    status: {
+      complete: false,
+      steps_total: 0,
+      steps_complete: 0,
+    },
+    created: "",
+    content: [],
+  },
   tracks: [],
   image: [],
   playcount: 0,
