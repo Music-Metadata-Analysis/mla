@@ -1,12 +1,15 @@
-import ConcreteBaseReportState from "./fixtures/mock.user.state.base.report.concrete.class";
-import { baseUserProperties, mockUrls } from "./fixtures/mock.user.state.data";
-import type { LastFMImageDataInterface } from "../../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateAlbumReport } from "../../../../../types/user/state.types";
-import type UserBaseReportState from "../user.state.base.report.class";
+import ConcreteBaseReportState from "../../flipcard/tests/fixtures/concrete.user.state.flipcard.report.class";
+import {
+  baseUserProperties,
+  mockUrls,
+} from "../../tests/fixtures/mock.user.state.data";
+import type { LastFMImageDataInterface } from "../../../../../../types/integrations/lastfm/api.types";
+import type { LastFMUserStateAlbumReport } from "../../../../../../types/user/state.types";
+import type UserFlipCardBaseReportState from "../user.state.base.flipcard.report.class";
 
-describe("UserBaseReportState", () => {
+describe("UserFlipCardBaseReportState", () => {
   let currentState: LastFMUserStateAlbumReport;
-  let instance: UserBaseReportState;
+  let instance: UserFlipCardBaseReportState;
   const mockT = jest.fn((arg: string) => `t(${arg})`);
   let index: number;
   let size: LastFMImageDataInterface["size"];
