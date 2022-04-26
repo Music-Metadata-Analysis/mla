@@ -146,7 +146,9 @@ class LastFMBaseReport<ResponseType>
   retrieveReport(userName: string): void {
     this.handleBegin(userName);
     this.client
-      .get<ResponseType>((this.route as string).replace(":username", userName))
+      .request<ResponseType>(
+        (this.route as string).replace(":username", userName)
+      )
       .then((response) => {
         this.response = response;
         this.handleNotFound(userName);
