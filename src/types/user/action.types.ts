@@ -13,6 +13,12 @@ export type UserActionType =
       integration: IntegrationTypes;
     }
   | {
+      type: "PartialFetchUser";
+      userName: string;
+      data: UserReportType;
+      integration: IntegrationTypes;
+    }
+  | {
       type: "RatelimitedFetchUser";
       userName: string;
       integration: IntegrationTypes;
