@@ -5,7 +5,7 @@ import type { UserStateInterface } from "../../types/user/state.types";
 
 class UserReducerStates {
   wrongTypeError = "Received wrong action type.";
-  initialReport = { ...InitialState.data.report };
+  initialReport = JSON.parse(JSON.stringify(InitialState.data.report));
   initialRetries = InitialState.retries;
 
   FailureFetchUser(
