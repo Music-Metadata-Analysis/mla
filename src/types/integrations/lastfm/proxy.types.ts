@@ -3,15 +3,33 @@ import type {
   LastFMTopArtistsReportResponseInterface,
   LastFMTopTracksReportResponseInterface,
 } from "../../clients/api/reports/lastfm.client.types";
+import type {
+  LastFMAlbumInfoInterface,
+  LastFMArtistTopAlbumsInterface,
+  LastFMTrackInfoInterface,
+} from "./api.types";
 
 export interface LastFMProxyInterface {
-  getTopAlbums: (
+  getAlbumInfo: (
+    artist: string,
+    album: string,
+    username: string
+  ) => Promise<LastFMAlbumInfoInterface>;
+  getArtistTopAlbums: (
+    artist: string
+  ) => Promise<LastFMArtistTopAlbumsInterface[]>;
+  getTrackInfo: (
+    track: string,
+    artist: string,
+    username: string
+  ) => Promise<LastFMTrackInfoInterface>;
+  getUserTopAlbums: (
     username: string
   ) => Promise<LastFMTopAlbumsReportResponseInterface>;
-  getTopArtists: (
+  getUserTopArtists: (
     username: string
   ) => Promise<LastFMTopArtistsReportResponseInterface>;
-  getTopTracks: (
+  getUserTopTracks: (
     username: string
   ) => Promise<LastFMTopTracksReportResponseInterface>;
 }

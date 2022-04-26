@@ -3,14 +3,14 @@ import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../../config/apiRoutes";
 import handleProxy, {
   endpointFactory,
-} from "../../../../../pages/api/v2/reports/lastfm/top20artists/[...username]";
+} from "../../../../../pages/api/v2/reports/lastfm/top20artists/[username]";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
-      getTopArtists: mockProxyMethod,
+      getUserTopArtists: mockProxyMethod,
     };
   });
 });
@@ -52,7 +52,7 @@ describe(testUrl, () => {
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: testUrl,
       method,
-      query: { username: [username] },
+      query: { username },
     }));
     await handleProxy(req, res);
   };

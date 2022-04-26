@@ -32,10 +32,16 @@ class APIClient {
 
   request = async <RESPONSE>(
     url: string,
-    method: HttpMethodType = "GET",
-    cache: RequestCache = "default",
-    body: Record<string, unknown> | null = null
+    params?: {
+      method?: HttpMethodType;
+      cache?: RequestCache;
+      body?: unknown;
+    }
   ): Promise<ApiResponse<RESPONSE>> => {
+    const method = params?.method ? params.method : "GET";
+    const cache = params?.cache ? params.cache : "default";
+    const body = params?.body ? JSON.stringify(params.body) : undefined;
+
     let fetchResponse = await fetch(url, {
       method,
       mode: "cors",
@@ -45,7 +51,7 @@ class APIClient {
         "Content-Type": "application/json",
       },
       referrerPolicy: "same-origin",
-      body: body ? JSON.stringify(body) : body,
+      body,
     });
 
     fetchResponse = this.handleKnownStatuses(fetchResponse);
