@@ -1,5 +1,5 @@
 import UserBaseState from "../user.state.base.class";
-import type { LastFMClientParamsInterface } from "../../../../../types/clients/api/reports/lastfm.client.types";
+import type { LastFMClientParamsInterface } from "../../../../../types/clients/api/lastfm/request.types";
 import type { AggregateBaseReportResponseInterface } from "../../../../../types/integrations/base.types";
 import type { LastFMUserStateBase } from "../../../../../types/user/state.types";
 

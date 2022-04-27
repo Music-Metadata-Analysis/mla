@@ -37,3 +37,5 @@ export type AggregateReportOperationType = {
   url: string;
   params: LastFMClientParamsInterface;
 };
+
+export type IntegrationTypes = "TEST" | "LAST.FM";

@@ -10,7 +10,7 @@ import Authentication from "../../../../authentication/authentication.container"
 import BillBoardSpinner from "../../../../billboard/billboard.spinner/billboard.spinner.component";
 import ErrorDisplay from "../../../../errors/display/error.display.component";
 import type UserState from "../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type { ReportType } from "../../../../../types/analytics.types";
+import type { IntegrationRequestType } from "../../../../../types/analytics.types";
 import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
 import type FlipCardBaseReport from "../flip.card.report/flip.card.report.base.class";
 
@@ -54,7 +54,7 @@ export default function FlipCardReportContainer<
       user.ready();
       metrics.increment("SearchMetric");
       analytics.event(
-        Events.LastFM.ReportPresented(report.analyticsReportType as ReportType)
+        Events.LastFM.ReportPresented(report.analyticsReportType as IntegrationRequestType)
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -8,7 +8,7 @@ import { UserContext } from "../../providers/user/user.provider";
 import useLastFM from "../lastfm";
 import type { UserContextInterface } from "../../types/user/context.types";
 
-jest.mock("../../clients/api/reports/lastfm/top20.albums.class", () => {
+jest.mock("../../clients/api/lastfm/reports/top20.albums.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       retrieveReport: mockRetrieveTopAlbums,
@@ -16,7 +16,7 @@ jest.mock("../../clients/api/reports/lastfm/top20.albums.class", () => {
   });
 });
 
-jest.mock("../../clients/api/reports/lastfm/top20.artists.class", () => {
+jest.mock("../../clients/api/lastfm/reports/top20.artists.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       retrieveReport: mockRetrieveTopArtists,
@@ -24,7 +24,7 @@ jest.mock("../../clients/api/reports/lastfm/top20.artists.class", () => {
   });
 });
 
-jest.mock("../../clients/api/reports/lastfm/top20.tracks.class", () => {
+jest.mock("../../clients/api/lastfm/reports/top20.tracks.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       retrieveReport: mockRetrieveTopTracks,
@@ -129,7 +129,9 @@ describe("useLastFM", () => {
 
     it("should retrieve the report from lastfm", async () => {
       await waitFor(() => expect(mockRetrieveTopAlbums).toBeCalledTimes(1));
-      expect(mockRetrieveTopAlbums).toHaveBeenCalledWith(mockUserName);
+      expect(mockRetrieveTopAlbums).toHaveBeenCalledWith({
+        userName: mockUserName,
+      });
     });
   });
 
@@ -140,18 +142,22 @@ describe("useLastFM", () => {
 
     it("should retrieve the report from lastfm", async () => {
       await waitFor(() => expect(mockRetrieveTopArtists).toBeCalledTimes(1));
-      expect(mockRetrieveTopArtists).toHaveBeenCalledWith(mockUserName);
+      expect(mockRetrieveTopArtists).toHaveBeenCalledWith({
+        userName: mockUserName,
+      });
     });
   });
 
-  describe("top20artists", () => {
+  describe("top20tracks", () => {
     beforeEach(async () => {
       act(() => received.result.current.top20tracks(mockUserName));
     });
 
     it("should retrieve the report from lastfm", async () => {
       await waitFor(() => expect(mockRetrieveTopTracks).toBeCalledTimes(1));
-      expect(mockRetrieveTopTracks).toHaveBeenCalledWith(mockUserName);
+      expect(mockRetrieveTopTracks).toHaveBeenCalledWith({
+        userName: mockUserName,
+      });
     });
   });
 });

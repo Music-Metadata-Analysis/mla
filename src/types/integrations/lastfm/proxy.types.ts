@@ -2,7 +2,7 @@ import type {
   LastFMTopAlbumsReportResponseInterface,
   LastFMTopArtistsReportResponseInterface,
   LastFMTopTracksReportResponseInterface,
-} from "../../clients/api/reports/lastfm.client.types";
+} from "../../clients/api/lastfm/response.types";
 import type {
   LastFMAlbumInfoInterface,
   LastFMArtistTopAlbumsInterface,

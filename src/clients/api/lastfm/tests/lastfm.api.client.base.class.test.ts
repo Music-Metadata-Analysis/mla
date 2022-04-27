@@ -1,9 +1,9 @@
 import { waitFor } from "@testing-library/react";
-import EventDefinition from "../../../../../events/event.class";
-import LastFMReport from "../report.base.class";
-import type { LastFMTopAlbumsReportResponseInterface } from "../../../../../types/clients/api/reports/lastfm.client.types";
+import EventDefinition from "../../../../events/event.class";
+import LastFMReport from "../lastfm.api.client.base.class";
+import type { LastFMTopAlbumsReportResponseInterface } from "../../../../types/clients/api/lastfm/response.types";
 
-jest.mock("../../../api.client.class", () => {
+jest.mock("../../api.client.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       request: mockRequest,
@@ -14,10 +14,10 @@ jest.mock("../../../api.client.class", () => {
 const mockRequest = jest.fn();
 
 describe("LastFMReport", () => {
-  const mockUserName = "user1234";
+  const mockParams = { userName: "user1234" };
   const mockAPIResponse = { data: "mocked data" };
   const integrationType = "LAST.FM";
-  const reportType = "BASE REPORT";
+  const reportType = "BASE";
   const mockDispatch = jest.fn();
   const mockEvent = jest.fn();
   let instance: LastFMReport<LastFMTopAlbumsReportResponseInterface>;
@@ -44,7 +44,7 @@ describe("LastFMReport", () => {
     it("should make the request with the correct url", () => {
       expect(mockRequest).toBeCalledTimes(1);
       expect(mockRequest).toBeCalledWith(
-        instance.route?.replace(":username", mockUserName)
+        instance.route?.replace(":username", mockParams.userName)
       );
     });
   };
@@ -66,7 +66,7 @@ describe("LastFMReport", () => {
       beforeEach(() => {
         setUpRetrieve(true, 200);
         instance = arrange();
-        instance.retrieveReport(mockUserName);
+        instance.retrieveReport(mockParams);
       });
 
       checkUrl();
@@ -75,12 +75,12 @@ describe("LastFMReport", () => {
         await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "StartFetchUser",
-          userName: mockUserName,
+          userName: mockParams.userName,
           integration: integrationType,
         });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "SuccessFetchUser",
-          userName: mockUserName,
+          userName: mockParams.userName,
           data: mockAPIResponse,
           integration: integrationType,
         });
@@ -93,7 +93,7 @@ describe("LastFMReport", () => {
           new EventDefinition({
             category: "LAST.FM",
             label: "RESPONSE",
-            action: `${reportType}: RECEIVED REPORT FROM LAST.FM.`,
+            action: `${reportType}: RECEIVED RESPONSE FROM LAST.FM.`,
           })
         );
       });
@@ -103,7 +103,7 @@ describe("LastFMReport", () => {
       beforeEach(() => {
         setUpRetrieve(false, 400);
         instance = arrange();
-        instance.retrieveReport(mockUserName);
+        instance.retrieveReport(mockParams);
       });
 
       checkUrl();
@@ -112,12 +112,12 @@ describe("LastFMReport", () => {
         await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "StartFetchUser",
-          userName: mockUserName,
+          userName: mockParams.userName,
           integration: integrationType,
         });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "FailureFetchUser",
-          userName: mockUserName,
+          userName: mockParams.userName,
           integration: integrationType,
         });
       });
@@ -129,7 +129,7 @@ describe("LastFMReport", () => {
           new EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
-            action: `${reportType}: ERROR CREATING REPORT.`,
+            action: `${reportType}: ERROR DURING REQUEST.`,
           })
         );
       });
@@ -139,7 +139,7 @@ describe("LastFMReport", () => {
       beforeEach(() => {
         setUpRetrieve(true, 401);
         instance = arrange();
-        instance.retrieveReport(mockUserName);
+        instance.retrieveReport(mockParams);
       });
 
       checkUrl();
@@ -148,12 +148,12 @@ describe("LastFMReport", () => {
         await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "StartFetchUser",
-          userName: mockUserName,
+          userName: mockParams.userName,
           integration: integrationType,
         });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "UnauthorizedFetchUser",
-          userName: mockUserName,
+          userName: mockParams.userName,
           integration: integrationType,
         });
       });
@@ -165,7 +165,7 @@ describe("LastFMReport", () => {
           new EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
-            action: `${reportType}: AN UNAUTHORIZED REPORT REQUEST WAS MADE.`,
+            action: `${reportType}: AN UNAUTHORIZED REQUEST WAS MADE.`,
           })
         );
       });
@@ -175,19 +175,19 @@ describe("LastFMReport", () => {
       beforeEach(() => {
         setUpRetrieve(true, 404);
         instance = arrange();
-        instance.retrieveReport(mockUserName);
+        instance.retrieveReport(mockParams);
       });
 
       it("should dispatch the reducer correctly", async () => {
         await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "StartFetchUser",
-          userName: mockUserName,
+          userName: mockParams.userName,
           integration: integrationType,
         });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "NotFoundFetchUser",
-          userName: mockUserName,
+          userName: mockParams.userName,
           integration: integrationType,
         });
       });
@@ -199,7 +199,7 @@ describe("LastFMReport", () => {
           new EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
-            action: `${reportType}: REQUEST WAS MADE FOR AN UNKNOWN USERNAME.`,
+            action: `${reportType}: REQUEST WAS MADE FOR AN UNKNOWN ENTITY.`,
           })
         );
       });
@@ -209,7 +209,7 @@ describe("LastFMReport", () => {
       beforeEach(() => {
         setUpRetrieve(true, 429);
         instance = arrange();
-        instance.retrieveReport(mockUserName);
+        instance.retrieveReport(mockParams);
       });
 
       checkUrl();
@@ -218,12 +218,12 @@ describe("LastFMReport", () => {
         await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "StartFetchUser",
-          userName: mockUserName,
+          userName: mockParams.userName,
           integration: integrationType,
         });
         expect(mockDispatch).toHaveBeenCalledWith({
           type: "RatelimitedFetchUser",
-          userName: mockUserName,
+          userName: mockParams.userName,
           integration: integrationType,
         });
       });
@@ -246,7 +246,7 @@ describe("LastFMReport", () => {
         beforeEach(async () => {
           setUpRetrieve(true, 503, { "retry-after": "0" });
           instance = arrange();
-          instance.retrieveReport(mockUserName);
+          instance.retrieveReport(mockParams);
           await waitForBackoff();
         });
 
@@ -260,12 +260,12 @@ describe("LastFMReport", () => {
           await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetchUser",
-            userName: mockUserName,
+            userName: mockParams.userName,
             integration: integrationType,
           });
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "TimeoutFetchUser",
-            userName: mockUserName,
+            userName: mockParams.userName,
             integration: integrationType,
           });
         });
@@ -281,7 +281,7 @@ describe("LastFMReport", () => {
         beforeEach(() => {
           setUpRetrieve(true, 503);
           instance = arrange();
-          instance.retrieveReport(mockUserName);
+          instance.retrieveReport(mockParams);
         });
 
         checkUrl();
@@ -290,12 +290,12 @@ describe("LastFMReport", () => {
           await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetchUser",
-            userName: mockUserName,
+            userName: mockParams.userName,
             integration: integrationType,
           });
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "FailureFetchUser",
-            userName: mockUserName,
+            userName: mockParams.userName,
             integration: integrationType,
           });
         });
@@ -307,7 +307,7 @@ describe("LastFMReport", () => {
             new EventDefinition({
               category: "LAST.FM",
               label: "ERROR",
-              action: `${reportType}: ERROR CREATING REPORT.`,
+              action: `${reportType}: ERROR DURING REQUEST.`,
             })
           );
         });

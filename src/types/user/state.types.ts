@@ -4,7 +4,7 @@ import type {
   LastFMTopArtistsReportResponseInterface,
   LastFMTopTracksReportResponseInterface,
   LastFMPlayCountByArtistResponseInterface,
-} from "../clients/api/reports/lastfm.client.types";
+} from "../clients/api/lastfm/response.types";
 import type { UserActionType } from "./action.types";
 import type { UserReportType } from "./report.types";
 
