@@ -13,7 +13,7 @@ export const InitialAggregateReportState = <
     steps_complete: 0,
   },
   created: "",
-  content: {},
+  content: [],
 };
 
 export const InitialState = <UserStateInterface>{

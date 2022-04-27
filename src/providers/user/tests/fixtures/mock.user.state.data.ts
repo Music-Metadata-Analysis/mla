@@ -19,7 +19,7 @@ export const mockInitialReportData = {
       steps_complete: 0,
     },
     created: "",
-    content: {},
+    content: [],
   },
   tracks: [],
   image: [],

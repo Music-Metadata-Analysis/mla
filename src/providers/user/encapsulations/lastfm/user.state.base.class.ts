@@ -5,7 +5,7 @@ export default class UserBaseState {
   userProperties: LastFMUserStateBase;
 
   constructor(userProperties: LastFMUserStateBase) {
-    this.userProperties = userProperties;
+    this.userProperties = JSON.parse(JSON.stringify(userProperties));
   }
 
   getProfileImageUrl = (size: LastFMImageDataInterface["size"]) => {

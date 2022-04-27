@@ -15,6 +15,13 @@ import type {
 import type { userDispatchType } from "../../../user/context.types";
 import type { TFunction } from "next-i18next";
 
+export interface LastFMClientParamsInterface {
+  userName: string;
+  artist?: string;
+  album?: string;
+  track?: string;
+}
+
 export interface LastFMReportInterface<T> {
   client: APIClient;
   dispatch: userDispatchType;
@@ -69,24 +76,18 @@ export interface LastFMPlayCountByArtistResponseInterface
 }
 
 export interface PlayCountByArtistReportInterface {
-  topArtists: {
-    name: string;
-    playcount?: number;
-    albums: PlayCountByArtistReportInterface_Artist[];
-  };
+  name: string;
+  playcount: number | null;
+  albums: PlayCountByArtistReportInterface_Artist[];
 }
 
 interface PlayCountByArtistReportInterface_Artist {
-  albums: {
-    name: string;
-    playcount?: number;
-    tracks: PlayCountByArtistReportInterface_Track[];
-  };
+  name: string;
+  playcount: number | null;
+  tracks: PlayCountByArtistReportInterface_Track[];
 }
 
 interface PlayCountByArtistReportInterface_Track {
-  tracks: {
-    name: string;
-    playcount?: number;
-  };
+  name: string;
+  playcount: number | null;
 }
