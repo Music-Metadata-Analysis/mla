@@ -11,7 +11,7 @@ import NavBarLogo from "../navbar.logo/navbar.logo.component";
 import NavBarOptions from "../navbar.options/navbar.options.component";
 import NavBarSessionControl from "../navbar.session.control/navbar.session.control.component";
 import NavSpinner from "../navbar.spinner/navbar.spinner.component";
-import type { LastFMTopAlbumsReportResponseInterface } from "../../../types/clients/api/reports/lastfm.client.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "../../../types/clients/api/lastfm/response.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
 
 jest.mock("../../../hooks/colour", () => {

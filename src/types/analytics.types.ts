@@ -42,8 +42,8 @@ export interface AnalyticsProviderInterface {
   children: React.ReactNode;
 }
 
-export type ReportType =
-  | "BASE REPORT"
+export type IntegrationRequestType =
+  | "BASE"
   | "PLAYCOUNT BY ARTIST"
   | "TOP20 ALBUMS"
   | "TOP20 ARTISTS"

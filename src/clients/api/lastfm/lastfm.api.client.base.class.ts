@@ -1,21 +1,24 @@
-import EventDefinition from "../../../../events/event.class";
-import HTTPClient from "../../api.client.class";
+import EventDefinition from "../../../events/event.class";
+import HTTPClient from "../api.client.class";
 import type {
   EventCreatorType,
-  ReportType,
-} from "../../../../types/analytics.types";
-import type { ApiResponse } from "../../../../types/clients/api/api.client.types";
-import type { LastFMReportInterface } from "../../../../types/clients/api/reports/lastfm.client.types";
-import type { BaseReportResponseInterface } from "../../../../types/integrations/base.types";
-import type { userDispatchType } from "../../../../types/user/context.types";
+  IntegrationRequestType,
+} from "../../../types/analytics.types";
+import type { ApiResponse } from "../../../types/clients/api/api.client.types";
+import type {
+  LastFMReportInterface,
+  LastFMReportParamsInterface,
+} from "../../../types/clients/api/lastfm/request.types";
+import type { BaseReportResponseInterface } from "../../../types/integrations/base.types";
+import type { userDispatchType } from "../../../types/user/context.types";
 
-class LastFMBaseReport<ResponseType>
+class LastFMBaseClient<ResponseType>
   implements LastFMReportInterface<ResponseType>
 {
   client: HTTPClient;
   dispatch: userDispatchType;
   eventDispatch: EventCreatorType;
-  eventType = "BASE REPORT" as ReportType;
+  eventType = "BASE" as IntegrationRequestType;
   integration = "LAST.FM" as const;
   response!: ApiResponse<ResponseType>;
   route!: string;
@@ -37,7 +40,7 @@ class LastFMBaseReport<ResponseType>
     );
     this.dispatch({
       type: "StartFetchUser",
-      userName: userName,
+      userName,
       integration: this.integration,
     });
   }
@@ -46,14 +49,14 @@ class LastFMBaseReport<ResponseType>
     if (this.response.status === 404) {
       this.dispatch({
         type: "NotFoundFetchUser",
-        userName: userName,
+        userName,
         integration: this.integration,
       });
       this.eventDispatch(
         new EventDefinition({
           category: "LAST.FM",
           label: "ERROR",
-          action: `${this.eventType}: REQUEST WAS MADE FOR AN UNKNOWN USERNAME.`,
+          action: `${this.eventType}: REQUEST WAS MADE FOR AN UNKNOWN ENTITY.`,
         })
       );
     }
@@ -63,7 +66,7 @@ class LastFMBaseReport<ResponseType>
     if (this.response.status === 200) {
       this.dispatch({
         type: "SuccessFetchUser",
-        userName: userName,
+        userName,
         data: this.response.response as unknown as BaseReportResponseInterface,
         integration: this.integration,
       });
@@ -71,7 +74,7 @@ class LastFMBaseReport<ResponseType>
         new EventDefinition({
           category: "LAST.FM",
           label: "RESPONSE",
-          action: `${this.eventType}: RECEIVED REPORT FROM LAST.FM.`,
+          action: `${this.eventType}: RECEIVED RESPONSE FROM LAST.FM.`,
         })
       );
     }
@@ -81,7 +84,7 @@ class LastFMBaseReport<ResponseType>
     if (this.response.status === 429) {
       this.dispatch({
         type: "RatelimitedFetchUser",
-        userName: userName,
+        userName,
         integration: this.integration,
       });
       this.eventDispatch(
@@ -101,7 +104,7 @@ class LastFMBaseReport<ResponseType>
         setTimeout(() => {
           this.dispatch({
             type: "TimeoutFetchUser",
-            userName: userName,
+            userName,
             integration: this.integration,
           });
         }, backOff * 1000);
@@ -115,14 +118,14 @@ class LastFMBaseReport<ResponseType>
     if (this.response.status === 401) {
       this.dispatch({
         type: "UnauthorizedFetchUser",
-        userName: userName,
+        userName,
         integration: this.integration,
       });
       this.eventDispatch(
         new EventDefinition({
           category: "LAST.FM",
           label: "ERROR",
-          action: `${this.eventType}: AN UNAUTHORIZED REPORT REQUEST WAS MADE.`,
+          action: `${this.eventType}: AN UNAUTHORIZED REQUEST WAS MADE.`,
         })
       );
     }
@@ -131,51 +134,64 @@ class LastFMBaseReport<ResponseType>
   handleFailure(userName: string): void {
     this.dispatch({
       type: "FailureFetchUser",
-      userName: userName,
+      userName,
       integration: this.integration,
     });
     this.eventDispatch(
       new EventDefinition({
         category: "LAST.FM",
         label: "ERROR",
-        action: `${this.eventType}: ERROR CREATING REPORT.`,
+        action: `${this.eventType}: ERROR DURING REQUEST.`,
       })
     );
   }
 
-  retrieveReport(userName: string): void {
-    this.handleBegin(userName);
+  retrieveReport(params: LastFMReportParamsInterface): void {
+    this.handleBegin(params.userName);
+    this.request(params);
+  }
+
+  private prepareURL(params: LastFMReportParamsInterface): string {
+    let customizedRoute = this.route;
+    for (const [key, value] of Object.entries(params)) {
+      customizedRoute = customizedRoute.replace(`:${key.toLowerCase()}`, value);
+    }
+    return customizedRoute;
+  }
+
+  private request(params: LastFMReportParamsInterface): void {
+    const url = this.prepareURL(params);
     this.client
-      .request<ResponseType>(this.route.replace(":username", userName))
+      .request<ResponseType>(url)
       .then((response) => {
         this.response = response;
-        this.handleNotFound(userName);
+        this.handleNotFound(params.userName);
         return Promise.resolve(response);
       })
       .then((response) => {
         this.response = response;
-        this.handleRatelimited(userName);
+        this.handleRatelimited(params.userName);
         return Promise.resolve(response);
       })
       .then((response) => {
         this.response = response;
-        this.handleTimeout(userName);
+        this.handleTimeout(params.userName);
         return Promise.resolve(response);
       })
       .then((response) => {
         this.response = response;
-        this.handleUnauthorized(userName);
+        this.handleUnauthorized(params.userName);
         return Promise.resolve(response);
       })
       .then((response) => {
         this.response = response;
-        this.handleSuccessful(userName);
+        this.handleSuccessful(params.userName);
         return Promise.resolve(response);
       })
       .catch(() => {
-        this.handleFailure(userName);
+        this.handleFailure(params.userName);
       });
   }
 }
 
-export default LastFMBaseReport;
+export default LastFMBaseClient;
