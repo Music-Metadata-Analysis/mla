@@ -15,11 +15,13 @@ export interface LastFMReportInterface<T> {
   integration: IntegrationTypes;
   response: ApiResponse<T> | undefined;
   route: string | undefined;
-  handleBegin: (userName: string) => void;
-  handleNotFound: (userName: string) => void;
-  handleSuccessful: (userName: string) => void;
-  handleRatelimited: (userName: string) => void;
-  handleFailure: (userName: string) => void;
+  handleBegin: (params: LastFMReportParamsInterface) => void;
+  handleNotFound: (params: LastFMReportParamsInterface) => void;
+  handleSuccessful: (params: LastFMReportParamsInterface) => void;
+  handleRatelimited: (params: LastFMReportParamsInterface) => void;
+  handleTimeout: (params: LastFMReportParamsInterface) => void;
+  handleUnauthorized: (params: LastFMReportParamsInterface) => void;
+  handleFailure: (params: LastFMReportParamsInterface) => void;
   retrieveReport: (params: LastFMReportParamsInterface) => void;
 }
 
