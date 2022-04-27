@@ -1,24 +1,10 @@
 import apiRoutes from "../../../../../config/apiRoutes";
 import LastFMReport from "../top20.tracks.class";
 
-jest.mock("../../../api.client.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      post: mockPost,
-    };
-  });
-});
-
-const mockPost = jest.fn();
-
 describe("LastFMTopTracksReport", () => {
   const mockDispatch = jest.fn();
   const mockEvent = jest.fn();
   let instance: LastFMReport;
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
 
   const arrange = () => {
     return new LastFMReport(mockDispatch, mockEvent);

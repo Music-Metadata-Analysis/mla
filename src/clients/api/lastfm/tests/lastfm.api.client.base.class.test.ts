@@ -1,6 +1,6 @@
 import { waitFor } from "@testing-library/react";
 import EventDefinition from "../../../../events/event.class";
-import LastFMReport from "../lastfm.api.client.base.class";
+import LastFMBaseClient from "../lastfm.api.client.base.class";
 import type { LastFMTopAlbumsReportResponseInterface } from "../../../../types/clients/api/lastfm/response.types";
 
 jest.mock("../../api.client.class", () => {
@@ -13,14 +13,21 @@ jest.mock("../../api.client.class", () => {
 
 const mockRequest = jest.fn();
 
-describe("LastFMReport", () => {
-  const mockParams = { userName: "user1234" };
+class ConcreteLastFMBaseClient<
+  ReportType
+> extends LastFMBaseClient<ReportType> {
+  route = "/api/v2/someroute/:username";
+}
+
+describe("LastFMBaseClient", () => {
+  const mockUserParams = { userName: "user12+34" };
+  const mockArtistParams = { ...mockUserParams, artist: "The Cure" };
   const mockAPIResponse = { data: "mocked data" };
   const integrationType = "LAST.FM";
   const reportType = "BASE";
   const mockDispatch = jest.fn();
   const mockEvent = jest.fn();
-  let instance: LastFMReport<LastFMTopAlbumsReportResponseInterface>;
+  let instance: ConcreteLastFMBaseClient<LastFMTopAlbumsReportResponseInterface>;
   const requestEvent = new EventDefinition({
     category: "LAST.FM",
     label: "REQUEST",
@@ -32,11 +39,11 @@ describe("LastFMReport", () => {
   });
 
   const arrange = () => {
-    const report = new LastFMReport<LastFMTopAlbumsReportResponseInterface>(
-      mockDispatch,
-      mockEvent
-    );
-    report.route = "/api/v2/someroute/:username";
+    const report =
+      new ConcreteLastFMBaseClient<LastFMTopAlbumsReportResponseInterface>(
+        mockDispatch,
+        mockEvent
+      );
     return report;
   };
 
@@ -44,8 +51,25 @@ describe("LastFMReport", () => {
     it("should make the request with the correct url", () => {
       expect(mockRequest).toBeCalledTimes(1);
       expect(mockRequest).toBeCalledWith(
-        instance.route?.replace(":username", mockParams.userName)
+        instance.route?.replace(
+          ":username",
+          encodeURIComponent(mockUserParams.userName)
+        )
       );
+    });
+  };
+
+  const checkUrlWithQueryString = () => {
+    it("should make the request with the correct url and querystring", () => {
+      let expectedRoute = instance.route?.replace(
+        ":artist",
+        encodeURIComponent(mockArtistParams.artist)
+      );
+      expectedRoute += `?username=${encodeURIComponent(
+        mockArtistParams.userName
+      )}`;
+      expect(mockRequest).toBeCalledTimes(1);
+      expect(mockRequest).toBeCalledWith(expectedRoute);
     });
   };
 
@@ -63,39 +87,79 @@ describe("LastFMReport", () => {
 
   describe("retrieveReport", () => {
     describe("when a request is successful", () => {
-      beforeEach(() => {
-        setUpRetrieve(true, 200);
-        instance = arrange();
-        instance.retrieveReport(mockParams);
+      describe("with a route containing the username", () => {
+        beforeEach(() => {
+          setUpRetrieve(true, 200);
+          instance = arrange();
+          instance.retrieveReport(mockUserParams);
+        });
+
+        checkUrl();
+
+        it("should dispatch the reducer correctly", async () => {
+          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          expect(mockDispatch).toHaveBeenCalledWith({
+            type: "StartFetch",
+            userName: mockUserParams.userName,
+            integration: integrationType,
+          });
+          expect(mockDispatch).toHaveBeenCalledWith({
+            type: "SuccessFetch",
+            userName: mockUserParams.userName,
+            data: mockAPIResponse,
+            integration: integrationType,
+          });
+        });
+
+        it("should register events correctly", async () => {
+          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+          expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+          expect(mockEvent).toHaveBeenCalledWith(
+            new EventDefinition({
+              category: "LAST.FM",
+              label: "RESPONSE",
+              action: `${reportType}: RECEIVED RESPONSE FROM LAST.FM.`,
+            })
+          );
+        });
       });
 
-      checkUrl();
-
-      it("should dispatch the reducer correctly", async () => {
-        await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
-        expect(mockDispatch).toHaveBeenCalledWith({
-          type: "StartFetchUser",
-          userName: mockParams.userName,
-          integration: integrationType,
+      describe("with a route NOT containing the username", () => {
+        beforeEach(() => {
+          setUpRetrieve(true, 200);
+          instance = arrange();
+          instance.route = "/api/v2/someroute/:artist";
+          instance.retrieveReport(mockArtistParams);
         });
-        expect(mockDispatch).toHaveBeenCalledWith({
-          type: "SuccessFetchUser",
-          userName: mockParams.userName,
-          data: mockAPIResponse,
-          integration: integrationType,
-        });
-      });
 
-      it("should register events correctly", async () => {
-        await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
-        expect(mockEvent).toHaveBeenCalledWith(requestEvent);
-        expect(mockEvent).toHaveBeenCalledWith(
-          new EventDefinition({
-            category: "LAST.FM",
-            label: "RESPONSE",
-            action: `${reportType}: RECEIVED RESPONSE FROM LAST.FM.`,
-          })
-        );
+        checkUrlWithQueryString();
+
+        it("should dispatch the reducer correctly", async () => {
+          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          expect(mockDispatch).toHaveBeenCalledWith({
+            type: "StartFetch",
+            userName: mockUserParams.userName,
+            integration: integrationType,
+          });
+          expect(mockDispatch).toHaveBeenCalledWith({
+            type: "SuccessFetch",
+            userName: mockUserParams.userName,
+            data: mockAPIResponse,
+            integration: integrationType,
+          });
+        });
+
+        it("should register events correctly", async () => {
+          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+          expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+          expect(mockEvent).toHaveBeenCalledWith(
+            new EventDefinition({
+              category: "LAST.FM",
+              label: "RESPONSE",
+              action: `${reportType}: RECEIVED RESPONSE FROM LAST.FM.`,
+            })
+          );
+        });
       });
     });
 
@@ -103,7 +167,7 @@ describe("LastFMReport", () => {
       beforeEach(() => {
         setUpRetrieve(false, 400);
         instance = arrange();
-        instance.retrieveReport(mockParams);
+        instance.retrieveReport(mockUserParams);
       });
 
       checkUrl();
@@ -111,13 +175,13 @@ describe("LastFMReport", () => {
       it("should dispatch the reducer correctly", async () => {
         await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
-          type: "StartFetchUser",
-          userName: mockParams.userName,
+          type: "StartFetch",
+          userName: mockUserParams.userName,
           integration: integrationType,
         });
         expect(mockDispatch).toHaveBeenCalledWith({
-          type: "FailureFetchUser",
-          userName: mockParams.userName,
+          type: "FailureFetch",
+          userName: mockUserParams.userName,
           integration: integrationType,
         });
       });
@@ -139,7 +203,7 @@ describe("LastFMReport", () => {
       beforeEach(() => {
         setUpRetrieve(true, 401);
         instance = arrange();
-        instance.retrieveReport(mockParams);
+        instance.retrieveReport(mockUserParams);
       });
 
       checkUrl();
@@ -147,13 +211,13 @@ describe("LastFMReport", () => {
       it("should dispatch the reducer correctly", async () => {
         await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
-          type: "StartFetchUser",
-          userName: mockParams.userName,
+          type: "StartFetch",
+          userName: mockUserParams.userName,
           integration: integrationType,
         });
         expect(mockDispatch).toHaveBeenCalledWith({
-          type: "UnauthorizedFetchUser",
-          userName: mockParams.userName,
+          type: "UnauthorizedFetch",
+          userName: mockUserParams.userName,
           integration: integrationType,
         });
       });
@@ -175,19 +239,19 @@ describe("LastFMReport", () => {
       beforeEach(() => {
         setUpRetrieve(true, 404);
         instance = arrange();
-        instance.retrieveReport(mockParams);
+        instance.retrieveReport(mockUserParams);
       });
 
       it("should dispatch the reducer correctly", async () => {
         await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
-          type: "StartFetchUser",
-          userName: mockParams.userName,
+          type: "StartFetch",
+          userName: mockUserParams.userName,
           integration: integrationType,
         });
         expect(mockDispatch).toHaveBeenCalledWith({
-          type: "NotFoundFetchUser",
-          userName: mockParams.userName,
+          type: "NotFoundFetch",
+          userName: mockUserParams.userName,
           integration: integrationType,
         });
       });
@@ -209,7 +273,7 @@ describe("LastFMReport", () => {
       beforeEach(() => {
         setUpRetrieve(true, 429);
         instance = arrange();
-        instance.retrieveReport(mockParams);
+        instance.retrieveReport(mockUserParams);
       });
 
       checkUrl();
@@ -217,13 +281,13 @@ describe("LastFMReport", () => {
       it("should dispatch the reducer correctly", async () => {
         await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
         expect(mockDispatch).toHaveBeenCalledWith({
-          type: "StartFetchUser",
-          userName: mockParams.userName,
+          type: "StartFetch",
+          userName: mockUserParams.userName,
           integration: integrationType,
         });
         expect(mockDispatch).toHaveBeenCalledWith({
-          type: "RatelimitedFetchUser",
-          userName: mockParams.userName,
+          type: "RatelimitedFetch",
+          userName: mockUserParams.userName,
           integration: integrationType,
         });
       });
@@ -246,7 +310,7 @@ describe("LastFMReport", () => {
         beforeEach(async () => {
           setUpRetrieve(true, 503, { "retry-after": "0" });
           instance = arrange();
-          instance.retrieveReport(mockParams);
+          instance.retrieveReport(mockUserParams);
           await waitForBackoff();
         });
 
@@ -259,13 +323,13 @@ describe("LastFMReport", () => {
         it("should dispatch the reducer correctly", async () => {
           await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
-            type: "StartFetchUser",
-            userName: mockParams.userName,
+            type: "StartFetch",
+            userName: mockUserParams.userName,
             integration: integrationType,
           });
           expect(mockDispatch).toHaveBeenCalledWith({
-            type: "TimeoutFetchUser",
-            userName: mockParams.userName,
+            type: "TimeoutFetch",
+            userName: mockUserParams.userName,
             integration: integrationType,
           });
         });
@@ -281,7 +345,7 @@ describe("LastFMReport", () => {
         beforeEach(() => {
           setUpRetrieve(true, 503);
           instance = arrange();
-          instance.retrieveReport(mockParams);
+          instance.retrieveReport(mockUserParams);
         });
 
         checkUrl();
@@ -289,13 +353,13 @@ describe("LastFMReport", () => {
         it("should dispatch the reducer correctly", async () => {
           await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
-            type: "StartFetchUser",
-            userName: mockParams.userName,
+            type: "StartFetch",
+            userName: mockUserParams.userName,
             integration: integrationType,
           });
           expect(mockDispatch).toHaveBeenCalledWith({
-            type: "FailureFetchUser",
-            userName: mockParams.userName,
+            type: "FailureFetch",
+            userName: mockUserParams.userName,
             integration: integrationType,
           });
         });

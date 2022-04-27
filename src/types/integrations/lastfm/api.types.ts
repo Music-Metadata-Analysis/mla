@@ -17,7 +17,7 @@ export interface LastFMAttrInterface {
 export interface LastFMAlbumDataInterface {
   artist?: LastFMArtistDataInterface;
   image?: LastFMImageDataInterface[];
-  mbid: string;
+  mbid?: string;
   name?: string;
   playcount?: string;
   url?: string;
@@ -27,7 +27,7 @@ export interface LastFMAlbumDataInterface {
 
 export interface LastFMArtistDataInterface {
   image?: LastFMImageDataInterface[];
-  mbid: string;
+  mbid?: string;
   name?: string;
   playcount?: string;
   streamable?: string;
@@ -52,7 +52,7 @@ export interface LastFMTrackDataInterface {
   date?: LastFMTrackDateInterface;
   duration?: string;
   image?: LastFMImageDataInterface[];
-  mbid: string;
+  mbid?: string;
   name?: string;
   playcount?: string;
   streamable?: LastFMTrackStreamableInterface | string;

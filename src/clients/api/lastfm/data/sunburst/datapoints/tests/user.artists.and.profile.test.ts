@@ -1,13 +1,20 @@
-import apiRoutes from "../../../../../config/apiRoutes";
-import LastFMReport from "../top20.artists.class";
+import apiRoutes from "../../../../../../../config/apiRoutes";
+import UserArtistsAndProfile from "../user.artists.and.profile";
+import type UserSunBurstReportBaseState from "../../../../../../../providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 
-describe("LastFMTopArtistsReport", () => {
+describe("UserArtistsAndProfile", () => {
   const mockDispatch = jest.fn();
   const mockEvent = jest.fn();
-  let instance: LastFMReport;
+  const mockEncapsulation =
+    jest.fn() as unknown as UserSunBurstReportBaseState<unknown>;
+  let instance: UserArtistsAndProfile<unknown>;
 
   const arrange = () => {
-    return new LastFMReport(mockDispatch, mockEvent);
+    return new UserArtistsAndProfile(
+      mockDispatch,
+      mockEvent,
+      mockEncapsulation
+    );
   };
 
   describe("when a request returns not found", () => {
