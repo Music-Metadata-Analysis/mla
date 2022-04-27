@@ -1,4 +1,4 @@
-import type { PlayCountByArtistReportInterface } from "../clients/api/reports/lastfm.client.types";
+import type { PlayCountByArtistReportInterface } from "../clients/api/lastfm/response.types";
 
 export interface BaseReportResponseInterface {
   albums?: unknown[];
@@ -33,3 +33,5 @@ export type AggregateReportOperationType = {
     | "User Profile";
   url: string;
 };
+
+export type IntegrationTypes = "TEST" | "LAST.FM";

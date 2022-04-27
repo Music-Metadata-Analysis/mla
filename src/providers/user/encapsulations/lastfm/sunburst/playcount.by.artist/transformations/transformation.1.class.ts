@@ -1,7 +1,6 @@
 import TransformationBase from "./playcount.by.artist.sunburst.transformation.base.class";
-import type { LastFMTopArtistsReportResponseInterface } from "../../../../../../../types/clients/api/reports/lastfm.client.types";
 
-class InitialTransformation extends TransformationBase<LastFMTopArtistsReportResponseInterface> {
+class InitialTransformation extends TransformationBase<[]> {
   transform() {
     this.state.userProperties.data.integration = "LASTFM";
     this.state.getReport().status = {

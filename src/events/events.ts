@@ -1,5 +1,5 @@
 import EventDefinition from "./event.class";
-import type { ReportType } from "../types/analytics.types";
+import type { IntegrationRequestType } from "../types/analytics.types";
 
 const Events = {
   Auth: {
@@ -26,7 +26,7 @@ const Events = {
     }),
   },
   LastFM: {
-    ReportPresented: (title: ReportType) =>
+    ReportPresented: (title: IntegrationRequestType) =>
       new EventDefinition({
         category: "LAST.FM",
         label: "REPORT",
