@@ -54,7 +54,9 @@ export default function FlipCardReportContainer<
       user.ready();
       metrics.increment("SearchMetric");
       analytics.event(
-        Events.LastFM.ReportPresented(report.analyticsReportType as IntegrationRequestType)
+        Events.LastFM.ReportPresented(
+          report.analyticsReportType as IntegrationRequestType
+        )
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
