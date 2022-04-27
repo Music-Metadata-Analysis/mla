@@ -1,7 +1,6 @@
 import ReducerAuthUnauthorized from "../auth/auth.unauthorized.class";
 import ReducerDataPointFailureFetch from "../datapoints/datapoint.failure.class";
 import ReducerDataPointNotFoundFetch from "../datapoints/datapoint.notfound.class";
-import ReducerDataPointRatelimitedFetch from "../datapoints/datapoint.ratelimited.class";
 import ReducerDataPointSuccessFetch from "../datapoints/datapoint.success.class";
 import ReducerDataPointTimeoutFetch from "../datapoints/datapoint.timeout.class";
 import ReducerGenericFailureFetch from "../generics/generic.failure.class";
@@ -32,7 +31,6 @@ describe("getReducerStates", () => {
       ReducerAuthUnauthorized,
       ReducerDataPointFailureFetch,
       ReducerDataPointNotFoundFetch,
-      ReducerDataPointRatelimitedFetch,
       ReducerDataPointSuccessFetch,
       ReducerDataPointTimeoutFetch,
       ReducerGenericFailureFetch,
