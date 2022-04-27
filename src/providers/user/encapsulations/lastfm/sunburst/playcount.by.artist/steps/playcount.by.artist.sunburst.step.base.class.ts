@@ -1,5 +1,5 @@
-import type { LastFMClientParamsInterface } from "../../../../../../../types/clients/api/reports/lastfm.client.types";
-import type { StepInterface } from "../../../../../../../types/clients/api/reports/lastfm.sunburst.types";
+import type { LastFMClientParamsInterface } from "../../../../../../../types/clients/api/lastfm/request.types";
+import type { StepInterface } from "../../../../../../../types/clients/api/lastfm/sunburst.types";
 import type UserPlaycountByArtistState from "../user.state.playcount.by.artist.sunburst.report.class";
 
 abstract class PlayCountByArtistStepBase implements StepInterface {
