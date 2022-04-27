@@ -11,6 +11,7 @@
       "buttonText": "View on last.fm"
     }
   },
+  "playCountByArtist": {},
   "search": {
     "fieldLabel": "Username:",
     "fieldPlaceholder": "last.fm username",
