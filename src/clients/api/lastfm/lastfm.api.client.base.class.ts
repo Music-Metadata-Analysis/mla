@@ -12,7 +12,7 @@ import type {
 import type { BaseReportResponseInterface } from "../../../types/integrations/base.types";
 import type { userDispatchType } from "../../../types/user/context.types";
 
-class LastFMBaseClient<ResponseType>
+abstract class LastFMBaseClient<ResponseType>
   implements LastFMReportInterface<ResponseType>
 {
   client: HTTPClient;
@@ -21,7 +21,7 @@ class LastFMBaseClient<ResponseType>
   eventType = "BASE" as IntegrationRequestType;
   integration = "LAST.FM" as const;
   response!: ApiResponse<ResponseType>;
-  route!: string;
+  abstract route: string;
   invalidRetryHeaderError = "TimeoutFetchUser, with invalid retry header.";
 
   constructor(dispatch: userDispatchType, event: EventCreatorType) {

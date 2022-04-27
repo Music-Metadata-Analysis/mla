@@ -43,6 +43,8 @@ export interface AnalyticsProviderInterface {
 }
 
 export type IntegrationRequestType =
+  | "ALBUM INFO"
+  | "ARTIST GET ALBUMS"
   | "BASE"
   | "PLAYCOUNT BY ARTIST"
   | "TOP20 ALBUMS"
