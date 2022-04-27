@@ -23,7 +23,7 @@ describe("Dynamic Events", () => {
   describe("LastFM", () => {
     describe("ReportPresented", () => {
       it("should generate the expected result", () => {
-        const title = "BASE REPORT";
+        const title = "BASE";
         const expected = new EventDefinition({
           category: "LAST.FM",
           label: "REPORT",

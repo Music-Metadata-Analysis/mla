@@ -1,7 +1,7 @@
 import type translations from "../../../../../../public/locales/en/lastfm.json";
 import type useUserInterface from "../../../../../hooks/ui";
 import type UserState from "../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type { ReportType } from "../../../../../types/analytics.types";
+import type { IntegrationRequestType } from "../../../../../types/analytics.types";
 import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
 import type { LastFMDrawerInterface } from "../flip.card.report.drawer/flip.card.report.drawer.component";
 import type { TFunction } from "next-i18next";
@@ -9,7 +9,7 @@ import type { FC } from "react";
 
 export default abstract class FlipCardBaseReport<T extends UserState> {
   drawerArtWorkAltText!: string;
-  analyticsReportType!: ReportType;
+  analyticsReportType!: IntegrationRequestType;
   drawerComponent!: FC<LastFMDrawerInterface<T>>;
   encapsulationClass!: new (
     userProperties: T["userProperties"],
