@@ -8,10 +8,8 @@ import Transformation4 from "./transformations/transformation.4.class";
 import Transformation5 from "./transformations/transformation.5.class";
 import apiRoutes from "../../../../../../config/apiRoutes";
 import UserSunBurstReportBaseState from "../user.state.base.sunburst.report.class";
-import type {
-  LastFMClientParamsInterface,
-  PlayCountByArtistReportInterface,
-} from "../../../../../../types/clients/api/reports/lastfm.client.types";
+import type { LastFMClientParamsInterface } from "../../../../../../types/clients/api/lastfm/request.types";
+import type { PlayCountByArtistReportInterface } from "../../../../../../types/clients/api/lastfm/response.types";
 import type {
   AggregateBaseReportResponseInterface,
   AggregateReportOperationType,

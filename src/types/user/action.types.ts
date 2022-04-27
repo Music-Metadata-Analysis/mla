@@ -1,4 +1,4 @@
-import type { IntegrationTypes } from "../integration.types";
+import type { IntegrationTypes } from "../integrations/base.types";
 import type { UserReportType } from "./report.types";
 
 export type UserActionType =
