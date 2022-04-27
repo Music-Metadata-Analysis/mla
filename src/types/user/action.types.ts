@@ -11,9 +11,6 @@ export type UserActionType =
       data: UserReportType;
     }
   | {
-      type: "DataPointRatelimitedFetch";
-    }
-  | {
       type: "DataPointStartFetch";
     }
   | {
