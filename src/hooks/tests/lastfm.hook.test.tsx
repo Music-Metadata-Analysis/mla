@@ -3,6 +3,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
 import mockUseLastFMHook from "./lastfm.mock.hook";
+import PlayCountByArtistStateEncapsulation from "../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import { InitialState } from "../../providers/user/user.initial";
 import { UserContext } from "../../providers/user/user.provider";
 import useLastFM from "../lastfm";
@@ -32,9 +33,26 @@ jest.mock("../../clients/api/lastfm/reports/top20.tracks.class", () => {
   });
 });
 
+jest.mock(
+  "../../clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class",
+  () => {
+    return jest.fn().mockImplementation(() => {
+      return {
+        retrieveReport: mockRetrievePlayCountByArtist,
+      };
+    });
+  }
+);
+
+jest.mock(
+  "../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class",
+  () => jest.fn()
+);
+
 const mockRetrieveTopAlbums = jest.fn();
 const mockRetrieveTopArtists = jest.fn();
 const mockRetrieveTopTracks = jest.fn();
+const mockRetrievePlayCountByArtist = jest.fn();
 
 interface MockUserContextWithChildren {
   children?: React.ReactNode;
@@ -156,6 +174,27 @@ describe("useLastFM", () => {
     it("should retrieve the report from lastfm", async () => {
       await waitFor(() => expect(mockRetrieveTopTracks).toBeCalledTimes(1));
       expect(mockRetrieveTopTracks).toHaveBeenCalledWith({
+        userName: mockUserName,
+      });
+    });
+  });
+
+  describe("playCountByArtist", () => {
+    beforeEach(async () => {
+      act(() => received.result.current.playCountByArtist(mockUserName));
+    });
+
+    it("should retrieve the report from lastfm", async () => {
+      await waitFor(() =>
+        expect(PlayCountByArtistStateEncapsulation).toBeCalledTimes(1)
+      );
+      await waitFor(() =>
+        expect(PlayCountByArtistStateEncapsulation).toBeCalledWith(
+          received.result.current.userProperties
+        )
+      );
+
+      expect(mockRetrievePlayCountByArtist).toHaveBeenCalledWith({
         userName: mockUserName,
       });
     });
