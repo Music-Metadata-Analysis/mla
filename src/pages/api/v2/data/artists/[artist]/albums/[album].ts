@@ -9,6 +9,15 @@ class ArtistTopAlbums extends LastFMApiEndpointFactoryV2 {
   route = apiRoutes.v2.data.artists.albumsGet;
   maxAgeValue = 3600 * 24;
 
+  isProxyResponseValid(proxyResponse: { [key: string]: unknown }) {
+    if (proxyResponse.hasOwnProperty("userplaycount")) {
+      if (typeof proxyResponse["userplaycount"] === "object") {
+        return false;
+      }
+    }
+    return true;
+  }
+
   getParams(req: LastFMEndpointRequest): [PathParamType, boolean] {
     const params = req.query as PathParamType;
     const error = !params.artist || !params.album || !params.username;

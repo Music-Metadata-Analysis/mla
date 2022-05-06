@@ -12,13 +12,16 @@ class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV2 {
   timeOut = 100;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getProxyResponse(_: QueryParamType) {
+  async getProxyResponse(_: QueryParamType) {
     function sleep(ms: number) {
       return new Promise((resolve) => {
         setTimeout(resolve, ms * 2);
       });
     }
-    return sleep(this.timeOut * 2);
+    await sleep(this.timeOut * 2);
+    return {
+      expired: "expired",
+    };
   }
 }
 
@@ -28,8 +31,20 @@ class ConcreteErrorClass extends LastFMApiEndpointFactoryV2 {
   errorCode?: number;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getProxyResponse(_: QueryParamType) {
+  async getProxyResponse(_: QueryParamType) {
     throw new ProxyError(this.mockError, this.errorCode);
+    return {
+      error: "error",
+    };
+  }
+}
+
+class ConcreteProxyErrorClass extends LastFMApiEndpointFactoryV2 {
+  route = "/api/v2/endpoint/:username";
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async getProxyResponse(_: QueryParamType) {
+    return undefined as never as unknown[];
   }
 }
 
@@ -106,6 +121,24 @@ describe("LastFMApiEndpointFactoryV2", () => {
           it("should return a 502", () => {
             expect(res._getStatusCode()).toBe(502);
             expect(res._getJSONData()).toStrictEqual(status.STATUS_502_MESSAGE);
+          });
+
+          checkJWT();
+        });
+
+        describe("receives a request that generates an invalid proxy response", () => {
+          beforeEach(async () => {
+            factory = new ConcreteProxyErrorClass();
+            await arrange();
+          });
+
+          it("should return a 503", () => {
+            expect(res._getStatusCode()).toBe(503);
+            expect(res._getJSONData()).toStrictEqual(status.STATUS_503_MESSAGE);
+          });
+
+          it("should set a retry-after header", () => {
+            expect(res.getHeader("retry-after")).toBe(0);
           });
 
           checkJWT();
