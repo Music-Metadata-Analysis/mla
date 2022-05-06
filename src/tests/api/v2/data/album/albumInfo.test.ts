@@ -1,7 +1,10 @@
 import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../../config/apiRoutes";
-import { STATUS_400_MESSAGE } from "../../../../../config/status";
+import {
+  STATUS_400_MESSAGE,
+  STATUS_503_MESSAGE,
+} from "../../../../../config/status";
 import handleProxy, {
   endpointFactory,
 } from "../../../../../pages/api/v2/data/artists/[artist]/albums/[album]";
@@ -39,6 +42,11 @@ describe(testUrl, () => {
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
   let res: MockResponse<NextApiResponse>;
   const mockResponse = { mock: "response" };
+  const mockResponseWithUserPlayCount = { mock: "response", userplaycount: 0 };
+  const mockResponseWithInvalidUserPlayCount = {
+    mock: "reponse",
+    userplaycount: { performing: "some query" },
+  };
   let query: QueryParamType;
   let method: HttpMethodType;
 
@@ -78,28 +86,96 @@ describe(testUrl, () => {
               album: "Wish",
               username: "niall-byrne",
             };
-            mockProxyMethod.mockReturnValueOnce(Promise.resolve(mockResponse));
-            await arrange({ query, method });
           });
 
-          it("should return a 200 status code", () => {
-            expect(res._getStatusCode()).toBe(200);
-            expect(res._getJSONData()).toStrictEqual(mockResponse);
+          describe("with a valid proxy response containing no userplaycount", () => {
+            beforeEach(async () => {
+              mockProxyMethod.mockReturnValueOnce(
+                Promise.resolve(mockResponse)
+              );
+              await arrange({ query, method });
+            });
+
+            it("should return a 200 status code", () => {
+              expect(res._getStatusCode()).toBe(200);
+              expect(res._getJSONData()).toStrictEqual(mockResponse);
+            });
+
+            it("should set a Cache-Control header", () => {
+              expect(res._getHeaders()["cache-control"]).toStrictEqual([
+                "public",
+                `max-age=${endpointFactory.maxAgeValue}`,
+              ]);
+            });
+
+            it("should call the proxy method with the correct params", () => {
+              expect(mockProxyMethod).toBeCalledWith(
+                query.artist,
+                query.album,
+                query.username
+              );
+            });
           });
 
-          it("should set a Cache-Control header", () => {
-            expect(res._getHeaders()["cache-control"]).toStrictEqual([
-              "public",
-              `max-age=${endpointFactory.maxAgeValue}`,
-            ]);
+          describe("with a valid proxy response containing a valid userplaycount", () => {
+            beforeEach(async () => {
+              mockProxyMethod.mockReturnValueOnce(
+                Promise.resolve(mockResponseWithUserPlayCount)
+              );
+              await arrange({ query, method });
+            });
+
+            it("should return a 200 status code", () => {
+              expect(res._getStatusCode()).toBe(200);
+              expect(res._getJSONData()).toStrictEqual(
+                mockResponseWithUserPlayCount
+              );
+            });
+
+            it("should set a Cache-Control header", () => {
+              expect(res._getHeaders()["cache-control"]).toStrictEqual([
+                "public",
+                `max-age=${endpointFactory.maxAgeValue}`,
+              ]);
+            });
+
+            it("should call the proxy method with the correct params", () => {
+              expect(mockProxyMethod).toBeCalledWith(
+                query.artist,
+                query.album,
+                query.username
+              );
+            });
           });
 
-          it("should call the proxy method with the correct params", () => {
-            expect(mockProxyMethod).toBeCalledWith(
-              query.artist,
-              query.album,
-              query.username
-            );
+          describe("with a proxy response containing an invalid userplaycount", () => {
+            beforeEach(async () => {
+              mockProxyMethod.mockReturnValueOnce(
+                Promise.resolve(mockResponseWithInvalidUserPlayCount)
+              );
+              await arrange({ query, method });
+            });
+
+            it("should return a 503 status code", () => {
+              expect(res._getStatusCode()).toBe(503);
+              expect(res._getJSONData()).toStrictEqual(STATUS_503_MESSAGE);
+            });
+
+            it("should NOT set a Cache-Control header", () => {
+              expect(res._getHeaders()["cache-control"]).toBeUndefined();
+            });
+
+            it("should set a Retry-After header", () => {
+              expect(res._getHeaders()["retry-after"]).toStrictEqual(0);
+            });
+
+            it("should call the proxy method with the correct params", () => {
+              expect(mockProxyMethod).toBeCalledWith(
+                query.artist,
+                query.album,
+                query.username
+              );
+            });
           });
         });
       });

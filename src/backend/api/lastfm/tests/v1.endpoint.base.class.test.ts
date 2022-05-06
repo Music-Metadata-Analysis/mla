@@ -12,13 +12,16 @@ class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV1 {
   timeOut = 100;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getProxyResponse(_: BodyType) {
+  async getProxyResponse(_: BodyType) {
     function sleep(ms: number) {
       return new Promise((resolve) => {
         setTimeout(resolve, ms * 2);
       });
     }
-    return sleep(this.timeOut * 2);
+    await sleep(this.timeOut * 2);
+    return {
+      expired: "expired",
+    };
   }
 }
 
@@ -28,8 +31,11 @@ class ConcreteErrorClass extends LastFMApiEndpointFactoryV1 {
   errorCode?: number;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getProxyResponse(_: BodyType) {
+  async getProxyResponse(_: BodyType) {
     throw new ProxyError(this.mockError, this.errorCode);
+    return {
+      error: "error",
+    };
   }
 }
 
