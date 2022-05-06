@@ -15,7 +15,12 @@ export default abstract class LastFMEndpointBase {
   proxy!: LastFMProxy;
   route!: string;
 
-  abstract getProxyResponse(params: QueryParamType | BodyType): void;
+  abstract getProxyResponse(params: QueryParamType | BodyType): Promise<
+    | {
+        [key: string]: unknown;
+      }
+    | unknown[]
+  >;
 
   onNoMatch(req: NextApiRequest, res: NextApiResponse) {
     res.status(405).json(status.STATUS_405_MESSAGE);

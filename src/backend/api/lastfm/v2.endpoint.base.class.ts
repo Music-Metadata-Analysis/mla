@@ -16,11 +16,17 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
   proxy!: LastFMProxy;
   route!: string;
   maxAgeValue!: number;
+  delay = 500;
 
   getParams(req: LastFMEndpointRequest): [PathParamType, boolean] {
     const params = req.query as PathParamType;
     const error = !params.username;
     return [params, error];
+  }
+
+  isProxyResponseValid(proxyResponse: { [key: string]: unknown } | unknown[]) {
+    if (proxyResponse) return true;
+    return false;
   }
 
   create() {
@@ -29,30 +35,71 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
       onNoMatch: this.onNoMatch,
     });
     handler.get(this.route, async (req, res, next) => {
+      await this.waitToAvoidRateLimiting();
       const token = await getToken({
         req,
         secret: process.env.AUTH_MASTER_JWT_SECRET,
       });
-      const [params, error] = this.getParams(req);
+      const [params, paramErrors] = this.getParams(req);
       if (!token) {
-        res.status(401).json(status.STATUS_401_MESSAGE);
-      } else if (error) {
-        res.status(400).json(status.STATUS_400_MESSAGE);
+        this.unauthorizedRequest(res);
+      } else if (paramErrors) {
+        this.invalidRequest(res);
       } else {
-        this.proxy = new LastFMProxy();
-        const abort = this.createTimeout(req, res, next);
-        const proxyResponse = await this.getProxyResponse(params);
-        clearTimeout(abort);
-        req.proxyResponse = "Success!";
-        res.setHeader("Cache-Control", [
-          "public",
-          `max-age=${this.maxAgeValue}`,
-        ]);
-        res.status(200).json(proxyResponse);
+        const proxyResponse = await this.queryProxy(req, res, next, params);
+        if (this.isProxyResponseValid(proxyResponse)) {
+          this.validProxyResponse(req, res, proxyResponse);
+        } else {
+          this.invalidProxyResponse(req, res);
+        }
       }
       next();
     });
     handler.use(Logger);
     return handler;
+  }
+
+  private waitToAvoidRateLimiting() {
+    return new Promise((resolve) => setTimeout(resolve, this.delay));
+  }
+
+  private unauthorizedRequest(res: NextApiResponse) {
+    res.status(401).json(status.STATUS_401_MESSAGE);
+  }
+
+  private invalidRequest(res: NextApiResponse) {
+    res.status(400).json(status.STATUS_400_MESSAGE);
+  }
+
+  private async queryProxy(
+    req: LastFMEndpointRequest,
+    res: NextApiResponse,
+    next: () => void,
+    params: PathParamType
+  ) {
+    this.proxy = new LastFMProxy();
+    const abort = this.createTimeout(req, res, next);
+    const proxyResponse = await this.getProxyResponse(params);
+    clearTimeout(abort);
+    return proxyResponse;
+  }
+
+  private validProxyResponse(
+    req: LastFMEndpointRequest,
+    res: NextApiResponse,
+    proxyResponse: { [key: string]: unknown } | unknown[]
+  ) {
+    req.proxyResponse = "Success!";
+    res.setHeader("Cache-Control", ["public", `max-age=${this.maxAgeValue}`]);
+    res.status(200).json(proxyResponse);
+  }
+
+  private invalidProxyResponse(
+    req: LastFMEndpointRequest,
+    res: NextApiResponse
+  ) {
+    req.proxyResponse = "Invalid LAST.FM response, please retry.";
+    res.setHeader("retry-after", 0);
+    res.status(503).json(status.STATUS_503_MESSAGE);
   }
 }
