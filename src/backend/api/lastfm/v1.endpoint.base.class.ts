@@ -6,10 +6,7 @@ import Logger from "./endpoint.common.logger";
 import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
 import LastFMProxy from "../../integrations/lastfm/proxy.class";
-import type {
-  LastFMEndpointRequest,
-  BodyType,
-} from "../../../types/api.endpoint.types";
+import type { LastFMEndpointRequest } from "../../../types/api.endpoint.types";
 import type { NextApiResponse } from "next";
 
 export default abstract class LastFMApiEndpointFactoryV1 extends LastFMEndpointBase {
@@ -17,8 +14,6 @@ export default abstract class LastFMApiEndpointFactoryV1 extends LastFMEndpointB
   timeOut = requestSettings.timeout;
   proxy!: LastFMProxy;
   route!: string;
-
-  abstract getProxyResponse(params: BodyType): void;
 
   create() {
     const handler = nextConnect<LastFMEndpointRequest, NextApiResponse>({
