@@ -96,6 +96,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
 
   handleRatelimited(): void {
     if (this.response.status === 429) {
+      // TODO: Maybe this should just be ratelimited?
       this.dispatch({
         type: "DataPointRatelimitedFetch",
       });

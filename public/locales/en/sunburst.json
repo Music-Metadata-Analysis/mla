@@ -1,0 +1,10 @@
+{
+  "detailTypes": {
+    "Album Details": "Album Details",
+    "Artist's Albums": "Artist's Albums",
+    "Top Artists": "Top Artists",
+    "Top Albums": "Top Albums",
+    "Track Details": "Track Details",
+    "User Profile": "User Profile"
+  }
+}
