@@ -11,6 +11,15 @@
       "buttonText": "View on last.fm"
     }
   },
+  "playCountByArtist": {
+    "searchTitle": "Playcount by Artist Report",
+    "title": "My Top Artist Playcounts",
+    "communication": "Retrieving Results...",
+    "noArtWork": "No Art Work",
+    "drawer": {
+      "artWorkAltText": "Promo Art Work"
+    }
+  },
   "search": {
     "fieldLabel": "Username:",
     "fieldPlaceholder": "last.fm username",
