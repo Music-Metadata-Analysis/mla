@@ -114,7 +114,7 @@ describe("useLastFM", () => {
       act(() => received.result.current.ready());
       await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
       expect(mockDispatch).toHaveBeenCalledWith({
-        type: "ReadyFetchUser",
+        type: "ReadyFetch",
         userName: received.result.current.userProperties.userName,
         data: received.result.current.userProperties.data.report,
         integration: received.result.current.userProperties.data.integration,
