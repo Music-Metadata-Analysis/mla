@@ -34,7 +34,7 @@ export const mockUserStateWithError = {
     integration: null,
     report: mockInitialReportData,
   },
-  error: "FailureFetchUser" as const,
+  error: "FailureFetch" as const,
   profileUrl: "http://localhost",
   ready: true,
   retries: 3,

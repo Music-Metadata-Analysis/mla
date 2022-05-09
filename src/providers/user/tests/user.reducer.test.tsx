@@ -2,31 +2,46 @@ import {
   mockAlbumsReport,
   mockUserStateWithError,
 } from "./fixtures/mock.user.state.data";
+import UserReducerStateBase from "../states/user.reducer.states.base.class";
 import { InitialState } from "../user.initial";
 import { UserReducer } from "../user.reducer";
 import type { BaseReportResponseInterface } from "../../../types/integrations/base.types";
 import type { UserActionType } from "../../../types/user/action.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
 
-jest.mock("../user.reducer.states.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return mockStates;
-  });
+class ConcreteStateOne extends UserReducerStateBase<"ReadyFetch"> {
+  type = "ReadyFetch" as const;
+  generateState(): UserStateInterface {
+    return mockReadyState as unknown as UserStateInterface;
+  }
+}
+
+class ConcreteStateTwo extends UserReducerStateBase<"ResetState"> {
+  type = "ResetState" as const;
+  generateState(): UserStateInterface {
+    return mockResetState as unknown as UserStateInterface;
+  }
+}
+
+class ConcreteStateThree extends UserReducerStateBase<"StartFetch"> {
+  type = "StartFetch" as const;
+  generateState(): UserStateInterface {
+    return mockStartState as unknown as UserStateInterface;
+  }
+}
+
+jest.mock("../states/user.reducer.states", () => {
+  return () => mockClasses;
 });
 
-const mockReturnValue = "MockReturnedState";
-const mockStates = {
-  FailureFetchUser: jest.fn().mockReturnValue(mockReturnValue),
-  StartFetchUser: jest.fn().mockReturnValue(mockReturnValue),
-  SuccessFetchUser: jest.fn().mockReturnValue(mockReturnValue),
-  RatelimitedFetchUser: jest.fn().mockReturnValue(mockReturnValue),
-  ReadyFetchUser: jest.fn().mockReturnValue(mockReturnValue),
-  ResetState: jest.fn().mockReturnValue(mockReturnValue),
-};
+const mockClasses = [ConcreteStateOne, ConcreteStateTwo, ConcreteStateThree];
+const mockReadyState = "mockReadyState";
+const mockResetState = "mockResetState";
+const mockStartState = "mockStartState";
 
 describe("UserReducer", () => {
   let received: UserStateInterface | null;
-  const testIntegrationType = "TEST";
+  const testIntegrationType = "TEST" as const;
 
   beforeEach(() => {
     received = null;
@@ -42,84 +57,40 @@ describe("UserReducer", () => {
     return UserReducer({ ...initialProps }, action as UserActionType);
   };
 
-  it("should handle ReadyFetchUser correctly", () => {
+  it("should handle ReadyFetch correctly", () => {
     const action = {
-      type: "ReadyFetchUser",
+      type: "ReadyFetch" as const,
       userName: "someguy",
       data: mockAlbumsReport as BaseReportResponseInterface,
       integration: testIntegrationType,
-    } as UserActionType;
+    };
     received = arrange(action, { ...getInitialState() });
-    expect(mockStates.ReadyFetchUser).toBeCalledTimes(1);
-    expect(mockStates.ReadyFetchUser).toBeCalledWith(InitialState, action);
-    expect(received).toBe(mockReturnValue);
+    expect(received).toBe(mockReadyState);
   });
 
   it("should handle ResetState correctly", () => {
     const action = {
-      type: "ResetState",
-    } as UserActionType;
-    received = arrange({ type: "ResetState" }, mockUserStateWithError);
-    expect(mockStates.ResetState).toBeCalledTimes(1);
-    expect(mockStates.ResetState).toBeCalledWith(
-      mockUserStateWithError,
-      action
-    );
-    expect(received).toBe(mockReturnValue);
-  });
-
-  it("should handle StartFetchUser correctly", () => {
-    const action = {
-      type: "StartFetchUser",
-      userName: "niall",
-      integration: testIntegrationType,
-    } as UserActionType;
+      type: "ResetState" as const,
+    };
     received = arrange(action, mockUserStateWithError);
-    expect(mockStates.StartFetchUser).toBeCalledTimes(1);
-    expect(mockStates.StartFetchUser).toBeCalledWith(
-      mockUserStateWithError,
-      action
-    );
-    expect(received).toBe(mockReturnValue);
+    expect(received).toBe(mockResetState);
   });
 
-  it("should handle SuccessFetchUser correctly", () => {
+  it("should handle StartFetch correctly", () => {
     const action = {
-      type: "SuccessFetchUser",
+      type: "StartFetch" as const,
       userName: "someguy",
-      data: mockAlbumsReport as BaseReportResponseInterface,
       integration: testIntegrationType,
-    } as UserActionType;
-    received = arrange(action, { ...getInitialState() });
-    expect(mockStates.SuccessFetchUser).toBeCalledTimes(1);
-    expect(mockStates.SuccessFetchUser).toBeCalledWith(InitialState, action);
-    expect(received).toBe(mockReturnValue);
+    };
+    received = arrange(action, mockUserStateWithError);
+    expect(received).toBe(mockStartState);
   });
 
-  it("should handle FailureFetchUser correctly", () => {
+  it("should handle an Unknown Action correctly", () => {
     const action = {
-      type: "FailureFetchUser",
-      userName: "someguy",
-      integration: testIntegrationType,
-    } as UserActionType;
+      type: "UnknownAction",
+    } as unknown as UserActionType;
     received = arrange(action, { ...getInitialState() });
-    expect(mockStates.FailureFetchUser).toBeCalledTimes(1);
-    expect(mockStates.FailureFetchUser).toBeCalledWith(InitialState, action);
-    expect(received).toBe(mockReturnValue);
-  });
-
-  it("should handle RatelimitedFetchUser correctly", () => {
-    const action = {
-      type: "RatelimitedFetchUser",
-      userName: "someguy",
-      integration: testIntegrationType,
-    } as UserActionType;
-    received = arrange(action, { ...getInitialState() });
-    expect(mockStates.RatelimitedFetchUser).toBeCalledTimes(1);
-    expect(mockStates.RatelimitedFetchUser).toBeCalledWith(
-      InitialState,
-      action
-    );
-    expect(received).toBe(mockReturnValue);
+    expect(received).toStrictEqual({ ...getInitialState() });
   });
 });
