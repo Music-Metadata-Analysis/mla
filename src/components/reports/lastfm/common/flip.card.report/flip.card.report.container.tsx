@@ -43,7 +43,7 @@ export default function FlipCardReportContainer<
   }, []);
 
   useEffect(() => {
-    if (user.userProperties.error === "TimeoutFetchUser") {
+    if (user.userProperties.error === "TimeoutFetch") {
       report.startDataFetch(user, userName);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,7 +60,7 @@ export default function FlipCardReportContainer<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ui.images.count, user.userProperties]);
 
-  if (user.userProperties.error === "RatelimitedFetchUser") {
+  if (user.userProperties.error === "RatelimitedFetch") {
     return (
       <ErrorDisplay
         errorKey={"lastfmRatelimited"}
@@ -69,7 +69,7 @@ export default function FlipCardReportContainer<
     );
   }
 
-  if (user.userProperties.error === "NotFoundFetchUser") {
+  if (user.userProperties.error === "NotFoundFetch") {
     return (
       <ErrorDisplay
         errorKey={"userNotFound"}
@@ -78,7 +78,7 @@ export default function FlipCardReportContainer<
     );
   }
 
-  if (user.userProperties.error === "FailureFetchUser") {
+  if (user.userProperties.error === "FailureFetch") {
     return (
       <ErrorDisplay
         errorKey={"lastfmCommunications"}
@@ -87,7 +87,7 @@ export default function FlipCardReportContainer<
     );
   }
 
-  if (user.userProperties.error === "UnauthorizedFetchUser") {
+  if (user.userProperties.error === "UnauthorizedFetch") {
     return <Authentication />;
   }
 

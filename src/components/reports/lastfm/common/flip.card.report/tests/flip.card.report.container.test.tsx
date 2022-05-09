@@ -157,7 +157,7 @@ describe("FlipCardReportContainer", () => {
 
     describe("when the request has failed", () => {
       beforeEach(() => {
-        mockHookState.userProperties.error = "FailureFetchUser";
+        mockHookState.userProperties.error = "FailureFetch";
         arrange();
       });
 
@@ -191,7 +191,7 @@ describe("FlipCardReportContainer", () => {
 
     describe("when the request has timed out", () => {
       beforeEach(() => {
-        mockHookState.userProperties.error = "TimeoutFetchUser";
+        mockHookState.userProperties.error = "TimeoutFetch";
         arrange();
       });
 
@@ -252,7 +252,7 @@ describe("FlipCardReportContainer", () => {
 
     describe("when the request is unauthorized", () => {
       beforeEach(() => {
-        mockHookState.userProperties.error = "UnauthorizedFetchUser";
+        mockHookState.userProperties.error = "UnauthorizedFetch";
         arrange();
       });
 
@@ -274,7 +274,7 @@ describe("FlipCardReportContainer", () => {
 
     describe("when the request has been ratelimited", () => {
       beforeEach(() => {
-        mockHookState.userProperties.error = "RatelimitedFetchUser";
+        mockHookState.userProperties.error = "RatelimitedFetch";
         arrange();
       });
 
@@ -308,7 +308,7 @@ describe("FlipCardReportContainer", () => {
 
     describe("when NO valid user has been found", () => {
       beforeEach(() => {
-        mockHookState.userProperties.error = "NotFoundFetchUser";
+        mockHookState.userProperties.error = "NotFoundFetch";
         arrange();
       });
 
