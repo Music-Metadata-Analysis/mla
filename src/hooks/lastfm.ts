@@ -28,7 +28,7 @@ const useLastFM = () => {
 
   const ready = (): void => {
     dispatch({
-      type: "ReadyFetchUser",
+      type: "ReadyFetch",
       userName: userProperties.userName as string,
       integration: userProperties.data.integration as "LAST.FM",
       data: userProperties.data.report,

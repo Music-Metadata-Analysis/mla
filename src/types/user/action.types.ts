@@ -3,51 +3,66 @@ import type { UserReportType } from "./report.types";
 
 export type UserActionType =
   | {
-      type: "FailureFetchUser";
-      userName: string;
-      integration: IntegrationTypes;
-    }
-  | {
-      type: "NotFoundFetchUser";
-      userName: string;
-      integration: IntegrationTypes;
-    }
-  | {
-      type: "PartialFetchUser";
-      userName: string;
+      type: "DataPointFailureFetch";
       data: UserReportType;
-      integration: IntegrationTypes;
     }
   | {
-      type: "RatelimitedFetchUser";
+      type: "DataPointNotFoundFetch";
+      data: UserReportType;
+    }
+  | {
+      type: "DataPointRatelimitedFetch";
+    }
+  | {
+      type: "DataPointStartFetch";
+    }
+  | {
+      type: "DataPointSuccessFetch";
+      data: UserReportType;
+    }
+  | {
+      type: "DataPointTimeoutFetch";
+    }
+  | {
+      type: "FailureFetch";
       userName: string;
       integration: IntegrationTypes;
     }
   | {
-      type: "ReadyFetchUser";
+      type: "NotFoundFetch";
+      userName: string;
+      integration: IntegrationTypes;
+    }
+  | {
+      type: "RatelimitedFetch";
+      userName: string;
+      integration: IntegrationTypes;
+    }
+  | {
+      type: "ReadyFetch";
       userName: string;
       data: UserReportType;
       integration: IntegrationTypes;
     }
   | { type: "ResetState" }
   | {
-      type: "StartFetchUser";
+      type: "StartFetch";
       userName: string;
       integration: IntegrationTypes;
     }
   | {
-      type: "SuccessFetchUser";
+      type: "SuccessFetch";
       userName: string;
       data: UserReportType;
       integration: IntegrationTypes;
     }
   | {
-      type: "TimeoutFetchUser";
+      type: "TimeoutFetch";
       userName: string;
       integration: IntegrationTypes;
     }
   | {
-      type: "UnauthorizedFetchUser";
+      type: "UnauthorizedFetch";
       userName: string;
       integration: IntegrationTypes;
     };
