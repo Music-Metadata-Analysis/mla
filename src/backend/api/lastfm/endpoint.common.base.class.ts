@@ -9,11 +9,13 @@ import type {
 } from "../../../types/api.endpoint.types";
 import type LastFMProxy from "../../integrations/lastfm/proxy.class";
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextConnect } from "next-connect";
 
 export default abstract class LastFMEndpointBase {
   timeOut = requestSettings.timeout;
   proxy!: LastFMProxy;
   route!: string;
+  private connectionTimeout: NodeJS.Timeout | undefined;
 
   abstract getProxyResponse(params: QueryParamType | BodyType): Promise<
     | {
@@ -22,16 +24,22 @@ export default abstract class LastFMEndpointBase {
     | unknown[]
   >;
 
-  onNoMatch(req: NextApiRequest, res: NextApiResponse) {
-    res.status(405).json(status.STATUS_405_MESSAGE);
-  }
+  abstract create(): NextConnect<
+    LastFMEndpointRequest,
+    NextApiResponse<unknown>
+  >;
 
-  onError(
+  onNoMatch = (req: NextApiRequest, res: NextApiResponse) => {
+    res.status(405).json(status.STATUS_405_MESSAGE);
+  };
+
+  onError = (
     err: ProxyError,
     req: LastFMEndpointRequest,
     res: NextApiResponse,
     next: () => void
-  ) {
+  ) => {
+    this.clearTimeout();
     req.proxyResponse = err.toString();
     if (err.clientStatusCode && knownStatuses[err.clientStatusCode]) {
       res
@@ -41,18 +49,22 @@ export default abstract class LastFMEndpointBase {
       res.status(502).json(status.STATUS_502_MESSAGE);
     }
     next();
-  }
+  };
 
-  createTimeout(
+  createTimeout = (
     req: LastFMEndpointRequest,
     res: NextApiResponse,
     next: () => void
-  ) {
-    return setTimeout(() => {
+  ) => {
+    this.connectionTimeout = setTimeout(() => {
       req.proxyResponse = "Timed out! Please retry this request!";
       res.setHeader("retry-after", 0);
       res.status(503).json(status.STATUS_503_MESSAGE);
       next();
     }, this.timeOut);
-  }
+  };
+
+  clearTimeout = () => {
+    if (this.connectionTimeout) clearTimeout(this.connectionTimeout);
+  };
 }

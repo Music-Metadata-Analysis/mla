@@ -1,7 +1,7 @@
 import { body, validationResult } from "express-validator";
 import { getToken } from "next-auth/jwt";
 import nextConnect from "next-connect";
-import LastFMEndpointBase from "./endpoint.common.base";
+import LastFMEndpointBase from "./endpoint.common.base.class";
 import Logger from "./endpoint.common.logger";
 import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
@@ -36,9 +36,9 @@ export default abstract class LastFMApiEndpointFactoryV1 extends LastFMEndpointB
           res.status(400).json(status.STATUS_400_MESSAGE);
         } else {
           this.proxy = new LastFMProxy();
-          const abort = this.createTimeout(req, res, next);
+          this.createTimeout(req, res, next);
           const proxyResponse = await this.getProxyResponse(req.body);
-          clearTimeout(abort);
+          this.clearTimeout();
           req.proxyResponse = "Success!";
           res.setHeader("Sunset", this.sunsetDate.toDateString());
           res.status(200).json(proxyResponse);

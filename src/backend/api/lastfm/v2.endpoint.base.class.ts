@@ -1,6 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import nextConnect from "next-connect";
-import LastFMEndpointBase from "./endpoint.common.base";
+import LastFMEndpointBase from "./endpoint.common.base.class";
 import Logger from "./endpoint.common.logger";
 import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
@@ -78,9 +78,9 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
     params: PathParamType
   ) {
     this.proxy = new LastFMProxy();
-    const abort = this.createTimeout(req, res, next);
+    this.createTimeout(req, res, next);
     const proxyResponse = await this.getProxyResponse(params);
-    clearTimeout(abort);
+    this.clearTimeout();
     return proxyResponse;
   }
 
