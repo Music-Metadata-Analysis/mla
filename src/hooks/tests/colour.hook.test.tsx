@@ -2,6 +2,14 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockUseColour from "./colour.hook.mock";
 import useColour from "../colour";
+import type { Colour } from "../../types/ui/chakra.types";
+
+type NestedObjectKey =
+  | Colour
+  | Record<
+      string,
+      Colour | Record<string, Colour> | ((colour: Colour) => string)
+    >;
 
 describe("useColour", () => {
   let received: ReturnType<typeof arrange>;
@@ -15,22 +23,23 @@ describe("useColour", () => {
       received = arrange();
     });
 
-    const assertIsString = (property: string) => {
+    const assertIsString = (property: unknown) => {
       expect(typeof property).toBe("string");
     };
 
+    const assertIsFunction = (property: unknown) => {
+      expect(typeof property).toBe("function");
+    };
+
     const assertLenIs = (
-      object: Record<
-        string,
-        string | Record<string, string | Record<string, string>>
-      >,
+      object: Record<string, NestedObjectKey>,
       length: number
     ) => {
       expect(Object.keys(object).length).toBe(length);
     };
 
     it("should contain the correct number of top level properties", () => {
-      assertLenIs(received.result.current, 11);
+      assertLenIs(received.result.current, 13);
     });
 
     it("should contain the bodyColour background color", () => {
@@ -109,8 +118,43 @@ describe("useColour", () => {
       assertLenIs(received.result.current.navButtonColour, 3);
     });
 
+    it("should contain the sunBurstColour properties", () => {
+      assertIsString(received.result.current.sunBurstColour.foreground);
+      assertLenIs(received.result.current.sunBurstColour, 1);
+    });
+
     it("should contain an entry for transparent", () => {
       assertIsString(received.result.current.transparent);
+    });
+
+    describe("utilities", () => {
+      it("should contain the expected functions", () => {
+        assertIsFunction(received.result.current.utilities.colourToCSS);
+        assertLenIs(received.result.current.sunBurstColour, 1);
+      });
+
+      describe("colourToCSS", () => {
+        let result: string;
+
+        const arrangeColourToCss = (color: Colour) =>
+          (result = received.result.current.utilities.colourToCSS(color));
+
+        describe("when called on the chakra ui colour grey.100", () => {
+          beforeEach(() => arrangeColourToCss("grey-100"));
+
+          it("should return the correct CSS colour variable", () => {
+            expect(result).toBe("var(--chakra-colors-grey-100)");
+          });
+        });
+
+        describe("when called on the chakra ui colour red.500", () => {
+          beforeEach(() => arrangeColourToCss("red-500"));
+
+          it("should return the correct CSS colour variable", () => {
+            expect(result).toBe("var(--chakra-colors-red-500)");
+          });
+        });
+      });
     });
 
     it("should contain all the same properties as the mock colour hook", () => {
