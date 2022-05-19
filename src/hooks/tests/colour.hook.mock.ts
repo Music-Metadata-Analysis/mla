@@ -1,3 +1,5 @@
+import type { Colour } from "../../types/ui/chakra.types";
+
 let colourIndex = 1;
 
 function mockColour() {
@@ -63,7 +65,13 @@ const mockColourHook = {
     hoverBackground: mockColour(),
     selectedBackground: mockColour(),
   },
+  sunBurstColour: {
+    foreground: mockColour(),
+  },
   transparent: mockColour(),
+  utilities: {
+    colourToCSS: jest.fn((colour: Colour) => `converted(${colour})`),
+  },
 };
 
 export default mockColourHook;

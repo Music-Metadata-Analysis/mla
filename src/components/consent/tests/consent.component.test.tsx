@@ -78,8 +78,8 @@ describe("Consent", () => {
         CookieConsent as never as React.FC,
         {
           buttonStyle: {
-            background: `var(--chakra-colors-${mockColourHook.consentColour.accept.background})`,
-            color: `var(--chakra-colors-${mockColourHook.buttonColour.foreground})`,
+            background: `converted(${mockColourHook.consentColour.accept.background})`,
+            color: `converted(${mockColourHook.buttonColour.foreground})`,
           },
           buttonText: translations.analytics.acceptMessage,
           contentStyle: {
@@ -87,18 +87,18 @@ describe("Consent", () => {
           },
           cookieName: settings.consentCookieName,
           declineButtonStyle: {
-            background: `var(--chakra-colors-${mockColourHook.consentColour.decline.background})`,
-            color: `var(--chakra-colors-${mockColourHook.buttonColour.foreground})`,
+            background: `converted(${mockColourHook.consentColour.decline.background})`,
+            color: `converted(${mockColourHook.buttonColour.foreground})`,
           },
           declineButtonText: translations.analytics.declineMessage,
           enableDeclineButton: true,
           setDeclineCookie: false,
           style: {
-            background: `var(--chakra-colors-${mockColourHook.componentColour.background})`,
-            borderTopColor: `var(--chakra-colors-${mockColourHook.buttonColour.border})`,
+            background: `converted(${mockColourHook.componentColour.background})`,
+            borderTopColor: `converted(${mockColourHook.buttonColour.border})`,
             borderTopStyle: "solid",
             borderTopWidth: "1px",
-            color: `var(--chakra-colors-${mockColourHook.componentColour.foreground})`,
+            color: `converted(${mockColourHook.componentColour.foreground})`,
             flexDirection: "column",
             zIndex: 999,
           },
