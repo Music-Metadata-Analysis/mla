@@ -1,10 +1,11 @@
 import { useColorMode } from "@chakra-ui/react";
 import { useMemo } from "react";
+import type { Colour } from "../types/ui/chakra.types";
 
 const useColour = () => {
   const { colorMode } = useColorMode();
 
-  const chooseColour = (colour1: string, colour2: string) => {
+  const chooseColour = (colour1: Colour, colour2: Colour) => {
     if (colorMode === "light") return colour1;
     return colour2;
   };
@@ -66,7 +67,19 @@ const useColour = () => {
       hoverBackground: chooseColour("gray.400", "gray.700"),
       selectedBackground: chooseColour("gray.400", "gray.700"),
     },
+    sunBurstColour: {
+      foreground: chooseColour("gray.900", "gray.300"),
+    },
     transparent: "rgb(0,0,0,0)",
+    utilities: {
+      colourToCSS: (colour: Colour) => {
+        const value = `var(--chakra-colors-${String(colour).replace(
+          ".",
+          "-"
+        )})`;
+        return value;
+      },
+    },
   });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

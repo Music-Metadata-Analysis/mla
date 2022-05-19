@@ -26,8 +26,8 @@ const BillBoardSpinner = ({ visible, title }: BillBoardSpinnerProps) => {
             data-testid={testIDs.BillboardSpinner}
             style={{ transform: "scale(1.5)" }}
             thickness="8px"
-            color={componentColour.foreground}
-            emptyColor={componentColour.background}
+            color={componentColour.foreground as string}
+            emptyColor={componentColour.background as string}
             bgColor={componentColour.background}
             size={"xl"}
           />
