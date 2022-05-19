@@ -15,13 +15,13 @@ export const testIDs = {
 
 export default function Consent() {
   const analytics = useAnalytics();
-  const { componentColour, buttonColour, consentColour } = useColours();
+  const {
+    utilities: { colourToCSS },
+    componentColour,
+    buttonColour,
+    consentColour,
+  } = useColours();
   const { t } = useTranslation("main");
-
-  const chakraColourToCSS = (colour: string) => {
-    const value = `var(--chakra-colors-${colour.replace(".", "-")})`;
-    return value;
-  };
 
   const accept = () => {
     analytics.setup();
@@ -42,23 +42,23 @@ export default function Consent() {
       onAccept={accept}
       style={{
         borderTopWidth: "1px",
-        borderTopColor: chakraColourToCSS(buttonColour.border),
+        borderTopColor: colourToCSS(buttonColour.border),
         borderTopStyle: "solid",
-        background: chakraColourToCSS(componentColour.background),
-        color: chakraColourToCSS(componentColour.foreground),
+        background: colourToCSS(componentColour.background),
+        color: colourToCSS(componentColour.foreground),
         zIndex: 999,
         flexDirection: "column",
       }}
       buttonStyle={{
-        background: chakraColourToCSS(consentColour.accept.background),
-        color: chakraColourToCSS(buttonColour.foreground),
+        background: colourToCSS(consentColour.accept.background),
+        color: colourToCSS(buttonColour.foreground),
       }}
       contentStyle={{
         flex: "1 0",
       }}
       declineButtonStyle={{
-        background: chakraColourToCSS(consentColour.decline.background),
-        color: chakraColourToCSS(buttonColour.foreground),
+        background: colourToCSS(consentColour.decline.background),
+        color: colourToCSS(buttonColour.foreground),
       }}
       setDeclineCookie={false}
       enableDeclineButton
