@@ -9,6 +9,7 @@ import {
   StatNumber,
 } from "@chakra-ui/react";
 import useColour from "../../../hooks/colour";
+import { truncate } from "../../../utils/strings";
 import BillBoard from "../billboard.component";
 
 export const testIDs = {
@@ -37,9 +38,8 @@ const BillBoardProgressBar = ({
   const { componentColour } = useColour();
   const maxLength = 18;
 
-  const truncate = (input: string) => {
-    if (input.length <= maxLength) return input;
-    return input.substring(0, maxLength) + "...";
+  const truncateResource = (input: string) => {
+    return truncate(input, maxLength);
   };
 
   return (
@@ -62,7 +62,7 @@ const BillBoardProgressBar = ({
           <StatGroup>
             <Stat>
               <StatLabel>{details.type}</StatLabel>
-              <StatHelpText>{truncate(details.resource)}</StatHelpText>
+              <StatHelpText>{truncateResource(details.resource)}</StatHelpText>
             </Stat>
           </StatGroup>
           <StatGroup>

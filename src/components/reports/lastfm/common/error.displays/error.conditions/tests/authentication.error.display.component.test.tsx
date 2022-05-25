@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import MockStage2Report from "../../../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import mockRouter from "../../../../../../../tests/fixtures/mock.router";
 import Authentication from "../../../../../../authentication/authentication.container";
-import { MockReportClass } from "../../../sunburst.report/tests/mock.sunburst.report.class";
+import { MockReportClass } from "../../../sunburst.report/tests/fixtures/mock.sunburst.report.class";
 import AuthenticationErrorConditionalDisplay from "../authentication.error.display.component";
 import type { LastFMUserStateBase } from "../../../../../../../types/user/state.types";
 

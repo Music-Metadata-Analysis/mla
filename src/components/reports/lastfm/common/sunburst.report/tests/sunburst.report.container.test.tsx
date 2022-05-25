@@ -2,8 +2,9 @@ import { cleanup, render, screen } from "@testing-library/react";
 import {
   MockReportClass,
   MockUserStateEncapsulation,
-} from "./mock.sunburst.report.class";
+} from "./fixtures/mock.sunburst.report.class";
 import lastfm from "../../../../../../../public/locales/en/lastfm.json";
+import sunburst from "../../../../../../../public/locales/en/sunburst.json";
 import apiRoutes from "../../../../../../config/apiRoutes";
 import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock.hook";
 import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
@@ -108,6 +109,18 @@ describe("SunBurstReportContainer", () => {
     });
   };
 
+  const testTranslationFunctions = (call: {
+    lastFMt: (value: string) => string;
+    sunBurstT: (value: string) => string;
+  }) => {
+    expect(typeof call.lastFMt).toBe("function");
+    expect(typeof call.sunBurstT).toBe("function");
+    expect(call.lastFMt("playCountByArtist.title")).toBe(
+      lastfm.playCountByArtist.title
+    );
+    expect(call.sunBurstT("info.interaction")).toBe(sunburst.info.interaction);
+  };
+
   const checkSunBurstReportProps = (visible: boolean) => {
     const call = (SunBurstReport as jest.Mock).mock.calls[0][0];
     expect(call.userState).toBeInstanceOf(MockUserStateEncapsulation);
@@ -116,8 +129,8 @@ describe("SunBurstReportContainer", () => {
     );
     expect(call.report).toBeInstanceOf(SunBurstBaseReport);
     expect(call.visible).toBe(visible);
-    expect(typeof call.t).toBe("function");
-    expect(Object.keys(call).length).toBe(4);
+    testTranslationFunctions(call);
+    expect(Object.keys(call).length).toBe(5);
   };
 
   const resetHookState = () => {
@@ -165,10 +178,18 @@ describe("SunBurstReportContainer", () => {
 
     it("should render the AggregateErrorDisplayComponent as expected", () => {
       expect(AggregateErrorDisplayComponent).toBeCalledTimes(2);
-      checkMockCall(AggregateErrorDisplayComponent, {
-        report,
-        userProperties: mockHookState.userProperties,
-      });
+
+      const checkCall = (index: number) => {
+        const call = (AggregateErrorDisplayComponent as jest.Mock).mock.calls[
+          index
+        ][0];
+        expect(call.report).toBeInstanceOf(MockReportClass);
+        expect(call.userProperties).toStrictEqual(mockHookState.userProperties);
+        expect(Object.keys(call).length).toBe(2);
+      };
+
+      checkCall(0);
+      checkCall(1);
     });
 
     it("should render the mockErrorDisplay component", async () => {
@@ -297,7 +318,7 @@ describe("SunBurstReportContainer", () => {
                 title: lastfm[report.translationKey].communication,
                 details: {
                   resource: "Disintegration",
-                  type: "detailTypes.Album Details",
+                  type: "Album Details",
                 },
                 value: 50,
               },
@@ -409,7 +430,7 @@ describe("SunBurstReportContainer", () => {
                 title: lastfm[report.translationKey].communication,
                 details: {
                   resource: "Disintegration",
-                  type: "detailTypes.Album Details",
+                  type: "Album Details",
                 },
                 value: 50,
               },

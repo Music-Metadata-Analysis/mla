@@ -3,7 +3,7 @@ import SunBurstContainer from "../common/sunburst.report/sunburst.report.contain
 import type PlayCountByArtistState from "../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import type { userHookAsLastFMPlayCountByArtistReport } from "../../../../types/user/hook.types";
 
-interface PlayCountByArtistContainerProps {
+export interface PlayCountByArtistContainerProps {
   userName: string;
   user: userHookAsLastFMPlayCountByArtistReport;
 }
@@ -13,7 +13,7 @@ export default function PlayCountByArtistContainer({
   userName,
 }: PlayCountByArtistContainerProps) {
   return (
-    <SunBurstContainer<PlayCountByArtistState> //TODO: Wrong Encapsulation
+    <SunBurstContainer<PlayCountByArtistState>
       user={user}
       userName={userName}
       reportClass={PlayCountByArtistReport}

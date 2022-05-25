@@ -22,15 +22,15 @@ export default function SearchContainer({
   t,
 }: SearchContainerProps) {
   const { data: authSession, status: authStatus } = useSession();
-  const { hideNavBar, showNavBar } = useNavBar();
+  const navBar = useNavBar();
   const router = useRouter();
 
   useEffect(() => {
-    hideNavBar();
-    window.addEventListener("resize", hideNavBar);
+    navBar.setters.hideNavBar();
+    window.addEventListener("resize", navBar.setters.hideNavBar);
     return () => {
-      window.removeEventListener("resize", hideNavBar);
-      showNavBar();
+      window.removeEventListener("resize", navBar.setters.hideNavBar);
+      navBar.setters.showNavBar();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

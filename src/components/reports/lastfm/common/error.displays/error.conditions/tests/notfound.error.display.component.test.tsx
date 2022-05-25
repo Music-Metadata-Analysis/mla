@@ -3,7 +3,7 @@ import MockStage2Report from "../../../../../../../providers/user/encapsulations
 import checkMockCall from "../../../../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../../../../tests/fixtures/mock.router";
 import ErrorDisplay from "../../../../../../errors/display/error.display.component";
-import { MockReportClass } from "../../../sunburst.report/tests/mock.sunburst.report.class";
+import { MockReportClass } from "../../../sunburst.report/tests/fixtures/mock.sunburst.report.class";
 import NotFoundErrorConditionalDisplay from "../notfound.error.display.component";
 import type { LastFMUserStateBase } from "../../../../../../../types/user/state.types";
 

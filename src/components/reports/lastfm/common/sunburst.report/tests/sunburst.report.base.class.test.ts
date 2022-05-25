@@ -1,14 +1,30 @@
-import { MockReportClass } from "./mock.sunburst.report.class";
+import { MockReportClass } from "./fixtures/mock.sunburst.report.class";
+import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
 import MockStage2Report from "../../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import PlayCountByArtistState from "../../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
+import SunBurstDataTranslator from "../chart/chart.data.class";
+import MockCompleteReport1 from "../chart/tests/fixtures/mock.state.data.1.json";
 import type { PlayCountByArtistReportInterface } from "../../../../../../types/clients/api/lastfm/response.types";
 import type {
   AggregateBaseReportResponseInterface,
   AggregateReportOperationType,
 } from "../../../../../../types/integrations/base.types";
+import type { d3Node } from "../../../../../../types/reports/sunburst.types";
+import type { userHookAsLastFM } from "../../../../../../types/user/hook.types";
 import type { LastFMUserStateBase } from "../../../../../../types/user/state.types";
 import type { BillBoardProgressBarDetails } from "../../../../../billboard/billboard.progress.bar/billboard.progress.bar.component";
+import type { LastFMSunBurstDrawerInterface } from "../../sunburst.report.drawer/sunburst.report.drawer.component";
+import type SunBurstNodeEncapsulation from "../encapsulations/sunburst.node.encapsulation.base";
 import type SunBurstBaseReport from "../sunburst.report.base.class";
+import type { FC } from "react";
+
+jest.mock("../chart/chart.data.class.ts", () =>
+  jest.fn(() => ({
+    convert: mockConvert,
+  }))
+);
+
+const mockConvert = jest.fn();
 
 describe("SunBurstBaseReport", () => {
   let instance: SunBurstBaseReport<PlayCountByArtistState>;
@@ -17,6 +33,7 @@ describe("SunBurstBaseReport", () => {
 
   describe("When instantiated with a concrete implementation", () => {
     beforeEach(() => {
+      jest.clearAllMocks();
       instance = new MockReportClass();
       mockUserState = JSON.parse(JSON.stringify(MockStage2Report));
     });
@@ -31,8 +48,29 @@ describe("SunBurstBaseReport", () => {
       getUserState().status.operation as AggregateReportOperationType;
 
     describe("getDrawerComponent", () => {
-      it("is not implemented", () => {
-        expect("Not Implemented Yet.").toBe("");
+      let received: FC<LastFMSunBurstDrawerInterface>;
+
+      beforeEach(() => (received = instance.getDrawerComponent()));
+
+      it("should return the expected drawer component", () => {
+        expect(received).toBe(instance.drawerComponent);
+      });
+    });
+
+    describe("getEncapsulatedNode", () => {
+      let received: SunBurstNodeEncapsulation;
+      const mockNode = {
+        data: { name: "mockNode", entity: "unknown" },
+      } as d3Node;
+
+      beforeEach(() => (received = instance.getEncapsulatedNode(mockNode)));
+
+      it("should return an instance of expected encapsulation class", () => {
+        expect(received).toBeInstanceOf(instance.nodeEncapsulationClass);
+      });
+
+      it("should return the the correct encapsulated node", () => {
+        expect(received.getNode()).toBe(mockNode);
       });
     });
 
@@ -136,6 +174,47 @@ describe("SunBurstBaseReport", () => {
         expect(instance.getReportTranslationKey()).toBe(
           instance.translationKey
         );
+      });
+    });
+
+    describe("getSunBurstData", () => {
+      let result: unknown;
+
+      describe("when given a finished report", () => {
+        beforeEach(() => {
+          mockConvert.mockReturnValueOnce({ mock: "return_value" });
+          result = instance.getSunBurstData(
+            MockCompleteReport1 as LastFMUserStateBase,
+            "Top Artists"
+          );
+        });
+
+        it("should instantiate the SunBurstDataTranslator class", () => {
+          expect(SunBurstDataTranslator).toBeCalledTimes(1);
+          expect(SunBurstDataTranslator).toBeCalledWith(
+            instance.entityKeys,
+            instance.leafEntity
+          );
+        });
+
+        it("should call the convert method of the sunBurstDataTranslator class", () => {
+          expect(mockConvert).toBeCalledTimes(1);
+          expect(mockConvert).toBeCalledWith(
+            {
+              children: [],
+              entity: "root",
+              name: "Top Artists",
+              value: MockCompleteReport1.data.report.playcount,
+            },
+            instance.getReportData(MockCompleteReport1 as LastFMUserStateBase)
+              .content,
+            instance.topLevelEntity
+          );
+        });
+
+        it("should return the expected value", () => {
+          expect(result).toStrictEqual({ mock: "return_value" });
+        });
       });
     });
 
@@ -648,6 +727,20 @@ describe("SunBurstBaseReport", () => {
         expect(received).toStrictEqual(
           mockUserState.data.report.playCountByArtist
         );
+      });
+    });
+
+    describe("startDataFetch", () => {
+      beforeEach(() =>
+        instance.startDataFetch(
+          mockLastFMHook as userHookAsLastFM,
+          "niall-byrne"
+        )
+      );
+
+      it("should contain the expected userProperties ", () => {
+        expect(mockLastFMHook.playCountByArtist).toBeCalledTimes(1);
+        expect(mockLastFMHook.playCountByArtist).toBeCalledWith("niall-byrne");
       });
     });
   });

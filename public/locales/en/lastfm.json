@@ -17,7 +17,16 @@
     "communication": "Retrieving Results...",
     "noArtWork": "No Art Work",
     "drawer": {
-      "artWorkAltText": "Promo Art Work"
+      "artWorkAltText": "Promo Art Work",
+      "noInformation": "No information available.",
+      "value": "Playcount",
+      "percentage": "% of total"
+    },
+    "rootTag": "Top Artists",
+    "panel": {
+      "value": "Playcount",
+      "control": "Select",
+      "leafNodeControl": "Tracks"
     }
   },
   "search": {

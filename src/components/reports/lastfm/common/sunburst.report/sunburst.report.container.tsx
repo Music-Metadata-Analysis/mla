@@ -27,7 +27,7 @@ export default function SunBurstReportContainer<
   reportClass,
 }: SunBurstReportContainerProps<UserStateType>) {
   const analytics = useAnalytics();
-  const { t } = useTranslation("lastfm");
+  const { t: lastFMt } = useTranslation("lastfm");
   const { t: sunBurstT } = useTranslation("sunburst");
   const metrics = useMetrics();
   const report = new reportClass();
@@ -85,7 +85,9 @@ export default function SunBurstReportContainer<
   return (
     <>
       <BillBoardProgressBar
-        title={t(`${String(report.getReportTranslationKey())}.communication`)}
+        title={lastFMt(
+          `${String(report.getReportTranslationKey())}.communication`
+        )}
         visible={!user.userProperties.ready}
         value={progressPercent}
         details={progressDetails}
@@ -94,7 +96,8 @@ export default function SunBurstReportContainer<
         report={report}
         visible={user.userProperties.ready}
         userState={report.getEncapsulatedUserState(user.userProperties)}
-        t={t}
+        lastFMt={lastFMt}
+        sunBurstT={sunBurstT}
       />
     </>
   );

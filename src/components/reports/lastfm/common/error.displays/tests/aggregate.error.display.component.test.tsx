@@ -4,7 +4,7 @@ import checkMockCall from "../../../../../../tests/fixtures/mock.component.call"
 import mockRouter from "../../../../../../tests/fixtures/mock.router";
 import Authentication from "../../../../../authentication/authentication.container";
 import ErrorDisplay from "../../../../../errors/display/error.display.component";
-import { MockReportClass } from "../../sunburst.report/tests/mock.sunburst.report.class";
+import { MockReportClass } from "../../sunburst.report/tests/fixtures/mock.sunburst.report.class";
 import AggregateErrorDisplayComponent from "../aggregate.error.display.component";
 import type { LastFMUserStateBase } from "../../../../../../types/user/state.types";
 

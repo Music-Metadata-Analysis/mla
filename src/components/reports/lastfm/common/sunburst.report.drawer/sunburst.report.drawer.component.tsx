@@ -1,83 +1,92 @@
-import { Box, Divider, Flex } from "@chakra-ui/react";
-import { useEffect } from "react";
-import useAnalytics from "../../../../../hooks/analytics";
+import { Divider, Flex } from "@chakra-ui/react";
+import { useRef } from "react";
+import SunBurstNodeList from "./nodes/node.list.component";
+import SunBurstDrawerControl from "./panels/drawer.control.panel.component";
+import SunBurstDrawerTitle from "./panels/drawer.title.panel.component";
 import useColour from "../../../../../hooks/colour";
-import StyledButtonLink from "../../../../button/button.external.link/button.external.link.component";
 import Drawer from "../../../common/drawer/drawer.component";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type { d3Node } from "../../../../../types/reports/sunburst.types";
+import type SunBurstNodeEncapsulation from "../sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 import type { TFunction } from "next-i18next";
 
-export interface LastFMDrawerInterface<T extends UserState<unknown>> {
-  artWorkAltText: string;
+export interface LastFMSunBurstDrawerInterface {
+  alignment: "left" | "right";
   isOpen: boolean;
-  fallbackImage: string;
-  objectIndex: number;
+  lastFMt: TFunction;
+  node: SunBurstNodeEncapsulation;
   onClose: () => void;
-  t: TFunction;
-  userState: T;
+  sunBurstT: TFunction;
+  setSelectedNode: (node: d3Node) => void;
+  svgTransition: boolean;
 }
 
 export const testIDs = {
-  LastFMDrawer: "LastFMDrawer",
-  LastFMDrawerCloseButton: "LastFMDrawerCloseButton",
-  LastFMDrawerExternalLink: "LastFMDrawerExternalLink",
-  LastFMDrawerPlayCount: "LastFMDrawerPlayCount",
-  LastFMDrawerRank: "LastFMDrawerRank",
+  LastFMSunBurstDrawer: "LastFMSunBurstDrawer",
+  LastFMSunBurstDrawerBackButton: "LastFMSunBurstDrawerBackButton",
+  LastFMSunBurstDrawerEntityList: "LastFMSunBurstDrawerEntityList",
+  LastFMSunBurstDrawerListTitle: "LastFMSunBurstDrawerListTitle",
+  LastFMSunBurstDrawerPercentage: "LastFMSunBurstDrawerPercentage",
+  LastFMSunBurstDrawerSubTitle: "LastFMSunBurstDrawerSubTitle",
+  LastFMSunBurstDrawerTitle: "LastFMSunBurstDrawerTitle",
+  LastFMSunBurstDrawerValue: "LastFMSunBurstDrawerValue",
 };
 
-export default function FlipCardDrawer<
-  UserStateType extends UserState<unknown>
->({
-  artWorkAltText,
-  fallbackImage,
+export default function LastFMSunBurstDrawer({
+  alignment,
   isOpen,
-  objectIndex,
   onClose,
-  t,
-  userState,
-}: LastFMDrawerInterface<UserStateType>) {
-  const analytics = useAnalytics();
+  node,
+  setSelectedNode,
+  svgTransition,
+}: LastFMSunBurstDrawerInterface) {
   const { componentColour } = useColour();
-  //const artwork = userState.getArtwork(
-  //  objectIndex,
-  //  drawerSettings.lastFMImageSize
-  //);
-  //const externalLink = userState.getExternalLink(objectIndex);
-  //const playCount = userState.getPlayCount(objectIndex);
-  //const title = userState.getDrawerTitle(objectIndex);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    //analytics.event(userState.getDrawerEvent(objectIndex));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const selectChildNode = (targetNode: SunBurstNodeEncapsulation) => {
+    setSelectedNode(targetNode.getNode());
+  };
+
+  const selectParentNode = () => {
+    setSelectedNode(node.getParent() as d3Node);
+  };
 
   return (
     <Drawer
-      title={"Open Drawer"}
-      data-testid={testIDs.LastFMDrawer}
+      data-testid={testIDs.LastFMSunBurstDrawer}
       isOpen={isOpen}
       onClose={onClose}
+      placement={alignment}
+      alwaysOpen={true}
     >
-      <Flex>
-        <Box borderWidth={"1px"} borderColor={componentColour.details}>
-          {"Place Holder Text"}
-        </Box>
-        <Divider ml={`10px`} mr={`10px`} orientation="vertical" />
-        <Flex flexDirection={"column"} justifyContent={"space-between"}>
-          <div>
-            <p data-testid={testIDs.LastFMDrawerRank}>
-              <strong>{t("flipCardReport.drawer.rank")}</strong>
-              {`: ${objectIndex + 1}`}
-            </p>
-            <p data-testid={testIDs.LastFMDrawerPlayCount}>
-              <strong>{t("flipCardReport.drawer.playCount")}</strong>
-              {`: ${"playCount"}`}
-            </p>
-          </div>
-          <StyledButtonLink href={"externalLink"}>
-            {t("flipCardReport.drawer.buttonText")}
-          </StyledButtonLink>
-        </Flex>
+      <Flex
+        flexDirection={"column"}
+        bg={componentColour.background}
+        color={componentColour.foreground}
+        height={"100%"}
+      >
+        <SunBurstDrawerTitle node={node} />
+        <Divider
+          mt={"10px"}
+          mb={"10px"}
+          orientation="horizontal"
+          bg={componentColour.details}
+        />
+        <SunBurstDrawerControl
+          node={node}
+          selectParentNode={selectParentNode}
+        />
+        <Divider
+          mt={"10px"}
+          mb={"10px"}
+          orientation="horizontal"
+          bg={componentColour.details}
+        />
+        <SunBurstNodeList
+          node={node}
+          scrollRef={scrollRef}
+          selectChildNode={selectChildNode}
+          svgTransition={svgTransition}
+        />
       </Flex>
     </Drawer>
   );

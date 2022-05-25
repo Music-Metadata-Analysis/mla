@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import MockStage2Report from "../../../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import mockRouter from "../../../../../../../tests/fixtures/mock.router";
-import { MockReportClass } from "../../../sunburst.report/tests/mock.sunburst.report.class";
+import { MockReportClass } from "../../../sunburst.report/tests/fixtures/mock.sunburst.report.class";
 import ConditionalErrorDisplayBase from "../error.condition.display.base.class";
 import type { PlayCountByArtistReportInterface } from "../../../../../../../types/clients/api/lastfm/response.types";
 import type { AggregateBaseReportResponseInterface } from "../../../../../../../types/integrations/base.types";

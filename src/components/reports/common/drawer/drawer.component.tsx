@@ -11,9 +11,11 @@ import useColour from "../../../../hooks/colour";
 import type { PropsWithChildren } from "react";
 
 export interface DrawerInterface {
-  title: string;
+  title?: string;
   isOpen: boolean;
   onClose: () => void;
+  placement: "bottom" | "left" | "right" | "top";
+  alwaysOpen?: boolean;
 }
 
 export const testIDs = {
@@ -23,28 +25,47 @@ export const testIDs = {
   DrawerHeader: "DrawerHeader",
 };
 
-const AlbumDrawer = ({
+const LastFMReportDrawer = ({
   children,
   title,
   isOpen,
   onClose,
+  alwaysOpen,
+  placement,
 }: PropsWithChildren<DrawerInterface>) => {
   const { componentColour, transparent } = useColour();
+
+  const placementOpposites = {
+    bottom: "Top",
+    left: "Right",
+    right: "Left",
+    top: "Bottom",
+  };
+
+  const getBorderProps = () => {
+    return {
+      [`border${placementOpposites[placement]}`]: "1px",
+    };
+  };
 
   return (
     <Drawer
       data-testid={testIDs.Drawer}
-      placement={"bottom"}
       isOpen={isOpen}
       onClose={onClose}
+      placement={placement}
+      variant={alwaysOpen ? "alwaysOpen" : undefined}
     >
-      <DrawerOverlay />
+      {alwaysOpen ? null : <DrawerOverlay />}
       <DrawerContent
         bg={componentColour.background}
         color={componentColour.foreground}
+        borderColor={componentColour.foreground}
         sx={{
           caretColor: transparent,
         }}
+        pointerEvents={"auto"}
+        {...getBorderProps()}
       >
         <DrawerCloseButton
           data-testid={testIDs.DrawerCloseButton}
@@ -52,7 +73,11 @@ const AlbumDrawer = ({
             boxShadow: "none !important",
           }}
         />
-        <DrawerHeader data-testid={testIDs.DrawerHeader}>{title}</DrawerHeader>
+        {title ? (
+          <DrawerHeader data-testid={testIDs.DrawerHeader}>
+            {title}
+          </DrawerHeader>
+        ) : null}
         <Divider
           style={{ background: componentColour.scheme }}
           orientation="horizontal"
@@ -68,4 +93,4 @@ const AlbumDrawer = ({
   );
 };
 
-export default AlbumDrawer;
+export default LastFMReportDrawer;

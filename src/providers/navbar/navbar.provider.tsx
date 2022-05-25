@@ -5,13 +5,22 @@ import type { NavBarProviderInterface } from "../../types/navbar.types";
 export const NavBarContext = createContext(InitialValues);
 
 const NavBarProvider = ({ children }: NavBarProviderInterface) => {
-  const [isVisible, setIsVisible] = useState(InitialValues.isVisible);
+  const [isVisible, setIsVisible] = useState(InitialValues.getters.isVisible);
+  const [isHamburgerEnabled, setIsHamburgerEnabled] = useState(
+    InitialValues.getters.isHamburgerEnabled
+  );
 
   return (
     <NavBarContext.Provider
       value={{
-        isVisible,
-        setIsVisible,
+        getters: {
+          isVisible,
+          isHamburgerEnabled,
+        },
+        setters: {
+          setIsVisible,
+          setIsHamburgerEnabled,
+        },
       }}
     >
       {children}
