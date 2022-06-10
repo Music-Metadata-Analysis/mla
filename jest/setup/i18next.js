@@ -9,6 +9,7 @@ import legal from "../../public/locales/en/legal.json";
 import main from "../../public/locales/en/main.json";
 import navbar from "../../public/locales/en/navbar.json";
 import splash from "../../public/locales/en/splash.json";
+import sunburst from "../../public/locales/en/sunburst.json";
 
 i18n.use(initReactI18next).init({
   ...i18nConfig,
@@ -23,6 +24,7 @@ i18n.use(initReactI18next).init({
       main,
       navbar,
       splash,
+      sunburst,
     },
   },
 });

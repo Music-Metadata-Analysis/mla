@@ -1,5 +1,8 @@
 import EventDefinition from "./event.class";
-import type { IntegrationRequestType } from "../types/analytics.types";
+import type {
+  IntegrationRequestType,
+  SunBurstEntityTypes,
+} from "../types/analytics.types";
 
 const Events = {
   Auth: {
@@ -49,6 +52,12 @@ const Events = {
         category: "LAST.FM",
         label: "DATA: TRACK",
         action: `VIEWED TRACK DETAILS: ${artistName}:${trackName}.`,
+      }),
+    SunBurstNodeSelected: (entity: SunBurstEntityTypes, name: string) =>
+      new EventDefinition({
+        category: "LAST.FM",
+        label: `DATA: ${entity}`,
+        action: `VIEWED ${entity} DETAILS: ${name}.`,
       }),
   },
   General: {

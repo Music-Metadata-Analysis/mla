@@ -8,7 +8,9 @@ export type EventDefinitionType = {
     | "CONTACT"
     | "DATA: ALBUM"
     | "DATA: ARTIST"
+    | "DATA: ROOT"
     | "DATA: TRACK"
+    | "DATA: UNKNOWN"
     | "ERROR"
     | "EXTERNAL_LINK"
     | "INTERNAL_LINK"
@@ -51,3 +53,10 @@ export type IntegrationRequestType =
   | "TOP20 ARTISTS"
   | "TOP20 TRACKS"
   | "TRACK INFO";
+
+export type SunBurstEntityTypes =
+  | "ALBUM"
+  | "ARTIST"
+  | "ROOT"
+  | "TRACK"
+  | "UNKNOWN";

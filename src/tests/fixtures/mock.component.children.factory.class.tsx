@@ -4,8 +4,25 @@ class MockComponentWithChildrenFactory {
       __esModule: true,
     };
     mockModule[exportName] = jest.fn(
-      ({ children }: { children: React.ReactChildren }) => {
-        return <div data-testid={name}>{children}</div>;
+      ({
+        children,
+        ...props
+      }: {
+        "data-testid": string | undefined;
+        onClick: (...args: unknown[]) => void | undefined;
+        disabled: boolean | undefined;
+        children: React.ReactChildren;
+      }) => {
+        return (
+          <div
+            data-testid={props["data-testid"] ? props["data-testid"] : name}
+            onClick={
+              props["onClick"] && !props.disabled ? props["onClick"] : undefined
+            }
+          >
+            {children}
+          </div>
+        );
       }
     );
     return mockModule;
