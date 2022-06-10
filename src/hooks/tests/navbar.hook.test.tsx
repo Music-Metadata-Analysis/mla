@@ -1,8 +1,8 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockUseNavBar from "./navbar.mock.hook";
 import NavConfig from "../../config/navbar";
-import { NavBarContext } from "../../providers/navbar/navbar.provider";
+import NavBarProvider from "../../providers/navbar/navbar.provider";
 import useNavBar from "../navbar";
 import type { NavBarContextInterface } from "../../types/navbar.types";
 import type { ReactNode } from "react";
@@ -15,7 +15,6 @@ interface MockInterfaceContextWithChildren {
 describe("useNavBar", () => {
   let originalEnvironment: typeof process.env;
   let received: ReturnType<typeof arrange>;
-  const mockSetIsVisible = jest.fn();
 
   beforeAll(() => {
     originalEnvironment = process.env;
@@ -29,37 +28,37 @@ describe("useNavBar", () => {
     process.env = originalEnvironment;
   });
 
-  const providerWrapper = ({
-    children,
-    mockContext,
-  }: MockInterfaceContextWithChildren) => {
-    return (
-      <NavBarContext.Provider value={mockContext}>
-        {children}
-      </NavBarContext.Provider>
-    );
+  const providerWrapper = ({ children }: MockInterfaceContextWithChildren) => {
+    return <NavBarProvider>{children}</NavBarProvider>;
   };
 
-  const arrange = (providerProps: NavBarContextInterface) => {
-    return renderHook(() => useNavBar(), {
-      wrapper: providerWrapper,
-      initialProps: {
-        mockContext: providerProps,
-      },
-    });
+  const arrange = () => {
+    return renderHook(() => useNavBar(), { wrapper: providerWrapper });
   };
 
   describe("when rendered", () => {
     beforeEach(() => {
-      received = arrange({
-        isVisible: true,
-        setIsVisible: mockSetIsVisible,
-      });
+      received = arrange();
     });
 
-    it("should contain the correct functions", () => {
-      expect(received.result.current.hideNavBar).toBeInstanceOf(Function);
-      expect(received.result.current.showNavBar).toBeInstanceOf(Function);
+    it("should contain the correct setter functions", () => {
+      expect(received.result.current.setters.hideNavBar).toBeInstanceOf(
+        Function
+      );
+      expect(received.result.current.setters.showNavBar).toBeInstanceOf(
+        Function
+      );
+      expect(received.result.current.setters.disableHamburger).toBeInstanceOf(
+        Function
+      );
+      expect(received.result.current.setters.enableHamburger).toBeInstanceOf(
+        Function
+      );
+    });
+
+    it("should contain the correct getters values", () => {
+      expect(received.result.current.getters.isHamburgerEnabled).toBe(true);
+      expect(received.result.current.getters.isVisible).toBe(true);
     });
 
     it("should contain all the same properties as the mock hook", () => {
@@ -69,59 +68,101 @@ describe("useNavBar", () => {
     });
   });
 
-  describe("when on a larger screen", () => {
-    beforeAll(() => {
-      global.innerHeight = NavConfig.heightDuringInput;
-      received = arrange({
-        isVisible: true,
-        setIsVisible: mockSetIsVisible,
+  const checkHamburgerControls = () => {
+    describe("when disableHamburger is called", () => {
+      beforeEach(
+        async () =>
+          await act(async () => {
+            received.result.current.setters.disableHamburger();
+          })
+      );
+
+      it("should update the correct hook value", () => {
+        expect(received.result.current.getters.isHamburgerEnabled).toBe(false);
       });
+
+      describe("when enableHamburger is called", () => {
+        beforeEach(
+          async () =>
+            await act(async () => {
+              received.result.current.setters.enableHamburger();
+            })
+        );
+
+        it("should update the correct hook value", () => {
+          expect(received.result.current.getters.isHamburgerEnabled).toBe(true);
+        });
+      });
+    });
+  };
+
+  describe("when on a larger screen", () => {
+    beforeEach(() => {
+      global.innerHeight = NavConfig.heightDuringInput;
+      received = arrange();
     });
 
     describe("when hideNavBar is called", () => {
-      beforeEach(() => received.result.current.hideNavBar());
+      beforeEach(
+        async () =>
+          await act(async () => {
+            received.result.current.setters.hideNavBar();
+          })
+      );
 
       it("should not hide the navbar as expected", () => {
-        expect(mockSetIsVisible).toBeCalledTimes(1);
-        expect(mockSetIsVisible).toBeCalledWith(true);
+        expect(received.result.current.getters.isVisible).toBe(true);
+      });
+
+      describe("when showNavBar is called", () => {
+        beforeEach(
+          async () =>
+            await act(async () => {
+              received.result.current.setters.showNavBar();
+            })
+        );
+
+        it("should show the navbar as expected", () => {
+          expect(received.result.current.getters.isVisible).toBe(true);
+        });
       });
     });
 
-    describe("when showNavBar is called", () => {
-      beforeEach(() => received.result.current.showNavBar());
-
-      it("should show the navbar as expected", () => {
-        expect(mockSetIsVisible).toBeCalledTimes(1);
-        expect(mockSetIsVisible).toBeCalledWith(true);
-      });
-    });
+    checkHamburgerControls();
   });
 
   describe("when on a smaller screen", () => {
-    beforeAll(() => {
+    beforeEach(() => {
       global.innerHeight = NavConfig.heightDuringInput - 1;
-      received = arrange({
-        isVisible: true,
-        setIsVisible: mockSetIsVisible,
-      });
+      received = arrange();
     });
 
     describe("when hideNavBar is called", () => {
-      beforeEach(() => received.result.current.hideNavBar());
+      beforeEach(
+        async () =>
+          await act(async () => {
+            received.result.current.setters.hideNavBar();
+          })
+      );
 
       it("should hide the navbar as expected", () => {
-        expect(mockSetIsVisible).toBeCalledTimes(1);
-        expect(mockSetIsVisible).toBeCalledWith(false);
+        expect(received.result.current.getters.isVisible).toBe(false);
+      });
+
+      describe("when showNavBar is called", () => {
+        beforeEach(
+          async () =>
+            await act(async () => {
+              received.result.current.setters.showNavBar();
+            })
+        );
+
+        it("should show the navbar as expected", () => {
+          expect(received.result.current.getters.isVisible).toBe(true);
+        });
       });
     });
 
-    describe("when showNavBar is called", () => {
-      beforeEach(() => received.result.current.showNavBar());
-
-      it("should show the navbar as expected", () => {
-        expect(mockSetIsVisible).toBeCalledTimes(1);
-        expect(mockSetIsVisible).toBeCalledWith(true);
-      });
-    });
+    checkHamburgerControls();
   });
 });

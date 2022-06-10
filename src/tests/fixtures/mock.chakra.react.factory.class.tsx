@@ -1,3 +1,5 @@
+import { forwardRef } from "react";
+
 class MockChakraReactComponents {
   create = (mocks: string[]) => {
     const originalModule = jest.requireActual("@chakra-ui/react");
@@ -10,9 +12,15 @@ class MockChakraReactComponents {
       const Original = originalModule[mock];
       const createdMock = jest
         .fn()
-        .mockImplementation(({ children, ...props }) => (
-          <Original {...props}>{children}</Original>
-        ));
+        .mockImplementation(({ children, ...props }) => {
+          const Wrapped = forwardRef((props, ref) => (
+            <Original ref={ref} {...props}>
+              {children}
+            </Original>
+          ));
+          Wrapped.displayName = Original.displayName;
+          return <Wrapped {...props} />;
+        });
       mockModule[mock] = createdMock;
     });
 

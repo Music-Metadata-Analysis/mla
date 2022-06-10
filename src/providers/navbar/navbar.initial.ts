@@ -2,8 +2,14 @@ import { voidFn } from "../../utils/voids";
 import type { NavBarContextInterface } from "../../types/navbar.types";
 
 const InitialValues = <NavBarContextInterface>{
-  isVisible: true,
-  setIsVisible: voidFn,
+  getters: {
+    isVisible: true,
+    isHamburgerEnabled: true,
+  },
+  setters: {
+    setIsVisible: voidFn,
+    setIsHamburgerEnabled: voidFn,
+  },
 };
 
 export default InitialValues;
