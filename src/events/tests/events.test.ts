@@ -70,5 +70,21 @@ describe("Dynamic Events", () => {
         checkEvent(expected, Events.LastFM.TrackViewed(artistName, trackName));
       });
     });
+
+    describe("SunBurstNodeSelected", () => {
+      it("should generate the expected result", () => {
+        const entityName = "Test Track";
+        const entityType = "UNKNOWN";
+        const expected = new EventDefinition({
+          category: "LAST.FM",
+          label: `DATA: ${entityType}`,
+          action: `VIEWED ${entityType} DETAILS: ${entityName}.`,
+        });
+        checkEvent(
+          expected,
+          Events.LastFM.SunBurstNodeSelected("UNKNOWN", "Test Track")
+        );
+      });
+    });
   });
 });

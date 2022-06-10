@@ -1,0 +1,32 @@
+{
+  "name": "Top Artists",
+  "entity": "root",
+  "children": [
+    {
+      "entity": "artists",
+      "name": "Caspian",
+      "children": [
+        {
+          "entity": "albums",
+          "name": "The Four Trees",
+          "value": 159,
+          "children": [
+            { "entity": "tracks", "name": "Moksha" },
+            { "entity": "tracks", "name": "Some Are White Light" },
+            { "entity": "tracks", "name": "Sea Lawn" },
+            { "entity": "tracks", "name": "Crawlspace" },
+            { "entity": "tracks", "name": "Book IX" },
+            { "entity": "tracks", "name": "The Dropsonde" },
+            { "entity": "tracks", "name": "Brombie" },
+            { "entity": "tracks", "name": "Our Breath In Winter" },
+            { "entity": "tracks", "name": "The Dove" },
+            { "entity": "tracks", "name": "ASA" },
+            { "entity": "tracks", "name": "...Reprise" }
+          ]
+        },
+        { "entity": "albums", "name": "Other", "value": 4384 }
+      ]
+    },
+    { "entity": "artists", "name": "Other", "value": 174116 }
+  ]
+}

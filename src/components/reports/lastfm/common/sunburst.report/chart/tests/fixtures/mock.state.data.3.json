@@ -1,0 +1,58 @@
+{
+  "data": {
+    "integration": "LAST.FM",
+    "report": {
+      "artists": [],
+      "playCountByArtist": {
+        "status": {
+          "complete": true,
+          "steps_total": 832,
+          "steps_complete": 832
+        },
+        "created": "2022-05-16T15:57:54.437Z",
+        "content": [
+          {
+            "name": "Lights & Motion",
+            "playcount": 5709,
+            "albums": [
+              {
+                "name": "Chronicle",
+                "playcount": 889,
+                "tracks": [
+                  { "name": "Fireflies", "rank": 1, "fetched": true },
+                  { "name": "Glow", "rank": 2, "fetched": true },
+                  { "name": "Antlers", "rank": 3, "fetched": true },
+                  { "name": "Reborn", "rank": 4, "fetched": true },
+                  { "name": "Northern Lights", "rank": 5, "fetched": true },
+                  { "name": "Particle Storm", "rank": 6, "fetched": true },
+                  {
+                    "name": "As the World Goes Away",
+                    "rank": 7,
+                    "fetched": true
+                  },
+                  { "name": "Paper Wings", "rank": 8, "fetched": true },
+                  {
+                    "name": "The Spectacular Quiet",
+                    "rank": 9,
+                    "fetched": true
+                  }
+                ],
+                "fetched": true
+              }
+            ],
+            "fetched": true
+          }
+        ]
+      },
+      "tracks": [],
+      "image": [],
+      "playcount": 184368
+    }
+  },
+  "error": null,
+  "inProgress": false,
+  "profileUrl": "https://www.last.fm/user/niall-byrne",
+  "ready": true,
+  "retries": 3,
+  "userName": "niall-byrne"
+}

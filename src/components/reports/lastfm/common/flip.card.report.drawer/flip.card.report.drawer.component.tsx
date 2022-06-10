@@ -56,6 +56,7 @@ export default function FlipCardDrawer<UserStateType extends UserState>({
       data-testid={testIDs.LastFMDrawer}
       isOpen={isOpen}
       onClose={onClose}
+      placement={"bottom"}
     >
       <Flex>
         <Box borderWidth={"1px"} borderColor={componentColour.details}>

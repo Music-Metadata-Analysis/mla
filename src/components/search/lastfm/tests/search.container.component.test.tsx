@@ -57,20 +57,22 @@ describe("SearchContainer", () => {
 
   it("should attempt to hide the NavBar during render", () => {
     arrange();
-    expect(mockNavBarHook.hideNavBar).toBeCalledTimes(1);
+    expect(mockNavBarHook.setters.hideNavBar).toBeCalledTimes(1);
   });
 
   it("should attempt to hide the NavBar during a screen resize", () => {
     arrange();
-    expect(mockNavBarHook.hideNavBar).toBeCalledTimes(1);
+    expect(mockNavBarHook.setters.hideNavBar).toBeCalledTimes(1);
     global.dispatchEvent(new Event("resize"));
-    expect(mockNavBarHook.hideNavBar).toBeCalledTimes(2);
+    expect(mockNavBarHook.setters.hideNavBar).toBeCalledTimes(2);
   });
 
   it("should show the NavBar during cleanup", async () => {
     arrange();
     cleanup();
-    await waitFor(() => expect(mockNavBarHook.showNavBar).toBeCalledTimes(1));
+    await waitFor(() =>
+      expect(mockNavBarHook.setters.showNavBar).toBeCalledTimes(1)
+    );
   });
 
   it("should render the SearchForm with the correct props", () => {

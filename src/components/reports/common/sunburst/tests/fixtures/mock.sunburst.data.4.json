@@ -1,0 +1,87 @@
+{
+  "name": "Top Artists",
+  "entity": "root",
+  "children": [
+    {
+      "entity": "artists",
+      "name": "Lights & Motion",
+      "children": [
+        {
+          "entity": "albums",
+          "name": "Chronicle",
+          "value": 889,
+          "children": [
+            { "entity": "tracks", "name": "Fireflies" },
+            { "entity": "tracks", "name": "Glow" },
+            { "entity": "tracks", "name": "Antlers" },
+            { "entity": "tracks", "name": "Reborn" },
+            { "entity": "tracks", "name": "Northern Lights" },
+            { "entity": "tracks", "name": "Particle Storm" },
+            { "entity": "tracks", "name": "As the World Goes Away" },
+            { "entity": "tracks", "name": "Paper Wings" },
+            { "entity": "tracks", "name": "The Spectacular Quiet" }
+          ]
+        },
+        {
+          "entity": "albums",
+          "name": "Reanimation",
+          "value": 2688,
+          "children": [
+            { "entity": "tracks", "name": "Requiem" },
+            { "entity": "tracks", "name": "Home" },
+            { "entity": "tracks", "name": "Aerials" },
+            { "entity": "tracks", "name": "Drift" },
+            { "entity": "tracks", "name": "The March" },
+            { "entity": "tracks", "name": "Victory Rose" },
+            { "entity": "tracks", "name": "Epilogue" },
+            { "entity": "tracks", "name": "Fractured" },
+            { "entity": "tracks", "name": "Texas" },
+            { "entity": "tracks", "name": "Faded Fluorescence" },
+            { "entity": "tracks", "name": "Departure" },
+            { "entity": "tracks", "name": "Reanimation" },
+            { "entity": "tracks", "name": "Dream Away" }
+          ]
+        },
+        {
+          "entity": "albums",
+          "name": "Bloom",
+          "value": 259,
+          "children": [
+            { "entity": "tracks", "name": "Overture" },
+            { "entity": "tracks", "name": "Vanilla Sky" },
+            { "entity": "tracks", "name": "Bloom" },
+            { "entity": "tracks", "name": "Glaciers" },
+            { "entity": "tracks", "name": "Lion" }
+          ]
+        },
+        { "entity": "albums", "name": "Other", "value": 1873 }
+      ]
+    },
+    {
+      "entity": "artists",
+      "name": "Caspian",
+      "children": [
+        {
+          "entity": "albums",
+          "name": "The Four Trees",
+          "value": 159,
+          "children": [
+            { "entity": "tracks", "name": "Moksha" },
+            { "entity": "tracks", "name": "Some Are White Light" },
+            { "entity": "tracks", "name": "Sea Lawn" },
+            { "entity": "tracks", "name": "Crawlspace" },
+            { "entity": "tracks", "name": "Book IX" },
+            { "entity": "tracks", "name": "The Dropsonde" },
+            { "entity": "tracks", "name": "Brombie" },
+            { "entity": "tracks", "name": "Our Breath In Winter" },
+            { "entity": "tracks", "name": "The Dove" },
+            { "entity": "tracks", "name": "ASA" },
+            { "entity": "tracks", "name": "...Reprise" }
+          ]
+        },
+        { "entity": "albums", "name": "Other", "value": 4384 }
+      ]
+    },
+    { "entity": "artists", "name": "Other", "value": 174116 }
+  ]
+}

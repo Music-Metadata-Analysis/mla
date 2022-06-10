@@ -1,0 +1,40 @@
+{
+  "data": {
+    "integration": "LAST.FM",
+    "report": {
+      "artists": [],
+      "playCountByArtist": {
+        "status": {
+          "complete": true,
+          "steps_total": 832,
+          "steps_complete": 832
+        },
+        "created": "2022-05-16T15:57:54.437Z",
+        "content": [
+          {
+            "name": "Lights & Motion",
+            "playcount": 5709,
+            "albums": [
+              {
+                "name": "Chronicle",
+                "playcount": 889,
+                "tracks": [],
+                "fetched": true
+              }
+            ],
+            "fetched": true
+          }
+        ]
+      },
+      "tracks": [],
+      "image": [],
+      "playcount": 184368
+    }
+  },
+  "error": null,
+  "inProgress": false,
+  "profileUrl": "https://www.last.fm/user/niall-byrne",
+  "ready": true,
+  "retries": 3,
+  "userName": "niall-byrne"
+}

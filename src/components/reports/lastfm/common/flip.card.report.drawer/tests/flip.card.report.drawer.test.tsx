@@ -100,6 +100,7 @@ describe("FlipCardReportDrawer", () => {
           "data-testid": testIDs.LastFMDrawer,
           isOpen: true,
           title,
+          placement: "bottom",
         },
         0,
         ["onClose"]
