@@ -1,0 +1,141 @@
+{
+  "data": {
+    "integration": "LAST.FM",
+    "report": {
+      "albums": [],
+      "artists": [],
+      "playCountByArtist": {
+        "status": {
+          "complete": true,
+          "steps_total": 832,
+          "steps_complete": 832
+        },
+        "created": "2022-05-16T15:57:54.437Z",
+        "content": [
+          {
+            "name": "Lights & Motion",
+            "playcount": 5709,
+            "albums": [
+              {
+                "name": "Chronicle",
+                "playcount": 889,
+                "tracks": [
+                  { "name": "Fireflies", "rank": 1, "fetched": true },
+                  { "name": "Glow", "rank": 2, "fetched": true },
+                  { "name": "Antlers", "rank": 3, "fetched": true },
+                  { "name": "Reborn", "rank": 4, "fetched": true },
+                  { "name": "Northern Lights", "rank": 5, "fetched": true },
+                  { "name": "Particle Storm", "rank": 6, "fetched": true },
+                  {
+                    "name": "As the World Goes Away",
+                    "rank": 7,
+                    "fetched": true
+                  },
+                  { "name": "Paper Wings", "rank": 8, "fetched": true },
+                  {
+                    "name": "The Spectacular Quiet",
+                    "rank": 9,
+                    "fetched": true
+                  }
+                ],
+                "fetched": true
+              },
+              {
+                "name": "Reanimation",
+                "playcount": 2688,
+                "tracks": [
+                  { "name": "Requiem", "rank": 1, "fetched": true },
+                  { "name": "Home", "rank": 2, "fetched": true },
+                  { "name": "Aerials", "rank": 3, "fetched": true },
+                  { "name": "Drift", "rank": 4, "fetched": true },
+                  { "name": "The March", "rank": 5, "fetched": true },
+                  { "name": "Victory Rose", "rank": 6, "fetched": true },
+                  { "name": "Epilogue", "rank": 7, "fetched": true },
+                  { "name": "Fractured", "rank": 8, "fetched": true },
+                  { "name": "Texas", "rank": 9, "fetched": true },
+                  { "name": "Faded Fluorescence", "rank": 10, "fetched": true },
+                  { "name": "Departure", "rank": 11, "fetched": true },
+                  { "name": "Reanimation", "rank": 12, "fetched": true },
+                  { "name": "Dream Away", "rank": 13, "fetched": true }
+                ],
+                "fetched": true
+              },
+              {
+                "name": "Bloom",
+                "playcount": 259,
+                "tracks": [
+                  { "name": "Overture", "rank": 1, "fetched": true },
+                  { "name": "Vanilla Sky", "rank": 2, "fetched": true },
+                  { "name": "Bloom", "rank": 3, "fetched": true },
+                  { "name": "Glaciers", "rank": 4, "fetched": true },
+                  { "name": "Lion", "rank": 5, "fetched": true }
+                ],
+                "fetched": true
+              }
+            ],
+            "fetched": true
+          },
+          {
+            "name": "Caspian",
+            "playcount": 4543,
+            "albums": [
+              {
+                "name": "The Four Trees",
+                "playcount": 159,
+                "tracks": [
+                  { "name": "Moksha", "rank": 1, "fetched": true },
+                  {
+                    "name": "Some Are White Light",
+                    "rank": 2,
+                    "fetched": true
+                  },
+                  { "name": "Sea Lawn", "rank": 3, "fetched": true },
+                  { "name": "Crawlspace", "rank": 4, "fetched": true },
+                  { "name": "Book IX", "rank": 5, "fetched": true },
+                  { "name": "The Dropsonde", "rank": 6, "fetched": true },
+                  { "name": "Brombie", "rank": 7, "fetched": true },
+                  {
+                    "name": "Our Breath In Winter",
+                    "rank": 8,
+                    "fetched": true
+                  },
+                  { "name": "The Dove", "rank": 9, "fetched": true },
+                  { "name": "ASA", "rank": 10, "fetched": true },
+                  { "name": "...Reprise", "rank": 11, "fetched": true }
+                ],
+                "fetched": true
+              }
+            ],
+            "fetched": true
+          }
+        ]
+      },
+      "tracks": [],
+      "image": [
+        {
+          "size": "small",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/34s/3045c415a689785ec440988170f4d015.png"
+        },
+        {
+          "size": "medium",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/64s/3045c415a689785ec440988170f4d015.png"
+        },
+        {
+          "size": "large",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/174s/3045c415a689785ec440988170f4d015.png"
+        },
+        {
+          "size": "extralarge",
+          "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/3045c415a689785ec440988170f4d015.png"
+        }
+      ],
+      "playcount": 184368
+    }
+  },
+  "error": null,
+  "inProgress": false,
+  "profileUrl": "https://www.last.fm/user/niall-byrne",
+  "ready": true,
+  "retries": 3,
+  "userName": "niall-byrne"
+}

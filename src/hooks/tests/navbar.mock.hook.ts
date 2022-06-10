@@ -1,6 +1,14 @@
 const mockNavBarHook = {
-  hideNavBar: jest.fn(),
-  showNavBar: jest.fn(),
+  getters: {
+    isHamburgerEnabled: true,
+    isVisible: true,
+  },
+  setters: {
+    enableHamburger: jest.fn(),
+    disableHamburger: jest.fn(),
+    hideNavBar: jest.fn(),
+    showNavBar: jest.fn(),
+  },
 };
 
 export default mockNavBarHook;

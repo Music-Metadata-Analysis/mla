@@ -1,8 +1,14 @@
 import type { Dispatch, SetStateAction } from "react";
 
 export interface NavBarContextInterface {
-  isVisible: boolean;
-  setIsVisible: Dispatch<SetStateAction<boolean>>;
+  getters: {
+    isVisible: boolean;
+    isHamburgerEnabled: boolean;
+  };
+  setters: {
+    setIsVisible: Dispatch<SetStateAction<boolean>>;
+    setIsHamburgerEnabled: Dispatch<SetStateAction<boolean>>;
+  };
 }
 
 export interface NavBarProviderInterface {

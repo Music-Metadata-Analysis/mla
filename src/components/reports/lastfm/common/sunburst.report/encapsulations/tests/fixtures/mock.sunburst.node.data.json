@@ -1,0 +1,768 @@
+{
+  "data": {
+    "name": "Top Artists",
+    "entity": "root",
+    "children": [
+      {
+        "entity": "artists",
+        "name": "Lights & Motion",
+        "children": [
+          {
+            "entity": "albums",
+            "name": "Chronicle",
+            "value": 889,
+            "children": [
+              { "entity": "tracks", "name": "Fireflies" },
+              { "entity": "tracks", "name": "Glow" },
+              { "entity": "tracks", "name": "Antlers" },
+              { "entity": "tracks", "name": "Reborn" },
+              { "entity": "tracks", "name": "Northern Lights" },
+              { "entity": "tracks", "name": "Particle Storm" },
+              { "entity": "tracks", "name": "As the World Goes Away" },
+              { "entity": "tracks", "name": "Paper Wings" },
+              { "entity": "tracks", "name": "The Spectacular Quiet" }
+            ]
+          },
+          {
+            "entity": "albums",
+            "name": "Reanimation",
+            "value": 2688,
+            "children": [
+              { "entity": "tracks", "name": "Requiem" },
+              { "entity": "tracks", "name": "Home" },
+              { "entity": "tracks", "name": "Aerials" },
+              { "entity": "tracks", "name": "Drift" },
+              { "entity": "tracks", "name": "The March" },
+              { "entity": "tracks", "name": "Victory Rose" },
+              { "entity": "tracks", "name": "Epilogue" },
+              { "entity": "tracks", "name": "Fractured" },
+              { "entity": "tracks", "name": "Texas" },
+              { "entity": "tracks", "name": "Faded Fluorescence" },
+              { "entity": "tracks", "name": "Departure" },
+              { "entity": "tracks", "name": "Reanimation" },
+              { "entity": "tracks", "name": "Dream Away" }
+            ]
+          },
+          {
+            "entity": "albums",
+            "name": "Bloom",
+            "value": 259,
+            "children": [
+              { "entity": "tracks", "name": "Overture" },
+              { "entity": "tracks", "name": "Vanilla Sky" },
+              { "entity": "tracks", "name": "Bloom" },
+              { "entity": "tracks", "name": "Glaciers" },
+              { "entity": "tracks", "name": "Lion" }
+            ]
+          },
+          { "entity": "albums", "name": "Other", "value": 1873 }
+        ]
+      },
+      {
+        "entity": "artists",
+        "name": "Caspian",
+        "children": [
+          {
+            "entity": "albums",
+            "name": "The Four Trees",
+            "value": 159,
+            "children": [
+              { "entity": "tracks", "name": "Moksha" },
+              { "entity": "tracks", "name": "Some Are White Light" },
+              { "entity": "tracks", "name": "Sea Lawn" },
+              { "entity": "tracks", "name": "Crawlspace" },
+              { "entity": "tracks", "name": "Book IX" },
+              { "entity": "tracks", "name": "The Dropsonde" },
+              { "entity": "tracks", "name": "Brombie" },
+              { "entity": "tracks", "name": "Our Breath In Winter" },
+              { "entity": "tracks", "name": "The Dove" },
+              { "entity": "tracks", "name": "ASA" },
+              { "entity": "tracks", "name": "...Reprise" }
+            ]
+          },
+          { "entity": "albums", "name": "Other", "value": 4384 }
+        ]
+      },
+      { "entity": "artists", "name": "Other", "value": 174116 }
+    ]
+  },
+  "height": 3,
+  "depth": 0,
+  "parent": null,
+  "children": [
+    {
+      "data": { "entity": "artists", "name": "Other", "value": 174116 },
+      "height": 0,
+      "depth": 1,
+      "parent": null,
+      "value": 174116,
+      "y0": 1,
+      "y1": 2,
+      "x0": 0,
+      "x1": 5.933801380634822
+    },
+    {
+      "data": {
+        "entity": "artists",
+        "name": "Lights & Motion",
+        "children": [
+          {
+            "entity": "albums",
+            "name": "Chronicle",
+            "value": 889,
+            "children": [
+              { "entity": "tracks", "name": "Fireflies" },
+              { "entity": "tracks", "name": "Glow" },
+              { "entity": "tracks", "name": "Antlers" },
+              { "entity": "tracks", "name": "Reborn" },
+              { "entity": "tracks", "name": "Northern Lights" },
+              { "entity": "tracks", "name": "Particle Storm" },
+              { "entity": "tracks", "name": "As the World Goes Away" },
+              { "entity": "tracks", "name": "Paper Wings" },
+              { "entity": "tracks", "name": "The Spectacular Quiet" }
+            ]
+          },
+          {
+            "entity": "albums",
+            "name": "Reanimation",
+            "value": 2688,
+            "children": [
+              { "entity": "tracks", "name": "Requiem" },
+              { "entity": "tracks", "name": "Home" },
+              { "entity": "tracks", "name": "Aerials" },
+              { "entity": "tracks", "name": "Drift" },
+              { "entity": "tracks", "name": "The March" },
+              { "entity": "tracks", "name": "Victory Rose" },
+              { "entity": "tracks", "name": "Epilogue" },
+              { "entity": "tracks", "name": "Fractured" },
+              { "entity": "tracks", "name": "Texas" },
+              { "entity": "tracks", "name": "Faded Fluorescence" },
+              { "entity": "tracks", "name": "Departure" },
+              { "entity": "tracks", "name": "Reanimation" },
+              { "entity": "tracks", "name": "Dream Away" }
+            ]
+          },
+          {
+            "entity": "albums",
+            "name": "Bloom",
+            "value": 259,
+            "children": [
+              { "entity": "tracks", "name": "Overture" },
+              { "entity": "tracks", "name": "Vanilla Sky" },
+              { "entity": "tracks", "name": "Bloom" },
+              { "entity": "tracks", "name": "Glaciers" },
+              { "entity": "tracks", "name": "Lion" }
+            ]
+          },
+          { "entity": "albums", "name": "Other", "value": 1873 }
+        ]
+      },
+      "height": 2,
+      "depth": 1,
+      "parent": null,
+      "children": [
+        {
+          "data": {
+            "entity": "albums",
+            "name": "Reanimation",
+            "value": 2688,
+            "children": [
+              { "entity": "tracks", "name": "Requiem" },
+              { "entity": "tracks", "name": "Home" },
+              { "entity": "tracks", "name": "Aerials" },
+              { "entity": "tracks", "name": "Drift" },
+              { "entity": "tracks", "name": "The March" },
+              { "entity": "tracks", "name": "Victory Rose" },
+              { "entity": "tracks", "name": "Epilogue" },
+              { "entity": "tracks", "name": "Fractured" },
+              { "entity": "tracks", "name": "Texas" },
+              { "entity": "tracks", "name": "Faded Fluorescence" },
+              { "entity": "tracks", "name": "Departure" },
+              { "entity": "tracks", "name": "Reanimation" },
+              { "entity": "tracks", "name": "Dream Away" }
+            ]
+          },
+          "height": 1,
+          "depth": 2,
+          "parent": null,
+          "children": [
+            {
+              "data": { "entity": "tracks", "name": "Requiem" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Home" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Aerials" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Drift" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "The March" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Victory Rose" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Epilogue" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Fractured" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Texas" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Faded Fluorescence" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Departure" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Reanimation" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            },
+            {
+              "data": { "entity": "tracks", "name": "Dream Away" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 5.933801380634822,
+              "x1": 5.933801380634822
+            }
+          ],
+          "value": 2688,
+          "y0": 2,
+          "y1": 3,
+          "x0": 5.933801380634822,
+          "x1": 6.025407310653582
+        },
+        {
+          "data": { "entity": "albums", "name": "Other", "value": 1873 },
+          "height": 0,
+          "depth": 2,
+          "parent": null,
+          "value": 1873,
+          "y0": 2,
+          "y1": 3,
+          "x0": 6.025407310653582,
+          "x1": 6.089238377217994
+        },
+        {
+          "data": {
+            "entity": "albums",
+            "name": "Chronicle",
+            "value": 889,
+            "children": [
+              { "entity": "tracks", "name": "Fireflies" },
+              { "entity": "tracks", "name": "Glow" },
+              { "entity": "tracks", "name": "Antlers" },
+              { "entity": "tracks", "name": "Reborn" },
+              { "entity": "tracks", "name": "Northern Lights" },
+              { "entity": "tracks", "name": "Particle Storm" },
+              { "entity": "tracks", "name": "As the World Goes Away" },
+              { "entity": "tracks", "name": "Paper Wings" },
+              { "entity": "tracks", "name": "The Spectacular Quiet" }
+            ]
+          },
+          "height": 1,
+          "depth": 2,
+          "parent": null,
+          "children": [
+            {
+              "data": { "entity": "tracks", "name": "Fireflies" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.089238377217994,
+              "x1": 6.089238377217994
+            },
+            {
+              "data": { "entity": "tracks", "name": "Glow" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.089238377217994,
+              "x1": 6.089238377217994
+            },
+            {
+              "data": { "entity": "tracks", "name": "Antlers" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.089238377217994,
+              "x1": 6.089238377217994
+            },
+            {
+              "data": { "entity": "tracks", "name": "Reborn" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.089238377217994,
+              "x1": 6.089238377217994
+            },
+            {
+              "data": { "entity": "tracks", "name": "Northern Lights" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.089238377217994,
+              "x1": 6.089238377217994
+            },
+            {
+              "data": { "entity": "tracks", "name": "Particle Storm" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.089238377217994,
+              "x1": 6.089238377217994
+            },
+            {
+              "data": { "entity": "tracks", "name": "As the World Goes Away" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.089238377217994,
+              "x1": 6.089238377217994
+            },
+            {
+              "data": { "entity": "tracks", "name": "Paper Wings" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.089238377217994,
+              "x1": 6.089238377217994
+            },
+            {
+              "data": { "entity": "tracks", "name": "The Spectacular Quiet" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.089238377217994,
+              "x1": 6.089238377217994
+            }
+          ],
+          "value": 889,
+          "y0": 2,
+          "y1": 3,
+          "x0": 6.089238377217994,
+          "x1": 6.119535130114823
+        },
+        {
+          "data": {
+            "entity": "albums",
+            "name": "Bloom",
+            "value": 259,
+            "children": [
+              { "entity": "tracks", "name": "Overture" },
+              { "entity": "tracks", "name": "Vanilla Sky" },
+              { "entity": "tracks", "name": "Bloom" },
+              { "entity": "tracks", "name": "Glaciers" },
+              { "entity": "tracks", "name": "Lion" }
+            ]
+          },
+          "height": 1,
+          "depth": 2,
+          "parent": null,
+          "children": [
+            {
+              "data": { "entity": "tracks", "name": "Overture" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.119535130114823,
+              "x1": 6.119535130114823
+            },
+            {
+              "data": { "entity": "tracks", "name": "Vanilla Sky" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.119535130114823,
+              "x1": 6.119535130114823
+            },
+            {
+              "data": { "entity": "tracks", "name": "Bloom" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.119535130114823,
+              "x1": 6.119535130114823
+            },
+            {
+              "data": { "entity": "tracks", "name": "Glaciers" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.119535130114823,
+              "x1": 6.119535130114823
+            },
+            {
+              "data": { "entity": "tracks", "name": "Lion" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.119535130114823,
+              "x1": 6.119535130114823
+            }
+          ],
+          "value": 259,
+          "y0": 2,
+          "y1": 3,
+          "x0": 6.119535130114823,
+          "x1": 6.128361743163506
+        }
+      ],
+      "value": 5709,
+      "y0": 1,
+      "y1": 2,
+      "x0": 5.933801380634822,
+      "x1": 6.128361743163506
+    },
+    {
+      "data": {
+        "entity": "artists",
+        "name": "Caspian",
+        "children": [
+          {
+            "entity": "albums",
+            "name": "The Four Trees",
+            "value": 159,
+            "children": [
+              { "entity": "tracks", "name": "Moksha" },
+              { "entity": "tracks", "name": "Some Are White Light" },
+              { "entity": "tracks", "name": "Sea Lawn" },
+              { "entity": "tracks", "name": "Crawlspace" },
+              { "entity": "tracks", "name": "Book IX" },
+              { "entity": "tracks", "name": "The Dropsonde" },
+              { "entity": "tracks", "name": "Brombie" },
+              { "entity": "tracks", "name": "Our Breath In Winter" },
+              { "entity": "tracks", "name": "The Dove" },
+              { "entity": "tracks", "name": "ASA" },
+              { "entity": "tracks", "name": "...Reprise" }
+            ]
+          },
+          { "entity": "albums", "name": "Other", "value": 4384 }
+        ]
+      },
+      "height": 2,
+      "depth": 1,
+      "parent": null,
+      "children": [
+        {
+          "data": { "entity": "albums", "name": "Other", "value": 4384 },
+          "height": 0,
+          "depth": 2,
+          "parent": null,
+          "value": 4384,
+          "y0": 2,
+          "y1": 3,
+          "x0": 6.128361743163506,
+          "x1": 6.277766652836959
+        },
+        {
+          "data": {
+            "entity": "albums",
+            "name": "The Four Trees",
+            "value": 159,
+            "children": [
+              { "entity": "tracks", "name": "Moksha" },
+              { "entity": "tracks", "name": "Some Are White Light" },
+              { "entity": "tracks", "name": "Sea Lawn" },
+              { "entity": "tracks", "name": "Crawlspace" },
+              { "entity": "tracks", "name": "Book IX" },
+              { "entity": "tracks", "name": "The Dropsonde" },
+              { "entity": "tracks", "name": "Brombie" },
+              { "entity": "tracks", "name": "Our Breath In Winter" },
+              { "entity": "tracks", "name": "The Dove" },
+              { "entity": "tracks", "name": "ASA" },
+              { "entity": "tracks", "name": "...Reprise" }
+            ]
+          },
+          "height": 1,
+          "depth": 2,
+          "parent": null,
+          "children": [
+            {
+              "data": { "entity": "tracks", "name": "Moksha" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            },
+            {
+              "data": { "entity": "tracks", "name": "Some Are White Light" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            },
+            {
+              "data": { "entity": "tracks", "name": "Sea Lawn" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            },
+            {
+              "data": { "entity": "tracks", "name": "Crawlspace" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            },
+            {
+              "data": { "entity": "tracks", "name": "Book IX" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            },
+            {
+              "data": { "entity": "tracks", "name": "The Dropsonde" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            },
+            {
+              "data": { "entity": "tracks", "name": "Brombie" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            },
+            {
+              "data": { "entity": "tracks", "name": "Our Breath In Winter" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            },
+            {
+              "data": { "entity": "tracks", "name": "The Dove" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            },
+            {
+              "data": { "entity": "tracks", "name": "ASA" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            },
+            {
+              "data": { "entity": "tracks", "name": "...Reprise" },
+              "height": 0,
+              "depth": 3,
+              "parent": null,
+              "value": 0,
+              "y0": 3,
+              "y1": 4,
+              "x0": 6.277766652836959,
+              "x1": 6.277766652836959
+            }
+          ],
+          "value": 159,
+          "y0": 2,
+          "y1": 3,
+          "x0": 6.277766652836959,
+          "x1": 6.283185307179587
+        }
+      ],
+      "value": 4543,
+      "y0": 1,
+      "y1": 2,
+      "x0": 6.128361743163506,
+      "x1": 6.283185307179587
+    }
+  ],
+  "value": 184368,
+  "y0": 0,
+  "x0": 0,
+  "x1": 6.283185307179586,
+  "y1": 1
+}

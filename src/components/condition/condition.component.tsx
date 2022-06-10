@@ -1,10 +1,10 @@
 interface ConditionalProps {
   isTrue: boolean;
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
 }
 
 const Condition = ({ isTrue, children }: ConditionalProps) => {
-  if (isTrue) return children;
+  if (isTrue) return <>{children}</>;
   return null;
 };
 

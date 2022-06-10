@@ -2,7 +2,7 @@ import AlbumInfo from "../datapoints/album.info";
 import ArtistAlbums from "../datapoints/artist.albums";
 import UserArtistsAndProfile from "../datapoints/user.artists.and.profile";
 import LastFMPlayCountByArtistDataClient from "../playcount.by.artist.sunburst.client.class";
-import type UserPlaycountByArtistState from "../../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
+import type PlayCountByArtistState from "../../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 
 describe("LastFMPlayCountByArtistDataClient", () => {
   const mockDispatch = jest.fn();
@@ -18,7 +18,7 @@ describe("LastFMPlayCountByArtistDataClient", () => {
           (instance = new LastFMPlayCountByArtistDataClient(
             mockDispatch,
             eventCreator,
-            mockState as unknown as UserPlaycountByArtistState
+            mockState as unknown as PlayCountByArtistState
           ))
       );
 

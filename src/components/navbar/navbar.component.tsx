@@ -7,7 +7,7 @@ import {
   useDisclosure,
   Stack,
 } from "@chakra-ui/react";
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import NavBarColorModeToggle from "./navbar.color.mode/navbar.color.mode.component";
 import NavBarLogo from "./navbar.logo/navbar.logo.component";
 import NavBarOptions from "./navbar.options/navbar.options.component";
@@ -16,7 +16,7 @@ import Spinner from "./navbar.spinner/navbar.spinner.component";
 import lastFMSettings from "../../config/lastfm";
 import useColour from "../../hooks/colour";
 import useLastFM from "../../hooks/lastfm";
-import { NavBarContext } from "../../providers/navbar/navbar.provider";
+import useNavBar from "../../hooks/navbar";
 import UserBaseState from "../../providers/user/encapsulations/lastfm/user.state.base.class";
 import Condition from "../condition/condition.component";
 
@@ -33,7 +33,7 @@ interface NavBarProps {
 
 export default function NavBar({ menuConfig }: NavBarProps) {
   const { componentColour, transparent } = useColour();
-  const { isVisible } = useContext(NavBarContext);
+  const controls = useNavBar();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useLastFM();
   const userState = new UserBaseState(user.userProperties);
@@ -48,12 +48,12 @@ export default function NavBar({ menuConfig }: NavBarProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.userProperties.ready]);
 
-  if (!isVisible) return null;
+  if (!controls.getters.isVisible) return null;
 
   return (
     <>
       <Box
-        zIndex={100}
+        zIndex={1000}
         fontSize={[18, 18, 20]}
         style={{ position: "fixed", top: 0, width: "100%" }}
         data-testid={testIDs.NavBarRoot}
@@ -89,6 +89,7 @@ export default function NavBar({ menuConfig }: NavBarProps) {
                 aria-label={"Open Menu"}
                 display={{ sm: "none" }}
                 onClick={isOpen ? onClose : onOpen}
+                disabled={!controls.getters.isHamburgerEnabled}
               />
               <HStack spacing={8} alignItems={"center"}>
                 <HStack

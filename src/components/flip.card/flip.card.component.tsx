@@ -78,16 +78,12 @@ export default function FlipCard({
           >
             <Img
               data-testid={testIDs.flipFrontImage}
-              src={image}
+              src={hasError ? fallbackImage : image}
               alt={`${t("frontAltText")}: ${index + 1}`}
               width={`${size - border * 2}px`}
               height={`${size - border * 2}px`}
               onLoad={() => imageIsLoaded()}
-              onError={(e) => {
-                (e.target as HTMLImageElement).onerror = null;
-                (e.target as HTMLImageElement).src = fallbackImage;
-                setError(true);
-              }}
+              onError={() => setError(true)}
               style={{
                 position: "relative",
               }}

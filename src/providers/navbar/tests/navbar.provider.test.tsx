@@ -25,10 +25,16 @@ describe("NavBarProvider", () => {
       arrange();
     });
 
-    it("should contain the expected properties", () => {
+    it("should contain the expected getters", () => {
       const properties = received as NavBarContextInterface;
-      expect(typeof properties.isVisible).toBe("boolean");
-      expect(typeof properties.setIsVisible).toBe("function");
+      expect(typeof properties.getters.isVisible).toBe("boolean");
+      expect(typeof properties.getters.isHamburgerEnabled).toBe("boolean");
+    });
+
+    it("should contain the expected setters", () => {
+      const properties = received as NavBarContextInterface;
+      expect(typeof properties.setters.setIsVisible).toBe("function");
+      expect(typeof properties.setters.setIsHamburgerEnabled).toBe("function");
     });
   });
 });
