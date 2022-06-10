@@ -15,7 +15,7 @@ import type {
   AggregateReportOperationType,
 } from "../../../../../../types/integrations/base.types";
 
-export default class UserPlaycountByArtistState extends UserSunBurstReportBaseState<
+export default class PlayCountByArtistState extends UserSunBurstReportBaseState<
   PlayCountByArtistReportInterface[]
 > {
   private transformations = {
@@ -36,7 +36,7 @@ export default class UserPlaycountByArtistState extends UserSunBurstReportBaseSt
   updateWithResponse(
     response: unknown,
     params: LastFMClientParamsInterface,
-    url: keyof UserPlaycountByArtistState["transformations"]
+    url: keyof PlayCountByArtistState["transformations"]
   ) {
     if (!this.transformations.hasOwnProperty(url)) this.throwError();
 
