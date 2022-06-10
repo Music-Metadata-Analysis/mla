@@ -5,12 +5,12 @@ import MockAlbumGetInfo from "../../../../../../../tests/fixtures/lastfm/api/alb
 import MockArtistGetTopAlbums from "../../../../../../../tests/fixtures/lastfm/api/artist.getTopAlbums.json";
 import MockUserGetTopArtists from "../../../../../../../tests/fixtures/lastfm/api/user.getTopArtists.json";
 import { InitialState } from "../../../../../user.initial";
-import UserPlaycountByArtistState from "../user.state.playcount.by.artist.sunburst.report.class";
+import PlayCountByArtistState from "../user.state.playcount.by.artist.sunburst.report.class";
 import type { LastFMImageDataInterface } from "../../../../../../../types/integrations/lastfm/api.types";
 import type { LastFMUserStatePlayCountByArtistReport } from "../../../../../../../types/user/state.types";
 
 describe("UserPlaycountByArtistState", () => {
-  let instance: UserPlaycountByArtistState;
+  let instance: PlayCountByArtistState;
   let mockUserProperties: LastFMUserStatePlayCountByArtistReport;
   const mockTopArtists = MockUserGetTopArtists.artists.map((artist) => ({
     name: artist.name,
@@ -48,7 +48,7 @@ describe("UserPlaycountByArtistState", () => {
   describe("when initialized", () => {
     beforeEach(() => {
       mockUserProperties = JSON.parse(JSON.stringify(InitialState));
-      instance = new UserPlaycountByArtistState(mockUserProperties);
+      instance = new PlayCountByArtistState(mockUserProperties);
     });
 
     describe("getReport", () => {
@@ -75,7 +75,7 @@ describe("UserPlaycountByArtistState", () => {
   describe("when the report is non-existent (Stage1)", () => {
     beforeEach(() => {
       mockUserProperties = JSON.parse(JSON.stringify(InitialState));
-      instance = new UserPlaycountByArtistState(mockUserProperties);
+      instance = new PlayCountByArtistState(mockUserProperties);
     });
 
     describe("getReport", () => {
@@ -209,7 +209,7 @@ describe("UserPlaycountByArtistState", () => {
   describe("when the report has top artist information, except for The Cure (Stage2)", () => {
     beforeEach(() => {
       mockUserProperties = JSON.parse(JSON.stringify(MockStage2Report));
-      instance = new UserPlaycountByArtistState(mockUserProperties);
+      instance = new PlayCountByArtistState(mockUserProperties);
     });
 
     describe("getReport", () => {
@@ -270,7 +270,7 @@ describe("UserPlaycountByArtistState", () => {
         { name: "Disintegration", playcount: null, tracks: [], fetched: false },
         { name: "Wish", playcount: null, tracks: [], fetched: false },
       ];
-      instance = new UserPlaycountByArtistState(mockUserProperties);
+      instance = new PlayCountByArtistState(mockUserProperties);
     });
 
     describe("getReport", () => {
@@ -397,7 +397,7 @@ describe("UserPlaycountByArtistState", () => {
   describe("when the report has top artist information, and album details, and is about to be completed (Stage3)", () => {
     beforeEach(() => {
       mockUserProperties = JSON.parse(JSON.stringify(MockStage3Report));
-      instance = new UserPlaycountByArtistState(mockUserProperties);
+      instance = new PlayCountByArtistState(mockUserProperties);
     });
 
     describe("getReport", () => {
