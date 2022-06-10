@@ -1,15 +1,15 @@
 import type { LastFMClientParamsInterface } from "../../../../../../../types/clients/api/lastfm/request.types";
 import type { TransformationInterface } from "../../../../../../../types/clients/api/lastfm/sunburst.types";
-import type UserPlaycountByArtistState from "../user.state.playcount.by.artist.sunburst.report.class";
+import type PlayCountByArtistState from "../user.state.playcount.by.artist.sunburst.report.class";
 abstract class PlayCountByArtistTransformationBase<ResponseType>
   implements TransformationInterface
 {
-  state: UserPlaycountByArtistState;
+  state: PlayCountByArtistState;
   response: ResponseType;
   params: LastFMClientParamsInterface;
 
   constructor(
-    state: UserPlaycountByArtistState,
+    state: PlayCountByArtistState,
     params: LastFMClientParamsInterface,
     response: unknown
   ) {
