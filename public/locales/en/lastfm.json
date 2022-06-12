@@ -48,12 +48,14 @@
     "reports": {
       "topAlbums": "Top Albums",
       "topArtists": "Top Artists",
-      "topTracks": "Top Tracks"
+      "topTracks": "Top Tracks",
+      "playCountByArtist": "Count by Artist"
     },
     "indicators": {
       "topAlbums": "Report 1",
       "topArtists": "Report 2",
-      "topTracks": "Report 3"
+      "topTracks": "Report 3",
+      "playCountByArtist": "Report 4"
     }
   },
   "top20Albums": {
