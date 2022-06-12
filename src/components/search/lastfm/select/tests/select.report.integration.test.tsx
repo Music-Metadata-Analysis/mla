@@ -9,19 +9,31 @@ jest.mock("next/router", () => ({
   useRouter: () => mockRouter,
 }));
 
+jest.mock("../../../../scrollbar/vertical.scrollbar.component", () =>
+  createMockedComponent("VerticalScrollBarComponent")
+);
+
+const createMockedComponent = (name: string) => {
+  const {
+    factoryInstance,
+  } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
+};
+
 type translationKeyType = keyof typeof translations["select"][
   | "indicators"
   | "reports"];
 
 describe("SearchSelection", () => {
   const translationKeys = ["topAlbums", "topArtists", "topTracks"];
+  const mockRef = { current: null, type: "mockRef" };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = () => {
-    render(<Select />);
+    render(<Select scrollRef={mockRef} />);
   };
 
   describe("when rendered on a screen above the configured threshold", () => {

@@ -34,6 +34,12 @@ const settings = {
         indicatorTextKey: "select.indicators.topTracks",
         route: routes.search.lastfm.top20tracks,
       },
+      {
+        analyticsName: "Playcount by Artist",
+        buttonTextKey: "select.reports.playCountByArtist",
+        indicatorTextKey: "select.indicators.playCountByArtist",
+        route: routes.search.lastfm.playCountByArtist,
+      },
     ],
   },
 };

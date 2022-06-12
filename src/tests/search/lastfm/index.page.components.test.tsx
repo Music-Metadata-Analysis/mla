@@ -64,7 +64,7 @@ describe("SearchSelectionPage", () => {
 
     it("should call the Select correctly", () => {
       expect(Select).toBeCalledTimes(1);
-      mockCheckCall(Select, {}, 0);
+      mockCheckCall(Select, { scrollRef: { current: null } }, 0);
     });
   });
 });
