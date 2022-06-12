@@ -24,7 +24,7 @@ export default function SearchSelectionOption({
   const selectButtonWidths = [150, 150, 200];
 
   return (
-    <Flex mb={2} align={"center"} justify={"center"}>
+    <Flex mt={2} align={"center"} justify={"center"}>
       <Indicator visible={visibleIndicators} indication={indicatorText} />
       <Button
         data-testid={testIDs.OptionButton}
