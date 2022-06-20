@@ -1,5 +1,5 @@
 const settings = {
-  minimumHeight: 400,
+  minimumHeight: 520,
 };
 
 export default settings;
