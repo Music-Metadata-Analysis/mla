@@ -54,9 +54,10 @@ describe("PrivacyFooter", () => {
         Button,
         {
           href: externalLinks.svsContact,
-          mb: 2,
+          mb: 1,
           mr: 2,
-          w: "125px",
+          size: "xs",
+          w: ["100px", "125px"],
         },
         0
       );
@@ -64,9 +65,10 @@ describe("PrivacyFooter", () => {
         Button,
         {
           href: externalLinks.privacyPolicy,
-          mb: 2,
+          mb: 1,
           ml: 2,
-          w: "125px",
+          size: "xs",
+          w: ["100px", "125px"],
         },
         1
       );

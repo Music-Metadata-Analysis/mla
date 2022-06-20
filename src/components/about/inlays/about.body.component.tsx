@@ -10,7 +10,7 @@ export default function PrivacyBody({ t }: { t: TFunction }) {
     <>
       <Center>
         <Box mb={3}>
-          <Text ml={2} fontSize={["xxs"]}>
+          <Text fontSize={["xxs"]} ml={2}>
             {t("creditText")}
           </Text>
         </Box>
@@ -25,7 +25,7 @@ export default function PrivacyBody({ t }: { t: TFunction }) {
               />
             </DimOnHover>
           </ClickLink>
-          <Text ml={2} fontSize={["l", "xl", "2xl"]}>
+          <Text fontSize={["sm", "l", "l", "xl", "2xl"]} ml={2}>
             {t("company")}
           </Text>
         </Flex>
