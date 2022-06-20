@@ -53,19 +53,19 @@ export default function NavBar({ menuConfig }: NavBarProps) {
   return (
     <>
       <Box
-        zIndex={1000}
-        fontSize={[18, 18, 20]}
-        style={{ position: "fixed", top: 0, width: "100%" }}
         data-testid={testIDs.NavBarRoot}
         bg={componentColour.background}
-        color={componentColour.foreground}
+        borderBottomWidth={"1px"}
+        borderBottomStyle={"solid"}
         borderColor={componentColour.border}
-        px={4}
+        color={componentColour.foreground}
+        fontSize={[18, 18, 20]}
+        px={[2, 2, 2, 4]}
+        style={{ position: "fixed", top: 0, width: "100%" }}
         sx={{
           caretColor: transparent,
         }}
-        borderBottomWidth={"1px"}
-        borderBottomStyle={"solid"}
+        zIndex={1000}
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <NavBarLogo
@@ -82,14 +82,14 @@ export default function NavBar({ menuConfig }: NavBarProps) {
               <NavBarColorModeToggle />
               <NavBarSessionControl />
               <IconButton
-                ml={1}
-                data-testid={testIDs.NavBarMobileMenuButton}
-                size={"md"}
-                icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
                 aria-label={"Open Menu"}
+                data-testid={testIDs.NavBarMobileMenuButton}
                 display={{ sm: "none" }}
-                onClick={isOpen ? onClose : onOpen}
                 disabled={!controls.getters.isHamburgerEnabled}
+                icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                ml={[0, 0, 1]}
+                onClick={isOpen ? onClose : onOpen}
+                size={"md"}
               />
               <HStack spacing={8} alignItems={"center"}>
                 <HStack
