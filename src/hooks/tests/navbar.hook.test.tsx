@@ -98,7 +98,7 @@ describe("useNavBar", () => {
 
   describe("when on a larger screen", () => {
     beforeEach(() => {
-      global.innerHeight = NavConfig.heightDuringInput;
+      global.innerHeight = NavConfig.minimumHeightDuringInput;
       received = arrange();
     });
 
@@ -133,7 +133,7 @@ describe("useNavBar", () => {
 
   describe("when on a smaller screen", () => {
     beforeEach(() => {
-      global.innerHeight = NavConfig.heightDuringInput - 1;
+      global.innerHeight = NavConfig.minimumHeightDuringInput - 1;
       received = arrange();
     });
 
