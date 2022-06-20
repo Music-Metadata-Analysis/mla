@@ -96,7 +96,7 @@ describe("PrivacyToggle", () => {
         Text,
         {
           ml: 2,
-          fontSize: ["l", "xl", "2xl"],
+          fontSize: ["sm", "l", "l", "xl", "2xl"],
         },
         0
       );

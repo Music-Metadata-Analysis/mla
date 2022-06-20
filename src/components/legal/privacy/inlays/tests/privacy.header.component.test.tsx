@@ -1,4 +1,4 @@
-import { Container } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import translations from "../../../../../../public/locales/en/legal.json";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
@@ -9,7 +9,7 @@ jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
   } = require("../../../../../tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Container"]);
+  return factoryInstance.create(["Text"]);
 });
 
 describe("PrivacyHeader", () => {
@@ -26,14 +26,14 @@ describe("PrivacyHeader", () => {
   describe("when rendered", () => {
     beforeEach(() => arrange());
 
-    it("should call Container with the correct props", () => {
-      expect(Container).toBeCalledTimes(1);
+    it("should call Text with the correct props", () => {
+      expect(Text).toBeCalledTimes(1);
       checkMockCall(
-        Container,
+        Text,
         {
-          centerContent: true,
-          mb: 8,
           fontSize: [12, 14, 14, "md"],
+          mb: 8,
+          textAlign: "center",
         },
         0
       );

@@ -54,9 +54,10 @@ describe("TermsOfServiceFooter", () => {
         Button,
         {
           href: externalLinks.svsContact,
-          mb: 2,
+          mb: 1,
           mr: 2,
-          w: "125px",
+          size: "xs",
+          w: ["100px", "125px"],
         },
         0
       );
@@ -64,9 +65,10 @@ describe("TermsOfServiceFooter", () => {
         Button,
         {
           href: externalLinks.termsOfService,
-          mb: 2,
-          ml: 2,
-          w: "125px",
+          mb: 1,
+          mr: 2,
+          size: "xs",
+          w: ["100px", "125px"],
         },
         1
       );

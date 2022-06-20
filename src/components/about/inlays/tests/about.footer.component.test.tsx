@@ -53,9 +53,10 @@ describe("About", () => {
         Button,
         {
           analyticsName: "About Page Privacy Policy",
-          mb: 2,
+          size: "xs",
+          mb: 1,
           mr: 2,
-          w: "125px",
+          w: ["100px", "125px"],
         },
         0
       );
@@ -63,9 +64,10 @@ describe("About", () => {
         Button,
         {
           analyticsName: "About Page Start",
-          mb: 2,
+          size: "xs",
+          mb: 1,
           ml: 2,
-          w: "125px",
+          w: ["100px", "125px"],
         },
         1
       );
