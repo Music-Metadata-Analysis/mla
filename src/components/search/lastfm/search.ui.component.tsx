@@ -42,8 +42,8 @@ export default function SearchUI({ route, title, t }: SearchUIProps) {
   return (
     <Billboard title={title}>
       <Authentication />
-      <Flex justify={"center"} align={"center"} w={"100%"}>
-        <Box mb={10}>
+      <Flex justify={"space-evenly"} align={"center"} w={"100%"}>
+        <Box>
           <Avatar
             icon={<LastFMIcon width={100} height={100} />}
             width={[50, 50, 75]}

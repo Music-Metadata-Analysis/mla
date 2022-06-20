@@ -14,7 +14,7 @@ const useNavBar = () => {
   };
 
   const hideNavBar = () => {
-    if (window.innerHeight < NavConfig.heightDuringInput) {
+    if (window.innerHeight < NavConfig.minimumHeightDuringInput) {
       setters.setIsVisible(false);
     } else {
       setters.setIsVisible(true);

@@ -30,7 +30,6 @@
     }
   },
   "search": {
-    "fieldLabel": "Username:",
     "fieldPlaceholder": "last.fm username",
     "buttonText": "Go!",
     "errors": {
