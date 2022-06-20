@@ -2,7 +2,7 @@ import routes from "./routes";
 
 const settings = {
   offset: 110,
-  heightDuringInput: 350,
+  minimumHeightDuringInput: 190,
   menuConfig: {
     about: routes.about,
     search: routes.search.lastfm.selection,

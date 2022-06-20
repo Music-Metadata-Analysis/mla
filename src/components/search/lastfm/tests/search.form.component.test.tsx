@@ -37,13 +37,11 @@ describe("SearchForm", () => {
 
   it("should call Flex as expected to center content", () => {
     arrange();
-    expect(Flex).toBeCalledTimes(1);
-    checkMockCall(Flex, { justify: "center", maxWidth: "700px" });
-  });
-
-  it("should display the correct username field label", async () => {
-    arrange();
-    expect(await screen.findByText("t(search.fieldLabel)")).toBeTruthy();
+    expect(Flex).toBeCalledTimes(2);
+    checkMockCall(Flex, {
+      flexDirection: "column",
+      justify: "center",
+    });
   });
 
   it("should display the correct username placeholder text", async () => {
@@ -71,13 +69,12 @@ describe("SearchForm", () => {
     arrange();
     expect(StyledButton).toBeCalledTimes(1);
     checkMockCall(StyledButton, {
-      width: ["50px", "100px", "100px"],
       analyticsName: "Search: last.fm",
       isLoading: false,
-      mb: 12,
-      mt: 8,
       ml: 3,
+      mt: 2,
       type: "submit",
+      width: ["50px", "100px", "100px"],
     });
   });
 
