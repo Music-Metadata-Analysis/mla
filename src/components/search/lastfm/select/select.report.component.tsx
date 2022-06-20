@@ -43,7 +43,7 @@ export default function SearchSelection({ scrollRef }: SearchSelectionProps) {
     <Billboard title={t("select.title")}>
       <Box position={"relative"}>
         <Flex justify={"space-evenly"} align={"center"}>
-          <Box mb={2}>
+          <Box mb={1}>
             <Avatar
               icon={<LastFMIcon width={100} height={100} />}
               width={[50, 50, 75]}
@@ -67,7 +67,7 @@ export default function SearchSelection({ scrollRef }: SearchSelectionProps) {
               direction={"column"}
               justify={"center"}
               align={"center"}
-              mb={3}
+              mb={2}
             >
               {config.select.options.map((option, index) => {
                 return (

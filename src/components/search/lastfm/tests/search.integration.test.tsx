@@ -45,12 +45,6 @@ describe("SearchTopTracks", () => {
     expect(await screen.findByText(mockTitle)).toBeTruthy();
   });
 
-  it("should display the correct field label", async () => {
-    expect(
-      await screen.findByText(lastfmTranslations.search.fieldLabel)
-    ).toBeTruthy();
-  });
-
   it("should display the correct input placeholder", async () => {
     expect(
       await screen.findByPlaceholderText(

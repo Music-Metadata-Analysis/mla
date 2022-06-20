@@ -86,7 +86,7 @@ describe("SearchSelection", () => {
           align: "center",
           direction: "column",
           justify: "center",
-          mb: 3,
+          mb: 2,
         },
         1
       );
@@ -95,7 +95,7 @@ describe("SearchSelection", () => {
     it("should call Box as expected to create a margin around the form", () => {
       expect(MockedBox).toBeCalledTimes(3);
       checkMockCall(MockedBox, { position: "relative" }, 0);
-      checkMockCall(MockedBox, { mb: 2 }, 1);
+      checkMockCall(MockedBox, { mb: 1 }, 1);
       checkMockCall(
         MockedBox,
         {

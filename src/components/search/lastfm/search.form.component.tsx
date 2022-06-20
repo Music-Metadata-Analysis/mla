@@ -1,4 +1,4 @@
-import { Flex, FormControl, FormLabel } from "@chakra-ui/react";
+import { Flex, FormControl } from "@chakra-ui/react";
 import {
   Formik,
   Form,
@@ -35,7 +35,7 @@ export default function SearchForm({
     >
       {({ isSubmitting }) => (
         <Form>
-          <Flex justify={"center"} maxWidth={"700px"}>
+          <Flex flexDirection={"column"} justify={"center"}>
             <Field name="username" validate={validateUserName}>
               {({
                 field,
@@ -45,29 +45,27 @@ export default function SearchForm({
                 form: FormikProps<LastFMUserSearchInterface>;
               }) => (
                 <FormControl isInvalid={form.errors.username !== undefined}>
-                  <FormLabel id={"username.label"} htmlFor="username">
-                    {t("search.fieldLabel")}
-                  </FormLabel>
                   <StyledInput
                     {...field}
                     id="username"
                     placeholder={t("search.fieldPlaceholder")}
-                    maxWidth={"700px"}
+                    width={["150px", "300px", "400px", "500px"]}
                   />
                 </FormControl>
               )}
             </Field>
-            <StyledButton
-              width={["50px", "100px", "100px"]}
-              analyticsName="Search: last.fm"
-              mb={12}
-              mt={8}
-              ml={3}
-              isLoading={isSubmitting}
-              type="submit"
-            >
-              {t("search.buttonText")}
-            </StyledButton>
+            <Flex align={"center"} justifyContent={"flex-end"}>
+              <StyledButton
+                analyticsName="Search: last.fm"
+                isLoading={isSubmitting}
+                ml={3}
+                mt={2}
+                type="submit"
+                width={["50px", "100px", "100px"]}
+              >
+                {t("search.buttonText")}
+              </StyledButton>
+            </Flex>
           </Flex>
         </Form>
       )}
