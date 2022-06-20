@@ -4,14 +4,26 @@ import Button from "../../../button/button.external.link/button.external.link.co
 import type { TFunction } from "next-i18next";
 
 export default function PrivacyFooter({ t }: { t: TFunction }) {
-  const buttonWidth = "125px";
+  const buttonWidth = ["100px", "125px"];
 
   return (
     <Flex>
-      <Button href={externalLinks.svsContact} mb={2} mr={2} w={buttonWidth}>
+      <Button
+        size={"xs"}
+        href={externalLinks.svsContact}
+        mb={1}
+        mr={2}
+        w={buttonWidth}
+      >
         {t("privacy.buttons.contact")}
       </Button>
-      <Button href={externalLinks.privacyPolicy} ml={2} mb={2} w={buttonWidth}>
+      <Button
+        size={"xs"}
+        href={externalLinks.privacyPolicy}
+        ml={2}
+        mb={1}
+        w={buttonWidth}
+      >
         {t("privacy.buttons.policy")}
       </Button>
     </Flex>

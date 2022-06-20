@@ -101,16 +101,16 @@ describe("AboutBody", () => {
       checkMockCall(
         Text,
         {
-          ml: 2,
           fontSize: ["xxs"],
+          ml: 2,
         },
         0
       );
       checkMockCall(
         Text,
         {
+          fontSize: ["sm", "l", "l", "xl", "2xl"],
           ml: 2,
-          fontSize: ["l", "xl", "2xl"],
         },
         1
       );

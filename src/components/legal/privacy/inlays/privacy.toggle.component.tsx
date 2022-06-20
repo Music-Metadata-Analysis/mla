@@ -17,7 +17,7 @@ export default function PrivacyToggle({ t }: { t: TFunction }) {
             />
           </DimOnHover>
         </ClickLink>
-        <Text ml={2} fontSize={["l", "xl", "2xl"]}>
+        <Text fontSize={["sm", "l", "l", "xl", "2xl"]} ml={2}>
           {t("privacy.company")}
         </Text>
       </Flex>

@@ -34,7 +34,8 @@ describe("SplashFooter", () => {
       expect(Button).toBeCalledTimes(1);
       checkMockCall(Button, {
         analyticsName: "Splash Page Start",
-        mb: 2,
+        mb: 1,
+        size: "xs",
       });
     });
   });

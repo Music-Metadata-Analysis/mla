@@ -9,9 +9,10 @@ export default function SplashBody({ t }: { t: TFunction }) {
   return (
     <>
       <Button
-        mb={2}
-        onClick={() => router.push(routes.search.lastfm.selection)}
         analyticsName={"Splash Page Start"}
+        onClick={() => router.push(routes.search.lastfm.selection)}
+        mb={1}
+        size={"xs"}
       >
         {t("buttons.start")}
       </Button>
