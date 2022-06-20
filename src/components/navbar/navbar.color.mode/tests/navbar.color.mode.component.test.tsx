@@ -31,6 +31,24 @@ jest.mock("@chakra-ui/icons", () => {
 let mockColorMode: "light" | "dark" = "light" as const;
 const mockToggleColorMode = jest.fn();
 
+const checkSwitch = ({ isChecked }: { isChecked: boolean }) => {
+  it("should render the Switch", () => {
+    expect(Switch).toBeCalledTimes(1);
+    checkMockCall(
+      Switch,
+      {
+        colorScheme: "yellow",
+        "data-testid": "ColorModeToggle",
+        isChecked: isChecked,
+        ml: [1, 2, 3],
+        mr: [0, 1, 2],
+      },
+      0,
+      ["onChange"]
+    );
+  });
+};
+
 describe("NavBarColorModeToggle", () => {
   beforeEach(() => jest.clearAllMocks());
 
@@ -57,21 +75,7 @@ describe("NavBarColorModeToggle", () => {
       expect(MoonIcon).toBeCalledTimes(0);
     });
 
-    it("should render the Switch", () => {
-      expect(Switch).toBeCalledTimes(1);
-      checkMockCall(
-        Switch,
-        {
-          "data-testid": "ColorModeToggle",
-          colorScheme: "yellow",
-          isChecked: true,
-          ml: 2,
-          mr: 3,
-        },
-        0,
-        ["onChange"]
-      );
-    });
+    checkSwitch({ isChecked: true });
 
     describe("when clicked", () => {
       beforeEach(async () => {
@@ -113,21 +117,7 @@ describe("NavBarColorModeToggle", () => {
       expect(SunIcon).toBeCalledTimes(0);
     });
 
-    it("should render the Switch", () => {
-      expect(Switch).toBeCalledTimes(1);
-      checkMockCall(
-        Switch,
-        {
-          "data-testid": "ColorModeToggle",
-          colorScheme: "yellow",
-          isChecked: false,
-          ml: 2,
-          mr: 3,
-        },
-        0,
-        ["onChange"]
-      );
-    });
+    checkSwitch({ isChecked: false });
 
     describe("when clicked", () => {
       beforeEach(async () => {
