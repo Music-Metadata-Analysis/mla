@@ -53,8 +53,8 @@ describe("NavBarLink", () => {
         borderColor: selected
           ? mockColourHook.navButtonColour.selectedBackground
           : mockColourHook.transparent,
-        pr: 2,
-        pl: 2,
+        pl: [1, 1, 2],
+        pr: [1, 1, 2],
         rounded: "md",
       },
       0,
