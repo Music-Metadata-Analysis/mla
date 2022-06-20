@@ -36,8 +36,8 @@ const NavLink = ({
         e.currentTarget.blur();
         navigate(e, children as string, href);
       }}
-      pl={2}
-      pr={2}
+      pl={[1, 1, 2]}
+      pr={[1, 1, 2]}
       rounded={"md"}
       _hover={{
         textDecoration: "none",

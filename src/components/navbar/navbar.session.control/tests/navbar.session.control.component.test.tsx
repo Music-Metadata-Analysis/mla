@@ -47,18 +47,6 @@ const mockUseDisclosure = jest.fn();
 const mockUseSession = jest.fn();
 
 describe("NavSessionControl", () => {
-  const buttonProps = {
-    _hover: {
-      bg: mockColourHook.navButtonColour.hoverBackground,
-      textDecoration: "none",
-    },
-    bg: mockColourHook.navButtonColour.background,
-    borderColor: mockColourHook.transparent,
-    p: "10px",
-    rounded: "md",
-    width: "100%",
-  };
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -67,35 +55,82 @@ describe("NavSessionControl", () => {
     render(<NavBarSessionControl />);
   };
 
+  const checkAnalyticsWrapper = ({
+    expectedCallCount,
+  }: {
+    expectedCallCount: number;
+  }) => {
+    it("should call the AnalyticsWrapper component with the expected props", () => {
+      expect(AnalyticsWrapper).toBeCalledTimes(expectedCallCount);
+      for (let i = 0; i < expectedCallCount; i++) {
+        checkMockCall(AnalyticsWrapper, { buttonName: "NavBar SignIn" }, 0);
+      }
+    });
+  };
+
+  const checkAuthentication = ({
+    expectedCallCount,
+  }: {
+    expectedCallCount: number;
+  }) => {
+    it("should call the Authentication component with the expected props", () => {
+      expect(Authentication).toBeCalledTimes(expectedCallCount);
+      for (let i = 0; i < expectedCallCount; i++) {
+        checkMockCall(Authentication, { hidden: true }, 0, ["onModalClose"]);
+      }
+    });
+  };
+
+  const checkChakraBox = ({
+    expectedCallCount,
+  }: {
+    expectedCallCount: number;
+  }) => {
+    it("should call the Box component with the expected props", () => {
+      expect(Box).toBeCalledTimes(expectedCallCount);
+      for (let i = 0; i < expectedCallCount; i++) {
+        checkMockCall(Box, { pl: [0, 1, 2], pr: 0 }, i);
+      }
+    });
+  };
+
+  const checkChakraButton = ({
+    expectedCallCount,
+  }: {
+    expectedCallCount: number;
+  }) => {
+    it("should call the Button component with the expected props", () => {
+      expect(Button).toBeCalledTimes(expectedCallCount);
+      for (let i = 0; i < expectedCallCount; i++) {
+        checkMockCall(
+          Button,
+          {
+            _hover: {
+              bg: mockColourHook.navButtonColour.hoverBackground,
+              textDecoration: "none",
+            },
+            bg: mockColourHook.navButtonColour.background,
+            borderColor: mockColourHook.transparent,
+            p: [1, 1, 2],
+            rounded: "md",
+            width: "100%",
+          },
+          i
+        );
+      }
+    });
+  };
+
   describe("when the user is logged in", () => {
     beforeEach(() => {
       mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
       arrange();
     });
 
-    it("should render the Authentication modal twice", () => {
-      expect(Authentication).toBeCalledTimes(2);
-      checkMockCall(Authentication, { hidden: true }, 0, ["onModalClose"]);
-      checkMockCall(Authentication, { hidden: true }, 1, ["onModalClose"]);
-    });
-
-    it("should render the AnalyticsWrapper component twice", () => {
-      expect(AnalyticsWrapper).toBeCalledTimes(2);
-      checkMockCall(AnalyticsWrapper, { buttonName: "NavBar SignIn" }, 0);
-      checkMockCall(AnalyticsWrapper, { buttonName: "NavBar SignOut" }, 1);
-    });
-
-    it("should render the Box component twice", () => {
-      expect(Box).toBeCalledTimes(2);
-      checkMockCall(Box, { pl: [0, 2], pr: 2 }, 0);
-      checkMockCall(Box, { pl: [0, 2], pr: 2 }, 1);
-    });
-
-    it("should render the Button twice", () => {
-      expect(Button).toBeCalledTimes(2);
-      checkMockCall(Button, buttonProps, 0);
-      checkMockCall(Button, buttonProps, 1);
-    });
+    checkAuthentication({ expectedCallCount: 2 });
+    checkAnalyticsWrapper({ expectedCallCount: 2 });
+    checkChakraBox({ expectedCallCount: 2 });
+    checkChakraButton({ expectedCallCount: 2 });
   });
 
   describe("when the user is NOT logged in", () => {
@@ -104,24 +139,9 @@ describe("NavSessionControl", () => {
       arrange();
     });
 
-    it("should render the Authentication modal twice", () => {
-      expect(Authentication).toBeCalledTimes(1);
-      checkMockCall(Authentication, { hidden: true }, 0, ["onModalClose"]);
-    });
-
-    it("should render the AnalyticsWrapper once", () => {
-      expect(AnalyticsWrapper).toBeCalledTimes(1);
-      checkMockCall(AnalyticsWrapper, { buttonName: "NavBar SignIn" }, 0);
-    });
-
-    it("should render the Box component once", () => {
-      expect(Box).toBeCalledTimes(1);
-      checkMockCall(Box, { pl: [0, 2], pr: 2 }, 0);
-    });
-
-    it("should render the Button once", () => {
-      expect(Button).toBeCalledTimes(1);
-      checkMockCall(Button, buttonProps, 0);
-    });
+    checkAuthentication({ expectedCallCount: 1 });
+    checkAnalyticsWrapper({ expectedCallCount: 1 });
+    checkChakraBox({ expectedCallCount: 1 });
+    checkChakraButton({ expectedCallCount: 1 });
   });
 });

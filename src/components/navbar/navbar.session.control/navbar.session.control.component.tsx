@@ -52,7 +52,7 @@ const NavSessionControl = () => {
         hidden={!showModal}
         onModalClose={() => setShowModal(false)}
       />
-      <Box pl={[0, 2]} pr={2}>
+      <Box pl={[0, 1, 2]} pr={0}>
         <AnalyticsWrapper buttonName={generateAnalyticsName()}>
           <Button
             onClick={(e) => {
@@ -60,7 +60,7 @@ const NavSessionControl = () => {
             }}
             borderColor={transparent}
             width={"100%"}
-            p={"10px"}
+            p={[1, 1, 2]}
             rounded={"md"}
             _hover={{
               textDecoration: "none",

@@ -160,7 +160,7 @@ describe("NavBar", () => {
         color: mockColourHook.componentColour.foreground,
         "data-testid": "NavBarRoot",
         fontSize: [18, 18, 20],
-        px: 4,
+        px: [2, 2, 2, 4],
         style: {
           position: "fixed",
           top: 0,
@@ -211,17 +211,17 @@ describe("NavBar", () => {
     isOpen: boolean;
     disabled: boolean;
   }) => {
-    it("should render the menu button with the right props", () => {
+    it("should render the Menu Hamburger Button with the right props", () => {
       expect(IconButton).toBeCalledTimes(1);
       const iconRender = { component: IconButton, call: 0 };
 
       expect(getMockComponentPropCount(iconRender)).toBe(8);
-      checkProp(iconRender, "ml", 1);
-      checkProp(iconRender, "data-testid", testIDs.NavBarMobileMenuButton);
-      checkProp(iconRender, "size", "md");
       checkProp(iconRender, "aria-label", "Open Menu");
-      checkProp(iconRender, "display", { sm: "none" });
+      checkProp(iconRender, "data-testid", testIDs.NavBarMobileMenuButton);
       checkProp(iconRender, "disabled", disabled);
+      checkProp(iconRender, "display", { sm: "none" });
+      checkProp(iconRender, "ml", [0, 0, 1]);
+      checkProp(iconRender, "size", "md");
 
       expect(
         typeof getMockComponentProp({ ...iconRender, propName: "onClick" })
