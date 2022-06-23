@@ -28,6 +28,11 @@ jobs:
       - name: Build -- Setup Environment
         uses: actions/checkout@v2.4.0
 
+      - name: Build -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
       - name: Build -- Setup Environment
         run: |
           source .github/scripts/setup.sh
@@ -62,6 +67,11 @@ jobs:
       - name: Deploy Production -- Checkout Repository
         if: github.ref == 'refs/heads/production'
         uses: actions/checkout@v2.4.0
+
+      - name: Deploy Production -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
 
       - name: Deploy Production -- Setup Environment
         if: github.ref == 'refs/heads/production'
@@ -112,6 +122,11 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: actions/checkout@v2.4.0
 
+      - name: Deploy Stage -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
       - name: Deploy Stage -- Setup Environment
         if: github.ref == 'refs/heads/master'
         run: |
@@ -151,6 +166,11 @@ jobs:
       - name: Lint -- Checkout Repository
         uses: actions/checkout@v2.4.0
 
+      - name: Lint -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
       - name: Lint -- Setup Environment
         run: |
           source .github/scripts/setup.sh
@@ -177,6 +197,11 @@ jobs:
       - name: Security Test -- Checkout Repository
         uses: actions/checkout@v2.4.0
 
+      - name: Security Test -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
       - name: Documentation Test -- Setup Environment
         run: |
           source .github/scripts/setup.sh
@@ -185,7 +210,7 @@ jobs:
 
       - name: Security Test -- Install Node Modules
         run: |
-          npm ci
+          npm i
 
       - name: Security Test -- Dependency Audit
         run: |
@@ -229,6 +254,11 @@ jobs:
       - name: Smoke Test Production -- Checkout Repository
         if: github.ref == 'refs/heads/production'
         uses: actions/checkout@v2.4.0
+
+      - name: Smoke Test Production -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
 
       - name: Smoke Test Production -- Setup Environment
         if: github.ref == 'refs/heads/production'
@@ -277,6 +307,11 @@ jobs:
       - name: Smoke Test Stage -- Checkout Repository
         if: github.ref == 'refs/heads/master'
         uses: actions/checkout@v2.4.0
+
+      - name: Smoke Test Stage -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
 
       - name: Smoke Test Stage -- Setup Environment
         if: github.ref == 'refs/heads/master'
@@ -378,6 +413,11 @@ jobs:
     steps:
       - name: Type Validation -- Checkout Repository
         uses: actions/checkout@v2.4.0
+
+      - name: Type Validation -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
 
       - name: Type Validation -- Setup Environment
         run: |
