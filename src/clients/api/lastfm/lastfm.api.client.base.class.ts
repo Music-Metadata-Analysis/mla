@@ -147,6 +147,7 @@ abstract class LastFMBaseClient<ResponseType>
   }
 
   retrieveReport(params: LastFMReportParamsInterface): void {
+    // TODO: Integrate Cache Lookup
     this.handleBegin(params);
     this.request(params);
   }

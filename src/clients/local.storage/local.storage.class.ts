@@ -3,18 +3,25 @@ import type {
   LocalStorageObjectInterface,
 } from "../../types/clients/local.storage/local.storage.types";
 
-class LocalStorageClient<ResponseType extends LocalStorageResponseTypes> {
+class LocalStorageClient {
   lifespan = 24 * 3600 * 1000;
 
-  get(category: string, index: string): ResponseType | null {
-    const storage = this.getCategory(category);
+  get<ResponseType extends LocalStorageResponseTypes>(
+    category: string,
+    index: string
+  ): ResponseType | null {
+    const storage = this.getCategory<ResponseType>(category);
     const search = storage.find((entry) => entry.index === index);
     if (search) return search.content;
     return null;
   }
 
-  set(category: string, index: string, content: ResponseType) {
-    const storage = this.getCategory(category);
+  set<ResponseType extends LocalStorageResponseTypes>(
+    category: string,
+    index: string,
+    content: ResponseType
+  ) {
+    const storage = this.getCategory<ResponseType>(category);
     storage.push({
       index,
       expiry: new Date(Date.now() + this.lifespan),
@@ -23,17 +30,17 @@ class LocalStorageClient<ResponseType extends LocalStorageResponseTypes> {
     localStorage.setItem(category, JSON.stringify(storage));
   }
 
-  private getCategory(
+  private getCategory<ResponseType extends LocalStorageResponseTypes>(
     category: string
   ): Array<LocalStorageObjectInterface<ResponseType>> {
     const result = localStorage.getItem(category);
     if (result) {
-      return this.filterCategory(JSON.parse(result));
+      return this.filterCategory<ResponseType>(JSON.parse(result));
     }
     return [];
   }
 
-  private filterCategory(
+  private filterCategory<ResponseType extends LocalStorageResponseTypes>(
     entityList: Array<LocalStorageObjectInterface<ResponseType>>
   ) {
     const now = new Date();

@@ -3,6 +3,7 @@ import type { EventCreatorType } from "../../../../../types/analytics.types";
 import type { LastFMReportParamsInterface } from "../../../../../types/clients/api/lastfm/request.types";
 import type { SunBurstDataPointClientConstructor } from "../../../../../types/clients/api/lastfm/sunburst.types";
 import type { userDispatchType } from "../../../../../types/user/context.types";
+import LocalStorageClient from "../../../../local.storage/local.storage.class";
 
 abstract class LastFMSunburstDataClient<AggregateReportType> {
   dispatch: userDispatchType;
@@ -41,7 +42,12 @@ abstract class LastFMSunburstDataClient<AggregateReportType> {
     return params;
   }
 
+  private checkCache(params: LastFMReportParamsInterface) {
+
+  } 
+
   retrieveReport(params: LastFMReportParamsInterface): void {
+    // TODO: Integrate Cache Lookup
     const route = this.getRoute();
     const dataPointInstances = this.dataPointClasses.map(
       (dataPointClass) =>

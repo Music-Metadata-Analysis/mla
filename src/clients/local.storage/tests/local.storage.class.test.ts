@@ -3,7 +3,7 @@ import type { LastFMTopAlbumsReportResponseInterface } from "../../../types/clie
 import type { LocalStorageObjectInterface } from "../../../types/clients/local.storage/local.storage.types";
 
 describe("LocalStorageClient", () => {
-  let instance: LocalStorageClient<LastFMTopAlbumsReportResponseInterface>;
+  let instance: LocalStorageClient;
   let getItemMock: jest.SpyInstance;
   let setItemMock: jest.SpyInstance;
   let dateNowSpy: jest.SpyInstance;
@@ -39,7 +39,10 @@ describe("LocalStorageClient", () => {
 
     describe("get", () => {
       beforeEach(() => {
-        response = instance.get(category, index);
+        response = instance.get<LastFMTopAlbumsReportResponseInterface>(
+          category,
+          index
+        );
       });
 
       it("should return null", () => {
@@ -54,7 +57,11 @@ describe("LocalStorageClient", () => {
 
     describe("set", () => {
       beforeEach(() => {
-        instance.set(category, createdIndex, mockReport);
+        instance.set<LastFMTopAlbumsReportResponseInterface>(
+          category,
+          createdIndex,
+          mockReport
+        );
       });
 
       it("should call getItem with the expected parameters", () => {
@@ -91,7 +98,10 @@ describe("LocalStorageClient", () => {
 
     describe("get", () => {
       beforeEach(() => {
-        response = instance.get(category, index);
+        response = instance.get<LastFMTopAlbumsReportResponseInterface>(
+          category,
+          index
+        );
       });
 
       it("should return null", () => {
@@ -106,7 +116,11 @@ describe("LocalStorageClient", () => {
 
     describe("set", () => {
       beforeEach(() => {
-        instance.set(category, createdIndex, mockReport);
+        instance.set<LastFMTopAlbumsReportResponseInterface>(
+          category,
+          createdIndex,
+          mockReport
+        );
       });
 
       it("should call getItem with the expected parameters", () => {
@@ -143,7 +157,10 @@ describe("LocalStorageClient", () => {
 
     describe("get", () => {
       beforeEach(() => {
-        response = instance.get(category, index);
+        response = instance.get<LastFMTopAlbumsReportResponseInterface>(
+          category,
+          index
+        );
       });
 
       it("should return the mock report", () => {
@@ -158,7 +175,11 @@ describe("LocalStorageClient", () => {
 
     describe("set", () => {
       beforeEach(() => {
-        instance.set(category, createdIndex, mockReport);
+        instance.set<LastFMTopAlbumsReportResponseInterface>(
+          category,
+          createdIndex,
+          mockReport
+        );
       });
 
       it("should call getItem with the expected parameters", () => {
