@@ -237,10 +237,11 @@ describe("Top20AlbumsReport", () => {
       });
 
       it("should open the correct link when the button is pressed", async () => {
-        const button = await screen.findByText(
+        const buttonText = await screen.findByText(
           translations.flipCardReport.drawer.buttonText
         );
-        const aTag = button?.parentElement?.parentElement as HTMLAnchorElement;
+        const aTag = buttonText?.parentElement?.parentElement
+          ?.parentElement as HTMLAnchorElement;
         expect(aTag.href).toBe(testUrl);
       });
 

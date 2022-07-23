@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Img } from "@chakra-ui/react";
+import { Box, Divider, Flex, Img, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import drawerSettings from "./settings/drawer";
 import useAnalytics from "../../../../../hooks/analytics";
@@ -59,11 +59,12 @@ export default function FlipCardDrawer<UserStateType extends UserState>({
       placement={"bottom"}
     >
       <Flex>
-        <Box borderWidth={"1px"} borderColor={componentColour.details}>
+        <Box>
           <Img
-            src={artwork}
             alt={t(artWorkAltText)}
-            width={`${drawerSettings.imageSize}px`}
+            borderWidth={"1px"}
+            borderColor={componentColour.details}
+            borderStyle={"solid"}
             onError={(e) => {
               (e.target as HTMLImageElement).onerror = null;
               (e.target as HTMLImageElement).src = fallbackImage;
@@ -71,22 +72,32 @@ export default function FlipCardDrawer<UserStateType extends UserState>({
             style={{
               position: "relative",
             }}
+            src={artwork}
+            width={`${drawerSettings.imageSize}px`}
           />
         </Box>
         <Divider ml={`10px`} mr={`10px`} orientation="vertical" />
         <Flex flexDirection={"column"} justifyContent={"space-between"}>
           <div>
-            <p data-testid={testIDs.LastFMDrawerRank}>
+            <Text
+              data-testid={testIDs.LastFMDrawerRank}
+              fontSize={["xs", "md", "md"]}
+            >
               <strong>{t("flipCardReport.drawer.rank")}</strong>
               {`: ${objectIndex + 1}`}
-            </p>
-            <p data-testid={testIDs.LastFMDrawerPlayCount}>
+            </Text>
+            <Text
+              data-testid={testIDs.LastFMDrawerPlayCount}
+              fontSize={["xs", "md", "md"]}
+            >
               <strong>{t("flipCardReport.drawer.playCount")}</strong>
               {`: ${playCount}`}
-            </p>
+            </Text>
           </div>
-          <StyledButtonLink href={externalLink}>
-            {t("flipCardReport.drawer.buttonText")}
+          <StyledButtonLink size={"sm"} href={externalLink}>
+            <Text fontSize={["xs", "sm", "sm"]}>
+              {t("flipCardReport.drawer.buttonText")}
+            </Text>
           </StyledButtonLink>
         </Flex>
       </Flex>

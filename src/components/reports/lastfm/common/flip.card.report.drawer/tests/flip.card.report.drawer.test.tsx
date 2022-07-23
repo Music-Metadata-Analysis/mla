@@ -1,4 +1,4 @@
-import { Box, Divider, Img } from "@chakra-ui/react";
+import { Box, Divider, Img, Text } from "@chakra-ui/react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import Events from "../../../../../../events/events";
 import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock.hook";
@@ -21,7 +21,7 @@ jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
   } = require("../../../../../../tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Box", "Divider", "Img"]);
+  return factoryInstance.create(["Box", "Divider", "Img", "Text"]);
 });
 
 jest.mock(
@@ -117,13 +117,33 @@ describe("FlipCardReportDrawer", () => {
 
     it("should call Box once", () => {
       expect(Box).toBeCalledTimes(1);
+      checkMockCall(Box, {}, 0);
+    });
+
+    it("should call Text 2 times", () => {
+      expect(Text).toBeCalledTimes(3);
       checkMockCall(
-        Box,
+        Text,
         {
-          borderColor: mockColourHook.componentColour.details,
-          borderWidth: "1px",
+          "data-testid": testIDs.LastFMDrawerRank,
+          fontSize: ["xs", "md", "md"],
         },
         0
+      );
+      checkMockCall(
+        Text,
+        {
+          "data-testid": testIDs.LastFMDrawerPlayCount,
+          fontSize: ["xs", "md", "md"],
+        },
+        1
+      );
+      checkMockCall(
+        Text,
+        {
+          fontSize: ["xs", "sm", "sm"],
+        },
+        2
       );
     });
 
@@ -133,6 +153,9 @@ describe("FlipCardReportDrawer", () => {
         Img,
         {
           alt: `t(${currentProps.artWorkAltText})`,
+          borderColor: mockColourHook.componentColour.details,
+          borderStyle: "solid",
+          borderWidth: "1px",
           src: MockImageUrl,
           style: {
             position: "relative",
