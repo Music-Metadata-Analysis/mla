@@ -3,14 +3,14 @@ import type { LocalStorageObjectInterface } from "../../types/clients/local.stor
 class LocalStorageClient {
   lifespan = 24 * 3600 * 1000;
 
-  lookup(category: string, index: string): unknown | null {
+  find(category: string, index: string): unknown | null {
     const storage = this.getCategory(category);
     const search = storage.find((entry) => entry.index === index);
     if (search) return search.content;
     return null;
   }
 
-  createEntry(
+  create(
     category: string,
     index: string,
     content: LocalStorageObjectInterface["content"]

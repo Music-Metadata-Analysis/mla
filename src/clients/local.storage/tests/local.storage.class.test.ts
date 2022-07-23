@@ -34,9 +34,9 @@ describe("LocalStorageClient", () => {
 
     beforeEach(() => getItemMock.mockImplementationOnce(() => null));
 
-    describe("lookup", () => {
+    describe("find", () => {
       beforeEach(() => {
-        response = instance.lookup(category, index);
+        response = instance.find(category, index);
       });
 
       it("should return null", () => {
@@ -51,7 +51,7 @@ describe("LocalStorageClient", () => {
 
     describe("createEntry", () => {
       beforeEach(() => {
-        instance.createEntry(category, createdIndex, mockReport);
+        instance.create(category, createdIndex, mockReport);
       });
 
       it("should call getItem with the expected parameters", () => {
@@ -86,9 +86,9 @@ describe("LocalStorageClient", () => {
       );
     });
 
-    describe("lookup", () => {
+    describe("find", () => {
       beforeEach(() => {
-        response = instance.lookup(category, index);
+        response = instance.find(category, index);
       });
 
       it("should return null", () => {
@@ -103,7 +103,7 @@ describe("LocalStorageClient", () => {
 
     describe("createEntry", () => {
       beforeEach(() => {
-        instance.createEntry(category, createdIndex, mockReport);
+        instance.create(category, createdIndex, mockReport);
       });
 
       it("should call getItem with the expected parameters", () => {
@@ -138,9 +138,9 @@ describe("LocalStorageClient", () => {
       );
     });
 
-    describe("lookup", () => {
+    describe("find", () => {
       beforeEach(() => {
-        response = instance.lookup(category, index);
+        response = instance.find(category, index);
       });
 
       it("should return the mock report", () => {
@@ -153,9 +153,9 @@ describe("LocalStorageClient", () => {
       });
     });
 
-    describe("createEntry", () => {
+    describe("create", () => {
       beforeEach(() => {
-        instance.createEntry(category, createdIndex, mockReport);
+        instance.create(category, createdIndex, mockReport);
       });
 
       it("should call getItem with the expected parameters", () => {
