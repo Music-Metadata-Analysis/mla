@@ -4,6 +4,10 @@ import config from "../../../../../config/lastfm";
 import mockRouter from "../../../../../tests/fixtures/mock.router";
 import Select from "../select.report.component";
 
+jest.mock("flagsmith/react", () => ({
+  useFlags: jest.fn(() => ({})),
+}));
+
 jest.mock("next/router", () => ({
   __esModule: true,
   useRouter: () => mockRouter,
