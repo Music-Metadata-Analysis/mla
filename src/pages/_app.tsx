@@ -20,4 +20,5 @@ function App({
     </RootProvider>
   );
 }
+
 export default appWithTranslation(App);
