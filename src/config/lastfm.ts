@@ -1,3 +1,4 @@
+import flags from "./flags";
 import routes from "./routes";
 
 export const GenerateUserLink = (username: string) => {
@@ -21,24 +22,28 @@ const settings = {
         buttonTextKey: "select.reports.topAlbums",
         indicatorTextKey: "select.indicators.topAlbums",
         route: routes.search.lastfm.top20albums,
+        flag: null,
       },
       {
         analyticsName: "Top Artists",
         buttonTextKey: "select.reports.topArtists",
         indicatorTextKey: "select.indicators.topArtists",
         route: routes.search.lastfm.top20artists,
+        flag: null,
       },
       {
         analyticsName: "Top Tracks",
         buttonTextKey: "select.reports.topTracks",
         indicatorTextKey: "select.indicators.topTracks",
         route: routes.search.lastfm.top20tracks,
+        flag: null,
       },
       {
         analyticsName: "Playcount by Artist",
         buttonTextKey: "select.reports.playCountByArtist",
         indicatorTextKey: "select.indicators.playCountByArtist",
         route: routes.search.lastfm.playCountByArtist,
+        flag: flags.report_playcount_by_artist,
       },
     ],
   },
