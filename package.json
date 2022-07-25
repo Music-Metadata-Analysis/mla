@@ -29,7 +29,7 @@
     "@chakra-ui/clickable": "^1.2.4",
     "@chakra-ui/icons": "^1.1.5",
     "@chakra-ui/react": "^1.8.6",
-    "@emotion/react": "^11.8.2",
+    "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.6.0",
     "@toplast/lastfm": "^0.1.5",
     "cheerio": "^1.0.0-rc.10",
