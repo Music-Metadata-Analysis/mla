@@ -2,6 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import * as status from "../../../../config/status";
 import { ProxyError } from "../../../../errors/proxy.error.class";
+import flagVendor from "../../../integrations/flags/vendor";
 import LastFMApiEndpointFactoryV2 from "../v2.endpoint.base.class";
 import type { QueryParamType } from "../../../../types/api.endpoint.types";
 import type { HttpMethodType } from "../../../../types/clients/api/api.client.types";
@@ -10,6 +11,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV2 {
   route = "/api/v2/endpoint/:username";
   timeOut = 100;
+  delay = 1;
+  flag = null;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getProxyResponse(_: QueryParamType) {
@@ -29,6 +32,8 @@ class ConcreteErrorClass extends LastFMApiEndpointFactoryV2 {
   route = "/api/v2/endpoint/:username";
   mockError = "mockError";
   errorCode?: number;
+  delay = 1;
+  flag = null;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getProxyResponse(_: QueryParamType) {
@@ -41,12 +46,19 @@ class ConcreteErrorClass extends LastFMApiEndpointFactoryV2 {
 
 class ConcreteProxyErrorClass extends LastFMApiEndpointFactoryV2 {
   route = "/api/v2/endpoint/:username";
+  delay = 1;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getProxyResponse(_: QueryParamType) {
     return undefined as never as unknown[];
   }
 }
+
+jest.mock("../../../integrations/flags/vendor", () => ({
+  Client: jest.fn(() => ({
+    isEnabled: mockIsFeatureEnabled,
+  })),
+}));
 
 jest.mock("../../../../backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
@@ -55,6 +67,8 @@ jest.mock("../../../../backend/api/lastfm/endpoint.common.logger", () => {
 jest.mock("next-auth/jwt", () => ({
   getToken: jest.fn(),
 }));
+
+const mockIsFeatureEnabled = jest.fn();
 
 describe("LastFMApiEndpointFactoryV2", () => {
   // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
@@ -66,10 +80,28 @@ describe("LastFMApiEndpointFactoryV2", () => {
     | ConcreteTimeoutClass
     | ConcreteErrorClass;
   let method: HttpMethodType;
+  let originalEnvironment: typeof process.env;
+  let requiredFlag: string | null;
   let username: [string] | null;
+  const mockJWTSecret = "MockValue1";
+  const mockFlagEnvironment = "MockValue2";
+
+  const setupEnv = () => {
+    process.env.AUTH_MASTER_JWT_SECRET = mockJWTSecret;
+    process.env.NEXT_PUBLIC_FLAG_ENVIRONMENT = mockFlagEnvironment;
+  };
+
+  beforeAll(() => {
+    originalEnvironment = process.env;
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
+    setupEnv();
+  });
+
+  afterAll(() => {
+    process.env = originalEnvironment;
   });
 
   const checkJWT = () => {
@@ -77,18 +109,38 @@ describe("LastFMApiEndpointFactoryV2", () => {
       expect(getToken).toBeCalledTimes(1);
       const call = (getToken as jest.Mock).mock.calls[0][0];
       expect(call.req).toBe(req);
-      expect(call.secret).toBe(process.env.AUTH_MASTER_JWT_SECRET);
+      expect(call.secret).toBe(mockJWTSecret);
       expect(Object.keys(call).length).toBe(2);
     });
   };
 
-  const arrange = async () => {
+  const checkFeatureFlagLookup = ({
+    expectedCalls,
+  }: {
+    expectedCalls: number;
+  }) => {
+    it(`should${
+      expectedCalls > 0 ? " " : " NOT "
+    }check the flag's status`, () => {
+      expect(flagVendor.Client).toBeCalledTimes(expectedCalls);
+      expect(mockIsFeatureEnabled).toBeCalledTimes(expectedCalls);
+    });
+
+    if (expectedCalls > 0) {
+      it("should instantiate Flagsmith with the correct environment", () => {
+        expect(flagVendor.Client).toBeCalledWith(mockFlagEnvironment);
+      });
+    }
+  };
+
+  const actRequest = async () => {
     // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: factory.route,
       method,
       query: { username },
     }));
+    factory.flag = requiredFlag;
     await factory.create()(req, res);
   };
 
@@ -112,84 +164,322 @@ describe("LastFMApiEndpointFactoryV2", () => {
           username = ["validUser"];
         });
 
-        describe("receives a request that generates an unknown proxy error", () => {
-          beforeEach(async () => {
-            factory = new ConcreteErrorClass();
-            await arrange();
+        describe("with a bypassed flag", () => {
+          beforeEach(async () => (requiredFlag = null));
+
+          describe("receives a request that generates an unknown proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              await actRequest();
+            });
+
+            it("should return a 502", () => {
+              expect(res._getStatusCode()).toBe(502);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_502_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
           });
 
-          it("should return a 502", () => {
-            expect(res._getStatusCode()).toBe(502);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_502_MESSAGE);
+          describe("receives a request that generates an invalid proxy response", () => {
+            beforeEach(async () => {
+              factory = new ConcreteProxyErrorClass();
+              await actRequest();
+            });
+
+            it("should return a 503", () => {
+              expect(res._getStatusCode()).toBe(503);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_503_MESSAGE
+              );
+            });
+
+            it("should set a retry-after header", () => {
+              expect(res.getHeader("retry-after")).toBe(0);
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
           });
 
-          checkJWT();
+          describe("receives a request that generates an ratelimited proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              (factory as ConcreteErrorClass).errorCode = 429;
+              await actRequest();
+            });
+
+            it("should return a 429", () => {
+              expect(res._getStatusCode()).toBe(429);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_429_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
+
+          describe("receives a request that generates an not found proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              (factory as ConcreteErrorClass).errorCode = 404;
+              await actRequest();
+            });
+
+            it("should return a 404", () => {
+              expect(res._getStatusCode()).toBe(404);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_404_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
+
+          describe("receives a TIMED OUT request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 503", () => {
+              expect(res._getStatusCode()).toBe(503);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_503_MESSAGE
+              );
+            });
+
+            it("should set a retry-after header", () => {
+              expect(res.getHeader("retry-after")).toBe(0);
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
         });
 
-        describe("receives a request that generates an invalid proxy response", () => {
+        describe("with an enabled flag", () => {
           beforeEach(async () => {
-            factory = new ConcreteProxyErrorClass();
-            await arrange();
+            requiredFlag = "mockFlag";
+            mockIsFeatureEnabled.mockReturnValueOnce(true);
           });
 
-          it("should return a 503", () => {
-            expect(res._getStatusCode()).toBe(503);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_503_MESSAGE);
+          describe("receives a request that generates an unknown proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              await actRequest();
+            });
+
+            it("should return a 502", () => {
+              expect(res._getStatusCode()).toBe(502);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_502_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 1 });
           });
 
-          it("should set a retry-after header", () => {
-            expect(res.getHeader("retry-after")).toBe(0);
+          describe("receives a request that generates an invalid proxy response", () => {
+            beforeEach(async () => {
+              factory = new ConcreteProxyErrorClass();
+              await actRequest();
+            });
+
+            it("should return a 503", () => {
+              expect(res._getStatusCode()).toBe(503);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_503_MESSAGE
+              );
+            });
+
+            it("should set a retry-after header", () => {
+              expect(res.getHeader("retry-after")).toBe(0);
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 1 });
           });
 
-          checkJWT();
+          describe("receives a request that generates an ratelimited proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              (factory as ConcreteErrorClass).errorCode = 429;
+              await actRequest();
+            });
+
+            it("should return a 429", () => {
+              expect(res._getStatusCode()).toBe(429);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_429_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 1 });
+          });
+
+          describe("receives a request that generates an not found proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              (factory as ConcreteErrorClass).errorCode = 404;
+              await actRequest();
+            });
+
+            it("should return a 404", () => {
+              expect(res._getStatusCode()).toBe(404);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_404_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 1 });
+          });
+
+          describe("receives a TIMED OUT request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 503", () => {
+              expect(res._getStatusCode()).toBe(503);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_503_MESSAGE
+              );
+            });
+
+            it("should set a retry-after header", () => {
+              expect(res.getHeader("retry-after")).toBe(0);
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 1 });
+          });
         });
 
-        describe("receives a request that generates an ratelimited proxy error", () => {
+        describe("with an disabled flag", () => {
           beforeEach(async () => {
-            factory = new ConcreteErrorClass();
-            (factory as ConcreteErrorClass).errorCode = 429;
-            await arrange();
+            requiredFlag = "mockFlag";
+            mockIsFeatureEnabled.mockReturnValueOnce(false);
           });
 
-          it("should return a 429", () => {
-            expect(res._getStatusCode()).toBe(429);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_429_MESSAGE);
+          describe("receives a request that generates an unknown proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              await actRequest();
+            });
+
+            it("should return a 404", () => {
+              expect(res._getStatusCode()).toBe(404);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_404_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 1 });
           });
 
-          checkJWT();
-        });
+          describe("receives a request that generates an invalid proxy response", () => {
+            beforeEach(async () => {
+              factory = new ConcreteProxyErrorClass();
+              await actRequest();
+            });
 
-        describe("receives a request that generates an not found proxy error", () => {
-          beforeEach(async () => {
-            factory = new ConcreteErrorClass();
-            (factory as ConcreteErrorClass).errorCode = 404;
-            await arrange();
+            it("should return a 404", () => {
+              expect(res._getStatusCode()).toBe(404);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_404_MESSAGE
+              );
+            });
+
+            it("should NOT set a retry-after header", () => {
+              expect(res.getHeader("retry-after")).toBe(undefined);
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 1 });
           });
 
-          it("should return a 404", () => {
-            expect(res._getStatusCode()).toBe(404);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_404_MESSAGE);
+          describe("receives a request that generates an ratelimited proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              (factory as ConcreteErrorClass).errorCode = 429;
+              await actRequest();
+            });
+
+            it("should return a 404", () => {
+              expect(res._getStatusCode()).toBe(404);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_404_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 1 });
           });
 
-          checkJWT();
-        });
+          describe("receives a request that generates an not found proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              (factory as ConcreteErrorClass).errorCode = 404;
+              await actRequest();
+            });
 
-        describe("receives a TIMED OUT request", () => {
-          beforeEach(async () => {
-            factory = new ConcreteTimeoutClass();
-            await arrange();
+            it("should return a 404", () => {
+              expect(res._getStatusCode()).toBe(404);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_404_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 1 });
           });
 
-          it("should return a 503", () => {
-            expect(res._getStatusCode()).toBe(503);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_503_MESSAGE);
-          });
+          describe("receives a TIMED OUT request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
 
-          it("should set a retry-after header", () => {
-            expect(res.getHeader("retry-after")).toBe(0);
-          });
+            it("should return a 404", () => {
+              expect(res._getStatusCode()).toBe(404);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_404_MESSAGE
+              );
+            });
 
-          checkJWT();
+            it("should NOT set a retry-after header", () => {
+              expect(res.getHeader("retry-after")).toBe(undefined);
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 1 });
+          });
         });
       });
 
@@ -198,18 +488,76 @@ describe("LastFMApiEndpointFactoryV2", () => {
           username = null;
         });
 
-        describe("receives a request", () => {
+        describe("with an enabled flag", () => {
           beforeEach(async () => {
-            factory = new ConcreteTimeoutClass();
-            await arrange();
+            requiredFlag = null;
+            mockIsFeatureEnabled.mockReturnValueOnce(false);
           });
 
-          it("should return a 400", () => {
-            expect(res._getStatusCode()).toBe(400);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
+          describe("receives a request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 400", () => {
+              expect(res._getStatusCode()).toBe(400);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_400_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
+        });
+
+        describe("with a bypassed flag", () => {
+          beforeEach(async () => (requiredFlag = null));
+
+          describe("receives a request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 400", () => {
+              expect(res._getStatusCode()).toBe(400);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_400_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
+        });
+
+        describe("with a disabled flag", () => {
+          beforeEach(async () => {
+            requiredFlag = "mockFlag";
+            mockIsFeatureEnabled.mockReturnValueOnce(true);
           });
 
-          checkJWT();
+          describe("receives a request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 400", () => {
+              expect(res._getStatusCode()).toBe(400);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_400_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
         });
       });
     });
@@ -227,7 +575,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("receives a request", () => {
           beforeEach(async () => {
             factory = new ConcreteTimeoutClass();
-            await arrange();
+            await actRequest();
           });
 
           it("should return a 405", () => {
@@ -254,36 +602,144 @@ describe("LastFMApiEndpointFactoryV2", () => {
           username = ["validUser"];
         });
 
-        describe("receives a request that generates any proxy error", () => {
+        describe("with an bypassed flag", () => {
           beforeEach(async () => {
-            factory = new ConcreteErrorClass();
-            await arrange();
+            requiredFlag = null;
           });
 
-          it("should return a 401", () => {
-            expect(res._getStatusCode()).toBe(401);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
+          describe("receives a request that generates any proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              await actRequest();
+            });
+
+            it("should return a 401", () => {
+              expect(res._getStatusCode()).toBe(401);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_401_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
           });
 
-          checkJWT();
+          describe("receives a TIMED OUT request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 401", () => {
+              expect(res._getStatusCode()).toBe(401);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_401_MESSAGE
+              );
+            });
+
+            it("should NOT set a retry-after header", () => {
+              expect(res.getHeader("retry-after")).toBeUndefined();
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
         });
 
-        describe("receives a TIMED OUT request", () => {
+        describe("with an enabled flag", () => {
           beforeEach(async () => {
-            factory = new ConcreteTimeoutClass();
-            await arrange();
+            requiredFlag = "mockFlag";
+            mockIsFeatureEnabled.mockReturnValueOnce(true);
           });
 
-          it("should return a 401", () => {
-            expect(res._getStatusCode()).toBe(401);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
+          describe("receives a request that generates any proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              await actRequest();
+            });
+
+            it("should return a 401", () => {
+              expect(res._getStatusCode()).toBe(401);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_401_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
           });
 
-          it("should NOT set a retry-after header", () => {
-            expect(res.getHeader("retry-after")).toBeUndefined();
+          describe("receives a TIMED OUT request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 401", () => {
+              expect(res._getStatusCode()).toBe(401);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_401_MESSAGE
+              );
+            });
+
+            it("should NOT set a retry-after header", () => {
+              expect(res.getHeader("retry-after")).toBeUndefined();
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
+        });
+
+        describe("with a disabled flag", () => {
+          beforeEach(async () => {
+            requiredFlag = "mockFlag";
+            mockIsFeatureEnabled.mockReturnValueOnce(false);
           });
 
-          checkJWT();
+          describe("receives a request that generates any proxy error", () => {
+            beforeEach(async () => {
+              factory = new ConcreteErrorClass();
+              await actRequest();
+            });
+
+            it("should return a 401", () => {
+              expect(res._getStatusCode()).toBe(401);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_401_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
+
+          describe("receives a TIMED OUT request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 401", () => {
+              expect(res._getStatusCode()).toBe(401);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_401_MESSAGE
+              );
+            });
+
+            it("should NOT set a retry-after header", () => {
+              expect(res.getHeader("retry-after")).toBeUndefined();
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
         });
       });
 
@@ -292,18 +748,78 @@ describe("LastFMApiEndpointFactoryV2", () => {
           username = null;
         });
 
-        describe("receives a request", () => {
+        describe("with a bypassed flag", () => {
           beforeEach(async () => {
-            factory = new ConcreteTimeoutClass();
-            await arrange();
+            requiredFlag = null;
           });
 
-          it("should return a 401", () => {
-            expect(res._getStatusCode()).toBe(401);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
+          describe("receives a request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 401", () => {
+              expect(res._getStatusCode()).toBe(401);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_401_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
+        });
+
+        describe("with an enabled flag", () => {
+          beforeEach(async () => {
+            requiredFlag = "mockFlag";
+            mockIsFeatureEnabled.mockReturnValueOnce(true);
           });
 
-          checkJWT();
+          describe("receives a request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 401", () => {
+              expect(res._getStatusCode()).toBe(401);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_401_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
+        });
+
+        describe("with a disabled flag", () => {
+          beforeEach(async () => {
+            requiredFlag = "mockFlag";
+            mockIsFeatureEnabled.mockReturnValueOnce(false);
+          });
+
+          describe("receives a request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 401", () => {
+              expect(res._getStatusCode()).toBe(401);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_401_MESSAGE
+              );
+            });
+
+            checkJWT();
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
         });
       });
     });
@@ -318,15 +834,71 @@ describe("LastFMApiEndpointFactoryV2", () => {
           username = ["validUser"];
         });
 
-        describe("receives a request", () => {
+        describe("with a bypassed flag", () => {
           beforeEach(async () => {
-            factory = new ConcreteTimeoutClass();
-            await arrange();
+            requiredFlag = null;
           });
 
-          it("should return a 405", () => {
-            expect(res._getStatusCode()).toBe(405);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_405_MESSAGE);
+          describe("receives a request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 405", () => {
+              expect(res._getStatusCode()).toBe(405);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_405_MESSAGE
+              );
+            });
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
+        });
+
+        describe("with an enabled flag", () => {
+          beforeEach(async () => {
+            requiredFlag = "mockFlag";
+            mockIsFeatureEnabled.mockReturnValueOnce(true);
+          });
+
+          describe("receives a request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 405", () => {
+              expect(res._getStatusCode()).toBe(405);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_405_MESSAGE
+              );
+            });
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
+          });
+        });
+
+        describe("with a disabled flag", () => {
+          beforeEach(async () => {
+            requiredFlag = "mockFlag";
+            mockIsFeatureEnabled.mockReturnValueOnce(false);
+          });
+
+          describe("receives a request", () => {
+            beforeEach(async () => {
+              factory = new ConcreteTimeoutClass();
+              await actRequest();
+            });
+
+            it("should return a 405", () => {
+              expect(res._getStatusCode()).toBe(405);
+              expect(res._getJSONData()).toStrictEqual(
+                status.STATUS_405_MESSAGE
+              );
+            });
+
+            checkFeatureFlagLookup({ expectedCalls: 0 });
           });
         });
       });

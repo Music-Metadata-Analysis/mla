@@ -4,6 +4,7 @@ import LastFMEndpointBase from "./endpoint.common.base.class";
 import Logger from "./endpoint.common.logger";
 import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
+import flagVendor from "../../integrations/flags/vendor";
 import LastFMProxy from "../../integrations/lastfm/proxy.class";
 import type {
   LastFMEndpointRequest,
@@ -17,6 +18,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
   route!: string;
   maxAgeValue!: number;
   delay = 500;
+  flag: string | null = null;
 
   getParams(req: LastFMEndpointRequest): [PathParamType, boolean] {
     const params = req.query as PathParamType;
@@ -45,6 +47,8 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
         this.unauthorizedRequest(res);
       } else if (paramErrors) {
         this.invalidRequest(res);
+      } else if (!(await this.isEnabled())) {
+        res.status(404).json(status.STATUS_404_MESSAGE);
       } else {
         const proxyResponse = await this.queryProxy(req, res, next, params);
         if (this.isProxyResponseValid(proxyResponse)) {
@@ -57,6 +61,16 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
     });
     handler.use(Logger);
     return handler;
+  }
+
+  private async isEnabled() {
+    if (!this.flag) return true;
+
+    const client = new flagVendor.Client(
+      process.env.NEXT_PUBLIC_FLAG_ENVIRONMENT
+    );
+
+    return await client.isEnabled(this.flag);
   }
 
   private waitToAvoidRateLimiting() {
