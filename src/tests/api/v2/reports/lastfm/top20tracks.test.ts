@@ -1,5 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
+import LastFMApiEndpointFactoryV2 from "../../../../../backend/api/lastfm/v2.endpoint.base.class";
 import apiRoutes from "../../../../../config/apiRoutes";
 import handleProxy, {
   endpointFactory,
@@ -56,6 +57,24 @@ describe(testUrl, () => {
     }));
     await handleProxy(req, res);
   };
+
+  describe("An instance of the endpoint factory class", () => {
+    it("should inherit from LastFMApiEndpointFactoryV2", () => {
+      expect(endpointFactory).toBeInstanceOf(LastFMApiEndpointFactoryV2);
+    });
+
+    it("should have the correct route set", () => {
+      expect(endpointFactory.route).toBe(testUrl);
+    });
+
+    it("should have the correct maxAgeValue set", () => {
+      expect(endpointFactory.maxAgeValue).toBe(3600 * 24);
+    });
+
+    it("should have flag restrictions bypassed", () => {
+      expect(endpointFactory.flag).toBe(null);
+    });
+  });
 
   describe("with a valid jwt token", () => {
     beforeEach(() =>

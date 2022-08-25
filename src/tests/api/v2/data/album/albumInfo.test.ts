@@ -1,5 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
+import LastFMApiEndpointFactoryV2 from "../../../../../backend/api/lastfm/v2.endpoint.base.class";
 import apiRoutes from "../../../../../config/apiRoutes";
 import {
   STATUS_400_MESSAGE,
@@ -54,7 +55,7 @@ describe(testUrl, () => {
     jest.clearAllMocks();
   });
 
-  const arrange = async ({ query, method = "GET" }: ArrangeArgs) => {
+  const actRequest = async ({ query, method = "GET" }: ArrangeArgs) => {
     // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
     ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
       url: testUrl,
@@ -63,6 +64,24 @@ describe(testUrl, () => {
     }));
     await handleProxy(req, res);
   };
+
+  describe("An instance of the endpoint factory class", () => {
+    it("should inherit from LastFMApiEndpointFactoryV2", () => {
+      expect(endpointFactory).toBeInstanceOf(LastFMApiEndpointFactoryV2);
+    });
+
+    it("should have the correct route set", () => {
+      expect(endpointFactory.route).toBe(testUrl);
+    });
+
+    it("should have the correct maxAgeValue set", () => {
+      expect(endpointFactory.maxAgeValue).toBe(3600 * 24);
+    });
+
+    it("should have flag restrictions bypassed", () => {
+      expect(endpointFactory.flag).toBe(null);
+    });
+  });
 
   describe("with a valid jwt token", () => {
     beforeEach(() =>
@@ -93,7 +112,7 @@ describe(testUrl, () => {
               mockProxyMethod.mockReturnValueOnce(
                 Promise.resolve(mockResponse)
               );
-              await arrange({ query, method });
+              await actRequest({ query, method });
             });
 
             it("should return a 200 status code", () => {
@@ -122,7 +141,7 @@ describe(testUrl, () => {
               mockProxyMethod.mockReturnValueOnce(
                 Promise.resolve(mockResponseWithUserPlayCount)
               );
-              await arrange({ query, method });
+              await actRequest({ query, method });
             });
 
             it("should return a 200 status code", () => {
@@ -153,7 +172,7 @@ describe(testUrl, () => {
               mockProxyMethod.mockReturnValueOnce(
                 Promise.resolve(mockResponseWithInvalidUserPlayCount)
               );
-              await arrange({ query, method });
+              await actRequest({ query, method });
             });
 
             it("should return a 503 status code", () => {
@@ -178,22 +197,22 @@ describe(testUrl, () => {
             });
           });
         });
-      });
-    });
 
-    describe("with an invalid payload", () => {
-      beforeEach(async () => {
-        query = {};
-        await arrange({ query, method });
-      });
+        describe("with an invalid payload", () => {
+          beforeEach(async () => {
+            query = {};
+            await actRequest({ query, method });
+          });
 
-      it("should return a 400 status code", () => {
-        expect(res._getStatusCode()).toBe(400);
-        expect(res._getJSONData()).toStrictEqual(STATUS_400_MESSAGE);
-      });
+          it("should return a 400 status code", () => {
+            expect(res._getStatusCode()).toBe(400);
+            expect(res._getJSONData()).toStrictEqual(STATUS_400_MESSAGE);
+          });
 
-      it("should NOT call the proxy method", () => {
-        expect(mockProxyMethod).toBeCalledTimes(0);
+          it("should NOT call the proxy method", () => {
+            expect(mockProxyMethod).toBeCalledTimes(0);
+          });
+        });
       });
     });
   });
