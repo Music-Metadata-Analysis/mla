@@ -51,10 +51,10 @@
       "playCountByArtist": "Count by Artist"
     },
     "indicators": {
-      "topAlbums": "Report 1",
-      "topArtists": "Report 2",
-      "topTracks": "Report 3",
-      "playCountByArtist": "Report 4"
+      "topAlbums": "Flip Card Report",
+      "topArtists": "Flip Card Report",
+      "topTracks": "Flip Card Report",
+      "playCountByArtist": "Sunburst Report"
     }
   },
   "top20Albums": {

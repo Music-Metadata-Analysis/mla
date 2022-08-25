@@ -57,10 +57,25 @@ describe("LastFMApiEndpointFactoryV1", () => {
     | LastFMApiEndpointFactoryV1
     | ConcreteTimeoutClass
     | ConcreteErrorClass;
+  let originalEnvironment: typeof process.env;
   let method: HttpMethodType;
+  const mockJWTSecret = "MockValue1";
+
+  const setupEnv = () => {
+    process.env.AUTH_MASTER_JWT_SECRET = mockJWTSecret;
+  };
+
+  beforeAll(() => {
+    originalEnvironment = process.env;
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
+    setupEnv();
+  });
+
+  afterAll(() => {
+    process.env = originalEnvironment;
   });
 
   const checkJWT = () => {
@@ -68,7 +83,7 @@ describe("LastFMApiEndpointFactoryV1", () => {
       expect(getToken).toBeCalledTimes(1);
       const call = (getToken as jest.Mock).mock.calls[0][0];
       expect(call.req).toBe(req);
-      expect(call.secret).toBe(process.env.AUTH_MASTER_JWT_SECRET);
+      expect(call.secret).toBe(mockJWTSecret);
       expect(Object.keys(call).length).toBe(2);
     });
   };

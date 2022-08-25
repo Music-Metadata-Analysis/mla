@@ -1,3 +1,4 @@
+import type { VendorFlagStateType } from "../../../clients/flags/vendor.types";
 import type { ReactElement, JSXElementConstructor, ReactNode } from "react";
 
 export interface FlagVendor {
@@ -11,7 +12,7 @@ export interface FlagVendorHookInterface {
 }
 
 export interface FlagVendorProviderProps {
-  state: unknown;
+  state: VendorFlagStateType;
   children: (
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>[]
@@ -19,5 +20,5 @@ export interface FlagVendorProviderProps {
     ReactNode;
 }
 export interface FlagVendorSSR {
-  fetchState: () => unknown | Promise<unknown>;
+  fetchState: () => VendorFlagStateType | Promise<VendorFlagStateType>;
 }
