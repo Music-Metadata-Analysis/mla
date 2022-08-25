@@ -1,12 +1,11 @@
 import { Box, Flex, Avatar } from "@chakra-ui/react";
-import { useFlags } from "flagsmith/react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { MutableRefObject, useEffect, useState } from "react";
 import Option from "./inlay/select.option.component";
-import flags from "../../../../config/flags";
 import config from "../../../../config/lastfm";
 import settings from "../../../../config/navbar";
+import useFlags from "../../../../hooks/flags";
 import Billboard from "../../../billboard/billboard.component";
 import LastFMIcon from "../../../icons/lastfm/lastfm.icon";
 import VerticalScrollBarComponent from "../../../scrollbar/vertical.scrollbar.component";
@@ -19,7 +18,7 @@ export default function SearchSelection({ scrollRef }: SearchSelectionProps) {
   const { t } = useTranslation("lastfm");
   const router = useRouter();
   const [visibleIndicators, setVisibleIndicators] = useState(true);
-  const flagState = useFlags([flags.report_playcount_by_artist]);
+  const flags = useFlags();
 
   const getMaximumHeight = () => {
     return `calc(100vh - ${settings.offset}px)`;
@@ -28,9 +27,7 @@ export default function SearchSelection({ scrollRef }: SearchSelectionProps) {
   const enabledReports = () => {
     let enabled = config.select.options;
     enabled = enabled.filter((option) => {
-      if (!option.flag) return true;
-      if (!flagState[option.flag]) return false;
-      return flagState[option.flag].enabled;
+      return flags.isEnabled(option.flag);
     });
     return enabled;
   };

@@ -1,12 +1,11 @@
 // @ts-ignore: mocked with forwardRef
 import { MockedBox, Flex, Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import { useFlags } from "flagsmith/react";
 import { renderToString } from "react-dom/server";
 import translations from "../../../../../../public/locales/en/lastfm.json";
-import flags from "../../../../../config/flags";
 import config from "../../../../../config/lastfm";
 import settings from "../../../../../config/navbar";
+import mockUseFlags from "../../../../../hooks/tests/flags.mock.hook";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import translationKeyLookup from "../../../../../tests/fixtures/mock.translation";
 import Billboard from "../../../../billboard/billboard.component";
@@ -27,8 +26,9 @@ jest.mock("@chakra-ui/react", () => {
   return chakraMock;
 });
 
-jest.mock("flagsmith/react", () => ({
-  useFlags: jest.fn(),
+jest.mock("../../../../../hooks/flags", () => ({
+  __esModule: true,
+  default: () => mockUseFlags,
 }));
 
 jest.mock("../../../../billboard/billboard.component", () =>
@@ -70,7 +70,7 @@ describe("SearchSelection", () => {
     jest.clearAllMocks();
   });
 
-  const arrange = () => {
+  const actRender = () => {
     render(<Select scrollRef={mockRef} />);
   };
 
@@ -154,53 +154,59 @@ describe("SearchSelection", () => {
     });
   };
 
-  describe(`when ${flags.report_playcount_by_artist} is missing`, () => {
+  const checkFlagIsEnabledCalls = () => {
+    it(`should call the isEnabled hook function as expected`, () => {
+      const configuredFlags = config.select.options;
+
+      expect(mockUseFlags.isEnabled).toBeCalledTimes(configuredFlags.length);
+      (mockUseFlags.isEnabled as jest.Mock).mock.calls.forEach(
+        (mockCall, index) => {
+          const call = mockCall;
+          expect(call).toEqual([configuredFlags[index].flag]);
+        }
+      );
+    });
+  };
+
+  describe(`when a flag is disabled`, () => {
     beforeEach(() => {
-      (useFlags as jest.Mock).mockImplementation(() => ({}));
+      (mockUseFlags.isEnabled as jest.Mock)
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(false);
     });
 
     describe("when rendered", () => {
       beforeEach(() => {
-        arrange();
+        actRender();
       });
 
       checkChakraComponents();
+
+      checkFlagIsEnabledCalls();
 
       checkFlagsForOptions(3);
     });
   });
 
-  describe(`when ${flags.report_playcount_by_artist} is disabled`, () => {
+  describe(`when all flags are enabled`, () => {
     beforeEach(() => {
-      (useFlags as jest.Mock).mockImplementation(() => ({
-        [flags.report_playcount_by_artist]: { enabled: false },
-      }));
+      (mockUseFlags.isEnabled as jest.Mock)
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(true);
     });
 
     describe("when rendered", () => {
       beforeEach(() => {
-        arrange();
+        actRender();
       });
 
       checkChakraComponents();
 
-      checkFlagsForOptions(3);
-    });
-  });
-
-  describe(`when ${flags.report_playcount_by_artist} is enabled`, () => {
-    beforeEach(() => {
-      (useFlags as jest.Mock).mockImplementation(() => ({
-        [flags.report_playcount_by_artist]: { enabled: true },
-      }));
-    });
-
-    describe("when rendered", () => {
-      beforeEach(() => {
-        arrange();
-      });
-
-      checkChakraComponents();
+      checkFlagIsEnabledCalls();
 
       checkFlagsForOptions(4);
     });
