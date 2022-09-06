@@ -12,7 +12,7 @@ export default class PlayCountByArtistReport extends SunBurstBaseReport<PlayCoun
   encapsulationClass = PlayCountByArtistState;
   nodeEncapsulationClass = PlayCountByArtistNode;
   translationKey = "playCountByArtist" as const;
-  retryRoute = routes.search.lastfm.top20albums;
+  retryRoute = routes.search.lastfm.playCountByArtist;
   hookMethod = "playCountByArtist" as const;
   entityKeys = ["albums" as const, "artists" as const, "tracks" as const];
   leafEntity = "tracks" as const;
