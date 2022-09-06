@@ -27,7 +27,7 @@ describe(PlayCountByArtistReport.name, () => {
       expect(instance.encapsulationClass).toBe(PlayCountByArtistState);
       expect(instance.nodeEncapsulationClass).toBe(PlayCountByArtistNode);
       expect(instance.translationKey).toBe("playCountByArtist");
-      expect(instance.retryRoute).toBe(routes.search.lastfm.top20albums);
+      expect(instance.retryRoute).toBe(routes.search.lastfm.playCountByArtist);
       expect(instance.hookMethod).toBe("playCountByArtist");
       expect(instance.entityKeys).toStrictEqual([
         "albums",
