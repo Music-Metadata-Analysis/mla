@@ -1,12 +1,13 @@
 import routes from "../../../src/config/routes";
-import reports from "../../fixtures/reports";
+import { getAuthorizationCookieName } from "../../fixtures/cookies";
+import { flipCardReports } from "../../fixtures/reports";
 
 describe("Flip Card Reports", () => {
   Cypress.config("baseUrl", Cypress.env("BASEURL"));
   const expectedFlipCards = 20;
-  const authorizationCookieName = "__Secure-next-auth.session-token";
+  const authorizationCookieName = getAuthorizationCookieName();
 
-  reports.forEach((report) => {
+  flipCardReports.forEach((report) => {
     describe(report, () => {
       describe("when we are logged in", () => {
         beforeEach(() => {
@@ -27,7 +28,7 @@ describe("Flip Card Reports", () => {
         describe("when we visit the search selection screen", () => {
           beforeEach(() => cy.visit(routes.search.lastfm.selection));
 
-          describe("when we select the topAlbums report", () => {
+          describe(`when we select the '${report}' report`, () => {
             let Report;
 
             beforeEach(() => {
