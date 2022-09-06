@@ -1,9 +1,7 @@
 import lastfm from "../../public/locales/en/lastfm.json";
 
-const reports = [
+export const flipCardReports = [
   lastfm.select.reports.topAlbums,
   lastfm.select.reports.topArtists,
   lastfm.select.reports.topTracks,
 ];
-
-export default reports;
