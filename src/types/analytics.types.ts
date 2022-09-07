@@ -1,4 +1,4 @@
-import type { EventArgs } from "react-ga";
+import type EventDefinition from "../events/event.class";
 
 export type EventDefinitionType = {
   category: "AUTH" | "LAST.FM" | "MAIN" | "TEST";
@@ -24,7 +24,7 @@ export type EventDefinitionType = {
   value?: number;
 };
 
-export type EventCreatorType = (eventArgs: EventArgs) => void;
+export type EventCreatorType = (eventArgs: EventDefinition) => void;
 
 export type ButtonClickHandlerType = (
   e: React.BaseSyntheticEvent,

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useContext, useState } from "react";
-import ReactGA from "react-ga";
+import analyticsVendor from "../clients/analytics/vendor";
 import EventDefinition from "../events/event.class";
 import { AnalyticsContext } from "../providers/analytics/analytics.provider";
 import { isProduction, isTest } from "../utils/env";
@@ -8,12 +8,12 @@ import type {
   ButtonClickHandlerType,
   LinkClickHandlerType,
 } from "../types/analytics.types";
-import type { EventArgs } from "react-ga";
 
 const useAnalytics = () => {
   const { initialized, setInitialized } = useContext(AnalyticsContext);
   const [isTrackingRoutes, registerTrackRoutes] = useState(false);
   const router = useRouter();
+  const analytics = new analyticsVendor.GoogleAnalytics();
 
   useEffect(() => {
     if (!isTrackingRoutes) return;
@@ -52,26 +52,23 @@ const useAnalytics = () => {
   };
 
   const handleRouteChange = (url: string): void => {
-    ReactGA.set({ page: url });
-    ReactGA.pageview(url);
+    analytics.routeChange(url);
   };
 
-  const event = (eventArgs: EventArgs): void => {
+  const event = (eventArgs: EventDefinition): void => {
     if (!isProduction() && !isTest()) {
       console.group("EVENT");
       console.log(eventArgs);
       console.groupEnd();
     }
     if (initialized) {
-      ReactGA.event(eventArgs);
+      analytics.event(eventArgs);
     }
   };
 
   const setup = (): void => {
     if (initialized || !process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE) return;
-    ReactGA.initialize(process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE, {
-      debug: !isProduction(),
-    });
+    analytics.initialize(process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE);
     setInitialized(true);
     registerTrackRoutes(true);
   };
