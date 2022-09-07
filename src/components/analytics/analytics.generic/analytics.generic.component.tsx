@@ -1,8 +1,8 @@
 import useAnalytics from "../../../hooks/analytics";
-import type { EventDefinitionType } from "../../../types/analytics.types";
+import type EventDefinition from "../../../events/event.class";
 
 interface AnalyticsGenericWrapperProps {
-  eventDefinition: EventDefinitionType;
+  eventDefinition: EventDefinition;
   children: React.ReactNode;
 }
 
