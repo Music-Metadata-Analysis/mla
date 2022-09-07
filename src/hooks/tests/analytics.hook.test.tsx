@@ -2,7 +2,6 @@ import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
-import ReactGA from "react-ga";
 import mockUseAnalytics from "./analytics.mock.hook";
 import EventDefinition from "../../events/event.class";
 import Events from "../../events/events";
@@ -11,7 +10,16 @@ import useAnalytics from "../analytics";
 import type { AnalyticsContextInterface } from "../../types/analytics.types";
 import type { MutableEnv } from "../../types/process.types";
 
-jest.mock("react-ga");
+jest.mock("../../clients/analytics/vendor", () => ({
+  __esModule: true,
+  default: {
+    GoogleAnalytics: jest.fn(() => ({
+      event: mockAnalyticsVendorEvent,
+      initialize: mockAnalyticsVendorInitialize,
+      routeChange: mockAnalyticsVendorRouteChange,
+    })),
+  },
+}));
 
 jest.mock("next/router");
 
@@ -20,8 +28,11 @@ interface MockAnalyticsContextWithChildren {
   mockContext: AnalyticsContextInterface;
 }
 
+const mockAnalyticsVendorEvent = jest.fn();
+const mockAnalyticsVendorInitialize = jest.fn();
+const mockAnalyticsVendorRouteChange = jest.fn();
+
 describe("useAnalytics", () => {
-  let expectedDebugMode: boolean;
   let mockSetInitialized: jest.Mock;
   let originalEnvironment: typeof process.env;
   let received: ReturnType<typeof arrange>;
@@ -117,7 +128,6 @@ describe("useAnalytics", () => {
 
   describe("when in production", () => {
     beforeAll(() => {
-      expectedDebugMode = false;
       (process.env as MutableEnv).NODE_ENV = "production";
     });
 
@@ -138,7 +148,7 @@ describe("useAnalytics", () => {
           beforeEach(() => received.result.current.setup());
 
           it("should NOT initialize analytics", () => {
-            expect(ReactGA.initialize).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorInitialize).toBeCalledTimes(0);
           });
 
           it("should NOT set initialized to true", () => {
@@ -150,7 +160,7 @@ describe("useAnalytics", () => {
           beforeEach(() => received.result.current.event(Events.General.Test));
 
           it("should NOT process events", () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
 
@@ -163,7 +173,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
 
@@ -176,7 +186,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
 
@@ -189,7 +199,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
       });
@@ -217,10 +227,9 @@ describe("useAnalytics", () => {
           });
 
           it("should initialize analytics (with debug disabled)", () => {
-            expect(ReactGA.initialize).toBeCalledTimes(1);
-            expect(ReactGA.initialize).toHaveBeenCalledWith(
-              process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE,
-              { debug: expectedDebugMode }
+            expect(mockAnalyticsVendorInitialize).toBeCalledTimes(1);
+            expect(mockAnalyticsVendorInitialize).toHaveBeenCalledWith(
+              process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE
             );
           });
 
@@ -240,11 +249,8 @@ describe("useAnalytics", () => {
 
             handler(fakeUrl);
 
-            expect(ReactGA.set).toBeCalledTimes(1);
-            expect(ReactGA.set).toBeCalledWith({ page: fakeUrl });
-
-            expect(ReactGA.pageview).toBeCalledTimes(1);
-            expect(ReactGA.pageview).toBeCalledWith(fakeUrl);
+            expect(mockAnalyticsVendorRouteChange).toBeCalledTimes(1);
+            expect(mockAnalyticsVendorRouteChange).toBeCalledWith(fakeUrl);
           });
         });
 
@@ -258,7 +264,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", async () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
 
@@ -271,7 +277,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", async () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
 
@@ -284,7 +290,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", async () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
 
@@ -297,7 +303,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", async () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
       });
@@ -314,7 +320,7 @@ describe("useAnalytics", () => {
           beforeEach(() => received.result.current.setup());
 
           it("should NOT initialize analytics", () => {
-            expect(ReactGA.initialize).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorInitialize).toBeCalledTimes(0);
           });
 
           it("should NOT set initialized to true", () => {
@@ -332,8 +338,10 @@ describe("useAnalytics", () => {
           });
 
           it("should process events", async () => {
-            expect(ReactGA.event).toBeCalledTimes(1);
-            expect(ReactGA.event).toBeCalledWith(Events.General.Test);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(1);
+            expect(mockAnalyticsVendorEvent).toBeCalledWith(
+              Events.General.Test
+            );
           });
         });
 
@@ -346,8 +354,10 @@ describe("useAnalytics", () => {
           });
 
           it("should process events as expected", async () => {
-            expect(ReactGA.event).toBeCalledTimes(1);
-            expect(ReactGA.event).toBeCalledWith(mockButtonClickEvent);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(1);
+            expect(mockAnalyticsVendorEvent).toBeCalledWith(
+              mockButtonClickEvent
+            );
           });
         });
 
@@ -360,8 +370,10 @@ describe("useAnalytics", () => {
           });
 
           it("should process events as expected", async () => {
-            expect(ReactGA.event).toBeCalledTimes(1);
-            expect(ReactGA.event).toBeCalledWith(mockExternalLinkClickEvent);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(1);
+            expect(mockAnalyticsVendorEvent).toBeCalledWith(
+              mockExternalLinkClickEvent
+            );
           });
         });
 
@@ -374,8 +386,10 @@ describe("useAnalytics", () => {
           });
 
           it("should process events as expected", async () => {
-            expect(ReactGA.event).toBeCalledTimes(1);
-            expect(ReactGA.event).toBeCalledWith(mockInternalLinkClickEvent);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(1);
+            expect(mockAnalyticsVendorEvent).toBeCalledWith(
+              mockInternalLinkClickEvent
+            );
           });
         });
       });
@@ -384,7 +398,6 @@ describe("useAnalytics", () => {
 
   describe("when NOT in production and NOT in test", () => {
     beforeAll(() => {
-      expectedDebugMode = true;
       (process.env as MutableEnv).NODE_ENV = "development";
     });
 
@@ -405,7 +418,7 @@ describe("useAnalytics", () => {
           beforeEach(() => received.result.current.setup());
 
           it("should NOT initialize analytics", async () => {
-            expect(ReactGA.initialize).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorInitialize).toBeCalledTimes(0);
           });
 
           it("should NOT set initialized to true", async () => {
@@ -426,7 +439,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", async () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
 
@@ -439,7 +452,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", async () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
 
@@ -452,7 +465,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", async () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
 
@@ -465,7 +478,7 @@ describe("useAnalytics", () => {
           });
 
           it("should NOT process events", async () => {
-            expect(ReactGA.event).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(0);
           });
         });
       });
@@ -488,7 +501,7 @@ describe("useAnalytics", () => {
           beforeEach(() => received.result.current.setup());
 
           it("should NOT initialize analytics", async () => {
-            expect(ReactGA.initialize).toBeCalledTimes(0);
+            expect(mockAnalyticsVendorInitialize).toBeCalledTimes(0);
           });
 
           it("should NOT set initialized to true", async () => {
@@ -509,8 +522,10 @@ describe("useAnalytics", () => {
           });
 
           it("should process events", async () => {
-            expect(ReactGA.event).toBeCalledTimes(1);
-            expect(ReactGA.event).toBeCalledWith(Events.General.Test);
+            expect(mockAnalyticsVendorEvent).toBeCalledTimes(1);
+            expect(mockAnalyticsVendorEvent).toBeCalledWith(
+              Events.General.Test
+            );
           });
         });
       });
@@ -532,10 +547,9 @@ describe("useAnalytics", () => {
           });
 
           it("should initialize analytics (with debug enabled)", async () => {
-            expect(ReactGA.initialize).toBeCalledTimes(1);
-            expect(ReactGA.initialize).toHaveBeenCalledWith(
-              process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE,
-              { debug: expectedDebugMode }
+            expect(mockAnalyticsVendorInitialize).toBeCalledTimes(1);
+            expect(mockAnalyticsVendorInitialize).toHaveBeenCalledWith(
+              process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE
             );
           });
 
@@ -555,11 +569,8 @@ describe("useAnalytics", () => {
 
             handler(fakeUrl);
 
-            expect(ReactGA.set).toBeCalledTimes(1);
-            expect(ReactGA.set).toBeCalledWith({ page: fakeUrl });
-
-            expect(ReactGA.pageview).toBeCalledTimes(1);
-            expect(ReactGA.pageview).toBeCalledWith(fakeUrl);
+            expect(mockAnalyticsVendorRouteChange).toBeCalledTimes(1);
+            expect(mockAnalyticsVendorRouteChange).toBeCalledWith(fakeUrl);
           });
         });
       });
