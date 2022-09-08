@@ -1,5 +1,5 @@
 // @ts-ignore: mocked with forwardRef
-import { MockedBox, Flex, Avatar } from "@chakra-ui/react";
+import { BoxWithFwdRef, Flex, Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import translations from "../../../../../../public/locales/en/lastfm.json";
@@ -21,7 +21,7 @@ jest.mock("@chakra-ui/react", () => {
   } = require("../../../../../tests/fixtures/mock.chakra.react.factory.class");
   const chakraMock = factoryInstance.create(["Avatar", "Box", "Flex"]);
   chakraMock.Avatar = jest.fn().mockImplementation(() => <div>MockAvatar</div>);
-  chakraMock.MockedBox = chakraMock.Box;
+  chakraMock.BoxWithFwdRef = chakraMock.Box;
   chakraMock.Box = forwardRef(chakraMock.Box);
   return chakraMock;
 });
@@ -95,11 +95,11 @@ describe("SearchSelection", () => {
     });
 
     it("should call Box as expected to create a margin around the form", () => {
-      expect(MockedBox).toBeCalledTimes(3);
-      checkMockCall(MockedBox, { position: "relative" }, 0);
-      checkMockCall(MockedBox, { mb: 1 }, 1);
+      expect(BoxWithFwdRef).toBeCalledTimes(3);
+      checkMockCall(BoxWithFwdRef, { position: "relative" }, 0);
+      checkMockCall(BoxWithFwdRef, { mb: 1 }, 1);
       checkMockCall(
-        MockedBox,
+        BoxWithFwdRef,
         {
           className: "scrollbar",
           id: "SunburstDrawerEntityListScrollArea",
