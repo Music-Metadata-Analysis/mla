@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import S3Profile from "../../../backend/integrations/auth/s3profile.class";
@@ -11,6 +12,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 jest.mock("next-auth", () => jest.fn());
 jest.mock("next-auth/providers/facebook", () => jest.fn());
 jest.mock("next-auth/providers/github", () => jest.fn());
+jest.mock("next-auth/providers/google", () => jest.fn());
 jest.mock("next-auth/providers/spotify", () => jest.fn());
 jest.mock("../../../backend/integrations/auth/s3profile.class", () =>
   jest.fn(() => ({
@@ -40,6 +42,8 @@ describe("NextAuthConfig", () => {
     process.env.AUTH_FACEBOOK_SECRET = mockValue();
     process.env.AUTH_GITHUB_ID = mockValue();
     process.env.AUTH_GITHUB_SECRET = mockValue();
+    process.env.AUTH_GOOGLE_ID = mockValue();
+    process.env.AUTH_GOOGLE_SECRET = mockValue();
     process.env.AUTH_MASTER_SECRET_KEY = mockValue();
     process.env.AUTH_MASTER_JWT_SECRET = mockValue();
     process.env.AUTH_SPOTIFY_ID = mockValue();
@@ -78,7 +82,7 @@ describe("NextAuthConfig", () => {
       });
     });
 
-    it("should initialize the GithubProvider Provider", async () => {
+    it("should initialize the Github Provider", async () => {
       expect(GithubProvider).toBeCalledTimes(1);
       expect(GithubProvider).toBeCalledWith({
         clientId: process.env.AUTH_GITHUB_ID,
@@ -86,7 +90,15 @@ describe("NextAuthConfig", () => {
       });
     });
 
-    it("should initialize the SpotifyProvider Provider", async () => {
+    it("should initialize the Google Provider", async () => {
+      expect(GoogleProvider).toBeCalledTimes(1);
+      expect(GoogleProvider).toBeCalledWith({
+        clientId: process.env.AUTH_GOOGLE_ID,
+        clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      });
+    });
+
+    it("should initialize the Spotify Provider", async () => {
       expect(SpotifyProvider).toBeCalledTimes(1);
       expect(SpotifyProvider).toBeCalledWith({
         clientId: process.env.AUTH_SPOTIFY_ID,

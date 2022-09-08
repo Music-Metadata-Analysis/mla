@@ -20,13 +20,17 @@ jest.mock("../../../hooks/lastfm", () => {
   });
 });
 
+jest.mock("../navbar.session.control/navbar.session.control.component", () =>
+  jest.fn(() => <div>MockNavBarSessionController</div>)
+);
+
 jest.mock("../../../hooks/analytics", () => ({
   __esModule: true,
   default: () => mockAnalyticsHook,
 }));
 
-jest.mock("../navbar.session.control/navbar.session.control.component", () =>
-  jest.fn(() => <div>MockNavBarSessionController</div>)
+jest.mock("../../scrollbar/vertical.scrollbar.component", () =>
+  jest.fn(() => <div>MockVerticalScrollBar</div>)
 );
 
 const getMockedUserProperties = () => mockUserProperties;
