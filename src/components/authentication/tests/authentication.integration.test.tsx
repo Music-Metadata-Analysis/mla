@@ -35,6 +35,10 @@ jest.mock("../../../hooks/analytics", () => ({
   default: () => mockAnalyticsHook,
 }));
 
+jest.mock("../../scrollbar/vertical.scrollbar.component", () =>
+  jest.fn(() => <div>MockVerticalScrollBar</div>)
+);
+
 const mockUseDisclosure = jest.fn();
 const mockUseSession = jest.fn();
 
@@ -44,11 +48,14 @@ describe("AuthenticationContainer", () => {
   const providers: (keyof typeof translations.buttons)[] = [
     "facebook",
     "github",
+    "google",
     "spotify",
   ];
   let mockCallBack: (() => void) | undefined;
 
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   const arrange = () => {
     render(

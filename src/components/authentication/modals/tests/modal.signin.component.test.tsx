@@ -1,5 +1,6 @@
 import {
-  Box,
+  // @ts-ignore: mocked with forwardRef
+  BoxWithFwdRef,
   Center,
   Container,
   Flex,
@@ -16,10 +17,12 @@ import routes from "../../../../config/routes";
 import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import ClickLink from "../../../clickable/click.link.internal/click.link.internal.component";
+import VerticalScrollBar from "../../../scrollbar/vertical.scrollbar.component";
 import SignInButtons from "../../buttons/signin.buttons";
 import ModalComponent, { testIDs } from "../modal.signin.component";
 
 jest.mock("@chakra-ui/react", () => {
+  const { forwardRef } = require("react");
   const {
     factoryInstance,
   } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
@@ -36,11 +39,17 @@ jest.mock("@chakra-ui/react", () => {
   ]);
   instance.ModalOverlay = jest.fn(() => "ModalOverlay");
   instance.ModalCloseButton = jest.fn(() => "ModalCloseButton");
+  instance.BoxWithFwdRef = instance.Box;
+  instance.Box = forwardRef(instance.Box);
   return instance;
 });
 
 jest.mock("../../buttons/signin.buttons", () =>
   jest.fn(() => <div>MockSignInButtons</div>)
+);
+
+jest.mock("../../../scrollbar/vertical.scrollbar.component", () =>
+  jest.fn(() => <div>MockVerticalScrollBar</div>)
 );
 
 jest.mock("../../../../hooks/colour", () => {
@@ -81,10 +90,23 @@ describe("AuthenticationModal", () => {
   };
 
   it("should call the Box component correctly", () => {
-    expect(Box).toBeCalledTimes(1);
-    checkMockCall(Box, {
-      borderWidth: 1,
-    });
+    expect(BoxWithFwdRef).toBeCalledTimes(2);
+    checkMockCall(
+      BoxWithFwdRef,
+      {
+        borderWidth: 1,
+      },
+      0
+    );
+    checkMockCall(
+      BoxWithFwdRef,
+      {
+        className: "scrollbar",
+        id: "SignInProvidersScrollArea",
+        maxHeight: "calc(100vh - 150px)",
+      },
+      1
+    );
   });
 
   it("should call the Modal component correctly", () => {
@@ -105,9 +127,12 @@ describe("AuthenticationModal", () => {
   it("should call the ModalContent component correctly", () => {
     expect(ModalContent).toBeCalledTimes(1);
     checkMockCall(ModalContent, {
-      color: mockColourHook.modalColour.foreground,
-      borderColor: mockColourHook.modalColour.border,
       bg: mockColourHook.modalColour.background,
+      borderColor: mockColourHook.modalColour.border,
+      color: mockColourHook.modalColour.foreground,
+      m: 0,
+      ml: 2,
+      mr: 2,
     });
   });
 
@@ -137,7 +162,10 @@ describe("AuthenticationModal", () => {
 
   it("should call the ModalBody component correctly", () => {
     expect(ModalBody).toBeCalledTimes(1);
-    checkMockCall(ModalBody, {});
+    checkMockCall(ModalBody, {
+      pl: 2,
+      pr: 2,
+    });
   });
 
   it("should call the Center component correctly", () => {
@@ -167,6 +195,17 @@ describe("AuthenticationModal", () => {
       1,
       ["onClick"]
     );
+  });
+
+  it("should call the VerticalScrollBar component correctly", () => {
+    expect(VerticalScrollBar).toBeCalledTimes(1);
+    const call = (VerticalScrollBar as jest.Mock).mock.calls[0][0];
+    expect(call.scrollRef).toBeDefined();
+    expect(call.update).toBe(null);
+    expect(call.horizontalOffset).toBe(10);
+    expect(call.verticalOffset).toBe(0);
+    expect(call.zIndex).toBe(10000);
+    expect(Object.keys(call).length).toBe(5);
   });
 
   it("should call the SignInButtons component correctly", () => {
