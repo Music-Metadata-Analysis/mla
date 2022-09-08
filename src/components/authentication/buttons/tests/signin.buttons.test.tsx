@@ -2,6 +2,7 @@ import { render } from "@testing-library/react";
 import {
   FacebookLoginButton,
   GithubLoginButton,
+  GoogleLoginButton,
 } from "react-social-login-buttons";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import AnalyticsWrapper from "../../../analytics/analytics.button/analytics.button.component";
@@ -11,6 +12,7 @@ import SignInButtons from "../signin.buttons";
 jest.mock("react-social-login-buttons", () => ({
   FacebookLoginButton: jest.fn(() => "FacebookLoginButton"),
   GithubLoginButton: jest.fn(() => "GithubLoginButton"),
+  GoogleLoginButton: jest.fn(() => "GoogleLoginButton"),
 }));
 
 jest.mock("../../../button/button.spotify/spotify.login", () =>
@@ -34,7 +36,7 @@ const mockSignIn = jest.fn();
 const mockT = jest.fn((arg: string) => `t(${arg})`);
 
 describe("AuthenticationComponent", () => {
-  const buttonWidth = 250;
+  const buttonWidth = 245;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -52,7 +54,7 @@ describe("AuthenticationComponent", () => {
   };
 
   it("should call the AnalyticsWrapper component correctly", () => {
-    expect(AnalyticsWrapper).toBeCalledTimes(3);
+    expect(AnalyticsWrapper).toBeCalledTimes(4);
     checkMockCall(
       AnalyticsWrapper,
       {
@@ -70,9 +72,16 @@ describe("AuthenticationComponent", () => {
     checkMockCall(
       AnalyticsWrapper,
       {
-        buttonName: "Spotify Login",
+        buttonName: "Google Login",
       },
       2
+    );
+    checkMockCall(
+      AnalyticsWrapper,
+      {
+        buttonName: "Spotify Login",
+      },
+      3
     );
   });
 
@@ -98,6 +107,20 @@ describe("AuthenticationComponent", () => {
         style: { width: buttonWidth },
         align: "center",
         text: "t(buttons.github)",
+      },
+      0,
+      ["onClick"]
+    );
+  });
+
+  it("should call the GoogleLoginButton component correctly", () => {
+    expect(GoogleLoginButton).toBeCalledTimes(1);
+    checkMockCall(
+      GoogleLoginButton,
+      {
+        style: { width: buttonWidth },
+        align: "center",
+        text: "t(buttons.google)",
       },
       0,
       ["onClick"]
