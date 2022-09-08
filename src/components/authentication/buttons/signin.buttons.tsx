@@ -1,6 +1,7 @@
 import {
   FacebookLoginButton,
   GithubLoginButton,
+  GoogleLoginButton,
 } from "react-social-login-buttons";
 import AnalyticsWrapper from "../../analytics/analytics.button/analytics.button.component";
 import SpotifyLoginButton from "../../button/button.spotify/spotify.login";
@@ -17,7 +18,7 @@ export default function SignInButtons({
   signIn,
   t,
 }: AuthenticationProviderProps) {
-  const buttonWidth = 250;
+  const buttonWidth = 245;
 
   const handleSignIn = (provider: string) => {
     setClicked(true);
@@ -40,6 +41,14 @@ export default function SignInButtons({
           align={"center"}
           onClick={() => handleSignIn("github")}
           text={t("buttons.github")}
+        />
+      </AnalyticsWrapper>
+      <AnalyticsWrapper buttonName={"Google Login"}>
+        <GoogleLoginButton
+          style={{ width: buttonWidth }}
+          align={"center"}
+          onClick={() => handleSignIn("google")}
+          text={t("buttons.google")}
         />
       </AnalyticsWrapper>
       <AnalyticsWrapper buttonName={"Spotify Login"}>

@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
 import S3Profile from "../../../backend/integrations/auth/s3profile.class";
 import settings from "../../../config/auth";
@@ -23,6 +24,10 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       GithubProvider({
         clientId: process.env.AUTH_GITHUB_ID,
         clientSecret: process.env.AUTH_GITHUB_SECRET,
+      }),
+      GoogleProvider({
+        clientId: process.env.AUTH_GOOGLE_ID,
+        clientSecret: process.env.AUTH_GOOGLE_SECRET,
       }),
       SpotifyProvider({
         clientId: process.env.AUTH_SPOTIFY_ID,

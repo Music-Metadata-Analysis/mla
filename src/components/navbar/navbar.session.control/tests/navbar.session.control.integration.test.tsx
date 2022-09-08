@@ -42,6 +42,10 @@ jest.mock("react-icons/ri", () => ({
     .mockImplementation((props) => <div {...props}>MockRiLogoutBoxRLine</div>),
 }));
 
+jest.mock("../../../scrollbar/vertical.scrollbar.component", () =>
+  jest.fn(() => <div>MockVerticalScrollBar</div>)
+);
+
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
