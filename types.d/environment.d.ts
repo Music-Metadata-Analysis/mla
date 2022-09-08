@@ -6,6 +6,8 @@ declare namespace NodeJS {
     AUTH_FACEBOOK_SECRET: string;
     AUTH_GITHUB_ID: string;
     AUTH_GITHUB_SECRET: string;
+    AUTH_GOOGLE_ID: string;
+    AUTH_GOOGLE_SECRET: string;
     AUTH_MASTER_JWT_SECRET: string;
     AUTH_MASTER_SECRET_KEY: string;
     AUTH_SPOTIFY_ID: string;
