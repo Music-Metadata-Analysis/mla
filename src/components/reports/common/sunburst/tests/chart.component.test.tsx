@@ -56,6 +56,16 @@ describe("SunBurstChart", () => {
   );
   const mockFinishTransition = jest.fn();
 
+  beforeAll(() => {
+    // @ts-ignore: Jest does not yet support SVGTextElement
+    window.SVGElement.prototype.getComputedTextLength = () => 60;
+  });
+
+  afterAll(() => {
+    // @ts-ignore: Jest does not yet support SVGTextElement
+    delete window.SVGElement.prototype.getComputedTextLength;
+  });
+
   beforeEach(() => {
     instance = new SunBurstChart({
       containerSize: 300,
