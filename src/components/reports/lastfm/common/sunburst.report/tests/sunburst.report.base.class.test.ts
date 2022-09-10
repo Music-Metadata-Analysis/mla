@@ -9,7 +9,10 @@ import type {
   AggregateBaseReportResponseInterface,
   AggregateReportOperationType,
 } from "../../../../../../types/integrations/base.types";
-import type { d3Node } from "../../../../../../types/reports/sunburst.types";
+import type {
+  d3Node,
+  SunBurstData,
+} from "../../../../../../types/reports/sunburst.types";
 import type { userHookAsLastFM } from "../../../../../../types/user/hook.types";
 import type { LastFMUserStateBase } from "../../../../../../types/user/state.types";
 import type { BillBoardProgressBarDetails } from "../../../../../billboard/billboard.progress.bar/billboard.progress.bar.component";
@@ -87,6 +90,28 @@ describe("SunBurstBaseReport", () => {
 
       it("should contain the expected userProperties ", () => {
         expect(received.userProperties).toStrictEqual(mockUserState);
+      });
+    });
+
+    describe("getEntityLeaf", () => {
+      let received: SunBurstData["entity"];
+
+      beforeEach(() => (received = instance.getEntityLeaf()));
+
+      it("should return the last entity in the entityKeys list", () => {
+        expect(received).toBe(
+          instance.entityKeys[instance.entityKeys.length - 1]
+        );
+      });
+    });
+
+    describe("getEntityTopLevel", () => {
+      let received: SunBurstData["entity"];
+
+      beforeEach(() => (received = instance.getEntityTopLevel()));
+
+      it("should return the first entity in the entityKeys list", () => {
+        expect(received).toBe(instance.entityKeys[0]);
       });
     });
 
@@ -191,10 +216,7 @@ describe("SunBurstBaseReport", () => {
 
         it("should instantiate the SunBurstDataTranslator class", () => {
           expect(SunBurstDataTranslator).toBeCalledTimes(1);
-          expect(SunBurstDataTranslator).toBeCalledWith(
-            instance.entityKeys,
-            instance.leafEntity
-          );
+          expect(SunBurstDataTranslator).toBeCalledWith(instance.entityKeys);
         });
 
         it("should call the convert method of the sunBurstDataTranslator class", () => {
@@ -208,7 +230,7 @@ describe("SunBurstBaseReport", () => {
             },
             instance.getReportData(MockCompleteReport1 as LastFMUserStateBase)
               .content,
-            instance.topLevelEntity
+            instance.getEntityTopLevel()
           );
         });
 
