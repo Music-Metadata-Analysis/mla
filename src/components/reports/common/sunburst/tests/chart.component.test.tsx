@@ -136,8 +136,8 @@ describe("SunBurstChart", () => {
           [
             `-${expectedPadding / 2}`,
             `-${expectedPadding / 2}`,
-            `${size + expectedPadding / 2}`,
-            `${size + expectedPadding / 2}`,
+            `${size + expectedPadding}`,
+            `${size + expectedPadding}`,
           ].join(",")
         )
       );

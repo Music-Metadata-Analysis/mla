@@ -147,8 +147,8 @@ class SunBurstChart extends Component<SunBurstChartProps> {
     return [
       -padding / 2,
       -padding / 2,
-      this.props.size + padding / 2,
-      this.props.size + padding / 2,
+      this.props.size + padding,
+      this.props.size + padding,
     ];
   };
 
