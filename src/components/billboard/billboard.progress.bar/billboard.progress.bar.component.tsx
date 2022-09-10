@@ -48,7 +48,7 @@ const BillBoardProgressBar = ({
       style={{ display: visible ? "inline" : "none" }}
     >
       <BillBoard title={title}>
-        <Box pt={10} pb={20}>
+        <Box pt={3} pb={3}>
           <Progress
             data-testid={testIDs.BillBoardProgressBar}
             height="32px"
