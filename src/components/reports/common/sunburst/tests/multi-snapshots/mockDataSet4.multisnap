@@ -5,7 +5,7 @@ exports[`SunBurstChart with mockDataSet4 should match the snapshot on file: mult
   <svg
     data-testid="SunBurstChart"
     style="font: Helvetica 9px 9px;"
-    viewBox="-5,-5,305,305"
+    viewBox="-5,-5,310,310"
     width="500"
     xmlns="http://www.w3.org/2000/svg"
   >
