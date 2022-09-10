@@ -171,7 +171,7 @@ export default function SunBurstReport<
                   lastFMt(`${String(report.getReportTranslationKey())}.rootTag`)
                 )}
                 finishTransition={finishSvgTransition}
-                leafEntity={report.leafEntity}
+                leafEntity={report.getEntityLeaf()}
                 selectedNode={sunBurstGetters.selectedNode}
                 setSelectedNode={selectNode}
               />
