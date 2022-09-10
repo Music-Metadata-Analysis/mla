@@ -30,12 +30,10 @@ describe(PlayCountByArtistReport.name, () => {
       expect(instance.retryRoute).toBe(routes.search.lastfm.playCountByArtist);
       expect(instance.hookMethod).toBe("playCountByArtist");
       expect(instance.entityKeys).toStrictEqual([
-        "albums",
         "artists",
+        "albums",
         "tracks",
       ]);
-      expect(instance.leafEntity).toBe("tracks");
-      expect(instance.topLevelEntity).toBe("artists");
     });
 
     describe("getReportData", () => {
