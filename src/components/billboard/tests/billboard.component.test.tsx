@@ -78,7 +78,7 @@ describe("Billboard", () => {
             bg: mockColourHook.componentColour.background,
             color: mockColourHook.componentColour.foreground,
             p: 3,
-            pb: i == 0 ? 6 : expectedBottomMargin,
+            pb: i == 0 ? 5 : expectedBottomMargin,
             mt: expectedTopMargin,
             w: ["90%", "80%", "70%"],
           },
@@ -115,7 +115,7 @@ describe("Billboard", () => {
       checkChakraComponents({
         expectedCalls: 1,
         expectedTopMargin: 16,
-        expectedBottomMargin: 6,
+        expectedBottomMargin: 5,
       });
       checkChildComponents({ expectedCalls: 1 });
     });
@@ -147,7 +147,7 @@ describe("Billboard", () => {
       checkChakraComponents({
         expectedCalls: 1,
         expectedTopMargin: 0,
-        expectedBottomMargin: 6,
+        expectedBottomMargin: 5,
       });
       checkChildComponents({ expectedCalls: 1 });
     });
