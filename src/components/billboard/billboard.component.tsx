@@ -40,12 +40,12 @@ const Billboard = ({ children, title }: BillboardProps) => {
   return (
     <Center height={"calc(100vh)"}>
       <Box
-        mt={getNavBarOffset()}
-        p={3}
         color={componentColour.foreground}
         bg={componentColour.background}
+        mt={getNavBarOffset()}
+        p={3}
+        pb={showTitle ? 5 : 3}
         w={["90%", "80%", "70%"]}
-        pb={showTitle ? 6 : 3}
       >
         <Condition isTrue={showTitle}>
           <Container
