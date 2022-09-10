@@ -402,7 +402,7 @@ describe("SunBurstReport", () => {
                 `${String(mockReport.getReportTranslationKey())}.rootTag`
               )
             ),
-            leafEntity: mockReport.leafEntity,
+            leafEntity: mockReport.getEntityLeaf(),
             selectedNode: nullNode,
           },
           0,

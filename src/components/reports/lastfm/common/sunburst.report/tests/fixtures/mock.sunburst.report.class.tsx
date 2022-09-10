@@ -35,9 +35,7 @@ export class MockReportClass
   analyticsReportType = "PLAYCOUNT BY ARTIST" as const;
   drawerArtWorkAltText = "top20Albums.drawer.artWorkAltText";
   hookMethod = "playCountByArtist" as const;
-  entityKeys = ["albums" as const, "tracks" as const, "artists" as const];
-  topLevelEntity = "artists" as const;
-  leafEntity = "tracks" as const;
+  entityKeys = ["artists" as const, "albums" as const, "tracks" as const];
   valueKey = "playcount";
   getReportData(userProperties: MockUserStateEncapsulation["userProperties"]) {
     return userProperties.data.report
