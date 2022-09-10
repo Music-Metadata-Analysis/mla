@@ -45,7 +45,7 @@ class SunBurstChart extends Component<SunBurstChartProps> {
   graphic: SVGProperties;
   padding = 10;
   percentageFontSize = 30;
-  maxLength = 12;
+  maxLabelLength = 60;
   nodeLabelFont = "9px Helvetica";
 
   constructor(props: SunBurstChartProps) {
@@ -393,7 +393,7 @@ class SunBurstChart extends Component<SunBurstChartProps> {
   };
 
   private createNodeLabels = () => {
-    return this.graphic.g
+    const updatedLabels = this.graphic.g
       .append("g")
       .attr("pointer-events", "none")
       .attr("text-anchor", "middle")
@@ -407,7 +407,25 @@ class SunBurstChart extends Component<SunBurstChartProps> {
       .style("fill", this.props.colourSet.foreground)
       .attr("fill-opacity", (d) => +this.isLabelVisible(d.current))
       .attr("transform", (d) => this.triggerLabelTransform(d.current))
-      .text((d) => truncate(d.data.name, this.maxLength));
+      .text((d) => d.data.name);
+
+    this.truncateNodeLabels();
+
+    return updatedLabels;
+  };
+
+  private truncateNodeLabels = () => {
+    this.graphic.g
+      .selectAll<SVGTextElement, SVGTextElement>("text")
+      .nodes()
+      .forEach((el) => {
+        if (el && el.getAttribute("class") == "NodeLabel") {
+          const width = el.getComputedTextLength();
+          const charWidth = width / el.innerHTML.length;
+          const maximumCharacters = Math.floor(this.maxLabelLength / charWidth);
+          el.innerHTML = truncate(el.innerHTML, maximumCharacters);
+        }
+      });
   };
 
   private createTransition = () => {
