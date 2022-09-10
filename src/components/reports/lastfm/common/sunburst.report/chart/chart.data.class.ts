@@ -3,15 +3,10 @@ import type { SunBurstData } from "../../../../../../types/reports/sunburst.type
 
 class SunBurstDataTranslator {
   entityKeys: Array<SunBurstData["entity"]>;
-  leafEntity: SunBurstData["entity"];
   valueKey = "playcount" as const;
 
-  constructor(
-    entityKeys: Array<SunBurstData["entity"]>,
-    leafEntity: SunBurstData["entity"]
-  ) {
+  constructor(entityKeys: Array<SunBurstData["entity"]>) {
     this.entityKeys = entityKeys;
-    this.leafEntity = leafEntity;
   }
 
   convert(
@@ -27,7 +22,6 @@ class SunBurstDataTranslator {
       this.createNode(sunBurstData, state, entityType, childEntityType);
     });
     this.createRemainderNode(sunBurstData, entityType, totalCount);
-
     if (childEntityType !== "unknown") {
       delete sunBurstData.value;
     }
@@ -73,15 +67,13 @@ class SunBurstDataTranslator {
     entityType: SunBurstData["entity"],
     totalCount: number
   ) {
-    if (
-      Array.isArray(sunBurstData.children) &&
-      sunBurstData.children.length > 0
-    ) {
+    if (Array.isArray(sunBurstData.children) && !this.isLeafNode(entityType)) {
+      const sunBurstChildren = sunBurstData.children as SunBurstData[];
       const remainder = this.getValue(sunBurstData) - totalCount;
-      if (!this.isLeafNode(sunBurstData.children[0].entity) && remainder > 0) {
-        sunBurstData.children?.push({
+      if (remainder > 0) {
+        sunBurstChildren?.push({
           entity: entityType,
-          name: "Other",
+          name: "Other", // Needs to be translated
           value: remainder,
         });
       }
@@ -89,7 +81,7 @@ class SunBurstDataTranslator {
   }
 
   private isLeafNode(entity: SunBurstData["entity"]) {
-    return entity === this.leafEntity;
+    return entity === this.entityKeys[this.entityKeys.length - 1];
   }
 
   private getValue(sunBurstData: SunBurstData) {
