@@ -24,10 +24,7 @@ describe("SunBurstDataTranslator", () => {
         children: [],
       };
       const report = new MockReportClass();
-      instance = new SunBurstDataTranslator(
-        report.entityKeys,
-        report.leafEntity
-      );
+      instance = new SunBurstDataTranslator(report.entityKeys);
     });
 
     const arrange = (
@@ -64,7 +61,13 @@ describe("SunBurstDataTranslator", () => {
           expect(result).toStrictEqual({
             entity: "root",
             name: "Top Artists",
-            children: [],
+            children: [
+              {
+                entity: "artists",
+                name: "Other",
+                value: 184368,
+              },
+            ],
           });
         });
       });
@@ -84,7 +87,13 @@ describe("SunBurstDataTranslator", () => {
               {
                 entity: "artists",
                 name: "Lights & Motion",
-                children: [],
+                children: [
+                  {
+                    entity: "albums",
+                    name: "Other",
+                    value: 5709,
+                  },
+                ],
                 value: 5709,
               },
               {

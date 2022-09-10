@@ -35,20 +35,28 @@ export default abstract class SunBurstBaseReport<T extends UserState<unknown>>
   abstract retryRoute: string;
   abstract translationKey: keyof typeof translations;
   abstract hookMethod: "playCountByArtist";
-  abstract entityKeys: SunBurstData["entity"][];
-  abstract leafEntity: SunBurstData["entity"];
-  abstract topLevelEntity: SunBurstData["entity"];
+  abstract entityKeys: SunBurstData["entity"][]; // Order: Toplevel, Intermediary..., Leaf
 
   getDrawerComponent() {
     return this.drawerComponent;
   }
 
   getEncapsulatedNode(node: d3Node) {
-    return new this.nodeEncapsulationClass(node, this.leafEntity);
+    return new this.nodeEncapsulationClass(node, this.getEntityLeaf());
   }
 
   getEncapsulatedUserState(userProperties: T["userProperties"]) {
     return new this.encapsulationClass(userProperties);
+  }
+
+  getEntityLeaf() {
+    return this.entityKeys[
+      this.entityKeys.length - 1
+    ] as SunBurstData["entity"];
+  }
+
+  getEntityTopLevel() {
+    return this.entityKeys[0] as SunBurstData["entity"];
   }
 
   getProgressPercentage(userProperties: T["userProperties"]) {
@@ -91,14 +99,11 @@ export default abstract class SunBurstBaseReport<T extends UserState<unknown>>
       value: userProperties.data.report.playcount,
       children: [],
     };
-    const translator = new SunBurstDataTranslator(
-      this.entityKeys,
-      this.leafEntity
-    );
+    const translator = new SunBurstDataTranslator(this.entityKeys);
     const result = translator.convert(
       sunBurstData,
       this.getReportData(userProperties).content as AggregateReportContent[],
-      this.topLevelEntity
+      this.getEntityTopLevel()
     );
     return result;
   }
