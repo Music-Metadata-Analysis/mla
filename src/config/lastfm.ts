@@ -43,7 +43,7 @@ const settings = {
         buttonTextKey: "select.reports.playCountByArtist",
         indicatorTextKey: "select.indicators.playCountByArtist",
         route: routes.search.lastfm.playCountByArtist,
-        flag: flags.report_playcount_by_artist,
+        flag: flags.lastfm_playcount_by_artist,
       },
     ],
   },

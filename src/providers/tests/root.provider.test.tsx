@@ -1,6 +1,6 @@
 import { waitFor, screen, render } from "@testing-library/react";
 import flagsmith from "flagsmith/isomorphic";
-import { FlagsmithProvider, FlagsmithContextType } from "flagsmith/react";
+import { FlagsmithProvider } from "flagsmith/react";
 import { SessionProvider } from "next-auth/react";
 import Header from "../../components/header/header.component";
 import checkMockCall from "../../tests/fixtures/mock.component.call";
@@ -10,6 +10,7 @@ import NavBarProvider from "../navbar/navbar.provider";
 import RootProvider from "../root.provider";
 import UserInterfaceRootProvider from "../ui/ui.root.provider";
 import UserProvider from "../user/user.provider";
+import type { VendorFlagStateType } from "../../clients/flags/vendor.types";
 
 jest.mock("flagsmith/isomorphic", () => ({ mock: "object" }));
 
@@ -93,17 +94,14 @@ describe("RootProvider", () => {
     process.env = originalEnvironment;
   });
 
-  const arrange = async (
-    pageKey?: string,
-    flagsmithState?: FlagsmithContextType["serverState"]
-  ) => {
+  const arrange = async (pageKey?: string, flagState?: VendorFlagStateType) => {
     const headerProps = pageKey ? { pageKey } : undefined;
-    const serverState = flagsmithState ? flagsmithState : undefined;
+    const serverState = flagState ? flagState : undefined;
     render(
       <RootProvider
         session={mockSession}
         headerProps={headerProps}
-        flagsmithState={serverState}
+        flagState={serverState}
       >
         <div data-testid={providers.RootProvider}>Test</div>
       </RootProvider>

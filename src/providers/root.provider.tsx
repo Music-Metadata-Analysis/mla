@@ -7,24 +7,25 @@ import NavBarProvider from "./navbar/navbar.provider";
 import UserInterfaceRootProvider from "./ui/ui.root.provider";
 import UserProvider from "./user/user.provider";
 import Header, { HeaderProps } from "../components/header/header.component";
+import type { VendorFlagStateType } from "../clients/flags/vendor.types";
 import type { Session } from "next-auth";
 
 type RootProviderProps = {
   headerProps?: HeaderProps;
   children: React.ReactChild | React.ReactChild[];
-  flagsmithState?: FlagsmithContextType["serverState"];
+  flagState?: VendorFlagStateType;
   session?: Session;
 };
 
 const RootProvider = ({
   children,
   session,
-  flagsmithState,
+  flagState,
   headerProps = { pageKey: "default" },
 }: RootProviderProps) => {
   return (
     <FlagsmithProvider
-      serverState={flagsmithState}
+      serverState={flagState}
       options={{
         environmentID: process.env.NEXT_PUBLIC_FLAGSMITH_ENVIRONMENT,
       }}
