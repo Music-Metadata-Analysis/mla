@@ -1,35 +1,29 @@
-import flagsmith from "flagsmith/isomorphic";
-import { FlagsmithProvider, FlagsmithContextType } from "flagsmith/react";
 import { SessionProvider } from "next-auth/react";
 import AnalyticsProvider from "./analytics/analytics.provider";
 import MetricsProvider from "./metrics/metrics.provider";
 import NavBarProvider from "./navbar/navbar.provider";
 import UserInterfaceRootProvider from "./ui/ui.root.provider";
 import UserProvider from "./user/user.provider";
+import flagVendor from "../clients/flags/vendor";
 import Header, { HeaderProps } from "../components/header/header.component";
+import type { VendorFlagStateType } from "../clients/flags/vendor.types";
 import type { Session } from "next-auth";
 
 type RootProviderProps = {
   headerProps?: HeaderProps;
   children: React.ReactChild | React.ReactChild[];
-  flagsmithState?: FlagsmithContextType["serverState"];
+  flagState?: VendorFlagStateType;
   session?: Session;
 };
 
 const RootProvider = ({
   children,
   session,
-  flagsmithState,
+  flagState,
   headerProps = { pageKey: "default" },
 }: RootProviderProps) => {
   return (
-    <FlagsmithProvider
-      serverState={flagsmithState}
-      options={{
-        environmentID: process.env.NEXT_PUBLIC_FLAGSMITH_ENVIRONMENT,
-      }}
-      flagsmith={flagsmith}
-    >
+    <flagVendor.Provider state={flagState}>
       <UserInterfaceRootProvider>
         <SessionProvider session={session}>
           <MetricsProvider>
@@ -44,7 +38,7 @@ const RootProvider = ({
           </MetricsProvider>
         </SessionProvider>
       </UserInterfaceRootProvider>
-    </FlagsmithProvider>
+    </flagVendor.Provider>
   );
 };
 

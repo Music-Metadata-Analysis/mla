@@ -1,11 +1,13 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import translations from "../../../../../../public/locales/en/lastfm.json";
 import config from "../../../../../config/lastfm";
+import mockUseFlags from "../../../../../hooks/tests/flags.mock.hook";
 import mockRouter from "../../../../../tests/fixtures/mock.router";
 import Select from "../select.report.component";
 
-jest.mock("flagsmith/react", () => ({
-  useFlags: jest.fn(() => ({})),
+jest.mock("../../../../../hooks/flags", () => ({
+  __esModule: true,
+  default: () => mockUseFlags,
 }));
 
 jest.mock("next/router", () => ({
@@ -34,7 +36,11 @@ describe("SearchSelection", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    enableAllFlags();
   });
+
+  const enableAllFlags = () =>
+    (mockUseFlags.isEnabled as jest.Mock).mockReturnValue(true);
 
   const arrange = () => {
     render(<Select scrollRef={mockRef} />);
@@ -49,7 +55,9 @@ describe("SearchSelection", () => {
       describe(translations.select.reports[key], () => {
         it("should display the indicator text", async () => {
           expect(
-            await screen.findByText(translations.select.indicators[key] + ":")
+            await screen.findAllByText(
+              translations.select.indicators[key] + ":"
+            )
           ).toBeTruthy();
         });
 

@@ -1,5 +1,4 @@
 import { ColorModeScript } from "@chakra-ui/react";
-import flagsmith from "flagsmith/isomorphic";
 import { getSession } from "next-auth/react";
 import Document, {
   DocumentContext,
@@ -8,16 +7,17 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
+import flagVendorSSR from "../clients/flags/vendor.ssr";
 
 class BaseDocument extends Document {
   static async getServerSideProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    await flagsmith.init({ environmentID: process.env.NEXT_PUBLIC_FLAGSMITH_ENVIRONMENT });
+    const ssrFlags = new flagVendorSSR.Client();
 
     return {
       props: {
         session: await getSession(),
-        flagsmithState: flagsmith.getState(),
+        flagState: await ssrFlags.getState(),
         ...initialProps,
       },
     };

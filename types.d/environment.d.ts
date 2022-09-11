@@ -18,6 +18,6 @@ declare namespace NodeJS {
     MLA_AWS_REGION: string;
     MLA_AWS_SECRET_ACCESS_KEY: string;
     NEXT_PUBLIC_ANALYTICS_UA_CODE: string;
-    NEXT_PUBLIC_FLAGSMITH_ENVIRONMENT: string;
+    NEXT_PUBLIC_FLAG_ENVIRONMENT: string;
   }
 }
