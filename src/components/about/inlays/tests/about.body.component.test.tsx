@@ -2,6 +2,7 @@ import { Avatar, Box, Center, Flex, Text } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import translations from "../../../../../public/locales/en/about.json";
+import dialogueSettings from "../../../../config/dialogue";
 import externalLinks from "../../../../config/external";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../tests/fixtures/mock.translation";
@@ -54,9 +55,9 @@ describe("AboutBody", () => {
     it("should call Avatar as expected to display the logo", () => {
       expect(Avatar).toBeCalledTimes(1);
       const call = (Avatar as jest.Mock).mock.calls[0][0];
-      expect(call.width).toStrictEqual([50, 50, 75]);
+      expect(call.width).toStrictEqual(dialogueSettings.iconSizes);
       expect(renderToString(call.icon)).toBe(
-        renderToString(<SVSIcon width={75} height={75} />)
+        renderToString(<SVSIcon {...dialogueSettings.iconComponentProps} />)
       );
       expect(Object.keys(call).length).toBe(2);
     });
@@ -109,7 +110,7 @@ describe("AboutBody", () => {
       checkMockCall(
         Text,
         {
-          fontSize: ["sm", "l", "l", "xl", "2xl"],
+          fontSize: dialogueSettings.mediumTextFontSize,
           ml: 2,
         },
         1

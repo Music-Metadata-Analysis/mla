@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { render, fireEvent, waitFor } from "@testing-library/react";
-import settings from "../../../../config/dialogue";
+import dialogueSettings from "../../../../config/dialogue";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import Billboard from "../../../billboard/billboard.component";
 import Condition from "../../../condition/condition.component";
@@ -97,7 +97,7 @@ describe("Dialogue", () => {
         Object.defineProperty(window, "innerHeight", {
           writable: true,
           configurable: true,
-          value: settings.minimumHeight - 1,
+          value: dialogueSettings.toggleMinimumDisplayHeight - 1,
         });
       });
 
