@@ -1,7 +1,6 @@
 import { waitFor, screen, render } from "@testing-library/react";
-import flagsmith from "flagsmith/isomorphic";
-import { FlagsmithProvider, FlagsmithContextType } from "flagsmith/react";
 import { SessionProvider } from "next-auth/react";
+import flagVendor from "../../clients/flags/vendor";
 import Header from "../../components/header/header.component";
 import checkMockCall from "../../tests/fixtures/mock.component.call";
 import AnalyticsProvider from "../analytics/analytics.provider";
@@ -10,12 +9,17 @@ import NavBarProvider from "../navbar/navbar.provider";
 import RootProvider from "../root.provider";
 import UserInterfaceRootProvider from "../ui/ui.root.provider";
 import UserProvider from "../user/user.provider";
+import type { VendorFlagStateType } from "../../clients/flags/vendor.types";
 
-jest.mock("flagsmith/isomorphic", () => ({ mock: "object" }));
-
-jest.mock("flagsmith/react", () =>
-  createProviderMock(providers.FlagsmithProvider, "FlagsmithProvider")
-);
+jest.mock("../../clients/flags/vendor", () => {
+  const provider = createProviderMock(providers.FlagVendorProvider, "Provider");
+  return {
+    __esModule: true,
+    default: {
+      Provider: provider["Provider"],
+    },
+  };
+});
 
 jest.mock("next-auth/react", () =>
   createProviderMock(providers.SessionProvider, "SessionProvider")
@@ -54,7 +58,7 @@ const createProviderMock = (name: string, exportName = "default") => {
 
 const providers = {
   AnalyticsProvider: "AnalyticsProvider",
-  FlagsmithProvider: "FlagsmithProvider",
+  FlagVendorProvider: "FlagVendorProvider",
   Header: "Header",
   MetricsProvider: "MetricsProvider",
   NavBarProvider: "NavBarProvider",
@@ -82,7 +86,7 @@ describe("RootProvider", () => {
 
   beforeAll(() => {
     originalEnvironment = process.env;
-    process.env.NEXT_PUBLIC_FLAGSMITH_ENVIRONMENT = mockFlagSmithEnvironment;
+    process.env.NEXT_PUBLIC_FLAG_ENVIRONMENT = mockFlagSmithEnvironment;
   });
 
   beforeEach(() => {
@@ -93,24 +97,21 @@ describe("RootProvider", () => {
     process.env = originalEnvironment;
   });
 
-  const arrange = async (
-    pageKey?: string,
-    flagsmithState?: FlagsmithContextType["serverState"]
-  ) => {
+  const arrange = async (pageKey?: string, flagState?: VendorFlagStateType) => {
     const headerProps = pageKey ? { pageKey } : undefined;
-    const serverState = flagsmithState ? flagsmithState : undefined;
+    const serverState = flagState ? flagState : undefined;
     render(
       <RootProvider
         session={mockSession}
         headerProps={headerProps}
-        flagsmithState={serverState}
+        flagState={serverState}
       >
         <div data-testid={providers.RootProvider}>Test</div>
       </RootProvider>
     );
   };
 
-  describe("When Rendered, without a pageKey or flagsmithState", () => {
+  describe("When Rendered, without a pageKey or flagState", () => {
     beforeEach(() => arrange());
 
     it("should call the Header component correctly", async () => {
@@ -121,18 +122,15 @@ describe("RootProvider", () => {
       expect(await screen.findByTestId(providers.Header)).toBeTruthy;
     });
 
-    it("should call the FlagsmithProvider component correctly", async () => {
-      await waitFor(() => expect(FlagsmithProvider).toBeCalledTimes(1));
+    it("should call the FlagVendorProvider component correctly", async () => {
+      await waitFor(() => expect(flagVendor.Provider).toBeCalledTimes(1));
       await waitFor(() =>
-        checkMockCall(FlagsmithProvider, {
-          options: {
-            environmentID: mockFlagSmithEnvironment,
-          },
-          flagsmith,
-          serverState: undefined,
+        checkMockCall(flagVendor.Provider, {
+          state: undefined,
         })
       );
-      expect(await screen.findByTestId(providers.FlagsmithProvider)).toBeTruthy;
+      expect(await screen.findByTestId(providers.FlagVendorProvider))
+        .toBeTruthy;
     });
   });
 
@@ -179,18 +177,15 @@ describe("RootProvider", () => {
         .toBeTruthy;
     });
 
-    it("should initialize the FlagsmithProvider", async () => {
-      await waitFor(() => expect(FlagsmithProvider).toBeCalledTimes(1));
+    it("should initialize the FlagVendorProvider", async () => {
+      await waitFor(() => expect(flagVendor.Provider).toBeCalledTimes(1));
       await waitFor(() =>
-        checkMockCall(FlagsmithProvider, {
-          options: {
-            environmentID: mockFlagSmithEnvironment,
-          },
-          flagsmith,
-          serverState: mockServerState,
+        checkMockCall(flagVendor.Provider, {
+          state: mockServerState,
         })
       );
-      expect(await screen.findByTestId(providers.FlagsmithProvider)).toBeTruthy;
+      expect(await screen.findByTestId(providers.FlagVendorProvider))
+        .toBeTruthy;
     });
 
     it("should display the RootProvider's Child Elements", async () => {
