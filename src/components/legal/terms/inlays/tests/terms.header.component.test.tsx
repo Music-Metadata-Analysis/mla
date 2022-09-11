@@ -1,6 +1,7 @@
 import { Container } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import translations from "../../../../../../public/locales/en/legal.json";
+import dialogueSettings from "../../../../../config/dialogue";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../../tests/fixtures/mock.translation";
 import TermsOfServiceHeader from "../terms.header.component";
@@ -32,8 +33,8 @@ describe("TermsOfServiceHeader", () => {
         Container,
         {
           centerContent: true,
-          mb: 4,
-          fontSize: [12, 14, 14, "md"],
+          mb: 3,
+          fontSize: dialogueSettings.smallTextFontSize,
         },
         0
       );
@@ -41,8 +42,8 @@ describe("TermsOfServiceHeader", () => {
         Container,
         {
           centerContent: true,
-          mb: 8,
-          fontSize: [10, 12, 12, 12],
+          mb: 3,
+          fontSize: dialogueSettings.smallTextFontSize,
         },
         1
       );

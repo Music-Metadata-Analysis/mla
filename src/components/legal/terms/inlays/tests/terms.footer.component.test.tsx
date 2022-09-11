@@ -1,6 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import translations from "../../../../../../public/locales/en/legal.json";
+import dialogueSettings from "../../../../../config/dialogue";
 import externalLinks from "../../../../../config/external";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../../tests/fixtures/mock.translation";
@@ -53,22 +54,18 @@ describe("TermsOfServiceFooter", () => {
       checkMockCall(
         Button,
         {
+          ...dialogueSettings.buttonComponentProps,
           href: externalLinks.svsContact,
-          mb: 1,
-          mr: 2,
-          size: "xs",
-          w: ["100px", "125px"],
+          w: dialogueSettings.buttonPairSizes,
         },
         0
       );
       checkMockCall(
         Button,
         {
+          ...dialogueSettings.buttonComponentProps,
           href: externalLinks.termsOfService,
-          mb: 1,
-          mr: 2,
-          size: "xs",
-          w: ["100px", "125px"],
+          w: dialogueSettings.buttonPairSizes,
         },
         1
       );
