@@ -81,21 +81,21 @@ export default function FlipCardDrawer<UserStateType extends UserState>({
           <div>
             <Text
               data-testid={testIDs.LastFMDrawerRank}
-              fontSize={["xs", "md", "md"]}
+              fontSize={["sm", "md"]}
             >
               <strong>{t("flipCardReport.drawer.rank")}</strong>
               {`: ${objectIndex + 1}`}
             </Text>
             <Text
               data-testid={testIDs.LastFMDrawerPlayCount}
-              fontSize={["xs", "md", "md"]}
+              fontSize={["sm", "md"]}
             >
               <strong>{t("flipCardReport.drawer.playCount")}</strong>
               {`: ${playCount}`}
             </Text>
           </div>
           <StyledButtonLink size={"sm"} href={externalLink}>
-            <Text fontSize={["xs", "sm", "sm"]}>
+            <Text fontSize={["sm", "md"]}>
               {t("flipCardReport.drawer.buttonText")}
             </Text>
           </StyledButtonLink>
