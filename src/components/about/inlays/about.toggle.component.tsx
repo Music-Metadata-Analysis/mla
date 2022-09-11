@@ -1,4 +1,5 @@
 import { Container, UnorderedList, ListItem } from "@chakra-ui/react";
+import dialogueSettings from "../../../config/dialogue";
 import type { TFunction } from "next-i18next";
 
 export default function PrivacyToggle({ t }: { t: TFunction }) {
@@ -14,12 +15,18 @@ export default function PrivacyToggle({ t }: { t: TFunction }) {
         pr={5}
         pb={5}
         ml={2}
-        fontSize={[12, 14, 14, "md"]}
+        fontSize={dialogueSettings.smallTextFontSize}
       >
         <UnorderedList>
-          <ListItem p={[0.5, 0.5, 0, 0]}>{t("aboutText1")}</ListItem>
-          <ListItem p={[0.5, 0.5, 0, 0]}>{t("aboutText2")}</ListItem>
-          <ListItem p={[0.5, 0.5, 0, 0]}>{t("aboutText3")}</ListItem>
+          <ListItem p={dialogueSettings.listItemPadding}>
+            {t("aboutText1")}
+          </ListItem>
+          <ListItem p={dialogueSettings.listItemPadding}>
+            {t("aboutText2")}
+          </ListItem>
+          <ListItem p={dialogueSettings.listItemPadding}>
+            {t("aboutText3")}
+          </ListItem>
         </UnorderedList>
       </Container>
     </div>
