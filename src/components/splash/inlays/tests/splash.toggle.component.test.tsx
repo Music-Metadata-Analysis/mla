@@ -1,6 +1,7 @@
 import { Container, ListItem, UnorderedList } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import translations from "../../../../../public/locales/en/splash.json";
+import dialogueSettings from "../../../../config/dialogue";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../tests/fixtures/mock.translation";
 import Highlight from "../../../highlight/highlight.component";
@@ -46,33 +47,32 @@ describe("SplashToggle", () => {
           centerContent: true,
           p: 5,
           ml: 2,
-          fontSize: [12, 14, 14, "md"],
+          fontSize: dialogueSettings.largeTextFontSize,
         },
         0
       );
     });
 
     it("should call ListItem with the correct props", () => {
-      const expectedPadding = [0.5, 0.5, 0, 0];
       expect(ListItem).toBeCalledTimes(3);
       checkMockCall(
         ListItem,
         {
-          p: expectedPadding,
+          p: dialogueSettings.listItemPadding,
         },
         0
       );
       checkMockCall(
         ListItem,
         {
-          p: expectedPadding,
+          p: dialogueSettings.listItemPadding,
         },
         1
       );
       checkMockCall(
         ListItem,
         {
-          p: expectedPadding,
+          p: dialogueSettings.listItemPadding,
         },
         2
       );

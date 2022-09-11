@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { FC, useEffect, useState } from "react";
-import settings from "../../../config/dialogue";
+import dialogueSettings from "../../../config/dialogue";
 import Billboard from "../../billboard/billboard.component";
 import Condition from "../../condition/condition.component";
 import type { TFunction } from "next-i18next";
@@ -32,7 +32,7 @@ export default function Dialogue({
   const [visible, setVisible] = useState(true);
 
   const recalculateHeight = () => {
-    if (window.innerHeight < settings.minimumHeight) {
+    if (window.innerHeight < dialogueSettings.toggleMinimumDisplayHeight) {
       setVisible(false);
     } else {
       setVisible(true);
