@@ -1,28 +1,23 @@
 import { Flex } from "@chakra-ui/react";
+import dialogueSettings from "../../../../config/dialogue";
 import externalLinks from "../../../../config/external";
 import Button from "../../../button/button.external.link/button.external.link.component";
 import type { TFunction } from "next-i18next";
 
 export default function PrivacyFooter({ t }: { t: TFunction }) {
-  const buttonWidth = ["100px", "125px"];
-
   return (
     <Flex>
       <Button
-        size={"xs"}
+        {...dialogueSettings.buttonComponentProps}
         href={externalLinks.svsContact}
-        mb={1}
-        mr={2}
-        w={buttonWidth}
+        w={dialogueSettings.buttonPairSizes}
       >
         {t("privacy.buttons.contact")}
       </Button>
       <Button
-        size={"xs"}
+        {...dialogueSettings.buttonComponentProps}
         href={externalLinks.privacyPolicy}
-        ml={2}
-        mb={1}
-        w={buttonWidth}
+        w={dialogueSettings.buttonPairSizes}
       >
         {t("privacy.buttons.policy")}
       </Button>

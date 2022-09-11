@@ -1,4 +1,5 @@
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
+import dialogueSettings from "../../../../config/dialogue";
 import externalLinks from "../../../../config/external";
 import ClickLink from "../../../clickable/click.link.external/click.link.external.component";
 import SVSIcon from "../../../icons/svs/svs.icon";
@@ -12,12 +13,12 @@ export default function PrivacyToggle({ t }: { t: TFunction }) {
         <ClickLink href={externalLinks.svs}>
           <DimOnHover>
             <Avatar
-              icon={<SVSIcon width={75} height={75} />}
-              width={[50, 50, 75]}
+              icon={<SVSIcon {...dialogueSettings.iconComponentProps} />}
+              width={dialogueSettings.iconSizes}
             />
           </DimOnHover>
         </ClickLink>
-        <Text fontSize={["sm", "l", "l", "xl", "2xl"]} ml={2}>
+        <Text fontSize={dialogueSettings.mediumTextFontSize} ml={2}>
           {t("privacy.company")}
         </Text>
       </Flex>

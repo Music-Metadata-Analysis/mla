@@ -2,6 +2,7 @@ import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import translations from "../../../../../public/locales/en/splash.json";
+import dialogueSettings from "../../../../config/dialogue";
 import lastFMConfig from "../../../../config/lastfm";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../tests/fixtures/mock.translation";
@@ -58,9 +59,9 @@ describe("SplashBody", () => {
     it("should call Avatar as expected to display the logo", () => {
       expect(Avatar).toBeCalledTimes(1);
       const call = (Avatar as jest.Mock).mock.calls[0][0];
-      expect(call.width).toStrictEqual([50, 50, 75]);
+      expect(call.width).toStrictEqual(dialogueSettings.iconSizes);
       expect(renderToString(call.icon)).toBe(
-        renderToString(<LastFMIcon width={75} height={75} />)
+        renderToString(<LastFMIcon {...dialogueSettings.iconComponentProps} />)
       );
       expect(Object.keys(call).length).toBe(2);
     });
@@ -97,7 +98,7 @@ describe("SplashBody", () => {
         Text,
         {
           ml: 2,
-          fontSize: ["2xl"],
+          fontSize: dialogueSettings.mediumTextFontSize,
         },
         1
       );

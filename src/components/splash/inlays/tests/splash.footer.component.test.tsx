@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import translations from "../../../../../public/locales/en/splash.json";
+import dialogueSettings from "../../../../config/dialogue";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../tests/fixtures/mock.translation";
 import Button from "../../../button/button.standard/button.standard.component";
@@ -33,9 +34,8 @@ describe("SplashFooter", () => {
     it("should call Button with the correct props", () => {
       expect(Button).toBeCalledTimes(1);
       checkMockCall(Button, {
+        ...dialogueSettings.buttonComponentProps,
         analyticsName: "Splash Page Start",
-        mb: 1,
-        size: "xs",
       });
     });
   });
