@@ -1,6 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import translations from "../../../../../public/locales/en/about.json";
+import dialogueSettings from "../../../../config/dialogue";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../tests/fixtures/mock.translation";
 import Button from "../../../button/button.standard/button.standard.component";
@@ -52,22 +53,18 @@ describe("About", () => {
       checkMockCall(
         Button,
         {
+          ...dialogueSettings.buttonComponentProps,
           analyticsName: "About Page Privacy Policy",
-          size: "xs",
-          mb: 1,
-          mr: 2,
-          w: ["100px", "125px"],
+          w: dialogueSettings.buttonPairSizes,
         },
         0
       );
       checkMockCall(
         Button,
         {
+          ...dialogueSettings.buttonComponentProps,
           analyticsName: "About Page Start",
-          size: "xs",
-          mb: 1,
-          ml: 2,
-          w: ["100px", "125px"],
+          w: dialogueSettings.buttonPairSizes,
         },
         1
       );

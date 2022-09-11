@@ -1,4 +1,5 @@
 import { Container, UnorderedList, ListItem } from "@chakra-ui/react";
+import dialogueSettings from "../../../config/dialogue";
 import Highlight from "../../highlight/highlight.component";
 import type { TFunction } from "next-i18next";
 
@@ -11,11 +12,22 @@ export default function PrivacyToggle({ t }: { t: TFunction }) {
         listStylePosition: "outside",
       }}
     >
-      <Container centerContent p={5} ml={2} fontSize={[12, 14, 14, "md"]}>
+      <Container
+        centerContent
+        p={5}
+        ml={2}
+        fontSize={dialogueSettings.largeTextFontSize}
+      >
         <UnorderedList>
-          <ListItem p={[0.5, 0.5, 0, 0]}>{t("splashText1")}</ListItem>
-          <ListItem p={[0.5, 0.5, 0, 0]}>{t("splashText2")}</ListItem>
-          <ListItem p={[0.5, 0.5, 0, 0]}>{t("splashText3")}</ListItem>
+          <ListItem p={dialogueSettings.listItemPadding}>
+            {t("splashText1")}
+          </ListItem>
+          <ListItem p={dialogueSettings.listItemPadding}>
+            {t("splashText2")}
+          </ListItem>
+          <ListItem p={dialogueSettings.listItemPadding}>
+            {t("splashText3")}
+          </ListItem>
         </UnorderedList>
       </Container>
     </Highlight>

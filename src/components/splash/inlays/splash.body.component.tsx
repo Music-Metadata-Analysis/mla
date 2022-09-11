@@ -1,4 +1,5 @@
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
+import dialogueSettings from "../../../config/dialogue";
 import lastFMConfig from "../../../config/lastfm";
 import ClickLink from "../../clickable/click.link.external/click.link.external.component";
 import LastFMIcon from "../../icons/lastfm/lastfm.icon";
@@ -18,12 +19,12 @@ export default function PrivacyText({ t }: { t: TFunction }) {
           <ClickLink href={lastFMConfig.homePage}>
             <DimOnHover>
               <Avatar
-                icon={<LastFMIcon width={75} height={75} />}
-                width={[50, 50, 75]}
+                icon={<LastFMIcon {...dialogueSettings.iconComponentProps} />}
+                width={dialogueSettings.iconSizes}
               />
             </DimOnHover>
           </ClickLink>
-          <Text ml={2} fontSize={["2xl"]}>
+          <Text ml={2} fontSize={dialogueSettings.mediumTextFontSize}>
             LAST.FM
           </Text>
         </Flex>
