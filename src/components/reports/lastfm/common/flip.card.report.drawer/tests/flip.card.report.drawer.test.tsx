@@ -126,7 +126,7 @@ describe("FlipCardReportDrawer", () => {
         Text,
         {
           "data-testid": testIDs.LastFMDrawerRank,
-          fontSize: ["xs", "md", "md"],
+          fontSize: ["sm", "md"],
         },
         0
       );
@@ -134,14 +134,14 @@ describe("FlipCardReportDrawer", () => {
         Text,
         {
           "data-testid": testIDs.LastFMDrawerPlayCount,
-          fontSize: ["xs", "md", "md"],
+          fontSize: ["sm", "md"],
         },
         1
       );
       checkMockCall(
         Text,
         {
-          fontSize: ["xs", "sm", "sm"],
+          fontSize: ["sm", "md"],
         },
         2
       );
