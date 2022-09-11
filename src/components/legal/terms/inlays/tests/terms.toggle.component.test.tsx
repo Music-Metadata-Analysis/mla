@@ -2,6 +2,7 @@ import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import translations from "../../../../../../public/locales/en/legal.json";
+import dialogueSettings from "../../../../../config/dialogue";
 import externalLinks from "../../../../../config/external";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../../tests/fixtures/mock.translation";
@@ -54,9 +55,9 @@ describe("TermsOfServiceToggle", () => {
     it("should call Avatar as expected to display the logo", () => {
       expect(Avatar).toBeCalledTimes(1);
       const call = (Avatar as jest.Mock).mock.calls[0][0];
-      expect(call.width).toStrictEqual([50, 50, 75]);
+      expect(call.width).toStrictEqual(dialogueSettings.iconSizes);
       expect(renderToString(call.icon)).toBe(
-        renderToString(<SVSIcon width={75} height={75} />)
+        renderToString(<SVSIcon {...dialogueSettings.iconComponentProps} />)
       );
       expect(Object.keys(call).length).toBe(2);
     });
@@ -86,6 +87,7 @@ describe("TermsOfServiceToggle", () => {
     it("should call Box with the correct props", () => {
       expect(Box).toBeCalledTimes(1);
       checkMockCall(Box, {
+        mt: [3, 3, 5],
         mb: [5, 5, 8],
       });
     });
@@ -96,7 +98,7 @@ describe("TermsOfServiceToggle", () => {
         Text,
         {
           ml: 2,
-          fontSize: ["l", "xl", "2xl"],
+          fontSize: dialogueSettings.mediumTextFontSize,
         },
         0
       );

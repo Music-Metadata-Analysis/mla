@@ -1,6 +1,7 @@
 import { Text } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import translations from "../../../../../../public/locales/en/legal.json";
+import dialogueSettings from "../../../../../config/dialogue";
 import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import tLookup from "../../../../../tests/fixtures/mock.translation";
 import PrivacyHeader from "../privacy.header.component";
@@ -31,7 +32,7 @@ describe("PrivacyHeader", () => {
       checkMockCall(
         Text,
         {
-          fontSize: [12, 14, 14, "md"],
+          fontSize: dialogueSettings.smallTextFontSize,
           mb: 8,
           textAlign: "center",
         },

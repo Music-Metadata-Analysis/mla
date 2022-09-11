@@ -1,32 +1,28 @@
 import { Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import dialogueSettings from "../../../config/dialogue";
 import routes from "../../../config/routes";
 import Button from "../../button/button.standard/button.standard.component";
 import type { TFunction } from "next-i18next";
 
 export default function PrivacyButtons({ t }: { t: TFunction }) {
-  const buttonWidth = ["100px", "125px"];
   const router = useRouter();
 
   return (
     <Flex>
       <Button
+        {...dialogueSettings.buttonComponentProps}
         analyticsName={"About Page Privacy Policy"}
         onClick={() => router.push(routes.legal.privacy)}
-        mb={1}
-        mr={2}
-        size={"xs"}
-        w={buttonWidth}
+        w={dialogueSettings.buttonPairSizes}
       >
         {t("buttons.privacy")}
       </Button>
       <Button
+        {...dialogueSettings.buttonComponentProps}
         analyticsName={"About Page Start"}
         onClick={() => router.push(routes.search.lastfm.selection)}
-        mb={1}
-        ml={2}
-        size={"xs"}
-        w={buttonWidth}
+        w={dialogueSettings.buttonPairSizes}
       >
         {t("buttons.start")}
       </Button>
