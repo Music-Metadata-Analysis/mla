@@ -1,5 +1,6 @@
 import LastFMClientAdapterBase from "./client.base.class";
-import S3ArtistCache from "../s3.artist.cache.class";
+import ArtistImageCacheFactory from "../cache/artist.image.cache.factory.class";
+import type { CacheControllerInterface } from "../../../../types/integrations/cache/vendor.types";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
@@ -12,18 +13,18 @@ import type {
   LastFMExternalClientError,
 } from "../../../../types/integrations/lastfm/client.types";
 import type { Await } from "../../../../types/promise.types";
-
 class LastFmUserClientAdapter
   extends LastFMClientAdapterBase
   implements LastFMUserClientInterface
 {
-  cache: S3ArtistCache;
+  cache: CacheControllerInterface<string>;
   reportCount = 20;
   reportPeriod = "overall" as const;
 
   constructor(secret_key: string) {
     super(secret_key);
-    this.cache = new S3ArtistCache(process.env.LASTFM_CACHE_AWS_S3_BUCKET_NAME);
+    const cacheFactory = new ArtistImageCacheFactory();
+    this.cache = cacheFactory.create();
   }
 
   async getTopAlbums(username: string): Promise<LastFMAlbumDataInterface[]> {
@@ -61,7 +62,7 @@ class LastFmUserClientAdapter
   private async attachArtistArtwork(artists: LastFMAlbumDataInterface[]) {
     const cacheLookups: Promise<string>[] = [];
     artists.map((artist) => {
-      cacheLookups.push(this.cache.lookup(artist.name));
+      cacheLookups.push(this.cache.query(artist.name));
     });
 
     await Promise.all(cacheLookups).then((urls) => {
@@ -97,7 +98,7 @@ class LastFmUserClientAdapter
   private async attachTrackArtistArtwork(tracks: LastFMTrackDataInterface[]) {
     const cacheLookups: Promise<string>[] = [];
     tracks.map((track) => {
-      cacheLookups.push(this.cache.lookup(track.artist?.name));
+      cacheLookups.push(this.cache.query(track.artist?.name));
     });
 
     await Promise.all(cacheLookups).then((urls) => {

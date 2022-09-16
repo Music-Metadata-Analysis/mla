@@ -112,6 +112,8 @@
       "\tlet instance: CLASS;",
       "\tlet arg1: string;",
       "",
+      "\tbeforeEach(() => jest.clearAllMocks());",
+      "",
       "\tconst arrange = () => (instance = new CLASS(arg1));",
       "",
       "\tdescribe(\"when initialized\", () => {",
