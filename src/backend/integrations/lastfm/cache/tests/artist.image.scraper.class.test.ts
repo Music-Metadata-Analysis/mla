@@ -1,5 +1,5 @@
-import lastFMConfig from "../../../../config/lastfm";
-import Scraper from "../scraper.class";
+import lastFMConfig from "../../../../../config/lastfm";
+import ArtistImageScraper from "../artist.image.scraper.class";
 
 const mockValidExpectedHTML = `
   <ul class="image-list">
@@ -32,8 +32,8 @@ const mockValidUnexpectedHTML = `
 
 const mockInvalidHTML = `Invalid HTML`;
 
-describe("Scraper", () => {
-  let instance: Scraper;
+describe("ArtistImageScraper", () => {
+  let instance: ArtistImageScraper;
   let response: Promise<string>;
   const mockResponse = jest.fn();
   let mockArtistName: string | undefined;
@@ -65,7 +65,7 @@ describe("Scraper", () => {
   };
 
   const arrange = () => {
-    instance = new Scraper();
+    instance = new ArtistImageScraper();
   };
 
   describe("when artistName is valid", () => {

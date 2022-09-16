@@ -4,7 +4,7 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
 import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
-import S3Profile from "../../../backend/integrations/auth/s3profile.class";
+import ProfilePersistanceClient from "../../../backend/integrations/auth/profile.persistance.client.class";
 import settings from "../../../config/auth";
 import NextAuthConfig from "../../../pages/api/auth/[...nextauth]";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -14,13 +14,15 @@ jest.mock("next-auth/providers/facebook", () => jest.fn());
 jest.mock("next-auth/providers/github", () => jest.fn());
 jest.mock("next-auth/providers/google", () => jest.fn());
 jest.mock("next-auth/providers/spotify", () => jest.fn());
-jest.mock("../../../backend/integrations/auth/s3profile.class", () =>
-  jest.fn(() => ({
-    writeProfileToS3: mockWriteProfileToS3,
-  }))
+jest.mock(
+  "../../../backend/integrations/auth/profile.persistance.client.class",
+  () =>
+    jest.fn(() => ({
+      persistProfile: mockPersistProfile,
+    }))
 );
 
-const mockWriteProfileToS3 = jest.fn();
+const mockPersistProfile = jest.fn();
 
 describe("NextAuthConfig", () => {
   let originalEnvironment: typeof process.env;
@@ -136,17 +138,20 @@ describe("NextAuthConfig", () => {
         const call = (NextAuth as jest.Mock).mock.calls[0][2];
         expect(typeof call.events.signIn).toBe("function");
         const eventHandler = call.events.signIn;
+        
         eventHandler({ profile: mockProfile });
       });
 
-      it("should instantiate the S3 client correctly", () => {
-        expect(S3Profile).toBeCalledTimes(1);
-        expect(S3Profile).toBeCalledWith(process.env.AUTH_EMAILS_BUCKET_NAME);
+      it("should instantiate the ProfilePersistanceClient class correctly", () => {
+        expect(ProfilePersistanceClient).toBeCalledTimes(1);
+        expect(ProfilePersistanceClient).toBeCalledWith(
+          process.env.AUTH_EMAILS_BUCKET_NAME
+        );
       });
 
-      it("should write the profile to S3", () => {
-        expect(mockWriteProfileToS3).toBeCalledTimes(1);
-        expect(mockWriteProfileToS3).toBeCalledWith(mockProfile);
+      it("should call the persistProfile method correctly", () => {
+        expect(mockPersistProfile).toBeCalledTimes(1);
+        expect(mockPersistProfile).toBeCalledWith(mockProfile);
       });
     });
   });
