@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
-import lastFMConfig from "../../../config/lastfm";
+import lastFMConfig from "../../../../config/lastfm";
 
-export default class Scraper {
+export default class ArtistImageScraper {
   defaultArtistImageResponse = "";
   invalidResponseMessage = "Invalid Response!";
   invalidHTMLMessage = "Invalid HTML!";

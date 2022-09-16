@@ -3,7 +3,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
-import S3Profile from "../../../backend/integrations/auth/s3profile.class";
+import ProfilePersistanceClient from "../../../backend/integrations/auth/profile.persistance.client.class";
 import settings from "../../../config/auth";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -37,8 +37,10 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     secret: process.env.AUTH_MASTER_SECRET_KEY,
     events: {
       async signIn(message) {
-        const s3Client = new S3Profile(process.env.AUTH_EMAILS_BUCKET_NAME);
-        await s3Client.writeProfileToS3(message.profile);
+        const client = new ProfilePersistanceClient(
+          process.env.AUTH_EMAILS_BUCKET_NAME
+        );
+        await client.persistProfile(message.profile);
       },
     },
   });
