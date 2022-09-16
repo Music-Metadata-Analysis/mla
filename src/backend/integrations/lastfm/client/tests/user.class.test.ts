@@ -16,10 +16,14 @@ jest.mock("@toplast/lastfm", () => {
   });
 });
 
-jest.mock("../../s3.artist.cache.class", () => jest.fn(() => MockCache));
+jest.mock("../../cache/artist.image.cache.factory.class", () =>
+  jest.fn(() => ({
+    create: jest.fn(() => MockCache),
+  }))
+);
 
 const MockCache = {
-  lookup: jest.fn(),
+  query: jest.fn(),
   logCacheHitRate: jest.fn(),
 };
 
@@ -164,14 +168,14 @@ describe("LastFMUserClientAdapter", () => {
               JSON.parse(JSON.stringify(mockTopArtistsResponseComplete))
             )
           );
-          MockCache.lookup.mockReturnValueOnce(mockImageUrl);
+          MockCache.query.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
           res = await instance.getTopArtists(username);
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(MockCache.lookup).toBeCalledTimes(1);
-          expect(MockCache.lookup).toBeCalledWith(
+          expect(MockCache.query).toBeCalledTimes(1);
+          expect(MockCache.query).toBeCalledWith(
             mockTopArtistsResponseComplete.topartists.artist[0].name
           );
         });
@@ -205,14 +209,14 @@ describe("LastFMUserClientAdapter", () => {
               JSON.parse(JSON.stringify(mockTopArtistsResponseIncomplete))
             )
           );
-          MockCache.lookup.mockReturnValueOnce(mockImageUrl);
+          MockCache.query.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
           res = await instance.getTopArtists(username);
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(MockCache.lookup).toBeCalledTimes(1);
-          expect(MockCache.lookup).toBeCalledWith(
+          expect(MockCache.query).toBeCalledTimes(1);
+          expect(MockCache.query).toBeCalledWith(
             mockTopArtistsResponseComplete.topartists.artist[0].name
           );
         });
@@ -383,14 +387,14 @@ describe("LastFMUserClientAdapter", () => {
               JSON.parse(JSON.stringify(mockTopTracksResponseComplete))
             )
           );
-          MockCache.lookup.mockReturnValueOnce(mockImageUrl);
+          MockCache.query.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
           res = await instance.getTopTracks(username);
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(MockCache.lookup).toBeCalledTimes(1);
-          expect(MockCache.lookup).toBeCalledWith(
+          expect(MockCache.query).toBeCalledTimes(1);
+          expect(MockCache.query).toBeCalledWith(
             mockTopTracksResponseComplete.toptracks.track[0].artist.name
           );
         });
@@ -424,14 +428,14 @@ describe("LastFMUserClientAdapter", () => {
               JSON.parse(JSON.stringify(mockTopTracksResponseIncomplete))
             )
           );
-          MockCache.lookup.mockReturnValueOnce(mockImageUrl);
+          MockCache.query.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
           res = await instance.getTopTracks(username);
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(MockCache.lookup).toBeCalledTimes(1);
-          expect(MockCache.lookup).toBeCalledWith(undefined);
+          expect(MockCache.query).toBeCalledTimes(1);
+          expect(MockCache.query).toBeCalledWith(undefined);
         });
 
         it("should call the external library correctly", () => {
