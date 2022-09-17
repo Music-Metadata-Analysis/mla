@@ -13,6 +13,7 @@ import LastFMIcon from "../../../../icons/lastfm/lastfm.icon";
 import VerticalScrollBarComponent from "../../../../scrollbar/vertical.scrollbar.component";
 import Option from "../inlay/select.option.component";
 import Select from "../select.report.component";
+import type { MutableRefObject } from "react";
 
 jest.mock("@chakra-ui/react", () => {
   const { forwardRef } = require("react");
@@ -64,7 +65,9 @@ const createMock = (name: string) =>
 
 describe("SearchSelection", () => {
   const t = (key: string) => translationKeyLookup(key, translations);
-  const mockRef = { current: null };
+  const mockRef = {
+    current: { mock: "div" },
+  } as unknown as MutableRefObject<HTMLDivElement | null>;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -125,8 +128,8 @@ describe("SearchSelection", () => {
         VerticalScrollBarComponent,
         {
           horizontalOffset: 0,
-          scrollRef: { current: null },
-          update: null,
+          scrollRef: mockRef,
+          update: mockRef.current,
           verticalOffset: 0,
         },
         0

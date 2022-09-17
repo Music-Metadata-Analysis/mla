@@ -62,7 +62,7 @@ export default function SearchSelection({ scrollRef }: SearchSelectionProps) {
           <VerticalScrollBarComponent
             horizontalOffset={0}
             scrollRef={scrollRef}
-            update={null}
+            update={scrollRef.current}
             verticalOffset={0}
           />
           <Box

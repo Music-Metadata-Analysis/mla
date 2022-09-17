@@ -28,6 +28,7 @@ export default function SearchSelectionOption({
       <Indicator visible={visibleIndicators} indication={indicatorText} />
       <Button
         data-testid={testIDs.OptionButton}
+        m={1}
         w={selectButtonWidths}
         analyticsName={analyticsName}
         onClick={() => clickHandler()}
