@@ -57,6 +57,7 @@ describe("SearchSelection", () => {
       checkMockCall(Button, {
         analyticsName: "mockAnalyticsName",
         "data-testid": "OptionButton",
+        m: 1,
         w: [150, 150, 200],
       });
     });
@@ -81,6 +82,7 @@ describe("SearchSelection", () => {
       checkMockCall(Button, {
         analyticsName: "mockAnalyticsName",
         "data-testid": "OptionButton",
+        m: 1,
         w: [150, 150, 200],
       });
     });
