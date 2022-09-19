@@ -1,10 +1,12 @@
 import about from "../../../public/locales/en/about.json";
 import routes from "../../../src/config/routes";
+import { baseUrl } from "../../fixtures/setup";
 
 describe("Splash Page", () => {
-  Cypress.config("baseUrl", Cypress.env("BASEURL"));
-
-  before(() => cy.visit(routes.about));
+  before(() => {
+    baseUrl();
+    cy.visit(routes.about);
+  });
 
   it("should render the correct page title", () => {
     cy.contains(about.title).should("be.visible", { timeout: 5000 });

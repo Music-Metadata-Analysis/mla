@@ -5,3 +5,7 @@ export const flipCardReports = [
   lastfm.select.reports.topArtists,
   lastfm.select.reports.topTracks,
 ];
+
+export const sunBurstReports = {
+  playCountByArtist: lastfm.select.reports.playCountByArtist,
+};
