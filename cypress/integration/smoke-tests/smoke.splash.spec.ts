@@ -41,7 +41,7 @@ describe("Splash Page", () => {
   });
 
   describe("when we view the cookie consent banner", () => {
-    let CookieConsent;
+    let CookieConsent: Cypress.Chainable<JQuery<Node>>;
 
     beforeEach(() => {
       CookieConsent = cy.get(".CookieConsent", { timeout: 1000 });
@@ -70,7 +70,7 @@ describe("Splash Page", () => {
 
       it("should no longer display the cookie consent banner", () => {
         CookieConsent.contains(main.analytics.message1).not;
-        CookieConsent.contains(main.analytics.message2).mot;
+        CookieConsent.contains(main.analytics.message2).not;
       });
     });
   });

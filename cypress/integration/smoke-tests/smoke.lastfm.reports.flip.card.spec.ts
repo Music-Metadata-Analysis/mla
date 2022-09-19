@@ -45,7 +45,7 @@ describe("Flip Card Reports", () => {
 
               beforeEach(() => {
                 Input = cy.get('input[name="username"]');
-                Input.type("niall-byrne{enter}").enter;
+                Input.type("niall-byrne{enter}");
               });
 
               it("should load 20 flip cards for the expected report", () => {

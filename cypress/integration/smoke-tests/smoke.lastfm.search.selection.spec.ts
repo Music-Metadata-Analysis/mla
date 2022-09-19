@@ -1,12 +1,12 @@
 import authentication from "../../../public/locales/en/authentication.json";
 import lastfm from "../../../public/locales/en/lastfm.json";
 import routes from "../../../src/config/routes";
-import reports from "../../fixtures/reports";
+import { flipCardReports } from "../../fixtures/reports";
 
 describe("Search Selection Page", () => {
   Cypress.config("baseUrl", Cypress.env("BASEURL"));
 
-  reports.forEach((report) => {
+  flipCardReports.forEach((report) => {
     describe(report, () => {
       describe("when we are NOT logged in", () => {
         before(() => cy.visit(routes.search.lastfm.selection));
@@ -24,7 +24,7 @@ describe("Search Selection Page", () => {
         });
 
         describe(`when we select the ${report} report`, () => {
-          let Report;
+          let Report: Cypress.Chainable<undefined>;
 
           before(() => {
             Report = cy.contains(report);
