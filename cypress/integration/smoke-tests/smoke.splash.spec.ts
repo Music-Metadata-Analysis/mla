@@ -2,11 +2,13 @@ import main from "../../../public/locales/en/main.json";
 import navbar from "../../../public/locales/en/navbar.json";
 import splash from "../../../public/locales/en/splash.json";
 import routes from "../../../src/config/routes";
+import { baseUrl } from "../../fixtures/setup";
 
 describe("Splash Page", () => {
-  Cypress.config("baseUrl", Cypress.env("BASEURL"));
-
-  before(() => cy.visit(routes.home));
+  before(() => {
+    baseUrl();
+    cy.visit(routes.home);
+  });
 
   it("should render the title correctly", () => {
     cy.contains(splash.title).should("be.visible", { timeout: 5000 });
@@ -41,7 +43,7 @@ describe("Splash Page", () => {
   });
 
   describe("when we view the cookie consent banner", () => {
-    let CookieConsent;
+    let CookieConsent: Cypress.Chainable<JQuery<Node>>;
 
     beforeEach(() => {
       CookieConsent = cy.get(".CookieConsent", { timeout: 1000 });
@@ -70,7 +72,7 @@ describe("Splash Page", () => {
 
       it("should no longer display the cookie consent banner", () => {
         CookieConsent.contains(main.analytics.message1).not;
-        CookieConsent.contains(main.analytics.message2).mot;
+        CookieConsent.contains(main.analytics.message2).not;
       });
     });
   });

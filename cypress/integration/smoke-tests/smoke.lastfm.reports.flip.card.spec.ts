@@ -1,30 +1,23 @@
 import routes from "../../../src/config/routes";
+import env from "../../config/env";
+import { authenticate } from "../../fixtures/auth";
 import { getAuthorizationCookieName } from "../../fixtures/cookies";
 import { flipCardReports } from "../../fixtures/reports";
+import { baseUrl } from "../../fixtures/setup";
 
 describe("Flip Card Reports", () => {
-  Cypress.config("baseUrl", Cypress.env("BASEURL"));
   const expectedFlipCards = 20;
   const authorizationCookieName = getAuthorizationCookieName();
+
+  before(() => {
+    baseUrl();
+    authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN);
+    cy.visit("/");
+  });
 
   flipCardReports.forEach((report) => {
     describe(report, () => {
       describe("when we are logged in", () => {
-        beforeEach(() => {
-          cy.visit("/");
-          cy.setCookie(
-            authorizationCookieName,
-            Cypress.env("SMOKE_TEST_TOKEN"),
-            {
-              httpOnly: true,
-              domain: Cypress.env("BASEURL").split("//")[1],
-              expiry: new Date().getTime() + 20000,
-              sameSite: "lax",
-              secure: true,
-            }
-          );
-        });
-
         describe("when we visit the search selection screen", () => {
           beforeEach(() => cy.visit(routes.search.lastfm.selection));
 
@@ -45,7 +38,7 @@ describe("Flip Card Reports", () => {
 
               beforeEach(() => {
                 Input = cy.get('input[name="username"]');
-                Input.type("niall-byrne{enter}").enter;
+                Input.type("niall-byrne{enter}");
               });
 
               it("should load 20 flip cards for the expected report", () => {
