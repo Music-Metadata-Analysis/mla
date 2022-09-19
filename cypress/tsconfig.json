@@ -1,4 +1,9 @@
 {
+  "compilerOptions": {
+    "module": "commonjs",
+    "types": ["cypress", "node"]
+  },
   "extends": "../tsconfig.json",
-  "include": ["../**/*.ts*"]
+  "include": ["../**/*.ts*"],
+  "importsNotUsedAsValues": "error"
 }

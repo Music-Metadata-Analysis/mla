@@ -1,15 +1,24 @@
 import authentication from "../../../public/locales/en/authentication.json";
 import lastfm from "../../../public/locales/en/lastfm.json";
 import routes from "../../../src/config/routes";
-import reports from "../../fixtures/reports";
+import { flipCardReports, sunBurstReports } from "../../fixtures/reports";
+import { baseUrl } from "../../fixtures/setup";
 
-describe("Search Selection Page", () => {
-  Cypress.config("baseUrl", Cypress.env("BASEURL"));
+describe("LastFM Report Selection Protected", () => {
+  const reports = flipCardReports.concat(Object.values(sunBurstReports));
+  const openAuthReports = [reports[0]];
 
-  reports.forEach((report) => {
+  before(() => {
+    baseUrl();
+    cy.visit("/");
+  });
+
+  openAuthReports.forEach((report) => {
     describe(report, () => {
       describe("when we are NOT logged in", () => {
-        before(() => cy.visit(routes.search.lastfm.selection));
+        before(() => {
+          cy.visit(routes.search.lastfm.selection);
+        });
 
         it("should render the correct page title", () => {
           cy.contains(lastfm.select.title).should("be.visible", {
@@ -18,13 +27,11 @@ describe("Search Selection Page", () => {
         });
 
         it("should render the correct button text", () => {
-          cy.contains(lastfm.select.reports.topAlbums).should("be.visible");
-          cy.contains(lastfm.select.reports.topArtists).should("be.visible");
-          cy.contains(lastfm.select.reports.topTracks).should("be.visible");
+          cy.contains(report).should("be.visible");
         });
 
         describe(`when we select the ${report} report`, () => {
-          let Report;
+          let Report: Cypress.Chainable<undefined>;
 
           before(() => {
             Report = cy.contains(report);
