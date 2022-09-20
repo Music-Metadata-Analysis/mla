@@ -1,22 +1,26 @@
-import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../../config/apiRoutes";
 import * as status from "../../../../../config/status";
 import trackHandler from "../../../../../pages/api/v1/reports/lastfm/top20tracks";
 import testResponses from "../../../../fixtures/lastfm.toptracks";
 import testAccounts from "../../../../fixtures/lastfm.users";
+import {
+  createAPIMocks,
+  mockSession,
+} from "../../../../fixtures/mock.authentication";
+import type {
+  MockAPIRequest,
+  MockAPIResponse,
+} from "../../../../../types/api.endpoint.types";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 jest.mock("../../../../../backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 
-jest.mock("next-auth/jwt", () => ({
-  getToken: jest.fn().mockReturnValue(
-    Promise.resolve({
-      token: "testToken",
-    })
-  ),
+jest.mock("../../../../../backend/integrations/auth/vendor", () => ({
+  Client: jest.fn(() => ({
+    getSession: () => Promise.resolve(mockSession),
+  })),
 }));
 
 type ArrangeArgs = {
@@ -33,10 +37,8 @@ if (process.env[integrationEnvironmentVariable]) {
     let scenario: string;
     let testUser: string;
     let originalEnvironment: typeof process.env;
-    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-    let req: MockRequest<NextApiRequest>;
-    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-    let res: MockResponse<NextApiResponse>;
+    let mockReq: MockAPIRequest;
+    let mockRes: MockAPIResponse;
 
     beforeAll(() => {
       originalEnvironment = process.env;
@@ -52,13 +54,12 @@ if (process.env[integrationEnvironmentVariable]) {
     });
 
     const arrange = async ({ body, method = "POST" }: ArrangeArgs) => {
-      // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-      ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
+      ({ req: mockReq, res: mockRes } = createAPIMocks({
         url: endpointUnderTest,
         method,
         body,
       }));
-      await handler(req, res);
+      await handler(mockReq, mockRes);
     };
 
     describe("receives a GET request", () => {
@@ -67,8 +68,8 @@ if (process.env[integrationEnvironmentVariable]) {
       });
 
       it("should return a 405", () => {
-        expect(res._getStatusCode()).toBe(405);
-        expect(res._getJSONData()).toStrictEqual(status.STATUS_405_MESSAGE);
+        expect(mockRes._getStatusCode()).toBe(405);
+        expect(mockRes._getJSONData()).toStrictEqual(status.STATUS_405_MESSAGE);
       });
     });
 
@@ -88,8 +89,10 @@ if (process.env[integrationEnvironmentVariable]) {
           });
 
           it("should return a 200 status code, and the expected response", () => {
-            expect(res._getStatusCode()).toBe(200);
-            expect(res._getJSONData()).toStrictEqual(testResponses[scenario]);
+            expect(mockRes._getStatusCode()).toBe(200);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              testResponses[scenario]
+            );
           });
         });
       });
@@ -109,8 +112,10 @@ if (process.env[integrationEnvironmentVariable]) {
           });
 
           it("should return a 200 status code, and the expected response", () => {
-            expect(res._getStatusCode()).toBe(200);
-            expect(res._getJSONData()).toStrictEqual(testResponses[scenario]);
+            expect(mockRes._getStatusCode()).toBe(200);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              testResponses[scenario]
+            );
           });
         });
       });

@@ -1,6 +1,9 @@
 import { render, waitFor, cleanup } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import settings from "../../../../config/lastfm";
+import mockAuthHook, {
+  mockUserProfile,
+} from "../../../../hooks/tests/auth.mock.hook";
 import mockNavBarHook from "../../../../hooks/tests/navbar.mock.hook";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../tests/fixtures/mock.router";
@@ -15,19 +18,11 @@ jest.mock("../search.form.component", () => {
     .mockImplementation(() => <div id="username">MockSearchForm</div>);
 });
 
+jest.mock("../../../../hooks/auth", () => () => mockAuthHook);
+
 jest.mock("../../../../hooks/navbar", () => {
   return jest.fn().mockImplementation(() => mockNavBarHook);
 });
-
-jest.mock("next-auth/react", () => ({
-  useSession: () => mockUseSession(),
-  signIn: jest.fn(),
-  signOut: jest.fn(),
-}));
-
-const mockUseSession = jest
-  .fn()
-  .mockReturnValue({ data: {}, status: "authenticated" });
 
 describe("SearchContainer", () => {
   let validateUserName: (username: string) => string | undefined;
@@ -166,7 +161,8 @@ describe("SearchContainer", () => {
 
     describe("when the user is logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
+        mockAuthHook.status = "authenticated";
+        mockAuthHook.user = mockUserProfile;
         arrangeHandleSubmit();
       });
 
@@ -189,10 +185,8 @@ describe("SearchContainer", () => {
 
     describe("when the user is not logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue({
-          data: null,
-          status: "unauthenticated",
-        });
+        mockAuthHook.status = "unauthenticated";
+        mockAuthHook.user = null;
         arrangeHandleSubmit();
       });
 

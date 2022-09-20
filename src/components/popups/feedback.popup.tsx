@@ -1,9 +1,9 @@
-import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import { useEffect } from "react";
 import Feedback from "./dialogues/feedback.dialogue";
 import PopUp from "./popup/popup.component";
 import settings from "../../config/popups";
+import useAuth from "../../hooks/auth";
 import useMetrics from "../../hooks/metrics";
 import useUserInterface from "../../hooks/ui";
 
@@ -11,7 +11,7 @@ const popUpName = "FeedBack" as const;
 
 export default function FeedbackPopUp() {
   const { metrics } = useMetrics();
-  const { status: authStatus } = useSession();
+  const { status: authStatus } = useAuth();
   const ui = useUserInterface();
   const { t } = useTranslation("main");
 

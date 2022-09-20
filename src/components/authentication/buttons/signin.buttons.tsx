@@ -5,11 +5,12 @@ import {
 } from "react-social-login-buttons";
 import AnalyticsWrapper from "../../analytics/analytics.button/analytics.button.component";
 import SpotifyLoginButton from "../../button/button.spotify/spotify.login";
+import type { AuthServiceType } from "../../../types/clients/auth/vendor.types";
 import type { TFunction } from "next-i18next";
 
 export interface AuthenticationProviderProps {
   setClicked: (value: boolean) => void;
-  signIn: (provider: string) => void;
+  signIn: (provider: AuthServiceType) => void;
   t: TFunction;
 }
 
@@ -20,7 +21,7 @@ export default function SignInButtons({
 }: AuthenticationProviderProps) {
   const buttonWidth = 245;
 
-  const handleSignIn = (provider: string) => {
+  const handleSignIn = (provider: AuthServiceType) => {
     setClicked(true);
     signIn(provider);
   };
