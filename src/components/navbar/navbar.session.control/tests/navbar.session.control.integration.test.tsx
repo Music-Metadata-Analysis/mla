@@ -1,7 +1,7 @@
 import { LockIcon } from "@chakra-ui/icons";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RiLogoutBoxRLine } from "react-icons/ri";
-import NavBarSessionControl from "../navbar.session.control.component";
+import NavBarSessionControlContainer from "../navbar.session.control.container";
 import authenticationTranslocations from "@locales/authentication.json";
 import { testIDs as modalIDs } from "@src/components/authentication/modals/modal.signin.component";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
@@ -35,13 +35,17 @@ jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   require("@fixtures/react/child").createComponent("VerticalScrollBar")
 );
 
-describe("NavSessionControl", () => {
+describe("NavBarSessionControlContainer", () => {
+  const mockCloseMobileMenu = jest.fn();
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = () => {
-    render(<NavBarSessionControl />);
+    render(
+      <NavBarSessionControlContainer closeMobileMenu={mockCloseMobileMenu} />
+    );
   };
 
   describe("when the user is logged in", () => {
@@ -60,6 +64,13 @@ describe("NavSessionControl", () => {
       beforeEach(async () => {
         const button = await screen.findByTestId("signOut");
         fireEvent.click(button);
+      });
+
+      it("should close the mobile menu", async () => {
+        await waitFor(async () =>
+          expect(mockCloseMobileMenu).toBeCalledTimes(1)
+        );
+        expect(mockCloseMobileMenu).toBeCalledWith();
       });
 
       it("should call signOut once", async () => {
@@ -86,6 +97,13 @@ describe("NavSessionControl", () => {
         jest.clearAllMocks();
         const button = await screen.findByTestId("signIn");
         fireEvent.click(button);
+      });
+
+      it("should close the mobile menu", async () => {
+        await waitFor(async () =>
+          expect(mockCloseMobileMenu).toBeCalledTimes(1)
+        );
+        expect(mockCloseMobileMenu).toBeCalledWith();
       });
 
       it("should show the authentication modal ", async () => {

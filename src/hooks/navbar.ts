@@ -3,38 +3,21 @@ import NavConfig from "@src/config/navbar";
 import { NavBarContext } from "@src/providers/navbar/navbar.provider";
 
 const useNavBar = () => {
-  const { setters, getters } = useContext(NavBarContext);
+  const context = useContext(NavBarContext);
 
-  const disableHamburger = () => {
-    setters.setIsHamburgerEnabled(false);
-  };
-
-  const enableHamburger = () => {
-    setters.setIsHamburgerEnabled(true);
-  };
-
-  const hideNavBar = () => {
+  const limitedNavBarHide = () => {
     if (window.innerHeight < NavConfig.minimumHeightDuringInput) {
-      setters.setIsVisible(false);
+      context.navigation.setFalse();
     } else {
-      setters.setIsVisible(true);
+      context.navigation.setTrue();
     }
   };
 
-  const showNavBar = () => {
-    setters.setIsVisible(true);
-  };
-
   return {
-    getters: {
-      isHamburgerEnabled: getters.isHamburgerEnabled,
-      isVisible: getters.isVisible,
-    },
-    setters: {
-      hideNavBar,
-      showNavBar,
-      disableHamburger,
-      enableHamburger,
+    ...context,
+    navigation: {
+      ...context.navigation,
+      setFalse: limitedNavBarHide,
     },
   };
 };

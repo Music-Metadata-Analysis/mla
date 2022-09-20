@@ -25,16 +25,18 @@ describe("NavBarProvider", () => {
       arrange();
     });
 
-    it("should contain the expected getters", () => {
-      const properties = received as NavBarContextInterface;
-      expect(typeof properties.getters.isVisible).toBe("boolean");
-      expect(typeof properties.getters.isHamburgerEnabled).toBe("boolean");
-    });
+    const checkIsToggle = (name: keyof NavBarContextInterface) => {
+      it(`should contain the expected ${name} properties`, () => {
+        const properties = received as NavBarContextInterface;
+        expect(typeof properties[name].state).toBe("boolean");
+        expect(typeof properties[name].setFalse).toBe("function");
+        expect(typeof properties[name].setTrue).toBe("function");
+        expect(typeof properties[name].toggle).toBe("function");
+      });
+    };
 
-    it("should contain the expected setters", () => {
-      const properties = received as NavBarContextInterface;
-      expect(typeof properties.setters.setIsVisible).toBe("function");
-      expect(typeof properties.setters.setIsHamburgerEnabled).toBe("function");
-    });
+    checkIsToggle("hamburger");
+    checkIsToggle("mobileMenu");
+    checkIsToggle("navigation");
   });
 });

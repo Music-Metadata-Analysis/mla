@@ -60,7 +60,7 @@ export default function SunBurstReport<
     getters: layoutGetters,
     sections,
   } = useSunBurstLayout();
-  const { setters: navBarSetters } = useNavBar();
+  const navBar = useNavBar();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const DrawerComponent = report.getDrawerComponent();
   const breakPoints = [250, 250, 300, 500, 600, 600];
@@ -80,12 +80,12 @@ export default function SunBurstReport<
   };
 
   const openDrawer = () => {
-    navBarSetters.disableHamburger();
+    navBar.hamburger.setFalse();
     onOpen();
   };
 
   const closeDrawer = () => {
-    navBarSetters.enableHamburger();
+    navBar.hamburger.setTrue();
     onClose();
   };
 

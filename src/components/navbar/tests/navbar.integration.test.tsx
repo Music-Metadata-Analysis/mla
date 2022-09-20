@@ -1,6 +1,9 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import NavBar, { testIDs } from "../navbar.component";
+import NavBar from "../navbar.component";
+import { testIDs as NavBarMobileMenuTestIDs } from "../navbar.mobile.menu/navbar.mobile.menu.component";
+import { testIDs as NavBarRootTestIDs } from "../navbar.root/navbar.root.component";
 import navbarTranslations from "@locales/navbar.json";
+import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import NavConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
@@ -10,9 +13,9 @@ import NavBarProvider from "@src/providers/navbar/navbar.provider";
 import type { JSONstringType } from "@src/types/json.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 
-jest.mock("@src/hooks/auth");
-
 jest.mock("@src/hooks/analytics");
+
+jest.mock("@src/hooks/auth");
 
 jest.mock("@src/hooks/lastfm", () =>
   jest.fn(() => ({ userProperties: getMockedUserProperties() }))
@@ -21,6 +24,8 @@ jest.mock("@src/hooks/lastfm", () =>
 jest.mock("@src/hooks/locale");
 
 jest.mock("@src/hooks/router");
+
+jest.mock("@src/clients/web.framework/vendor");
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   require("@fixtures/react/child").createComponent("VerticalScrollBar")
@@ -58,6 +63,8 @@ describe("NavBar", () => {
     mockAuthHook.user = mockUserProfile;
     jest.clearAllMocks();
 
+    mockIsBuildTime.mockReturnValue(false);
+
     arrange();
   });
 
@@ -65,7 +72,7 @@ describe("NavBar", () => {
     mockUserProperties = { ...thisMockUserProperties };
     render(
       <NavBarProvider>
-        <NavBar menuConfig={config} />
+        <NavBar config={config} />
       </NavBarProvider>
     );
   };
@@ -116,15 +123,17 @@ describe("NavBar", () => {
 
       if (mobileClick) {
         it(`should close the mobile menu`, () => {
-          expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
+          expect(
+            screen.queryByTestId(NavBarMobileMenuTestIDs.NavBarMobileMenu)
+          ).toBeNull();
         });
       }
     });
   };
 
   const clickMobileMenuButton = async () => {
-    const searchRoot = await screen.findByTestId(testIDs.NavBarRoot);
-    await clickByTestId(testIDs.NavBarMobileMenuButton, searchRoot);
+    const searchRoot = await screen.findByTestId(NavBarRootTestIDs.NavBarRoot);
+    await clickByTestId(NavBarRootTestIDs.NavBarMobileMenuButton, searchRoot);
   };
 
   describe("when rendered", () => {
@@ -135,9 +144,13 @@ describe("NavBar", () => {
     });
 
     it("should display the correct links", async () => {
+      const navBarMenu = await screen.findByTestId(
+        NavBarRootTestIDs.NavBarMenu
+      );
+
       for (const linkText of Object.keys(NavConfig.menuConfig)) {
         expect(
-          await screen.findByText(
+          await within(navBarMenu).findByText(
             _t(
               (navbarTranslations[translationPrefix] as JSONstringType)[
                 linkText
@@ -148,47 +161,58 @@ describe("NavBar", () => {
       }
     });
 
+    describe("when navbar links are clicked", () => {
+      for (let i = 0; i < clickAbleLinks.length; i++) {
+        testLink(clickAbleLinks[i], NavBarRootTestIDs.NavBarMenu);
+      }
+      testLink(navbarTranslations.title, NavBarRootTestIDs.NavBarRoot);
+    });
+
+    it("should NOT display the mobile menu", () => {
+      expect(
+        screen.queryByTestId(NavBarMobileMenuTestIDs.NavBarMobileMenu)
+      ).toBeNull();
+    });
+
     describe("when the mobile menu button is clicked", () => {
       beforeEach(async () => {
-        expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
+        expect(
+          screen.queryByTestId(NavBarMobileMenuTestIDs.NavBarMobileMenu)
+        ).toBeNull();
         await clickMobileMenuButton();
       });
 
       it("should display the mobile menu", async () => {
         expect(
-          await screen.findByTestId(testIDs.NavBarMobileMenu)
+          await screen.findByTestId(NavBarMobileMenuTestIDs.NavBarMobileMenu)
         ).toBeTruthy();
+      });
+
+      describe("when mobile menu links are clicked", () => {
+        for (let i = 0; i < clickAbleLinks.length; i++) {
+          testLink(
+            clickAbleLinks[i],
+            NavBarMobileMenuTestIDs.NavBarMobileMenu,
+            true
+          );
+        }
       });
     });
 
     describe("when the mobile menu button is clicked twice", () => {
       beforeEach(async () => {
-        expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
+        expect(
+          screen.queryByTestId(NavBarMobileMenuTestIDs.NavBarMobileMenu)
+        ).toBeNull();
         await clickMobileMenuButton();
         await clickMobileMenuButton();
       });
 
-      it("should hide the mobile menu", async () => {
-        expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
+      it("should hide the mobile menu", () => {
+        expect(
+          screen.queryByTestId(NavBarMobileMenuTestIDs.NavBarMobileMenu)
+        ).toBeNull();
       });
-    });
-
-    describe("when navbar links are clicked", () => {
-      for (let i = 0; i < clickAbleLinks.length; i++) {
-        testLink(clickAbleLinks[i], testIDs.NavBarRoot);
-      }
-      testLink(navbarTranslations.title, testIDs.NavBarRoot);
-    });
-
-    describe("when mobile menu links are clicked", () => {
-      beforeEach(async () => {
-        expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
-        await clickMobileMenuButton();
-      });
-
-      for (let i = 0; i < clickAbleLinks.length; i++) {
-        testLink(clickAbleLinks[i], testIDs.NavBarMobileMenu, true);
-      }
     });
   });
 });

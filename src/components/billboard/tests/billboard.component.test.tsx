@@ -99,7 +99,7 @@ describe("Billboard", () => {
   };
 
   describe("when the navbar is visible", () => {
-    beforeEach(() => (mockNavBarHook.getters.isVisible = true));
+    beforeEach(() => (mockNavBarHook.navigation.state = true));
 
     describe("when the screen height is >= the threshold", () => {
       beforeEach(() => {
@@ -131,7 +131,7 @@ describe("Billboard", () => {
   });
 
   describe("when the navbar is NOT visible", () => {
-    beforeEach(() => (mockNavBarHook.getters.isVisible = false));
+    beforeEach(() => (mockNavBarHook.navigation.state = false));
 
     describe("when the screen height is >= the threshold", () => {
       beforeEach(() => {

@@ -1,14 +1,10 @@
+import mockToggleHookValues from "../utility/__mocks__/toggle.mock";
+import { makeUnique } from "@src/tests/fixtures/mock.utility";
+
 const mockValues = {
-  getters: {
-    isHamburgerEnabled: true,
-    isVisible: true,
-  },
-  setters: {
-    enableHamburger: jest.fn(),
-    disableHamburger: jest.fn(),
-    hideNavBar: jest.fn(),
-    showNavBar: jest.fn(),
-  },
+  hamburger: makeUnique<typeof mockToggleHookValues>(mockToggleHookValues),
+  mobileMenu: makeUnique<typeof mockToggleHookValues>(mockToggleHookValues),
+  navigation: makeUnique<typeof mockToggleHookValues>(mockToggleHookValues),
 };
 
 export default mockValues;
