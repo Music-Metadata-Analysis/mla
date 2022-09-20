@@ -1,8 +1,8 @@
 import { LockIcon } from "@chakra-ui/icons";
 import { Box, Button } from "@chakra-ui/react";
-import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import useAuth from "../../../hooks/auth";
 import useColour from "../../../hooks/colour";
 import AnalyticsWrapper from "../../analytics/analytics.button/analytics.button.component";
 import Authentication from "../../authentication/authentication.container";
@@ -10,7 +10,7 @@ import type { MouseEvent } from "react";
 
 const NavSessionControl = () => {
   const { navButtonColour, transparent } = useColour();
-  const { status: authStatus } = useSession();
+  const { status: authStatus, signOut } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [buttonType, setButtonType] =
     useState<keyof typeof operations>("signIn");

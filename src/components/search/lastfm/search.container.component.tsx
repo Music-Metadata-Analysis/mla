@@ -1,8 +1,8 @@
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import SearchForm from "./search.form.component";
 import settings from "../../../config/lastfm";
+import useAuth from "../../../hooks/auth";
 import useNavBar from "../../../hooks/navbar";
 import type { LastFMUserSearchInterface } from "../../../types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
@@ -21,7 +21,7 @@ export default function SearchContainer({
   openError,
   t,
 }: SearchContainerProps) {
-  const { data: authSession, status: authStatus } = useSession();
+  const { user: authSession, status: authStatus } = useAuth();
   const navBar = useNavBar();
   const router = useRouter();
 

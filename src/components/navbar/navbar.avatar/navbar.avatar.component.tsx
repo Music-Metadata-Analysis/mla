@@ -1,30 +1,19 @@
 import { Avatar } from "@chakra-ui/react";
-import ClickLink from "../../clickable/click.link.external/click.link.external.component";
-import LastFMIcon from "../../icons/lastfm/lastfm.icon";
-import DimOnHover from "../../styles/hover.dim/hover.dim.styles";
+import useAuth from "../../../hooks/auth";
+import useColour from "../../../hooks/colour";
 
-export const testIDs = {
-  NavBarAvatarLink: "NavBarAvatarLink",
-};
+const NavBarAvatar = () => {
+  const { user } = useAuth();
+  const { buttonColour } = useColour();
 
-interface NavBarAvatarProps {
-  href: string;
-  image: string;
-}
-
-const NavBarAvatar = ({ href, image }: NavBarAvatarProps) => {
   return (
-    <DimOnHover data-testid={testIDs.NavBarAvatarLink}>
-      <ClickLink href={href}>
-        <Avatar
-          loading={"eager"}
-          cursor={"pointer"}
-          size={"sm"}
-          src={image}
-          icon={<LastFMIcon />}
-        />
-      </ClickLink>
-    </DimOnHover>
+    <Avatar
+      bg={buttonColour.background}
+      loading={"eager"}
+      name={user?.name}
+      size={"sm"}
+      src={user?.image}
+    />
   );
 };
 

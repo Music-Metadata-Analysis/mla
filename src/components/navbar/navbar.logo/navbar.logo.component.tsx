@@ -6,12 +6,7 @@ import useAnalytics from "../../../hooks/analytics";
 import NavBarAvatar from "../navbar.avatar/navbar.avatar.component";
 import NavBarLink from "../navbar.link/navbar.link.component";
 
-interface NavBarLogoProps {
-  href: string;
-  image: string;
-}
-
-const NavBarLogo = ({ href, image }: NavBarLogoProps) => {
+const NavBarLogo = () => {
   const analytics = useAnalytics();
   const { t } = useTranslation("navbar");
   const router = useRouter();
@@ -26,7 +21,7 @@ const NavBarLogo = ({ href, image }: NavBarLogoProps) => {
         {t("title")}
       </NavBarLink>
       <Spacer pl="10px" />
-      <NavBarAvatar href={href} image={image} />
+      <NavBarAvatar />
     </Flex>
   );
 };

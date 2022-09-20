@@ -1,11 +1,16 @@
-import { getToken } from "next-auth/jwt";
-import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../../config/apiRoutes";
 import handleProxy, {
   endpointFactory,
 } from "../../../../../pages/api/v1/reports/lastfm/top20tracks";
+import {
+  createAPIMocks,
+  mockSession,
+} from "../../../../fixtures/mock.authentication";
+import type {
+  MockAPIRequest,
+  MockAPIResponse,
+} from "../../../../../types/api.endpoint.types";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
   return jest.fn().mockImplementation(() => {
@@ -19,10 +24,13 @@ jest.mock("../../../../../backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 
-jest.mock("next-auth/jwt", () => ({
-  getToken: jest.fn(),
+jest.mock("../../../../../backend/integrations/auth/vendor", () => ({
+  Client: jest.fn(() => ({
+    getSession: mockGetSession,
+  })),
 }));
 
+const mockGetSession = jest.fn();
 const mockProxyMethod = jest.fn();
 const testUrl = apiRoutes.v1.reports.lastfm.top20tracks;
 
@@ -32,10 +40,8 @@ type ArrangeArgs = {
 };
 
 describe(testUrl, () => {
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let req: MockRequest<NextApiRequest>;
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let res: MockResponse<NextApiResponse>;
+  let mockReq: MockAPIRequest;
+  let mockRes: MockAPIResponse;
   const mockResponse = {
     tracks: [],
     image: [],
@@ -48,23 +54,16 @@ describe(testUrl, () => {
   });
 
   const arrange = async ({ body, method = "POST" }: ArrangeArgs) => {
-    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-    ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
+    ({ req: mockReq, res: mockRes } = createAPIMocks({
       url: testUrl,
       method,
       body,
     }));
-    await handleProxy(req, res);
+    await handleProxy(mockReq, mockRes);
   };
 
-  describe("with a valid jwt token", () => {
-    beforeEach(() =>
-      (getToken as jest.Mock).mockReturnValue(
-        Promise.resolve({
-          token: "testToken",
-        })
-      )
-    );
+  describe("with a valid session", () => {
+    beforeEach(() => mockGetSession.mockResolvedValue(mockSession));
 
     describe("receives a POST request", () => {
       beforeEach(() => {
@@ -83,12 +82,12 @@ describe(testUrl, () => {
           });
 
           it("should return a 200 status code", () => {
-            expect(res._getStatusCode()).toBe(200);
-            expect(res._getJSONData()).toStrictEqual(mockResponse);
+            expect(mockRes._getStatusCode()).toBe(200);
+            expect(mockRes._getJSONData()).toStrictEqual(mockResponse);
           });
 
           it("should set a sunset header", () => {
-            expect(res._getHeaders().sunset).toBe(
+            expect(mockRes._getHeaders().sunset).toBe(
               endpointFactory.sunsetDate.toDateString()
             );
           });

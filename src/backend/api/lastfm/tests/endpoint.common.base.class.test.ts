@@ -1,19 +1,25 @@
 import { waitFor } from "@testing-library/react";
 import nextConnect, { NextHandler } from "next-connect";
-import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import * as status from "../../../../config/status";
+import { createAPIMocks } from "../../../../tests/fixtures/mock.authentication";
 import LastFMEndpointBase from "../endpoint.common.base.class";
-import type { BodyType } from "../../../../types/api.endpoint.types";
-import type { LastFMEndpointRequest } from "../../../../types/api.endpoint.types";
+import type {
+  BodyType,
+  MockAPIRequest,
+  MockAPIResponse,
+} from "../../../../types/api.endpoint.types";
+import type {
+  LastFMEndpointRequest,
+  LastFMEndpointResponse,
+} from "../../../../types/api.endpoint.types";
 import type { HttpMethodType } from "../../../../types/clients/api/api.client.types";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 class ConcreteClass extends LastFMEndpointBase {
   route = "/api/v1/endpoint";
   timeOut = 100;
 
   create() {
-    const handler = nextConnect<LastFMEndpointRequest, NextApiResponse>({
+    const handler = nextConnect<LastFMEndpointRequest, LastFMEndpointResponse>({
       onError: this.onError,
       onNoMatch: this.onNoMatch,
     });
@@ -36,15 +42,13 @@ class ConcreteClass extends LastFMEndpointBase {
 
 const mockExpressMiddleware = (
   req: LastFMEndpointRequest,
-  res: NextApiResponse,
+  res: LastFMEndpointResponse,
   next: NextHandler
 ) => next();
 
 describe("LastFMEndpointBase", () => {
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let req: MockRequest<NextApiRequest>;
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let res: MockResponse<NextApiResponse>;
+  let mockReq: MockAPIRequest;
+  let mockRes: MockAPIResponse;
   let payload: undefined | Record<string, string>;
   let factory: ConcreteClass;
   let method: HttpMethodType;
@@ -61,8 +65,7 @@ describe("LastFMEndpointBase", () => {
     });
 
     const arrangeMocks = async (url = factory.route) => {
-      // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-      ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
+      ({ req: mockReq, res: mockRes } = createAPIMocks({
         url,
         method,
         body: payload,
@@ -70,31 +73,28 @@ describe("LastFMEndpointBase", () => {
     };
 
     const arrangeRequest = async (url = factory.route) => {
-      // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-      ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
-        url,
-        method,
-        body: payload,
-      }));
-      await factory.create()(req, res);
+      arrangeMocks(url);
+      await factory.create()(mockReq, mockRes);
     };
 
     describe("createTimeout", () => {
       beforeEach(async () => {
         mockTimeout = jest.fn();
         arrangeMocks();
-        factory.createTimeout(req, res, mockTimeout);
+        factory.createTimeout(mockReq, mockRes, mockTimeout);
       });
 
       describe("when called", () => {
         it("should modify the response status code to 503", async () => {
-          await waitFor(() => expect(res._getStatusCode()).toBe(503));
-          expect(res._getJSONData()).toStrictEqual(status.STATUS_503_MESSAGE);
+          await waitFor(() => expect(mockRes._getStatusCode()).toBe(503));
+          expect(mockRes._getJSONData()).toStrictEqual(
+            status.STATUS_503_MESSAGE
+          );
         });
 
         it("should modify the response to set a retry header", async () => {
           await waitFor(() =>
-            expect(res._getHeaders()).toStrictEqual({
+            expect(mockRes._getHeaders()).toStrictEqual({
               "content-type": "application/json",
               "retry-after": 0,
             })
@@ -111,7 +111,7 @@ describe("LastFMEndpointBase", () => {
           mockTimeout = jest.fn();
           clearTimeOut = jest.spyOn(window, "clearTimeout");
           arrangeMocks();
-          factory.createTimeout(req, res, mockTimeout);
+          factory.createTimeout(mockReq, mockRes, mockTimeout);
         });
 
         afterEach(() => clearTimeOut.mockRestore());
@@ -150,8 +150,8 @@ describe("LastFMEndpointBase", () => {
             });
 
             it("should return a 200", () => {
-              expect(res._getStatusCode()).toBe(200);
-              expect(res._getJSONData()).toStrictEqual({ ok: true });
+              expect(mockRes._getStatusCode()).toBe(200);
+              expect(mockRes._getJSONData()).toStrictEqual({ ok: true });
             });
           });
 
@@ -162,8 +162,8 @@ describe("LastFMEndpointBase", () => {
             });
 
             it("should return a 502", () => {
-              expect(res._getStatusCode()).toBe(502);
-              expect(res._getJSONData()).toStrictEqual(
+              expect(mockRes._getStatusCode()).toBe(502);
+              expect(mockRes._getJSONData()).toStrictEqual(
                 status.STATUS_502_MESSAGE
               );
             });
@@ -182,8 +182,8 @@ describe("LastFMEndpointBase", () => {
             });
 
             it("should return a 405", () => {
-              expect(res._getStatusCode()).toBe(405);
-              expect(res._getJSONData()).toStrictEqual(
+              expect(mockRes._getStatusCode()).toBe(405);
+              expect(mockRes._getJSONData()).toStrictEqual(
                 status.STATUS_405_MESSAGE
               );
             });
