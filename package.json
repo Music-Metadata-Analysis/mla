@@ -131,6 +131,7 @@
       "<rootDir>/jest/setup/i18next.js",
       "<rootDir>/jest/setup/next.jsx",
       "<rootDir>/jest/setup/snapshot.js",
+      "<rootDir>/jest/setup/text.js",
       "<rootDir>/jest/setup/testing-library.js"
     ],
     "moduleNameMapper": {

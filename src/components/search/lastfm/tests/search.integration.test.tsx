@@ -3,6 +3,9 @@ import lastfmTranslations from "../../../../../public/locales/en/lastfm.json";
 import mainTranslations from "../../../../../public/locales/en/main.json";
 import settings from "../../../../config/lastfm";
 import routes from "../../../../config/routes";
+import mockAuthHook, {
+  mockUserProfile,
+} from "../../../../hooks/tests/auth.mock.hook";
 import mockRouter from "../../../../tests/fixtures/mock.router";
 import tLookup from "../../../../tests/fixtures/mock.translation";
 import SearchUI from "../search.ui.component";
@@ -12,9 +15,7 @@ jest.mock("next/router", () => ({
   useRouter: () => mockRouter,
 }));
 
-jest.mock("next-auth/react", () => ({
-  useSession: jest.fn().mockReturnValue({ data: {}, status: "authenticated" }),
-}));
+jest.mock("../../../../hooks/auth", () => () => mockAuthHook);
 
 jest.mock(
   "../../../../components/authentication/authentication.container",
@@ -28,6 +29,8 @@ describe("SearchTopTracks", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockAuthHook.status = "authenticated";
+    mockAuthHook.user = mockUserProfile;
     arrange();
   });
 

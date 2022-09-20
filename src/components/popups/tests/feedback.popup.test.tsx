@@ -1,15 +1,16 @@
 import { render } from "@testing-library/react";
 import translations from "../../../../public/locales/en/main.json";
 import settings from "../../../config/popups";
+import mockAuthHook, {
+  mockUserProfile,
+} from "../../../hooks/tests/auth.mock.hook";
 import mockMetricsHook from "../../../hooks/tests/metrics.mock.hook";
 import mockUserInterfaceHook from "../../../hooks/tests/ui.mock.hook";
 import FeedbackDialogue from "../dialogues/feedback.dialogue";
 import FeedbackPopUp from "../feedback.popup";
 import PopUp from "../popup/popup.component";
 
-jest.mock("next-auth/react", () => ({
-  useSession: () => mockUseSession(),
-}));
+jest.mock("../../../hooks/auth", () => () => mockAuthHook);
 
 jest.mock("../popup/popup.component", () =>
   jest.fn(() => <div>MockPopup</div>)
@@ -25,8 +26,6 @@ jest.mock("../../../hooks/ui", () => ({
   default: () => mockUserInterfaceHook,
 }));
 
-const mockUseSession = jest.fn();
-
 describe("FeedBackPopup", () => {
   const mockPopUpName = "FeedBack";
 
@@ -40,7 +39,8 @@ describe("FeedBackPopup", () => {
 
   describe("user is logged in", () => {
     beforeEach(() => {
-      mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
+      mockAuthHook.status = "authenticated";
+      mockAuthHook.user = mockUserProfile;
     });
 
     describe("metric count matches a target", () => {
@@ -118,7 +118,8 @@ describe("FeedBackPopup", () => {
 
   describe("user is NOT logged in", () => {
     beforeEach(() => {
-      mockUseSession.mockReturnValue({ data: {}, status: "unauthenticated" });
+      mockAuthHook.status = "unauthenticated";
+      mockAuthHook.user = null;
       arrange();
     });
 

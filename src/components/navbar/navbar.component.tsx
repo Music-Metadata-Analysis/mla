@@ -13,11 +13,9 @@ import NavBarLogo from "./navbar.logo/navbar.logo.component";
 import NavBarOptions from "./navbar.options/navbar.options.component";
 import NavBarSessionControl from "./navbar.session.control/navbar.session.control.component";
 import Spinner from "./navbar.spinner/navbar.spinner.component";
-import lastFMSettings from "../../config/lastfm";
 import useColour from "../../hooks/colour";
 import useLastFM from "../../hooks/lastfm";
 import useNavBar from "../../hooks/navbar";
-import UserBaseState from "../../providers/user/encapsulations/lastfm/user.state.base.class";
 import Condition from "../condition/condition.component";
 
 export const testIDs = {
@@ -36,12 +34,6 @@ export default function NavBar({ menuConfig }: NavBarProps) {
   const controls = useNavBar();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useLastFM();
-  const userState = new UserBaseState(user.userProperties);
-
-  const getProfileUrl = () => {
-    if (user.userProperties.profileUrl) return user.userProperties.profileUrl;
-    return lastFMSettings.homePage;
-  };
 
   useEffect(() => {
     if (!user.userProperties.ready) onClose;
@@ -68,10 +60,7 @@ export default function NavBar({ menuConfig }: NavBarProps) {
         zIndex={1000}
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <NavBarLogo
-            href={getProfileUrl()}
-            image={userState.getProfileImageUrl("small")}
-          />
+          <NavBarLogo />
           <Spinner whileTrue={!user.userProperties.ready}>
             <Flex
               data-testid={testIDs.NavBarMenu}

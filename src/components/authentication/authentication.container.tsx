@@ -1,5 +1,4 @@
 import { useDisclosure } from "@chakra-ui/react";
-import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SignInModal from "./modals/modal.signin.component";
@@ -7,6 +6,8 @@ import SpinnerModal from "./modals/modal.spinner.component";
 import routes from "../../config/routes";
 import Events from "../../events/events";
 import useAnalytics from "../../hooks/analytics";
+import useAuth from "../../hooks/auth";
+import type { AuthServiceType } from "../../types/clients/auth/vendor.types";
 
 export interface AuthenticationProps {
   onModalClose?: () => void;
@@ -19,7 +20,7 @@ export default function Authentication({
 }: AuthenticationProps) {
   const analytics = useAnalytics();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { status: authStatus } = useSession();
+  const { status: authStatus, signIn } = useAuth();
   const router = useRouter();
   const [clicked, setClicked] = useState(false);
 
@@ -46,7 +47,7 @@ export default function Authentication({
     if (!onModalClose && !overrideCloseBehavior) router.push(routes.home);
   };
 
-  const handleSignIn = (provider: string) => {
+  const handleSignIn = (provider: AuthServiceType) => {
     analytics.event(Events.Auth.HandleLogin(provider));
     signIn(provider);
   };

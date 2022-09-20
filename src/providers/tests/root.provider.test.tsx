@@ -1,5 +1,5 @@
 import { waitFor, screen, render } from "@testing-library/react";
-import { SessionProvider } from "next-auth/react";
+import authVendor from "../../clients/auth/vendor";
 import flagVendor from "../../clients/flags/vendor";
 import Header from "../../components/header/header.component";
 import checkMockCall from "../../tests/fixtures/mock.component.call";
@@ -9,21 +9,20 @@ import NavBarProvider from "../navbar/navbar.provider";
 import RootProvider from "../root.provider";
 import UserInterfaceRootProvider from "../ui/ui.root.provider";
 import UserProvider from "../user/user.provider";
+import type { VendorAuthStateType } from "../../clients/auth/vendor.types";
 import type { VendorFlagStateType } from "../../clients/flags/vendor.types";
 
-jest.mock("../../clients/flags/vendor", () => {
-  const provider = createProviderMock(providers.FlagVendorProvider, "Provider");
-  return {
-    __esModule: true,
-    default: {
-      Provider: provider["Provider"],
-    },
-  };
-});
+jest.mock("../../clients/auth/vendor", () => ({
+  Provider: createProviderMock(providers.AuthVendorProvider, "Provider")[
+    "Provider"
+  ],
+}));
 
-jest.mock("next-auth/react", () =>
-  createProviderMock(providers.SessionProvider, "SessionProvider")
-);
+jest.mock("../../clients/flags/vendor", () => ({
+  Provider: createProviderMock(providers.FlagVendorProvider, "Provider")[
+    "Provider"
+  ],
+}));
 
 jest.mock("../../components/header/header.component", () =>
   createProviderMock(providers.Header)
@@ -58,12 +57,12 @@ const createProviderMock = (name: string, exportName = "default") => {
 
 const providers = {
   AnalyticsProvider: "AnalyticsProvider",
+  AuthVendorProvider: "AuthVendorProvider",
   FlagVendorProvider: "FlagVendorProvider",
   Header: "Header",
   MetricsProvider: "MetricsProvider",
   NavBarProvider: "NavBarProvider",
   RootProvider: "RootProvider",
-  SessionProvider: "SessionProvider",
   UserProvider: "UserProvider",
   UserInterfaceRootProvider: "UserInterfaceRootProvider",
 };
@@ -79,22 +78,10 @@ describe("RootProvider", () => {
   };
   const mockSession = {
     testSession: true,
-    expires: new Date(Date.now() + 1000).toISOString(),
-  };
-  let originalEnvironment: typeof process.env;
-  const mockFlagSmithEnvironment = "environment_identifier_token";
-
-  beforeAll(() => {
-    originalEnvironment = process.env;
-    process.env.NEXT_PUBLIC_FLAG_ENVIRONMENT = mockFlagSmithEnvironment;
-  });
+  } as unknown as VendorAuthStateType;
 
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  afterAll(() => {
-    process.env = originalEnvironment;
   });
 
   const arrange = async (pageKey?: string, flagState?: VendorFlagStateType) => {
@@ -145,6 +132,24 @@ describe("RootProvider", () => {
       expect(await screen.findByTestId(providers.Header)).toBeTruthy;
     });
 
+    it("should initialize the AuthVendorProvider", async () => {
+      await waitFor(() => expect(authVendor.Provider).toBeCalledTimes(1));
+      checkMockCall(authVendor.Provider, { session: mockSession });
+      expect(await screen.findByTestId(providers.AuthVendorProvider))
+        .toBeTruthy;
+    });
+
+    it("should initialize the FlagVendorProvider", async () => {
+      await waitFor(() => expect(flagVendor.Provider).toBeCalledTimes(1));
+      await waitFor(() =>
+        checkMockCall(flagVendor.Provider, {
+          state: mockServerState,
+        })
+      );
+      expect(await screen.findByTestId(providers.FlagVendorProvider))
+        .toBeTruthy;
+    });
+
     it("should initialize the Analytics Provider", async () => {
       await waitFor(() => expect(AnalyticsProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.AnalyticsProvider)).toBeTruthy;
@@ -160,12 +165,6 @@ describe("RootProvider", () => {
       expect(await screen.findByTestId(providers.NavBarProvider)).toBeTruthy;
     });
 
-    it("should initialize the SessionProvider", async () => {
-      await waitFor(() => expect(SessionProvider).toBeCalledTimes(1));
-      checkMockCall(SessionProvider, { session: mockSession });
-      expect(await screen.findByTestId(providers.SessionProvider)).toBeTruthy;
-    });
-
     it("should initialize the UserProvider", async () => {
       await waitFor(() => expect(UserProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.UserProvider)).toBeTruthy;
@@ -174,17 +173,6 @@ describe("RootProvider", () => {
     it("should initialize the UserInterfaceProvider", async () => {
       await waitFor(() => expect(UserInterfaceRootProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.UserInterfaceRootProvider))
-        .toBeTruthy;
-    });
-
-    it("should initialize the FlagVendorProvider", async () => {
-      await waitFor(() => expect(flagVendor.Provider).toBeCalledTimes(1));
-      await waitFor(() =>
-        checkMockCall(flagVendor.Provider, {
-          state: mockServerState,
-        })
-      );
-      expect(await screen.findByTestId(providers.FlagVendorProvider))
         .toBeTruthy;
     });
 
