@@ -1,13 +1,15 @@
 import { render } from "@testing-library/react";
-import createPersistedReducer from "use-persisted-reducer";
+import { getPersistedUseReducer } from "../../../hooks/utility/local.storage";
 import { InitialState } from "../metrics.initial";
 import MetricsProvider, { MetricsContext } from "../metrics.provider";
 import type { MetricsContextInterface } from "../../../types/metrics/context.types";
 
-jest.mock("use-persisted-reducer", () => {
-  const module = jest.requireActual("use-persisted-reducer");
-  return jest.fn((props) => module(props));
-});
+jest.mock("../../../hooks/utility/local.storage", () => ({
+  getPersistedUseReducer: jest.fn(() => mockReducer),
+}));
+
+const mockReducer = jest.fn(() => mockReducerProperties);
+const mockReducerProperties = [{ ...InitialState }, jest.fn()];
 
 describe("MetricsProvider", () => {
   const received: Partial<MetricsContextInterface> = {};
@@ -33,14 +35,14 @@ describe("MetricsProvider", () => {
     });
 
     it("should create a persisted reducer with the expected local storage key", () => {
-      expect(createPersistedReducer).toBeCalledTimes(1);
-      expect(createPersistedReducer).toBeCalledWith("metrics");
+      expect(getPersistedUseReducer).toBeCalledTimes(1);
+      expect(getPersistedUseReducer).toBeCalledWith("metrics");
     });
 
     it("should contain the expected properties", () => {
       const properties = received as MetricsContextInterface;
-      expect(properties.dispatch).toBeInstanceOf(Function);
-      expect(properties.metrics).toStrictEqual(InitialState);
+      expect(properties.metrics).toBe(mockReducerProperties[0]);
+      expect(properties.dispatch).toBe(mockReducerProperties[1]);
     });
   });
 });

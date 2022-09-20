@@ -24,6 +24,7 @@
     "metas",
     "middlewares",
     "multisnap",
+    "nextauth",
     "nextjs",
     "niall",
     "pageview",
@@ -38,6 +39,7 @@
     "remotesite",
     "Scrobble",
     "scrobbled",
+    "signin",
     "someguy",
     "someuser",
     "streamable",
@@ -46,7 +48,8 @@
     "testuser",
     "topalbums",
     "topartists",
-    "toplast"
+    "toplast",
+    "userplaycount"
   ],
   "cSpell.ignoreRegExpList": ["node_modules"],
   "importSorter.generalConfiguration.exclude": ["node_modules"],

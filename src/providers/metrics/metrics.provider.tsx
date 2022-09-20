@@ -1,7 +1,7 @@
 import { createContext, ReactNode } from "react";
 import InitialValues from "./metrics.initial";
 import { MetricsReducer } from "./metrics.reducer";
-import { getSSRreducer } from "../../utils/local.storage";
+import { getPersistedUseReducer } from "../../hooks/utility/local.storage";
 
 export const MetricsContext = createContext({ ...InitialValues });
 
@@ -10,7 +10,7 @@ interface MetricsProviderProps {
 }
 
 const MetricsProvider = ({ children }: MetricsProviderProps) => {
-  const [metrics, dispatch] = getSSRreducer("metrics")(
+  const [metrics, dispatch] = getPersistedUseReducer("metrics")(
     MetricsReducer,
     InitialValues.metrics
   );

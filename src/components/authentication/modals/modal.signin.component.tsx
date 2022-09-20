@@ -18,6 +18,7 @@ import useColours from "../../../hooks/colour";
 import ClickLink from "../../clickable/click.link.internal/click.link.internal.component";
 import VerticalScrollBar from "../../scrollbar/vertical.scrollbar.component";
 import SignInButtons from "../buttons/signin.buttons";
+import type { AuthServiceType } from "../../../types/clients/auth/vendor.types";
 
 export const testIDs = {
   AuthenticationModalCloseButton: "AuthenticationCloseButton",
@@ -30,7 +31,7 @@ export interface AuthenticationProps {
   isOpen: boolean;
   onClose: (overrideCloseBehavior?: boolean) => void;
   setClicked: (value: boolean) => void;
-  signIn: (provider: string) => void;
+  signIn: (provider: AuthServiceType) => void;
 }
 
 export default function ModalComponent({

@@ -1,13 +1,13 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import mainTranslations from "../../../../public/locales/en/main.json";
 import navbarTranslations from "../../../../public/locales/en/navbar.json";
-import lastFMsettings from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
 import mockAnalyticsHook from "../../../hooks/tests/analytics.mock.hook";
+import mockAuthHook, {
+  mockUserProfile,
+} from "../../../hooks/tests/auth.mock.hook";
 import NavBarProvider from "../../../providers/navbar/navbar.provider";
 import mockRouter from "../../../tests/fixtures/mock.router";
-import { testIDs as NavBarAnalyticsTestIDs } from "../navbar.avatar/navbar.avatar.component";
 import NavBar, { testIDs } from "../navbar.component";
 import type { JSONstringType } from "../../../types/json.types";
 import type { UserStateInterface } from "../../../types/user/state.types";
@@ -20,9 +20,7 @@ jest.mock("../../../hooks/lastfm", () => {
   });
 });
 
-jest.mock("../navbar.session.control/navbar.session.control.component", () =>
-  jest.fn(() => <div>MockNavBarSessionController</div>)
-);
+jest.mock("../../../hooks/auth", () => () => mockAuthHook);
 
 jest.mock("../../../hooks/analytics", () => ({
   __esModule: true,
@@ -62,6 +60,7 @@ describe("NavBar", () => {
 
   beforeEach(() => {
     thisMockUserProperties = { ...baseMockUserProperties };
+    mockAuthHook.user = mockUserProfile;
     jest.clearAllMocks();
 
     arrange();
@@ -191,34 +190,6 @@ describe("NavBar", () => {
       for (let i = 0; i < clickAbleLinks.length; i++) {
         testLink(clickAbleLinks[i], testIDs.NavBarMobileMenu, true);
       }
-    });
-
-    describe("when the avatar image is clicked", () => {
-      beforeEach(async () => {
-        const link = (await screen.findByAltText(
-          mainTranslations.altText.lastfm
-        )) as HTMLElement;
-        fireEvent.click(link);
-      });
-
-      it(`should produce an analytics event`, async () => {
-        expect(mockAnalyticsHook.trackExternalLinkClick).toBeCalledTimes(1);
-        const call = mockAnalyticsHook.trackExternalLinkClick.mock.calls[0];
-        expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-        expect(call[1]).toBe(lastFMsettings.homePage);
-        expect(Object.keys(call).length).toBe(2);
-      });
-
-      it(`the avatar should reference the external link correctly`, async () => {
-        const link = (await screen.findByTestId(
-          NavBarAnalyticsTestIDs.NavBarAvatarLink
-        )) as HTMLElement;
-        expect(link.firstChild).toHaveAttribute(
-          "href",
-          lastFMsettings.homePage
-        );
-        expect(link.firstChild).toHaveAttribute("target", "_blank");
-      });
     });
   });
 });

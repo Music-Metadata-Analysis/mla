@@ -1,12 +1,17 @@
-import { getToken } from "next-auth/jwt";
-import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import LastFMApiEndpointFactoryV2 from "../../../../../backend/api/lastfm/v2.endpoint.base.class";
 import apiRoutes from "../../../../../config/apiRoutes";
 import handleProxy, {
   endpointFactory,
 } from "../../../../../pages/api/v2/reports/lastfm/top20artists/[username]";
+import {
+  createAPIMocks,
+  mockSession,
+} from "../../../../fixtures/mock.authentication";
+import type {
+  MockAPIRequest,
+  MockAPIResponse,
+} from "../../../../../types/api.endpoint.types";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
   return jest.fn().mockImplementation(() => {
@@ -20,23 +25,24 @@ jest.mock("../../../../../backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 
-jest.mock("next-auth/jwt", () => ({
-  getToken: jest.fn(),
+jest.mock("../../../../../backend/integrations/auth/vendor", () => ({
+  Client: jest.fn(() => ({
+    getSession: mockGetSession,
+  })),
 }));
 
+const mockGetSession = jest.fn();
 const mockProxyMethod = jest.fn();
-const testUrl = apiRoutes.v2.reports.lastfm.top20artists;
+const endpointUnderTest = apiRoutes.v2.reports.lastfm.top20artists;
 
 type ArrangeArgs = {
   username: string;
   method: HttpMethodType;
 };
 
-describe(testUrl, () => {
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let req: MockRequest<NextApiRequest>;
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let res: MockResponse<NextApiResponse>;
+describe(endpointUnderTest, () => {
+  let mockReq: MockAPIRequest;
+  let mockRes: MockAPIResponse;
   const mockResponse = {
     artists: [],
     image: [],
@@ -49,13 +55,12 @@ describe(testUrl, () => {
   });
 
   const actRequest = async ({ username, method = "GET" }: ArrangeArgs) => {
-    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-    ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
-      url: testUrl,
+    ({ req: mockReq, res: mockRes } = createAPIMocks({
+      url: endpointUnderTest,
       method,
       query: { username },
     }));
-    await handleProxy(req, res);
+    await handleProxy(mockReq, mockRes);
   };
 
   describe("An instance of the endpoint factory class", () => {
@@ -64,7 +69,7 @@ describe(testUrl, () => {
     });
 
     it("should have the correct route set", () => {
-      expect(endpointFactory.route).toBe(testUrl);
+      expect(endpointFactory.route).toBe(endpointUnderTest);
     });
 
     it("should have the correct maxAgeValue set", () => {
@@ -76,14 +81,8 @@ describe(testUrl, () => {
     });
   });
 
-  describe("with a valid jwt token", () => {
-    beforeEach(() =>
-      (getToken as jest.Mock).mockReturnValue(
-        Promise.resolve({
-          token: "testToken",
-        })
-      )
-    );
+  describe("with a valid session", () => {
+    beforeEach(() => mockGetSession.mockResolvedValue(mockSession));
 
     describe("receives a GET request", () => {
       beforeEach(() => {
@@ -102,12 +101,12 @@ describe(testUrl, () => {
           });
 
           it("should return a 200 status code", () => {
-            expect(res._getStatusCode()).toBe(200);
-            expect(res._getJSONData()).toStrictEqual(mockResponse);
+            expect(mockRes._getStatusCode()).toBe(200);
+            expect(mockRes._getJSONData()).toStrictEqual(mockResponse);
           });
 
           it("should set a Cache-Control header", () => {
-            expect(res._getHeaders()["cache-control"]).toStrictEqual([
+            expect(mockRes._getHeaders()["cache-control"]).toStrictEqual([
               "public",
               `max-age=${endpointFactory.maxAgeValue}`,
             ]);

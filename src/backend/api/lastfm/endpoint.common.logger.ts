@@ -1,9 +1,11 @@
-import type { LastFMEndpointRequest } from "../../../types/api.endpoint.types";
-import type { NextApiResponse } from "next";
+import type {
+  LastFMEndpointRequest,
+  LastFMEndpointResponse,
+} from "../../../types/api.endpoint.types";
 
 const logger = (
   req: LastFMEndpointRequest,
-  res: NextApiResponse,
+  res: LastFMEndpointResponse,
   next: () => void
 ) => {
   const remoteIp = getRemoteIpAddress(req);

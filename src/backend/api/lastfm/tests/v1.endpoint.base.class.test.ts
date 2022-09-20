@@ -1,11 +1,17 @@
-import { getToken } from "next-auth/jwt";
-import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import * as status from "../../../../config/status";
 import { ProxyError } from "../../../../errors/proxy.error.class";
+import {
+  createAPIMocks,
+  mockSession,
+} from "../../../../tests/fixtures/mock.authentication";
+import authVendor from "../../../integrations/auth/vendor";
 import LastFMApiEndpointFactoryV1 from "../v1.endpoint.base.class";
-import type { BodyType } from "../../../../types/api.endpoint.types";
+import type {
+  BodyType,
+  MockAPIRequest,
+  MockAPIResponse,
+} from "../../../../types/api.endpoint.types";
 import type { HttpMethodType } from "../../../../types/clients/api/api.client.types";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV1 {
   route = "/api/v1/endpoint";
@@ -39,19 +45,21 @@ class ConcreteErrorClass extends LastFMApiEndpointFactoryV1 {
   }
 }
 
+jest.mock("../../../integrations/auth/vendor", () => ({
+  Client: jest.fn(() => ({
+    getSession: mockGetSession,
+  })),
+}));
+
 jest.mock("../../../../backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 
-jest.mock("next-auth/jwt", () => ({
-  getToken: jest.fn(),
-}));
+const mockGetSession = jest.fn();
 
 describe("LastFMApiEndpointFactoryV1", () => {
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let req: MockRequest<NextApiRequest>;
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let res: MockResponse<NextApiResponse>;
+  let mockReq: MockAPIRequest;
+  let mockRes: MockAPIResponse;
   let payload: undefined | Record<string, string>;
   let factory:
     | LastFMApiEndpointFactoryV1
@@ -79,33 +87,29 @@ describe("LastFMApiEndpointFactoryV1", () => {
   });
 
   const checkJWT = () => {
-    it("should call getToken with the correct props", () => {
-      expect(getToken).toBeCalledTimes(1);
-      const call = (getToken as jest.Mock).mock.calls[0][0];
-      expect(call.req).toBe(req);
-      expect(call.secret).toBe(mockJWTSecret);
-      expect(Object.keys(call).length).toBe(2);
+    it("should instantiate the authentication client as expected", () => {
+      expect(authVendor.Client).toBeCalledTimes(1);
+      expect(authVendor.Client).toBeCalledWith(mockReq);
+    });
+
+    it("should call the getSession method with the correct props", () => {
+      expect(mockGetSession).toBeCalledTimes(1);
+      expect(mockGetSession).toBeCalledWith();
     });
   };
 
   const arrange = async () => {
-    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-    ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
+    ({ req: mockReq, res: mockRes } = createAPIMocks({
       url: factory.route,
       method,
       body: payload,
     }));
-    await factory.create()(req, res);
+    await factory.create()(mockReq, mockRes);
   };
 
   describe("with an authenticated user", () => {
     beforeEach(() => {
-      jest.clearAllMocks();
-      (getToken as jest.Mock).mockReturnValue(
-        Promise.resolve({
-          token: "testToken",
-        })
-      );
+      mockGetSession.mockResolvedValue(mockSession);
     });
 
     describe("with a POST request", () => {
@@ -125,8 +129,10 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 502", () => {
-            expect(res._getStatusCode()).toBe(502);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_502_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(502);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_502_MESSAGE
+            );
           });
 
           checkJWT();
@@ -140,8 +146,10 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 429", () => {
-            expect(res._getStatusCode()).toBe(429);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_429_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(429);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_429_MESSAGE
+            );
           });
 
           checkJWT();
@@ -155,8 +163,10 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 404", () => {
-            expect(res._getStatusCode()).toBe(404);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_404_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(404);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_404_MESSAGE
+            );
           });
 
           checkJWT();
@@ -169,12 +179,14 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 503", () => {
-            expect(res._getStatusCode()).toBe(503);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_503_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(503);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_503_MESSAGE
+            );
           });
 
           it("should set a retry-after header", () => {
-            expect(res.getHeader("retry-after")).toBe(0);
+            expect(mockRes.getHeader("retry-after")).toBe(0);
           });
 
           checkJWT();
@@ -193,8 +205,10 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 400", () => {
-            expect(res._getStatusCode()).toBe(400);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(400);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_400_MESSAGE
+            );
           });
 
           checkJWT();
@@ -213,8 +227,10 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 400", () => {
-            expect(res._getStatusCode()).toBe(400);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_400_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(400);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_400_MESSAGE
+            );
           });
 
           checkJWT();
@@ -239,8 +255,10 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 405", () => {
-            expect(res._getStatusCode()).toBe(405);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_405_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(405);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_405_MESSAGE
+            );
           });
         });
       });
@@ -248,9 +266,9 @@ describe("LastFMApiEndpointFactoryV1", () => {
   });
 
   describe("with an UNAUTHENTICATED user", () => {
-    beforeEach(() =>
-      (getToken as jest.Mock).mockReturnValue(Promise.resolve(null))
-    );
+    beforeEach(() => {
+      mockGetSession.mockResolvedValue(null);
+    });
 
     describe("with a POST request", () => {
       beforeEach(() => {
@@ -269,8 +287,10 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 401", () => {
-            expect(res._getStatusCode()).toBe(401);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(401);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_401_MESSAGE
+            );
           });
 
           checkJWT();
@@ -283,12 +303,14 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 401", () => {
-            expect(res._getStatusCode()).toBe(401);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(401);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_401_MESSAGE
+            );
           });
 
           it("should NOT set a retry-after header", () => {
-            expect(res.getHeader("retry-after")).toBeUndefined();
+            expect(mockRes.getHeader("retry-after")).toBeUndefined();
           });
 
           checkJWT();
@@ -307,8 +329,10 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 401", () => {
-            expect(res._getStatusCode()).toBe(401);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(401);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_401_MESSAGE
+            );
           });
 
           checkJWT();
@@ -327,8 +351,10 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 401", () => {
-            expect(res._getStatusCode()).toBe(401);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_401_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(401);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_401_MESSAGE
+            );
           });
 
           checkJWT();
@@ -353,8 +379,10 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           it("should return a 405", () => {
-            expect(res._getStatusCode()).toBe(405);
-            expect(res._getJSONData()).toStrictEqual(status.STATUS_405_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(405);
+            expect(mockRes._getJSONData()).toStrictEqual(
+              status.STATUS_405_MESSAGE
+            );
           });
         });
       });

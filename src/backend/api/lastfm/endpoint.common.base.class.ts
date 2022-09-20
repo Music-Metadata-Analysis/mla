@@ -4,11 +4,11 @@ import * as status from "../../../config/status";
 import type { ProxyError } from "../../../errors/proxy.error.class";
 import type {
   LastFMEndpointRequest,
+  LastFMEndpointResponse,
   QueryParamType,
   BodyType,
 } from "../../../types/api.endpoint.types";
 import type LastFMProxy from "../../integrations/lastfm/proxy.class";
-import type { NextApiRequest, NextApiResponse } from "next";
 import type { NextConnect } from "next-connect";
 
 export default abstract class LastFMEndpointBase {
@@ -24,19 +24,16 @@ export default abstract class LastFMEndpointBase {
     | unknown[]
   >;
 
-  abstract create(): NextConnect<
-    LastFMEndpointRequest,
-    NextApiResponse<unknown>
-  >;
+  abstract create(): NextConnect<LastFMEndpointRequest, LastFMEndpointResponse>;
 
-  onNoMatch = (req: NextApiRequest, res: NextApiResponse) => {
+  onNoMatch = (req: LastFMEndpointRequest, res: LastFMEndpointResponse) => {
     res.status(405).json(status.STATUS_405_MESSAGE);
   };
 
   onError = (
     err: ProxyError,
     req: LastFMEndpointRequest,
-    res: NextApiResponse,
+    res: LastFMEndpointResponse,
     next: () => void
   ) => {
     this.clearTimeout();
@@ -53,7 +50,7 @@ export default abstract class LastFMEndpointBase {
 
   createTimeout = (
     req: LastFMEndpointRequest,
-    res: NextApiResponse,
+    res: LastFMEndpointResponse,
     next: () => void
   ) => {
     this.connectionTimeout = setTimeout(() => {

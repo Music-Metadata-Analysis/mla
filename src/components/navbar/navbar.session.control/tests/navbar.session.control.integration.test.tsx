@@ -1,13 +1,17 @@
 import { LockIcon } from "@chakra-ui/icons";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { signOut } from "next-auth/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import mockAuthHook, {
+  mockUserProfile,
+} from "../../../../hooks/tests/auth.mock.hook";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import mockRouter from "../../../../tests/fixtures/mock.router";
 import Authentication from "../../../authentication/authentication.container";
 import { testIDs as modalIDs } from "../../../authentication/modals/modal.signin.component";
 import NavBarSessionControl from "../navbar.session.control.component";
+
+jest.mock("../../../../hooks/auth", () => () => mockAuthHook);
 
 jest.mock(
   "../../../analytics/analytics.button/analytics.button.component",
@@ -20,12 +24,6 @@ jest.mock("../../../authentication/authentication.container", () => {
   ).default;
   return jest.fn((props) => <Component {...props} />);
 });
-
-jest.mock("next-auth/react", () => ({
-  useSession: () => mockUseSession(),
-  signIn: jest.fn(),
-  signOut: jest.fn(),
-}));
 
 jest.mock("@chakra-ui/icons", () => {
   const {
@@ -53,8 +51,6 @@ const createMockedComponent = (name: string) => {
   return factoryInstance.create(name);
 };
 
-const mockUseSession = jest.fn();
-
 describe("NavSessionControl", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -70,7 +66,8 @@ describe("NavSessionControl", () => {
 
   describe("when the user is logged in", () => {
     beforeEach(() => {
-      mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
+      mockAuthHook.user = mockUserProfile;
+      mockAuthHook.status = "authenticated";
       arrange();
     });
 
@@ -86,15 +83,16 @@ describe("NavSessionControl", () => {
       });
 
       it("should call signOut once", async () => {
-        expect(signOut).toBeCalledTimes(1);
-        expect(signOut).toBeCalledWith();
+        expect(mockAuthHook.signOut).toBeCalledTimes(1);
+        expect(mockAuthHook.signOut).toBeCalledWith();
       });
     });
   });
 
   describe("when the user is NOT logged in", () => {
     beforeEach(() => {
-      mockUseSession.mockReturnValue({ data: null, status: "unauthenticated" });
+      mockAuthHook.user = null;
+      mockAuthHook.status = "unauthenticated";
       arrange();
     });
 

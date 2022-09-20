@@ -1,13 +1,15 @@
 import { body, validationResult } from "express-validator";
-import { getToken } from "next-auth/jwt";
 import nextConnect from "next-connect";
 import LastFMEndpointBase from "./endpoint.common.base.class";
 import Logger from "./endpoint.common.logger";
 import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
+import authVendor from "../../integrations/auth/vendor";
 import LastFMProxy from "../../integrations/lastfm/proxy.class";
-import type { LastFMEndpointRequest } from "../../../types/api.endpoint.types";
-import type { NextApiResponse } from "next";
+import type {
+  LastFMEndpointRequest,
+  LastFMEndpointResponse,
+} from "../../../types/api.endpoint.types";
 
 export default abstract class LastFMApiEndpointFactoryV1 extends LastFMEndpointBase {
   sunsetDate = new Date("Wed, 1 Jan 2023 00:00:00 GMT");
@@ -16,7 +18,7 @@ export default abstract class LastFMApiEndpointFactoryV1 extends LastFMEndpointB
   route!: string;
 
   create() {
-    const handler = nextConnect<LastFMEndpointRequest, NextApiResponse>({
+    const handler = nextConnect<LastFMEndpointRequest, LastFMEndpointResponse>({
       onError: this.onError,
       onNoMatch: this.onNoMatch,
     });
@@ -25,10 +27,8 @@ export default abstract class LastFMApiEndpointFactoryV1 extends LastFMEndpointB
       body("userName").isString(),
       body("userName").isLength({ min: 1 }),
       async (req, res, next) => {
-        const token = await getToken({
-          req,
-          secret: process.env.AUTH_MASTER_JWT_SECRET,
-        });
+        const authClient = new authVendor.Client(req);
+        const token = await authClient.getSession();
         const errors = validationResult(req);
         if (!token) {
           res.status(401).json(status.STATUS_401_MESSAGE);
