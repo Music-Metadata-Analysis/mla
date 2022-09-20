@@ -2,13 +2,23 @@ import { voidFn } from "@src/utils/voids";
 import type { NavBarContextInterface } from "@src/types/navbar.types";
 
 const InitialValues = <NavBarContextInterface>{
-  getters: {
-    isVisible: true,
-    isHamburgerEnabled: true,
+  hamburger: {
+    state: true,
+    setFalse: voidFn,
+    setTrue: voidFn,
+    toggle: voidFn,
   },
-  setters: {
-    setIsVisible: voidFn,
-    setIsHamburgerEnabled: voidFn,
+  mobileMenu: {
+    state: false,
+    setFalse: voidFn,
+    setTrue: voidFn,
+    toggle: voidFn,
+  },
+  navigation: {
+    state: true,
+    setFalse: voidFn,
+    setTrue: voidFn,
+    toggle: voidFn,
   },
 };
 

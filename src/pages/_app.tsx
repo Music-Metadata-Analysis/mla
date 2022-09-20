@@ -22,7 +22,7 @@ function MLA({
       session={session}
       headerProps={headerProps}
     >
-      <NavBar menuConfig={NavConfig.menuConfig} />
+      <NavBar config={NavConfig.menuConfig} />
       <Component {...otherProps} />
       <RootPopups />
       <Consent />

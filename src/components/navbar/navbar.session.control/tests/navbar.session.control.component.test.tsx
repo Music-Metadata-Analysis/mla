@@ -3,7 +3,6 @@ import { render } from "@testing-library/react";
 import NavBarSessionControl from "../navbar.session.control.component";
 import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
 import Authentication from "@src/components/authentication/authentication.container";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
@@ -34,12 +33,27 @@ jest.mock("@src/components/authentication/authentication.container", () =>
 const mockUseDisclosure = jest.fn();
 
 describe("NavSessionControl", () => {
+  let mockButtonType: "signIn" | "signOut";
+  let mockShowAuthenticationModal: boolean;
+
+  const mockAnalyticsButtonName = "mockAnalyticsButtonName";
+  const mockHandleClick = jest.fn();
+  const mockOnAuthenticationModalClose = jest.fn();
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = () => {
-    render(<NavBarSessionControl />);
+    render(
+      <NavBarSessionControl
+        analyticsButtonName={mockAnalyticsButtonName}
+        buttonType={mockButtonType}
+        handleClick={mockHandleClick}
+        onAuthenticationModalClose={mockOnAuthenticationModalClose}
+        showAuthenticationModal={mockShowAuthenticationModal}
+      />
+    );
   };
 
   const checkAnalyticsWrapper = ({
@@ -50,20 +64,26 @@ describe("NavSessionControl", () => {
     it("should call the AnalyticsWrapper component with the expected props", () => {
       expect(AnalyticsWrapper).toBeCalledTimes(expectedCallCount);
       for (let i = 0; i < expectedCallCount; i++) {
-        checkMockCall(AnalyticsWrapper, { buttonName: "NavBar SignIn" }, 0);
+        checkMockCall(
+          AnalyticsWrapper,
+          { buttonName: mockAnalyticsButtonName },
+          0
+        );
       }
     });
   };
 
   const checkAuthentication = ({
     expectedCallCount,
+    hidden,
   }: {
     expectedCallCount: number;
+    hidden: boolean;
   }) => {
     it("should call the Authentication component with the expected props", () => {
       expect(Authentication).toBeCalledTimes(expectedCallCount);
       for (let i = 0; i < expectedCallCount; i++) {
-        checkMockCall(Authentication, { hidden: true }, 0, ["onModalClose"]);
+        checkMockCall(Authentication, { hidden }, 0, ["onModalClose"]);
       }
     });
   };
@@ -76,7 +96,7 @@ describe("NavSessionControl", () => {
     it("should call the Box component with the expected props", () => {
       expect(Box).toBeCalledTimes(expectedCallCount);
       for (let i = 0; i < expectedCallCount; i++) {
-        checkMockCall(Box, { pl: [0, 1, 2], pr: 0 }, i);
+        checkMockCall(Box, { pl: [0, 2, 2], pr: [0, 0.5] }, i);
       }
     });
   };
@@ -98,7 +118,7 @@ describe("NavSessionControl", () => {
             },
             bg: mockColourHook.navButtonColour.background,
             borderColor: mockColourHook.transparent,
-            p: [1, 1, 2],
+            p: 1,
             rounded: "md",
             width: "100%",
           },
@@ -108,29 +128,22 @@ describe("NavSessionControl", () => {
     });
   };
 
-  describe("when the user is logged in", () => {
+  describe("when the buttonType is 'signIn'", () => {
     beforeEach(() => {
-      mockAuthHook.user = mockUserProfile;
-      mockAuthHook.status = "authenticated";
-      arrange();
+      mockButtonType = "signIn";
     });
 
-    checkAuthentication({ expectedCallCount: 2 });
-    checkAnalyticsWrapper({ expectedCallCount: 2 });
-    checkChakraBox({ expectedCallCount: 2 });
-    checkChakraButton({ expectedCallCount: 2 });
-  });
+    describe("when the showAuthenticationModal is 'true'", () => {
+      beforeEach(() => {
+        mockShowAuthenticationModal = true;
 
-  describe("when the user is NOT logged in", () => {
-    beforeEach(() => {
-      mockAuthHook.user = null;
-      mockAuthHook.status = "unauthenticated";
-      arrange();
+        arrange();
+      });
+
+      checkAnalyticsWrapper({ expectedCallCount: 1 });
+      checkAuthentication({ expectedCallCount: 1, hidden: false });
+      checkChakraBox({ expectedCallCount: 1 });
+      checkChakraButton({ expectedCallCount: 1 });
     });
-
-    checkAuthentication({ expectedCallCount: 1 });
-    checkAnalyticsWrapper({ expectedCallCount: 1 });
-    checkChakraBox({ expectedCallCount: 1 });
-    checkChakraButton({ expectedCallCount: 1 });
   });
 });

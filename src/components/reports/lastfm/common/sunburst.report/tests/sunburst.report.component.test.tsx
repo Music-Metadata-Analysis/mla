@@ -259,7 +259,7 @@ describe("SunBurstReport", () => {
         });
 
         it("should enable the NavBar's Hamburger Button, and close the drawer", () => {
-          expect(mockNavBarHook.setters.enableHamburger).toBeCalledTimes(1);
+          expect(mockNavBarHook.hamburger.setTrue).toBeCalledTimes(1);
           expect(mockDisclosure.onClose).toBeCalledTimes(1);
         });
       });
@@ -333,7 +333,7 @@ describe("SunBurstReport", () => {
         });
 
         it("should disabled the NavBar's Hamburger Button, and open the drawer", () => {
-          expect(mockNavBarHook.setters.disableHamburger).toBeCalledTimes(1);
+          expect(mockNavBarHook.hamburger.setFalse).toBeCalledTimes(1);
           expect(mockDisclosure.onOpen).toBeCalledTimes(1);
         });
       });

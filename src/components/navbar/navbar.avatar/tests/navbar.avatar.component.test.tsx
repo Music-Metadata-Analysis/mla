@@ -1,11 +1,8 @@
 import { Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import NavBarAvatar from "../navbar.avatar.component";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-
-jest.mock("@src/hooks/auth");
 
 jest.mock("@src/hooks/colour");
 
@@ -15,18 +12,26 @@ jest.mock("@chakra-ui/react", () => {
 });
 
 describe("NavBarAvatar", () => {
+  let mockAuthData: { name?: string; image?: string };
+
+  const mockAuthDataAuthenticated = {
+    name: "mockUser",
+    image: "https://mock/profile/url",
+  };
+  const mockAuthDataUnauthenticated = {};
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = () => {
-    render(<NavBarAvatar />);
+    render(<NavBarAvatar user={mockAuthData} />);
   };
 
-  describe("with a logged in user", () => {
+  describe("with an authenticated in user", () => {
     beforeEach(() => {
-      mockAuthHook.user = mockUserProfile;
-      mockAuthHook.status = "authenticated";
+      mockAuthData = mockAuthDataAuthenticated;
+
       arrange();
     });
 
@@ -35,17 +40,17 @@ describe("NavBarAvatar", () => {
       checkMockCall(Avatar, {
         bg: mockColourHook.buttonColour.background,
         loading: "eager",
-        name: mockUserProfile.name,
+        name: mockAuthDataAuthenticated.name,
         size: "sm",
-        src: mockUserProfile.image,
+        src: mockAuthDataAuthenticated.image,
       });
     });
   });
 
-  describe("without a logged in user", () => {
+  describe("with an unauthenticated user", () => {
     beforeEach(() => {
-      mockAuthHook.user = null;
-      mockAuthHook.status = "unauthenticated";
+      mockAuthData = mockAuthDataUnauthenticated;
+
       arrange();
     });
 

@@ -1,66 +1,41 @@
 import { LockIcon } from "@chakra-ui/icons";
 import { Box, Button } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
 import Authentication from "@src/components/authentication/authentication.container";
-import useAuth from "@src/hooks/auth";
 import useColour from "@src/hooks/colour";
 import type { MouseEvent } from "react";
 
-const NavSessionControl = () => {
+export interface NavSessionControlProps {
+  analyticsButtonName: string;
+  buttonType: "signIn" | "signOut";
+  handleClick: (e: MouseEvent<HTMLElement>) => void;
+  onAuthenticationModalClose: () => void;
+  showAuthenticationModal: boolean;
+}
+
+const NavBarSessionControl = ({
+  analyticsButtonName,
+  buttonType,
+  handleClick,
+  onAuthenticationModalClose,
+  showAuthenticationModal,
+}: NavSessionControlProps) => {
   const { navButtonColour, transparent } = useColour();
-  const { status: authStatus, signOut } = useAuth();
-  const [showModal, setShowModal] = useState(false);
-  const [buttonType, setButtonType] =
-    useState<keyof typeof operations>("signIn");
-
-  const operations = {
-    signIn: () => {
-      setShowModal(true);
-    },
-    signOut: () => {
-      signOut();
-    },
-  };
-
-  useEffect(() => {
-    return () => setShowModal(false);
-  }, []);
-
-  useEffect(() => {
-    if (authStatus === "unauthenticated") {
-      setButtonType("signIn");
-    } else {
-      setButtonType("signOut");
-    }
-  }, [authStatus]);
-
-  const handleOperation = (e: MouseEvent<HTMLElement>) => {
-    operations[buttonType]();
-    e.currentTarget.blur();
-  };
-
-  const generateAnalyticsName = () => {
-    const name = buttonType[0].toUpperCase() + buttonType.slice(1);
-    return `NavBar ${name}`;
-  };
 
   return (
     <>
       <Authentication
-        hidden={!showModal}
-        onModalClose={() => setShowModal(false)}
+        hidden={!showAuthenticationModal}
+        onModalClose={onAuthenticationModalClose}
       />
-      <Box pl={[0, 1, 2]} pr={0}>
-        <AnalyticsWrapper buttonName={generateAnalyticsName()}>
+      <Box pl={[0, 2, 2]} pr={[0, 0.5]}>
+        <AnalyticsWrapper buttonName={analyticsButtonName}>
           <Button
-            onClick={(e) => {
-              handleOperation(e);
-            }}
+            onClick={handleClick}
             borderColor={transparent}
             width={"100%"}
-            p={[1, 1, 2]}
+            p={1}
             rounded={"md"}
             _hover={{
               textDecoration: "none",
@@ -80,4 +55,4 @@ const NavSessionControl = () => {
   );
 };
 
-export default NavSessionControl;
+export default NavBarSessionControl;

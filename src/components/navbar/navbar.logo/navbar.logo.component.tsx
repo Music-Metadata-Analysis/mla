@@ -1,27 +1,40 @@
 import { Flex, Spacer } from "@chakra-ui/react";
 import NavBarAvatar from "../navbar.avatar/navbar.avatar.component";
-import NavBarLink from "../navbar.link/navbar.link.component";
+import NavBarLinkContainer from "../navbar.link/navbar.link.container";
 import routes from "@src/config/routes";
-import useAnalytics from "@src/hooks/analytics";
 import useLocale from "@src/hooks/locale";
-import useRouter from "@src/hooks/router";
+import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 
-const NavBarLogo = () => {
-  const analytics = useAnalytics();
+interface NavBarLogoProps {
+  closeMobileMenu: () => void;
+  currentPath: string;
+  tracker: ButtonClickHandlerType;
+  transaction: boolean;
+  user: { name?: string; image?: string };
+}
+
+const NavBarLogo = ({
+  closeMobileMenu,
+  currentPath,
+  tracker,
+  transaction,
+  user,
+}: NavBarLogoProps) => {
   const { t } = useLocale("navbar");
-  const router = useRouter();
 
   return (
     <Flex h={16} alignItems={"center"}>
-      <NavBarLink
-        trackButtonClick={analytics.trackButtonClick}
-        selected={router.path === routes.home}
+      <NavBarLinkContainer
+        closeMobileMenu={closeMobileMenu}
+        selected={currentPath === routes.home}
         path={routes.home}
+        tracker={tracker}
+        transaction={transaction}
       >
         {t("title")}
-      </NavBarLink>
+      </NavBarLinkContainer>
       <Spacer pl="10px" />
-      <NavBarAvatar />
+      <NavBarAvatar user={user} />
     </Flex>
   );
 };

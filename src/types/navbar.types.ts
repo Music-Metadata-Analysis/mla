@@ -1,14 +1,9 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { ToggleHookType } from "../hooks/utility/toggle";
 
 export interface NavBarContextInterface {
-  getters: {
-    isVisible: boolean;
-    isHamburgerEnabled: boolean;
-  };
-  setters: {
-    setIsVisible: Dispatch<SetStateAction<boolean>>;
-    setIsHamburgerEnabled: Dispatch<SetStateAction<boolean>>;
-  };
+  hamburger: ToggleHookType;
+  mobileMenu: ToggleHookType;
+  navigation: ToggleHookType;
 }
 
 export interface NavBarProviderInterface {

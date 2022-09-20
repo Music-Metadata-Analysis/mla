@@ -85,7 +85,7 @@ describe("MLA", () => {
 
   it("should render the NavBar with the correct props", () => {
     expect(NavBar).toBeCalledTimes(1);
-    checkMockCall(NavBar, { menuConfig: NavConfig.menuConfig });
+    checkMockCall(NavBar, { config: NavConfig.menuConfig });
   });
 
   it("should render the passed Component with the correct props", () => {

@@ -26,11 +26,11 @@ export default function SearchContainer({
   const router = useRouter();
 
   useEffect(() => {
-    navBar.setters.hideNavBar();
-    window.addEventListener("resize", navBar.setters.hideNavBar);
+    navBar.navigation.setFalse();
+    window.addEventListener("resize", navBar.navigation.setFalse);
     return () => {
-      window.removeEventListener("resize", navBar.setters.hideNavBar);
-      navBar.setters.showNavBar();
+      window.removeEventListener("resize", navBar.navigation.setFalse);
+      navBar.navigation.setTrue();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

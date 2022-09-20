@@ -13,12 +13,10 @@ interface BillboardProps {
 const Billboard = ({ children, title }: BillboardProps) => {
   const { componentColour, transparent } = useColour();
   const [showTitle, setShowTitle] = useState<boolean>(true);
-  const {
-    getters: { isVisible },
-  } = useNavBar();
+  const { navigation } = useNavBar();
 
   const getNavBarOffset = () => {
-    if (isVisible) return 16;
+    if (navigation.state) return 16;
     return 0;
   };
 
