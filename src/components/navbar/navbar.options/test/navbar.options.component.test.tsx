@@ -1,84 +1,132 @@
 import { render } from "@testing-library/react";
-import NavLink from "../../navbar.link/navbar.link.component";
-import NavLinkOptions from "../navbar.options.component";
+import NavLinkContainer from "../../navbar.link/navbar.link.container";
+import NavBarOptions from "../navbar.options.component";
 import navbarTranslations from "@locales/navbar.json";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
-
-jest.mock("@src/hooks/analytics");
 
 jest.mock("@src/hooks/locale");
 
-jest.mock("@src/hooks/router");
-
-jest.mock("../../navbar.link/navbar.link.component");
-
-const mockConfig = {
-  about: "/mockPath",
-  search: "/otherPath",
-};
+jest.mock("../../navbar.link/navbar.link.container", () =>
+  require("@fixtures/react/child").createComponent("NavBarLinkContainer")
+);
 
 describe("NavBarOptions", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    jest.mocked(NavLink).mockImplementation(() => <div>MockNavLink</div>);
-  });
+  let mockCurrentPath: string;
+  let mockTransaction: boolean;
 
-  const arrange = (pathname: string) => {
-    mockRouterHook.path = pathname;
-    render(<NavLinkOptions menuConfig={mockConfig} />);
+  const mockTracker = jest.fn();
+  const mockCloseMobileMenu = jest.fn();
+
+  const mockConfig = {
+    about: "/mockPath",
+    search: "/otherPath",
   };
 
-  describe("When rendered without a selection", () => {
-    beforeEach(() => arrange("/not/a/matching/path"));
-
-    it("should call NavLink appropriately", () => {
-      expect(NavLink).toBeCalledTimes(2);
-      expect(NavLink).toBeCalledWith(
-        {
-          path: mockConfig.about,
-          selected: false,
-          children: _t(navbarTranslations.menu.about),
-          trackButtonClick: mockAnalyticsHook.trackButtonClick,
-        },
-        {}
-      );
-      expect(NavLink).toBeCalledWith(
-        {
-          path: mockConfig.search,
-          selected: false,
-          children: _t(navbarTranslations.menu.search),
-          trackButtonClick: mockAnalyticsHook.trackButtonClick,
-        },
-        {}
-      );
-    });
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest
+      .mocked(NavLinkContainer)
+      .mockImplementation(() => <div>MockNavLink</div>);
   });
 
-  describe("When rendered with a selection", () => {
-    beforeEach(() => arrange(mockConfig.about));
+  const arrange = () => {
+    render(
+      <NavBarOptions
+        closeMobileMenu={mockCloseMobileMenu}
+        config={mockConfig}
+        currentPath={mockCurrentPath}
+        tracker={mockTracker}
+        transaction={mockTransaction}
+      />
+    );
+  };
 
-    it("should call NavLink appropriately", () => {
-      expect(NavLink).toBeCalledTimes(2);
-      expect(NavLink).toBeCalledWith(
-        {
-          path: mockConfig.about,
-          selected: true,
-          children: _t(navbarTranslations.menu.about),
-          trackButtonClick: mockAnalyticsHook.trackButtonClick,
-        },
-        {}
-      );
-      expect(NavLink).toBeCalledWith(
-        {
-          path: mockConfig.search,
-          selected: false,
-          children: _t(navbarTranslations.menu.search),
-          trackButtonClick: mockAnalyticsHook.trackButtonClick,
-        },
-        {}
-      );
+  const checkNavLinkContainer = ({
+    selections,
+  }: {
+    selections: Record<keyof typeof mockConfig, boolean>;
+  }) => {
+    it(`should call NavLinkContainer ${
+      Object.keys(mockConfig).length
+    } times`, () => {
+      expect(NavLinkContainer).toBeCalledTimes(Object.keys(mockConfig).length);
     });
+
+    (Object.keys(mockConfig) as Array<keyof typeof mockConfig>).forEach(
+      (option, index) => {
+        it(`should call NavLinkContainer for the '${option}' link correctly`, () => {
+          expect(NavLinkContainer).toHaveBeenNthCalledWith(
+            index + 1,
+            {
+              closeMobileMenu: mockCloseMobileMenu,
+              path: mockConfig[option],
+              selected: selections[option],
+              children: _t(navbarTranslations.menu[option]),
+              tracker: mockTracker,
+              transaction: mockTransaction,
+            },
+            {}
+          );
+        });
+      }
+    );
+  };
+
+  const scenario1 = () => {
+    describe("When rendered without a selection", () => {
+      beforeEach(() => {
+        mockCurrentPath = "/not/a/match";
+
+        arrange();
+      });
+
+      checkNavLinkContainer({
+        selections: { about: false, search: false },
+      });
+    });
+  };
+
+  const scenario2 = () => {
+    describe("When rendered with about selected", () => {
+      beforeEach(() => {
+        mockCurrentPath = mockConfig.about;
+
+        arrange();
+      });
+
+      checkNavLinkContainer({
+        selections: { about: true, search: false },
+      });
+    });
+  };
+
+  const scenario3 = () => {
+    describe("When rendered with search selected", () => {
+      beforeEach(() => {
+        mockCurrentPath = mockConfig.search;
+
+        arrange();
+      });
+
+      checkNavLinkContainer({
+        selections: { about: false, search: true },
+      });
+    });
+  };
+
+  describe("when there is a transaction", () => {
+    beforeEach(() => (mockTransaction = true));
+
+    scenario1();
+    scenario2();
+    scenario3();
+  });
+
+  describe("when there is NOT a transaction", () => {
+    beforeEach(() => (mockTransaction = false));
+
+    scenario1();
+    scenario2();
+    scenario3();
   });
 });

@@ -2,8 +2,11 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/navbar.mock";
 import useNavBar from "../navbar";
+import mockToggleHook from "../utility/__mocks__/toggle.mock";
 import NavConfig from "@src/config/navbar";
+import useToggle from "@src/hooks/utility/toggle";
 import NavBarProvider from "@src/providers/navbar/navbar.provider";
+import { makeUnique } from "@src/tests/fixtures/mock.utility";
 import type { NavBarContextInterface } from "@src/types/navbar.types";
 import type { ReactNode } from "react";
 
@@ -12,20 +15,28 @@ interface MockInterfaceContextWithChildren {
   mockContext: NavBarContextInterface;
 }
 
+jest.mock("@src/hooks/utility/toggle");
+
 describe("useNavBar", () => {
   let originalEnvironment: typeof process.env;
   let received: ReturnType<typeof arrange>;
+
+  const mockToggleHooks = [
+    makeUnique<typeof mockToggleHook>(mockToggleHook),
+    makeUnique<typeof mockToggleHook>(mockToggleHook),
+    makeUnique<typeof mockToggleHook>(mockToggleHook),
+  ];
 
   beforeAll(() => {
     originalEnvironment = process.env;
   });
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   afterAll(() => {
     process.env = originalEnvironment;
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   const providerWrapper = ({ children }: MockInterfaceContextWithChildren) => {
@@ -33,7 +44,68 @@ describe("useNavBar", () => {
   };
 
   const arrange = () => {
-    return renderHook(() => useNavBar(), { wrapper: providerWrapper });
+    jest
+      .mocked(useToggle)
+      .mockImplementationOnce(() => mockToggleHooks[0])
+      .mockImplementationOnce(() => mockToggleHooks[1])
+      .mockImplementationOnce(() => mockToggleHooks[2]);
+
+    return renderHook(() => useNavBar(), {
+      wrapper: providerWrapper,
+    });
+  };
+
+  const checkControl = ({
+    property,
+    toggleFunction,
+    mockIndex,
+    notCalled,
+  }: {
+    property: keyof typeof mockHookValues;
+    toggleFunction: Exclude<keyof typeof mockToggleHook, "state">;
+    mockIndex: number;
+    notCalled?: boolean;
+  }) => {
+    describe(`when '${toggleFunction}' is called on ${property}`, () => {
+      beforeEach(async () => {
+        received = arrange();
+
+        await act(async () => {
+          received.result.current[property][toggleFunction]();
+        });
+      });
+
+      if (notCalled) {
+        it(`should NOT call ${property}'s underlying useToggle method`, () => {
+          expect(mockToggleHooks[mockIndex][toggleFunction]).toBeCalledTimes(0);
+        });
+      } else {
+        it(`should call ${property}'s underlying useToggle method`, () => {
+          expect(mockToggleHooks[mockIndex][toggleFunction]).toBeCalledTimes(1);
+          expect(mockToggleHooks[mockIndex][toggleFunction]).toBeCalledWith();
+        });
+
+        it(`should only call ${property}'s underlying useToggle method`, () => {
+          mockToggleHooks.forEach((mockFn, index) => {
+            if (index !== mockIndex) {
+              expect(mockFn[toggleFunction]).toBeCalledTimes(0);
+            }
+          });
+        });
+      }
+    });
+  };
+
+  const checkToggle = (name: keyof typeof mockHookValues) => {
+    it(`should contain a ${name} property, with the functions of a toggle hook`, () => {
+      expect(typeof received.result.current[name].setFalse).toBe("function");
+      expect(typeof received.result.current[name].setTrue).toBe("function");
+      expect(typeof received.result.current[name].toggle).toBe("function");
+    });
+
+    it(`should contain a ${name} property, with the state boolean of a toggle hook`, () => {
+      expect(typeof received.result.current[name].state).toBe("boolean");
+    });
   };
 
   describe("when rendered", () => {
@@ -41,128 +113,147 @@ describe("useNavBar", () => {
       received = arrange();
     });
 
-    it("should contain the correct setter functions", () => {
-      expect(received.result.current.setters.hideNavBar).toBeInstanceOf(
-        Function
-      );
-      expect(received.result.current.setters.showNavBar).toBeInstanceOf(
-        Function
-      );
-      expect(received.result.current.setters.disableHamburger).toBeInstanceOf(
-        Function
-      );
-      expect(received.result.current.setters.enableHamburger).toBeInstanceOf(
-        Function
-      );
-    });
-
-    it("should contain the correct getters values", () => {
-      expect(received.result.current.getters.isHamburgerEnabled).toBe(true);
-      expect(received.result.current.getters.isVisible).toBe(true);
-    });
-
     it("should contain all the same properties as the mock hook", () => {
       const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(received.result.current).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
+
+    checkToggle("hamburger");
+    checkToggle("mobileMenu");
+    checkToggle("navigation");
   });
-
-  const checkHamburgerControls = () => {
-    describe("when disableHamburger is called", () => {
-      beforeEach(
-        async () =>
-          await act(async () => {
-            received.result.current.setters.disableHamburger();
-          })
-      );
-
-      it("should update the correct hook value", () => {
-        expect(received.result.current.getters.isHamburgerEnabled).toBe(false);
-      });
-
-      describe("when enableHamburger is called", () => {
-        beforeEach(
-          async () =>
-            await act(async () => {
-              received.result.current.setters.enableHamburger();
-            })
-        );
-
-        it("should update the correct hook value", () => {
-          expect(received.result.current.getters.isHamburgerEnabled).toBe(true);
-        });
-      });
-    });
-  };
 
   describe("when on a larger screen", () => {
     beforeEach(() => {
       global.innerHeight = NavConfig.minimumHeightDuringInput;
-      received = arrange();
     });
 
-    describe("when hideNavBar is called", () => {
-      beforeEach(
-        async () =>
-          await act(async () => {
-            received.result.current.setters.hideNavBar();
-          })
-      );
-
-      it("should not hide the navbar as expected", () => {
-        expect(received.result.current.getters.isVisible).toBe(true);
+    describe("the hamburger controls", () => {
+      checkControl({
+        property: "hamburger",
+        toggleFunction: "setFalse",
+        mockIndex: 0,
       });
 
-      describe("when showNavBar is called", () => {
-        beforeEach(
-          async () =>
-            await act(async () => {
-              received.result.current.setters.showNavBar();
-            })
-        );
+      checkControl({
+        property: "hamburger",
+        toggleFunction: "setTrue",
+        mockIndex: 0,
+      });
 
-        it("should show the navbar as expected", () => {
-          expect(received.result.current.getters.isVisible).toBe(true);
-        });
+      checkControl({
+        property: "hamburger",
+        toggleFunction: "toggle",
+        mockIndex: 0,
       });
     });
 
-    checkHamburgerControls();
+    describe("the mobileMenu controls", () => {
+      checkControl({
+        property: "mobileMenu",
+        toggleFunction: "setFalse",
+        mockIndex: 1,
+      });
+
+      checkControl({
+        property: "mobileMenu",
+        toggleFunction: "setTrue",
+        mockIndex: 1,
+      });
+
+      checkControl({
+        property: "mobileMenu",
+        toggleFunction: "toggle",
+        mockIndex: 1,
+      });
+    });
+
+    describe("the navigation controls", () => {
+      checkControl({
+        property: "navigation",
+        toggleFunction: "setFalse",
+        mockIndex: 2,
+        notCalled: true,
+      });
+
+      checkControl({
+        property: "navigation",
+        toggleFunction: "setTrue",
+        mockIndex: 2,
+      });
+
+      checkControl({
+        property: "navigation",
+        toggleFunction: "toggle",
+        mockIndex: 2,
+      });
+    });
   });
 
   describe("when on a smaller screen", () => {
     beforeEach(() => {
       global.innerHeight = NavConfig.minimumHeightDuringInput - 1;
-      received = arrange();
     });
 
-    describe("when hideNavBar is called", () => {
-      beforeEach(
-        async () =>
-          await act(async () => {
-            received.result.current.setters.hideNavBar();
-          })
-      );
-
-      it("should hide the navbar as expected", () => {
-        expect(received.result.current.getters.isVisible).toBe(false);
+    describe("the hamburger controls", () => {
+      checkControl({
+        property: "hamburger",
+        toggleFunction: "setFalse",
+        mockIndex: 0,
       });
 
-      describe("when showNavBar is called", () => {
-        beforeEach(
-          async () =>
-            await act(async () => {
-              received.result.current.setters.showNavBar();
-            })
-        );
+      checkControl({
+        property: "hamburger",
+        toggleFunction: "setTrue",
+        mockIndex: 0,
+      });
 
-        it("should show the navbar as expected", () => {
-          expect(received.result.current.getters.isVisible).toBe(true);
-        });
+      checkControl({
+        property: "hamburger",
+        toggleFunction: "toggle",
+        mockIndex: 0,
       });
     });
 
-    checkHamburgerControls();
+    describe("the mobileMenu controls", () => {
+      checkControl({
+        property: "mobileMenu",
+        toggleFunction: "setFalse",
+        mockIndex: 1,
+      });
+
+      checkControl({
+        property: "mobileMenu",
+        toggleFunction: "setTrue",
+        mockIndex: 1,
+      });
+
+      checkControl({
+        property: "mobileMenu",
+        toggleFunction: "toggle",
+        mockIndex: 1,
+      });
+    });
+
+    describe("the navBar controls", () => {
+      checkControl({
+        property: "navigation",
+        toggleFunction: "setFalse",
+        mockIndex: 2,
+      });
+
+      checkControl({
+        property: "navigation",
+        toggleFunction: "setTrue",
+        mockIndex: 2,
+      });
+
+      checkControl({
+        property: "navigation",
+        toggleFunction: "toggle",
+        mockIndex: 2,
+      });
+    });
   });
 });

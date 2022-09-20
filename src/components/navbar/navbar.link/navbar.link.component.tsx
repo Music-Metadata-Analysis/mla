@@ -1,52 +1,39 @@
-import { StyledSelection } from "./navbar.link.styles";
+import { StyledButton } from "./navbar.link.styles";
 import useColour from "@src/hooks/colour";
-import useRouter from "@src/hooks/router";
-import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 import type { MouseEvent } from "react";
 
 interface NavLinkProps {
-  path: string;
-  selected: boolean;
   children: React.ReactNode;
-  trackButtonClick: ButtonClickHandlerType;
+  handleClick: (e: MouseEvent<HTMLElement>) => void;
+  transaction: boolean;
+  selected: boolean;
 }
 
 const NavLink = ({
-  path,
-  selected,
   children,
-  trackButtonClick,
+  handleClick,
+  selected,
+  transaction,
 }: NavLinkProps) => {
-  const router = useRouter();
   const { navButtonColour, transparent } = useColour();
 
-  const navigate = (
-    e: MouseEvent<HTMLElement>,
-    buttonName: string,
-    path: string
-  ) => {
-    trackButtonClick(e, buttonName);
-    router.push(path);
-  };
-
   return (
-    <StyledSelection
-      borderColor={selected ? navButtonColour.selectedBackground : transparent}
-      onClick={(e) => {
-        e.currentTarget.blur();
-        navigate(e, children as string, path);
-      }}
-      pl={[1, 1, 2]}
-      pr={[1, 1, 2]}
-      rounded={"md"}
+    <StyledButton
       _hover={{
         textDecoration: "none",
         bg: navButtonColour.hoverBackground,
       }}
       bg={navButtonColour.background}
+      borderColor={selected ? navButtonColour.selectedBackground : transparent}
+      disabled={transaction}
+      m={[1, 2, 2]}
+      onClick={handleClick}
+      pl={[1, 2, 2]}
+      pr={[1, 2, 2]}
+      rounded={"md"}
     >
       {children}
-    </StyledSelection>
+    </StyledButton>
   );
 };
 

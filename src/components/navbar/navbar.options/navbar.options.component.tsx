@@ -1,28 +1,37 @@
-import NavLink from "../navbar.link/navbar.link.component";
-import useAnalytics from "@src/hooks/analytics";
+import NavBarLinkContainer from "../navbar.link/navbar.link.container";
 import useLocale from "@src/hooks/locale";
-import useRouter from "@src/hooks/router";
+import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 
-interface NavBarProps {
-  menuConfig: { [index: string]: string };
+interface NavBarOptionsProps {
+  closeMobileMenu: () => void;
+  config: { [index: string]: string };
+  currentPath: string;
+  tracker: ButtonClickHandlerType;
+  transaction: boolean;
 }
 
-const NavBarOptions = ({ menuConfig }: NavBarProps) => {
-  const router = useRouter();
-  const analytics = useAnalytics();
+const NavBarOptions = ({
+  closeMobileMenu,
+  config,
+  currentPath,
+  tracker,
+  transaction,
+}: NavBarOptionsProps) => {
   const { t } = useLocale("navbar");
 
   return (
     <>
-      {Object.keys(menuConfig).map((key) => (
-        <NavLink
+      {Object.keys(config).map((key) => (
+        <NavBarLinkContainer
+          closeMobileMenu={closeMobileMenu}
           key={key}
-          selected={router.path === menuConfig[key]}
-          path={menuConfig[key]}
-          trackButtonClick={analytics.trackButtonClick}
+          path={config[key]}
+          selected={currentPath === config[key]}
+          tracker={tracker}
+          transaction={transaction}
         >
           {t(`menu.${key}`)}
-        </NavLink>
+        </NavBarLinkContainer>
       ))}
     </>
   );

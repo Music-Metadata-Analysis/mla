@@ -1,57 +1,114 @@
-import { render, screen, within } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import NavBarAvatar from "../../navbar.avatar/navbar.avatar.component";
-import NavBarLink from "../../navbar.link/navbar.link.component";
+import NavBarLinkContainer from "../../navbar.link/navbar.link.container";
 import NavBarLogo from "../navbar.logo.component";
 import navbarTranslations from "@locales/navbar.json";
 import routes from "@src/config/routes";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
-
-jest.mock("@src/hooks/analytics");
 
 jest.mock("@src/hooks/locale");
-
-jest.mock("@src/hooks/router");
 
 jest.mock("../../navbar.avatar/navbar.avatar.component", () =>
   require("@fixtures/react/child").createComponent("NavBarAvatar")
 );
 
-jest.mock("../../navbar.link/navbar.link.component", () =>
+jest.mock("../../navbar.link/navbar.link.container", () =>
   require("@fixtures/react/parent").createComponent("NavBarLink")
 );
 
 describe("NavBarLogo", () => {
+  let mockCurrentPath: string;
+  let mockTransaction: boolean;
+
+  const mockCloseMobileMenu = jest.fn();
+  const mockTracker = jest.fn();
+  const mockAuthData = {
+    name: "mockUser",
+    image: "https://mock/profile/url",
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
-    arrange();
   });
 
   const arrange = () => {
-    mockRouterHook.path = routes.home;
-    render(<NavBarLogo />);
+    render(
+      <NavBarLogo
+        closeMobileMenu={mockCloseMobileMenu}
+        currentPath={mockCurrentPath}
+        tracker={mockTracker}
+        transaction={mockTransaction}
+        user={mockAuthData}
+      />
+    );
   };
 
-  it("should render the title NavBarLink with the correct props", () => {
-    expect(NavBarLink).toBeCalledTimes(1);
-    checkMockCall(NavBarLink, {
-      selected: routes.home === mockRouterHook.path,
-      path: routes.home,
-      trackButtonClick: mockAnalyticsHook.trackButtonClick,
+  const checkNavBarLink = () => {
+    it("should render the title NavBarLinkContainer with the correct props", () => {
+      expect(NavBarLinkContainer).toBeCalledTimes(1);
+      expect(NavBarLinkContainer).toBeCalledWith(
+        {
+          closeMobileMenu: mockCloseMobileMenu,
+          children: _t(navbarTranslations.title),
+          selected: routes.home === mockCurrentPath,
+          path: routes.home,
+          tracker: mockTracker,
+          transaction: mockTransaction,
+        },
+        {}
+      );
     });
+  };
+
+  const checkNavBarAvatar = () => {
+    it("should render the Avatar with the correct props", () => {
+      expect(NavBarAvatar).toBeCalledTimes(1);
+      expect(NavBarAvatar).toBeCalledWith(
+        {
+          user: mockAuthData,
+        },
+        {}
+      );
+    });
+  };
+
+  const scenario1 = () => {
+    describe("when the currentPath is NOT home", () => {
+      beforeEach(() => {
+        mockCurrentPath = routes.about;
+
+        arrange();
+      });
+
+      checkNavBarLink();
+      checkNavBarAvatar();
+    });
+  };
+
+  const scenario2 = () => {
+    describe("when the currentPath is home", () => {
+      beforeEach(() => {
+        mockCurrentPath = routes.home;
+
+        arrange();
+      });
+
+      checkNavBarLink();
+      checkNavBarAvatar();
+    });
+  };
+
+  describe("when there is a transaction", () => {
+    beforeEach(() => (mockTransaction = true));
+
+    scenario1();
+    scenario2();
   });
 
-  it("should render the title NavBarLink content correctly", async () => {
-    const link = await screen.findByTestId("NavBarLink");
-    expect(
-      await within(link).findByText(_t(navbarTranslations.title))
-    ).toBeTruthy();
-  });
+  describe("when there is NOT a transaction", () => {
+    beforeEach(() => (mockTransaction = false));
 
-  it("should render the Avatar with the correct props", () => {
-    expect(NavBarAvatar).toBeCalledTimes(1);
-    checkMockCall(NavBarAvatar, {});
+    scenario1();
+    scenario2();
   });
 });

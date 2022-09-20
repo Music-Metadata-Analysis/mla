@@ -16,6 +16,7 @@ const NavBarSpinner = ({ whileTrue, children }: SpinnerProps) => {
       <Condition isTrue={whileTrue}>
         <Spinner data-testid={testIDs.NavBarSpinner} />
       </Condition>
+
       <Condition isTrue={!whileTrue}>{children}</Condition>
     </>
   );
