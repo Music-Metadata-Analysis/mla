@@ -1,5 +1,3 @@
-import { getToken } from "next-auth/jwt";
-import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import LastFMApiEndpointFactoryV2 from "../../../../../backend/api/lastfm/v2.endpoint.base.class";
 import apiRoutes from "../../../../../config/apiRoutes";
 import {
@@ -9,9 +7,16 @@ import {
 import handleProxy, {
   endpointFactory,
 } from "../../../../../pages/api/v2/data/artists/[artist]/albums/[album]";
-import type { QueryParamType } from "../../../../../types/api.endpoint.types";
+import {
+  createAPIMocks,
+  mockSession,
+} from "../../../../fixtures/mock.authentication";
+import type {
+  MockAPIRequest,
+  MockAPIResponse,
+  QueryParamType,
+} from "../../../../../types/api.endpoint.types";
 import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
   return jest.fn().mockImplementation(() => {
@@ -25,27 +30,28 @@ jest.mock("../../../../../backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 
-jest.mock("next-auth/jwt", () => ({
-  getToken: jest.fn(),
+jest.mock("../../../../../backend/integrations/auth/vendor", () => ({
+  Client: jest.fn(() => ({
+    getSession: mockGetSession,
+  })),
 }));
 
+const mockGetSession = jest.fn();
 const mockProxyMethod = jest.fn();
-const testUrl = apiRoutes.v2.data.artists.albumsGet;
+const endpointUnderTest = apiRoutes.v2.data.artists.albumsGet;
 
 type ArrangeArgs = {
   query: QueryParamType;
   method: HttpMethodType;
 };
 
-describe(testUrl, () => {
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let req: MockRequest<NextApiRequest>;
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let res: MockResponse<NextApiResponse>;
+describe(endpointUnderTest, () => {
+  let mockReq: MockAPIRequest;
+  let mockRes: MockAPIResponse;
   const mockResponse = { mock: "response" };
   const mockResponseWithUserPlayCount = { mock: "response", userplaycount: 0 };
   const mockResponseWithInvalidUserPlayCount = {
-    mock: "reponse",
+    mock: "response",
     userplaycount: { performing: "some query" },
   };
   let query: QueryParamType;
@@ -56,13 +62,12 @@ describe(testUrl, () => {
   });
 
   const actRequest = async ({ query, method = "GET" }: ArrangeArgs) => {
-    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-    ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
-      url: testUrl,
+    ({ req: mockReq, res: mockRes } = createAPIMocks({
+      url: endpointUnderTest,
       method,
       query,
     }));
-    await handleProxy(req, res);
+    await handleProxy(mockReq, mockRes);
   };
 
   describe("An instance of the endpoint factory class", () => {
@@ -71,7 +76,7 @@ describe(testUrl, () => {
     });
 
     it("should have the correct route set", () => {
-      expect(endpointFactory.route).toBe(testUrl);
+      expect(endpointFactory.route).toBe(endpointUnderTest);
     });
 
     it("should have the correct maxAgeValue set", () => {
@@ -83,14 +88,8 @@ describe(testUrl, () => {
     });
   });
 
-  describe("with a valid jwt token", () => {
-    beforeEach(() =>
-      (getToken as jest.Mock).mockReturnValue(
-        Promise.resolve({
-          token: "testToken",
-        })
-      )
-    );
+  describe("with a valid session", () => {
+    beforeEach(() => mockGetSession.mockResolvedValue(mockSession));
 
     describe("with valid data", () => {
       describe("receives a GET request", () => {
@@ -116,12 +115,12 @@ describe(testUrl, () => {
             });
 
             it("should return a 200 status code", () => {
-              expect(res._getStatusCode()).toBe(200);
-              expect(res._getJSONData()).toStrictEqual(mockResponse);
+              expect(mockRes._getStatusCode()).toBe(200);
+              expect(mockRes._getJSONData()).toStrictEqual(mockResponse);
             });
 
             it("should set a Cache-Control header", () => {
-              expect(res._getHeaders()["cache-control"]).toStrictEqual([
+              expect(mockRes._getHeaders()["cache-control"]).toStrictEqual([
                 "public",
                 `max-age=${endpointFactory.maxAgeValue}`,
               ]);
@@ -145,14 +144,14 @@ describe(testUrl, () => {
             });
 
             it("should return a 200 status code", () => {
-              expect(res._getStatusCode()).toBe(200);
-              expect(res._getJSONData()).toStrictEqual(
+              expect(mockRes._getStatusCode()).toBe(200);
+              expect(mockRes._getJSONData()).toStrictEqual(
                 mockResponseWithUserPlayCount
               );
             });
 
             it("should set a Cache-Control header", () => {
-              expect(res._getHeaders()["cache-control"]).toStrictEqual([
+              expect(mockRes._getHeaders()["cache-control"]).toStrictEqual([
                 "public",
                 `max-age=${endpointFactory.maxAgeValue}`,
               ]);
@@ -176,16 +175,16 @@ describe(testUrl, () => {
             });
 
             it("should return a 503 status code", () => {
-              expect(res._getStatusCode()).toBe(503);
-              expect(res._getJSONData()).toStrictEqual(STATUS_503_MESSAGE);
+              expect(mockRes._getStatusCode()).toBe(503);
+              expect(mockRes._getJSONData()).toStrictEqual(STATUS_503_MESSAGE);
             });
 
             it("should NOT set a Cache-Control header", () => {
-              expect(res._getHeaders()["cache-control"]).toBeUndefined();
+              expect(mockRes._getHeaders()["cache-control"]).toBeUndefined();
             });
 
             it("should set a Retry-After header", () => {
-              expect(res._getHeaders()["retry-after"]).toStrictEqual(0);
+              expect(mockRes._getHeaders()["retry-after"]).toStrictEqual(0);
             });
 
             it("should call the proxy method with the correct params", () => {
@@ -205,8 +204,8 @@ describe(testUrl, () => {
           });
 
           it("should return a 400 status code", () => {
-            expect(res._getStatusCode()).toBe(400);
-            expect(res._getJSONData()).toStrictEqual(STATUS_400_MESSAGE);
+            expect(mockRes._getStatusCode()).toBe(400);
+            expect(mockRes._getJSONData()).toStrictEqual(STATUS_400_MESSAGE);
           });
 
           it("should NOT call the proxy method", () => {

@@ -5,22 +5,20 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
-import * as authClient from "next-auth/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import translations from "../../../../public/locales/en/authentication.json";
 import routes from "../../../config/routes";
 import Events from "../../../events/events";
 import mockAnalyticsHook from "../../../hooks/tests/analytics.mock.hook";
+import mockAuthHook, {
+  mockUserProfile,
+} from "../../../hooks/tests/auth.mock.hook";
 import mockRouter from "../../../tests/fixtures/mock.router";
 import AuthenticationContainer from "../authentication.container";
 import { testIDs as AuthModalTestIDs } from "../modals/modal.signin.component";
 import { testIDs as SpinnerModalTestIDs } from "../modals/modal.spinner.component";
 
-jest.mock("next-auth/react", () => ({
-  useSession: () => mockUseSession(),
-  signIn: jest.fn(),
-  signOut: jest.fn(),
-}));
+jest.mock("../../../hooks/auth", () => () => mockAuthHook);
 
 jest.mock("@chakra-ui/react", () => {
   const module = jest.requireActual("@chakra-ui/react");
@@ -40,7 +38,6 @@ jest.mock("../../scrollbar/vertical.scrollbar.component", () =>
 );
 
 const mockUseDisclosure = jest.fn();
-const mockUseSession = jest.fn();
 
 describe("AuthenticationContainer", () => {
   const mockOnOpen = jest.fn();
@@ -127,7 +124,7 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should start the sign-in sequence", () => {
-          expect(authClient.signIn).toBeCalledWith(provider);
+          expect(mockAuthHook.signIn).toBeCalledWith(provider);
         });
 
         it("should generate an analytics event", () => {
@@ -153,7 +150,8 @@ describe("AuthenticationContainer", () => {
 
     describe("user is logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
+        mockAuthHook.status = "authenticated";
+        mockAuthHook.user = mockUserProfile;
       });
 
       describe("when a callback is specified", () => {
@@ -263,10 +261,8 @@ describe("AuthenticationContainer", () => {
 
     describe("user is NOT logged in", () => {
       beforeEach(() => {
-        mockUseSession.mockReturnValue({
-          data: null,
-          status: "unauthenticated",
-        });
+        mockAuthHook.status = "authenticated";
+        mockAuthHook.user = null;
         arrange();
       });
 

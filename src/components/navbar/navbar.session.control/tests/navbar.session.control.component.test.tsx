@@ -1,10 +1,15 @@
 import { Box, Button } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
+import mockAuthHook, {
+  mockUserProfile,
+} from "../../../../hooks/tests/auth.mock.hook";
 import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
 import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import AnalyticsWrapper from "../../../analytics/analytics.button/analytics.button.component";
 import Authentication from "../../../authentication/authentication.container";
 import NavBarSessionControl from "../navbar.session.control.component";
+
+jest.mock("../../../../hooks/auth", () => () => mockAuthHook);
 
 jest.mock("../../../../hooks/colour", () => {
   return () => mockColourHook;
@@ -14,12 +19,6 @@ jest.mock(
   "../../../analytics/analytics.button/analytics.button.component",
   () => createMockedComponent("AnalyticsWrapper")
 );
-
-jest.mock("next-auth/react", () => ({
-  useSession: () => mockUseSession(),
-  signIn: jest.fn(),
-  signOut: jest.fn(),
-}));
 
 jest.mock("@chakra-ui/react", () => ({
   useDisclosure: () => mockUseDisclosure(),
@@ -44,7 +43,6 @@ const createMockedComponent = (name: string) => {
 };
 
 const mockUseDisclosure = jest.fn();
-const mockUseSession = jest.fn();
 
 describe("NavSessionControl", () => {
   beforeEach(() => {
@@ -123,7 +121,8 @@ describe("NavSessionControl", () => {
 
   describe("when the user is logged in", () => {
     beforeEach(() => {
-      mockUseSession.mockReturnValue({ data: {}, status: "authenticated" });
+      mockAuthHook.user = mockUserProfile;
+      mockAuthHook.status = "authenticated";
       arrange();
     });
 
@@ -135,7 +134,8 @@ describe("NavSessionControl", () => {
 
   describe("when the user is NOT logged in", () => {
     beforeEach(() => {
-      mockUseSession.mockReturnValue({ data: null, status: "unauthenticated" });
+      mockAuthHook.user = null;
+      mockAuthHook.status = "unauthenticated";
       arrange();
     });
 

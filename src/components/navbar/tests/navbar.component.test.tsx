@@ -2,7 +2,6 @@ import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Box, Flex, HStack, IconButton, Stack } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import ReactDOMServer from "react-dom/server";
-import lastFMsettings from "../../../config/lastfm";
 import NavConfig from "../../../config/navbar";
 import mockColourHook from "../../../hooks/tests/colour.hook.mock";
 import mockLastFMHook from "../../../hooks/tests/lastfm.mock.hook";
@@ -286,16 +285,10 @@ describe("NavBar", () => {
     }
   };
 
-  const checkLogoComponent = ({
-    url,
-    imageUrl,
-  }: {
-    url: string;
-    imageUrl: string;
-  }) => {
+  const checkLogoComponent = () => {
     it("should render the NavBarLogo component with the expected props", async () => {
       expect(NavBarLogo).toBeCalledTimes(1);
-      checkMockCall(NavBarLogo, { href: url, image: imageUrl });
+      checkMockCall(NavBarLogo, {});
     });
   };
 
@@ -401,7 +394,7 @@ describe("NavBar", () => {
         checkChakraIconButtonComponent({ isOpen: false, disabled: false });
         checkChakraHStackComponent();
         checkChakraStackComponent({ isOpen: false });
-        checkLogoComponent({ url: lastFMsettings.homePage, imageUrl: "" });
+        checkLogoComponent();
         checkSpinnerComponent({ pending: true });
         checkColourToggleComponent();
         checkSessionControllerComponent();
@@ -450,10 +443,7 @@ describe("NavBar", () => {
             checkChakraIconButtonComponent({ isOpen: false, disabled: true });
             checkChakraHStackComponent();
             checkChakraStackComponent({ isOpen: false });
-            checkLogoComponent({
-              url: mockProfileUrl,
-              imageUrl: mockImageUrl,
-            });
+            checkLogoComponent();
             checkSpinnerComponent({ pending: false });
             checkColourToggleComponent();
             checkSessionControllerComponent();
@@ -472,7 +462,7 @@ describe("NavBar", () => {
             checkChakraIconButtonComponent({ isOpen: false, disabled: true });
             checkChakraHStackComponent();
             checkChakraStackComponent({ isOpen: false });
-            checkLogoComponent({ url: lastFMsettings.homePage, imageUrl: "" });
+            checkLogoComponent();
             checkSpinnerComponent({ pending: false });
             checkColourToggleComponent();
             checkSessionControllerComponent();
@@ -495,10 +485,7 @@ describe("NavBar", () => {
             checkChakraIconButtonComponent({ isOpen: false, disabled: false });
             checkChakraHStackComponent();
             checkChakraStackComponent({ isOpen: false });
-            checkLogoComponent({
-              url: mockProfileUrl,
-              imageUrl: mockImageUrl,
-            });
+            checkLogoComponent();
             checkSpinnerComponent({ pending: false });
             checkColourToggleComponent();
             checkSessionControllerComponent();
@@ -517,7 +504,7 @@ describe("NavBar", () => {
             checkChakraIconButtonComponent({ isOpen: false, disabled: false });
             checkChakraHStackComponent();
             checkChakraStackComponent({ isOpen: false });
-            checkLogoComponent({ url: lastFMsettings.homePage, imageUrl: "" });
+            checkLogoComponent();
             checkSpinnerComponent({ pending: false });
             checkColourToggleComponent();
             checkSessionControllerComponent();
@@ -544,10 +531,7 @@ describe("NavBar", () => {
             checkChakraIconButtonComponent({ isOpen: true, disabled: true });
             checkChakraHStackComponent();
             checkChakraStackComponent({ isOpen: true });
-            checkLogoComponent({
-              url: mockProfileUrl,
-              imageUrl: mockImageUrl,
-            });
+            checkLogoComponent();
             checkSpinnerComponent({ pending: false });
             checkColourToggleComponent();
             checkSessionControllerComponent();
@@ -566,7 +550,7 @@ describe("NavBar", () => {
             checkChakraIconButtonComponent({ isOpen: true, disabled: true });
             checkChakraHStackComponent();
             checkChakraStackComponent({ isOpen: true });
-            checkLogoComponent({ url: lastFMsettings.homePage, imageUrl: "" });
+            checkLogoComponent();
             checkSpinnerComponent({ pending: false });
             checkColourToggleComponent();
             checkSessionControllerComponent();
@@ -589,10 +573,7 @@ describe("NavBar", () => {
             checkChakraIconButtonComponent({ isOpen: true, disabled: true });
             checkChakraHStackComponent();
             checkChakraStackComponent({ isOpen: true });
-            checkLogoComponent({
-              url: mockProfileUrl,
-              imageUrl: mockImageUrl,
-            });
+            checkLogoComponent();
             checkSpinnerComponent({ pending: false });
             checkColourToggleComponent();
             checkSessionControllerComponent();
@@ -611,7 +592,7 @@ describe("NavBar", () => {
             checkChakraIconButtonComponent({ isOpen: true, disabled: true });
             checkChakraHStackComponent();
             checkChakraStackComponent({ isOpen: true });
-            checkLogoComponent({ url: lastFMsettings.homePage, imageUrl: "" });
+            checkLogoComponent();
             checkSpinnerComponent({ pending: false });
             checkColourToggleComponent();
             checkSessionControllerComponent();

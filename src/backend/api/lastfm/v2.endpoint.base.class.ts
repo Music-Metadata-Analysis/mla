@@ -1,16 +1,16 @@
-import { getToken } from "next-auth/jwt";
 import nextConnect from "next-connect";
 import LastFMEndpointBase from "./endpoint.common.base.class";
 import Logger from "./endpoint.common.logger";
 import requestSettings from "../../../config/requests";
 import * as status from "../../../config/status";
+import authVendor from "../../integrations/auth/vendor";
 import flagVendor from "../../integrations/flags/vendor";
 import LastFMProxy from "../../integrations/lastfm/proxy.class";
 import type {
   LastFMEndpointRequest,
+  LastFMEndpointResponse,
   PathParamType,
 } from "../../../types/api.endpoint.types";
-import type { NextApiResponse } from "next";
 
 export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointBase {
   timeOut = requestSettings.timeout;
@@ -32,16 +32,14 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
   }
 
   create() {
-    const handler = nextConnect<LastFMEndpointRequest, NextApiResponse>({
+    const handler = nextConnect<LastFMEndpointRequest, LastFMEndpointResponse>({
       onError: this.onError,
       onNoMatch: this.onNoMatch,
     });
     handler.get(this.route, async (req, res, next) => {
       await this.waitToAvoidRateLimiting();
-      const token = await getToken({
-        req,
-        secret: process.env.AUTH_MASTER_JWT_SECRET,
-      });
+      const authClient = new authVendor.Client(req);
+      const token = await authClient.getSession();
       const [params, paramErrors] = this.getParams(req);
       if (!token) {
         this.unauthorizedRequest(res);
@@ -77,17 +75,17 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
     return new Promise((resolve) => setTimeout(resolve, this.delay));
   }
 
-  private unauthorizedRequest(res: NextApiResponse) {
+  private unauthorizedRequest(res: LastFMEndpointResponse) {
     res.status(401).json(status.STATUS_401_MESSAGE);
   }
 
-  private invalidRequest(res: NextApiResponse) {
+  private invalidRequest(res: LastFMEndpointResponse) {
     res.status(400).json(status.STATUS_400_MESSAGE);
   }
 
   private async queryProxy(
     req: LastFMEndpointRequest,
-    res: NextApiResponse,
+    res: LastFMEndpointResponse,
     next: () => void,
     params: PathParamType
   ) {
@@ -100,7 +98,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
 
   private validProxyResponse(
     req: LastFMEndpointRequest,
-    res: NextApiResponse,
+    res: LastFMEndpointResponse,
     proxyResponse: { [key: string]: unknown } | unknown[]
   ) {
     req.proxyResponse = "Success!";
@@ -110,7 +108,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
 
   private invalidProxyResponse(
     req: LastFMEndpointRequest,
-    res: NextApiResponse
+    res: LastFMEndpointResponse
   ) {
     req.proxyResponse = "Invalid LAST.FM response, please retry.";
     res.setHeader("retry-after", 0);

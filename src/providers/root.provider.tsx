@@ -1,19 +1,19 @@
-import { SessionProvider } from "next-auth/react";
 import AnalyticsProvider from "./analytics/analytics.provider";
 import MetricsProvider from "./metrics/metrics.provider";
 import NavBarProvider from "./navbar/navbar.provider";
 import UserInterfaceRootProvider from "./ui/ui.root.provider";
 import UserProvider from "./user/user.provider";
+import authVendor from "../clients/auth/vendor";
 import flagVendor from "../clients/flags/vendor";
 import Header, { HeaderProps } from "../components/header/header.component";
+import type { VendorAuthStateType } from "../clients/auth/vendor.types";
 import type { VendorFlagStateType } from "../clients/flags/vendor.types";
-import type { Session } from "next-auth";
 
 type RootProviderProps = {
   headerProps?: HeaderProps;
   children: React.ReactChild | React.ReactChild[];
   flagState?: VendorFlagStateType;
-  session?: Session;
+  session: VendorAuthStateType;
 };
 
 const RootProvider = ({
@@ -23,9 +23,9 @@ const RootProvider = ({
   headerProps = { pageKey: "default" },
 }: RootProviderProps) => {
   return (
-    <flagVendor.Provider state={flagState}>
-      <UserInterfaceRootProvider>
-        <SessionProvider session={session}>
+    <authVendor.Provider session={session}>
+      <flagVendor.Provider state={flagState}>
+        <UserInterfaceRootProvider>
           <MetricsProvider>
             <UserProvider>
               <AnalyticsProvider>
@@ -36,9 +36,9 @@ const RootProvider = ({
               </AnalyticsProvider>
             </UserProvider>
           </MetricsProvider>
-        </SessionProvider>
-      </UserInterfaceRootProvider>
-    </flagVendor.Provider>
+        </UserInterfaceRootProvider>
+      </flagVendor.Provider>
+    </authVendor.Provider>
   );
 };
 

@@ -1,14 +1,14 @@
-import { createMocks, MockRequest, MockResponse } from "node-mocks-http";
 import apiRoutes from "../../../../config/apiRoutes";
+import { createAPIMocks } from "../../../../tests/fixtures/mock.authentication";
 import Logger from "../endpoint.common.logger";
-import type { LastFMEndpointRequest } from "../../../../types/api.endpoint.types";
-import type { NextApiResponse, NextApiRequest } from "next";
+import type {
+  MockAPIRequest,
+  MockAPIResponse,
+} from "../../../../types/api.endpoint.types";
 
 describe("endpointLogger", () => {
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let req: MockRequest<LastFMEndpointRequest>;
-  // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-  let res: MockResponse<NextApiResponse>;
+  let mockReq: MockAPIRequest;
+  let mockRes: MockAPIResponse;
   const next = jest.fn();
   let testRemoteAddress: string | string[] | undefined;
   const testBody = { test: "test body" };
@@ -25,8 +25,7 @@ describe("endpointLogger", () => {
   });
 
   const arrange = async (socketDefinedRemoteAddress?: string) => {
-    // @ts-ignore: Fixing this: https://github.com/howardabrams/node-mocks-http/issues/245
-    ({ req: req, res: res } = createMocks<NextApiRequest, NextApiResponse>({
+    ({ req: mockReq, res: mockRes } = createAPIMocks({
       headers: {
         referer: testReferer,
         "user-agent": testUserAgent,
@@ -39,7 +38,7 @@ describe("endpointLogger", () => {
       body: testBody,
       proxyResponse: testProxyResponse,
     }));
-    await Logger(req, res, next);
+    await Logger(mockReq, mockRes, next);
   };
 
   describe("with a string based list of ips as the x-forwarded-header", () => {
@@ -56,7 +55,7 @@ describe("endpointLogger", () => {
 
         beforeEach(async () => {
           await arrange(socketTestAddress);
-          res.status(statusCode).json({ status: "ready" });
+          mockRes.status(statusCode).json({ status: "ready" });
         });
 
         it("should log the expected message, using the socket's remote address", () => {
@@ -73,7 +72,7 @@ describe("endpointLogger", () => {
 
         beforeEach(async () => {
           await arrange();
-          res.status(statusCode).json({ status: "ready" });
+          mockRes.status(statusCode).json({ status: "ready" });
         });
 
         it("should log the expected message, using the first x-forwarded header's address", () => {
@@ -101,7 +100,7 @@ describe("endpointLogger", () => {
 
         beforeEach(async () => {
           await arrange(socketTestAddress);
-          res.status(statusCode).json({ status: "ready" });
+          mockRes.status(statusCode).json({ status: "ready" });
         });
 
         it("should log the expected message, using the socket's remote address", () => {
@@ -118,7 +117,7 @@ describe("endpointLogger", () => {
 
         beforeEach(async () => {
           await arrange();
-          res.status(statusCode).json({ status: "ready" });
+          mockRes.status(statusCode).json({ status: "ready" });
         });
 
         it("should log the expected message, using the first x-forwarded header's address", () => {
@@ -146,7 +145,7 @@ describe("endpointLogger", () => {
 
         beforeEach(async () => {
           await arrange(socketTestAddress);
-          res.status(statusCode).json({ status: "ready" });
+          mockRes.status(statusCode).json({ status: "ready" });
         });
 
         it("should log the expected message, using the socket's remote address", () => {
@@ -163,7 +162,7 @@ describe("endpointLogger", () => {
 
         beforeEach(async () => {
           await arrange();
-          res.status(statusCode).json({ status: "ready" });
+          mockRes.status(statusCode).json({ status: "ready" });
         });
 
         it("should log the expected message, simply stating undefined for the remote ip address", () => {

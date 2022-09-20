@@ -1,7 +1,7 @@
-import persistanceVendor from "../../persistance/vendor";
+import persistanceVendor from "../../../persistance/vendor";
 import ProfilePersistanceClient from "../profile.persistance.client.class";
 
-jest.mock("../../persistance/vendor", () => {
+jest.mock("../../../persistance/vendor", () => {
   return {
     PersistanceClient: jest.fn(() => MockPersistanceClient),
   };
