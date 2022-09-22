@@ -3,7 +3,7 @@ import type { ReactElement, JSXElementConstructor, ReactNode } from "react";
 
 export interface FlagVendor {
   hook: () => FlagVendorHookInterface;
-  Provider: ({ state, children }: FlagVendorProviderProps) => JSX.Element;
+  Provider: ({ children, state }: FlagVendorProviderProps) => JSX.Element;
   SSR: new () => FlagVendorSSR;
 }
 
@@ -12,13 +12,15 @@ export interface FlagVendorHookInterface {
 }
 
 export interface FlagVendorProviderProps {
-  state: VendorFlagStateType;
   children: (
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>[]
   ) &
     ReactNode;
+  state: VendorFlagStateType;
 }
 export interface FlagVendorSSR {
-  getState: () => VendorFlagStateType | Promise<VendorFlagStateType>;
+  getState: (
+    identity?: string | null
+  ) => VendorFlagStateType | Promise<VendorFlagStateType>;
 }

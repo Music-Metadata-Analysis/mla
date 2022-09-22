@@ -12,8 +12,8 @@ import type { VendorFlagStateType } from "../clients/flags/vendor.types";
 type RootProviderProps = {
   headerProps?: HeaderProps;
   children: React.ReactChild | React.ReactChild[];
-  flagState?: VendorFlagStateType;
-  session: VendorAuthStateType;
+  flagState: VendorFlagStateType;
+  session?: VendorAuthStateType;
 };
 
 const RootProvider = ({

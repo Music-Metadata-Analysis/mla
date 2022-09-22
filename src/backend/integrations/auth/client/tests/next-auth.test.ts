@@ -5,6 +5,11 @@ import type { MockAPIRequest } from "../../../../../types/api.endpoint.types";
 import type { AuthVendorSessionType } from "../../../../../types/integrations/auth/vendor.types";
 import type { JWT } from "next-auth/jwt";
 
+jest.mock("../../../../../utils/voids", () => {
+  const module = require("../../../../../utils/tests/voids.mock");
+  return { normalizeNull: module.mockNormalizeNull };
+});
+
 jest.mock("next-auth/jwt", () => ({
   getToken: jest.fn(),
 }));
@@ -16,23 +21,27 @@ describe(NextAuthClient.name, () => {
   const mockJWTSecret = "mockJWTSecret";
   const mockValidJWT = {
     email: "mock@mock.com",
+    group: "mockGroup",
     name: "mockName",
     picture: "https://mockprofile.com/mock.jpeg",
   } as JWT;
   const mockValidNullJWT = {
     email: null,
+    group: null,
     name: null,
     picture: null,
   } as JWT;
   const mockValidSession = {
-    email: mockValidJWT.email,
-    image: mockValidJWT.picture,
-    name: mockValidJWT.name,
+    email: `normalizeNull(${mockValidJWT.email})`,
+    group: `normalizeNull(${mockValidJWT.group})`,
+    image: `normalizeNull(${mockValidJWT.picture})`,
+    name: `normalizeNull(${mockValidJWT.name})`,
   } as AuthVendorSessionType;
   const mockValidNullSession = {
-    email: null,
-    image: null,
-    name: null,
+    email: `normalizeNull(null)`,
+    image: `normalizeNull(null)`,
+    name: `normalizeNull(null)`,
+    group: `normalizeNull(null)`,
   } as AuthVendorSessionType;
 
   beforeEach(() => {

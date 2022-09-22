@@ -12,6 +12,7 @@ export type AuthSessionType = {
   name?: string;
   email?: string;
   image?: string;
+  group?: string;
   oauth: AuthServiceType;
 } | null;
 export type AuthStatusType = "authenticated" | "unauthenticated" | "processing";
@@ -24,7 +25,7 @@ export interface AuthVendorHookInterface {
 }
 
 export interface AuthVendorProviderProps {
-  session: VendorAuthStateType;
+  session?: VendorAuthStateType;
   children: (
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>[]
@@ -32,8 +33,7 @@ export interface AuthVendorProviderProps {
     ReactNode;
 }
 export interface AuthVendorSSR {
-  getSession: () =>
-    | VendorAuthStateType
-    | null
-    | Promise<VendorAuthStateType | null>;
+  getSession: (
+    ...args: unknown[]
+  ) => VendorAuthStateType | null | Promise<VendorAuthStateType | null>;
 }

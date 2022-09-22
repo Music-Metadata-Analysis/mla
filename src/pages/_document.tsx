@@ -1,29 +1,7 @@
 import { ColorModeScript } from "@chakra-ui/react";
-import Document, {
-  DocumentContext,
-  Html,
-  Head,
-  Main,
-  NextScript,
-} from "next/document";
-import authVendor from "../clients/auth/vendor";
-import flagVendor from "../clients/flags/vendor";
+import Document, { Html, Head, Main, NextScript } from "next/document";
 
 class BaseDocument extends Document {
-  static async getServerSideProps(ctx: DocumentContext) {
-    const initialProps = await Document.getInitialProps(ctx);
-    const ssrAuth = new authVendor.SSR();
-    const ssrFlags = new flagVendor.SSR();
-
-    return {
-      props: {
-        flagState: await ssrFlags.getState(),
-        session: await ssrAuth.getSession(),
-        ...initialProps,
-      },
-    };
-  }
-
   render() {
     return (
       <Html>

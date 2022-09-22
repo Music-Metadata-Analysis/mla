@@ -1,4 +1,5 @@
 import { getToken } from "next-auth/jwt";
+import { normalizeNull } from "../../../../utils/voids";
 import type { AuthVendorClientInterface } from "../../../../types/integrations/auth/vendor.types";
 import type { NextApiRequest } from "next";
 
@@ -16,9 +17,10 @@ export default class NextAuthClient implements AuthVendorClientInterface {
     });
     if (!token) return null;
     return {
-      email: token.email ? token.email : null,
-      image: token.picture ? token.picture : null,
-      name: token.name ? token.name : null,
+      email: normalizeNull(token.email),
+      image: normalizeNull(token.picture),
+      name: normalizeNull(token.name),
+      group: normalizeNull(token.group as string),
     };
   };
 }

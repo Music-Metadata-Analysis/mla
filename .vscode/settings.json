@@ -37,6 +37,7 @@
     "ratelimited",
     "ratelimiting",
     "remotesite",
+    "Renderable",
     "Scrobble",
     "scrobbled",
     "signin",
