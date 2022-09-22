@@ -1,13 +1,15 @@
 import flagsmith from "flagsmith/isomorphic";
-import { FlagsmithProvider, FlagsmithContextType } from "flagsmith/react";
+import { FlagsmithProvider } from "flagsmith/react";
+import { normalizeUndefined } from "../../../utils/voids";
 import type { FlagVendorProviderProps } from "../../../types/clients/flags/vendor.types";
 
 const FlagProvider = ({ state, children }: FlagVendorProviderProps) => {
   return (
     <FlagsmithProvider
-      serverState={state as FlagsmithContextType["serverState"]}
+      serverState={state.serverState}
       options={{
         environmentID: process.env.NEXT_PUBLIC_FLAG_ENVIRONMENT,
+        identity: normalizeUndefined(state?.identity),
       }}
       flagsmith={flagsmith}
     >

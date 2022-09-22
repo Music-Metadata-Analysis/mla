@@ -69,12 +69,15 @@ const providers = {
 
 describe("RootProvider", () => {
   const mockPageKey = "test";
-  const mockServerState = {
-    api: "unknown",
-    environmentID: "unknown",
-    flags: {},
-    identity: "unknown",
-    traits: {},
+  const mockFlagState = {
+    serverState: {
+      api: "unknown",
+      environmentID: "unknown",
+      flags: {},
+      identity: "unknown",
+      traits: {},
+    },
+    identity: "mockIdentity",
   };
   const mockSession = {
     testSession: true,
@@ -84,22 +87,21 @@ describe("RootProvider", () => {
     jest.clearAllMocks();
   });
 
-  const arrange = async (pageKey?: string, flagState?: VendorFlagStateType) => {
+  const arrange = async (flagState: VendorFlagStateType, pageKey?: string) => {
     const headerProps = pageKey ? { pageKey } : undefined;
-    const serverState = flagState ? flagState : undefined;
     render(
       <RootProvider
         session={mockSession}
         headerProps={headerProps}
-        flagState={serverState}
+        flagState={flagState}
       >
         <div data-testid={providers.RootProvider}>Test</div>
       </RootProvider>
     );
   };
 
-  describe("When Rendered, without a pageKey or flagState", () => {
-    beforeEach(() => arrange());
+  describe("When Rendered, with flagState, but without a pageKey", () => {
+    beforeEach(() => arrange(mockFlagState));
 
     it("should call the Header component correctly", async () => {
       await waitFor(() => expect(Header).toBeCalledTimes(1));
@@ -113,7 +115,7 @@ describe("RootProvider", () => {
       await waitFor(() => expect(flagVendor.Provider).toBeCalledTimes(1));
       await waitFor(() =>
         checkMockCall(flagVendor.Provider, {
-          state: undefined,
+          state: mockFlagState,
         })
       );
       expect(await screen.findByTestId(providers.FlagVendorProvider))
@@ -121,8 +123,8 @@ describe("RootProvider", () => {
     });
   });
 
-  describe("When Rendered, with a pageKey and flagsmithState", () => {
-    beforeEach(() => arrange(mockPageKey, mockServerState));
+  describe("When Rendered, with flagState and a pageKey", () => {
+    beforeEach(() => arrange(mockFlagState, mockPageKey));
 
     it("should call the Header component correctly", async () => {
       await waitFor(() => expect(Header).toBeCalledTimes(1));
@@ -143,7 +145,7 @@ describe("RootProvider", () => {
       await waitFor(() => expect(flagVendor.Provider).toBeCalledTimes(1));
       await waitFor(() =>
         checkMockCall(flagVendor.Provider, {
-          state: mockServerState,
+          state: mockFlagState,
         })
       );
       expect(await screen.findByTestId(providers.FlagVendorProvider))

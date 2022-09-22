@@ -4,6 +4,11 @@ import { FlagsmithProvider, FlagsmithContextType } from "flagsmith/react";
 import checkMockCalls from "../../../../tests/fixtures/mock.component.call";
 import FlagProvider from "../flagsmith";
 
+jest.mock("../../../../utils/voids", () => {
+  const module = require("../../../../utils/tests/voids.mock");
+  return { normalizeUndefined: module.mockNormalizeUndefined };
+});
+
 jest.mock("flagsmith/isomorphic", () => ({ mock: "object" }));
 
 jest.mock("flagsmith/react", () =>
@@ -18,9 +23,13 @@ const createProviderMock = (name: string, exportName = "default") => {
 };
 
 describe("FlagProvider", () => {
+  const mockIdentity = "mockIdentity";
   const mockFlagState = {
-    mockFlag: { enabled: false },
-  } as unknown as FlagsmithContextType["serverState"];
+    serverState: {
+      mockFlag: { enabled: false },
+    } as unknown as FlagsmithContextType["serverState"],
+    identity: mockIdentity,
+  };
   const mockFlagEnvironment = "mockFlagEnvironment";
   let originalEnvironment: typeof process.env;
 
@@ -66,8 +75,9 @@ describe("FlagProvider", () => {
           flagsmith,
           options: {
             environmentID: mockFlagEnvironment,
+            identity: `normalizeUndefined(${mockFlagState.identity})`,
           },
-          serverState: mockFlagState,
+          serverState: mockFlagState.serverState,
         },
         0,
         []

@@ -4,6 +4,7 @@ export type AuthVendorSessionType = {
   email: string | null;
   image: string | null;
   name: string | null;
+  group: string | null;
 } | null;
 
 export interface AuthVendorClientInterface {

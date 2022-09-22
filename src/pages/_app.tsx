@@ -1,24 +1,52 @@
-import "../styles/globals.css";
 import { appWithTranslation } from "next-i18next";
+import App, { AppContext } from "next/app";
+import "../styles/globals.css";
+import authVendorSSR from "../clients/auth/vendor.ssr";
+import flagVendorSSR from "../clients/flags/vendor.ssr";
 import Consent from "../components/consent/consent.component";
 import NavBar from "../components/navbar/navbar.component";
-import PopUps from "../components/popups/root.popup";
+import RootPopups from "../components/popups/root.popup";
 import NavConfig from "../config/navbar";
 import RootProvider from "../providers/root.provider";
+import { normalizeUndefined } from "../utils/voids";
 import type { AppProps } from "next/app";
 
-function App({
+function MLA({
   Component,
-  pageProps: { session, headerProps, ...otherProps },
+  pageProps: { flagState, session, headerProps, ...otherProps },
 }: AppProps) {
   return (
-    <RootProvider session={session} headerProps={headerProps}>
+    <RootProvider
+      flagState={flagState}
+      session={session}
+      headerProps={headerProps}
+    >
       <NavBar menuConfig={NavConfig.menuConfig} />
       <Component {...otherProps} />
-      <PopUps />
+      <RootPopups />
       <Consent />
     </RootProvider>
   );
 }
 
-export default appWithTranslation(App);
+export const getInitialProps = async (appCtx: AppContext) => {
+  const initialProps = await App.getInitialProps(appCtx);
+  const session = await new authVendorSSR.Client().getSession({
+    req: appCtx.ctx.req,
+  });
+  const flagState = await new flagVendorSSR.Client().getState(
+    session?.group as string | null
+  );
+
+  return {
+    pageProps: {
+      flagState,
+      session: normalizeUndefined(session),
+      ...initialProps,
+    },
+  };
+};
+
+MLA.getInitialProps = getInitialProps;
+
+export default appWithTranslation(MLA);

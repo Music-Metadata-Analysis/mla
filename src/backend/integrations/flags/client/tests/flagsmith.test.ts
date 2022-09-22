@@ -5,10 +5,14 @@ jest.mock("flagsmith-nodejs", () => ({
   __esModule: true,
   default: jest.fn(() => ({
     getEnvironmentFlags: mockGetEnvironmentFlags,
+    getIdentityFlags: mockGetIdentityFlags,
   })),
 }));
 
 const mockGetEnvironmentFlags = jest.fn(() => ({
+  isFeatureEnabled: mockIsFeatureEnabled,
+}));
+const mockGetIdentityFlags = jest.fn(() => ({
   isFeatureEnabled: mockIsFeatureEnabled,
 }));
 const mockIsFeatureEnabled = jest.fn();
@@ -16,73 +20,117 @@ const mockIsFeatureEnabled = jest.fn();
 describe(FlagSmithClient.name, () => {
   let instance: FlagSmithClient;
   let mockFlagName: string;
-  const mockEnvironmentName = "TestEnvironment";
+  const mockEnvironmentName = "mockEnvironmentName";
+  const mockGroupName = "mockGroupName";
 
   beforeEach(() => jest.clearAllMocks());
 
   const arrange = () => (instance = new FlagSmithClient(mockEnvironmentName));
 
+  const checkFlagSmithEnvironmentSelection = () => {
+    it("should query the correct FlagSmith environment", () => {
+      expect(Flagsmith).toBeCalledTimes(1);
+      expect(Flagsmith).toBeCalledWith({
+        environmentKey: mockEnvironmentName,
+      });
+    });
+  };
+
+  const checkFlagSmithGroupQuery = () => {
+    it("should query the group's flags from FlagSmith", () => {
+      expect(mockGetIdentityFlags).toBeCalledTimes(1);
+      expect(mockGetIdentityFlags).toBeCalledWith(mockGroupName);
+    });
+
+    it("should check if this specific feature is enabled", () => {
+      expect(mockIsFeatureEnabled).toBeCalledTimes(1);
+      expect(mockIsFeatureEnabled).toBeCalledWith(mockFlagName);
+    });
+  };
+
+  const checkFlagSmithEnvironmentQuery = () => {
+    it("should query the environment's flags from FlagSmith", () => {
+      expect(mockGetEnvironmentFlags).toBeCalledTimes(1);
+      expect(mockGetEnvironmentFlags).toBeCalledWith();
+    });
+
+    it("should check if this specific feature is enabled", () => {
+      expect(mockIsFeatureEnabled).toBeCalledTimes(1);
+      expect(mockIsFeatureEnabled).toBeCalledWith(mockFlagName);
+    });
+  };
+
   describe("when initialized", () => {
     beforeEach(() => arrange());
 
     describe("with an enabled flag name", () => {
+      beforeEach(() => {
+        mockIsFeatureEnabled.mockImplementationOnce(() => true);
+      });
+
       describe("isEnabled", () => {
         let result: boolean;
 
-        beforeEach(async () => {
-          mockIsFeatureEnabled.mockImplementationOnce(() => true);
-          result = await instance.isEnabled(mockFlagName);
-        });
+        describe("when called with a group", () => {
+          beforeEach(async () => {
+            result = await instance.isEnabled(mockFlagName, mockGroupName);
+          });
 
-        it("should query the correct FlagSmith environment", () => {
-          expect(Flagsmith).toBeCalledTimes(1);
-          expect(Flagsmith).toBeCalledWith({
-            environmentKey: mockEnvironmentName,
+          checkFlagSmithEnvironmentSelection();
+          checkFlagSmithGroupQuery();
+
+          it("should return true", () => {
+            expect(result).toBe(true);
           });
         });
 
-        it("should query the flags from FlagSmith", () => {
-          expect(mockGetEnvironmentFlags).toBeCalledTimes(1);
-        });
+        describe("when called without a group", () => {
+          beforeEach(async () => {
+            result = await instance.isEnabled(mockFlagName);
+          });
 
-        it("should check if this specific feature is enabled", () => {
-          expect(mockIsFeatureEnabled).toBeCalledTimes(1);
-          expect(mockIsFeatureEnabled).toBeCalledWith(mockFlagName);
-        });
+          checkFlagSmithEnvironmentSelection();
+          checkFlagSmithEnvironmentQuery();
 
-        it("should return true", () => {
-          expect(result).toBe(true);
+          it("should return true", () => {
+            expect(result).toBe(true);
+          });
         });
       });
     });
 
     describe("with an disabled flag name", () => {
+      beforeEach(() => {
+        mockIsFeatureEnabled.mockImplementationOnce(() => false);
+      });
+
       describe("isEnabled", () => {
         let result: boolean;
 
-        beforeEach(async () => {
-          mockIsFeatureEnabled.mockImplementationOnce(() => false);
-          result = await instance.isEnabled(mockFlagName);
-        });
+        describe("when called with a group", () => {
+          beforeEach(async () => {
+            result = await instance.isEnabled(mockFlagName, mockGroupName);
+          });
 
-        it("should query the correct FlagSmith environment", () => {
-          expect(Flagsmith).toBeCalledTimes(1);
-          expect(Flagsmith).toBeCalledWith({
-            environmentKey: mockEnvironmentName,
+          checkFlagSmithEnvironmentSelection();
+          checkFlagSmithGroupQuery();
+
+          it("should return false", () => {
+            expect(result).toBe(false);
           });
         });
 
-        it("should query the flags from FlagSmith", () => {
-          expect(mockGetEnvironmentFlags).toBeCalledTimes(1);
-        });
+        describe("when called without a group", () => {
+          beforeEach(async () => {
+            result = await instance.isEnabled(mockFlagName);
+          });
 
-        it("should check if this specific feature is enabled", () => {
-          expect(mockIsFeatureEnabled).toBeCalledTimes(1);
-          expect(mockIsFeatureEnabled).toBeCalledWith(mockFlagName);
-        });
+          checkFlagSmithEnvironmentSelection();
+          checkFlagSmithEnvironmentQuery();
 
-        it("should return false", () => {
-          expect(result).toBe(false);
+          it("should return false", () => {
+            expect(result).toBe(false);
+          });
         });
       });
     });

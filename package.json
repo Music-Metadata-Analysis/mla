@@ -107,11 +107,7 @@
       "<rootDir>/src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/src/**/fixtures/*.{js,jsx,ts,tsx}"
     ],
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/src/pages/_app.tsx",
-      "<rootDir>/src/pages/_document.tsx",
-      "<rootDir>/src/pages/api/auth"
-    ],
+    "coveragePathIgnorePatterns": [],
     "coverageReporters": [
       "text",
       "html"
