@@ -5,7 +5,8 @@ import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
 import settings from "../../../../../config/auth";
 import { createAPIMocks } from "../../../../../tests/fixtures/mock.authentication";
-import createRoutes from "../next-auth";
+import flagVendor from "../../../flags/vendor";
+import createRoutes, { getGroup } from "../next-auth";
 import type {
   MockAPIRequest,
   MockAPIResponse,
@@ -17,13 +18,23 @@ jest.mock("next-auth/providers/github", () => jest.fn());
 jest.mock("next-auth/providers/google", () => jest.fn());
 jest.mock("next-auth/providers/spotify", () => jest.fn());
 
+jest.mock("../../../flags/vendor.ts", () => {
+  return {
+    Group: jest.fn(() => ({
+      getFromIdentifier: mockGetFromIdentifier,
+    })),
+  };
+});
+
+const mockGroup = "mockGroup";
 const MockProfilePersistanceClient = jest.fn(() => ({
   persistProfile: mockPersistProfile,
 }));
+const mockGetFromIdentifier = jest.fn(() => mockGroup);
 const mockPersistProfile = jest.fn();
 
 describe("NextAuthRoutes", () => {
-  let originalEnvironment: typeof process.env;
+  const originalEnvironment = process.env;
   let mockReq: MockAPIRequest;
   let mockRes: MockAPIResponse;
   let mockValueIndex = 0;
@@ -34,8 +45,7 @@ describe("NextAuthRoutes", () => {
     return value;
   }
 
-  beforeAll(() => {
-    originalEnvironment = process.env;
+  const setupEnv = () => {
     process.env.AUTH_FACEBOOK_ID = mockValue();
     process.env.AUTH_FACEBOOK_SECRET = mockValue();
     process.env.AUTH_GITHUB_ID = mockValue();
@@ -46,9 +56,11 @@ describe("NextAuthRoutes", () => {
     process.env.AUTH_MASTER_JWT_SECRET = mockValue();
     process.env.AUTH_SPOTIFY_ID = mockValue();
     process.env.AUTH_SPOTIFY_SECRET = mockValue();
-  });
+    process.env.FLAG_GROUPS_HASH = JSON.stringify({ mock: mockValue() });
+  };
 
   beforeEach(() => {
+    setupEnv();
     jest.clearAllMocks();
   });
 
@@ -64,8 +76,50 @@ describe("NextAuthRoutes", () => {
     await createRoutes(MockProfilePersistanceClient)(mockReq, mockRes);
   };
 
+  describe("getGroup", () => {
+    const mockEmail = "mock@mock.com";
+
+    describe("when a valid environment value is set", () => {
+      describe("when called on an identity", () => {
+        beforeEach(() => getGroup(mockEmail));
+
+        it("should instantiate the flag vendor's Group class correctly", () => {
+          expect(flagVendor.Group).toBeCalledTimes(1);
+          expect(flagVendor.Group).toBeCalledWith(
+            JSON.parse(process.env.FLAG_GROUPS_HASH)
+          );
+        });
+
+        it("should call the getFromIdentifier method correctly", () => {
+          expect(mockGetFromIdentifier).toBeCalledTimes(1);
+          expect(mockGetFromIdentifier).toBeCalledWith(mockEmail);
+        });
+      });
+    });
+
+    describe("when a valid environment value is NOT set", () => {
+      beforeEach(() => ((process.env.FLAG_GROUPS_HASH as string | null) = ""));
+
+      describe("when called on an identity", () => {
+        beforeEach(() => getGroup(mockEmail));
+
+        it("should instantiate the flag vendor's Group class correctly", () => {
+          expect(flagVendor.Group).toBeCalledTimes(1);
+          expect(flagVendor.Group).toBeCalledWith({});
+        });
+
+        it("should call the getFromIdentifier method correctly", () => {
+          expect(mockGetFromIdentifier).toBeCalledTimes(1);
+          expect(mockGetFromIdentifier).toBeCalledWith(mockEmail);
+        });
+      });
+    });
+  });
+
   describe("NextAuth processes a request", () => {
-    const mockProfile = { name: "Simple Human" };
+    const mockProfile = { name: "mockProfile", email: "mock@profile.com" };
+    const mockSession = { name: "mockSession", email: "mock@session.com" };
+    const mockToken = { token: "mockToken", email: "mock@token.com" };
 
     beforeEach(async () => {
       await arrange();
@@ -128,25 +182,211 @@ describe("NextAuthRoutes", () => {
       expect(typeof call.events.signIn).toBe("function");
     });
 
-    describe("when a signIn event is triggered", () => {
-      beforeEach(() => {
-        const call = (NextAuth as jest.Mock).mock.calls[0][2];
-        expect(typeof call.events.signIn).toBe("function");
-        const eventHandler = call.events.signIn;
+    describe("callbacks", () => {
+      let mockTestSession: (typeof mockSession & { group?: string }) | null;
+      let mockTestToken: (typeof mockToken & { group?: string }) | null;
 
-        eventHandler({ profile: mockProfile });
+      describe("with a token and session", () => {
+        beforeEach(() => {
+          mockTestSession = { ...mockSession };
+          mockTestToken = { ...mockToken };
+        });
+
+        describe("jwt", () => {
+          let result: typeof mockToken;
+
+          beforeEach(async () => {
+            const call = (NextAuth as jest.Mock).mock.calls[0][2];
+            expect(typeof call.callbacks.jwt).toBe("function");
+            const callback = call.callbacks.jwt;
+
+            result = await callback({
+              token: mockTestToken,
+            });
+          });
+
+          it("should instantiate the flag vendor's Group class correctly", () => {
+            expect(flagVendor.Group).toBeCalledTimes(1);
+            expect(flagVendor.Group).toBeCalledWith(
+              JSON.parse(process.env.FLAG_GROUPS_HASH)
+            );
+          });
+
+          it("should call the getFromIdentifier method correctly", () => {
+            expect(mockGetFromIdentifier).toBeCalledTimes(1);
+            expect(mockGetFromIdentifier).toBeCalledWith(mockTestToken?.email);
+          });
+
+          it("should assign the group as expected", () => {
+            expect(mockTestToken?.group).toBe(mockGroup);
+          });
+
+          it("should return the token", () => {
+            expect(result).toBe(mockTestToken);
+          });
+        });
+
+        describe("session", () => {
+          let result: typeof mockSession;
+
+          beforeEach(async () => {
+            const call = (NextAuth as jest.Mock).mock.calls[0][2];
+            expect(typeof call.callbacks.session).toBe("function");
+            const callback = call.callbacks.session;
+
+            result = await callback({
+              session: mockTestSession,
+              token: { ...mockTestToken, group: mockGroup },
+            });
+          });
+
+          it("should assign the group as expected", () => {
+            expect(mockTestSession?.group).toBe(mockGroup);
+          });
+
+          it("should return the token", () => {
+            expect(result).toBe(mockTestSession);
+          });
+        });
       });
 
-      it("should instantiate the ProfilePersistanceClient class correctly", () => {
-        expect(MockProfilePersistanceClient).toBeCalledTimes(1);
-        expect(MockProfilePersistanceClient).toBeCalledWith(
-          process.env.AUTH_EMAILS_BUCKET_NAME
-        );
+      describe("without a token and session", () => {
+        beforeEach(() => {
+          mockTestSession = null;
+          mockTestToken = null;
+        });
+
+        describe("jwt", () => {
+          let result: typeof mockToken;
+
+          beforeEach(async () => {
+            const call = (NextAuth as jest.Mock).mock.calls[0][2];
+            expect(typeof call.callbacks.jwt).toBe("function");
+            const callback = call.callbacks.jwt;
+
+            result = await callback({
+              token: mockTestToken,
+            });
+          });
+
+          it("should NOT instantiate the flag vendor's Group class correctly", () => {
+            expect(flagVendor.Group).toBeCalledTimes(0);
+          });
+
+          it("should NOT assign the group as expected", () => {
+            expect(mockTestToken?.group).toBeUndefined();
+          });
+
+          it("should return the token", () => {
+            expect(result).toBe(mockTestToken);
+          });
+        });
+
+        describe("session", () => {
+          let result: typeof mockSession;
+
+          beforeEach(async () => {
+            const call = (NextAuth as jest.Mock).mock.calls[0][2];
+            expect(typeof call.callbacks.session).toBe("function");
+            const callback = call.callbacks.session;
+
+            result = await callback({
+              session: mockTestSession,
+              token: mockTestToken,
+            });
+          });
+
+          it("should NOT instantiate the flag vendor's Group class", () => {
+            expect(flagVendor.Group).toBeCalledTimes(0);
+          });
+
+          it("should NOT assign the group as expected", () => {
+            expect(mockTestSession?.group).toBeUndefined();
+          });
+
+          it("should return the token", () => {
+            expect(result).toBe(mockTestSession);
+          });
+        });
+      });
+    });
+
+    describe("events", () => {
+      let mockTestProfile: typeof mockProfile | null;
+
+      describe("with a profile", () => {
+        beforeEach(() => {
+          mockTestProfile = { ...mockProfile };
+        });
+
+        describe("signIn", () => {
+          beforeEach(() => {
+            const call = (NextAuth as jest.Mock).mock.calls[0][2];
+            expect(typeof call.events.signIn).toBe("function");
+            const eventHandler = call.events.signIn;
+
+            eventHandler({ profile: mockTestProfile });
+          });
+
+          it("should instantiate the flag vendor's Group class correctly", () => {
+            expect(flagVendor.Group).toBeCalledTimes(1);
+            expect(flagVendor.Group).toBeCalledWith(
+              JSON.parse(process.env.FLAG_GROUPS_HASH)
+            );
+          });
+
+          it("should call the getFromIdentifier method correctly", () => {
+            expect(mockGetFromIdentifier).toBeCalledTimes(1);
+            expect(mockGetFromIdentifier).toBeCalledWith(mockProfile?.email);
+          });
+
+          it("should instantiate the ProfilePersistanceClient class correctly", () => {
+            expect(MockProfilePersistanceClient).toBeCalledTimes(1);
+            expect(MockProfilePersistanceClient).toBeCalledWith(
+              process.env.AUTH_EMAILS_BUCKET_NAME
+            );
+          });
+
+          it("should call the persistProfile method correctly", () => {
+            expect(mockPersistProfile).toBeCalledTimes(1);
+            expect(mockPersistProfile).toBeCalledWith({
+              ...mockProfile,
+              group: mockGroup,
+            });
+          });
+        });
       });
 
-      it("should call the persistProfile method correctly", () => {
-        expect(mockPersistProfile).toBeCalledTimes(1);
-        expect(mockPersistProfile).toBeCalledWith(mockProfile);
+      describe("without a profile", () => {
+        beforeEach(() => {
+          mockTestProfile = null;
+        });
+
+        describe("signIn", () => {
+          beforeEach(() => {
+            const call = (NextAuth as jest.Mock).mock.calls[0][2];
+            expect(typeof call.events.signIn).toBe("function");
+            const eventHandler = call.events.signIn;
+
+            eventHandler({ profile: mockTestProfile });
+          });
+
+          it("should NOT instantiate the flag vendor's Group class correctly", () => {
+            expect(flagVendor.Group).toBeCalledTimes(0);
+          });
+
+          it("should instantiate the ProfilePersistanceClient class correctly", () => {
+            expect(MockProfilePersistanceClient).toBeCalledTimes(1);
+            expect(MockProfilePersistanceClient).toBeCalledWith(
+              process.env.AUTH_EMAILS_BUCKET_NAME
+            );
+          });
+
+          it("should call the persistProfile method correctly", () => {
+            expect(mockPersistProfile).toBeCalledTimes(1);
+            expect(mockPersistProfile).toBeCalledWith(null);
+          });
+        });
       });
     });
   });

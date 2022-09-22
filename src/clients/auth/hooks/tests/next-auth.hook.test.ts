@@ -29,6 +29,15 @@ let existingLocalStorageValue: { type: string | null };
 describe("useNextAuth", () => {
   let received: ReturnType<typeof arrange>;
   const mockOauthProvider = "google";
+  const mockSession = {
+    group: "mockGroup",
+    user: {
+      name: mockUserProfile.name,
+      email: mockUserProfile.email,
+      image: mockUserProfile.image,
+      oauth: mockUserProfile.oauth,
+    },
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -113,9 +122,7 @@ describe("useNextAuth", () => {
       describe("with a complete profile", () => {
         beforeEach(() => {
           (useSession as jest.Mock).mockImplementation(() => ({
-            data: {
-              user: { ...mockUserProfile },
-            },
+            data: { ...mockSession },
             status: "authenticated",
           }));
           existingLocalStorageValue = { type: mockUserProfile.oauth };
@@ -140,7 +147,8 @@ describe("useNextAuth", () => {
         beforeEach(() => {
           (useSession as jest.Mock).mockImplementation(() => ({
             data: {
-              user: { ...mockUserProfile, name: undefined },
+              ...mockSession,
+              user: { ...mockSession.user, name: undefined },
             },
             status: "authenticated",
           }));
@@ -171,7 +179,8 @@ describe("useNextAuth", () => {
         beforeEach(() => {
           (useSession as jest.Mock).mockImplementation(() => ({
             data: {
-              user: { ...mockUserProfile, email: undefined },
+              ...mockSession,
+              user: { ...mockSession.user, email: undefined },
             },
             status: "authenticated",
           }));
@@ -202,7 +211,8 @@ describe("useNextAuth", () => {
         beforeEach(() => {
           (useSession as jest.Mock).mockImplementation(() => ({
             data: {
-              user: { ...mockUserProfile, image: undefined },
+              ...mockSession,
+              user: { ...mockSession.user, image: undefined },
             },
             status: "authenticated",
           }));
@@ -225,6 +235,37 @@ describe("useNextAuth", () => {
           expect(received.result.current.user).toStrictEqual({
             ...mockUserProfile,
             image: undefined,
+          });
+        });
+      });
+
+      describe("with a profile missing a group", () => {
+        beforeEach(() => {
+          (useSession as jest.Mock).mockImplementation(() => ({
+            data: {
+              user: { ...mockSession.user },
+            },
+            status: "authenticated",
+          }));
+          existingLocalStorageValue = { type: mockUserProfile.oauth };
+          received = arrange();
+        });
+
+        checkLocalStorage();
+        checkHookProperties({
+          ...mockUserProfile,
+          group: undefined,
+          oauth: mockOauthProvider,
+        });
+
+        it("should return status as authenticated", () => {
+          expect(received.result.current.status).toBe("authenticated");
+        });
+
+        it("should return the correct user profile", () => {
+          expect(received.result.current.user).toStrictEqual({
+            ...mockUserProfile,
+            group: undefined,
           });
         });
       });
