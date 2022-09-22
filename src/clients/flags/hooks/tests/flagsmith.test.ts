@@ -1,17 +1,23 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import { useFlags } from "flagsmith/react";
+import { useFlags, useFlagsmith } from "flagsmith/react";
+import useAuth from "../../../../hooks/auth";
 import mockUseFlagsHook from "../../../../hooks/tests/flags.mock.hook";
-import useFlagSmith from "../flagsmith";
+import useFlagSmithVendor from "../flagsmith";
 
 jest.mock("flagsmith/react", () => ({
   useFlags: jest.fn(),
+  useFlagsmith: jest.fn(),
 }));
 
-describe("useFlagSmith", () => {
+jest.mock("../../../../hooks/auth", () => jest.fn());
+
+describe("useFlagSmithVendor", () => {
   let originalEnvironment: typeof process.env;
   let received: ReturnType<typeof arrange>;
   let mockFlagName: string | null | undefined;
+  const mockIdentify = jest.fn();
+  const mockGroup = "mockGroup";
 
   beforeAll(() => {
     originalEnvironment = process.env;
@@ -26,7 +32,32 @@ describe("useFlagSmith", () => {
   });
 
   const arrange = () => {
-    return renderHook(() => useFlagSmith());
+    return renderHook(() => useFlagSmithVendor());
+  };
+
+  const checkHookRender = () => {
+    it("should render the useAuth hook during render", () => {
+      expect(useAuth).toBeCalledTimes(1);
+      expect(useAuth).toBeCalledWith();
+    });
+
+    it("should render the useFlagsmith hook during render", () => {
+      expect(useFlagsmith).toBeCalledTimes(1);
+      expect(useFlagsmith).toBeCalledWith();
+    });
+  };
+
+  const checkIdentify = () => {
+    it("should identify the user correctly", () => {
+      expect(mockIdentify).toBeCalledTimes(1);
+      expect(mockIdentify).toBeCalledWith(mockGroup);
+    });
+  };
+
+  const checkDoesNotIdentify = () => {
+    it("should NOT attempt to identify the user", () => {
+      expect(mockIdentify).toBeCalledTimes(0);
+    });
   };
 
   const checkHookProperties = () => {
@@ -51,108 +82,257 @@ describe("useFlagSmith", () => {
         enabledFlag: { enabled: true },
         disabledFlag: { enabled: false },
       }));
-      received = arrange();
     });
 
-    describe("given an invalid flagName", () => {
+    describe("with a group, that isn't registered,", () => {
       beforeEach(() => {
+        (useFlagsmith as jest.Mock).mockReturnValue({
+          identity: null,
+          identify: mockIdentify,
+        });
+        (useAuth as jest.Mock).mockReturnValue({
+          user: { group: "mockGroup" },
+        });
         received = arrange();
       });
 
-      describe("when the flag name is: null", () => {
-        beforeEach(() => {
-          mockFlagName = null;
+      describe("given an invalid flagName", () => {
+        describe("when the flag name is: null", () => {
+          beforeEach(() => {
+            mockFlagName = null;
+          });
+
+          checkHookRender();
+          checkHookProperties();
+          checkIdentify();
+
+          describe("isEnabled", () => {
+            let result: boolean;
+
+            beforeEach(
+              () => (result = received.result.current.isEnabled(mockFlagName))
+            );
+
+            it("should return false", () => {
+              expect(result).toBe(false);
+            });
+          });
         });
 
-        checkHookProperties();
+        describe("when the flag name is: undefined", () => {
+          beforeEach(() => {
+            mockFlagName = undefined;
+          });
 
-        describe("isEnabled", () => {
-          let result: boolean;
+          checkHookRender();
+          checkHookProperties();
+          checkIdentify();
 
-          beforeEach(
-            () => (result = received.result.current.isEnabled(mockFlagName))
-          );
+          describe("isEnabled", () => {
+            let result: boolean;
 
-          it("should return false", () => {
-            expect(result).toBe(false);
+            beforeEach(
+              () => (result = received.result.current.isEnabled(mockFlagName))
+            );
+
+            it("should return false", () => {
+              expect(result).toBe(false);
+            });
+          });
+        });
+
+        describe(`when the flag name is: "wrong-name"`, () => {
+          beforeEach(() => {
+            mockFlagName = "wrong-name";
+          });
+
+          checkHookRender();
+          checkHookProperties();
+          checkIdentify();
+
+          describe("isEnabled", () => {
+            let result: boolean;
+
+            beforeEach(
+              () => (result = received.result.current.isEnabled(mockFlagName))
+            );
+
+            it("should return false", () => {
+              expect(result).toBe(false);
+            });
           });
         });
       });
 
-      describe("when the flag name is: undefined", () => {
-        beforeEach(() => {
-          mockFlagName = undefined;
-        });
+      describe("given a valid flagName", () => {
+        describe(`when the flag name is: enabledFlag`, () => {
+          beforeEach(() => {
+            mockFlagName = "enabledFlag";
+          });
 
-        checkHookProperties();
+          checkHookRender();
+          checkHookProperties();
+          checkIdentify();
 
-        describe("isEnabled", () => {
-          let result: boolean;
+          describe("isEnabled", () => {
+            let result: boolean;
 
-          beforeEach(
-            () => (result = received.result.current.isEnabled(mockFlagName))
-          );
+            beforeEach(() => {
+              result = received.result.current.isEnabled(mockFlagName);
+            });
 
-          it("should return false", () => {
-            expect(result).toBe(false);
+            it("should return true", () => {
+              expect(result).toBe(true);
+            });
           });
         });
-      });
 
-      describe(`when the flag name is: "wrong-name"`, () => {
-        beforeEach(() => {
-          mockFlagName = "wrong-name";
-        });
+        describe(`when the flag name is: disabledFlag`, () => {
+          beforeEach(() => {
+            mockFlagName = "disabledFlag";
+          });
 
-        checkHookProperties();
+          checkHookRender();
+          checkHookProperties();
+          checkIdentify();
 
-        describe("isEnabled", () => {
-          let result: boolean;
+          describe("isEnabled", () => {
+            let result: boolean;
 
-          beforeEach(
-            () => (result = received.result.current.isEnabled(mockFlagName))
-          );
+            beforeEach(() => {
+              result = received.result.current.isEnabled(mockFlagName);
+            });
 
-          it("should return false", () => {
-            expect(result).toBe(false);
+            it("should return false", () => {
+              expect(result).toBe(false);
+            });
           });
         });
       });
     });
 
-    describe("given a valid flagName", () => {
-      describe(`when the flag name is: enabledFlag`, () => {
-        beforeEach(() => {
-          mockFlagName = "enabledFlag";
+    describe("with a group, that is registered,", () => {
+      beforeEach(() => {
+        (useFlagsmith as jest.Mock).mockReturnValue({
+          identity: "mockGroup",
+          identify: mockIdentify,
         });
+        (useAuth as jest.Mock).mockReturnValue({
+          user: { group: "mockGroup" },
+        });
+        received = arrange();
+      });
 
-        describe("isEnabled", () => {
-          let result: boolean;
-
+      describe("given an invalid flagName", () => {
+        describe("when the flag name is: null", () => {
           beforeEach(() => {
-            result = received.result.current.isEnabled(mockFlagName);
+            mockFlagName = null;
           });
 
-          it("should return true", () => {
-            expect(result).toBe(true);
+          checkHookRender();
+          checkHookProperties();
+          checkDoesNotIdentify();
+
+          describe("isEnabled", () => {
+            let result: boolean;
+
+            beforeEach(
+              () => (result = received.result.current.isEnabled(mockFlagName))
+            );
+
+            it("should return false", () => {
+              expect(result).toBe(false);
+            });
+          });
+        });
+
+        describe("when the flag name is: undefined", () => {
+          beforeEach(() => {
+            mockFlagName = undefined;
+          });
+
+          checkHookRender();
+          checkHookProperties();
+          checkDoesNotIdentify();
+
+          describe("isEnabled", () => {
+            let result: boolean;
+
+            beforeEach(
+              () => (result = received.result.current.isEnabled(mockFlagName))
+            );
+
+            it("should return false", () => {
+              expect(result).toBe(false);
+            });
+          });
+        });
+
+        describe(`when the flag name is: "wrong-name"`, () => {
+          beforeEach(() => {
+            mockFlagName = "wrong-name";
+          });
+
+          checkHookRender();
+          checkHookProperties();
+          checkDoesNotIdentify();
+
+          describe("isEnabled", () => {
+            let result: boolean;
+
+            beforeEach(
+              () => (result = received.result.current.isEnabled(mockFlagName))
+            );
+
+            it("should return false", () => {
+              expect(result).toBe(false);
+            });
           });
         });
       });
 
-      describe(`when the flag name is: disabledFlag`, () => {
-        beforeEach(() => {
-          mockFlagName = "disabledFlag";
-        });
-
-        describe("isEnabled", () => {
-          let result: boolean;
-
+      describe("given a valid flagName", () => {
+        describe(`when the flag name is: enabledFlag`, () => {
           beforeEach(() => {
-            result = received.result.current.isEnabled(mockFlagName);
+            mockFlagName = "enabledFlag";
           });
 
-          it("should return false", () => {
-            expect(result).toBe(false);
+          checkHookRender();
+          checkHookProperties();
+          checkDoesNotIdentify();
+
+          describe("isEnabled", () => {
+            let result: boolean;
+
+            beforeEach(() => {
+              result = received.result.current.isEnabled(mockFlagName);
+            });
+
+            it("should return true", () => {
+              expect(result).toBe(true);
+            });
+          });
+        });
+
+        describe(`when the flag name is: disabledFlag`, () => {
+          beforeEach(() => {
+            mockFlagName = "disabledFlag";
+          });
+
+          checkHookRender();
+          checkHookProperties();
+          checkDoesNotIdentify();
+
+          describe("isEnabled", () => {
+            let result: boolean;
+
+            beforeEach(() => {
+              result = received.result.current.isEnabled(mockFlagName);
+            });
+
+            it("should return false", () => {
+              expect(result).toBe(false);
+            });
           });
         });
       });

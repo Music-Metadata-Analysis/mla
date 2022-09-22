@@ -26,6 +26,7 @@ const useNextAuth = (): AuthVendorHookInterface => {
       name: session?.user?.name ? session?.user?.name : undefined,
       email: session?.user?.email ? session?.user?.email : undefined,
       image: session?.user?.image ? session?.user?.image : undefined,
+      group: session?.group ? (session?.group as string) : undefined,
       oauth: oauth.type as AuthServiceType,
     };
   };

@@ -15,12 +15,12 @@ export interface FlagVendorHookInterface {
 }
 
 export interface FlagVendorProviderProps {
-  state: VendorFlagStateType;
   children: (
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>[]
   ) &
     ReactNode;
+  state: VendorFlagStateType;
 }
 export interface FlagVendorSSRInterface {
   getState: (

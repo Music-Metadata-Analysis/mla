@@ -12,6 +12,7 @@ declare namespace NodeJS {
     AUTH_MASTER_SECRET_KEY: string;
     AUTH_SPOTIFY_ID: string;
     AUTH_SPOTIFY_SECRET: string;
+    FLAG_GROUPS_HASH: string;
     INTEGRATION_TEST_LAST_FM_KEY: string;
     LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME: string;
     LASTFM_CACHE_AWS_S3_BUCKET_NAME: string;

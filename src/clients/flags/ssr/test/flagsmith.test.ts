@@ -1,6 +1,14 @@
 import flagsmith from "flagsmith/isomorphic";
 import FlagSmithSSR from "../flagsmith";
 
+jest.mock("../../../../utils/voids", () => {
+  const module = require("../../../../utils/tests/voids.mock");
+  return {
+    normalizeNull: module.mockNormalizeNull,
+    normalizeUndefined: module.mockNormalizeUndefined,
+  };
+});
+
 jest.mock("flagsmith/isomorphic", () => ({
   init: jest.fn(),
   getState: jest.fn(),
@@ -9,6 +17,7 @@ jest.mock("flagsmith/isomorphic", () => ({
 describe("FlagSmithSSR", () => {
   const mockFlagEnvironment = "mockFlagEnvironment";
   const mockFlagState = "mockFlagState";
+  const mockIdentity = "mockIdentity";
   let originalEnvironment: typeof process.env;
   let instance: FlagSmithSSR;
 
@@ -34,14 +43,15 @@ describe("FlagSmithSSR", () => {
     let result: unknown;
 
     beforeEach(async () => {
-      (flagsmith.getState as jest.Mock).mockResolvedValue(mockFlagState);
-      result = await instance.getState();
+      (flagsmith.getState as jest.Mock).mockReturnValueOnce(mockFlagState);
+      result = await instance.getState(mockIdentity);
     });
 
     it("should initialize the vendor object correctly", () => {
       expect(flagsmith.init).toBeCalledTimes(1);
       expect(flagsmith.init).toBeCalledWith({
         environmentID: mockFlagEnvironment,
+        identity: `normalizeUndefined(${mockIdentity})`,
       });
     });
 
@@ -51,7 +61,10 @@ describe("FlagSmithSSR", () => {
     });
 
     it("should return the vendor's flag state", () => {
-      expect(result).toBe(mockFlagState);
+      expect(result).toStrictEqual({
+        serverState: mockFlagState,
+        identity: `normalizeNull(${mockIdentity})`,
+      });
     });
   });
 });

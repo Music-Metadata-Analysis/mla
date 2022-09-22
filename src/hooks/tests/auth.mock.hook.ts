@@ -10,6 +10,7 @@ const mockAuthHook: AuthVendorHookInterface = {
 export const mockUserProfile = {
   name: "mockUser",
   email: "mock@gmail.com",
+  group: "mockGroup",
   oauth: "google" as const,
   image: "http://profile.com/image",
 };

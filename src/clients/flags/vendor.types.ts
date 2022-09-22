@@ -1,3 +1,6 @@
 import type { FlagsmithContextType } from "flagsmith/react";
 
-export type VendorFlagStateType = FlagsmithContextType["serverState"];
+export type VendorFlagStateType = {
+  serverState: FlagsmithContextType["serverState"];
+  identity: string | null;
+};
