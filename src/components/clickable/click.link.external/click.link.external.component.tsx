@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import AnalyticsWrapper from "../../analytics/analytics.link.external/analytics.link.external.component";
+import AnalyticsWrapper from "@src/components/analytics/analytics.link.external/analytics.link.external.component";
 import type { PropsWithChildren } from "react";
 
 interface ClickLinkProps {

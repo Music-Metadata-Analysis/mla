@@ -1,22 +1,19 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import BaseButton from "../../button.base/button.base.component";
 import StyledButton from "../button.standard.component";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 jest.mock("../../button.base/button.base.component", () =>
   createMockedComponent("BaseButton")
 );
 
-jest.mock("../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
-
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

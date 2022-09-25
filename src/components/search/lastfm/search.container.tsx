@@ -1,18 +1,18 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import SearchForm from "./search.form.component";
-import settings from "../../../config/lastfm";
-import useAuth from "../../../hooks/auth";
-import useNavBar from "../../../hooks/navbar";
-import type { LastFMUserSearchInterface } from "../../../types/search/lastfm/search";
+import SearchForm from "./search.form";
+import settings from "@src/config/lastfm";
+import useAuth from "@src/hooks/auth";
+import useNavBar from "@src/hooks/navbar";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
-import type { TFunction } from "next-i18next";
 
 interface SearchContainerProps {
   route: string;
   closeError: (fieldName: string) => void;
   openError: (fieldName: string, message: string) => void;
-  t: TFunction;
+  t: tFunctionType;
 }
 
 export default function SearchContainer({

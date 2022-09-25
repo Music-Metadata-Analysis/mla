@@ -1,6 +1,6 @@
 import { Avatar } from "@chakra-ui/react";
-import useAuth from "../../../hooks/auth";
-import useColour from "../../../hooks/colour";
+import useAuth from "@src/hooks/auth";
+import useColour from "@src/hooks/colour";
 
 const NavBarAvatar = () => {
   const { user } = useAuth();

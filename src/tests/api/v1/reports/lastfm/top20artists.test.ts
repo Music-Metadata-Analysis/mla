@@ -1,18 +1,18 @@
-import apiRoutes from "../../../../../config/apiRoutes";
+import apiRoutes from "@src/config/apiRoutes";
 import handleProxy, {
   endpointFactory,
-} from "../../../../../pages/api/v1/reports/lastfm/top20artists";
+} from "@src/pages/api/v1/reports/lastfm/top20artists";
 import {
   createAPIMocks,
   mockSession,
-} from "../../../../fixtures/mock.authentication";
+} from "@src/tests/fixtures/mock.authentication";
 import type {
   MockAPIRequest,
   MockAPIResponse,
-} from "../../../../../types/api.endpoint.types";
-import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
+} from "@src/types/api.endpoint.types";
+import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
-jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
+jest.mock("@src/backend/integrations/lastfm/proxy.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       getUserTopArtists: mockProxyMethod,
@@ -20,11 +20,11 @@ jest.mock("../../../../../backend/integrations/lastfm/proxy.class", () => {
   });
 });
 
-jest.mock("../../../../../backend/api/lastfm/endpoint.common.logger", () => {
+jest.mock("@src/backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 
-jest.mock("../../../../../backend/integrations/auth/vendor", () => ({
+jest.mock("@src/backend/integrations/auth/vendor", () => ({
   Client: jest.fn(() => ({
     getSession: mockGetSession,
   })),

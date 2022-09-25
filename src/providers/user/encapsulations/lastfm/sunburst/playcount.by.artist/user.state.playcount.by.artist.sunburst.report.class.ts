@@ -6,14 +6,14 @@ import Transformation2 from "./transformations/transformation.2.class";
 import Transformation3 from "./transformations/transformation.3.class";
 import Transformation4 from "./transformations/transformation.4.class";
 import Transformation5 from "./transformations/transformation.5.class";
-import apiRoutes from "../../../../../../config/apiRoutes";
 import UserSunBurstReportBaseState from "../user.state.base.sunburst.report.class";
-import type { LastFMClientParamsInterface } from "../../../../../../types/clients/api/lastfm/request.types";
-import type { PlayCountByArtistReportInterface } from "../../../../../../types/clients/api/lastfm/response.types";
+import apiRoutes from "@src/config/apiRoutes";
+import type { LastFMClientParamsInterface } from "@src/types/clients/api/lastfm/request.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
 import type {
   AggregateBaseReportResponseInterface,
   AggregateReportOperationType,
-} from "../../../../../../types/integrations/base.types";
+} from "@src/types/integrations/base.types";
 
 export default class PlayCountByArtistState extends UserSunBurstReportBaseState<
   PlayCountByArtistReportInterface[]

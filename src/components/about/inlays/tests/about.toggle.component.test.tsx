@@ -1,24 +1,23 @@
 import { Container, ListItem, UnorderedList } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import translations from "../../../../../public/locales/en/about.json";
-import dialogueSettings from "../../../../config/dialogue";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import tLookup from "../../../../tests/fixtures/mock.translation";
 import Toggle from "../about.toggle.component";
+import dialogueSettings from "@src/config/dialogue";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../icons/svs/svs.icon", () =>
+jest.mock("@src/components/icons/svs/svs.icon", () =>
   jest.fn(() => <div>MockIcon</div>)
 );
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Container", "ListItem", "UnorderedList"]);
 });
 
 describe("AboutToggle", () => {
-  const mockT = jest.fn((key) => tLookup(key, translations));
+  const mockT = new mockUseLocale("about").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

@@ -1,4 +1,4 @@
-import useAnalytics from "../../../hooks/analytics";
+import useAnalytics from "@src/hooks/analytics";
 
 interface AnalyticsWrapperProps {
   buttonName: string;

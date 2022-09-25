@@ -1,10 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import SunBurstChart from "./chart.component";
-import useColour from "../../../../hooks/colour";
-import type {
-  SunBurstData,
-  d3Node,
-} from "../../../../types/reports/sunburst.types";
+import useColour from "@src/hooks/colour";
+import type { SunBurstData, d3Node } from "@src/types/reports/sunburst.types";
 
 export interface SunBurstChartContainerProps {
   data: SunBurstData;

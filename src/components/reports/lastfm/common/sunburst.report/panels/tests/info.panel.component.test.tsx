@@ -1,22 +1,20 @@
 import { Text, Box, Container } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import mockColourHook from "../../../../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../../../../tests/fixtures/mock.component.call";
 import SunBurstInfoPanel, {
   SunBurstInfoPanelProps,
   testIDs,
 } from "../info.panel.component";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../../..//tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Text", "Box", "Container"]);
 });
 
-jest.mock("../../../../../../..//hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 describe("SunBurstInfoPanel", () => {
   let currentProps: SunBurstInfoPanelProps;

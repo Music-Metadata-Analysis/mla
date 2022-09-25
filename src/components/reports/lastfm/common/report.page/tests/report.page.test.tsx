@@ -1,21 +1,21 @@
 import { render } from "@testing-library/react";
-import routes from "../../../../../../config/routes";
-import Events from "../../../../../../events/events";
-import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
-import mockCheckCall from "../../../../../../tests/fixtures/mock.component.call";
-import ErrorBoundary from "../../../../../errors/boundary/error.boundary.component";
 import Page from "../report.page";
+import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import routes from "@src/config/routes";
+import Events from "@src/events/events";
+import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
+import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../../../errors/boundary/error.boundary.component", () =>
+jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
   createMockedComponent("ErrorBoundary")
 );
 
-jest.mock("../../../../../../hooks/lastfm", () => () => mockLastFMHook);
+jest.mock("@src/hooks/lastfm", () => () => mockLastFMHook);
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

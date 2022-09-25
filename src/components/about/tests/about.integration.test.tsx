@@ -6,11 +6,17 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import translations from "../../../../public/locales/en/about.json";
-import routes from "../../../config/routes";
-import mockRouter from "../../../tests/fixtures/mock.router";
-import { testIDs } from "../../dialogues/resizable/dialogue.resizable.component";
 import About from "../about.component";
+import translations from "@locales/about.json";
+import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
+import routes from "@src/config/routes";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockRouter from "@src/tests/fixtures/mock.router";
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 describe("About", () => {
   beforeEach(() => {
@@ -34,35 +40,35 @@ describe("About", () => {
       );
       expect(aboutList).toBeVisible();
       expect(
-        await within(aboutList).findByText(translations.aboutText1)
+        await within(aboutList).findByText(_t(translations.aboutText1))
       ).toBeTruthy();
       expect(
-        await within(aboutList).findByText(translations.aboutText2)
+        await within(aboutList).findByText(_t(translations.aboutText2))
       ).toBeTruthy();
       expect(
-        await within(aboutList).findByText(translations.aboutText3)
+        await within(aboutList).findByText(_t(translations.aboutText3))
       ).toBeTruthy();
     });
 
     it("should render the credit text on the screen", async () => {
-      expect(await screen.findByText(translations.creditText)).toBeTruthy();
+      expect(await screen.findByText(_t(translations.creditText))).toBeTruthy();
     });
 
     it("should render the company name on the screen", async () => {
-      expect(await screen.findByText(translations.company)).toBeTruthy();
+      expect(await screen.findByText(_t(translations.company))).toBeTruthy();
     });
 
     it("should render button text inside the start button", async () => {
       const footer = await screen.findByTestId(testIDs.DialogueFooterComponent);
       expect(
-        await within(footer).findByText(translations.buttons.start)
+        await within(footer).findByText(_t(translations.buttons.start))
       ).toBeTruthy();
     });
 
     it("should render button text inside the privacy button", async () => {
       const footer = await screen.findByTestId(testIDs.DialogueFooterComponent);
       expect(
-        await within(footer).findByText(translations.buttons.privacy)
+        await within(footer).findByText(_t(translations.buttons.privacy))
       ).toBeTruthy();
     });
 
@@ -73,7 +79,7 @@ describe("About", () => {
           testIDs.DialogueFooterComponent
         );
         const button = await within(footer).findByText(
-          translations.buttons.start
+          _t(translations.buttons.start)
         );
         fireEvent.click(button);
       });
@@ -91,7 +97,7 @@ describe("About", () => {
           testIDs.DialogueFooterComponent
         );
         const button = await within(footer).findByText(
-          translations.buttons.privacy
+          _t(translations.buttons.privacy)
         );
         fireEvent.click(button);
       });

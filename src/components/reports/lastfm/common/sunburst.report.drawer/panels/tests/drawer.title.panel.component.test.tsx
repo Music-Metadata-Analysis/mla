@@ -1,20 +1,26 @@
 import { Container, Text } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import checkMockCall from "../../../../../../../tests/fixtures/mock.component.call";
-import MockSunBurstNodeEncapsulation from "../../../sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
 import SunBurstDrawerTitlePanel, {
   testIDs,
   SunBurstDrawerTitlePanelProps,
 } from "../drawer.title.panel.component";
-import type { d3Node } from "../../../../../../../types/reports/sunburst.types";
-import type SunBurstNodeEncapsulation from "../../../sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Container", "Text"]);
 });
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 describe("SunBurstDrawerTitlePanel", () => {
   let currentProps: SunBurstDrawerTitlePanelProps;

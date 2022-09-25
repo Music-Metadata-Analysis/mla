@@ -1,5 +1,5 @@
-import type translations from "../../../../../public/locales/en/lastfm.json";
-import type { userHookAsLastFM } from "../../../user/hook.types";
+import type translations from "@locales/lastfm.json";
+import type { userHookAsLastFM } from "@src/types/user/hook.types";
 
 export interface LastFMReportClassInterface<UserPropertiesType, ReportType> {
   getRetryRoute(): string;

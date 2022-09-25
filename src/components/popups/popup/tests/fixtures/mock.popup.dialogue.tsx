@@ -1,5 +1,5 @@
 import { useColorMode, useColorModeValue } from "@chakra-ui/react";
-import type { UserInterfacePopUpsComponentProps } from "../../../../../types/ui/popups/ui.component.popups.types";
+import type { UserInterfacePopUpsComponentProps } from "@src/types/ui/popups/ui.component.popups.types";
 
 export const testIDs = {
   MockPopUpComponent: "MockPopUpComponent",

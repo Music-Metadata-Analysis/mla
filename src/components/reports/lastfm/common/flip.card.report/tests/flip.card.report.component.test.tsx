@@ -6,31 +6,34 @@ import {
   MockDrawerComponent,
 } from "./mock.last.fm.report.class";
 import { MockReportClass } from "./mock.last.fm.report.class";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import FlipCard from "../../../../../flip.card/flip.card.component";
-import ReportTitle from "../../../../common/report.title/report.title.component";
 import FlipCardReport, {
   FlipCardReportProps,
 } from "../flip.card.report.component";
+import lastfmTranslations from "@locales/lastfm.json";
+import FlipCard from "@src/components/flip.card/flip.card.component";
+import ReportTitle from "@src/components/reports/common/report.title/report.title.component";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../../../flip.card/flip.card.component", () => {
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
+
+jest.mock("@src/components/flip.card/flip.card.component", () => {
   return jest.fn(() => <div>{"MockFlipCard"}</div>);
 });
 
-jest.mock("../../../../common/report.title/report.title.component", () => {
-  return jest.fn(() => <div>{"MockReportTitle"}</div>);
-});
-
-jest.mock("next-i18next", () => {
-  return {
-    useTranslation: () => {
-      return { t: (translationKey: string) => `t(${translationKey})` };
-    },
-  };
-});
+jest.mock(
+  "@src/components/reports/common/report.title/report.title.component",
+  () => {
+    return jest.fn(() => <div>{"MockReportTitle"}</div>);
+  }
+);
 
 const mockImageIsLoaded = jest.fn();
 const mockUsername = "test-username";
+const mockT = new mockUseLocale("lastfm").t;
 
 const mockUserProperties = {
   error: null,
@@ -48,20 +51,14 @@ const mockUserProperties = {
     integration: "LASTFM" as const,
   },
 };
-const mockTranslation = jest.fn(
-  (translationKey: string) => `t(${translationKey})`
-);
 
 const FlipCardReportBaseProps: FlipCardReportProps<MockUserStateEncapsulation> =
   {
-    userState: new MockUserStateEncapsulation(
-      mockUserProperties,
-      mockTranslation
-    ),
+    userState: new MockUserStateEncapsulation(mockUserProperties, mockT),
     report: new MockReportClass(),
     imageIsLoaded: mockImageIsLoaded,
     visible: true,
-    t: mockTranslation,
+    t: mockT,
   };
 
 describe("FlipCardReport", () => {
@@ -144,7 +141,13 @@ describe("FlipCardReport", () => {
         expect(ReportTitle).toBeCalledTimes(1);
         checkMockCall(ReportTitle, {
           size: 100,
-          title: `t(${String(currentProps.report.translationKey)}.title)`,
+          title: _t(
+            (
+              lastfmTranslations[currentProps.report.translationKey] as {
+                title: string;
+              }
+            ).title
+          ),
           userName: mockUsername,
         });
       });
@@ -166,9 +169,13 @@ describe("FlipCardReport", () => {
             index: 0,
             rearImage: "/images/record-player.jpg",
             size: 100,
-            noArtWork: `t(${String(
-              currentProps.report.translationKey
-            )}.noArtWork)`,
+            noArtWork: _t(
+              (
+                lastfmTranslations[currentProps.report.translationKey] as {
+                  noArtWork: string;
+                }
+              ).noArtWork
+            ),
           },
           0,
           ["flipperController", "imageIsLoaded", "t"]
@@ -182,9 +189,13 @@ describe("FlipCardReport", () => {
             index: 1,
             rearImage: "/images/record-player.jpg",
             size: 100,
-            noArtWork: `t(${String(
-              currentProps.report.translationKey
-            )}.noArtWork)`,
+            noArtWork: _t(
+              (
+                lastfmTranslations[currentProps.report.translationKey] as {
+                  noArtWork: string;
+                }
+              ).noArtWork
+            ),
           },
           1,
           ["flipperController", "imageIsLoaded", "t"]

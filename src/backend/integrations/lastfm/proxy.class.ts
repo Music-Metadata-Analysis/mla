@@ -2,7 +2,7 @@ import LastFmAlbumClientAdapter from "./client/album.class";
 import LastFmArtistClientAdapter from "./client/artist.class";
 import LastFmTrackClientAdapter from "./client/track.class";
 import LastFmUserClientAdapter from "./client/user.class";
-import type { LastFMProxyInterface } from "../../../types/integrations/lastfm/proxy.types";
+import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 class LastFMProxy implements LastFMProxyInterface {
   private albumClient: LastFmAlbumClientAdapter;

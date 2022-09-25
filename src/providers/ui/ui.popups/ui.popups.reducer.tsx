@@ -1,8 +1,8 @@
 import UserInterfacePopUpsReducerStates from "./ui.popups.reducer.states.class";
-import reducerLoggingMiddleware from "../../../utils/reducer.logger";
-import withMiddleware from "../../../utils/reducer.middleware";
-import type { UserInterfacePopUpsActionType } from "../../../types/ui/popups/ui.popups.action.types";
-import type { UserInterfacePopUpsStateInterface } from "../../../types/ui/popups/ui.popups.state.types";
+import reducerLoggingMiddleware from "@src/utils/reducer.logger";
+import withMiddleware from "@src/utils/reducer.middleware";
+import type { UserInterfacePopUpsActionType } from "@src/types/ui/popups/ui.popups.action.types";
+import type { UserInterfacePopUpsStateInterface } from "@src/types/ui/popups/ui.popups.state.types";
 
 const userInterfacePopUpsReducer = (
   state: UserInterfacePopUpsStateInterface,

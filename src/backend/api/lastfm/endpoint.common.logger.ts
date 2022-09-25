@@ -1,7 +1,7 @@
 import type {
   LastFMEndpointRequest,
   LastFMEndpointResponse,
-} from "../../../types/api.endpoint.types";
+} from "@src/types/api.endpoint.types";
 
 const logger = (
   req: LastFMEndpointRequest,

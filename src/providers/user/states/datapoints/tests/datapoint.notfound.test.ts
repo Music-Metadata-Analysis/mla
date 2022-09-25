@@ -1,6 +1,6 @@
 import ReducerState from "../datapoint.notfound.class";
-import type { UserActionType } from "../../../../../types/user/action.types";
-import type { UserStateInterface } from "../../../../../types/user/state.types";
+import type { UserActionType } from "@src/types/user/action.types";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
 const testType = "DataPointNotFoundFetch";
 type actionType = UserActionType & { type: typeof testType };

@@ -1,17 +1,14 @@
 import SunBurstDataTranslator from "./chart/chart.data.class";
-import type translations from "../../../../../../public/locales/en/lastfm.json";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type { IntegrationRequestType } from "../../../../../types/analytics.types";
-import type { LastFMReportClassInterface } from "../../../../../types/clients/api/lastfm/data.report.types";
-import type { AggregateBaseReportResponseInterface } from "../../../../../types/integrations/base.types";
-import type {
-  d3Node,
-  SunBurstData,
-} from "../../../../../types/reports/sunburst.types";
-import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
-import type { LastFMSunBurstDrawerInterface } from "../sunburst.report.drawer/sunburst.report.drawer.component";
 import type SunBurstNodeEncapsulation from "./encapsulations/sunburst.node.encapsulation.base";
-import type { TFunction } from "next-i18next";
+import type translations from "@locales/lastfm.json";
+import type { LastFMSunBurstDrawerInterface } from "@src/components/reports/lastfm/common/sunburst.report.drawer/sunburst.report.drawer.component";
+import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type { IntegrationRequestType } from "@src/types/analytics.types";
+import type { LastFMReportClassInterface } from "@src/types/clients/api/lastfm/data.report.types";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { d3Node, SunBurstData } from "@src/types/reports/sunburst.types";
+import type { userHookAsLastFM } from "@src/types/user/hook.types";
 import type { FC } from "react";
 
 type AggregateReportContent = {
@@ -68,7 +65,7 @@ export default abstract class SunBurstBaseReport<T extends UserState<unknown>>
     return percentage;
   }
 
-  getProgressDetails(userProperties: T["userProperties"], t: TFunction) {
+  getProgressDetails(userProperties: T["userProperties"], t: tFunctionType) {
     if (!this.getReportData(userProperties).status.operation)
       return { resource: "", type: "" };
     const resource = this.getReportData(userProperties).status.operation

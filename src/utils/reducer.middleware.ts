@@ -2,7 +2,7 @@ import type {
   MiddlewareOrReducerType,
   MiddlewareType,
   NestedType,
-} from "../types/reducer.types";
+} from "@src/types/reducer.types";
 import type { Reducer } from "react";
 
 const withMiddleware = <STATE, ACTION>(

@@ -1,4 +1,4 @@
-import lastfm from "../../public/locales/en/lastfm.json";
+import lastfm from "@locales/lastfm.json";
 
 export const flipCardReports = [
   lastfm.select.reports.topAlbums,

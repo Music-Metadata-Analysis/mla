@@ -1,14 +1,17 @@
 import pagePropsGenerator from "../page.props.static";
 
-jest.mock("next-i18next/serverSideTranslations", () => {
+jest.mock("@src/clients/locale/vendor.ssr", () => {
   return {
-    serverSideTranslations: (locale: string, translations: string[]) =>
-      Promise.resolve({
-        i18NextProps: {
-          locale,
-          translations,
-        },
-      }),
+    Client: jest.fn((locale: string, translations: string[]) => ({
+      getTranslations: jest.fn(() =>
+        Promise.resolve({
+          i18NextProps: {
+            locale,
+            translations,
+          },
+        })
+      ),
+    })),
   };
 });
 

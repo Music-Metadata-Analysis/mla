@@ -1,14 +1,14 @@
-import { knownStatuses } from "../../../config/api";
-import requestSettings from "../../../config/requests";
-import * as status from "../../../config/status";
-import type { ProxyError } from "../../../errors/proxy.error.class";
+import { knownStatuses } from "@src/config/api";
+import requestSettings from "@src/config/requests";
+import * as status from "@src/config/status";
+import type LastFMProxy from "@src/backend/integrations/lastfm/proxy.class";
+import type { ProxyError } from "@src/errors/proxy.error.class";
 import type {
   LastFMEndpointRequest,
   LastFMEndpointResponse,
   QueryParamType,
   BodyType,
-} from "../../../types/api.endpoint.types";
-import type LastFMProxy from "../../integrations/lastfm/proxy.class";
+} from "@src/types/api.endpoint.types";
 import type { NextConnect } from "next-connect";
 
 export default abstract class LastFMEndpointBase {

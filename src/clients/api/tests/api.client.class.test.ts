@@ -1,6 +1,6 @@
-import * as status from "../../../config/status";
 import APIClient from "../api.client.class";
-import type { HttpMethodType } from "../../../types/clients/api/api.client.types";
+import * as status from "@src/config/status";
+import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
 describe("APIClient", () => {
   const client = new APIClient();

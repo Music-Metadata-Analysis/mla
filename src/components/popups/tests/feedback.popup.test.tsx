@@ -1,30 +1,28 @@
 import { render } from "@testing-library/react";
-import translations from "../../../../public/locales/en/main.json";
-import settings from "../../../config/popups";
-import mockAuthHook, {
-  mockUserProfile,
-} from "../../../hooks/tests/auth.mock.hook";
-import mockMetricsHook from "../../../hooks/tests/metrics.mock.hook";
-import mockUserInterfaceHook from "../../../hooks/tests/ui.mock.hook";
 import FeedbackDialogue from "../dialogues/feedback.dialogue";
 import FeedbackPopUp from "../feedback.popup";
 import PopUp from "../popup/popup.component";
+import translations from "@locales/main.json";
+import settings from "@src/config/popups";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockMetricsHook from "@src/hooks/tests/metrics.mock.hook";
+import mockUserInterfaceHook from "@src/hooks/tests/ui.mock.hook";
 
-jest.mock("../../../hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/auth", () => () => mockAuthHook);
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
+
+jest.mock("@src/hooks/metrics", () => () => mockMetricsHook);
+
+jest.mock("@src/hooks/ui", () => () => mockUserInterfaceHook);
 
 jest.mock("../popup/popup.component", () =>
   jest.fn(() => <div>MockPopup</div>)
 );
-
-jest.mock("../../../hooks/metrics", () => ({
-  __esModule: true,
-  default: () => mockMetricsHook,
-}));
-
-jest.mock("../../../hooks/ui", () => ({
-  __esModule: true,
-  default: () => mockUserInterfaceHook,
-}));
 
 describe("FeedBackPopup", () => {
   const mockPopUpName = "FeedBack";
@@ -73,7 +71,7 @@ describe("FeedBackPopup", () => {
           expect(PopUp).toBeCalledTimes(1);
           const call = (PopUp as jest.Mock).mock.calls[0][0];
           expect(call.name).toBe(mockPopUpName);
-          expect(call.message).toBe(translations.popups.FeedBack);
+          expect(call.message).toBe(_t(translations.popups.FeedBack));
           expect(call.Component).toBe(FeedbackDialogue);
         });
       });
@@ -105,7 +103,7 @@ describe("FeedBackPopup", () => {
           expect(PopUp).toBeCalledTimes(1);
           const call = (PopUp as jest.Mock).mock.calls[0][0];
           expect(call.name).toBe(mockPopUpName);
-          expect(call.message).toBe(translations.popups.FeedBack);
+          expect(call.message).toBe(_t(translations.popups.FeedBack));
           expect(call.Component).toBe(FeedbackDialogue);
         });
       });

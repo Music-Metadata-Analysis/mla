@@ -1,9 +1,9 @@
-import ErrorBoundary from "../../components/errors/boundary/error.boundary.component";
-import Privacy from "../../components/legal/privacy/privacy.component";
-import routes from "../../config/routes";
-import Events from "../../events/events";
-import pagePropsGenerator from "../../utils/page.props.static";
-import { voidFn } from "../../utils/voids";
+import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import Privacy from "@src/components/legal/privacy/privacy.component";
+import routes from "@src/config/routes";
+import Events from "@src/events/events";
+import pagePropsGenerator from "@src/utils/page.props.static";
+import { voidFn } from "@src/utils/voids";
 
 export default function PrivacyPage() {
   return (

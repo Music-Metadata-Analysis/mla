@@ -1,10 +1,10 @@
 import { useRef } from "react";
-import ErrorBoundary from "../../../components/errors/boundary/error.boundary.component";
-import Select from "../../../components/search/lastfm/select/select.report.component";
-import routes from "../../../config/routes";
-import Events from "../../../events/events";
-import pagePropsGenerator from "../../../utils/page.props.static";
-import { voidFn } from "../../../utils/voids";
+import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import Select from "@src/components/search/lastfm/select/select.report.component";
+import routes from "@src/config/routes";
+import Events from "@src/events/events";
+import pagePropsGenerator from "@src/utils/page.props.static";
+import { voidFn } from "@src/utils/voids";
 
 export default function SplashPage() {
   const scrollRef = useRef<HTMLDivElement>(null);

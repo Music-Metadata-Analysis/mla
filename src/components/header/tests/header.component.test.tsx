@@ -1,15 +1,16 @@
 import { waitFor, render } from "@testing-library/react";
 import Head from "next/head";
-import translation from "../../../../public/locales/en/main.json";
-import settings from "../../../config/head";
 import Header from "../header.component";
+import translation from "@locales/main.json";
+import settings from "@src/config/head";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
 
-jest.mock("next/head", () => {
-  return {
-    __esModule: true,
-    default: jest.fn(),
-  };
-});
+jest.mock("next/head", () => jest.fn());
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 const MockNextHeader = ({
   children,
@@ -57,14 +58,14 @@ describe("Header", () => {
 
     it("sets the title appropriately", async () => {
       await waitFor(() =>
-        expect(document.title).toEqual(translation.pages.default.title)
+        expect(document.title).toEqual(_t(translation.pages.default.title))
       );
     });
 
     it("should have the correct description metadata set", async () => {
       await waitFor(() =>
         expect(getMeta("description")).toEqual(
-          translation.pages.default.description
+          _t(translation.pages.default.description)
         )
       );
     });

@@ -1,6 +1,6 @@
-import routes from "../../../../../../config/routes";
-import UserAlbumState from "../../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 import FlipCardBaseReport from "../flip.card.report.base.class";
+import routes from "@src/config/routes";
+import UserAlbumState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 
 export const mockImageUrl = "http://someurl";
 

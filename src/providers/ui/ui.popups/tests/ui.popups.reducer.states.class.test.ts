@@ -1,7 +1,7 @@
 import { InitialState } from "../ui.popups.initial";
 import UserInterfacePopUpsReducerStates from "../ui.popups.reducer.states.class";
-import type { UserInterfacePopUpsActionType } from "../../../../types/ui/popups/ui.popups.action.types";
-import type { UserInterfacePopUpsStateInterface } from "../../../../types/ui/popups/ui.popups.state.types";
+import type { UserInterfacePopUpsActionType } from "@src/types/ui/popups/ui.popups.action.types";
+import type { UserInterfacePopUpsStateInterface } from "@src/types/ui/popups/ui.popups.state.types";
 
 describe("UserReducerStates", () => {
   let reducerStates: UserInterfacePopUpsReducerStates;

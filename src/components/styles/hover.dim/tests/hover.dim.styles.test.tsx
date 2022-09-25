@@ -1,12 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import DimOnHover from "../hover.dim.styles";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Box"]);
 });
 

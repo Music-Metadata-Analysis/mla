@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { UserInterfaceImagesContext } from "../providers/ui/ui.images/ui.images.provider";
-import { UserInterfacePopUpsContext } from "../providers/ui/ui.popups/ui.popups.provider";
-import type { PopUpNameType } from "../types/ui/popups/ui.popups.state.types";
+import { UserInterfaceImagesContext } from "@src/providers/ui/ui.images/ui.images.provider";
+import { UserInterfacePopUpsContext } from "@src/providers/ui/ui.popups/ui.popups.provider";
+import type { PopUpNameType } from "@src/types/ui/popups/ui.popups.state.types";
 
 const useUserInterface = () => {
   const images = useContext(UserInterfaceImagesContext);

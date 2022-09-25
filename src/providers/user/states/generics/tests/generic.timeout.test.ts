@@ -1,8 +1,8 @@
-import { mockInitialReportData } from "../../../tests/fixtures/mock.user.state.data";
-import { InitialState } from "../../../user.initial";
 import ReducerState from "../generic.timeout.class";
-import type { UserActionType } from "../../../../../types/user/action.types";
-import type { UserStateInterface } from "../../../../../types/user/state.types";
+import { mockInitialReportData } from "@src/providers/user/tests/fixtures/mock.user.state.data";
+import { InitialState } from "@src/providers/user/user.initial";
+import type { UserActionType } from "@src/types/user/action.types";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
 const testType = "TimeoutFetch";
 type actionType = UserActionType & { type: typeof testType };

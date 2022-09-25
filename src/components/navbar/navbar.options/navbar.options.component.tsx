@@ -1,7 +1,7 @@
-import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import useAnalytics from "../../../hooks/analytics";
 import NavLink from "../navbar.link/navbar.link.component";
+import useAnalytics from "@src/hooks/analytics";
+import useLocale from "@src/hooks/locale";
 
 interface NavBarProps {
   menuConfig: { [index: string]: string };
@@ -10,7 +10,7 @@ interface NavBarProps {
 const NavBarOptions = ({ menuConfig }: NavBarProps) => {
   const router = useRouter();
   const analytics = useAnalytics();
-  const { t } = useTranslation("navbar");
+  const { t } = useLocale("navbar");
 
   return (
     <>

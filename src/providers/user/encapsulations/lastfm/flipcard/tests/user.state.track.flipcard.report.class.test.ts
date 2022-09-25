@@ -1,15 +1,16 @@
 import { baseUserProperties } from "../../tests/fixtures/mock.user.state.data";
 import UserTrackState from "../user.state.track.flipcard.report.class";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
 import type {
   LastFMArtistDataInterface,
   LastFMTrackDataInterface,
-} from "../../../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateTrackReport } from "../../../../../../types/user/state.types";
+} from "@src/types/integrations/lastfm/api.types";
+import type { LastFMUserStateTrackReport } from "@src/types/user/state.types";
 
 describe("UserTrackState", () => {
   let currentState: LastFMUserStateTrackReport;
   let instance: UserTrackState;
-  const mockT = jest.fn((arg: string) => `t(${arg})`);
+  const mockT = new mockUseLocale("lastfm").t;
   let index: number;
 
   const resetState = () => {
@@ -184,9 +185,9 @@ describe("UserTrackState", () => {
         it("should return the default name (url encoded)", () => {
           instance.defaultTrackName = "has a space";
           expect(instance.getExternalLink(index)).toBe(
-            `${instance.lastfmPrefix}/${
+            `${instance.lastfmPrefix}/${encodeURIComponent(
               instance.defaultArtistName
-            }/_/${encodeURIComponent(instance.defaultTrackName)}`
+            )}/_/${encodeURIComponent(instance.defaultTrackName)}`
           );
         });
       });
@@ -243,9 +244,9 @@ describe("UserTrackState", () => {
       it("should return the default name (url encoded)", () => {
         instance.defaultTrackName = "has a space";
         expect(instance.getExternalLink(index)).toBe(
-          `${instance.lastfmPrefix}/${
+          `${instance.lastfmPrefix}/${encodeURIComponent(
             instance.defaultArtistName
-          }/_/${encodeURIComponent(instance.defaultTrackName)}`
+          )}/_/${encodeURIComponent(instance.defaultTrackName)}`
         );
       });
     });

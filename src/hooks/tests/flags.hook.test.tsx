@@ -3,9 +3,8 @@ import dk from "deep-keys";
 import mockUseFlagsHook from "./flags.mock.hook";
 import useFlags from "../flags";
 
-jest.mock("../../clients/flags/vendor", () => ({
-  __esModule: true,
-  default: { hook: () => mockUseFlagsHook },
+jest.mock("@src/clients/flags/vendor", () => ({
+  hook: () => mockUseFlagsHook,
 }));
 
 describe("useFlags", () => {

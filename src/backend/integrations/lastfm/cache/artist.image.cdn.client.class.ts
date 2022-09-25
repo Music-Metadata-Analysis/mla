@@ -1,6 +1,6 @@
 import ArtistImageScraper from "./artist.image.scraper.class";
 import cacheVendor from "../../cache/vendor";
-import type { PersistanceVendorInterface } from "../../../../types/integrations/persistance/vendor.types";
+import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
 
 export default class ArtistImageCdnClient extends cacheVendor.VendorCdnBaseClient<string> {
   protected scraper: ArtistImageScraper;

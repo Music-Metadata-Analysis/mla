@@ -1,9 +1,9 @@
-import LastFMApiEndpointFactoryV2 from "../../../../../../../../../backend/api/lastfm/v2.endpoint.base.class";
-import apiRoutes from "../../../../../../../../../config/apiRoutes";
+import LastFMApiEndpointFactoryV2 from "@src/backend/api/lastfm/v2.endpoint.base.class";
+import apiRoutes from "@src/config/apiRoutes";
 import type {
   LastFMEndpointRequest,
   PathParamType,
-} from "../../../../../../../../../types/api.endpoint.types";
+} from "@src/types/api.endpoint.types";
 
 class ArtistTopAlbums extends LastFMApiEndpointFactoryV2 {
   route = apiRoutes.v2.data.artists.tracksGet;

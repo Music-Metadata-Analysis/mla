@@ -1,5 +1,5 @@
-import env from "../config/env";
-import authVendor from "../vendors/auth/vendor";
+import env from "@cypress/config/env";
+import authVendor from "@cypress/vendors/auth/vendor";
 
 const cookiePrefix = Cypress.env(env.BASEURL).includes("localhost")
   ? ""

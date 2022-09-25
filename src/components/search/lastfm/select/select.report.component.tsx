@@ -1,21 +1,21 @@
 import { Box, Flex, Avatar } from "@chakra-ui/react";
-import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { MutableRefObject, useEffect, useState } from "react";
 import Option from "./inlay/select.option.component";
-import config from "../../../../config/lastfm";
-import settings from "../../../../config/navbar";
-import useFlags from "../../../../hooks/flags";
-import Billboard from "../../../billboard/billboard.component";
-import LastFMIcon from "../../../icons/lastfm/lastfm.icon";
-import VerticalScrollBarComponent from "../../../scrollbar/vertical.scrollbar.component";
+import Billboard from "@src/components/billboard/billboard.component";
+import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
+import VerticalScrollBarComponent from "@src/components/scrollbar/vertical.scrollbar.component";
+import config from "@src/config/lastfm";
+import settings from "@src/config/navbar";
+import useFlags from "@src/hooks/flags";
+import useLocale from "@src/hooks/locale";
 
 export interface SearchSelectionProps {
   scrollRef: MutableRefObject<HTMLDivElement | null>;
 }
 
 export default function SearchSelection({ scrollRef }: SearchSelectionProps) {
-  const { t } = useTranslation("lastfm");
+  const { t } = useLocale("lastfm");
   const router = useRouter();
   const [visibleIndicators, setVisibleIndicators] = useState(true);
   const flags = useFlags();

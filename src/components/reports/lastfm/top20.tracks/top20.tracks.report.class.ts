@@ -1,7 +1,7 @@
-import routes from "../../../../config/routes";
-import UserTrackDataState from "../../../../providers/user/encapsulations/lastfm/flipcard/user.state.track.flipcard.report.class";
-import FlipCardDrawer from "../common/flip.card.report.drawer/flip.card.report.drawer.component";
-import FlipCardBaseReport from "../common/flip.card.report/flip.card.report.base.class";
+import FlipCardDrawer from "@src/components/reports/lastfm/common/flip.card.report.drawer/flip.card.report.drawer.component";
+import FlipCardBaseReport from "@src/components/reports/lastfm/common/flip.card.report/flip.card.report.base.class";
+import routes from "@src/config/routes";
+import UserTrackDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.track.flipcard.report.class";
 
 export default class Top20TracksReport extends FlipCardBaseReport<UserTrackDataState> {
   analyticsReportType = "TOP20 TRACKS" as const;

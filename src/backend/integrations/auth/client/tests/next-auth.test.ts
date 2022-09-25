@@ -1,12 +1,12 @@
 import { getToken } from "next-auth/jwt";
-import { createAPIMocks } from "../../../../../tests/fixtures/mock.authentication";
 import NextAuthClient from "../next-auth";
-import type { MockAPIRequest } from "../../../../../types/api.endpoint.types";
-import type { AuthVendorSessionType } from "../../../../../types/integrations/auth/vendor.types";
+import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
+import type { MockAPIRequest } from "@src/types/api.endpoint.types";
+import type { AuthVendorSessionType } from "@src/types/integrations/auth/vendor.types";
 import type { JWT } from "next-auth/jwt";
 
-jest.mock("../../../../../utils/voids", () => {
-  const module = require("../../../../../utils/tests/voids.mock");
+jest.mock("@src/utils/voids", () => {
+  const module = require("@src/utils/tests/voids.mock");
   return { normalizeNull: module.mockNormalizeNull };
 });
 

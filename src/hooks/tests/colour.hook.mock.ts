@@ -1,4 +1,4 @@
-import type { Colour } from "../../types/ui/chakra.types";
+import type { Colour } from "@src/types/ui/chakra.types";
 
 let colourIndex = 1;
 

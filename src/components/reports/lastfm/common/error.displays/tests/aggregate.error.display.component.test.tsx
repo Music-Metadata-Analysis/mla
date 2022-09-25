@@ -1,30 +1,29 @@
 import { render } from "@testing-library/react";
-import MockStage2Report from "../../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import mockRouter from "../../../../../../tests/fixtures/mock.router";
-import Authentication from "../../../../../authentication/authentication.container";
-import ErrorDisplay from "../../../../../errors/display/error.display.component";
-import { MockReportClass } from "../../sunburst.report/tests/fixtures/mock.sunburst.report.class";
 import AggregateErrorDisplayComponent from "../aggregate.error.display.component";
-import type { LastFMUserStateBase } from "../../../../../../types/user/state.types";
+import Authentication from "@src/components/authentication/authentication.container";
+import ErrorDisplay from "@src/components/errors/display/error.display.component";
+import { MockReportClass } from "@src/components/reports/lastfm/common/sunburst.report/tests/fixtures/mock.sunburst.report.class";
+import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import mockRouter from "@src/tests/fixtures/mock.router";
+import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
-jest.mock("../../../../../authentication/authentication.container", () =>
+jest.mock("@src/components/authentication/authentication.container", () =>
   jest.fn(() => <div>MockedAuthenticationComponent</div>)
 );
 
-jest.mock("../../../../../errors/display/error.display.component", () =>
+jest.mock("@src/components/errors/display/error.display.component", () =>
   createMockedComponent("ErrorDisplay")
 );
 
 jest.mock("next/router", () => ({
-  __esModule: true,
   useRouter: () => mockRouter,
 }));
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

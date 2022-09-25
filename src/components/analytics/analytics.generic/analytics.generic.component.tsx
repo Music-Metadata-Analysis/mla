@@ -1,5 +1,5 @@
-import useAnalytics from "../../../hooks/analytics";
-import type EventDefinition from "../../../events/event.class";
+import useAnalytics from "@src/hooks/analytics";
+import type EventDefinition from "@src/events/event.class";
 
 interface AnalyticsGenericWrapperProps {
   eventDefinition: EventDefinition;

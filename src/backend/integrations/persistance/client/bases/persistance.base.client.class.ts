@@ -2,7 +2,7 @@ import type {
   PersistanceDataType,
   PersistanceVendorInterface,
   PersistanceClientHeaders,
-} from "../../../../../types/integrations/persistance/vendor.types";
+} from "@src/types/integrations/persistance/vendor.types";
 export default abstract class PersistanceVendorBaseClass
   implements PersistanceVendorInterface
 {

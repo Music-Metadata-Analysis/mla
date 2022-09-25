@@ -1,30 +1,31 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import lastfmTranslations from "../../../../../public/locales/en/lastfm.json";
-import mainTranslations from "../../../../../public/locales/en/main.json";
-import settings from "../../../../config/lastfm";
-import routes from "../../../../config/routes";
-import mockAuthHook, {
-  mockUserProfile,
-} from "../../../../hooks/tests/auth.mock.hook";
-import mockRouter from "../../../../tests/fixtures/mock.router";
-import tLookup from "../../../../tests/fixtures/mock.translation";
-import SearchUI from "../search.ui.component";
+import SearchUI from "../search.ui";
+import lastfmTranslations from "@locales/lastfm.json";
+import mainTranslations from "@locales/main.json";
+import settings from "@src/config/lastfm";
+import routes from "@src/config/routes";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockRouter from "@src/tests/fixtures/mock.router";
+
+jest.mock("@src/hooks/auth", () => () => mockAuthHook);
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 jest.mock("next/router", () => ({
-  __esModule: true,
   useRouter: () => mockRouter,
 }));
 
-jest.mock("../../../../hooks/auth", () => () => mockAuthHook);
-
-jest.mock(
-  "../../../../components/authentication/authentication.container",
-  () => jest.fn(() => <div>MockedAuthenticationComponent</div>)
+jest.mock("@src/components/authentication/authentication.container", () =>
+  jest.fn(() => <div>MockedAuthenticationComponent</div>)
 );
 
 describe("SearchTopTracks", () => {
   let enteredUsername: string;
-  const mockT = jest.fn((key) => tLookup(key, lastfmTranslations));
+  const mockT = new mockUseLocale("lastfm").t;
   const mockTitle = "mockTitle";
 
   beforeEach(() => {
@@ -51,41 +52,43 @@ describe("SearchTopTracks", () => {
   it("should display the correct input placeholder", async () => {
     expect(
       await screen.findByPlaceholderText(
-        lastfmTranslations.search.fieldPlaceholder
+        _t(lastfmTranslations.search.fieldPlaceholder)
       )
     ).toBeTruthy();
   });
 
   it("should display the correct buttonText", async () => {
     expect(
-      await screen.findByText(lastfmTranslations.search.buttonText)
+      await screen.findByText(_t(lastfmTranslations.search.buttonText))
     ).toBeTruthy();
   });
 
   it("should render the last.fm avatar correctly", async () => {
     expect(
-      await screen.findByAltText(mainTranslations.altText.lastfm)
+      await screen.findByAltText(_t(mainTranslations.altText.lastfm))
     ).toBeTruthy();
   });
 
   describe("given no username", () => {
     beforeEach(async () => {
       const element = screen.getByPlaceholderText(
-        lastfmTranslations.search.fieldPlaceholder
+        _t(lastfmTranslations.search.fieldPlaceholder)
       ) as HTMLInputElement;
       expect(element.value).toBe("");
     });
 
     describe("when search is pressed", () => {
       beforeEach(async () => {
-        const element = screen.getByText(lastfmTranslations.search.buttonText);
+        const element = screen.getByText(
+          _t(lastfmTranslations.search.buttonText)
+        );
         await waitFor(() => fireEvent.click(element));
       });
 
       it("should show an error message", async () => {
         expect(
           await screen.findByText(
-            lastfmTranslations.search.errors.username.required
+            _t(lastfmTranslations.search.errors.username.required)
           )
         ).toBeTruthy();
       });
@@ -95,7 +98,7 @@ describe("SearchTopTracks", () => {
   describe("given an invalid username", () => {
     beforeEach(async () => {
       const element = screen.getByPlaceholderText(
-        lastfmTranslations.search.fieldPlaceholder
+        _t(lastfmTranslations.search.fieldPlaceholder)
       ) as HTMLInputElement;
       expect(element.value).toBe("");
       enteredUsername = "a".repeat(settings.search.maxUserLength + 1);
@@ -106,14 +109,16 @@ describe("SearchTopTracks", () => {
 
     describe("when search is pressed", () => {
       beforeEach(async () => {
-        const element = screen.getByText(lastfmTranslations.search.buttonText);
+        const element = screen.getByText(
+          _t(lastfmTranslations.search.buttonText)
+        );
         await waitFor(() => fireEvent.click(element));
       });
 
       it("should show an error message", async () => {
         expect(
           await screen.findByText(
-            lastfmTranslations.search.errors.username.valid
+            _t(lastfmTranslations.search.errors.username.valid)
           )
         ).toBeTruthy();
       });
@@ -124,7 +129,7 @@ describe("SearchTopTracks", () => {
     beforeEach(async () => {
       enteredUsername = 'niall-byrne"urlencoded"';
       const element = screen.getByPlaceholderText(
-        lastfmTranslations.search.fieldPlaceholder
+        _t(lastfmTranslations.search.fieldPlaceholder)
       );
       await waitFor(() =>
         fireEvent.change(element, { target: { value: enteredUsername } })
@@ -133,7 +138,9 @@ describe("SearchTopTracks", () => {
 
     describe("when search is pressed", () => {
       beforeEach(async () => {
-        const element = screen.getByText(lastfmTranslations.search.buttonText);
+        const element = screen.getByText(
+          _t(lastfmTranslations.search.buttonText)
+        );
         await waitFor(() => fireEvent.click(element));
       });
 

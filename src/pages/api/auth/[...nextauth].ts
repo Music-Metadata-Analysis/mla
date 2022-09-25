@@ -1,3 +1,3 @@
-import authVendor from "../../../backend/integrations/auth/vendor";
+import authVendor from "@src/backend/integrations/auth/vendor";
 
 export default authVendor.ApiRoutes;

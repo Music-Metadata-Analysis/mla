@@ -1,22 +1,20 @@
 import { Box, Center } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import settings from "../../../../../config/sunburst";
-import mockColourHook from "../../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import SunBurstChartContainer from "../chart.container";
 import SunBurstChartUI, { SunBurstChartUIProps } from "../chart.ui.component";
-import type { d3Node } from "../../../../../types/reports/sunburst.types";
+import settings from "@src/config/sunburst";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Box", "Center"]);
 });
 
-jest.mock("../../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("../chart.container", () =>
   createMockedComponent("SunBurstChartContainer")
@@ -25,7 +23,7 @@ jest.mock("../chart.container", () =>
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

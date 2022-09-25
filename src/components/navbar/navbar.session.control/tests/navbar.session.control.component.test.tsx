@@ -1,22 +1,18 @@
 import { Box, Button } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import mockAuthHook, {
-  mockUserProfile,
-} from "../../../../hooks/tests/auth.mock.hook";
-import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import AnalyticsWrapper from "../../../analytics/analytics.button/analytics.button.component";
-import Authentication from "../../../authentication/authentication.container";
 import NavBarSessionControl from "../navbar.session.control.component";
+import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
+import Authentication from "@src/components/authentication/authentication.container";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../../hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/auth", () => () => mockAuthHook);
 
-jest.mock("../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock(
-  "../../../analytics/analytics.button/analytics.button.component",
+  "@src/components/analytics/analytics.button/analytics.button.component",
   () => createMockedComponent("AnalyticsWrapper")
 );
 
@@ -24,21 +20,21 @@ jest.mock("@chakra-ui/react", () => ({
   useDisclosure: () => mockUseDisclosure(),
 }));
 
-jest.mock("../../../authentication/authentication.container", () => {
-  return jest.fn(() => <div>MockComponent</div>);
-});
-
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Box", "Button"]);
+});
+
+jest.mock("@src/components/authentication/authentication.container", () => {
+  return jest.fn(() => <div>MockComponent</div>);
 });
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

@@ -1,24 +1,22 @@
 import { MockReportClass } from "./fixtures/mock.sunburst.report.class";
-import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
-import MockStage2Report from "../../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
-import PlayCountByArtistState from "../../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import SunBurstDataTranslator from "../chart/chart.data.class";
 import MockCompleteReport1 from "../chart/tests/fixtures/mock.state.data.1.json";
-import type { PlayCountByArtistReportInterface } from "../../../../../../types/clients/api/lastfm/response.types";
+import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
+import PlayCountByArtistState from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
+import type SunBurstNodeEncapsulation from "../encapsulations/sunburst.node.encapsulation.base";
+import type SunBurstBaseReport from "../sunburst.report.base.class";
+import type { BillBoardProgressBarDetails } from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
+import type { LastFMSunBurstDrawerInterface } from "@src/components/reports/lastfm/common/sunburst.report.drawer/sunburst.report.drawer.component";
+import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
 import type {
   AggregateBaseReportResponseInterface,
   AggregateReportOperationType,
-} from "../../../../../../types/integrations/base.types";
-import type {
-  d3Node,
-  SunBurstData,
-} from "../../../../../../types/reports/sunburst.types";
-import type { userHookAsLastFM } from "../../../../../../types/user/hook.types";
-import type { LastFMUserStateBase } from "../../../../../../types/user/state.types";
-import type { BillBoardProgressBarDetails } from "../../../../../billboard/billboard.progress.bar/billboard.progress.bar.component";
-import type { LastFMSunBurstDrawerInterface } from "../../sunburst.report.drawer/sunburst.report.drawer.component";
-import type SunBurstNodeEncapsulation from "../encapsulations/sunburst.node.encapsulation.base";
-import type SunBurstBaseReport from "../sunburst.report.base.class";
+} from "@src/types/integrations/base.types";
+import type { d3Node, SunBurstData } from "@src/types/reports/sunburst.types";
+import type { userHookAsLastFM } from "@src/types/user/hook.types";
+import type { LastFMUserStateBase } from "@src/types/user/state.types";
 import type { FC } from "react";
 
 jest.mock("../chart/chart.data.class.ts", () =>
@@ -32,7 +30,7 @@ const mockConvert = jest.fn();
 describe("SunBurstBaseReport", () => {
   let instance: SunBurstBaseReport<PlayCountByArtistState>;
   let mockUserState: LastFMUserStateBase;
-  const mockT = jest.fn((key: string) => `t(${key})`);
+  const mockT = new mockUseLocale("sunburst").t;
 
   describe("When instantiated with a concrete implementation", () => {
     beforeEach(() => {
@@ -182,7 +180,7 @@ describe("SunBurstBaseReport", () => {
         it("should return the expected details", () => {
           expect(received.resource).toBe(getUserStateOperation().resource);
           expect(received.type).toBe(
-            `t(detailTypes.${getUserStateOperation().type})`
+            mockT(`detailTypes.${getUserStateOperation().type}`)
           );
         });
       });

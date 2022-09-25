@@ -1,14 +1,14 @@
 import { Flex, Spacer } from "@chakra-ui/react";
-import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import routes from "../../../config/routes";
-import useAnalytics from "../../../hooks/analytics";
 import NavBarAvatar from "../navbar.avatar/navbar.avatar.component";
 import NavBarLink from "../navbar.link/navbar.link.component";
+import routes from "@src/config/routes";
+import useAnalytics from "@src/hooks/analytics";
+import useLocale from "@src/hooks/locale";
 
 const NavBarLogo = () => {
   const analytics = useAnalytics();
-  const { t } = useTranslation("navbar");
+  const { t } = useLocale("navbar");
   const router = useRouter();
 
   return (

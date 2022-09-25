@@ -1,4 +1,4 @@
-import nullNode from "../../providers/user/reports/sunburst.node.initial";
+import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 
 const mockUseSunBurstState = {
   setters: {

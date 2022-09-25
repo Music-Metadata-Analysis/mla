@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import { Html, Head, Main, NextScript } from "next/document";
 import checkMockCall from "../../src/tests/fixtures/mock.component.call";
-import BaseDocument from "../pages/_document";
+import BaseDocument from "@src/pages/_document";
 import type { Component } from "react";
 
 jest.mock("@chakra-ui/react", () => ({

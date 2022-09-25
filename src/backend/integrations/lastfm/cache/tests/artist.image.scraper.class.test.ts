@@ -1,5 +1,5 @@
-import lastFMConfig from "../../../../../config/lastfm";
 import ArtistImageScraper from "../artist.image.scraper.class";
+import lastFMConfig from "@src/config/lastfm";
 
 const mockValidExpectedHTML = `
   <ul class="image-list">

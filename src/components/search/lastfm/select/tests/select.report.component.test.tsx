@@ -2,24 +2,31 @@
 import { BoxWithFwdRef, Flex, Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
-import translations from "../../../../../../public/locales/en/lastfm.json";
-import config from "../../../../../config/lastfm";
-import settings from "../../../../../config/navbar";
-import mockUseFlags from "../../../../../hooks/tests/flags.mock.hook";
-import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
-import translationKeyLookup from "../../../../../tests/fixtures/mock.translation";
-import Billboard from "../../../../billboard/billboard.component";
-import LastFMIcon from "../../../../icons/lastfm/lastfm.icon";
-import VerticalScrollBarComponent from "../../../../scrollbar/vertical.scrollbar.component";
 import Option from "../inlay/select.option.component";
 import Select from "../select.report.component";
+import translations from "@locales/lastfm.json";
+import Billboard from "@src/components/billboard/billboard.component";
+import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
+import VerticalScrollBarComponent from "@src/components/scrollbar/vertical.scrollbar.component";
+import config from "@src/config/lastfm";
+import settings from "@src/config/navbar";
+import mockUseFlags from "@src/hooks/tests/flags.mock.hook";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { MutableRefObject } from "react";
+
+jest.mock("@src/hooks/flags", () => () => mockUseFlags);
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 jest.mock("@chakra-ui/react", () => {
   const { forwardRef } = require("react");
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   const chakraMock = factoryInstance.create(["Avatar", "Box", "Flex"]);
   chakraMock.Avatar = jest.fn().mockImplementation(() => <div>MockAvatar</div>);
   chakraMock.BoxWithFwdRef = chakraMock.Box;
@@ -27,12 +34,7 @@ jest.mock("@chakra-ui/react", () => {
   return chakraMock;
 });
 
-jest.mock("../../../../../hooks/flags", () => ({
-  __esModule: true,
-  default: () => mockUseFlags,
-}));
-
-jest.mock("../../../../billboard/billboard.component", () =>
+jest.mock("@src/components/billboard/billboard.component", () =>
   createMockedComponent("BillBoard")
 );
 
@@ -40,21 +42,18 @@ jest.mock("../inlay/select.option.component", () =>
   createMockedComponent("Option")
 );
 
-jest.mock("../../../../scrollbar/vertical.scrollbar.component", () =>
+jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   createMockedComponent("VerticalScrollBarComponent")
 );
 
-jest.mock("../../../../icons/lastfm/lastfm.icon", () => {
-  return {
-    __esModule: true,
-    default: createMock("LastFMIcon"),
-  };
-});
+jest.mock("@src/components/icons/lastfm/lastfm.icon", () =>
+  createMock("LastFMIcon")
+);
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
@@ -64,10 +63,10 @@ const createMock = (name: string) =>
   });
 
 describe("SearchSelection", () => {
-  const t = (key: string) => translationKeyLookup(key, translations);
   const mockRef = {
     current: { mock: "div" },
   } as unknown as MutableRefObject<HTMLDivElement | null>;
+  const mockT = new mockUseLocale("lastfm");
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -79,7 +78,7 @@ describe("SearchSelection", () => {
 
   const checkChakraComponents = () => {
     it("should call Billboard with the correct props", () => {
-      checkMockCall(Billboard, { title: translations.select.title }, 0, []);
+      checkMockCall(Billboard, { title: _t(translations.select.title) }, 0, []);
     });
 
     it("should call Flex as expected to center content", () => {
@@ -147,10 +146,10 @@ describe("SearchSelection", () => {
           config.select.options[index].analyticsName
         );
         expect(call.buttonText).toBe(
-          t(config.select.options[index].buttonTextKey)
+          mockT.t(config.select.options[index].buttonTextKey)
         );
         expect(call.indicatorText).toBe(
-          t(config.select.options[index].indicatorTextKey)
+          mockT.t(config.select.options[index].indicatorTextKey)
         );
         expect(call.visibleIndicators).toBe(true);
       });

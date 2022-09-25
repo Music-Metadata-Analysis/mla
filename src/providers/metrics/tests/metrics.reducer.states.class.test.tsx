@@ -1,7 +1,7 @@
 import { InitialState } from "../metrics.initial";
 import MetricsReducerStates from "../metrics.reducer.states.class";
-import type { MetricsActionType } from "../../../types/metrics/action.types";
-import type { MetricsStateType } from "../../../types/metrics/state.types";
+import type { MetricsActionType } from "@src/types/metrics/action.types";
+import type { MetricsStateType } from "@src/types/metrics/state.types";
 
 describe("MetricsReducerStates", () => {
   let reducerStates: MetricsReducerStates;

@@ -1,5 +1,5 @@
-import type { MetricsActionType } from "../../types/metrics/action.types";
-import type { MetricsStateType } from "../../types/metrics/state.types";
+import type { MetricsActionType } from "@src/types/metrics/action.types";
+import type { MetricsStateType } from "@src/types/metrics/state.types";
 
 class MetricsReducerStates {
   wrongTypeError = "Received wrong action type.";

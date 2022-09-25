@@ -1,13 +1,13 @@
 import MockStage2Report from "./fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import MockStage3Report from "./fixtures/user.state.playcount.by.artist.sunburst.stage.3.json";
-import apiRoutes from "../../../../../../../config/apiRoutes";
-import MockAlbumGetInfo from "../../../../../../../tests/fixtures/lastfm/api/album.getInfo.json";
-import MockArtistGetTopAlbums from "../../../../../../../tests/fixtures/lastfm/api/artist.getTopAlbums.json";
-import MockUserGetTopArtists from "../../../../../../../tests/fixtures/lastfm/api/user.getTopArtists.json";
-import { InitialState } from "../../../../../user.initial";
 import PlayCountByArtistState from "../user.state.playcount.by.artist.sunburst.report.class";
-import type { LastFMImageDataInterface } from "../../../../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStatePlayCountByArtistReport } from "../../../../../../../types/user/state.types";
+import apiRoutes from "@src/config/apiRoutes";
+import { InitialState } from "@src/providers/user/user.initial";
+import MockAlbumGetInfo from "@src/tests/fixtures/lastfm/api/album.getInfo.json";
+import MockArtistGetTopAlbums from "@src/tests/fixtures/lastfm/api/artist.getTopAlbums.json";
+import MockUserGetTopArtists from "@src/tests/fixtures/lastfm/api/user.getTopArtists.json";
+import type { LastFMImageDataInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMUserStatePlayCountByArtistReport } from "@src/types/user/state.types";
 
 describe("UserPlaycountByArtistState", () => {
   let instance: PlayCountByArtistState;

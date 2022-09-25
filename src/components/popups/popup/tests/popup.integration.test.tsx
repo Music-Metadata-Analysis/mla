@@ -9,10 +9,10 @@ import MockPopupDialogue, {
   testIDs,
   testColours,
 } from "./fixtures/mock.popup.dialogue";
-import UserInterfaceChakraProvider from "../../../../providers/ui/ui.chakra/ui.chakra.provider";
-import { UserInterfacePopUpsContext } from "../../../../providers/ui/ui.popups/ui.popups.provider";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import Popup from "../popup.component";
+import UserInterfaceChakraProvider from "@src/providers/ui/ui.chakra/ui.chakra.provider";
+import { UserInterfacePopUpsContext } from "@src/providers/ui/ui.popups/ui.popups.provider";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 describe("PopUp", () => {
   const mockPopUpName = "FeedBack";

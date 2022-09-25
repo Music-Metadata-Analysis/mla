@@ -1,4 +1,4 @@
-import type { AuthVendorHookInterface } from "../../types/clients/auth/vendor.types";
+import type { AuthVendorHookInterface } from "@src/types/clients/auth/vendor.types";
 
 const mockAuthHook: AuthVendorHookInterface = {
   signIn: jest.fn(),

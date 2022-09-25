@@ -1,6 +1,6 @@
 import { getToken } from "next-auth/jwt";
-import { normalizeNull } from "../../../../utils/voids";
-import type { AuthVendorClientInterface } from "../../../../types/integrations/auth/vendor.types";
+import { normalizeNull } from "@src/utils/voids";
+import type { AuthVendorClientInterface } from "@src/types/integrations/auth/vendor.types";
 import type { NextApiRequest } from "next";
 
 export default class NextAuthClient implements AuthVendorClientInterface {

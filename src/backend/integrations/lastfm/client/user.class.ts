@@ -1,18 +1,18 @@
 import LastFMClientAdapterBase from "./client.base.class";
 import ArtistImageCacheFactory from "../cache/artist.image.cache.factory.class";
-import type { CacheControllerInterface } from "../../../../types/integrations/cache/vendor.types";
+import type { CacheControllerInterface } from "@src/types/integrations/cache/vendor.types";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
   LastFMImageDataInterface,
   LastFMTrackDataInterface,
   LastFMUserProfileInterface,
-} from "../../../../types/integrations/lastfm/api.types";
+} from "@src/types/integrations/lastfm/api.types";
 import type {
   LastFMUserClientInterface,
   LastFMExternalClientError,
-} from "../../../../types/integrations/lastfm/client.types";
-import type { Await } from "../../../../types/promise.types";
+} from "@src/types/integrations/lastfm/client.types";
+import type { Await } from "@src/types/promise.types";
 class LastFmUserClientAdapter
   extends LastFMClientAdapterBase
   implements LastFMUserClientInterface

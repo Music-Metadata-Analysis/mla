@@ -1,8 +1,8 @@
-import routes from "../../../../../config/routes";
-import UserTrackDataState from "../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.track.flipcard.report.class";
-import FlipCardDrawer from "../../common/flip.card.report.drawer/flip.card.report.drawer.component";
 import Report from "../top20.tracks.report.class";
-import type { LastFMTrackDataInterface } from "../../../../../types/integrations/lastfm/api.types";
+import FlipCardDrawer from "@src/components/reports/lastfm/common/flip.card.report.drawer/flip.card.report.drawer.component";
+import routes from "@src/config/routes";
+import UserTrackDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.track.flipcard.report.class";
+import type { LastFMTrackDataInterface } from "@src/types/integrations/lastfm/api.types";
 
 describe("Top20TracksReport", () => {
   let report: Report;

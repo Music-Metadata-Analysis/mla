@@ -1,18 +1,18 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
 import FlipCardReport from "./flip.card.report.component";
-import Events from "../../../../../events/events";
-import useAnalytics from "../../../../../hooks/analytics";
-import useMetrics from "../../../../../hooks/metrics";
-import useUserInterface from "../../../../../hooks/ui";
-import Authentication from "../../../../authentication/authentication.container";
-import BillBoardSpinner from "../../../../billboard/billboard.spinner/billboard.spinner.component";
-import ErrorDisplay from "../../../../errors/display/error.display.component";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type { IntegrationRequestType } from "../../../../../types/analytics.types";
-import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
+import Authentication from "@src/components/authentication/authentication.container";
+import BillBoardSpinner from "@src/components/billboard/billboard.spinner/billboard.spinner.component";
+import ErrorDisplay from "@src/components/errors/display/error.display.component";
+import Events from "@src/events/events";
+import useAnalytics from "@src/hooks/analytics";
+import useLocale from "@src/hooks/locale";
+import useMetrics from "@src/hooks/metrics";
+import useUserInterface from "@src/hooks/ui";
 import type FlipCardBaseReport from "../flip.card.report/flip.card.report.base.class";
+import type UserState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
+import type { IntegrationRequestType } from "@src/types/analytics.types";
+import type { userHookAsLastFM } from "@src/types/user/hook.types";
 
 interface FlipCardReportProps<T extends UserState> {
   userName: string;
@@ -24,7 +24,7 @@ export default function FlipCardReportContainer<
   UserStateType extends UserState
 >({ user, userName, reportClass }: FlipCardReportProps<UserStateType>) {
   const analytics = useAnalytics();
-  const { t } = useTranslation("lastfm");
+  const { t } = useLocale("lastfm");
   const metrics = useMetrics();
   const report = new reportClass();
   const router = useRouter();

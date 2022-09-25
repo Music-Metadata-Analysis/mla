@@ -1,3 +1,3 @@
-import type { BaseReportResponseInterface } from "../integrations/base.types";
+import type { BaseReportResponseInterface } from "@src/types/integrations/base.types";
 
 export type UserReportType = BaseReportResponseInterface;
