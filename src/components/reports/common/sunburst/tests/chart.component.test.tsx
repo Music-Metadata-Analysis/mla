@@ -8,13 +8,10 @@ import {
 import { RefObject, useState, Dispatch } from "react";
 import mockDataSet3 from "./fixtures/mock.sunburst.data.3.json";
 import mockDataSet4 from "./fixtures/mock.sunburst.data.4.json";
-import nullNode from "../../../../../providers/user/reports/sunburst.node.initial";
-import { getMockProp } from "../../../../../tests/fixtures/mock.component.props";
 import SunBurstChart, { testIDs, SunBurstChartProps } from "../chart.component";
-import type {
-  SunBurstData,
-  d3Node,
-} from "../../../../../types/reports/sunburst.types";
+import nullNode from "@src/providers/user/reports/sunburst.node.initial";
+import { getMockProp } from "@src/tests/fixtures/mock.component.props";
+import type { SunBurstData, d3Node } from "@src/types/reports/sunburst.types";
 import type { SetStateAction } from "react";
 
 type CheckClickProps = {

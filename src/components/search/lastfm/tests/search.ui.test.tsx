@@ -1,49 +1,42 @@
 import { Box, Flex, Avatar, useToast } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import Authentication from "../../../authentication/authentication.container";
-import Billboard from "../../../billboard/billboard.component";
-import LastFMIcon from "../../../icons/lastfm/lastfm.icon";
-import SearchContainer from "../search.container.component";
-import SearchUI from "../search.ui.component";
+import SearchContainer from "../search.container";
+import SearchUI from "../search.ui";
+import Authentication from "@src/components/authentication/authentication.container";
+import Billboard from "@src/components/billboard/billboard.component";
+import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   const chakraMock = factoryInstance.create(["Box", "Flex"]);
   chakraMock.useToast = jest.fn();
   chakraMock.Avatar = jest.fn().mockImplementation(() => <div>MockAvatar</div>);
   return chakraMock;
 });
 
-jest.mock("../../../authentication/authentication.container", () =>
+jest.mock("@src/components/authentication/authentication.container", () =>
   jest.fn(() => <div>MockedAuthenticationComponent</div>)
 );
 
-jest.mock("../../../billboard/billboard.component", () =>
+jest.mock("@src/components/billboard/billboard.component", () =>
   createMockedComponent("BillBoard")
 );
 
-jest.mock("../search.container.component", () => {
-  return {
-    __esModule: true,
-    default: createMock("SearchComponent"),
-  };
-});
+jest.mock("../search.container", () => createMock("SearchContainer"));
 
-jest.mock("../../../icons/lastfm/lastfm.icon", () => {
-  return {
-    __esModule: true,
-    default: createMock("LastFMIcon"),
-  };
-});
+jest.mock("@src/components/icons/lastfm/lastfm.icon", () =>
+  createMock("LastFMIcon")
+);
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
@@ -57,14 +50,14 @@ describe("SearchUI", () => {
   const testMessage = "test_message";
   const mockTitle = "Mock Title";
   const mockRoute = "/some/fancy/route/here";
-  const mockT = jest.fn((arg: string) => `t(${arg})`);
+  const mockT = new mockUseLocale("lastfm");
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = () => {
-    render(<SearchUI t={mockT} title={mockTitle} route={mockRoute} />);
+    render(<SearchUI t={mockT.t} title={mockTitle} route={mockRoute} />);
   };
 
   describe("when rendered", () => {
@@ -107,10 +100,9 @@ describe("SearchUI", () => {
 
     it("should call SearchContainer to display the search form", () => {
       expect(SearchContainer).toBeCalledTimes(1);
-      checkMockCall(SearchContainer, { route: mockRoute }, 0, [
+      checkMockCall(SearchContainer, { route: mockRoute, t: mockT.t }, 0, [
         "openError",
         "closeError",
-        "t",
       ]);
     });
   });

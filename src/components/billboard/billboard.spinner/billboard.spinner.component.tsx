@@ -1,7 +1,7 @@
 import { Spinner, Flex } from "@chakra-ui/react";
-import { settings } from "../../../config/billboard";
-import useColour from "../../../hooks/colour";
 import BillBoard from "../billboard.component";
+import { settings } from "@src/config/billboard";
+import useColour from "@src/hooks/colour";
 
 export const testIDs = {
   BillboardSpinner: "BillboardSpinner",

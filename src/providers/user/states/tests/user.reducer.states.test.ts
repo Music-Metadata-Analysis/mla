@@ -12,9 +12,9 @@ import ReducerGenericStartFetch from "../generics/generic.start.class";
 import ReducerGenericSuccessFetch from "../generics/generic.success.class";
 import ReducerGenericTimeoutFetch from "../generics/generic.timeout.class";
 import getReducerState from "../user.reducer.states";
-import type { UserActionType } from "../../../../types/user/action.types";
-import type { UserStateInterface } from "../../../../types/user/state.types";
 import type ReducerStateBaseClass from "../user.reducer.states.base.class";
+import type { UserActionType } from "@src/types/user/action.types";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
 describe("getReducerStates", () => {
   let results: Array<

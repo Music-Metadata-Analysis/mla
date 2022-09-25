@@ -1,12 +1,9 @@
-import Events from "../../../../../../events/events";
-import { singular } from "../../../../../../utils/strings";
-import type EventDefinition from "../../../../../../events/event.class";
-import type { SunBurstEntityTypes } from "../../../../../../types/analytics.types";
-import type {
-  d3Node,
-  SunBurstData,
-} from "../../../../../../types/reports/sunburst.types";
-import type { TFunction } from "next-i18next";
+import Events from "@src/events/events";
+import { singular } from "@src/utils/strings";
+import type EventDefinition from "@src/events/event.class";
+import type { SunBurstEntityTypes } from "@src/types/analytics.types";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { d3Node, SunBurstData } from "@src/types/reports/sunburst.types";
 
 type SunBurstNodeEncapsulationConstructor = new (
   node: d3Node
@@ -26,8 +23,8 @@ abstract class SunBurstNodeEncapsulation {
   };
 
   abstract getDrawerTitle(): string;
-  abstract getDrawerSubTitle(t: TFunction): string | null;
-  abstract getDrawerListTitle(t: TFunction): string | null;
+  abstract getDrawerSubTitle(t: tFunctionType): string | null;
+  abstract getDrawerListTitle(t: tFunctionType): string | null;
 
   abstract getDrawerPercentage(): string;
   abstract getDrawerEntityListPercentage(): string;

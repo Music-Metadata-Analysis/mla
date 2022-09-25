@@ -1,6 +1,6 @@
 import reducerLoggingMiddleware from "../reducer.logger";
-import type { MutableEnv } from "../../types/process.types";
-import type { ActionType } from "../../types/reducer.types";
+import type { MutableEnv } from "@src/types/process.types";
+import type { ActionType } from "@src/types/reducer.types";
 import type { Reducer } from "react";
 
 type capturedOutput = Array<string | ActionType>;

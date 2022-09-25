@@ -2,10 +2,10 @@ import { LockIcon } from "@chakra-ui/icons";
 import { Box, Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { RiLogoutBoxRLine } from "react-icons/ri";
-import useAuth from "../../../hooks/auth";
-import useColour from "../../../hooks/colour";
-import AnalyticsWrapper from "../../analytics/analytics.button/analytics.button.component";
-import Authentication from "../../authentication/authentication.container";
+import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
+import Authentication from "@src/components/authentication/authentication.container";
+import useAuth from "@src/hooks/auth";
+import useColour from "@src/hooks/colour";
 import type { MouseEvent } from "react";
 
 const NavSessionControl = () => {

@@ -6,11 +6,17 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import translations from "../../../../public/locales/en/splash.json";
-import routes from "../../../config/routes";
-import mockRouter from "../../../tests/fixtures/mock.router";
-import { testIDs } from "../../dialogues/resizable/dialogue.resizable.component";
 import Splash from "../splash.component";
+import translations from "@locales/splash.json";
+import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
+import routes from "@src/config/routes";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockRouter from "@src/tests/fixtures/mock.router";
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 describe("Splash", () => {
   beforeEach(() => {
@@ -32,20 +38,20 @@ describe("Splash", () => {
       const toggle = await screen.findByTestId(testIDs.DialogueToggleComponent);
       expect(toggle).toBeVisible();
       expect(
-        await within(toggle).findByText(translations.splashText1)
+        await within(toggle).findByText(_t(translations.splashText1))
       ).toBeTruthy();
       expect(
-        await within(toggle).findByText(translations.splashText2)
+        await within(toggle).findByText(_t(translations.splashText2))
       ).toBeTruthy();
       expect(
-        await within(toggle).findByText(translations.splashText3)
+        await within(toggle).findByText(_t(translations.splashText3))
       ).toBeTruthy();
     });
 
     it("should render the credit text on the screen, inside the DialogueBodyComponent", async () => {
       const body = await screen.findByTestId(testIDs.DialogueBodyComponent);
       expect(
-        await within(body).findByText(translations.creditText)
+        await within(body).findByText(_t(translations.creditText))
       ).toBeTruthy();
     });
 
@@ -57,7 +63,7 @@ describe("Splash", () => {
     it("should render button text inside the button,inside the DialogueFooterComponent ", async () => {
       const footer = await screen.findByTestId(testIDs.DialogueFooterComponent);
       expect(
-        await within(footer).findByText(translations.buttons.start)
+        await within(footer).findByText(_t(translations.buttons.start))
       ).toBeTruthy();
     });
 
@@ -68,7 +74,7 @@ describe("Splash", () => {
           testIDs.DialogueFooterComponent
         );
         const button = await within(footer).findByText(
-          translations.buttons.start
+          _t(translations.buttons.start)
         );
         fireEvent.click(button);
       });

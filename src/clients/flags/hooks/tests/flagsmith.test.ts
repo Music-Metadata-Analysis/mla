@@ -1,16 +1,16 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import { useFlags, useFlagsmith } from "flagsmith/react";
-import useAuth from "../../../../hooks/auth";
-import mockUseFlagsHook from "../../../../hooks/tests/flags.mock.hook";
 import useFlagSmithVendor from "../flagsmith";
+import useAuth from "@src/hooks/auth";
+import mockUseFlagsHook from "@src/hooks/tests/flags.mock.hook";
 
 jest.mock("flagsmith/react", () => ({
   useFlags: jest.fn(),
   useFlagsmith: jest.fn(),
 }));
 
-jest.mock("../../../../hooks/auth", () => jest.fn());
+jest.mock("@src/hooks/auth", () => jest.fn());
 
 describe("useFlagSmithVendor", () => {
   let originalEnvironment: typeof process.env;

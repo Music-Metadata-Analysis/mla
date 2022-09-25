@@ -1,17 +1,17 @@
 import { Flex, useDisclosure } from "@chakra-ui/react";
-import { useTranslation } from "next-i18next";
 import { useState } from "react";
-import Condition from "../../../../condition/condition.component";
-import FlipCard from "../../../../flip.card/flip.card.component";
-import ReportTitle from "../../../common/report.title/report.title.component";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
+import Condition from "@src/components/condition/condition.component";
+import FlipCard from "@src/components/flip.card/flip.card.component";
+import ReportTitle from "@src/components/reports/common/report.title/report.title.component";
+import useLocale from "@src/hooks/locale";
 import type FlipCardBaseReport from "../flip.card.report/flip.card.report.base.class";
-import type { TFunction } from "next-i18next";
+import type UserState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export interface FlipCardReportProps<T extends UserState> {
   imageIsLoaded: () => void;
   report: FlipCardBaseReport<T>;
-  t: TFunction;
+  t: tFunctionType;
   userState: T;
   visible: boolean;
 }
@@ -25,7 +25,7 @@ export default function FlipCardReport<UserStateType extends UserState>({
 }: FlipCardReportProps<UserStateType>) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentlyFlipped, flipCard] = useState<null | number>(null);
-  const { t: cardTranslations } = useTranslation("cards");
+  const { t: cardTranslations } = useLocale("cards");
   const cardSize = 100;
   const maxWidth = 4 * cardSize + 20;
   const DrawerComponent = report.getDrawerComponent();

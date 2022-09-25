@@ -1,9 +1,9 @@
-import routes from "../../../src/config/routes";
-import env from "../../config/env";
-import { authenticate } from "../../fixtures/auth";
-import { getAuthorizationCookieName } from "../../fixtures/cookies";
-import { flipCardReports, sunBurstReports } from "../../fixtures/reports";
-import { baseUrl } from "../../fixtures/setup";
+import env from "@cypress/config/env";
+import { authenticate } from "@cypress/fixtures/auth";
+import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
+import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
+import { baseUrl } from "@cypress/fixtures/setup";
+import routes from "@src/config/routes";
 
 describe("LastFM Report Selection", () => {
   const authorizationCookieName = getAuthorizationCookieName();

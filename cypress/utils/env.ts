@@ -1,8 +1,8 @@
 import { loadEnvConfig } from "@next/env";
 import { writeFile } from "fs";
-import { AllAccessIdentity, NoAccessIdentity } from "../fixtures/auth";
-import authVendor from "../vendors/auth/vendor";
-import type { envVarType } from "../types/env";
+import { AllAccessIdentity, NoAccessIdentity } from "@cypress/fixtures/auth";
+import authVendor from "@cypress/vendors/auth/vendor";
+import type { envVarType } from "@cypress/types/env";
 
 const environmentFile = "cypress.env.json";
 

@@ -2,14 +2,14 @@ import { body, validationResult } from "express-validator";
 import nextConnect from "next-connect";
 import LastFMEndpointBase from "./endpoint.common.base.class";
 import Logger from "./endpoint.common.logger";
-import requestSettings from "../../../config/requests";
-import * as status from "../../../config/status";
-import authVendor from "../../integrations/auth/vendor";
-import LastFMProxy from "../../integrations/lastfm/proxy.class";
+import authVendor from "@src/backend/integrations/auth/vendor";
+import LastFMProxy from "@src/backend/integrations/lastfm/proxy.class";
+import requestSettings from "@src/config/requests";
+import * as status from "@src/config/status";
 import type {
   LastFMEndpointRequest,
   LastFMEndpointResponse,
-} from "../../../types/api.endpoint.types";
+} from "@src/types/api.endpoint.types";
 
 export default abstract class LastFMApiEndpointFactoryV1 extends LastFMEndpointBase {
   sunsetDate = new Date("Wed, 1 Jan 2023 00:00:00 GMT");

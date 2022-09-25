@@ -1,5 +1,5 @@
 import ReducerStateBaseClass from "../user.reducer.states.base.class";
-import type { UserStateInterface } from "../../../../types/user/state.types";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
 class ReducerGenericTimeoutFetch extends ReducerStateBaseClass<"TimeoutFetch"> {
   type = "TimeoutFetch" as const;

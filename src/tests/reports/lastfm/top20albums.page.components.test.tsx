@@ -1,30 +1,29 @@
 import { render } from "@testing-library/react";
-import ReportPage from "../../../components/reports/lastfm/common/report.page/report.page";
-import Top20AlbumReport from "../../../components/reports/lastfm/top20.albums/top20.albums.container";
-import routes from "../../../config/routes";
-import FourOhFour from "../../../pages/404";
-import Page from "../../../pages/reports/lastfm/top20albums";
-import getPageProps from "../../../utils/page.props.static";
-import mockCheckCall from "../../fixtures/mock.component.call";
+import ReportPage from "@src/components/reports/lastfm/common/report.page/report.page";
+import Top20AlbumReport from "@src/components/reports/lastfm/top20.albums/top20.albums.container";
+import routes from "@src/config/routes";
+import FourOhFour from "@src/pages/404";
+import Page from "@src/pages/reports/lastfm/top20albums";
+import mockCheckCall from "@src/tests/fixtures/mock.component.call";
+import getPageProps from "@src/utils/page.props.static";
 
-jest.mock("../../../utils/page.props.static", () => jest.fn());
+jest.mock("@src/utils/page.props.static", () => jest.fn());
 
-jest.mock(
-  "../../../components/reports/lastfm/common/report.page/report.page",
-  () => createMockedComponent("ReportPage")
+jest.mock("@src/components/reports/lastfm/common/report.page/report.page", () =>
+  createMockedComponent("ReportPage")
 );
 
 jest.mock(
-  "../../../components/reports/lastfm/top20.albums/top20.albums.container",
+  "@src/components/reports/lastfm/top20.albums/top20.albums.container",
   () => createMockedComponent("Top20AlbumReport")
 );
 
-jest.mock("../../../pages/404", () => createMockedComponent("FourOhFour"));
+jest.mock("@src/pages/404", () => createMockedComponent("FourOhFour"));
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

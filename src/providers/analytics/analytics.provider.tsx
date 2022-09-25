@@ -1,6 +1,6 @@
 import React from "react";
 import InitialValues from "./analytics.initial";
-import type { AnalyticsProviderInterface } from "../../types/analytics.types";
+import type { AnalyticsProviderInterface } from "@src/types/analytics.types";
 
 export const AnalyticsContext = React.createContext(InitialValues);
 

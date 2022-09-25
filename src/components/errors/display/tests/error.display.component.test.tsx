@@ -1,38 +1,45 @@
 import { WarningTwoIcon } from "@chakra-ui/icons";
 import { Flex } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import translation from "../../../../../public/locales/en/main.json";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import Billboard from "../../../billboard/billboard.component";
-import StyledButton from "../../../button/button.standard/button.standard.component";
 import ErrorDisplay from "../error.display.component";
+import translation from "@locales/main.json";
+import Billboard from "@src/components/billboard/billboard.component";
+import StyledButton from "@src/components/button/button.standard/button.standard.component";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../billboard/billboard.component", () =>
+jest.mock("@src/components/billboard/billboard.component", () =>
   createMockedComponent("BillBoard")
 );
 
-jest.mock("../../../button/button.standard/button.standard.component", () =>
-  createMockedComponent("StyledButton")
+jest.mock(
+  "@src/components/button/button.standard/button.standard.component",
+  () => createMockedComponent("StyledButton")
+);
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
 );
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Flex"]);
 });
 
 jest.mock("@chakra-ui/icons", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.icon.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.icon.factory.class");
   return factoryInstance.create(["WarningTwoIcon"]);
 });
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
@@ -63,7 +70,7 @@ describe("ErrorDisplay", () => {
     it("should render the billboard correctly", () => {
       expect(Billboard).toBeCalledTimes(1);
       checkMockCall(Billboard, {
-        title: translatedErrors[translationIndex].title,
+        title: _t(translatedErrors[translationIndex].title),
       });
     });
 
@@ -87,7 +94,7 @@ describe("ErrorDisplay", () => {
 
     it("should NOT display the translated error message", () => {
       expect(
-        screen.queryByText(translatedErrors[translationIndex].message)
+        screen.queryByText(_t(translatedErrors[translationIndex].message))
       ).toBeNull();
     });
 
@@ -98,7 +105,9 @@ describe("ErrorDisplay", () => {
 
     it("should display the Button text correctly", async () => {
       expect(
-        await screen.findByText(translatedErrors[translationIndex].resetButton)
+        await screen.findByText(
+          _t(translatedErrors[translationIndex].resetButton)
+        )
       ).toBeTruthy();
     });
 
@@ -119,7 +128,7 @@ describe("ErrorDisplay", () => {
     it("should render the billboard correctly", () => {
       expect(Billboard).toBeCalledTimes(1);
       checkMockCall(Billboard, {
-        title: translatedErrors[translationIndex].title,
+        title: _t(translatedErrors[translationIndex].title),
       });
     });
 
@@ -139,7 +148,7 @@ describe("ErrorDisplay", () => {
 
     it("should display the error message", async () => {
       expect(
-        await screen.findByText(translatedErrors[translationIndex].message)
+        await screen.findByText(_t(translatedErrors[translationIndex].message))
       ).toBeTruthy();
     });
 
@@ -150,7 +159,9 @@ describe("ErrorDisplay", () => {
 
     it("should display the Button text correctly", async () => {
       expect(
-        await screen.findByText(translatedErrors[translationIndex].resetButton)
+        await screen.findByText(
+          _t(translatedErrors[translationIndex].resetButton)
+        )
       ).toBeTruthy();
     });
 

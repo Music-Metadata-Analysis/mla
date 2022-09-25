@@ -1,18 +1,18 @@
 import { waitFor } from "@testing-library/react";
 import nextConnect, { NextHandler } from "next-connect";
-import * as status from "../../../../config/status";
-import { createAPIMocks } from "../../../../tests/fixtures/mock.authentication";
 import LastFMEndpointBase from "../endpoint.common.base.class";
+import * as status from "@src/config/status";
+import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type {
   BodyType,
   MockAPIRequest,
   MockAPIResponse,
-} from "../../../../types/api.endpoint.types";
+} from "@src/types/api.endpoint.types";
 import type {
   LastFMEndpointRequest,
   LastFMEndpointResponse,
-} from "../../../../types/api.endpoint.types";
-import type { HttpMethodType } from "../../../../types/clients/api/api.client.types";
+} from "@src/types/api.endpoint.types";
+import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
 class ConcreteClass extends LastFMEndpointBase {
   route = "/api/v1/endpoint";

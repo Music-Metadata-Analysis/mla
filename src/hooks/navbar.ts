@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import NavConfig from "../config/navbar";
-import { NavBarContext } from "../providers/navbar/navbar.provider";
+import NavConfig from "@src/config/navbar";
+import { NavBarContext } from "@src/providers/navbar/navbar.provider";
 
 const useNavBar = () => {
   const { setters, getters } = useContext(NavBarContext);

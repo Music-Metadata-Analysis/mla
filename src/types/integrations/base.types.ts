@@ -1,5 +1,5 @@
-import type { LastFMClientParamsInterface } from "../clients/api/lastfm/request.types";
-import type { PlayCountByArtistReportInterface } from "../clients/api/lastfm/response.types";
+import type { LastFMClientParamsInterface } from "@src/types/clients/api/lastfm/request.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
 
 export interface BaseReportResponseInterface {
   albums?: unknown[];

@@ -1,21 +1,22 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import Cookies from "js-cookie";
 import CookieConsent from "react-cookie-consent";
-import translations from "../../../../public/locales/en/main.json";
-import { settings } from "../../../config/cookies";
-import mockAnalyticsHook from "../../../hooks/tests/analytics.mock.hook";
-import mockColourHook from "../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import Consent, { testIDs } from "../consent.component";
+import translations from "@locales/main.json";
+import { settings } from "@src/config/cookies";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
-jest.mock("../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 jest.mock("react-cookie-consent", () => {
   const Original = jest.requireActual("react-cookie-consent").default;
@@ -57,18 +58,18 @@ describe("Consent", () => {
       const messageBox2 = await screen.findByTestId(
         testIDs.consentMessageLine2
       );
-      expect(messageBox1.innerHTML).toBe(translations.analytics.message1);
+      expect(messageBox1.innerHTML).toBe(_t(translations.analytics.message1));
       expect(messageBox2.innerHTML).toBe(
-        `<strong>${translations.analytics.message2}</strong>`
+        `<strong>${_t(translations.analytics.message2)}</strong>`
       );
     });
 
     it("should display the buttons", async () => {
       expect(
-        await screen.findByText(translations.analytics.acceptMessage)
+        await screen.findByText(_t(translations.analytics.acceptMessage))
       ).toBeTruthy();
       expect(
-        await screen.findByText(translations.analytics.declineMessage)
+        await screen.findByText(_t(translations.analytics.declineMessage))
       ).toBeTruthy();
     });
 
@@ -81,7 +82,7 @@ describe("Consent", () => {
             background: `converted(${mockColourHook.consentColour.accept.background})`,
             color: `converted(${mockColourHook.buttonColour.foreground})`,
           },
-          buttonText: translations.analytics.acceptMessage,
+          buttonText: _t(translations.analytics.acceptMessage),
           contentStyle: {
             flex: "1 0",
           },
@@ -90,7 +91,7 @@ describe("Consent", () => {
             background: `converted(${mockColourHook.consentColour.decline.background})`,
             color: `converted(${mockColourHook.buttonColour.foreground})`,
           },
-          declineButtonText: translations.analytics.declineMessage,
+          declineButtonText: _t(translations.analytics.declineMessage),
           enableDeclineButton: true,
           setDeclineCookie: false,
           style: {
@@ -112,7 +113,7 @@ describe("Consent", () => {
     describe("when accept is pressed", () => {
       beforeEach(async () => {
         const button = await screen.findByText(
-          translations.analytics.acceptMessage
+          _t(translations.analytics.acceptMessage)
         );
         fireEvent.click(button);
       });
@@ -129,7 +130,7 @@ describe("Consent", () => {
     describe("when decline is pressed", () => {
       beforeEach(async () => {
         const button = await screen.findByText(
-          translations.analytics.declineMessage
+          _t(translations.analytics.declineMessage)
         );
         fireEvent.click(button);
       });

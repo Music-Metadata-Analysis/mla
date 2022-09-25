@@ -1,15 +1,15 @@
 import { render } from "@testing-library/react";
-import mockUserHook from "../../../../../hooks/tests/lastfm.mock.hook";
-import {
-  getMockComponentProp,
-  getMockComponentPropCount,
-} from "../../../../../tests/fixtures/mock.component.props";
 import SunBurstContainer from "../../common/sunburst.report/sunburst.report.container";
 import PlayCountByArtistContainer, {
   PlayCountByArtistContainerProps,
 } from "../playcount.artists.container";
 import PlayCountByArtistReport from "../playcount.artists.report.class";
-import type { userHookAsLastFMPlayCountByArtistReport } from "../../../../../types/user/hook.types";
+import mockUserHook from "@src/hooks/tests/lastfm.mock.hook";
+import {
+  getMockComponentProp,
+  getMockComponentPropCount,
+} from "@src/tests/fixtures/mock.component.props";
+import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
 jest.mock("../../common/sunburst.report/sunburst.report.container", () =>
   createMockedComponent("SunBurstContainer")
@@ -18,7 +18,7 @@ jest.mock("../../common/sunburst.report/sunburst.report.container", () =>
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

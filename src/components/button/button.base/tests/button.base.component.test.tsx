@@ -1,25 +1,20 @@
 import { Button } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
-import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import BaseButton from "../button.base.component";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
+
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Button"]);
 });
-
-jest.mock("../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
 
 describe("StandardButton", () => {
   const linkText = "Link";

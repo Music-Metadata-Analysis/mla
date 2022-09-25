@@ -1,11 +1,9 @@
 import { Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import mockAuthHook, {
-  mockUserProfile,
-} from "../../../../hooks/tests/auth.mock.hook";
-import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import NavBarAvatar from "../navbar.avatar.component";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   return {
@@ -14,11 +12,9 @@ jest.mock("@chakra-ui/react", () => {
   };
 });
 
-jest.mock("../../../../hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/auth", () => () => mockAuthHook);
 
-jest.mock("../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 describe("NavBarAvatar", () => {
   beforeEach(() => {

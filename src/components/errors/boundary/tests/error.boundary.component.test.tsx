@@ -1,26 +1,20 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { useState } from "react";
-import Events from "../../../../events/events";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
-import mockRouter from "../../../../tests/fixtures/mock.router";
 import ErrorHandler from "../../handler/error.handler.component";
 import ErrorBoundary from "../error.boundary.component";
+import Events from "@src/events/events";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockRouter from "@src/tests/fixtures/mock.router";
 
 jest.mock("../../handler/error.handler.component", () => {
   const MockErrorHandler = () => (
     <div data-testid={testIDs.ErrorHandlerComponent}>Error Component</div>
   );
-  return {
-    __esModule: true,
-    default: jest.fn(() => <MockErrorHandler />),
-  };
+  return jest.fn(() => <MockErrorHandler />);
 });
 
-jest.mock("../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 const mockTestRoute = "/";
 const mockStateReset = jest.fn();

@@ -13,19 +13,20 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import routes from "../../../../config/routes";
-import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import ClickLink from "../../../clickable/click.link.internal/click.link.internal.component";
-import VerticalScrollBar from "../../../scrollbar/vertical.scrollbar.component";
 import SignInButtons from "../../buttons/signin.buttons";
 import ModalComponent, { testIDs } from "../modal.signin.component";
+import ClickLink from "@src/components/clickable/click.link.internal/click.link.internal.component";
+import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
+import routes from "@src/config/routes";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const { forwardRef } = require("react");
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   const instance = factoryInstance.create([
     "Box",
     "Center",
@@ -48,23 +49,26 @@ jest.mock("../../buttons/signin.buttons", () =>
   jest.fn(() => <div>MockSignInButtons</div>)
 );
 
-jest.mock("../../../scrollbar/vertical.scrollbar.component", () =>
+jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   jest.fn(() => <div>MockVerticalScrollBar</div>)
 );
 
-jest.mock("../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock(
-  "../../../clickable/click.link.internal/click.link.internal.component",
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
+
+jest.mock(
+  "@src/components/clickable/click.link.internal/click.link.internal.component",
   () => createMockedComponent("ClickLink")
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

@@ -1,34 +1,39 @@
 import { Flex } from "@chakra-ui/react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import StyledButton from "../../../button/button.standard/button.standard.component";
-import SearchForm from "../search.form.component";
+import SearchForm from "../search.form";
+import lastfmTranslations from "@locales/lastfm.json";
+import StyledButton from "@src/components/button/button.standard/button.standard.component";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../button/button.standard/button.standard.component", () => {
-  const Original = jest.requireActual(
-    "../../../button/button.standard/button.standard.component"
-  ).default;
-  return jest.fn((props) => <Original {...props} />);
-});
+jest.mock(
+  "@src/components/button/button.standard/button.standard.component",
+  () => {
+    const Original = jest.requireActual(
+      "@src/components/button/button.standard/button.standard.component"
+    ).default;
+    return jest.fn((props) => <Original {...props} />);
+  }
+);
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Flex"]);
 });
 
 describe("SearchForm", () => {
   beforeEach(() => jest.clearAllMocks());
 
-  const mockT = jest.fn((arg: string) => `t(${arg})`);
+  const mockT = new mockUseLocale("lastfm");
   const mockValidate = jest.fn();
   const mockSubmit = jest.fn();
 
   const arrange = () => {
     render(
       <SearchForm
-        t={mockT}
+        t={mockT.t}
         validateUserName={mockValidate}
         handleSubmit={mockSubmit}
       />
@@ -47,22 +52,28 @@ describe("SearchForm", () => {
   it("should display the correct username placeholder text", async () => {
     arrange();
     expect(
-      await screen.findByPlaceholderText("t(search.fieldPlaceholder)")
+      await screen.findByPlaceholderText(
+        _t(lastfmTranslations.search.fieldPlaceholder)
+      )
     ).toBeTruthy();
   });
 
   it("should display the correct button text", async () => {
     arrange();
-    expect(await screen.findByText("t(search.buttonText)")).toBeTruthy();
+    expect(
+      await screen.findByText(_t(lastfmTranslations.search.buttonText))
+    ).toBeTruthy();
   });
 
   it("should call StyledInput once", async () => {
     arrange();
     const inputField = (await screen.findByPlaceholderText(
-      "t(search.fieldPlaceholder)"
+      _t(lastfmTranslations.search.fieldPlaceholder)
     )) as HTMLInputElement & { ref: string };
     expect(inputField.id).toBe("username");
-    expect(inputField.placeholder).toBe("t(search.fieldPlaceholder)");
+    expect(inputField.placeholder).toBe(
+      _t(lastfmTranslations.search.fieldPlaceholder)
+    );
   });
 
   it("should call Button with the correct props", async () => {
@@ -84,7 +95,7 @@ describe("SearchForm", () => {
       mockValidate.mockImplementation(() => undefined);
       arrange();
       const input = await screen.findByPlaceholderText(
-        "t(search.fieldPlaceholder)"
+        _t(lastfmTranslations.search.fieldPlaceholder)
       );
       await waitFor(() => {
         fireEvent.change(input, { target: { value: "valid_user_name" } });
@@ -95,7 +106,9 @@ describe("SearchForm", () => {
       let button: HTMLElement;
 
       beforeEach(async () => {
-        button = await screen.findByText("t(search.buttonText)");
+        button = await screen.findByText(
+          _t(lastfmTranslations.search.buttonText)
+        );
         await waitFor(() => {
           fireEvent.focus(button);
           fireEvent.click(button);

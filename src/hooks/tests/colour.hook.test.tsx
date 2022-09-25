@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockUseColour from "./colour.hook.mock";
 import useColour from "../colour";
-import type { Colour } from "../../types/ui/chakra.types";
+import type { Colour } from "@src/types/ui/chakra.types";
 
 type NestedObjectKey =
   | Colour

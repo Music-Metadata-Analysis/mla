@@ -1,13 +1,12 @@
 import Flagsmith from "flagsmith-nodejs";
 import FlagSmithClient from "../flagsmith";
 
-jest.mock("flagsmith-nodejs", () => ({
-  __esModule: true,
-  default: jest.fn(() => ({
+jest.mock("flagsmith-nodejs", () =>
+  jest.fn(() => ({
     getEnvironmentFlags: mockGetEnvironmentFlags,
     getIdentityFlags: mockGetIdentityFlags,
-  })),
-}));
+  }))
+);
 
 const mockGetEnvironmentFlags = jest.fn(() => ({
   isFeatureEnabled: mockIsFeatureEnabled,

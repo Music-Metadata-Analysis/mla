@@ -1,8 +1,8 @@
-import main from "../../../public/locales/en/main.json";
-import navbar from "../../../public/locales/en/navbar.json";
-import splash from "../../../public/locales/en/splash.json";
-import routes from "../../../src/config/routes";
-import { baseUrl } from "../../fixtures/setup";
+import { baseUrl } from "@cypress/fixtures/setup";
+import main from "@locales/main.json";
+import navbar from "@locales/navbar.json";
+import splash from "@locales/splash.json";
+import routes from "@src/config/routes";
 
 describe("Splash Page", () => {
   before(() => {

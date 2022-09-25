@@ -1,6 +1,6 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import S3PersistenceClient from "../s3";
-import type { PersistanceClientHeaders } from "../../../../../types/integrations/persistance/vendor.types";
+import type { PersistanceClientHeaders } from "@src/types/integrations/persistance/vendor.types";
 
 jest.mock("@aws-sdk/client-s3", () => {
   return {

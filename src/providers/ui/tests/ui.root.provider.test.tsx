@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
-import BackGround from "../../../components/background/background.component";
-import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import UserInterfaceChakraProvider from "../ui.chakra/ui.chakra.provider";
 import UserInterfaceImagesProvider from "../ui.images/ui.images.provider";
 import UserInterfacePopUpsProvider from "../ui.popups/ui.popups.provider";
 import UserInterfaceRootProvider from "../ui.root.provider";
+import BackGround from "@src/components/background/background.component";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../components/background/background.component", () => {
+jest.mock("@src/components/background/background.component", () => {
   return createMockedComponent("BackGround");
 });
 
@@ -25,7 +25,7 @@ jest.mock("../ui.images/ui.images.provider", () => {
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

@@ -1,8 +1,8 @@
 import { Box, Img, Center, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
-import useColour from "../../hooks/colour";
-import type { TFunction } from "next-i18next";
+import useColour from "@src/hooks/colour";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export interface FlipCardProps {
   currentlyFlipped: null | number;
@@ -13,7 +13,7 @@ export interface FlipCardProps {
   size: number;
   flipperController: (index: number | null) => void;
   imageIsLoaded: () => void;
-  t: TFunction;
+  t: tFunctionType;
   noArtWork: string;
 }
 

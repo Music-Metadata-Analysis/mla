@@ -1,5 +1,5 @@
 import { isTest, isProduction } from "./env";
-import type { ActionType } from "../types/reducer.types";
+import type { ActionType } from "@src/types/reducer.types";
 import type { Reducer } from "react";
 
 const reducerLoggingMiddleware = <STATE, ACTION extends ActionType>(

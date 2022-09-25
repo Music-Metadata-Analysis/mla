@@ -1,12 +1,12 @@
 import { Box, Divider, Flex, Img, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import drawerSettings from "./settings/drawer";
-import useAnalytics from "../../../../../hooks/analytics";
-import useColour from "../../../../../hooks/colour";
-import StyledButtonLink from "../../../../button/button.external.link/button.external.link.component";
-import Drawer from "../../../common/drawer/drawer.component";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type { TFunction } from "next-i18next";
+import StyledButtonLink from "@src/components/button/button.external.link/button.external.link.component";
+import Drawer from "@src/components/reports/common/drawer/drawer.component";
+import useAnalytics from "@src/hooks/analytics";
+import useColour from "@src/hooks/colour";
+import type UserState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export interface LastFMDrawerInterface<T extends UserState> {
   artWorkAltText: string;
@@ -14,7 +14,7 @@ export interface LastFMDrawerInterface<T extends UserState> {
   fallbackImage: string;
   objectIndex: number;
   onClose: () => void;
-  t: TFunction;
+  t: tFunctionType;
   userState: T;
 }
 

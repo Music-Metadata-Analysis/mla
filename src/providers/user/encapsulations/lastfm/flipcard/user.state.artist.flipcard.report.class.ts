@@ -1,12 +1,12 @@
 import UserFlipCardBaseReportState from "./user.state.base.flipcard.report.class";
-import Events from "../../../../../events/events";
-import type { LastFMUserStateArtistReport } from "../../../../../types/user/state.types";
-import type { TFunction } from "next-i18next";
+import Events from "@src/events/events";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { LastFMUserStateArtistReport } from "@src/types/user/state.types";
 
 export default class UserArtistState extends UserFlipCardBaseReportState {
   userProperties: LastFMUserStateArtistReport;
 
-  constructor(userProperties: LastFMUserStateArtistReport, t: TFunction) {
+  constructor(userProperties: LastFMUserStateArtistReport, t: tFunctionType) {
     super(userProperties, t);
     this.userProperties = userProperties;
   }

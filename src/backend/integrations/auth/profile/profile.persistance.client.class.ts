@@ -1,9 +1,9 @@
 import persistanceVendor from "../../persistance/vendor";
+import type { VendorProfileType } from "../vendor.types";
 import type {
   PersistanceDataType,
   PersistanceVendorInterface,
-} from "../../../../types/integrations/persistance/vendor.types";
-import type { VendorProfileType } from "../vendor.types";
+} from "@src/types/integrations/persistance/vendor.types";
 
 class ProfilePersistanceClient {
   protected client: PersistanceVendorInterface;

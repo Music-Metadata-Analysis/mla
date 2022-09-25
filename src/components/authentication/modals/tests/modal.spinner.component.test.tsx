@@ -11,14 +11,15 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import ModalSpinner, { testIDs } from "../modal.spinner.component";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   const instance = factoryInstance.create([
     "Box",
     "Center",
@@ -34,9 +35,12 @@ jest.mock("@chakra-ui/react", () => {
   return instance;
 });
 
-jest.mock("../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 const mockOnClose = jest.fn();
 

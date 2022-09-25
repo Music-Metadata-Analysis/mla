@@ -1,5 +1,5 @@
-import type { CdnVendorInterface } from "../../../../../types/integrations/cache/vendor.types";
-import type { PersistanceVendorInterface } from "../../../../../types/integrations/persistance/vendor.types";
+import type { CdnVendorInterface } from "@src/types/integrations/cache/vendor.types";
+import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
 
 export default abstract class VendorCdnBaseClient<ObjectType>
   implements CdnVendorInterface<ObjectType>

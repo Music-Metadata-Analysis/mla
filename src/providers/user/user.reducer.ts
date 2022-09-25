@@ -1,8 +1,8 @@
 import getReducerStates from "./states/user.reducer.states";
-import reducerLoggingMiddleware from "../../utils/reducer.logger";
-import withMiddleware from "../../utils/reducer.middleware";
-import type { UserActionType } from "../../types/user/action.types";
-import type { UserStateInterface } from "../../types/user/state.types";
+import reducerLoggingMiddleware from "@src/utils/reducer.logger";
+import withMiddleware from "@src/utils/reducer.middleware";
+import type { UserActionType } from "@src/types/user/action.types";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
 const userReducer = (state: UserStateInterface, action: UserActionType) => {
   let newState = state;

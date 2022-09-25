@@ -1,4 +1,4 @@
-import type { EventDefinitionType } from "../types/analytics.types";
+import type { EventDefinitionType } from "@src/types/analytics.types";
 
 class EventDefinition implements EventDefinitionType {
   category: EventDefinitionType["category"];

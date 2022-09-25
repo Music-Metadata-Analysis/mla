@@ -1,20 +1,19 @@
 import { Container } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import translations from "../../../../../../public/locales/en/legal.json";
-import dialogueSettings from "../../../../../config/dialogue";
-import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
-import tLookup from "../../../../../tests/fixtures/mock.translation";
 import TermsOfServiceHeader from "../terms.header.component";
+import dialogueSettings from "@src/config/dialogue";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Container"]);
 });
 
 describe("TermsOfServiceHeader", () => {
-  const mockT = jest.fn((key) => tLookup(key, translations));
+  const mockT = new mockUseLocale("legal").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

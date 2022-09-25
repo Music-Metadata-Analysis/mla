@@ -2,38 +2,42 @@ import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Box, Flex, HStack, IconButton, Stack } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import ReactDOMServer from "react-dom/server";
-import NavConfig from "../../../config/navbar";
-import mockColourHook from "../../../hooks/tests/colour.hook.mock";
-import mockLastFMHook from "../../../hooks/tests/lastfm.mock.hook";
-import mockNavBarHook from "../../../hooks/tests/navbar.mock.hook";
-import checkMockCall from "../../../tests/fixtures/mock.component.call";
-import {
-  getMockComponentProp,
-  getMockComponentPropCount,
-} from "../../../tests/fixtures/mock.component.props";
 import NavBarColorModeToggle from "../navbar.color.mode/navbar.color.mode.component";
 import NavBar, { testIDs } from "../navbar.component";
 import NavBarLogo from "../navbar.logo/navbar.logo.component";
 import NavBarOptions from "../navbar.options/navbar.options.component";
 import NavBarSessionControl from "../navbar.session.control/navbar.session.control.component";
 import NavSpinner from "../navbar.spinner/navbar.spinner.component";
-import type { LastFMTopAlbumsReportResponseInterface } from "../../../types/clients/api/lastfm/response.types";
+import NavConfig from "@src/config/navbar";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
+import mockNavBarHook from "@src/hooks/tests/navbar.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import {
+  getMockComponentProp,
+  getMockComponentPropCount,
+} from "@src/tests/fixtures/mock.component.props";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
 
 jest.mock("@chakra-ui/icons", () => ({
   CloseIcon: jest.fn(() => <div>{"CloseIconMock"}</div>),
   HamburgerIcon: jest.fn(() => <div>{"HamburgerIconMock"}</div>),
 }));
 
-jest.mock("../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
-jest.mock("../../../hooks/navbar", () => {
-  return () => mockNavBarHook;
-});
+jest.mock("@src/hooks/navbar", () => () => mockNavBarHook);
 
-jest.mock("../../../hooks/lastfm", () => {
-  return () => mockLastFMHook;
+jest.mock("@src/hooks/lastfm", () => () => mockLastFMHook);
+
+jest.mock("@chakra-ui/react", () => {
+  const {
+    factoryInstance,
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
+  return {
+    ...factoryInstance.create(["Box", "Flex", "HStack", "IconButton", "Stack"]),
+    useDisclosure: () => mockUseDisclosure,
+  };
 });
 
 jest.mock("../navbar.color.mode/navbar.color.mode.component", () =>
@@ -56,20 +60,10 @@ jest.mock("../navbar.spinner/navbar.spinner.component", () =>
   createMockedComponent("NavSpinner")
 );
 
-jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("../../../tests/fixtures/mock.chakra.react.factory.class");
-  return {
-    ...factoryInstance.create(["Box", "Flex", "HStack", "IconButton", "Stack"]),
-    useDisclosure: () => mockUseDisclosure,
-  };
-});
-
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

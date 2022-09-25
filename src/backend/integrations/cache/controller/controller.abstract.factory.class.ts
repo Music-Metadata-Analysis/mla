@@ -2,8 +2,8 @@ import CacheController from "./controller.class";
 import type {
   CacheFactoryInterface,
   CdnVendorInterface,
-} from "../../../../types/integrations/cache/vendor.types";
-import type { PersistanceVendorInterface } from "../../../../types/integrations/persistance/vendor.types";
+} from "@src/types/integrations/cache/vendor.types";
+import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
 
 export default abstract class CacheControllerAbstractFactory<ObjectType>
   implements CacheFactoryInterface<ObjectType>

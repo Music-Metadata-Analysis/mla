@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import Indicator from "./select.indicator.component";
-import Button from "../../../../button/button.standard/button.standard.component";
+import Button from "@src/components/button/button.standard/button.standard.component";
 
 export interface SearchSelectionOptionProps {
   analyticsName: string;

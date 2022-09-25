@@ -6,19 +6,25 @@ import {
   within,
 } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import translations from "../../../../public/locales/en/authentication.json";
-import routes from "../../../config/routes";
-import Events from "../../../events/events";
-import mockAnalyticsHook from "../../../hooks/tests/analytics.mock.hook";
-import mockAuthHook, {
-  mockUserProfile,
-} from "../../../hooks/tests/auth.mock.hook";
-import mockRouter from "../../../tests/fixtures/mock.router";
 import AuthenticationContainer from "../authentication.container";
 import { testIDs as AuthModalTestIDs } from "../modals/modal.signin.component";
 import { testIDs as SpinnerModalTestIDs } from "../modals/modal.spinner.component";
+import authenticationTranslations from "@locales/authentication.json";
+import routes from "@src/config/routes";
+import Events from "@src/events/events";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockRouter from "@src/tests/fixtures/mock.router";
 
-jest.mock("../../../hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+
+jest.mock("@src/hooks/auth", () => () => mockAuthHook);
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 jest.mock("@chakra-ui/react", () => {
   const module = jest.requireActual("@chakra-ui/react");
@@ -28,12 +34,7 @@ jest.mock("@chakra-ui/react", () => {
   };
 });
 
-jest.mock("../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
-
-jest.mock("../../scrollbar/vertical.scrollbar.component", () =>
+jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   jest.fn(() => <div>MockVerticalScrollBar</div>)
 );
 
@@ -42,7 +43,7 @@ const mockUseDisclosure = jest.fn();
 describe("AuthenticationContainer", () => {
   const mockOnOpen = jest.fn();
   const mockOnClose = jest.fn();
-  const providers: (keyof typeof translations.buttons)[] = [
+  const providers: (keyof typeof authenticationTranslations.buttons)[] = [
     "facebook",
     "github",
     "google",
@@ -68,7 +69,9 @@ describe("AuthenticationContainer", () => {
         AuthModalTestIDs.AuthenticationModalTitle
       );
       await waitFor(() => expect(title).toBeVisible());
-      expect(await within(title).findByText(translations.title)).toBeTruthy();
+      expect(
+        await within(title).findByText(_t(authenticationTranslations.title))
+      ).toBeTruthy();
     });
 
     it("should display the modal close button", async () => {
@@ -117,7 +120,7 @@ describe("AuthenticationContainer", () => {
         beforeEach(async () => {
           jest.clearAllMocks();
           const button = await screen.findByText(
-            translations.buttons[provider]
+            _t(authenticationTranslations.buttons[provider])
           );
           await waitFor(() => expect(button).toBeVisible());
           fireEvent.click(button);
@@ -168,7 +171,9 @@ describe("AuthenticationContainer", () => {
             const footer = await screen.findByTestId(
               AuthModalTestIDs.AuthenticationModalFooter
             );
-            const link = await within(footer).findByText(translations.terms);
+            const link = await within(footer).findByText(
+              _t(authenticationTranslations.terms)
+            );
             fireEvent.click(link);
           });
 

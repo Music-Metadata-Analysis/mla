@@ -1,12 +1,12 @@
 import { getSession } from "next-auth/react";
-import { isBuildTime } from "../../../../utils/next";
 import NextAuthSSR from "../next-auth";
+import { isBuildTime } from "@src/utils/next";
 
 jest.mock("next-auth/react", () => ({
   getSession: jest.fn(),
 }));
 
-jest.mock("../../../../utils/next", () => ({
+jest.mock("@src/utils/next", () => ({
   isBuildTime: jest.fn(),
 }));
 

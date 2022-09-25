@@ -3,19 +3,19 @@ import { useRef } from "react";
 import SunBurstNodeList from "./nodes/node.list.component";
 import SunBurstDrawerControl from "./panels/drawer.control.panel.component";
 import SunBurstDrawerTitle from "./panels/drawer.title.panel.component";
-import useColour from "../../../../../hooks/colour";
-import Drawer from "../../../common/drawer/drawer.component";
-import type { d3Node } from "../../../../../types/reports/sunburst.types";
-import type SunBurstNodeEncapsulation from "../sunburst.report/encapsulations/sunburst.node.encapsulation.base";
-import type { TFunction } from "next-i18next";
+import Drawer from "@src/components/reports/common/drawer/drawer.component";
+import useColour from "@src/hooks/colour";
+import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
 export interface LastFMSunBurstDrawerInterface {
   alignment: "left" | "right";
   isOpen: boolean;
-  lastFMt: TFunction;
+  lastFMt: tFunctionType;
   node: SunBurstNodeEncapsulation;
   onClose: () => void;
-  sunBurstT: TFunction;
+  sunBurstT: tFunctionType;
   setSelectedNode: (node: d3Node) => void;
   svgTransition: boolean;
 }

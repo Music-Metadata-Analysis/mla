@@ -1,13 +1,13 @@
 import type {
-  LastFMTopAlbumsReportResponseInterface,
-  LastFMTopArtistsReportResponseInterface,
-  LastFMTopTracksReportResponseInterface,
-} from "../../clients/api/lastfm/response.types";
-import type {
   LastFMAlbumInfoInterface,
   LastFMArtistTopAlbumsInterface,
   LastFMTrackInfoInterface,
 } from "./api.types";
+import type {
+  LastFMTopAlbumsReportResponseInterface,
+  LastFMTopArtistsReportResponseInterface,
+  LastFMTopTracksReportResponseInterface,
+} from "@src/types/clients/api/lastfm/response.types";
 
 export interface LastFMProxyInterface {
   getAlbumInfo: (

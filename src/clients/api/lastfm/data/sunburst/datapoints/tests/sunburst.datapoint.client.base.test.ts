@@ -1,10 +1,10 @@
 import { waitFor } from "@testing-library/react";
-import EventDefinition from "../../../../../../../events/event.class";
-import InitialState from "../../../../../../../providers/user/user.initial";
 import LastFMBaseSunBurstDataPointClient from "../sunburst.datapoint.client.base.class";
-import type { LastFMTopAlbumsReportResponseInterface } from "../../../../../../../types/clients/api/lastfm/response.types";
+import EventDefinition from "@src/events/event.class";
+import InitialState from "@src/providers/user/user.initial";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
 
-jest.mock("../../../../../api.client.class", () => {
+jest.mock("@src/clients/api/api.client.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       request: mockRequest,
@@ -34,7 +34,7 @@ const mockState = {
 class ConcreteLastFMBaseSunBurstDataClient<
   ReportType
 > extends LastFMBaseSunBurstDataPointClient<jest.Mock, ReportType> {
-  route = "/api/v2/someroute/:username";
+  route = "/api/v2/some/route/:username";
 }
 
 describe("LastFMBaseSunBurstDataClient", () => {

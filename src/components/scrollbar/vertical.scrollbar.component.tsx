@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import useColour from "../../hooks/colour";
+import useColour from "@src/hooks/colour";
 import type { RefObject } from "react";
 
 export const testIDs = {

@@ -1,19 +1,16 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import NextLink from "next/link";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
 import ClickInternalLink from "../click.link.internal.component";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
 
 jest.mock("next/link", () => createMockedComponent("NextLink"));
 
-jest.mock("../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

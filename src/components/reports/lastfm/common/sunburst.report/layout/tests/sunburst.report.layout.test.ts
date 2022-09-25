@@ -1,5 +1,5 @@
-import settings from "../../../../../../../config/sunburst";
 import { canFitOnScreen, getLayoutType } from "../sunburst.report.layout";
+import settings from "@src/config/sunburst";
 import type { RefObject } from "react";
 
 describe("canFitOnScreen", () => {

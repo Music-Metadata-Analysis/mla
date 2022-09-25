@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import useColour from "../../../hooks/colour";
+import useColour from "@src/hooks/colour";
 import type { ButtonProps } from "@chakra-ui/react";
 import type { PropsWithChildren } from "react";
 

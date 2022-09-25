@@ -1,52 +1,49 @@
 import { Box, Divider, Img, Text } from "@chakra-ui/react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import Events from "../../../../../../events/events";
-import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock.hook";
-import mockColourHook from "../../../../../../hooks/tests/colour.hook.mock";
-import UserAlbumState from "../../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import StyledButtonLink from "../../../../../button/button.external.link/button.external.link.component";
-import Drawer from "../../../../common/drawer/drawer.component";
 import FlipCardDrawer, {
   LastFMDrawerInterface,
   testIDs,
 } from "../flip.card.report.drawer.component";
+import lastfmTranslations from "@locales/lastfm.json";
+import StyledButtonLink from "@src/components/button/button.external.link/button.external.link.component";
+import Drawer from "@src/components/reports/common/drawer/drawer.component";
+import Events from "@src/events/events";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import UserAlbumState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
-jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Box", "Divider", "Img", "Text"]);
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock(
-  "../../../../../button/button.external.link/button.external.link.component",
+  "@src/components/button/button.external.link/button.external.link.component",
   () => {
     const {
       factoryInstance,
-    } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+    } = require("@src/tests/fixtures/mock.component.children.factory.class");
     return factoryInstance.create("StyledButtonLink");
   }
 );
 
-jest.mock("../../../../common/drawer/drawer.component", () => {
+jest.mock("@src/components/reports/common/drawer/drawer.component", () => {
   const {
     factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create("MockDrawer");
 });
 
-jest.mock("../../../../../../hooks/colour", () => {
-  return () => mockColourHook;
+jest.mock("@chakra-ui/react", () => {
+  const {
+    factoryInstance,
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
+  return factoryInstance.create(["Box", "Divider", "Img", "Text"]);
 });
 
 const mockOnClose = jest.fn();
-const mockT = jest.fn((arg: string) => `t(${arg})`);
+const mockT = new mockUseLocale("lastfm").t;
 const mockBaseUserProperties = {
   data: {
     integration: "LASTFM" as const,
@@ -68,7 +65,7 @@ const mockState = new UserAlbumState(mockBaseUserProperties, mockT);
 
 const baseProps: LastFMDrawerInterface<UserAlbumState> = {
   objectIndex: 0,
-  artWorkAltText: "artWorkAltText",
+  artWorkAltText: lastfmTranslations.top20Albums.noArtWork,
   userState: mockState,
   fallbackImage: "/fallback.jpeg",
   isOpen: true,
@@ -152,7 +149,7 @@ describe("FlipCardReportDrawer", () => {
       checkMockCall(
         Img,
         {
-          alt: `t(${currentProps.artWorkAltText})`,
+          alt: mockT(lastfmTranslations.top20Albums.noArtWork),
           borderColor: mockColourHook.componentColour.details,
           borderStyle: "solid",
           borderWidth: "1px",
@@ -198,14 +195,18 @@ describe("FlipCardReportDrawer", () => {
       });
 
       checkBaseComponents(
-        "https://last.fm/music/t(defaults.artistName)/t(defaults.albumName)",
-        "t(defaults.artistName): t(defaults.albumName)"
+        `https://last.fm/music/t(Unknown%20Artist)/t(Unknown%20Album)`,
+        `${_t(lastfmTranslations.defaults.artistName)}: ${_t(
+          lastfmTranslations.defaults.albumName
+        )}`
       );
 
       it("should render the rank correctly", async () => {
         const rankElement = await screen.findByTestId(testIDs.LastFMDrawerRank);
         expect(
-          await within(rankElement).findByText("t(flipCardReport.drawer.rank)")
+          await within(rankElement).findByText(
+            _t(lastfmTranslations.flipCardReport.drawer.rank)
+          )
         ).toBeTruthy();
         expect(await within(rankElement).findByText(": 1")).toBeTruthy();
       });
@@ -216,7 +217,7 @@ describe("FlipCardReportDrawer", () => {
         );
         expect(
           await within(playCountElement).findByText(
-            "t(flipCardReport.drawer.playCount)"
+            _t(lastfmTranslations.flipCardReport.drawer.playCount)
           )
         ).toBeTruthy();
         expect(await within(playCountElement).findByText(": 0")).toBeTruthy();
@@ -226,8 +227,8 @@ describe("FlipCardReportDrawer", () => {
         expect(mockAnalyticsHook.event).toBeCalledTimes(1);
         expect(mockAnalyticsHook.event).toBeCalledWith(
           Events.LastFM.AlbumViewed(
-            "t(defaults.artistName)",
-            "t(defaults.albumName)"
+            _t(lastfmTranslations.defaults.artistName),
+            _t(lastfmTranslations.defaults.albumName)
           )
         );
       });
@@ -237,7 +238,7 @@ describe("FlipCardReportDrawer", () => {
 
         beforeEach(async () => {
           image = await screen.findByAltText(
-            `t(${currentProps.artWorkAltText})`
+            mockT(currentProps.artWorkAltText)
           );
           expect(image).toHaveAttribute("src", MockImageUrl);
           fireEvent.error(image);
@@ -281,7 +282,9 @@ describe("FlipCardReportDrawer", () => {
       it("should render the rank correctly", async () => {
         const rankElement = await screen.findByTestId(testIDs.LastFMDrawerRank);
         expect(
-          await within(rankElement).findByText("t(flipCardReport.drawer.rank)")
+          await within(rankElement).findByText(
+            _t(lastfmTranslations.flipCardReport.drawer.rank)
+          )
         ).toBeTruthy();
         expect(await within(rankElement).findByText(": 1")).toBeTruthy();
       });
@@ -292,7 +295,7 @@ describe("FlipCardReportDrawer", () => {
         );
         expect(
           await within(playCountElement).findByText(
-            "t(flipCardReport.drawer.playCount)"
+            _t(lastfmTranslations.flipCardReport.drawer.playCount)
           )
         ).toBeTruthy();
         expect(await within(playCountElement).findByText(": 100")).toBeTruthy();

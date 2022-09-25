@@ -3,34 +3,34 @@ import {
   MockReportClass,
   MockUserStateEncapsulation,
 } from "./fixtures/mock.sunburst.report.class";
-import lastfm from "../../../../../../../public/locales/en/lastfm.json";
-import sunburst from "../../../../../../../public/locales/en/sunburst.json";
-import apiRoutes from "../../../../../../config/apiRoutes";
-import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock.hook";
-import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
-import mockMetricsHook from "../../../../../../hooks/tests/metrics.mock.hook";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import BillBoardProgressBar from "../../../../../billboard/billboard.progress.bar/billboard.progress.bar.component";
 import AggregateErrorDisplayComponent from "../../error.displays/aggregate.error.display.component";
 import SunBurstBaseReport from "../sunburst.report.base.class";
 import SunBurstReport from "../sunburst.report.component";
 import SunBurstReportContainer from "../sunburst.report.container";
-import type { userHookAsLastFMPlayCountByArtistReport } from "../../../../../../types/user/hook.types";
+import lastfm from "@locales/lastfm.json";
+import sunburst from "@locales/sunburst.json";
+import BillBoardProgressBar from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
+import apiRoutes from "@src/config/apiRoutes";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockMetricsHook from "@src/hooks/tests/metrics.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
-jest.mock("../../../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
-jest.mock("../../../../../../hooks/metrics", () => ({
-  __esModule: true,
-  default: () => mockMetricsHook,
-}));
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
+
+jest.mock("@src/hooks/metrics", () => () => mockMetricsHook);
 
 jest.mock("../../error.displays/aggregate.error.display.component");
 
 jest.mock(
-  "../../../../../billboard/billboard.progress.bar/billboard.progress.bar.component",
+  "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component",
   () => createMockedComponent("BillBoardProgressBar")
 );
 
@@ -41,7 +41,7 @@ jest.mock("../sunburst.report.component", () =>
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
@@ -116,9 +116,11 @@ describe("SunBurstReportContainer", () => {
     expect(typeof call.lastFMt).toBe("function");
     expect(typeof call.sunBurstT).toBe("function");
     expect(call.lastFMt("playCountByArtist.title")).toBe(
-      lastfm.playCountByArtist.title
+      _t(lastfm.playCountByArtist.title)
     );
-    expect(call.sunBurstT("info.interaction")).toBe(sunburst.info.interaction);
+    expect(call.sunBurstT("info.interaction")).toBe(
+      _t(sunburst.info.interaction)
+    );
   };
 
   const checkSunBurstReportProps = (visible: boolean) => {
@@ -132,6 +134,9 @@ describe("SunBurstReportContainer", () => {
     testTranslationFunctions(call);
     expect(Object.keys(call).length).toBe(5);
   };
+
+  const expectedBillBoardTitle = () =>
+    _t(lastfm[report.translationKey].communication);
 
   const resetHookState = () => {
     mockHookState = {
@@ -244,7 +249,7 @@ describe("SunBurstReportContainer", () => {
               BillBoardProgressBar,
               {
                 visible: true,
-                title: lastfm[report.translationKey].communication,
+                title: expectedBillBoardTitle(),
                 details: {
                   resource: "",
                   type: "",
@@ -257,7 +262,7 @@ describe("SunBurstReportContainer", () => {
               BillBoardProgressBar,
               {
                 visible: true,
-                title: lastfm[report.translationKey].communication,
+                title: expectedBillBoardTitle(),
                 details: {
                   resource: "",
                   type: "",
@@ -302,7 +307,7 @@ describe("SunBurstReportContainer", () => {
               BillBoardProgressBar,
               {
                 visible: true,
-                title: lastfm[report.translationKey].communication,
+                title: expectedBillBoardTitle(),
                 details: {
                   resource: "",
                   type: "",
@@ -315,10 +320,10 @@ describe("SunBurstReportContainer", () => {
               BillBoardProgressBar,
               {
                 visible: true,
-                title: lastfm[report.translationKey].communication,
+                title: expectedBillBoardTitle(),
                 details: {
                   resource: "Disintegration",
-                  type: "Album Details",
+                  type: _t(sunburst.detailTypes["Album Details"]),
                 },
                 value: 50,
               },
@@ -356,7 +361,7 @@ describe("SunBurstReportContainer", () => {
               BillBoardProgressBar,
               {
                 visible: true,
-                title: lastfm[report.translationKey].communication,
+                title: expectedBillBoardTitle(),
                 details: {
                   resource: "",
                   type: "",
@@ -369,7 +374,7 @@ describe("SunBurstReportContainer", () => {
               BillBoardProgressBar,
               {
                 visible: true,
-                title: lastfm[report.translationKey].communication,
+                title: expectedBillBoardTitle(),
                 details: {
                   resource: "",
                   type: "",
@@ -414,7 +419,7 @@ describe("SunBurstReportContainer", () => {
               BillBoardProgressBar,
               {
                 visible: true,
-                title: lastfm[report.translationKey].communication,
+                title: expectedBillBoardTitle(),
                 details: {
                   resource: "",
                   type: "",
@@ -427,10 +432,10 @@ describe("SunBurstReportContainer", () => {
               BillBoardProgressBar,
               {
                 visible: true,
-                title: lastfm[report.translationKey].communication,
+                title: expectedBillBoardTitle(),
                 details: {
                   resource: "Disintegration",
-                  type: "Album Details",
+                  type: _t(sunburst.detailTypes["Album Details"]),
                 },
                 value: 50,
               },
@@ -476,7 +481,7 @@ describe("SunBurstReportContainer", () => {
               BillBoardProgressBar,
               {
                 visible: false,
-                title: lastfm[report.translationKey].communication,
+                title: expectedBillBoardTitle(),
                 details: {
                   resource: "",
                   type: "",
@@ -489,7 +494,7 @@ describe("SunBurstReportContainer", () => {
               BillBoardProgressBar,
               {
                 visible: false,
-                title: lastfm[report.translationKey].communication,
+                title: expectedBillBoardTitle(),
                 details: {
                   resource: "",
                   type: "",

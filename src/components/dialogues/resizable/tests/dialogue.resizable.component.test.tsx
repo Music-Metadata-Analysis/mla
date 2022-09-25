@@ -1,30 +1,30 @@
 import { Flex } from "@chakra-ui/react";
 import { render, fireEvent, waitFor } from "@testing-library/react";
-import dialogueSettings from "../../../../config/dialogue";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import Billboard from "../../../billboard/billboard.component";
-import Condition from "../../../condition/condition.component";
 import Dialogue from "../dialogue.resizable.component";
+import Billboard from "@src/components/billboard/billboard.component";
+import Condition from "@src/components/condition/condition.component";
+import dialogueSettings from "@src/config/dialogue";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../billboard/billboard.component", () =>
+jest.mock("@src/components/billboard/billboard.component", () =>
   createMockedComponent("BillBoard")
 );
 
-jest.mock("../../../condition/condition.component", () =>
+jest.mock("@src/components/condition/condition.component", () =>
   createMockedComponent("Condition")
 );
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Flex"]);
 });
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

@@ -1,4 +1,4 @@
-import type EventDefinition from "../../../events/event.class";
+import type EventDefinition from "@src/events/event.class";
 
 export interface AnalyticsVendor {
   GoogleAnalytics: new () => AnalyticsVendorInterface;

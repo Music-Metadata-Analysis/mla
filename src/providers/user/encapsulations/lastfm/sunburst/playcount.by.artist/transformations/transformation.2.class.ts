@@ -1,5 +1,5 @@
 import TransformationBase from "./playcount.by.artist.sunburst.transformation.base.class";
-import type { LastFMTopArtistsReportResponseInterface } from "../../../../../../../types/clients/api/lastfm/response.types";
+import type { LastFMTopArtistsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
 
 class AttachUserArtists extends TransformationBase<LastFMTopArtistsReportResponseInterface> {
   userWithoutListens() {

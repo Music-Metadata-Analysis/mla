@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import InitialValues from "./navbar.initial";
-import type { NavBarProviderInterface } from "../../types/navbar.types";
+import type { NavBarProviderInterface } from "@src/types/navbar.types";
 
 export const NavBarContext = createContext(InitialValues);
 

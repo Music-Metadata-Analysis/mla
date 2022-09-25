@@ -1,5 +1,5 @@
-import { voidFn } from "../../utils/voids";
-import type { AnalyticsContextInterface } from "../../types/analytics.types";
+import { voidFn } from "@src/utils/voids";
+import type { AnalyticsContextInterface } from "@src/types/analytics.types";
 
 const InitialValues = <AnalyticsContextInterface>{
   initialized: false,

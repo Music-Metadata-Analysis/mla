@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { SessionProvider } from "next-auth/react";
-import checkMockCalls from "../../../../tests/fixtures/mock.component.call";
 import NextAuthProvider from "../next-auth";
+import checkMockCalls from "@src/tests/fixtures/mock.component.call";
 import type { Session } from "next-auth";
 
 jest.mock("next-auth/react", () => ({
@@ -13,7 +13,7 @@ jest.mock("next-auth/react", () => ({
 const createProviderMock = (name: string, exportName = "default") => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name, exportName);
 };
 

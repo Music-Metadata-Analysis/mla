@@ -1,11 +1,11 @@
-import routes from "../../../../../../../config/routes";
-import PlayCountByArtistState from "../../../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
-import MockSunBurstNodeEncapsulation from "../../encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
 import SunBurstBaseReport from "../../sunburst.report.base.class";
-import type { LastFMReportClassInterface } from "../../../../../../../types/clients/api/lastfm/data.report.types";
-import type { PlayCountByArtistReportInterface } from "../../../../../../../types/clients/api/lastfm/response.types";
-import type { AggregateBaseReportResponseInterface } from "../../../../../../../types/integrations/base.types";
-import type { LastFMUserStateBase } from "../../../../../../../types/user/state.types";
+import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
+import routes from "@src/config/routes";
+import PlayCountByArtistState from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
+import type { LastFMReportClassInterface } from "@src/types/clients/api/lastfm/data.report.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 export const mockImageUrl = "http://someurl";
 

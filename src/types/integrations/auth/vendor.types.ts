@@ -1,4 +1,4 @@
-import type { VendorProfileType } from "../../../backend/integrations/auth/vendor.types";
+import type { VendorProfileType } from "@src/backend/integrations/auth/vendor.types";
 
 export type AuthVendorSessionType = {
   email: string | null;

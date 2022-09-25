@@ -1,4 +1,4 @@
-import settings from "../../../../../../config/sunburst";
+import settings from "@src/config/sunburst";
 import type { RefObject } from "react";
 
 const getRefProperty = (

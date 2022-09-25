@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import SunBurstReport from "./sunburst.report.component";
-import Events from "../../../../../events/events";
-import useAnalytics from "../../../../../hooks/analytics";
-import useMetrics from "../../../../../hooks/metrics";
-import BillBoardProgressBar from "../../../../billboard/billboard.progress.bar/billboard.progress.bar.component";
 import AggregateErrorDisplay from "../error.displays/aggregate.error.display.component";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type { IntegrationRequestType } from "../../../../../types/analytics.types";
-import type { AggregateBaseReportResponseInterface } from "../../../../../types/integrations/base.types";
-import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
-import type { BillBoardProgressBarDetails } from "../../../../billboard/billboard.progress.bar/billboard.progress.bar.component";
+import BillBoardProgressBar from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
+import Events from "@src/events/events";
+import useAnalytics from "@src/hooks/analytics";
+import useLocale from "@src/hooks/locale";
+import useMetrics from "@src/hooks/metrics";
 import type SunBurstBaseReport from "./sunburst.report.base.class";
+import type { BillBoardProgressBarDetails } from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
+import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type { IntegrationRequestType } from "@src/types/analytics.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { userHookAsLastFM } from "@src/types/user/hook.types";
 
 interface SunBurstReportContainerProps<T extends UserState<unknown>> {
   userName: string;
@@ -27,8 +27,8 @@ export default function SunBurstReportContainer<
   reportClass,
 }: SunBurstReportContainerProps<UserStateType>) {
   const analytics = useAnalytics();
-  const { t: lastFMt } = useTranslation("lastfm");
-  const { t: sunBurstT } = useTranslation("sunburst");
+  const { t: lastFMt } = useLocale("lastfm");
+  const { t: sunBurstT } = useLocale("sunburst");
   const metrics = useMetrics();
   const report = new reportClass();
   const [progressPercent, setProgressPercent] = useState(0);

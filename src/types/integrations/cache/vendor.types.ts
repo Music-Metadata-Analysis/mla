@@ -1,5 +1,5 @@
-import type CacheControllerAbstractFactory from "../../../backend/integrations/cache/controller/controller.abstract.factory.class";
-import type { PersistanceVendorInterface } from "../persistance/vendor.types";
+import type CacheControllerAbstractFactory from "@src/backend/integrations/cache/controller/controller.abstract.factory.class";
+import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
 
 export interface CacheFactoryInterface<ObjectType> {
   create(): CacheControllerInterface<ObjectType>;

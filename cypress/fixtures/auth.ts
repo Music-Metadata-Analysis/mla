@@ -1,5 +1,5 @@
-import env from "../config/env";
-import type { envVarSetType } from "../types/env";
+import env from "@cypress/config/env";
+import type { envVarSetType } from "@cypress/types/env";
 
 export const AllAccessIdentity = {
   email: "all-access@mla.com",

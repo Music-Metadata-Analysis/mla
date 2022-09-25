@@ -3,20 +3,18 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
-import mockAuthHook, {
-  mockUserProfile,
-} from "../../../../hooks/tests/auth.mock.hook";
 import useNextAuth from "../next-auth";
-import type { AuthSessionType } from "../../../../types/clients/auth/vendor.types";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import type { AuthSessionType } from "@src/types/clients/auth/vendor.types";
+
+jest.mock("@src/hooks/utility/local.storage", () => ({
+  getPersistedUseState: () => mockUseLocalStorage,
+}));
 
 jest.mock("next-auth/react", () => ({
   useSession: jest.fn(),
   signIn: jest.fn(),
   signOut: jest.fn(),
-}));
-
-jest.mock("../../../../hooks/utility/local.storage", () => ({
-  getPersistedUseState: () => mockUseLocalStorage,
 }));
 
 const mockUseLocalStorage = jest.fn(() => useMockLocalStorageHook());

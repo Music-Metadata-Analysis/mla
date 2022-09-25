@@ -1,10 +1,10 @@
 import PlayCountByArtistNode from "./playcount.artists.node.class";
-import routes from "../../../../config/routes";
-import PlayCountByArtistState from "../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import SunBurstDrawer from "../common/sunburst.report.drawer/sunburst.report.drawer.component";
 import SunBurstBaseReport from "../common/sunburst.report/sunburst.report.base.class";
-import type { PlayCountByArtistReportInterface } from "../../../../types/clients/api/lastfm/response.types";
-import type { AggregateBaseReportResponseInterface } from "../../../../types/integrations/base.types";
+import routes from "@src/config/routes";
+import PlayCountByArtistState from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
+import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
 
 export default class PlayCountByArtistReport extends SunBurstBaseReport<PlayCountByArtistState> {
   drawerComponent = SunBurstDrawer;

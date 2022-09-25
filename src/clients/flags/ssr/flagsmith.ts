@@ -1,6 +1,6 @@
 import flagsmith from "flagsmith/isomorphic";
-import { normalizeNull, normalizeUndefined } from "../../../utils/voids";
-import type { FlagVendorSSRInterface } from "../../../types/clients/flags/vendor.types";
+import { normalizeNull, normalizeUndefined } from "@src/utils/voids";
+import type { FlagVendorSSRInterface } from "@src/types/clients/flags/vendor.types";
 
 class FlagSmithSSR implements FlagVendorSSRInterface {
   getState = async (identity?: string | null) => {

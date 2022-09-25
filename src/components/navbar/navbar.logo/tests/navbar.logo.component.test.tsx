@@ -1,56 +1,63 @@
-import { render, screen } from "@testing-library/react";
-import translation from "../../../../../public/locales/en/navbar.json";
-import routes from "../../../../config/routes";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import mockRouter from "../../../../tests/fixtures/mock.router";
+import { render, screen, within } from "@testing-library/react";
 import NavBarAvatar from "../../navbar.avatar/navbar.avatar.component";
 import NavBarLink from "../../navbar.link/navbar.link.component";
 import NavBarLogo from "../navbar.logo.component";
+import navbarTranslations from "@locales/navbar.json";
+import routes from "@src/config/routes";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import mockRouter from "@src/tests/fixtures/mock.router";
 
-jest.mock("../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+jest.mock("next/router", () => ({ useRouter: () => mockRouter }));
+
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 jest.mock("../../navbar.avatar/navbar.avatar.component", () => {
   return jest.fn().mockImplementation(() => <div>MockComponent</div>);
 });
 
-jest.mock("../../navbar.link/navbar.link.component", () => {
-  return jest.fn().mockImplementation(() => <>{TitlePlaceHolder}</>);
-});
+jest.mock("../../navbar.link/navbar.link.component", () =>
+  createMockedComponent("NavBarLink")
+);
 
-jest.mock("next/router", () => ({
-  __esModule: true,
-  useRouter: () => mockRouter,
-}));
-
-const TitlePlaceHolder = "TitlePlaceHolder";
+const createMockedComponent = (name: string) => {
+  const {
+    factoryInstance,
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
+  return factoryInstance.create(name);
+};
 
 describe("NavBarLogo", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockRouter.pathname = routes.home;
     arrange();
   });
 
   const arrange = () => {
+    mockRouter.pathname = routes.home;
     render(<NavBarLogo />);
   };
 
-  it("should display the app title", async () => {
-    expect(await screen.findByText(TitlePlaceHolder)).toBeTruthy();
-  });
-
   it("should render the title NavBarLink with the correct props", () => {
     expect(NavBarLink).toBeCalledTimes(1);
-    const call = (NavBarLink as jest.Mock).mock.calls[0][0];
-    expect(call.selected).toBe(routes.home === mockRouter.pathname);
-    expect(call.href).toBe(routes.home);
-    expect(call.children).toBe(translation.title);
-    expect(call.trackButtonClick).toBe(mockAnalyticsHook.trackButtonClick);
-    expect(Object.keys(call).length).toBe(4);
+    checkMockCall(NavBarLink, {
+      selected: routes.home === mockRouter.pathname,
+      href: routes.home,
+      trackButtonClick: mockAnalyticsHook.trackButtonClick,
+    });
+  });
+
+  it("should render the title NavBarLink content correctly", async () => {
+    const link = await screen.findByTestId("NavBarLink");
+    expect(
+      await within(link).findByText(_t(navbarTranslations.title))
+    ).toBeTruthy();
   });
 
   it("should render the Avatar with the correct props", () => {

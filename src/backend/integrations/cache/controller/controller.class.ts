@@ -1,7 +1,7 @@
 import type {
   CacheControllerInterface,
   CdnVendorInterface,
-} from "../../../../types/integrations/cache/vendor.types";
+} from "@src/types/integrations/cache/vendor.types";
 
 export default class CacheController<ObjectType>
   implements CacheControllerInterface<ObjectType>

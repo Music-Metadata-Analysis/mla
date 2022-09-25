@@ -1,6 +1,6 @@
 import { InitialState } from "./ui.popups.initial";
-import type { UserInterfacePopUpsActionType } from "../../../types/ui/popups/ui.popups.action.types";
-import type { UserInterfacePopUpsStateInterface } from "../../../types/ui/popups/ui.popups.state.types";
+import type { UserInterfacePopUpsActionType } from "@src/types/ui/popups/ui.popups.action.types";
+import type { UserInterfacePopUpsStateInterface } from "@src/types/ui/popups/ui.popups.state.types";
 
 class UserInterfacePopUpsReducerStates {
   wrongTypeError = "Received wrong action type.";

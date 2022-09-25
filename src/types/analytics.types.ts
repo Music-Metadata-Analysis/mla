@@ -1,4 +1,4 @@
-import type EventDefinition from "../events/event.class";
+import type EventDefinition from "@src/events/event.class";
 
 export type EventDefinitionType = {
   category: "AUTH" | "LAST.FM" | "MAIN" | "TEST";

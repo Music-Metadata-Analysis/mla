@@ -3,12 +3,12 @@ import MockCompleteReport2 from "./fixtures/mock.state.data.2.json";
 import MockCompleteReport3 from "./fixtures/mock.state.data.3.json";
 import MockCompleteReport4 from "./fixtures/mock.state.data.4.json";
 import MockCompleteReport5 from "./fixtures/mock.state.data.5.json";
-import MockSunburstData4 from "../../../../../common/sunburst/tests/fixtures/mock.sunburst.data.4.json";
-import MockSunburstData5 from "../../../../../common/sunburst/tests/fixtures/mock.sunburst.data.5.json";
 import { MockReportClass } from "../../tests/fixtures/mock.sunburst.report.class";
 import SunBurstDataTranslator from "../chart.data.class";
-import type { SunBurstAggregateReportContent } from "../../../../../../../types/clients/api/lastfm/sunburst.types";
-import type { SunBurstData } from "../../../../../../../types/reports/sunburst.types";
+import MockSunburstData4 from "@src/components/reports/common/sunburst/tests/fixtures/mock.sunburst.data.4.json";
+import MockSunburstData5 from "@src/components/reports/common/sunburst/tests/fixtures/mock.sunburst.data.5.json";
+import type { SunBurstAggregateReportContent } from "@src/types/clients/api/lastfm/sunburst.types";
+import type { SunBurstData } from "@src/types/reports/sunburst.types";
 
 describe("SunBurstDataTranslator", () => {
   let instance: SunBurstDataTranslator;

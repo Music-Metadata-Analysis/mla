@@ -1,4 +1,4 @@
-import type { LastFMTopArtistsReportResponseInterface } from "../../types/clients/api/lastfm/response.types";
+import type { LastFMTopArtistsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
 
 interface TestData {
   [key: string]: LastFMTopArtistsReportResponseInterface;

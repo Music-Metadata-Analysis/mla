@@ -1,46 +1,46 @@
 import { waitFor, screen, render } from "@testing-library/react";
-import authVendor from "../../clients/auth/vendor";
-import flagVendor from "../../clients/flags/vendor";
-import Header from "../../components/header/header.component";
-import checkMockCall from "../../tests/fixtures/mock.component.call";
-import AnalyticsProvider from "../analytics/analytics.provider";
 import MetricsProvider from "../metrics/metrics.provider";
 import NavBarProvider from "../navbar/navbar.provider";
 import RootProvider from "../root.provider";
 import UserInterfaceRootProvider from "../ui/ui.root.provider";
 import UserProvider from "../user/user.provider";
-import type { VendorAuthStateType } from "../../clients/auth/vendor.types";
-import type { VendorFlagStateType } from "../../clients/flags/vendor.types";
+import authVendor from "@src/clients/auth/vendor";
+import flagVendor from "@src/clients/flags/vendor";
+import Header from "@src/components/header/header.component";
+import AnalyticsProvider from "@src/providers/analytics/analytics.provider";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
+import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 
-jest.mock("../../clients/auth/vendor", () => ({
+jest.mock("@src/clients/auth/vendor", () => ({
   Provider: createProviderMock(providers.AuthVendorProvider, "Provider")[
     "Provider"
   ],
 }));
 
-jest.mock("../../clients/flags/vendor", () => ({
+jest.mock("@src/clients/flags/vendor", () => ({
   Provider: createProviderMock(providers.FlagVendorProvider, "Provider")[
     "Provider"
   ],
 }));
 
-jest.mock("../../components/header/header.component", () =>
+jest.mock("@src/components/header/header.component", () =>
   createProviderMock(providers.Header)
 );
 
-jest.mock("../../providers/analytics/analytics.provider", () =>
+jest.mock("@src/providers/analytics/analytics.provider", () =>
   createProviderMock(providers.AnalyticsProvider)
 );
 
-jest.mock("../../providers/metrics/metrics.provider", () =>
+jest.mock("@src/providers/metrics/metrics.provider", () =>
   createProviderMock(providers.MetricsProvider)
 );
 
-jest.mock("../../providers/navbar/navbar.provider", () =>
+jest.mock("@src/providers/navbar/navbar.provider", () =>
   createProviderMock(providers.NavBarProvider)
 );
 
-jest.mock("../../providers/user/user.provider", () =>
+jest.mock("@src/providers/user/user.provider", () =>
   createProviderMock(providers.UserProvider)
 );
 
@@ -51,7 +51,7 @@ jest.mock("../ui/ui.root.provider", () =>
 const createProviderMock = (name: string, exportName = "default") => {
   const {
     factoryInstance,
-  } = require("../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name, exportName);
 };
 

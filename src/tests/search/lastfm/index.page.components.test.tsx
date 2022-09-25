@@ -1,31 +1,30 @@
 import { render } from "@testing-library/react";
-import ErrorBoundary from "../../../components/errors/boundary/error.boundary.component";
-import Select from "../../../components/search/lastfm/select/select.report.component";
-import routes from "../../../config/routes";
-import Events from "../../../events/events";
-import Page from "../../../pages/search/lastfm/index";
-import mockCheckCall from "../../../tests/fixtures/mock.component.call";
-import getPageProps from "../../../utils/page.props.static";
+import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import Select from "@src/components/search/lastfm/select/select.report.component";
+import routes from "@src/config/routes";
+import Events from "@src/events/events";
+import Page from "@src/pages/search/lastfm/index";
+import mockCheckCall from "@src/tests/fixtures/mock.component.call";
+import getPageProps from "@src/utils/page.props.static";
 
-jest.mock("../../../utils/page.props.static", () => jest.fn());
+jest.mock("@src/utils/page.props.static", () => jest.fn());
 
-jest.mock(
-  "../../../components/search/lastfm/select/select.report.component",
-  () => jest.fn(() => <div>SelectComponent</div>)
+jest.mock("@src/components/search/lastfm/select/select.report.component", () =>
+  jest.fn(() => <div>SelectComponent</div>)
 );
 
-jest.mock("../../../components/errors/boundary/error.boundary.component", () =>
+jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
   createMockedComponent("ErrorBoundary")
 );
 
-jest.mock("../../../components/errors/display/error.display.component", () =>
+jest.mock("@src/components/errors/display/error.display.component", () =>
   createMockedComponent("ErrorDisplay")
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

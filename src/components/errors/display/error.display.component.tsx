@@ -1,8 +1,8 @@
 import { WarningTwoIcon } from "@chakra-ui/icons";
 import { Container, Flex, useColorModeValue } from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
-import Billboard from "../../billboard/billboard.component";
-import StyledButton from "../../button/button.standard/button.standard.component";
+import Billboard from "@src/components/billboard/billboard.component";
+import StyledButton from "@src/components/button/button.standard/button.standard.component";
+import useLocale from "@src/hooks/locale";
 
 export interface ErrorHandlerProps {
   error?: Error;
@@ -11,7 +11,7 @@ export interface ErrorHandlerProps {
 }
 
 const ErrorDisplay = ({ errorKey, resetError, error }: ErrorHandlerProps) => {
-  const { t } = useTranslation("main");
+  const { t } = useLocale("main");
   const iconColor = useColorModeValue("yellow.800", "yellow.200");
 
   const displayMessage = () => {

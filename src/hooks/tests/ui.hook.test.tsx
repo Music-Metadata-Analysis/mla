@@ -1,11 +1,11 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockUserInterfaceHook from "./ui.mock.hook";
-import { UserInterfaceImagesContext } from "../../providers/ui/ui.images/ui.images.provider";
-import { UserInterfacePopUpsContext } from "../../providers/ui/ui.popups/ui.popups.provider";
 import useUserInterface from "../ui";
-import type { UserInterfaceImagesContextInterface } from "../../types/ui/images/ui.images.context.types";
-import type { UserInterfacePopUpsContextInterface } from "../../types/ui/popups/ui.popups.context.types";
+import { UserInterfaceImagesContext } from "@src/providers/ui/ui.images/ui.images.provider";
+import { UserInterfacePopUpsContext } from "@src/providers/ui/ui.popups/ui.popups.provider";
+import type { UserInterfaceImagesContextInterface } from "@src/types/ui/images/ui.images.context.types";
+import type { UserInterfacePopUpsContextInterface } from "@src/types/ui/popups/ui.popups.context.types";
 import type { ReactNode } from "react";
 
 interface MockInterfaceContextWithChildren {

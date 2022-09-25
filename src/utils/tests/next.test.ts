@@ -1,6 +1,6 @@
 import { PHASE_PRODUCTION_BUILD } from "next/constants";
 import { isBuildTime } from "../next";
-import type { MutableEnv } from "../../types/process.types";
+import type { MutableEnv } from "@src/types/process.types";
 
 describe("When node is running at next build time", () => {
   const originalEnvironment = process.env;
