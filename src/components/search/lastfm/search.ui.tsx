@@ -1,14 +1,14 @@
 import { Box, Flex, useToast, Avatar } from "@chakra-ui/react";
-import SearchContainer from "./search.container.component";
-import Authentication from "../../authentication/authentication.container";
-import Billboard from "../../billboard/billboard.component";
-import LastFMIcon from "../../icons/lastfm/lastfm.icon";
-import type { TFunction } from "next-i18next";
+import SearchContainer from "./search.container";
+import Authentication from "@src/components/authentication/authentication.container";
+import Billboard from "@src/components/billboard/billboard.component";
+import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 interface SearchUIProps {
   route: string;
   title: string;
-  t: TFunction;
+  t: tFunctionType;
 }
 
 export default function SearchUI({ route, title, t }: SearchUIProps) {

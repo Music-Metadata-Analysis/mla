@@ -1,6 +1,6 @@
-import apiRoutes from "../../../../../../../config/apiRoutes";
 import UserArtistsAndProfile from "../user.artists.and.profile";
-import type UserSunBurstReportBaseState from "../../../../../../../providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import apiRoutes from "@src/config/apiRoutes";
+import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 
 describe("UserArtistsAndProfile", () => {
   const mockDispatch = jest.fn();

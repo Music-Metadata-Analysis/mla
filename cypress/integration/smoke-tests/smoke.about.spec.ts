@@ -1,6 +1,6 @@
-import about from "../../../public/locales/en/about.json";
-import routes from "../../../src/config/routes";
-import { baseUrl } from "../../fixtures/setup";
+import { baseUrl } from "@cypress/fixtures/setup";
+import about from "@locales/about.json";
+import routes from "@src/config/routes";
 
 describe("Splash Page", () => {
   before(() => {

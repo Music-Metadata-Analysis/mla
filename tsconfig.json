@@ -1,22 +1,32 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
+    "baseUrl": ".",
     "downlevelIteration": true,
-    "importsNotUsedAsValues": "error",
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "importsNotUsedAsValues": "error",
+    "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "paths": {
+      "@cypress/*": ["cypress/*"],
+      "@locales/*": ["public/locales/en/*"],
+      "@public/*": ["public/*"],
+      "@src/*": ["src/*"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es5"
   },
+  "exclude": ["node_modules", "public", "coverage"],
   "include": ["types.d/*.d.ts", "*.d.ts", "src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "public", "coverage"]
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }

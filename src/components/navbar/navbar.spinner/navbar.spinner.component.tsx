@@ -1,5 +1,5 @@
 import { Spinner } from "@chakra-ui/react";
-import Condition from "../../condition/condition.component";
+import Condition from "@src/components/condition/condition.component";
 
 export const testIDs = {
   NavBarSpinner: "NavBarSpinner",

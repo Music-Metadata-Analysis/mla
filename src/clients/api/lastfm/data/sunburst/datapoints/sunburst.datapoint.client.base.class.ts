@@ -1,9 +1,9 @@
-import EventDefinition from "../../../../../../events/event.class";
-import LastFMBaseClient from "../../../lastfm.api.client.base.class";
-import type UserSunBurstReportBaseState from "../../../../../../providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type { EventCreatorType } from "../../../../../../types/analytics.types";
-import type { LastFMReportParamsInterface } from "../../../../../../types/clients/api/lastfm/request.types";
-import type { userDispatchType } from "../../../../../../types/user/context.types";
+import LastFMBaseClient from "@src/clients/api/lastfm/lastfm.api.client.base.class";
+import EventDefinition from "@src/events/event.class";
+import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type { EventCreatorType } from "@src/types/analytics.types";
+import type { LastFMReportParamsInterface } from "@src/types/clients/api/lastfm/request.types";
+import type { userDispatchType } from "@src/types/user/context.types";
 abstract class LastFMBaseSunBurstDataPointClient<
   ReportType,
   ResponseType

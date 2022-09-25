@@ -1,16 +1,16 @@
 import nextConnect from "next-connect";
 import LastFMEndpointBase from "./endpoint.common.base.class";
 import Logger from "./endpoint.common.logger";
-import requestSettings from "../../../config/requests";
-import * as status from "../../../config/status";
-import authVendor from "../../integrations/auth/vendor";
-import flagVendor from "../../integrations/flags/vendor";
-import LastFMProxy from "../../integrations/lastfm/proxy.class";
+import authVendor from "@src/backend/integrations/auth/vendor";
+import flagVendor from "@src/backend/integrations/flags/vendor";
+import LastFMProxy from "@src/backend/integrations/lastfm/proxy.class";
+import requestSettings from "@src/config/requests";
+import * as status from "@src/config/status";
 import type {
   LastFMEndpointRequest,
   LastFMEndpointResponse,
   PathParamType,
-} from "../../../types/api.endpoint.types";
+} from "@src/types/api.endpoint.types";
 
 export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointBase {
   timeOut = requestSettings.timeout;

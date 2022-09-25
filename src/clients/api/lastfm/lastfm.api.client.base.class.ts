@@ -1,16 +1,16 @@
-import EventDefinition from "../../../events/event.class";
 import HTTPClient from "../api.client.class";
+import EventDefinition from "@src/events/event.class";
 import type {
   EventCreatorType,
   IntegrationRequestType,
-} from "../../../types/analytics.types";
-import type { ApiResponse } from "../../../types/clients/api/api.client.types";
+} from "@src/types/analytics.types";
+import type { ApiResponse } from "@src/types/clients/api/api.client.types";
 import type {
   LastFMReportInterface,
   LastFMReportParamsInterface,
-} from "../../../types/clients/api/lastfm/request.types";
-import type { BaseReportResponseInterface } from "../../../types/integrations/base.types";
-import type { userDispatchType } from "../../../types/user/context.types";
+} from "@src/types/clients/api/lastfm/request.types";
+import type { BaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { userDispatchType } from "@src/types/user/context.types";
 
 abstract class LastFMBaseClient<ResponseType>
   implements LastFMReportInterface<ResponseType>

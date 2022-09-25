@@ -1,24 +1,28 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { act, render, screen, within } from "@testing-library/react";
-import lastfm from "../../../../../../../../public/locales/en/lastfm.json";
-import mockColourHook from "../../../../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../../../../tests/fixtures/mock.component.call";
-import VerticalScrollBar from "../../../../../../scrollbar/vertical.scrollbar.component";
-import MockSunBurstNodeEncapsulation from "../../../sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
 import SunBurstNodeButton from "../node.button.component";
 import SunBurstNodeDisplay from "../node.display.component";
 import SunBurstEntityNodeList, {
   testIDs,
   SunBurstEntityNodeListProps,
 } from "../node.list.component";
-import type { d3Node } from "../../../../../../../types/reports/sunburst.types";
-import type SunBurstNodeEncapsulation from "../../../sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import lastfm from "@locales/lastfm.json";
+import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
+import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("../../../../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
-jest.mock("../../../../../../scrollbar/vertical.scrollbar.component", () =>
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
+
+jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   createMockedComponent("VerticalScrollBar")
 );
 
@@ -33,14 +37,14 @@ jest.mock("../node.display.component", () =>
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Flex", "Text"]);
 });
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
@@ -124,7 +128,7 @@ describe("SunBurstEntityNodeList", () => {
         );
         expect(
           await within(container).findByText(
-            lastfm.playCountByArtist.drawer.noInformation
+            _t(lastfm.playCountByArtist.drawer.noInformation)
           )
         ).toBeTruthy();
       });

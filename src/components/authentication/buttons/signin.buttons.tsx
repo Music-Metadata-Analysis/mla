@@ -3,15 +3,15 @@ import {
   GithubLoginButton,
   GoogleLoginButton,
 } from "react-social-login-buttons";
-import AnalyticsWrapper from "../../analytics/analytics.button/analytics.button.component";
-import SpotifyLoginButton from "../../button/button.spotify/spotify.login";
-import type { AuthServiceType } from "../../../types/clients/auth/vendor.types";
-import type { TFunction } from "next-i18next";
+import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
+import SpotifyLoginButton from "@src/components/button/button.spotify/spotify.login";
+import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export interface AuthenticationProviderProps {
   setClicked: (value: boolean) => void;
   signIn: (provider: AuthServiceType) => void;
-  t: TFunction;
+  t: tFunctionType;
 }
 
 export default function SignInButtons({

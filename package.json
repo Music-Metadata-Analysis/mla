@@ -92,6 +92,7 @@
     "npm-force-resolutions": "^0.0.10",
     "prettier": "^2.6.1",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.0",
     "typescript": "^4.6.3",
     "webpack": "^5.70.0",
     "webpack-dev-server": "^4.7.4"
@@ -125,13 +126,14 @@
     "setupFilesAfterEnv": [
       "<rootDir>/jest/setup/emotion.js",
       "<rootDir>/jest/setup/fetch.js",
-      "<rootDir>/jest/setup/i18next.js",
       "<rootDir>/jest/setup/next.jsx",
       "<rootDir>/jest/setup/snapshot.js",
       "<rootDir>/jest/setup/text.js",
       "<rootDir>/jest/setup/testing-library.js"
     ],
     "moduleNameMapper": {
+      "^@locales/(.*)": "<rootDir>/public/locales/en/$1",
+      "^@src/(.*)": "<rootDir>/src/$1",
       ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
       ".+\\.(png|jpg|ttf|woff|woff2)$": "<rootDir>/jest/modules/images.js",
       "d3": "<rootDir>/node_modules/d3/dist/d3.min.js"

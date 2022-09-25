@@ -1,21 +1,18 @@
 import MockSunBurstData from "./fixtures/mock.sunburst.node.data.json";
 import MockSunBurstNodeEncapsulation from "./fixtures/mock.sunburst.node.encapsulation.class";
-import Events from "../../../../../../../events/events";
-import RGBA from "../../../../../../../utils/colours/rgba.class";
-import type EventDefinition from "../../../../../../../events/event.class";
-import type {
-  d3Node,
-  SunBurstData,
-} from "../../../../../../../types/reports/sunburst.types";
+import Events from "@src/events/events";
+import RGBA from "@src/utils/colours/rgba.class";
 import type SunBurstNodeEncapsulation from "../sunburst.node.encapsulation.base";
+import type EventDefinition from "@src/events/event.class";
+import type { d3Node, SunBurstData } from "@src/types/reports/sunburst.types";
 
 type d3NodeWithChildren = d3Node & { children: Array<d3NodeWithChildren> };
 
-jest.mock("../../../../../../../utils/strings", () => ({
+jest.mock("@src/utils/strings", () => ({
   singular: (value: string) => `singular(${value})`,
 }));
 
-jest.mock("../../../../../../../events/events", () => ({
+jest.mock("@src/events/events", () => ({
   LastFM: { SunBurstNodeSelected: jest.fn(() => "MockEvent!") },
 }));
 

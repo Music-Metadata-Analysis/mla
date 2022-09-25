@@ -4,8 +4,8 @@ import FetchFailureConditionalDisplay from "./error.conditions/failure.error.dis
 import NoListensErrorConditionalDisplay from "./error.conditions/nolistens.error.display.component";
 import NotFoundErrorConditionalDisplay from "./error.conditions/notfound.error.display.component";
 import RateLimitedErrorConditionalDisplay from "./error.conditions/ratelimited.error.display.component";
-import type { LastFMReportClassInterface } from "../../../../../types/clients/api/lastfm/data.report.types";
-import type { LastFMUserStateBase } from "../../../../../types/user/state.types";
+import type { LastFMReportClassInterface } from "@src/types/clients/api/lastfm/data.report.types";
+import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 type LastFMAggregateErrorDisplayProps<ReportType> = {
   report: LastFMReportClassInterface<LastFMUserStateBase, ReportType>;

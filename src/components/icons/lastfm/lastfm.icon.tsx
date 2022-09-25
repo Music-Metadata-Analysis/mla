@@ -1,6 +1,6 @@
-import { useTranslation } from "next-i18next";
 import { Icon } from "./lastfm.icon.styles";
-import LastFM from "../../../../public/images/lastfm.png";
+import LastFM from "@public/images/lastfm.png";
+import useLocale from "@src/hooks/locale";
 
 interface LastFMIconProps {
   height?: number;
@@ -8,7 +8,7 @@ interface LastFMIconProps {
 }
 
 const LastFMIcon = ({ width = 50, height = 50 }: LastFMIconProps) => {
-  const { t } = useTranslation("main");
+  const { t } = useLocale("main");
   return (
     <Icon
       alt={t("altText.lastfm")}

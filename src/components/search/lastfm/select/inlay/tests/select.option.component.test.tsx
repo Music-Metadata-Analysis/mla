@@ -1,17 +1,17 @@
 import { render, screen } from "@testing-library/react";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import Button from "../../../../../button/button.standard/button.standard.component";
 import Option from "../select.option.component";
+import Button from "@src/components/button/button.standard/button.standard.component";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock(
-  "../../../../../button/button.standard/button.standard.component",
+  "@src/components/button/button.standard/button.standard.component",
   () => createMockedComponent("Button")
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

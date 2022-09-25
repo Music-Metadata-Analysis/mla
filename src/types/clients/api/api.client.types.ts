@@ -1,4 +1,4 @@
-import type { Await } from "../../promise.types";
+import type { Await } from "@src/types/promise.types";
 
 export type FetchResponse = Await<ReturnType<typeof fetch>>;
 

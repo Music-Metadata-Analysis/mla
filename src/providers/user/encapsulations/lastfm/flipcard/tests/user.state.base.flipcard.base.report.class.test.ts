@@ -3,14 +3,16 @@ import {
   baseUserProperties,
   mockUrls,
 } from "../../tests/fixtures/mock.user.state.data";
-import type { LastFMImageDataInterface } from "../../../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateAlbumReport } from "../../../../../../types/user/state.types";
+import lastfmTranslations from "@locales/lastfm.json";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
 import type UserFlipCardBaseReportState from "../user.state.base.flipcard.report.class";
+import type { LastFMImageDataInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
 
 describe("UserFlipCardBaseReportState", () => {
   let currentState: LastFMUserStateAlbumReport;
   let instance: UserFlipCardBaseReportState;
-  const mockT = jest.fn((arg: string) => `t(${arg})`);
+  const mockT = new mockUseLocale("lastfm").t;
   let index: number;
   let size: LastFMImageDataInterface["size"];
 
@@ -30,9 +32,15 @@ describe("UserFlipCardBaseReportState", () => {
     beforeEach(() => arrange());
 
     it("should have the correct translated default values", () => {
-      expect(instance.defaultAlbumName).toBe("t(defaults.albumName)");
-      expect(instance.defaultArtistName).toBe("t(defaults.artistName)");
-      expect(instance.defaultTrackName).toBe("t(defaults.trackName)");
+      expect(instance.defaultAlbumName).toBe(
+        _t(lastfmTranslations.defaults.albumName)
+      );
+      expect(instance.defaultArtistName).toBe(
+        _t(lastfmTranslations.defaults.artistName)
+      );
+      expect(instance.defaultTrackName).toBe(
+        _t(lastfmTranslations.defaults.trackName)
+      );
     });
 
     describe("getDataSource", () => {

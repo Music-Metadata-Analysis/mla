@@ -1,9 +1,9 @@
 import { Flex } from "@chakra-ui/react";
 import { FC, useEffect, useState } from "react";
-import dialogueSettings from "../../../config/dialogue";
-import Billboard from "../../billboard/billboard.component";
-import Condition from "../../condition/condition.component";
-import type { TFunction } from "next-i18next";
+import Billboard from "@src/components/billboard/billboard.component";
+import Condition from "@src/components/condition/condition.component";
+import dialogueSettings from "@src/config/dialogue";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export const testIDs = {
   DialogueHeaderComponent: "DialogueHeaderComponent",
@@ -13,12 +13,12 @@ export const testIDs = {
 };
 
 export interface DialogueProps {
-  FooterComponent: FC<{ t: TFunction }>;
-  t: TFunction;
+  FooterComponent: FC<{ t: tFunctionType }>;
+  t: tFunctionType;
   titleKey: string;
-  BodyComponent: FC<{ t: TFunction }>;
-  HeaderComponent: FC<{ t: TFunction }>;
-  ToggleComponent: FC<{ t: TFunction }>;
+  BodyComponent: FC<{ t: tFunctionType }>;
+  HeaderComponent: FC<{ t: tFunctionType }>;
+  ToggleComponent: FC<{ t: tFunctionType }>;
 }
 
 export default function Dialogue({

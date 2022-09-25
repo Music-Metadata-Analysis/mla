@@ -1,19 +1,20 @@
 import { render } from "@testing-library/react";
-import mockLastFMHook from "../../../../../hooks/tests/lastfm.mock.hook";
-import UserInterfaceImageProvider from "../../../../../providers/ui/ui.images/ui.images.provider";
-import FlipCardReportContainer from "../../common/flip.card.report/flip.card.report.container";
 import Top20TracksContainer from "../top20.tracks.container";
 import Top20TracksReport from "../top20.tracks.report.class";
-import type { userHookAsLastFMTop20TrackReport } from "../../../../../types/user/hook.types";
+import FlipCardReportContainer from "@src/components/reports/lastfm/common/flip.card.report/flip.card.report.container";
+import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
+import UserInterfaceImageProvider from "@src/providers/ui/ui.images/ui.images.provider";
+import type { userHookAsLastFMTop20TrackReport } from "@src/types/user/hook.types";
 
-jest.mock("../../common/flip.card.report/flip.card.report.container", () =>
-  createMockedComponent("FlipCardReport")
+jest.mock(
+  "@src/components/reports/lastfm/common/flip.card.report/flip.card.report.container",
+  () => createMockedComponent("FlipCardReportContainer")
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

@@ -1,11 +1,11 @@
-import type APIClient from "../../../../clients/api/api.client.class";
+import type { ApiResponse } from "../api.client.types";
+import type APIClient from "@src/clients/api/api.client.class";
 import type {
   EventCreatorType,
   IntegrationRequestType,
-} from "../../../analytics.types";
-import type { IntegrationTypes } from "../../../integrations/base.types";
-import type { userDispatchType } from "../../../user/context.types";
-import type { ApiResponse } from "../api.client.types";
+} from "@src/types/analytics.types";
+import type { IntegrationTypes } from "@src/types/integrations/base.types";
+import type { userDispatchType } from "@src/types/user/context.types";
 
 export interface LastFMReportInterface<T> {
   client: APIClient;

@@ -1,9 +1,9 @@
 import { Flex, Box, Stat, StatLabel, StatHelpText } from "@chakra-ui/react";
-import useColour from "../../../../../../hooks/colour";
-import ButtonWithoutAnalytics from "../../../../../button/button.base/button.base.component";
-import type { d3Node } from "../../../../../../types/reports/sunburst.types";
+import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
+import useColour from "@src/hooks/colour";
 import type SunBurstNodeEncapsulation from "../encapsulations/sunburst.node.encapsulation.base";
-import type { TFunction } from "next-i18next";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
 export const testIDs = {
   SunBurstControlPanelName: "SunBurstControlPanelName",
@@ -18,7 +18,7 @@ export interface SunBurstControlPanelProps {
   isOpen: boolean;
   openDrawer: () => void;
   breakPoints: Array<number>;
-  lastFMt: TFunction;
+  lastFMt: tFunctionType;
   node: SunBurstNodeEncapsulation;
 }
 

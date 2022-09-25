@@ -1,19 +1,19 @@
 import { Flex, Box, Stat, StatLabel, StatHelpText } from "@chakra-ui/react";
 import { render, screen, within, fireEvent } from "@testing-library/react";
-import mockColourHook from "../../../../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../../../../tests/fixtures/mock.component.call";
-import ButtonWithoutAnalytics from "../../../../../../button/button.base/button.base.component";
 import MockSunBurstNodeEncapsulation from "../../encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
 import SunBurstControlPanel, {
   testIDs,
   SunBurstControlPanelProps,
 } from "../control.panel.component";
-import type { d3Node } from "../../../../../../../types/reports/sunburst.types";
+import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create([
     "Flex",
     "Box",
@@ -23,18 +23,16 @@ jest.mock("@chakra-ui/react", () => {
   ]);
 });
 
-jest.mock("../../../../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
-jest.mock("../../../../../../button/button.base/button.base.component", () =>
+jest.mock("@src/components/button/button.base/button.base.component", () =>
   createMockedComponent("ButtonWithoutAnalytics")
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

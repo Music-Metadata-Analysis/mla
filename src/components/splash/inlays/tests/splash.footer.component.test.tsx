@@ -1,24 +1,24 @@
 import { render } from "@testing-library/react";
-import translations from "../../../../../public/locales/en/splash.json";
-import dialogueSettings from "../../../../config/dialogue";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import tLookup from "../../../../tests/fixtures/mock.translation";
-import Button from "../../../button/button.standard/button.standard.component";
 import SplashFooter from "../splash.footer.component";
+import Button from "@src/components/button/button.standard/button.standard.component";
+import dialogueSettings from "@src/config/dialogue";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../button/button.standard/button.standard.component", () =>
-  createMockedComponent("Button")
+jest.mock(
+  "@src/components/button/button.standard/button.standard.component",
+  () => createMockedComponent("Button")
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
 describe("SplashFooter", () => {
-  const mockT = jest.fn((key: string) => tLookup(key, translations));
+  const mockT = new mockUseLocale("splash").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

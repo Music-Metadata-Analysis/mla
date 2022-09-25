@@ -1,6 +1,6 @@
 import { InitialState } from "../user.initial";
-import type { UserActionType } from "../../../types/user/action.types";
-import type { UserStateInterface } from "../../../types/user/state.types";
+import type { UserActionType } from "@src/types/user/action.types";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
 abstract class ReducerStateBaseClass<T extends UserActionType["type"]> {
   wrongTypeError = "Received wrong action type.";

@@ -1,9 +1,5 @@
 import { Divider, Flex } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import mockColourHook from "../../../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import Drawer from "../../../../common/drawer/drawer.component";
-import MockSunBurstNodeEncapsulation from "../../sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
 import SunBurstNodeList from "../nodes/node.list.component";
 import SunBurstDrawerControl from "../panels/drawer.control.panel.component";
 import SunBurstDrawerTitle from "../panels/drawer.title.panel.component";
@@ -11,12 +7,14 @@ import SunBurstReportDrawer, {
   testIDs,
   LastFMSunBurstDrawerInterface,
 } from "../sunburst.report.drawer.component";
-import type { d3Node } from "../../../../../../types/reports/sunburst.types";
-import type SunBurstNodeEncapsulation from "../../sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import Drawer from "@src/components/reports/common/drawer/drawer.component";
+import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("../../../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("../nodes/node.list.component", () =>
   createMockedComponent("SunBurstNodeList")
@@ -30,21 +28,21 @@ jest.mock("../panels/drawer.title.panel.component", () =>
   createMockedComponent("SunBurstDrawerTitle")
 );
 
-jest.mock("../../../../common/drawer/drawer.component", () =>
+jest.mock("@src/components/reports/common/drawer/drawer.component", () =>
   createMockedComponent("Drawer")
 );
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Divider", "Flex"]);
 });
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

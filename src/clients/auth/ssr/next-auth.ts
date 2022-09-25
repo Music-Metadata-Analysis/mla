@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
-import { isBuildTime } from "../../../utils/next";
-import type { AuthVendorSSRInterface } from "../../../types/clients/auth/vendor.types";
+import { isBuildTime } from "@src/utils/next";
+import type { AuthVendorSSRInterface } from "@src/types/clients/auth/vendor.types";
 import type { GetSessionParams } from "next-auth/react";
 
 class NextAuthSSR implements AuthVendorSSRInterface {

@@ -3,13 +3,13 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
 import mockUseLastFMHook from "./lastfm.mock.hook";
-import PlayCountByArtistStateEncapsulation from "../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
-import { InitialState } from "../../providers/user/user.initial";
-import { UserContext } from "../../providers/user/user.provider";
 import useLastFM from "../lastfm";
-import type { UserContextInterface } from "../../types/user/context.types";
+import PlayCountByArtistStateEncapsulation from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
+import { InitialState } from "@src/providers/user/user.initial";
+import { UserContext } from "@src/providers/user/user.provider";
+import type { UserContextInterface } from "@src/types/user/context.types";
 
-jest.mock("../../clients/api/lastfm/reports/top20.albums.class", () => {
+jest.mock("@src/clients/api/lastfm/reports/top20.albums.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       retrieveReport: mockRetrieveTopAlbums,
@@ -17,7 +17,7 @@ jest.mock("../../clients/api/lastfm/reports/top20.albums.class", () => {
   });
 });
 
-jest.mock("../../clients/api/lastfm/reports/top20.artists.class", () => {
+jest.mock("@src/clients/api/lastfm/reports/top20.artists.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       retrieveReport: mockRetrieveTopArtists,
@@ -25,7 +25,7 @@ jest.mock("../../clients/api/lastfm/reports/top20.artists.class", () => {
   });
 });
 
-jest.mock("../../clients/api/lastfm/reports/top20.tracks.class", () => {
+jest.mock("@src/clients/api/lastfm/reports/top20.tracks.class", () => {
   return jest.fn().mockImplementation(() => {
     return {
       retrieveReport: mockRetrieveTopTracks,
@@ -34,7 +34,7 @@ jest.mock("../../clients/api/lastfm/reports/top20.tracks.class", () => {
 });
 
 jest.mock(
-  "../../clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class",
+  "@src/clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class",
   () => {
     return jest.fn().mockImplementation(() => {
       return {
@@ -45,7 +45,7 @@ jest.mock(
 );
 
 jest.mock(
-  "../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class",
+  "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class",
   () => jest.fn()
 );
 

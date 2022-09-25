@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import NavBarProvider, { NavBarContext } from "../navbar.provider";
-import type { NavBarContextInterface } from "../../../types/navbar.types";
+import type { NavBarContextInterface } from "@src/types/navbar.types";
 
 describe("NavBarProvider", () => {
   const received: Partial<NavBarContextInterface> = {};

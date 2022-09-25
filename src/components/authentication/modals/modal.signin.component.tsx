@@ -11,14 +11,14 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { useTranslation } from "next-i18next";
 import { useRef } from "react";
-import routes from "../../../config/routes";
-import useColours from "../../../hooks/colour";
-import ClickLink from "../../clickable/click.link.internal/click.link.internal.component";
-import VerticalScrollBar from "../../scrollbar/vertical.scrollbar.component";
 import SignInButtons from "../buttons/signin.buttons";
-import type { AuthServiceType } from "../../../types/clients/auth/vendor.types";
+import ClickLink from "@src/components/clickable/click.link.internal/click.link.internal.component";
+import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
+import routes from "@src/config/routes";
+import useColours from "@src/hooks/colour";
+import useLocale from "@src/hooks/locale";
+import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
 
 export const testIDs = {
   AuthenticationModalCloseButton: "AuthenticationCloseButton",
@@ -40,7 +40,7 @@ export default function ModalComponent({
   setClicked,
   signIn,
 }: AuthenticationProps) {
-  const { t } = useTranslation("authentication");
+  const { t } = useLocale("authentication");
   const { modalColour } = useColours();
   const scrollRef = useRef<HTMLDivElement>(null);
 

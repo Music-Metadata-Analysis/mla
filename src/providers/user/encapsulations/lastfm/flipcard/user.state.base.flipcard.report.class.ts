@@ -1,8 +1,8 @@
 import UserBaseState from "../user.state.base.class";
-import type EventDefinition from "../../../../../events/event.class";
-import type { LastFMImageDataInterface } from "../../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateBase } from "../../../../../types/user/state.types";
-import type { TFunction } from "next-i18next";
+import type EventDefinition from "@src/events/event.class";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { LastFMImageDataInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 export default abstract class UserFlipCardBaseReportState extends UserBaseState {
   defaultAlbumName: string;
@@ -10,7 +10,7 @@ export default abstract class UserFlipCardBaseReportState extends UserBaseState 
   defaultTrackName: string;
   lastfmPrefix = "https://last.fm/music";
 
-  constructor(userProperties: LastFMUserStateBase, t: TFunction) {
+  constructor(userProperties: LastFMUserStateBase, t: tFunctionType) {
     super(userProperties);
     this.defaultAlbumName = t("defaults.albumName");
     this.defaultArtistName = t("defaults.artistName");

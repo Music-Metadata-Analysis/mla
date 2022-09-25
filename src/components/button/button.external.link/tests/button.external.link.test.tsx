@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
-import ClickLink from "../../../clickable/click.link.external/click.link.external.component";
 import BaseButton from "../../button.base/button.base.component";
 import StyledButtonLink from "../button.external.link.component";
+import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
 
 jest.mock(
-  "../../../clickable/click.link.external/click.link.external.component",
+  "@src/components/clickable/click.link.external/click.link.external.component",
   () => createMockedComponent("ClickLink")
 );
 
@@ -15,7 +15,7 @@ jest.mock("../../button.base/button.base.component", () =>
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

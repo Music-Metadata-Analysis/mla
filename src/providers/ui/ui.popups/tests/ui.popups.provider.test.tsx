@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import UserInterfacePopUpsProvider, {
   UserInterfacePopUpsContext,
 } from "../ui.popups.provider";
-import type { UserInterfacePopUpsContextInterface } from "../../../../types/ui/popups/ui.popups.context.types";
+import type { UserInterfacePopUpsContextInterface } from "@src/types/ui/popups/ui.popups.context.types";
 
 describe("UserInterfacePopUpsProvider", () => {
   const received: Partial<UserInterfacePopUpsContextInterface> = {};

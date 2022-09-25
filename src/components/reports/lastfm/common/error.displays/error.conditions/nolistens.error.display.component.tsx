@@ -1,5 +1,5 @@
 import ConditionalErrorBase from "./condition.base.class";
-import ErrorDisplay from "../../../../../errors/display/error.display.component";
+import ErrorDisplay from "@src/components/errors/display/error.display.component";
 
 class NoListensErrorConditionalDisplay<
   ReportType

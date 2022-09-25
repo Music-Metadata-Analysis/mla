@@ -2,25 +2,29 @@ import { LockIcon } from "@chakra-ui/icons";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { RiLogoutBoxRLine } from "react-icons/ri";
-import mockAuthHook, {
-  mockUserProfile,
-} from "../../../../hooks/tests/auth.mock.hook";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import mockRouter from "../../../../tests/fixtures/mock.router";
-import Authentication from "../../../authentication/authentication.container";
-import { testIDs as modalIDs } from "../../../authentication/modals/modal.signin.component";
 import NavBarSessionControl from "../navbar.session.control.component";
+import Authentication from "@src/components/authentication/authentication.container";
+import { testIDs as modalIDs } from "@src/components/authentication/modals/modal.signin.component";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import mockRouter from "@src/tests/fixtures/mock.router";
 
-jest.mock("../../../../hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/auth", () => () => mockAuthHook);
 
 jest.mock(
-  "../../../analytics/analytics.button/analytics.button.component",
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
+
+jest.mock(
+  "@src/components/analytics/analytics.button/analytics.button.component",
   () => createMockedComponent("AnalyticsWrapper")
 );
 
-jest.mock("../../../authentication/authentication.container", () => {
+jest.mock("@src/components/authentication/authentication.container", () => {
   const Component = jest.requireActual(
-    "../../../authentication/authentication.container"
+    "@src/components/authentication/authentication.container"
   ).default;
   return jest.fn((props) => <Component {...props} />);
 });
@@ -28,7 +32,7 @@ jest.mock("../../../authentication/authentication.container", () => {
 jest.mock("@chakra-ui/icons", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.icon.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.icon.factory.class");
   const instance = factoryInstance.create(["LockIcon"]);
   instance.useColorMode = jest.fn();
   return instance;
@@ -40,14 +44,14 @@ jest.mock("react-icons/ri", () => ({
     .mockImplementation((props) => <div {...props}>MockRiLogoutBoxRLine</div>),
 }));
 
-jest.mock("../../../scrollbar/vertical.scrollbar.component", () =>
+jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   jest.fn(() => <div>MockVerticalScrollBar</div>)
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

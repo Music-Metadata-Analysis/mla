@@ -10,8 +10,8 @@ import {
   ModalBody,
   Spinner,
 } from "@chakra-ui/react";
-import { useTranslation } from "next-i18next";
-import useColours from "../../../hooks/colour";
+import useColours from "@src/hooks/colour";
+import useLocale from "@src/hooks/locale";
 
 export const testIDs = {
   AuthenticationSpinnerModalTitle: "AuthenticationSpinnerModalTitle",
@@ -23,7 +23,7 @@ export interface AuthenticationSpinnerProps {
 }
 
 export default function SpinnerModal({ onClose }: AuthenticationSpinnerProps) {
-  const { t } = useTranslation("authentication");
+  const { t } = useLocale("authentication");
   const { modalColour } = useColours();
 
   return (

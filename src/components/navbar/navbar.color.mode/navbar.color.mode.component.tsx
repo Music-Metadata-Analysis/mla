@@ -1,6 +1,6 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Switch, useColorMode } from "@chakra-ui/react";
-import useAnalytics from "../../../hooks/analytics";
+import useAnalytics from "@src/hooks/analytics";
 import type { ChangeEvent } from "react";
 
 export const TestIDs = {

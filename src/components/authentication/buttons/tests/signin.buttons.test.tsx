@@ -4,10 +4,12 @@ import {
   GithubLoginButton,
   GoogleLoginButton,
 } from "react-social-login-buttons";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import AnalyticsWrapper from "../../../analytics/analytics.button/analytics.button.component";
-import SpotifyLoginButton from "../../../button/button.spotify/spotify.login";
 import SignInButtons from "../signin.buttons";
+import authenticationTranslations from "@locales/authentication.json";
+import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
+import SpotifyLoginButton from "@src/components/button/button.spotify/spotify.login";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("react-social-login-buttons", () => ({
   FacebookLoginButton: jest.fn(() => "FacebookLoginButton"),
@@ -15,28 +17,28 @@ jest.mock("react-social-login-buttons", () => ({
   GoogleLoginButton: jest.fn(() => "GoogleLoginButton"),
 }));
 
-jest.mock("../../../button/button.spotify/spotify.login", () =>
+jest.mock("@src/components/button/button.spotify/spotify.login", () =>
   jest.fn(() => "SpotifyLoginButton")
 );
 
 jest.mock(
-  "../../../analytics/analytics.button/analytics.button.component",
+  "@src/components/analytics/analytics.button/analytics.button.component",
   () => createMockedComponent("AnalyticsWrapper")
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
 const mockSetClicked = jest.fn();
 const mockSignIn = jest.fn();
-const mockT = jest.fn((arg: string) => `t(${arg})`);
 
 describe("AuthenticationComponent", () => {
   const buttonWidth = 245;
+  const mockT = new mockUseLocale("authentication").t;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -92,7 +94,7 @@ describe("AuthenticationComponent", () => {
       {
         style: { width: buttonWidth },
         align: "center",
-        text: "t(buttons.facebook)",
+        text: _t(authenticationTranslations.buttons.facebook),
       },
       0,
       ["onClick"]
@@ -106,7 +108,7 @@ describe("AuthenticationComponent", () => {
       {
         style: { width: buttonWidth },
         align: "center",
-        text: "t(buttons.github)",
+        text: _t(authenticationTranslations.buttons.github),
       },
       0,
       ["onClick"]
@@ -120,7 +122,7 @@ describe("AuthenticationComponent", () => {
       {
         style: { width: buttonWidth },
         align: "center",
-        text: "t(buttons.google)",
+        text: _t(authenticationTranslations.buttons.google),
       },
       0,
       ["onClick"]
@@ -134,7 +136,7 @@ describe("AuthenticationComponent", () => {
       {
         style: { width: buttonWidth },
         align: "center",
-        text: "t(buttons.spotify)",
+        text: _t(authenticationTranslations.buttons.spotify),
       },
       0,
       ["onClick"]

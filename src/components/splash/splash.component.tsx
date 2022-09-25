@@ -1,11 +1,11 @@
-import { useTranslation } from "next-i18next";
 import BodyComponent from "./inlays/splash.body.component";
 import FooterComponent from "./inlays/splash.footer.component";
 import ToggleComponent from "./inlays/splash.toggle.component";
-import Dialogue from "../dialogues/resizable/dialogue.resizable.component";
+import Dialogue from "@src/components/dialogues/resizable/dialogue.resizable.component";
+import useLocale from "@src/hooks/locale";
 
 export default function Splash() {
-  const { t } = useTranslation("splash");
+  const { t } = useLocale("splash");
 
   return (
     <Dialogue

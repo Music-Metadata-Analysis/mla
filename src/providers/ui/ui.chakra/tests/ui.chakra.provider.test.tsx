@@ -1,13 +1,11 @@
 import { ChakraProvider, CSSReset, ColorModeProvider } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import UserInterfaceProvider from "../ui.chakra.provider";
 import createTheme from "../ui.chakra.theme";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
-  const mockedModules: { [index: string]: boolean | jest.Mock } = {
-    __esModule: true,
-  };
+  const mockedModules: { [index: string]: boolean | jest.Mock } = {};
   Object.keys(providers).forEach((thisModule) => {
     mockedModules[thisModule as string] = createMock(thisModule);
   });

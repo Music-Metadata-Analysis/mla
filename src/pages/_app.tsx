@@ -1,14 +1,14 @@
-import { appWithTranslation } from "next-i18next";
 import App, { AppContext } from "next/app";
 import "../styles/globals.css";
-import authVendorSSR from "../clients/auth/vendor.ssr";
-import flagVendorSSR from "../clients/flags/vendor.ssr";
-import Consent from "../components/consent/consent.component";
-import NavBar from "../components/navbar/navbar.component";
-import RootPopups from "../components/popups/root.popup";
-import NavConfig from "../config/navbar";
-import RootProvider from "../providers/root.provider";
-import { normalizeUndefined } from "../utils/voids";
+import authVendorSSR from "@src/clients/auth/vendor.ssr";
+import flagVendorSSR from "@src/clients/flags/vendor.ssr";
+import localeVendor from "@src/clients/locale/vendor";
+import Consent from "@src/components/consent/consent.component";
+import NavBar from "@src/components/navbar/navbar.component";
+import RootPopups from "@src/components/popups/root.popup";
+import NavConfig from "@src/config/navbar";
+import RootProvider from "@src/providers/root.provider";
+import { normalizeUndefined } from "@src/utils/voids";
 import type { AppProps } from "next/app";
 
 function MLA({
@@ -49,4 +49,4 @@ export const getInitialProps = async (appCtx: AppContext) => {
 
 MLA.getInitialProps = getInitialProps;
 
-export default appWithTranslation(MLA);
+export default localeVendor.HOC(MLA);

@@ -1,7 +1,7 @@
 import { InitialState } from "../ui.popups.initial";
 import { UserInterfacePopUpsReducer } from "../ui.popups.reducer";
-import type { UserInterfacePopUpsActionType } from "../../../../types/ui/popups/ui.popups.action.types";
-import type { UserInterfacePopUpsStateInterface } from "../../../../types/ui/popups/ui.popups.state.types";
+import type { UserInterfacePopUpsActionType } from "@src/types/ui/popups/ui.popups.action.types";
+import type { UserInterfacePopUpsStateInterface } from "@src/types/ui/popups/ui.popups.state.types";
 
 jest.mock("../ui.popups.reducer.states.class", () => {
   return jest.fn().mockImplementation(() => {

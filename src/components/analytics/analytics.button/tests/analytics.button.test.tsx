@@ -1,11 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
 import AnalyticsButtonWrapper from "../analytics.button.component";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
 
-jest.mock("../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 describe("ButtonAnalyticsWrapper", () => {
   const buttonText = "Click Me";

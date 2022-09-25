@@ -3,42 +3,42 @@ import {
   MockReportClass,
   MockUserStateEncapsulation,
 } from "./mock.last.fm.report.class";
-import lastfm from "../../../../../../../public/locales/en/lastfm.json";
-import Events from "../../../../../../events/events";
-import mockAnalyticsHook from "../../../../../../hooks/tests/analytics.mock.hook";
-import mockLastFMHook from "../../../../../../hooks/tests/lastfm.mock.hook";
-import mockMetricsHook from "../../../../../../hooks/tests/metrics.mock.hook";
-import UserInterfaceImageProvider from "../../../../../../providers/ui/ui.images/ui.images.provider";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import mockRouter from "../../../../../../tests/fixtures/mock.router";
-import Authentication from "../../../../../authentication/authentication.container";
-import BillBoardSpinner from "../../../../../billboard/billboard.spinner/billboard.spinner.component";
-import ErrorDisplay from "../../../../../errors/display/error.display.component";
 import FlipCardBaseReport from "../flip.card.report.base.class";
 import FlipCardReport from "../flip.card.report.component";
 import FlipCardReportContainer from "../flip.card.report.container";
-import type { userHookAsLastFMTop20AlbumReport } from "../../../../../../types/user/hook.types";
+import lastfm from "@locales/lastfm.json";
+import Authentication from "@src/components/authentication/authentication.container";
+import BillBoardSpinner from "@src/components/billboard/billboard.spinner/billboard.spinner.component";
+import ErrorDisplay from "@src/components/errors/display/error.display.component";
+import Events from "@src/events/events";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockMetricsHook from "@src/hooks/tests/metrics.mock.hook";
+import UserInterfaceImageProvider from "@src/providers/ui/ui.images/ui.images.provider";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import mockRouter from "@src/tests/fixtures/mock.router";
+import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
 
-jest.mock("../../../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
-jest.mock("../../../../../../hooks/metrics", () => ({
-  __esModule: true,
-  default: () => mockMetricsHook,
-}));
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
-jest.mock("../../../../../authentication/authentication.container", () =>
+jest.mock("@src/hooks/metrics", () => () => mockMetricsHook);
+
+jest.mock("@src/components/authentication/authentication.container", () =>
   jest.fn(() => <div>MockedAuthenticationComponent</div>)
 );
 
 jest.mock(
-  "../../../../../billboard/billboard.spinner/billboard.spinner.component",
+  "@src/components/billboard/billboard.spinner/billboard.spinner.component",
   () => createMockedComponent("BillBoardSpinner")
 );
 
-jest.mock("../../../../../errors/display/error.display.component", () =>
+jest.mock("@src/components/errors/display/error.display.component", () =>
   createMockedComponent("ErrorDisplay")
 );
 
@@ -47,14 +47,13 @@ jest.mock("../flip.card.report.component", () =>
 );
 
 jest.mock("next/router", () => ({
-  __esModule: true,
   useRouter: () => mockRouter,
 }));
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
@@ -365,7 +364,7 @@ describe("FlipCardReportContainer", () => {
           expect(BillBoardSpinner).toBeCalledTimes(1);
           checkMockCall(BillBoardSpinner, {
             visible: true,
-            title: lastfm[report.translationKey].communication,
+            title: _t(lastfm[report.translationKey].communication),
           });
         });
 
@@ -412,7 +411,7 @@ describe("FlipCardReportContainer", () => {
           expect(BillBoardSpinner).toBeCalledTimes(1);
           checkMockCall(BillBoardSpinner, {
             visible: true,
-            title: lastfm[report.translationKey].communication,
+            title: _t(lastfm[report.translationKey].communication),
           });
         });
 
@@ -509,7 +508,7 @@ describe("FlipCardReportContainer", () => {
               BillBoardSpinner,
               {
                 visible: false,
-                title: lastfm[report.translationKey].communication,
+                title: _t(lastfm[report.translationKey].communication),
               },
               0
             );

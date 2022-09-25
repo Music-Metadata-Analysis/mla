@@ -1,4 +1,4 @@
-import { InitialState as imagesInitialState } from "../../providers/ui/ui.images/ui.images.initial";
+import { InitialState as imagesInitialState } from "@src/providers/ui/ui.images/ui.images.initial";
 
 const mockUserInterfaceHook = {
   popups: {

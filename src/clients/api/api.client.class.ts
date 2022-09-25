@@ -1,10 +1,10 @@
-import { knownStatuses } from "../../config/api";
+import { knownStatuses } from "@src/config/api";
 import type {
   ApiResponse,
   FetchResponse,
   HttpMethodType,
   StatusMessageType,
-} from "../../types/clients/api/api.client.types";
+} from "@src/types/clients/api/api.client.types";
 
 class APIClient {
   private handleUnsuccessful(

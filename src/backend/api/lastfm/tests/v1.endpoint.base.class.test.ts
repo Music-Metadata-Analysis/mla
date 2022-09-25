@@ -1,17 +1,17 @@
-import * as status from "../../../../config/status";
-import { ProxyError } from "../../../../errors/proxy.error.class";
+import LastFMApiEndpointFactoryV1 from "../v1.endpoint.base.class";
+import authVendor from "@src/backend/integrations/auth/vendor";
+import * as status from "@src/config/status";
+import { ProxyError } from "@src/errors/proxy.error.class";
 import {
   createAPIMocks,
   mockSession,
-} from "../../../../tests/fixtures/mock.authentication";
-import authVendor from "../../../integrations/auth/vendor";
-import LastFMApiEndpointFactoryV1 from "../v1.endpoint.base.class";
+} from "@src/tests/fixtures/mock.authentication";
 import type {
   BodyType,
   MockAPIRequest,
   MockAPIResponse,
-} from "../../../../types/api.endpoint.types";
-import type { HttpMethodType } from "../../../../types/clients/api/api.client.types";
+} from "@src/types/api.endpoint.types";
+import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
 class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV1 {
   route = "/api/v1/endpoint";
@@ -45,13 +45,13 @@ class ConcreteErrorClass extends LastFMApiEndpointFactoryV1 {
   }
 }
 
-jest.mock("../../../integrations/auth/vendor", () => ({
+jest.mock("@src/backend/integrations/auth/vendor", () => ({
   Client: jest.fn(() => ({
     getSession: mockGetSession,
   })),
 }));
 
-jest.mock("../../../../backend/api/lastfm/endpoint.common.logger", () => {
+jest.mock("@src/backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 

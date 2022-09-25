@@ -1,7 +1,7 @@
 import UserBaseState from "../user.state.base.class";
-import type { LastFMClientParamsInterface } from "../../../../../types/clients/api/lastfm/request.types";
-import type { AggregateBaseReportResponseInterface } from "../../../../../types/integrations/base.types";
-import type { LastFMUserStateBase } from "../../../../../types/user/state.types";
+import type { LastFMClientParamsInterface } from "@src/types/clients/api/lastfm/request.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 abstract class UserSunBurstReportBaseState<ReportType> extends UserBaseState {
   lastfmPrefix = "https://last.fm/music";

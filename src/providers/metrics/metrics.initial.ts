@@ -1,6 +1,6 @@
-import { voidFn } from "../../utils/voids";
-import type { MetricsContextInterface } from "../../types/metrics/context.types";
-import type { MetricsStateType } from "../../types/metrics/state.types";
+import { voidFn } from "@src/utils/voids";
+import type { MetricsContextInterface } from "@src/types/metrics/context.types";
+import type { MetricsStateType } from "@src/types/metrics/state.types";
 
 export const InitialState = {
   SearchMetric: 0,

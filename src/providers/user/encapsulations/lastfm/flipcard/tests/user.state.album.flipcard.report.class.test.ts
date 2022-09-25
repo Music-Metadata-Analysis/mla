@@ -1,15 +1,16 @@
 import { baseUserProperties } from "../../tests/fixtures/mock.user.state.data";
 import UserAlbumState from "../user.state.album.flipcard.report.class";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
-} from "../../../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateAlbumReport } from "../../../../../../types/user/state.types";
+} from "@src/types/integrations/lastfm/api.types";
+import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
 
 describe("UserAlbumState", () => {
   let currentState: LastFMUserStateAlbumReport;
   let instance: UserAlbumState;
-  const mockT = jest.fn((arg: string) => `t(${arg})`);
+  const mockT = new mockUseLocale("lastfm").t;
   let index: number;
 
   const resetState = () => {
@@ -184,9 +185,9 @@ describe("UserAlbumState", () => {
         it("should return the default name (url encoded)", () => {
           instance.defaultAlbumName = "has a space";
           expect(instance.getExternalLink(index)).toBe(
-            `${instance.lastfmPrefix}/${
+            `${instance.lastfmPrefix}/${encodeURIComponent(
               instance.defaultArtistName
-            }/${encodeURIComponent(instance.defaultAlbumName)}`
+            )}/${encodeURIComponent(instance.defaultAlbumName)}`
           );
         });
       });
@@ -243,9 +244,9 @@ describe("UserAlbumState", () => {
       it("should return the default name (url encoded)", () => {
         instance.defaultAlbumName = "has a space";
         expect(instance.getExternalLink(index)).toBe(
-          `${instance.lastfmPrefix}/${
+          `${instance.lastfmPrefix}/${encodeURIComponent(
             instance.defaultArtistName
-          }/${encodeURIComponent(instance.defaultAlbumName)}`
+          )}/${encodeURIComponent(instance.defaultAlbumName)}`
         );
       });
     });

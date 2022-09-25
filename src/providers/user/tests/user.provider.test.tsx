@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import React from "react";
 import { InitialState } from "../user.initial";
 import UserProvider, { UserContext } from "../user.provider";
-import type { UserContextInterface } from "../../../types/user/context.types";
+import type { UserContextInterface } from "@src/types/user/context.types";
 
 describe("UserProvider", () => {
   const received: Partial<UserContextInterface> = {};

@@ -1,27 +1,33 @@
 import { render } from "@testing-library/react";
-import lastfmTranslations from "../../../../public/locales/en/lastfm.json";
-import ErrorBoundary from "../../../components/errors/boundary/error.boundary.component";
-import SearchUI from "../../../components/search/lastfm/search.ui.component";
-import routes from "../../../config/routes";
-import Events from "../../../events/events";
-import Page from "../../../pages/search/lastfm/playCountByArtist";
-import mockCheckCall from "../../../tests/fixtures/mock.component.call";
-import getPageProps from "../../../utils/page.props.static";
+import lastfmTranslations from "@locales/lastfm.json";
+import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import SearchUI from "@src/components/search/lastfm/search.ui";
+import routes from "@src/config/routes";
+import Events from "@src/events/events";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import Page from "@src/pages/search/lastfm/playCountByArtist";
+import mockCheckCall from "@src/tests/fixtures/mock.component.call";
+import getPageProps from "@src/utils/page.props.static";
 
-jest.mock("../../../utils/page.props.static", () => jest.fn());
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
-jest.mock("../../../components/errors/boundary/error.boundary.component", () =>
+jest.mock("@src/utils/page.props.static", () => jest.fn());
+
+jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
   createMockedComponent("ErrorBoundary")
 );
 
-jest.mock("../../../components/search/lastfm/search.ui.component", () =>
+jest.mock("@src/components/search/lastfm/search.ui", () =>
   createMockedComponent("SearchUI")
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
@@ -64,7 +70,7 @@ describe("SearchTopAlbums", () => {
         SearchUI,
         {
           route: routes.reports.lastfm.playCountByArtist,
-          title: lastfmTranslations.playCountByArtist.searchTitle,
+          title: _t(lastfmTranslations.playCountByArtist.searchTitle),
         },
         0,
         ["t"]

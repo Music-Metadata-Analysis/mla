@@ -1,10 +1,10 @@
-import type translations from "../../../../../../public/locales/en/lastfm.json";
-import type useUserInterface from "../../../../../hooks/ui";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type { IntegrationRequestType } from "../../../../../types/analytics.types";
-import type { userHookAsLastFM } from "../../../../../types/user/hook.types";
 import type { LastFMDrawerInterface } from "../flip.card.report.drawer/flip.card.report.drawer.component";
-import type { TFunction } from "next-i18next";
+import type translations from "@locales/lastfm.json";
+import type useUserInterface from "@src/hooks/ui";
+import type UserState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
+import type { IntegrationRequestType } from "@src/types/analytics.types";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { userHookAsLastFM } from "@src/types/user/hook.types";
 import type { FC } from "react";
 
 export default abstract class FlipCardBaseReport<T extends UserState> {
@@ -13,7 +13,7 @@ export default abstract class FlipCardBaseReport<T extends UserState> {
   drawerComponent!: FC<LastFMDrawerInterface<T>>;
   encapsulationClass!: new (
     userProperties: T["userProperties"],
-    t: TFunction
+    t: tFunctionType
   ) => T;
   retryRoute!: string;
   translationKey!: keyof typeof translations;
@@ -27,7 +27,10 @@ export default abstract class FlipCardBaseReport<T extends UserState> {
     return this.drawerComponent as FC<LastFMDrawerInterface<T>>;
   }
 
-  getEncapsulatedUserState(userProperties: T["userProperties"], t: TFunction) {
+  getEncapsulatedUserState(
+    userProperties: T["userProperties"],
+    t: tFunctionType
+  ) {
     return new this.encapsulationClass(userProperties, t);
   }
 

@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
-import ButtonWithoutAnalytics from "../../../../../button/button.base/button.base.component";
-import type SunBurstNodeEncapsulation from "../../sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
+import useLocale from "@src/hooks/locale";
+import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 
 export const testIDs = {
   LastFMSunBurstDrawerValue: "LastFMSunBurstDrawerValue",
@@ -18,7 +18,7 @@ export default function SunBurstDrawerControlPanel({
   node,
   selectParentNode,
 }: SunBurstDrawerControlPanelProps) {
-  const { t: lastFMt } = useTranslation("lastfm");
+  const { t: lastFMt } = useLocale("lastfm");
 
   return (
     <Flex alignItems={"center"} justifyContent={"space-between"}>

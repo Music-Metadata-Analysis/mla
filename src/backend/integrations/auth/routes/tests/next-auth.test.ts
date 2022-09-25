@@ -3,14 +3,14 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
-import settings from "../../../../../config/auth";
-import { createAPIMocks } from "../../../../../tests/fixtures/mock.authentication";
-import flagVendor from "../../../flags/vendor";
 import createRoutes, { getGroup } from "../next-auth";
+import flagVendor from "@src/backend/integrations/flags/vendor";
+import settings from "@src/config/auth";
+import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type {
   MockAPIRequest,
   MockAPIResponse,
-} from "../../../../../types/api.endpoint.types";
+} from "@src/types/api.endpoint.types";
 
 jest.mock("next-auth", () => jest.fn());
 jest.mock("next-auth/providers/facebook", () => jest.fn());
@@ -18,7 +18,7 @@ jest.mock("next-auth/providers/github", () => jest.fn());
 jest.mock("next-auth/providers/google", () => jest.fn());
 jest.mock("next-auth/providers/spotify", () => jest.fn());
 
-jest.mock("../../../flags/vendor.ts", () => {
+jest.mock("@src/backend/integrations/flags/vendor.ts", () => {
   return {
     Group: jest.fn(() => ({
       getFromIdentifier: mockGetFromIdentifier,

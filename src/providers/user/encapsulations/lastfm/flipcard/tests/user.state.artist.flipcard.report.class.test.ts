@@ -1,12 +1,13 @@
 import { baseUserProperties } from "../../tests/fixtures/mock.user.state.data";
 import UserArtistState from "../user.state.artist.flipcard.report.class";
-import type { LastFMArtistDataInterface } from "../../../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateArtistReport } from "../../../../../../types/user/state.types";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import type { LastFMArtistDataInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMUserStateArtistReport } from "@src/types/user/state.types";
 
 describe("UserArtistState", () => {
   let currentState: LastFMUserStateArtistReport;
   let instance: UserArtistState;
-  const mockT = jest.fn((arg: string) => `t(${arg})`);
+  const mockT = new mockUseLocale("lastfm").t;
   let index: number;
 
   const resetState = () => {

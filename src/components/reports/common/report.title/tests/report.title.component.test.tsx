@@ -1,19 +1,17 @@
 import { Box, Container, Text } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import mockColourHook from "../../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import ReportTitle from "../report.title.component";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Box", "Container", "Text"]);
 });
 
-jest.mock("../../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 describe("ReportTitle", () => {
   const testProps = {

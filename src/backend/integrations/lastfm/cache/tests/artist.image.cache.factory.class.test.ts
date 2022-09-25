@@ -1,7 +1,7 @@
-import CacheController from "../../../cache/controller/controller.class";
 import ArtistImageCacheControllerFactory from "../artist.image.cache.factory.class";
+import CacheController from "@src/backend/integrations/cache/controller/controller.class";
 
-jest.mock("../../../persistance/vendor", () => ({
+jest.mock("@src/backend/integrations/persistance/vendor", () => ({
   PersistanceClient: jest.fn(() => ({
     write: jest.fn(async () => null),
   })),

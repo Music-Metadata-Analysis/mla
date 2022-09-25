@@ -2,7 +2,7 @@ import EventDefinition from "./event.class";
 import type {
   IntegrationRequestType,
   SunBurstEntityTypes,
-} from "../types/analytics.types";
+} from "@src/types/analytics.types";
 
 const Events = {
   Auth: {

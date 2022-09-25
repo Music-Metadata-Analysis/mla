@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import flagsmith from "flagsmith/isomorphic";
 import { FlagsmithProvider, FlagsmithContextType } from "flagsmith/react";
-import checkMockCalls from "../../../../tests/fixtures/mock.component.call";
 import FlagProvider from "../flagsmith";
+import checkMockCalls from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../../utils/voids", () => {
-  const module = require("../../../../utils/tests/voids.mock");
+jest.mock("@src/utils/voids", () => {
+  const module = require("@src/utils/tests/voids.mock");
   return { normalizeUndefined: module.mockNormalizeUndefined };
 });
 
@@ -18,7 +18,7 @@ jest.mock("flagsmith/react", () =>
 const createProviderMock = (name: string, exportName = "default") => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name, exportName);
 };
 

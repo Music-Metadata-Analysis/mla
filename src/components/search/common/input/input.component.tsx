@@ -1,5 +1,5 @@
 import { Input, InputProps } from "@chakra-ui/react";
-import useColour from "../../../../hooks/colour";
+import useColour from "@src/hooks/colour";
 
 const StyledInput = (props: InputProps) => {
   const { inputColour } = useColour();

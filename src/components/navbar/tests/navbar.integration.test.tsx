@@ -1,18 +1,21 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import navbarTranslations from "../../../../public/locales/en/navbar.json";
-import NavConfig from "../../../config/navbar";
-import mockAnalyticsHook from "../../../hooks/tests/analytics.mock.hook";
-import mockAuthHook, {
-  mockUserProfile,
-} from "../../../hooks/tests/auth.mock.hook";
-import NavBarProvider from "../../../providers/navbar/navbar.provider";
-import mockRouter from "../../../tests/fixtures/mock.router";
 import NavBar, { testIDs } from "../navbar.component";
-import type { JSONstringType } from "../../../types/json.types";
-import type { UserStateInterface } from "../../../types/user/state.types";
+import navbarTranslations from "@locales/navbar.json";
+import NavConfig from "@src/config/navbar";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import NavBarProvider from "@src/providers/navbar/navbar.provider";
+import mockRouter from "@src/tests/fixtures/mock.router";
+import type { JSONstringType } from "@src/types/json.types";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
-jest.mock("../../../hooks/lastfm", () => {
+jest.mock("@src/hooks/auth", () => () => mockAuthHook);
+
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+
+jest.mock("@src/hooks/lastfm", () => {
   return jest.fn().mockImplementation(() => {
     return {
       userProperties: getMockedUserProperties(),
@@ -20,14 +23,12 @@ jest.mock("../../../hooks/lastfm", () => {
   });
 });
 
-jest.mock("../../../hooks/auth", () => () => mockAuthHook);
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
-jest.mock("../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
-
-jest.mock("../../scrollbar/vertical.scrollbar.component", () =>
+jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   jest.fn(() => <div>MockVerticalScrollBar</div>)
 );
 
@@ -82,7 +83,7 @@ describe("NavBar", () => {
     fireEvent.click(link);
   };
   const clickByString = async (text: string, searchRoot: HTMLElement) => {
-    const link = (await within(searchRoot).findByText(text)) as HTMLElement;
+    const link = (await within(searchRoot).findByText(_t(text))) as HTMLElement;
     fireEvent.click(link);
   };
 
@@ -105,7 +106,7 @@ describe("NavBar", () => {
         expect(mockAnalyticsHook.trackButtonClick).toBeCalledTimes(1);
         const call = mockAnalyticsHook.trackButtonClick.mock.calls[0];
         expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-        expect(call[1]).toBe(link);
+        expect(call[1]).toBe(_t(link));
         expect(Object.keys(call).length).toBe(2);
       });
 
@@ -136,14 +137,20 @@ describe("NavBar", () => {
 
   describe("when rendered", () => {
     it("should display the title", async () => {
-      expect(await screen.findByText(navbarTranslations.title)).toBeTruthy();
+      expect(
+        await screen.findByText(_t(navbarTranslations.title))
+      ).toBeTruthy();
     });
 
     it("should display the correct links", async () => {
       for (const linkText of Object.keys(NavConfig.menuConfig)) {
         expect(
           await screen.findByText(
-            (navbarTranslations[translationPrefix] as JSONstringType)[linkText]
+            _t(
+              (navbarTranslations[translationPrefix] as JSONstringType)[
+                linkText
+              ]
+            )
           )
         ).toBeTruthy();
       }

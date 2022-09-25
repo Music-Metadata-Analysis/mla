@@ -6,21 +6,21 @@ import SunBurstControlPanel from "./panels/control.panel.component";
 import SunBurstInfoPanel from "./panels/info.panel.component";
 import SunBurstNotVisiblePanel from "./panels/not.visible.panel.component";
 import SunBurstTitlePanel from "./panels/title.panel.component";
-import settings from "../../../../../config/sunburst";
-import useAnalytics from "../../../../../hooks/analytics";
-import useNavBar from "../../../../../hooks/navbar";
-import useSunBurstState from "../../../../../hooks/sunburst";
-import Condition from "../../../../condition/condition.component";
-import SunBurstChartUI from "../../../common/sunburst/chart.ui.component";
-import type UserState from "../../../../../providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type { d3Node } from "../../../../../types/reports/sunburst.types";
+import Condition from "@src/components/condition/condition.component";
+import SunBurstChartUI from "@src/components/reports/common/sunburst/chart.ui.component";
+import settings from "@src/config/sunburst";
+import useAnalytics from "@src/hooks/analytics";
+import useNavBar from "@src/hooks/navbar";
+import useSunBurstState from "@src/hooks/sunburst";
 import type SunBurstBaseReport from "./sunburst.report.base.class";
-import type { TFunction } from "next-i18next";
+import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
 export interface SunBurstReportProps<T extends UserState<unknown>> {
   report: SunBurstBaseReport<T>;
-  lastFMt: TFunction;
-  sunBurstT: TFunction;
+  lastFMt: tFunctionType;
+  sunBurstT: tFunctionType;
   userState: T;
   visible: boolean;
 }

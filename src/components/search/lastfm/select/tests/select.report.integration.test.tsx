@@ -1,28 +1,30 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import translations from "../../../../../../public/locales/en/lastfm.json";
-import config from "../../../../../config/lastfm";
-import mockUseFlags from "../../../../../hooks/tests/flags.mock.hook";
-import mockRouter from "../../../../../tests/fixtures/mock.router";
 import Select from "../select.report.component";
+import translations from "@locales/lastfm.json";
+import config from "@src/config/lastfm";
+import mockUseFlags from "@src/hooks/tests/flags.mock.hook";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockRouter from "@src/tests/fixtures/mock.router";
 
-jest.mock("../../../../../hooks/flags", () => ({
-  __esModule: true,
-  default: () => mockUseFlags,
-}));
+jest.mock("@src/hooks/flags", () => () => mockUseFlags);
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 jest.mock("next/router", () => ({
-  __esModule: true,
   useRouter: () => mockRouter,
 }));
 
-jest.mock("../../../../scrollbar/vertical.scrollbar.component", () =>
+jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   createMockedComponent("VerticalScrollBarComponent")
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
@@ -56,21 +58,21 @@ describe("SearchSelection", () => {
         it("should display the indicator text", async () => {
           expect(
             await screen.findAllByText(
-              translations.select.indicators[key] + ":"
+              _t(translations.select.indicators[key]) + ":"
             )
           ).toBeTruthy();
         });
 
         it("should display the button text for report", async () => {
           expect(
-            await screen.findByText(translations.select.reports[key])
+            await screen.findByText(_t(translations.select.reports[key]))
           ).toBeTruthy();
         });
 
         describe("when the button is clicked", () => {
           beforeEach(async () => {
             const reportButton = await screen.findByText(
-              translations.select.reports[key]
+              _t(translations.select.reports[key])
             );
             fireEvent.click(reportButton);
           });
@@ -113,21 +115,22 @@ describe("SearchSelection", () => {
         it("should NOT display the indicator text", async () => {
           expect(
             screen.queryByText(
-              translations.select.indicators[key as translationKeyType] + ":"
+              _t(translations.select.indicators[key as translationKeyType]) +
+                ":"
             )
           ).toBeNull();
         });
 
         it("should display the button text for report", async () => {
           expect(
-            await screen.findByText(translations.select.reports[key])
+            await screen.findByText(_t(translations.select.reports[key]))
           ).toBeTruthy();
         });
 
         describe("when the button is clicked", () => {
           beforeEach(async () => {
             const reportButton = await screen.findByText(
-              translations.select.reports[key]
+              _t(translations.select.reports[key])
             );
             fireEvent.click(reportButton);
           });

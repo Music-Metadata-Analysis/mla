@@ -1,10 +1,16 @@
 import { render, screen, within } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import translations from "../../../../../public/locales/en/legal.json";
-import externalLinks from "../../../../config/external";
-import mockRouter from "../../../../tests/fixtures/mock.router";
-import { testIDs } from "../../../dialogues/resizable/dialogue.resizable.component";
 import Privacy from "../privacy.component";
+import translations from "@locales/legal.json";
+import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
+import externalLinks from "@src/config/external";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockRouter from "@src/tests/fixtures/mock.router";
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 describe("Privacy", () => {
   beforeEach(() => {
@@ -25,28 +31,30 @@ describe("Privacy", () => {
     it("should render the correct text inside the HeaderComponent", async () => {
       const header = await screen.findByTestId(testIDs.DialogueHeaderComponent);
       expect(header?.firstChild?.firstChild?.textContent).toBe(
-        translations.privacy.text1
+        _t(translations.privacy.text1)
       );
     });
 
     it("should render the company name on the screen, inside the ToggleComponent", async () => {
       const toggle = await screen.findByTestId(testIDs.DialogueToggleComponent);
       expect(
-        await within(toggle).findByText(translations.privacy.company)
+        await within(toggle).findByText(_t(translations.privacy.company))
       ).toBeTruthy();
     });
 
     it("should render button text inside the contact button, inside the FooterComponent", async () => {
       const footer = await screen.findByTestId(testIDs.DialogueFooterComponent);
       expect(
-        await within(footer).findByText(translations.privacy.buttons.contact)
+        await within(footer).findByText(
+          _t(translations.privacy.buttons.contact)
+        )
       ).toBeTruthy();
     });
 
     it("should render button text inside the policy button, inside the FooterComponent", async () => {
       const footer = await screen.findByTestId(testIDs.DialogueFooterComponent);
       expect(
-        await within(footer).findByText(translations.privacy.buttons.policy)
+        await within(footer).findByText(_t(translations.privacy.buttons.policy))
       ).toBeTruthy();
     });
 
@@ -59,7 +67,7 @@ describe("Privacy", () => {
           testIDs.DialogueFooterComponent
         );
         button = await within(footer).findByText(
-          translations.privacy.buttons.contact
+          _t(translations.privacy.buttons.contact)
         );
       });
 
@@ -80,7 +88,7 @@ describe("Privacy", () => {
           testIDs.DialogueFooterComponent
         );
         button = await within(footer).findByText(
-          translations.privacy.buttons.policy
+          _t(translations.privacy.buttons.policy)
         );
       });
 

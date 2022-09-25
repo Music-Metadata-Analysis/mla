@@ -8,9 +8,9 @@ import {
   StatHelpText,
   StatNumber,
 } from "@chakra-ui/react";
-import useColour from "../../../hooks/colour";
-import { truncate } from "../../../utils/strings";
 import BillBoard from "../billboard.component";
+import useColour from "@src/hooks/colour";
+import { truncate } from "@src/utils/strings";
 
 export const testIDs = {
   BillBoardProgressBar: "BillboardSpinner",

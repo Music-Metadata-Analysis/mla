@@ -1,4 +1,4 @@
-import { InitialState } from "../../providers/metrics/metrics.initial";
+import { InitialState } from "@src/providers/metrics/metrics.initial";
 
 const mockMetricsHook = {
   metrics: { ...InitialState },

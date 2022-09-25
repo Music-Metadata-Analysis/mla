@@ -1,11 +1,11 @@
 import { Text } from "@chakra-ui/react";
 import Cookies from "js-cookie";
-import { useTranslation } from "next-i18next";
 import { useEffect } from "react";
 import CookieConsent from "react-cookie-consent";
-import { settings } from "../../config/cookies";
-import useAnalytics from "../../hooks/analytics";
-import useColours from "../../hooks/colour";
+import { settings } from "@src/config/cookies";
+import useAnalytics from "@src/hooks/analytics";
+import useColours from "@src/hooks/colour";
+import useLocale from "@src/hooks/locale";
 
 export const testIDs = {
   consentDialogue: "consentDialogue",
@@ -21,7 +21,7 @@ export default function Consent() {
     buttonColour,
     consentColour,
   } = useColours();
-  const { t } = useTranslation("main");
+  const { t } = useLocale("main");
 
   const accept = () => {
     analytics.setup();

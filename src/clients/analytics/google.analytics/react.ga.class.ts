@@ -1,7 +1,7 @@
 import ReactGA from "react-ga";
-import { isProduction } from "../../../utils/env";
-import type EventDefinition from "../../../events/event.class";
-import type { AnalyticsVendorInterface } from "../../../types/clients/analytics/vendor.types";
+import { isProduction } from "@src/utils/env";
+import type EventDefinition from "@src/events/event.class";
+import type { AnalyticsVendorInterface } from "@src/types/clients/analytics/vendor.types";
 
 class VendorReactGA implements AnalyticsVendorInterface {
   vendor: typeof ReactGA;
