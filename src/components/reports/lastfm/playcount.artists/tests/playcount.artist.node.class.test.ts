@@ -1,8 +1,10 @@
 import SunBurstNodeEncapsulation from "../../common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 import PlayCountByArtistNodeEncapsulation from "../playcount.artists.node.class";
-import type { d3Node } from "../../../../../types/reports/sunburst.types";
+import sunburstTranslations from "@locales/sunburst.json";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("../../../../../utils/strings", () => ({
+jest.mock("@src/utils/strings", () => ({
   capitalize: (value: string) => `capitalize(${value})`,
 }));
 
@@ -10,7 +12,7 @@ describe(PlayCountByArtistNodeEncapsulation.name, () => {
   let instance: PlayCountByArtistNodeEncapsulation;
   let mockNode: d3Node;
   const expectedLeafEntity = "tracks";
-  const mockT = (value: string) => `t(${value})`;
+  const mockT = new mockUseLocale("sunburst").t;
 
   const createProps = (nodeData: unknown) => {
     mockNode = nodeData as d3Node;
@@ -172,7 +174,9 @@ describe(PlayCountByArtistNodeEncapsulation.name, () => {
 
       checkInstance();
       checkGetDrawerTitle({ expected: "mockIntermediary" });
-      checkGetDrawerListTitle({ expected: "capitalize(t(entities.albums):)" });
+      checkGetDrawerListTitle({
+        expected: `capitalize(${_t(sunburstTranslations.entities.albums)}:)`,
+      });
       checkGetDrawerSubTitle({ expected: "mockRoot" });
       checkValueMethodsWithParentPresent();
     });
@@ -214,7 +218,9 @@ describe(PlayCountByArtistNodeEncapsulation.name, () => {
 
       checkInstance();
       checkGetDrawerTitle({ expected: "mockRoot" });
-      checkGetDrawerListTitle({ expected: "capitalize(t(entities.albums):)" });
+      checkGetDrawerListTitle({
+        expected: `capitalize(${_t(sunburstTranslations.entities.albums)}:)`,
+      });
       checkGetDrawerSubTitle({ expected: null });
       checkValueMethodsWithOutParentPresent();
     });

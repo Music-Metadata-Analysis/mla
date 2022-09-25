@@ -1,14 +1,14 @@
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type {
   BaseReportResponseInterface,
   AggregateBaseReportResponseInterface,
-} from "../../../integrations/base.types";
+} from "@src/types/integrations/base.types";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
   LastFMImageDataInterface,
   LastFMTrackDataInterface,
-} from "../../../integrations/lastfm/api.types";
-import type { TFunction } from "next-i18next";
+} from "@src/types/integrations/lastfm/api.types";
 
 export interface LastFMFlipCardCommonDrawerInterface<T> {
   userState: T;
@@ -16,7 +16,7 @@ export interface LastFMFlipCardCommonDrawerInterface<T> {
   fallbackImage: string;
   isOpen: boolean;
   onClose: () => void;
-  t: TFunction;
+  t: tFunctionType;
 }
 
 export interface LastFMTopBaseReportResponseInterface

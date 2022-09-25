@@ -1,5 +1,5 @@
-import Condition from "../../condition/condition.component";
 import ErrorDisplay from "../display/error.display.component";
+import Condition from "@src/components/condition/condition.component";
 
 export interface ErrorHandlerProps {
   children: JSX.Element;

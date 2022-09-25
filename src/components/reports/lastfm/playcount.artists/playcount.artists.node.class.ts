@@ -1,6 +1,6 @@
-import { capitalize } from "../../../../utils/strings";
 import SunBurstNodeEncapsulation from "../common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
-import type { TFunction } from "next-i18next";
+import { capitalize } from "@src/utils/strings";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export default class PlayCountByArtistNodeEncapsulation extends SunBurstNodeEncapsulation {
   leafEntity = "tracks" as const;
@@ -18,7 +18,7 @@ export default class PlayCountByArtistNodeEncapsulation extends SunBurstNodeEnca
     return String(rounded);
   }
 
-  getDrawerListTitle(t: TFunction): string | null {
+  getDrawerListTitle(t: tFunctionType): string | null {
     const childEntity = this.getChildEntity();
     if (childEntity === "unknown" && !this.hasLeafChildren()) {
       return null;

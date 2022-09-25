@@ -1,26 +1,26 @@
 import { render, waitFor, cleanup } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import settings from "../../../../config/lastfm";
-import mockAuthHook, {
-  mockUserProfile,
-} from "../../../../hooks/tests/auth.mock.hook";
-import mockNavBarHook from "../../../../hooks/tests/navbar.mock.hook";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import mockRouter from "../../../../tests/fixtures/mock.router";
-import SearchContainer from "../search.container.component";
-import SearchForm from "../search.form.component";
-import type { LastFMUserSearchInterface } from "../../../../types/search/lastfm/search";
+import SearchContainer from "../search.container";
+import SearchForm from "../search.form";
+import lastfmTranslations from "@locales/lastfm.json";
+import settings from "@src/config/lastfm";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockNavBarHook from "@src/hooks/tests/navbar.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import mockRouter from "@src/tests/fixtures/mock.router";
+import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
 
-jest.mock("../search.form.component", () => {
+jest.mock("../search.form", () => {
   return jest
     .fn()
     .mockImplementation(() => <div id="username">MockSearchForm</div>);
 });
 
-jest.mock("../../../../hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/auth", () => () => mockAuthHook);
 
-jest.mock("../../../../hooks/navbar", () => {
+jest.mock("@src/hooks/navbar", () => {
   return jest.fn().mockImplementation(() => mockNavBarHook);
 });
 
@@ -33,7 +33,7 @@ describe("SearchContainer", () => {
   const mockRoute = "/a/very/fancy/route/to/something";
   const mockOpenError = jest.fn();
   const mockCloseError = jest.fn();
-  const mockT = jest.fn((arg: string) => `t(${arg})`);
+  const mockT = new mockUseLocale("lastfm").t;
 
   beforeEach(() => jest.clearAllMocks());
 
@@ -92,17 +92,17 @@ describe("SearchContainer", () => {
       beforeEach(() => (returnValue = validateUserName("")));
 
       it("should return the correct value", () => {
-        expect(returnValue).toBe("t(search.errors.username.required)");
-        expect(mockT).toBeCalledWith("search.errors.username.required");
+        expect(returnValue).toBe(
+          _t(lastfmTranslations.search.errors.username.required)
+        );
       });
 
       it("should generate an error", () => {
         expect(mockOpenError).toBeCalledTimes(1);
         expect(mockOpenError).toBeCalledWith(
           "username",
-          "t(search.errors.username.required)"
+          _t(lastfmTranslations.search.errors.username.required)
         );
-        expect(mockT).toBeCalledWith("search.errors.username.required");
       });
     });
 
@@ -115,17 +115,17 @@ describe("SearchContainer", () => {
       );
 
       it("should return the correct value", () => {
-        expect(returnValue).toBe("t(search.errors.username.valid)");
-        expect(mockT).toBeCalledWith("search.errors.username.valid");
+        expect(returnValue).toBe(
+          _t(lastfmTranslations.search.errors.username.valid)
+        );
       });
 
       it("should generate an error", () => {
         expect(mockOpenError).toBeCalledTimes(1);
         expect(mockOpenError).toBeCalledWith(
           "username",
-          "t(search.errors.username.valid)"
+          _t(lastfmTranslations.search.errors.username.valid)
         );
-        expect(mockT).toBeCalledWith("search.errors.username.valid");
       });
     });
 
@@ -202,9 +202,8 @@ describe("SearchContainer", () => {
           expect(mockOpenError).toBeCalledTimes(1);
           expect(mockOpenError).toBeCalledWith(
             "session",
-            "t(search.errors.session.notLoggedIn)"
+            _t(lastfmTranslations.search.errors.session.notLoggedIn)
           );
-          expect(mockT).toBeCalledWith("search.errors.session.notLoggedIn");
         });
 
         it("should NOT redirect to the expected route", () => {

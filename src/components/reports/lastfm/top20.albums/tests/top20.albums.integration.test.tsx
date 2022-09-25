@@ -1,22 +1,23 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import cardTranslations from "../../../../../../public/locales/en/cards.json";
-import translations from "../../../../../../public/locales/en/lastfm.json";
-import UserAlbumDataState from "../../../../../providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
-import translationLookUp from "../../../../../tests/fixtures/mock.translation";
-import { testIDs as drawerTestIDs } from "../../../common/drawer/drawer.component";
-import { testIDs as lastFMDrawerIDs } from "../../common/flip.card.report.drawer/flip.card.report.drawer.component";
+import Top20AlbumsReport from "../top20.albums.report.class";
+import cardTranslations from "@locales/cards.json";
+import translations from "@locales/lastfm.json";
+import { testIDs as drawerTestIDs } from "@src/components/reports/common/drawer/drawer.component";
+import { testIDs as lastFMDrawerIDs } from "@src/components/reports/lastfm/common/flip.card.report.drawer/flip.card.report.drawer.component";
 import FlipCardReport, {
   FlipCardReportProps,
-} from "../../common/flip.card.report/flip.card.report.component";
-import Top20AlbumsReport from "../top20.albums.report.class";
+} from "@src/components/reports/lastfm/common/flip.card.report/flip.card.report.component";
+import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import UserAlbumDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 
-const mockTranslation = jest.fn((translationKey: string) => {
-  const lastfmTranslations = require("../../../../../../public/locales/en/lastfm.json");
-  return translationLookUp(translationKey, lastfmTranslations);
-});
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 const mockImageIsLoaded = jest.fn();
+const mockT = new mockUseLocale("lastfm").t;
 const mockUsername = "test-username";
 const mockUserProperties = {
   error: null,
@@ -39,9 +40,9 @@ let mockPropertyIndex = 1;
 const Top20ReportBaseProps: FlipCardReportProps<UserAlbumDataState> = {
   report: new Top20AlbumsReport(),
   imageIsLoaded: mockImageIsLoaded,
-  userState: new UserAlbumDataState(mockUserProperties, mockTranslation),
+  userState: new UserAlbumDataState(mockUserProperties, mockT),
   visible: true,
-  t: mockTranslation,
+  t: mockT,
 };
 
 const generateMockProperty = () => {
@@ -112,7 +113,7 @@ describe("Top20AlbumsReport", () => {
 
   const clickCard = async (index: number) => {
     const CardFrontImage = (await screen.findByAltText(
-      `${cardTranslations.frontAltText}: ${index}`
+      `${_t(cardTranslations.frontAltText)}: ${index}`
     )) as HTMLImageElement;
     fireEvent.click(CardFrontImage);
     return CardFrontImage;
@@ -128,7 +129,7 @@ describe("Top20AlbumsReport", () => {
     it("when an image is loaded", async () => {
       arrange();
       const CardFrontImage = (await screen.findByAltText(
-        `${cardTranslations.frontAltText}: 1`
+        `${_t(cardTranslations.frontAltText)}: 1`
       )) as HTMLImageElement;
       fireEvent.load(CardFrontImage);
       expect(mockImageIsLoaded).toBeCalledTimes(1);
@@ -140,7 +141,9 @@ describe("Top20AlbumsReport", () => {
       });
 
       it("should render the report title text correctly", async () => {
-        expect(await screen.findByText(getTranslation().title)).toBeTruthy();
+        expect(
+          await screen.findByText(_t(getTranslation().title))
+        ).toBeTruthy();
         expect(
           await screen.findByText(
             currentProps.userState.userProperties.userName as string
@@ -152,12 +155,12 @@ describe("Top20AlbumsReport", () => {
         for (let i = 0; i < getDataSet().length; i++) {
           expect(
             await screen.findByAltText(
-              `${cardTranslations.frontAltText}: ${i + 1}`
+              `${_t(cardTranslations.frontAltText)}: ${i + 1}`
             )
           ).toBeTruthy();
           expect(
             await screen.findByAltText(
-              `${cardTranslations.rearAltText}: ${i + 1}`
+              `${_t(cardTranslations.rearAltText)}: ${i + 1}`
             )
           ).toBeTruthy();
         }
@@ -168,7 +171,7 @@ describe("Top20AlbumsReport", () => {
 
         beforeEach(async () => {
           const CardFrontImage = (await screen.findByAltText(
-            `${cardTranslations.frontAltText}: 1`
+            `${_t(cardTranslations.frontAltText)}: 1`
           )) as HTMLImageElement;
           CardFrontContainer = CardFrontImage.parentElement?.parentElement
             ?.parentElement?.parentElement as HTMLElement;
@@ -188,13 +191,13 @@ describe("Top20AlbumsReport", () => {
 
         it("should open the drawer", async () => {
           expect(
-            screen.queryByAltText(getTranslation().drawer.artWorkAltText)
+            screen.queryByAltText(_t(getTranslation().drawer.artWorkAltText))
           ).toBeNull();
 
           await clickCard(1);
 
           expect(
-            screen.queryByAltText(getTranslation().drawer.artWorkAltText)
+            screen.queryByAltText(_t(getTranslation().drawer.artWorkAltText))
           ).not.toBeNull();
         });
       });
@@ -216,7 +219,7 @@ describe("Top20AlbumsReport", () => {
         );
         expect(
           await within(rankElement).findByText(
-            translations.flipCardReport.drawer.rank
+            _t(translations.flipCardReport.drawer.rank)
           )
         ).toBeTruthy();
         expect(await within(rankElement).findByText(": 1")).toBeTruthy();
@@ -228,7 +231,7 @@ describe("Top20AlbumsReport", () => {
         );
         expect(
           await within(playCountElement).findByText(
-            translations.flipCardReport.drawer.playCount
+            _t(translations.flipCardReport.drawer.playCount)
           )
         ).toBeTruthy();
         expect(
@@ -238,7 +241,7 @@ describe("Top20AlbumsReport", () => {
 
       it("should open the correct link when the button is pressed", async () => {
         const buttonText = await screen.findByText(
-          translations.flipCardReport.drawer.buttonText
+          _t(translations.flipCardReport.drawer.buttonText)
         );
         const aTag = buttonText?.parentElement?.parentElement
           ?.parentElement as HTMLAnchorElement;
@@ -247,7 +250,7 @@ describe("Top20AlbumsReport", () => {
 
       it("should close the drawer when the close drawer button is clicked", async () => {
         expect(
-          screen.queryByAltText(getTranslation().drawer.artWorkAltText)
+          screen.queryByAltText(_t(getTranslation().drawer.artWorkAltText))
         ).not.toBeNull();
 
         const closeButton = (await screen.findByTestId(
@@ -270,7 +273,7 @@ describe("Top20AlbumsReport", () => {
     });
 
     it("should NOT render the title text", () => {
-      expect(screen.queryByText(getTranslation().title)).toBeNull();
+      expect(screen.queryByText(_t(getTranslation().title))).toBeNull();
     });
   });
 });

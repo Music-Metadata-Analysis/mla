@@ -1,11 +1,11 @@
-import { useTranslation } from "next-i18next";
 import BodyComponent from "./inlays/about.body.component";
 import FooterComponent from "./inlays/about.footer.component";
 import ToggleComponent from "./inlays/about.toggle.component";
-import Dialogue from "../dialogues/resizable/dialogue.resizable.component";
+import Dialogue from "@src/components/dialogues/resizable/dialogue.resizable.component";
+import useLocale from "@src/hooks/locale";
 
 export default function About() {
-  const { t } = useTranslation("about");
+  const { t } = useLocale("about");
 
   return (
     <Dialogue

@@ -1,9 +1,9 @@
 import { Text, Container, Center, Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { settings } from "../../config/billboard";
-import useColour from "../../hooks/colour";
-import useNavBar from "../../hooks/navbar";
-import Condition from "../condition/condition.component";
+import Condition from "@src/components/condition/condition.component";
+import { settings } from "@src/config/billboard";
+import useColour from "@src/hooks/colour";
+import useNavBar from "@src/hooks/navbar";
 
 interface BillboardProps {
   title: string;

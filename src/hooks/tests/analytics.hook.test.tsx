@@ -3,22 +3,19 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
 import mockUseAnalytics from "./analytics.mock.hook";
-import EventDefinition from "../../events/event.class";
-import Events from "../../events/events";
-import { AnalyticsContext } from "../../providers/analytics/analytics.provider";
 import useAnalytics from "../analytics";
-import type { AnalyticsContextInterface } from "../../types/analytics.types";
-import type { MutableEnv } from "../../types/process.types";
+import EventDefinition from "@src/events/event.class";
+import Events from "@src/events/events";
+import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
+import type { AnalyticsContextInterface } from "@src/types/analytics.types";
+import type { MutableEnv } from "@src/types/process.types";
 
-jest.mock("../../clients/analytics/vendor", () => ({
-  __esModule: true,
-  default: {
-    GoogleAnalytics: jest.fn(() => ({
-      event: mockAnalyticsVendorEvent,
-      initialize: mockAnalyticsVendorInitialize,
-      routeChange: mockAnalyticsVendorRouteChange,
-    })),
-  },
+jest.mock("@src/clients/analytics/vendor", () => ({
+  GoogleAnalytics: jest.fn(() => ({
+    event: mockAnalyticsVendorEvent,
+    initialize: mockAnalyticsVendorInitialize,
+    routeChange: mockAnalyticsVendorRouteChange,
+  })),
 }));
 
 jest.mock("next/router");

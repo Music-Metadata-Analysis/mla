@@ -1,11 +1,11 @@
-import { useTranslation } from "next-i18next";
 import FooterComponent from "./inlays/privacy.footer.component";
 import HeaderComponent from "./inlays/privacy.header.component";
 import ToggleComponent from "./inlays/privacy.toggle.component";
-import Dialogue from "../../dialogues/resizable/dialogue.resizable.component";
+import Dialogue from "@src/components/dialogues/resizable/dialogue.resizable.component";
+import useLocale from "@src/hooks/locale";
 
 export default function Privacy() {
-  const { t } = useTranslation("legal");
+  const { t } = useLocale("legal");
 
   return (
     <Dialogue

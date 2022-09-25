@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 import { useEffect, useContext, useState } from "react";
-import analyticsVendor from "../clients/analytics/vendor";
-import EventDefinition from "../events/event.class";
-import { AnalyticsContext } from "../providers/analytics/analytics.provider";
-import { isProduction, isTest } from "../utils/env";
+import analyticsVendor from "@src/clients/analytics/vendor";
+import EventDefinition from "@src/events/event.class";
+import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
+import { isProduction, isTest } from "@src/utils/env";
 import type {
   ButtonClickHandlerType,
   LinkClickHandlerType,
-} from "../types/analytics.types";
+} from "@src/types/analytics.types";
 
 const useAnalytics = () => {
   const { initialized, setInitialized } = useContext(AnalyticsContext);

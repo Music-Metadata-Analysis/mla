@@ -2,10 +2,10 @@ import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockMetricsHook from "./metrics.mock.hook";
-import { InitialState } from "../../providers/metrics/metrics.initial";
-import { MetricsContext } from "../../providers/metrics/metrics.provider";
 import useMetrics from "../metrics";
-import type { MetricsContextInterface } from "../../types/metrics/context.types";
+import { InitialState } from "@src/providers/metrics/metrics.initial";
+import { MetricsContext } from "@src/providers/metrics/metrics.provider";
+import type { MetricsContextInterface } from "@src/types/metrics/context.types";
 import type { ReactNode } from "react";
 
 interface MockUserContextWithChildren {

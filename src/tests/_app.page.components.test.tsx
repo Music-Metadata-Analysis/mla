@@ -1,17 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import App from "next/app";
 import checkMockCall from "../../src/tests/fixtures/mock.component.call";
-import authVendor from "../clients/auth/vendor";
-import flagVendor from "../clients/flags/vendor";
-import Consent from "../components/consent/consent.component";
-import NavBar from "../components/navbar/navbar.component";
-import RootPopup from "../components/popups/root.popup";
-import NavConfig from "../config/navbar";
-import MLA, { getInitialProps } from "../pages/_app";
-import RootProvider from "../providers/root.provider";
-import { normalizeUndefined } from "../utils/voids";
-import type { VendorAuthStateType } from "../clients/auth/vendor.types";
-import type { VendorFlagStateType } from "../clients/flags/vendor.types";
+import authVendor from "@src/clients/auth/vendor";
+import flagVendor from "@src/clients/flags/vendor";
+import Consent from "@src/components/consent/consent.component";
+import NavBar from "@src/components/navbar/navbar.component";
+import RootPopup from "@src/components/popups/root.popup";
+import NavConfig from "@src/config/navbar";
+import MLA, { getInitialProps } from "@src/pages/_app";
+import RootProvider from "@src/providers/root.provider";
+import { normalizeUndefined } from "@src/utils/voids";
+import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
+import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 import type { AppContext, AppProps } from "next/app";
 import type { Router } from "next/router";
 
@@ -35,29 +35,21 @@ jest.mock("next/app", () => ({
   getInitialProps: jest.fn(),
 }));
 
-jest.mock("../clients/auth/vendor", () => ({
+jest.mock("@src/clients/auth/vendor", () => ({
   SSR: jest.fn(() => ({
     getSession: mockGetSession,
   })),
 }));
 
-jest.mock("../clients/flags/vendor", () => ({
+jest.mock("@src/clients/flags/vendor", () => ({
   SSR: jest.fn(() => ({
     getState: mockGetState,
   })),
 }));
 
-const mockGetSession = jest.fn();
-const mockGetState = jest.fn();
-
-jest.mock("../utils/voids", () => {
-  const module = require("../utils/tests/voids.mock");
-  return { normalizeUndefined: module.mockNormalizeUndefined };
-});
-
-jest.mock("next-i18next", () => {
+jest.mock("@src/clients/locale/vendor", () => {
   return {
-    appWithTranslation: (Component: React.FC) =>
+    HOC: (Component: React.FC) =>
       jest.fn((props) => {
         return (
           <div data-testid={mockTranslationWrapper}>
@@ -66,6 +58,14 @@ jest.mock("next-i18next", () => {
         );
       }),
   };
+});
+
+const mockGetSession = jest.fn();
+const mockGetState = jest.fn();
+
+jest.mock("@src/utils/voids", () => {
+  const module = require("@src/utils/tests/voids.mock");
+  return { normalizeUndefined: module.mockNormalizeUndefined };
 });
 
 const mockTranslationWrapper = "mockTranslationWrapper";

@@ -7,7 +7,7 @@ import {
   DrawerCloseButton,
   DrawerContent,
 } from "@chakra-ui/react";
-import useColour from "../../../../hooks/colour";
+import useColour from "@src/hooks/colour";
 import type { PropsWithChildren } from "react";
 
 export interface DrawerInterface {

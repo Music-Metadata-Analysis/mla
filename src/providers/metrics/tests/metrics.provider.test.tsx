@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
-import { getPersistedUseReducer } from "../../../hooks/utility/local.storage";
 import { InitialState } from "../metrics.initial";
 import MetricsProvider, { MetricsContext } from "../metrics.provider";
-import type { MetricsContextInterface } from "../../../types/metrics/context.types";
+import { getPersistedUseReducer } from "@src/hooks/utility/local.storage";
+import type { MetricsContextInterface } from "@src/types/metrics/context.types";
 
-jest.mock("../../../hooks/utility/local.storage", () => ({
+jest.mock("@src/hooks/utility/local.storage", () => ({
   getPersistedUseReducer: jest.fn(() => mockReducer),
 }));
 

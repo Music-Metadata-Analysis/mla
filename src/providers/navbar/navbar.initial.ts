@@ -1,5 +1,5 @@
-import { voidFn } from "../../utils/voids";
-import type { NavBarContextInterface } from "../../types/navbar.types";
+import { voidFn } from "@src/utils/voids";
+import type { NavBarContextInterface } from "@src/types/navbar.types";
 
 const InitialValues = <NavBarContextInterface>{
   getters: {

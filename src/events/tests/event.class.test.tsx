@@ -1,5 +1,5 @@
 import EventDefinition from "../event.class";
-import type { EventDefinitionType } from "../../types/analytics.types";
+import type { EventDefinitionType } from "@src/types/analytics.types";
 
 describe("Event Definition", () => {
   let event: EventDefinition;

@@ -1,4 +1,4 @@
-import type { StatusMessageType } from "../types/clients/api/api.client.types";
+import type { StatusMessageType } from "@src/types/clients/api/api.client.types";
 
 export const STATUS_200_MESSAGE: StatusMessageType = {
   detail: "Not Implemented.",

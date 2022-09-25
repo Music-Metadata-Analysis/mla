@@ -1,11 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
 import AnalyticsLinkComponent from "../analytics.link.internal.component";
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
 
-jest.mock("../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 describe("AnalyticsInternalLink", () => {
   const buttonText = "Click Me";

@@ -5,31 +5,29 @@ import {
   StatNumber,
 } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import { truncate } from "../../../../utils/strings";
 import BillBoard from "../../billboard.component";
 import BillBoardProgressBar, {
   testIDs,
 } from "../billboard.progress.bar.component";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import { truncate } from "@src/utils/strings";
 import type { BillBoardProgressBarDetails } from "../billboard.progress.bar.component";
 
 jest.mock("../../billboard.component", () =>
   createMockedComponent("Billboard")
 );
 
-jest.mock("../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
-jest.mock("../../../../utils/strings", () => ({
+jest.mock("@src/utils/strings", () => ({
   truncate: jest.fn().mockReturnValue("TruncatedString"),
 }));
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create([
     "Progress",
     "StatHelpText",
@@ -41,7 +39,7 @@ jest.mock("@chakra-ui/react", () => {
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

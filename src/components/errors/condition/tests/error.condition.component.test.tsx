@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import ErrorDisplay from "../../display/error.display.component";
 import ErrorCondition from "../error.condition.component";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("../../display/error.display.component", () =>
   createMockedComponent("ErrorDisplay")
@@ -10,7 +10,7 @@ jest.mock("../../display/error.display.component", () =>
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

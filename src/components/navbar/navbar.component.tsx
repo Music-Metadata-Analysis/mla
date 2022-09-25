@@ -13,10 +13,10 @@ import NavBarLogo from "./navbar.logo/navbar.logo.component";
 import NavBarOptions from "./navbar.options/navbar.options.component";
 import NavBarSessionControl from "./navbar.session.control/navbar.session.control.component";
 import Spinner from "./navbar.spinner/navbar.spinner.component";
-import useColour from "../../hooks/colour";
-import useLastFM from "../../hooks/lastfm";
-import useNavBar from "../../hooks/navbar";
-import Condition from "../condition/condition.component";
+import Condition from "@src/components/condition/condition.component";
+import useColour from "@src/hooks/colour";
+import useLastFM from "@src/hooks/lastfm";
+import useNavBar from "@src/hooks/navbar";
 
 export const testIDs = {
   NavBarRoot: "NavBarRoot",

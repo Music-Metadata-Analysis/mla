@@ -1,13 +1,13 @@
 import UserFlipCardBaseReportState from "./user.state.base.flipcard.report.class";
-import Events from "../../../../../events/events";
-import type { LastFMArtistDataInterface } from "../../../../../types/integrations/lastfm/api.types";
-import type { LastFMUserStateAlbumReport } from "../../../../../types/user/state.types";
-import type { TFunction } from "next-i18next";
+import Events from "@src/events/events";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { LastFMArtistDataInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
 
 export default class UserAlbumState extends UserFlipCardBaseReportState {
   userProperties: LastFMUserStateAlbumReport;
 
-  constructor(userProperties: LastFMUserStateAlbumReport, t: TFunction) {
+  constructor(userProperties: LastFMUserStateAlbumReport, t: tFunctionType) {
     super(userProperties, t);
     this.userProperties = userProperties;
   }

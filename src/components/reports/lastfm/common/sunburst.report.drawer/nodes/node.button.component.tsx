@@ -1,6 +1,6 @@
 import { Flex, Text, Box, Container } from "@chakra-ui/react";
-import useColour from "../../../../../../hooks/colour";
-import type { SunBurstDrawerNodeComponentProps } from "../../../../../../types/clients/api/lastfm/sunburst.types";
+import useColour from "@src/hooks/colour";
+import type { SunBurstDrawerNodeComponentProps } from "@src/types/clients/api/lastfm/sunburst.types";
 
 export const testIDs = {
   NodeNameText: "NodeNameText",

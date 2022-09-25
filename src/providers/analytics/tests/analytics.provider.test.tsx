@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import AnalyticsProvider, { AnalyticsContext } from "../analytics.provider";
-import type { AnalyticsContextInterface } from "../../../types/analytics.types";
+import type { AnalyticsContextInterface } from "@src/types/analytics.types";
 
 describe("AnalyticsProvider", () => {
   const received: Partial<AnalyticsContextInterface> = {};

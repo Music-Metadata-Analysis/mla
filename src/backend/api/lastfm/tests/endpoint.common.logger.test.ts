@@ -1,10 +1,10 @@
-import apiRoutes from "../../../../config/apiRoutes";
-import { createAPIMocks } from "../../../../tests/fixtures/mock.authentication";
 import Logger from "../endpoint.common.logger";
+import apiRoutes from "@src/config/apiRoutes";
+import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type {
   MockAPIRequest,
   MockAPIResponse,
-} from "../../../../types/api.endpoint.types";
+} from "@src/types/api.endpoint.types";
 
 describe("endpointLogger", () => {
   let mockReq: MockAPIRequest;

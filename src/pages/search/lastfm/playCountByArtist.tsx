@@ -1,13 +1,13 @@
-import { useTranslation } from "next-i18next";
-import ErrorBoundary from "../../../components/errors/boundary/error.boundary.component";
-import SearchUI from "../../../components/search/lastfm/search.ui.component";
-import routes from "../../../config/routes";
-import Events from "../../../events/events";
-import pagePropsGenerator from "../../../utils/page.props.static";
-import { voidFn } from "../../../utils/voids";
+import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import SearchUI from "@src/components/search/lastfm/search.ui";
+import routes from "@src/config/routes";
+import Events from "@src/events/events";
+import useLocale from "@src/hooks/locale";
+import pagePropsGenerator from "@src/utils/page.props.static";
+import { voidFn } from "@src/utils/voids";
 
 export default function SearchLastFMTop20Albums() {
-  const { t } = useTranslation("lastfm");
+  const { t } = useLocale("lastfm");
 
   return (
     <ErrorBoundary

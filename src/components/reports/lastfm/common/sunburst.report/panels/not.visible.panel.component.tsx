@@ -1,6 +1,6 @@
 import { Box, Center, Container } from "@chakra-ui/react";
-import settings from "../../../../../../config/sunburst";
-import useColour from "../../../../../../hooks/colour";
+import settings from "@src/config/sunburst";
+import useColour from "@src/hooks/colour";
 
 export const testIDs = {
   SunBurstNotVisiblePanelMessage: "SunBurstInfoPanelMessage",

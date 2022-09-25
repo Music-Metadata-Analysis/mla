@@ -1,8 +1,8 @@
-import authentication from "../../../public/locales/en/authentication.json";
-import lastfm from "../../../public/locales/en/lastfm.json";
-import routes from "../../../src/config/routes";
-import { flipCardReports, sunBurstReports } from "../../fixtures/reports";
-import { baseUrl } from "../../fixtures/setup";
+import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
+import { baseUrl } from "@cypress/fixtures/setup";
+import authentication from "@locales/authentication.json";
+import lastfm from "@locales/lastfm.json";
+import routes from "@src/config/routes";
 
 describe("LastFM Report Selection Protected", () => {
   const reports = flipCardReports.concat(Object.values(sunBurstReports));

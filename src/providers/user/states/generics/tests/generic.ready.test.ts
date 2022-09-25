@@ -1,7 +1,7 @@
-import { mockAlbumsReport } from "../../../tests/fixtures/mock.user.state.data";
 import ReducerState from "../generic.ready.class";
-import type { UserActionType } from "../../../../../types/user/action.types";
-import type { UserStateInterface } from "../../../../../types/user/state.types";
+import { mockAlbumsReport } from "@src/providers/user/tests/fixtures/mock.user.state.data";
+import type { UserActionType } from "@src/types/user/action.types";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
 const testType = "ReadyFetch";
 type actionType = UserActionType & { type: typeof testType };

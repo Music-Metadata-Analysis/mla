@@ -1,5 +1,5 @@
-import apiRoutes from "../../../../../config/apiRoutes";
 import LastFMReport from "../top20.tracks.class";
+import apiRoutes from "@src/config/apiRoutes";
 
 describe("LastFMTopTracksReport", () => {
   const mockDispatch = jest.fn();

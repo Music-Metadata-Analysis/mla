@@ -1,12 +1,12 @@
 import { render } from "@testing-library/react";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import ErrorDisplay from "../../display/error.display.component";
 import ErrorHandler from "../error.handler.component";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

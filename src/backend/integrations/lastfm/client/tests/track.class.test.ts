@@ -1,7 +1,7 @@
 import LastFMTrackClientAdapter from "../track.class";
-import type { ProxyError } from "../../../../../errors/proxy.error.class";
-import type { LastFMTrackInfoInterface } from "../../../../../types/integrations/lastfm/api.types";
-import type { LastFMExternalClientError } from "../../../../../types/integrations/lastfm/client.types";
+import type { ProxyError } from "@src/errors/proxy.error.class";
+import type { LastFMTrackInfoInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMExternalClientError } from "@src/types/integrations/lastfm/client.types";
 
 jest.mock("@toplast/lastfm", () => {
   return jest.fn().mockImplementation(() => {

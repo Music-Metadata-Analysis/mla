@@ -1,9 +1,9 @@
 import { Text, Flex } from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
 import SunBurstNodeButton from "./node.button.component";
 import SunBurstNodeDisplay from "./node.display.component";
-import VerticalScrollBar from "../../../../../scrollbar/vertical.scrollbar.component";
-import type SunBurstNodeEncapsulation from "../../sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
+import useLocale from "@src/hooks/locale";
+import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 import type { RefObject } from "react";
 
 export const testIDs = {
@@ -24,8 +24,8 @@ export default function SunBurstEntityNodeList({
   selectChildNode,
   svgTransition,
 }: SunBurstEntityNodeListProps) {
-  const { t: lastFMt } = useTranslation("lastfm");
-  const { t: sunBurstT } = useTranslation("sunburst");
+  const { t: lastFMt } = useLocale("lastfm");
+  const { t: sunBurstT } = useLocale("sunburst");
 
   if (svgTransition) return null;
 

@@ -1,5 +1,5 @@
 import { Box, Container, Text } from "@chakra-ui/react";
-import useColour from "../../../../hooks/colour";
+import useColour from "@src/hooks/colour";
 
 interface ReportTitleProps {
   title: string;

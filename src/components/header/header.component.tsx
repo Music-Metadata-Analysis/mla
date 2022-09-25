@@ -1,13 +1,13 @@
-import { useTranslation } from "next-i18next";
 import Head from "next/head";
-import settings from "../../config/head";
+import settings from "@src/config/head";
+import useLocale from "@src/hooks/locale";
 
 export interface HeaderProps {
   pageKey: string;
 }
 
 const Header = ({ pageKey }: HeaderProps) => {
-  const { t } = useTranslation("main");
+  const { t } = useLocale("main");
 
   return (
     <>

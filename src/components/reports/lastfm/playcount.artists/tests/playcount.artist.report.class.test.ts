@@ -1,13 +1,13 @@
 import mockUserState from "./fixtures/mock.state.1.json";
-import routes from "../../../../../config/routes";
-import PlayCountByArtistState from "../../../../../providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import SunBurstDrawer from "../../common/sunburst.report.drawer/sunburst.report.drawer.component";
 import SunBurstBaseReport from "../../common/sunburst.report/sunburst.report.base.class";
 import PlayCountByArtistNode from "../playcount.artists.node.class";
 import PlayCountByArtistReport from "../playcount.artists.report.class";
-import type { PlayCountByArtistReportInterface } from "../../../../../types/clients/api/lastfm/response.types";
-import type { AggregateBaseReportResponseInterface } from "../../../../../types/integrations/base.types";
-import type { LastFMUserStateBase } from "../../../../../types/user/state.types";
+import routes from "@src/config/routes";
+import PlayCountByArtistState from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
+import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 describe(PlayCountByArtistReport.name, () => {
   let instance: PlayCountByArtistReport;

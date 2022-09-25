@@ -1,5 +1,5 @@
 import withMiddleware from "../reducer.middleware";
-import type { ActionType, StateType } from "../../types/reducer.types";
+import type { ActionType, StateType } from "@src/types/reducer.types";
 import type { Reducer } from "react";
 
 const callStack: ActionType[] = [];

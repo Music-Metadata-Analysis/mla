@@ -7,13 +7,13 @@ import {
   FormikProps,
   FormikHelpers,
 } from "formik";
-import StyledButton from "../../button/button.standard/button.standard.component";
 import StyledInput from "../common/input/input.component";
-import type { LastFMUserSearchInterface } from "../../../types/search/lastfm/search";
-import type { TFunction } from "next-i18next";
+import StyledButton from "@src/components/button/button.standard/button.standard.component";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 
 interface SearchFormProps {
-  t: TFunction;
+  t: tFunctionType;
   validateUserName: (username: string) => string | undefined;
   handleSubmit: (
     values: LastFMUserSearchInterface,

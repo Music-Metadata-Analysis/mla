@@ -2,7 +2,7 @@ import PersistanceVendorBaseClass from "../persistance.base.client.class";
 import type {
   PersistanceDataType,
   PersistanceClientHeaders,
-} from "../../../../../../types/integrations/persistance/vendor.types";
+} from "@src/types/integrations/persistance/vendor.types";
 
 class MockConcretePersistanceVendor extends PersistanceVendorBaseClass {
   protected async writeImplementation(

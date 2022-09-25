@@ -1,4 +1,4 @@
-import { InitialState } from "../../providers/user/user.initial";
+import { InitialState } from "@src/providers/user/user.initial";
 
 const mockLastFMHook = {
   userProperties: { ...InitialState },

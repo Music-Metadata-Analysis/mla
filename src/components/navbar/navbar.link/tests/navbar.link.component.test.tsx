@@ -1,23 +1,20 @@
 import { Button } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import mockColourHook from "../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import mockRouter from "../../../../tests/fixtures/mock.router";
 import NavBarLink from "../navbar.link.component";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import mockRouter from "@src/tests/fixtures/mock.router";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Button"]);
 });
 
-jest.mock("../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("next/router", () => ({
-  __esModule: true,
   useRouter: () => mockRouter,
 }));
 

@@ -1,32 +1,31 @@
 import { Container, ListItem, UnorderedList } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import translations from "../../../../../public/locales/en/splash.json";
-import dialogueSettings from "../../../../config/dialogue";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
-import tLookup from "../../../../tests/fixtures/mock.translation";
-import Highlight from "../../../highlight/highlight.component";
 import SplashToggle from "../splash.toggle.component";
+import Highlight from "@src/components/highlight/highlight.component";
+import dialogueSettings from "@src/config/dialogue";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../highlight/highlight.component", () =>
+jest.mock("@src/components/highlight/highlight.component", () =>
   createMockedComponent("Highlight")
 );
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Container", "ListItem", "UnorderedList"]);
 });
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
 describe("SplashToggle", () => {
-  const mockT = jest.fn((key) => tLookup(key, translations));
+  const mockT = new mockUseLocale("splash").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

@@ -1,6 +1,6 @@
-import apiRoutes from "../../../../../../config/apiRoutes";
-import InitialState from "../../../../../../providers/user/user.initial";
 import SunBurstDataClientBase from "../sunburst.client.base.class";
+import apiRoutes from "@src/config/apiRoutes";
+import InitialState from "@src/providers/user/user.initial";
 
 const mockDispatch = jest.fn();
 const mockEvent = jest.fn();

@@ -1,42 +1,41 @@
 import { Flex } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import translations from "../../../../../../public/locales/en/legal.json";
-import dialogueSettings from "../../../../../config/dialogue";
-import externalLinks from "../../../../../config/external";
-import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
-import tLookup from "../../../../../tests/fixtures/mock.translation";
-import Button from "../../../../button/button.external.link/button.external.link.component";
 import TermsOfServiceFooter from "../terms.footer.component";
+import Button from "@src/components/button/button.external.link/button.external.link.component";
+import dialogueSettings from "@src/config/dialogue";
+import externalLinks from "@src/config/external";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock(
-  "../../../../button/button.external.link/button.external.link.component",
+  "@src/components/button/button.external.link/button.external.link.component",
   () => createMockedComponent("Button")
 );
 
-jest.mock("../../../../styles/hover.dim/hover.dim.styles", () =>
+jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
   createMockedComponent("DimOnHover")
 );
 
-jest.mock("../../../../icons/svs/svs.icon", () =>
+jest.mock("@src/components/icons/svs/svs.icon", () =>
   jest.fn(() => <div>MockIcon</div>)
 );
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Flex"]);
 });
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 
 describe("TermsOfServiceFooter", () => {
-  const mockT = jest.fn((key) => tLookup(key, translations));
+  const mockT = new mockUseLocale("legal").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

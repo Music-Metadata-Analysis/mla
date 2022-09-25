@@ -1,9 +1,9 @@
 import { Container, UnorderedList, ListItem } from "@chakra-ui/react";
-import dialogueSettings from "../../../config/dialogue";
 import Highlight from "../../highlight/highlight.component";
-import type { TFunction } from "next-i18next";
+import dialogueSettings from "@src/config/dialogue";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
-export default function PrivacyToggle({ t }: { t: TFunction }) {
+export default function PrivacyToggle({ t }: { t: tFunctionType }) {
   return (
     <Highlight
       mb={3}

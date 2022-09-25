@@ -1,8 +1,8 @@
 import { useToast, useColorMode } from "@chakra-ui/react";
 import { useEffect } from "react";
-import useUserInterface from "../../../hooks/ui";
-import type { UserInterfacePopUpsComponentType } from "../../../types/ui/popups/ui.component.popups.types";
-import type { PopUpNameType } from "../../../types/ui/popups/ui.popups.state.types";
+import useUserInterface from "@src/hooks/ui";
+import type { UserInterfacePopUpsComponentType } from "@src/types/ui/popups/ui.component.popups.types";
+import type { PopUpNameType } from "@src/types/ui/popups/ui.popups.state.types";
 
 export interface PopUpProps {
   name: PopUpNameType;

@@ -1,6 +1,6 @@
-import { GenerateUserLink } from "../../../../config/lastfm";
 import ReducerStateBaseClass from "../user.reducer.states.base.class";
-import type { UserStateInterface } from "../../../../types/user/state.types";
+import { GenerateUserLink } from "@src/config/lastfm";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
 class ReducerGenericReadyFetch extends ReducerStateBaseClass<"ReadyFetch"> {
   type = "ReadyFetch" as const;

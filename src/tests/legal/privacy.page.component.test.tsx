@@ -1,26 +1,26 @@
 import { render } from "@testing-library/react";
-import ErrorBoundary from "../../components/errors/boundary/error.boundary.component";
-import Privacy from "../../components/legal/privacy/privacy.component";
-import routes from "../../config/routes";
-import Events from "../../events/events";
-import Page from "../../pages/legal/privacy";
-import mockCheckCall from "../../tests/fixtures/mock.component.call";
-import getPageProps from "../../utils/page.props.static";
+import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import Privacy from "@src/components/legal/privacy/privacy.component";
+import routes from "@src/config/routes";
+import Events from "@src/events/events";
+import Page from "@src/pages/legal/privacy";
+import mockCheckCall from "@src/tests/fixtures/mock.component.call";
+import getPageProps from "@src/utils/page.props.static";
 
-jest.mock("../../utils/page.props.static", () => jest.fn());
+jest.mock("@src/utils/page.props.static", () => jest.fn());
 
-jest.mock("../../components/errors/boundary/error.boundary.component", () =>
+jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
   createMockedComponent("ErrorBoundary")
 );
 
-jest.mock("../../components/legal/privacy/privacy.component", () =>
+jest.mock("@src/components/legal/privacy/privacy.component", () =>
   createMockedComponent("Privacy")
 );
 
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

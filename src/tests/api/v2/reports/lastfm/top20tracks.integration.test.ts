@@ -1,23 +1,23 @@
-import apiRoutes from "../../../../../config/apiRoutes";
-import * as status from "../../../../../config/status";
-import trackHandler from "../../../../../pages/api/v2/reports/lastfm/top20tracks/[username]";
-import testResponses from "../../../../fixtures/lastfm.toptracks";
-import testAccounts from "../../../../fixtures/lastfm.users";
+import apiRoutes from "@src/config/apiRoutes";
+import * as status from "@src/config/status";
+import trackHandler from "@src/pages/api/v2/reports/lastfm/top20tracks/[username]";
+import testResponses from "@src/tests/fixtures/lastfm.toptracks";
+import testAccounts from "@src/tests/fixtures/lastfm.users";
 import {
   createAPIMocks,
   mockSession,
-} from "../../../../fixtures/mock.authentication";
+} from "@src/tests/fixtures/mock.authentication";
 import type {
   MockAPIRequest,
   MockAPIResponse,
-} from "../../../../../types/api.endpoint.types";
-import type { HttpMethodType } from "../../../../../types/clients/api/api.client.types";
+} from "@src/types/api.endpoint.types";
+import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
-jest.mock("../../../../../backend/api/lastfm/endpoint.common.logger", () => {
+jest.mock("@src/backend/api/lastfm/endpoint.common.logger", () => {
   return jest.fn((req, res, next) => next());
 });
 
-jest.mock("../../../../../backend/integrations/auth/vendor", () => ({
+jest.mock("@src/backend/integrations/auth/vendor", () => ({
   Client: jest.fn(() => ({
     getSession: () => Promise.resolve(mockSession),
   })),

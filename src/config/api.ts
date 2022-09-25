@@ -1,5 +1,5 @@
-import * as status from "../config/status";
-import type { StatusMessageType } from "../types/clients/api/api.client.types";
+import * as status from "@src/config/status";
+import type { StatusMessageType } from "@src/types/clients/api/api.client.types";
 
 export const knownStatuses: { [index: number]: StatusMessageType } = {
   401: status.STATUS_401_MESSAGE,

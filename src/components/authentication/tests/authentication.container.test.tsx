@@ -1,20 +1,18 @@
 import { render } from "@testing-library/react";
-import mockAuthHook, {
-  mockUserProfile,
-} from "../../../hooks/tests/auth.mock.hook";
-import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import AuthenticationContainer from "../authentication.container";
 import ModalSignInComponent from "../modals/modal.signin.component";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../hooks/auth", () => () => mockAuthHook);
-
-jest.mock("@chakra-ui/react", () => ({
-  useDisclosure: () => mockUseDisclosure(),
-}));
+jest.mock("@src/hooks/auth", () => () => mockAuthHook);
 
 jest.mock("../modals/modal.signin.component", () => {
   return jest.fn(() => <div>MockComponent</div>);
 });
+
+jest.mock("@chakra-ui/react", () => ({
+  useDisclosure: () => mockUseDisclosure(),
+}));
 
 const mockUseDisclosure = jest.fn();
 

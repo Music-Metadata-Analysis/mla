@@ -1,17 +1,15 @@
 import { Input } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import mockColourHook from "../../../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../../../tests/fixtures/mock.component.call";
 import StyledInput from "../input.component";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Input"]);
 });
 

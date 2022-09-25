@@ -1,10 +1,10 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockUseNavBar from "./navbar.mock.hook";
-import NavConfig from "../../config/navbar";
-import NavBarProvider from "../../providers/navbar/navbar.provider";
 import useNavBar from "../navbar";
-import type { NavBarContextInterface } from "../../types/navbar.types";
+import NavConfig from "@src/config/navbar";
+import NavBarProvider from "@src/providers/navbar/navbar.provider";
+import type { NavBarContextInterface } from "@src/types/navbar.types";
 import type { ReactNode } from "react";
 
 interface MockInterfaceContextWithChildren {

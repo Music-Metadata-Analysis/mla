@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import UserInterfaceProviderInterface, {
   UserInterfaceImagesContext,
 } from "../ui.images.provider";
-import type { UserInterfaceImagesContextInterface } from "../../../../types/ui/images/ui.images.context.types";
+import type { UserInterfaceImagesContextInterface } from "@src/types/ui/images/ui.images.context.types";
 
 describe("UserInterfaceChakraProvider", () => {
   const received: Partial<UserInterfaceImagesContextInterface> = {};

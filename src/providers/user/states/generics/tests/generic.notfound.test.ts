@@ -1,7 +1,7 @@
-import { mockInitialReportData } from "../../../tests/fixtures/mock.user.state.data";
 import ReducerState from "../generic.notfound.class";
-import type { UserActionType } from "../../../../../types/user/action.types";
-import type { UserStateInterface } from "../../../../../types/user/state.types";
+import { mockInitialReportData } from "@src/providers/user/tests/fixtures/mock.user.state.data";
+import type { UserActionType } from "@src/types/user/action.types";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
 const testType = "NotFoundFetch";
 type actionType = UserActionType & { type: typeof testType };

@@ -1,5 +1,5 @@
 import ErrorDisplayConditionBase from "./condition.base.class";
-import type { LastFMUserStateBase } from "../../../../../../types/user/state.types";
+import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 abstract class ConditionalErrorDisplayBase<
   ReportType

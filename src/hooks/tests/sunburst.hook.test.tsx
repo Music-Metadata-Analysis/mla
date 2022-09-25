@@ -1,9 +1,9 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockUseSunBurstState from "./sunburst.mock.hook";
-import nullNode from "../../providers/user/reports/sunburst.node.initial";
 import useSunBurstState from "../sunburst";
-import type { d3Node } from "../../types/reports/sunburst.types";
+import nullNode from "@src/providers/user/reports/sunburst.node.initial";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
 describe("mockUseSunBurstState", () => {
   let received: ReturnType<typeof arrange>;

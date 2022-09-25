@@ -1,4 +1,4 @@
-import type { UserStateInterface } from "../../../../../../types/user/state.types";
+import type { UserStateInterface } from "@src/types/user/state.types";
 
 export const mockUrls = ["http://someurl1.com", "http://someurl2.com"];
 

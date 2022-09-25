@@ -1,4 +1,5 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import localeVendorSSR from "@src/clients/locale/vendor.ssr";
+import type { LocaleVendorSSRReturnType } from "@src/clients/locale/vendor.types";
 
 interface pagePropsGeneratorInterface {
   pageKey: string;
@@ -14,12 +15,16 @@ const pagePropsGenerator = ({
   translations = [],
 }: pagePropsGeneratorInterface) => {
   const getPageProps = async ({ locale }: getPagePropsInterface) => {
+    const translator = new localeVendorSSR.Client(
+      locale,
+      ["authentication", "main", "navbar"].concat(translations)
+    );
+    const translationData =
+      (await translator.getTranslations()) as LocaleVendorSSRReturnType;
+
     return {
       props: {
-        ...(await serverSideTranslations(
-          locale,
-          ["authentication", "main", "navbar"].concat(translations)
-        )),
+        ...translationData,
         headerProps: { pageKey },
       },
     };

@@ -1,4 +1,3 @@
-import type useLastFM from "../../hooks/lastfm";
 import type {
   LastFMUserStateBase,
   LastFMUserStateAlbumReport,
@@ -6,6 +5,7 @@ import type {
   LastFMUserStateTrackReport,
   LastFMUserStatePlayCountByArtistReport,
 } from "./state.types";
+import type useLastFM from "@src/hooks/lastfm";
 
 export interface userHookAsLastFM extends ReturnType<typeof useLastFM> {
   userProperties: LastFMUserStateBase;

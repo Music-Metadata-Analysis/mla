@@ -1,7 +1,7 @@
 import { createContext, ReactNode } from "react";
 import InitialValues from "./metrics.initial";
 import { MetricsReducer } from "./metrics.reducer";
-import { getPersistedUseReducer } from "../../hooks/utility/local.storage";
+import { getPersistedUseReducer } from "@src/hooks/utility/local.storage";
 
 export const MetricsContext = createContext({ ...InitialValues });
 

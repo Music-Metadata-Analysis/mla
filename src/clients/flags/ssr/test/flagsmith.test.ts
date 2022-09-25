@@ -1,8 +1,8 @@
 import flagsmith from "flagsmith/isomorphic";
 import FlagSmithSSR from "../flagsmith";
 
-jest.mock("../../../../utils/voids", () => {
-  const module = require("../../../../utils/tests/voids.mock");
+jest.mock("@src/utils/voids", () => {
+  const module = require("@src/utils/tests/voids.mock");
   return {
     normalizeNull: module.mockNormalizeNull,
     normalizeUndefined: module.mockNormalizeUndefined,

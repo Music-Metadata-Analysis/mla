@@ -3,9 +3,8 @@ import dk from "deep-keys";
 import mockAuthHook from "./auth.mock.hook";
 import useAuth from "../auth";
 
-jest.mock("../../clients/auth/vendor", () => ({
-  __esModule: true,
-  default: { hook: () => mockAuthHook },
+jest.mock("@src/clients/auth/vendor", () => ({
+  hook: () => mockAuthHook,
 }));
 
 describe("useAuth", () => {

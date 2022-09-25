@@ -1,25 +1,21 @@
 import { Container, Text, Center, Box } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import { settings } from "../../../config/billboard";
-import mockColourHook from "../../../hooks/tests/colour.hook.mock";
-import mockNavBarHook from "../../../hooks/tests/navbar.mock.hook";
-import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import Billboard from "../billboard.component";
+import { settings } from "@src/config/billboard";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockNavBarHook from "@src/hooks/tests/navbar.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Container", "Text", "Center", "Box"]);
 });
 
-jest.mock("../../../hooks/colour", () => {
-  return () => mockColourHook;
-});
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
-jest.mock("../../../hooks/navbar", () => {
-  return () => mockNavBarHook;
-});
+jest.mock("@src/hooks/navbar", () => () => mockNavBarHook);
 
 describe("Billboard", () => {
   const mockTitle = "Title";

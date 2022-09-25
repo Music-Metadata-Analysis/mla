@@ -1,5 +1,5 @@
 import StepBase from "./playcount.by.artist.sunburst.step.base.class";
-import apiRoutes from "../../../../../../../config/apiRoutes";
+import apiRoutes from "@src/config/apiRoutes";
 
 class NextIsAlbumDetails extends StepBase {
   getStep() {

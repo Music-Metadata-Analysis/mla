@@ -1,22 +1,20 @@
 import { Box } from "@chakra-ui/react";
 import { act, render, fireEvent } from "@testing-library/react";
-import mockColourHook from "../../../hooks/tests/colour.hook.mock";
-import checkMockCall from "../../../tests/fixtures/mock.component.call";
 import VerticalScrollBarComponent, {
   testIDs,
   VerticalScrollBarProps,
 } from "../vertical.scrollbar.component";
+import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { RefObject } from "react";
+
+jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   return factoryInstance.create(["Box"]);
-});
-
-jest.mock("../../../hooks/colour", () => {
-  return () => mockColourHook;
 });
 
 describe("VerticalScrollBarComponent", () => {

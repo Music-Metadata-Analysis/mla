@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { StyledSelection } from "./navbar.link.styles";
-import useColour from "../../../hooks/colour";
-import type { ButtonClickHandlerType } from "../../../types/analytics.types";
+import useColour from "@src/hooks/colour";
+import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 import type { MouseEvent } from "react";
 
 interface NavLinkProps {

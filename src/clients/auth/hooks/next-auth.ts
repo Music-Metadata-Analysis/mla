@@ -1,9 +1,9 @@
 import { useSession, signIn, signOut } from "next-auth/react";
-import { getPersistedUseState } from "../../../hooks/utility/local.storage";
+import { getPersistedUseState } from "@src/hooks/utility/local.storage";
 import type {
   AuthVendorHookInterface,
   AuthServiceType,
-} from "../../../types/clients/auth/vendor.types";
+} from "@src/types/clients/auth/vendor.types";
 import type { Session } from "next-auth";
 
 const useNextAuth = (): AuthVendorHookInterface => {

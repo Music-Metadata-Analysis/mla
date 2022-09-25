@@ -1,7 +1,7 @@
 import { useFlags, useFlagsmith } from "flagsmith/react";
-import flags from "../../../config/flags";
-import useAuth from "../../../hooks/auth";
-import type { FlagVendorHookInterface } from "../../../types/clients/flags/vendor.types";
+import flags from "@src/config/flags";
+import useAuth from "@src/hooks/auth";
+import type { FlagVendorHookInterface } from "@src/types/clients/flags/vendor.types";
 
 const useFlagSmithVendor = (): FlagVendorHookInterface => {
   const { user } = useAuth();

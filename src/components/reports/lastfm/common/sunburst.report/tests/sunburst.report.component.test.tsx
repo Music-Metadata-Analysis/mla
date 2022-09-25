@@ -1,15 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { act, render, fireEvent } from "@testing-library/react";
 import { MockReportClass } from "./fixtures/mock.sunburst.report.class";
-import settings from "../../../../../../config/sunburst";
-import Events from "../../../../../../events/events";
-import mockUseAnalytics from "../../../../../../hooks/tests/analytics.mock.hook";
-import mockNavBarHook from "../../../../../../hooks/tests/navbar.mock.hook";
-import mockUseSunBurstState from "../../../../../../hooks/tests/sunburst.mock.hook";
-import nullNode from "../../../../../../providers/user/reports/sunburst.node.initial";
-import checkMockCall from "../../../../../../tests/fixtures/mock.component.call";
-import { getMockComponentProp } from "../../../../../../tests/fixtures/mock.component.props";
-import SunBurstChartUI from "../../../../common/sunburst/chart.ui.component";
 import * as layout from "../layout/sunburst.report.layout";
 import mockUseSunBurstLayout from "../layout/tests/fixtures/mock.sunburst.report.layout.hook";
 import SunBurstControlPanel from "../panels/control.panel.component";
@@ -20,43 +11,54 @@ import SunBurstReport, {
   SunBurstReportProps,
   SunBurstReportLayouts,
 } from "../sunburst.report.component";
-import type UserState from "../../../../../../providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type { d3Node } from "../../../../../../types/reports/sunburst.types";
+import SunBurstChartUI from "@src/components/reports/common/sunburst/chart.ui.component";
+import settings from "@src/config/sunburst";
+import Events from "@src/events/events";
+import mockUseAnalytics from "@src/hooks/tests/analytics.mock.hook";
+import mockNavBarHook from "@src/hooks/tests/navbar.mock.hook";
+import mockUseSunBurstState from "@src/hooks/tests/sunburst.mock.hook";
+import nullNode from "@src/providers/user/reports/sunburst.node.initial";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import { getMockComponentProp } from "@src/tests/fixtures/mock.component.props";
+import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("../layout/sunburst.report.layout", () => ({
-  canFitOnScreen: jest.fn(),
-  getLayoutType: jest.fn(),
-}));
+jest.mock("@src/hooks/analytics", () => () => mockUseAnalytics);
 
-jest.mock("../../../../../../events/events", () => ({
+jest.mock(
+  "../layout/sunburst.report.layout.hook",
+  () => () => mockUseSunBurstLayout
+);
+
+jest.mock("@src/hooks/sunburst", () => () => mockUseSunBurstState);
+
+jest.mock("@src/hooks/navbar", () => () => mockNavBarHook);
+
+jest.mock("@chakra-ui/react", () => {
+  const {
+    factoryInstance,
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
+  const mock = {
+    ...factoryInstance.create(["Box", "Flex"]),
+    useDisclosure: () => mockDisclosure,
+  };
+  return mock;
+});
+
+jest.mock("@src/components/reports/common/sunburst/chart.ui.component", () =>
+  createMockedComponent("SunBurstChartUI")
+);
+
+jest.mock("@src/events/events", () => ({
   LastFM: {
     SunBurstNodeSelected: jest.fn().mockReturnValue("CorrectAnalyticsEvent!"),
   },
 }));
 
-jest.mock("../../../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockUseAnalytics,
+jest.mock("../layout/sunburst.report.layout", () => ({
+  canFitOnScreen: jest.fn(),
+  getLayoutType: jest.fn(),
 }));
-
-jest.mock("../layout/sunburst.report.layout.hook", () => ({
-  __esModule: true,
-  default: () => mockUseSunBurstLayout,
-}));
-
-jest.mock("../../../../../../hooks/sunburst", () => ({
-  __esModule: true,
-  default: () => mockUseSunBurstState,
-}));
-
-jest.mock("../../../../../../hooks/navbar", () => ({
-  __esModule: true,
-  default: () => mockNavBarHook,
-}));
-
-jest.mock("../../../../common/sunburst/chart.ui.component", () =>
-  createMockedComponent("SunBurstChartUI")
-);
 
 jest.mock("../panels/control.panel.component", () =>
   createMockedComponent("SunBurstControlPanel")
@@ -74,21 +76,10 @@ jest.mock("../panels/title.panel.component", () =>
   createMockedComponent("SunBurstTitlePanel")
 );
 
-jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("../../../../../../tests/fixtures/mock.chakra.react.factory.class");
-  const mock = {
-    ...factoryInstance.create(["Box", "Flex"]),
-    useDisclosure: () => mockDisclosure,
-  };
-  return mock;
-});
-
 const createMockedComponent = (name: string) => {
   const {
     factoryInstance,
-  } = require("../../../../../..//tests/fixtures/mock.component.children.factory.class");
+  } = require("@src/tests/fixtures/mock.component.children.factory.class");
   return factoryInstance.create(name);
 };
 

@@ -1,19 +1,14 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Switch, useColorMode } from "@chakra-ui/react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import mockAnalyticsHook from "../../../../hooks/tests/analytics.mock.hook";
-import checkMockCall from "../../../../tests/fixtures/mock.component.call";
 import NavBarColorModeToggle, { TestIDs } from "../navbar.color.mode.component";
-
-jest.mock("../../../../hooks/analytics", () => ({
-  __esModule: true,
-  default: () => mockAnalyticsHook,
-}));
+import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.react.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
   const instance = factoryInstance.create(["Switch"]);
   instance.useColorMode = jest.fn();
   return instance;
@@ -22,11 +17,13 @@ jest.mock("@chakra-ui/react", () => {
 jest.mock("@chakra-ui/icons", () => {
   const {
     factoryInstance,
-  } = require("../../../../tests/fixtures/mock.chakra.icon.factory.class");
+  } = require("@src/tests/fixtures/mock.chakra.icon.factory.class");
   const instance = factoryInstance.create(["MoonIcon", "SunIcon"]);
   instance.useColorMode = jest.fn();
   return instance;
 });
+
+jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 let mockColorMode: "light" | "dark" = "light" as const;
 const mockToggleColorMode = jest.fn();

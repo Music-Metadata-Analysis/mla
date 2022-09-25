@@ -1,11 +1,11 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
-import externalLinks from "../../../config/external";
-import useColour from "../../../hooks/colour";
-import ClickLink from "../../clickable/click.link.external/click.link.external.component";
-import SVSIcon from "../../icons/svs/svs.icon";
-import DimOnHover from "../../styles/hover.dim/hover.dim.styles";
-import type { UserInterfacePopUpsComponentProps } from "../../../types/ui/popups/ui.component.popups.types";
+import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
+import SVSIcon from "@src/components/icons/svs/svs.icon";
+import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
+import externalLinks from "@src/config/external";
+import useColour from "@src/hooks/colour";
+import type { UserInterfacePopUpsComponentProps } from "@src/types/ui/popups/ui.component.popups.types";
 
 export const testIDs = {
   FeedBackDialogueCloseButton: "FeedBackDialogueCloseButton",

@@ -1,6 +1,6 @@
 import LastFm from "@toplast/lastfm";
-import { ProxyError } from "../../../../errors/proxy.error.class";
-import type { LastFMExternalClientError } from "../../../../types/integrations/lastfm/client.types";
+import { ProxyError } from "@src/errors/proxy.error.class";
+import type { LastFMExternalClientError } from "@src/types/integrations/lastfm/client.types";
 
 class LastFmClientAdapterBase {
   externalClient: LastFm;

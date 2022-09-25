@@ -1,12 +1,9 @@
 import * as d3 from "d3";
 import { Component } from "react";
-import RGB from "../../../../utils/colours/rgb.class";
-import { valueToZero } from "../../../../utils/numeric";
-import { alwaysString, truncate } from "../../../../utils/strings";
-import type {
-  SunBurstData,
-  d3Node,
-} from "../../../../types/reports/sunburst.types";
+import RGB from "@src/utils/colours/rgb.class";
+import { valueToZero } from "@src/utils/numeric";
+import { alwaysString, truncate } from "@src/utils/strings";
+import type { SunBurstData, d3Node } from "@src/types/reports/sunburst.types";
 import type { RefObject } from "react";
 
 export const testIDs = {

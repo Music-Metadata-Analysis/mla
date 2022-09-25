@@ -1,9 +1,9 @@
 import LastFMClientAdapterBase from "./client.base.class";
-import type { LastFMAlbumInfoInterface } from "../../../../types/integrations/lastfm/api.types";
+import type { LastFMAlbumInfoInterface } from "@src/types/integrations/lastfm/api.types";
 import type {
   LastFMExternalClientError,
   LastFMAlbumClientInterface,
-} from "../../../../types/integrations/lastfm/client.types";
+} from "@src/types/integrations/lastfm/client.types";
 
 class LastFmAlbumClientAdapter
   extends LastFMClientAdapterBase

@@ -1,12 +1,12 @@
 import { Avatar, Box, Center, Flex, Text } from "@chakra-ui/react";
-import dialogueSettings from "../../../config/dialogue";
-import externalLinks from "../../../config/external";
-import ClickLink from "../../clickable/click.link.external/click.link.external.component";
-import SVSIcon from "../../icons/svs/svs.icon";
-import DimOnHover from "../../styles/hover.dim/hover.dim.styles";
-import type { TFunction } from "next-i18next";
+import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
+import SVSIcon from "@src/components/icons/svs/svs.icon";
+import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
+import dialogueSettings from "@src/config/dialogue";
+import externalLinks from "@src/config/external";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
-export default function PrivacyBody({ t }: { t: TFunction }) {
+export default function PrivacyBody({ t }: { t: tFunctionType }) {
   return (
     <>
       <Center>

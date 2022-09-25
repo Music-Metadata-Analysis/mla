@@ -1,6 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import externalLinks from "../../../../config/external";
 import FeedbackDialogue, { testIDs } from "../feedback.dialogue";
+import externalLinks from "@src/config/external";
+import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+
+jest.mock(
+  "@src/hooks/locale",
+  () => (filename: string) => new mockUseLocale(filename)
+);
 
 describe("FeedbackDialogue", () => {
   const mockClose = jest.fn();

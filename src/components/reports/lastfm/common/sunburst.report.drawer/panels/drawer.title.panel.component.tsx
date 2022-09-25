@@ -1,6 +1,6 @@
 import { Text, Container } from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
-import type SunBurstNodeEncapsulation from "../../sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import useLocale from "@src/hooks/locale";
+import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 
 export const testIDs = {
   LastFMSunBurstDrawerTitle: "LastFMSunBurstDrawerTitle",
@@ -14,7 +14,7 @@ export interface SunBurstDrawerTitlePanelProps {
 export default function SunBurstDrawerTitlePanel({
   node,
 }: SunBurstDrawerTitlePanelProps) {
-  const { t: sunBurstT } = useTranslation("sunburst");
+  const { t: sunBurstT } = useLocale("sunburst");
 
   const title = node.getDrawerTitle();
   const subTitle = node.getDrawerSubTitle(sunBurstT);

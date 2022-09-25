@@ -1,5 +1,5 @@
 import EventDefinition from "../event.class";
-import Events from "../events";
+import Events from "@src/events/events";
 
 describe("Dynamic Events", () => {
   const checkEvent = (event1: EventDefinition, event2: EventDefinition) => {

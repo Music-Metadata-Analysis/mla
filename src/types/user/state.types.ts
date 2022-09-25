@@ -1,12 +1,12 @@
+import type { UserActionType } from "./action.types";
+import type { UserReportType } from "./report.types";
 import type {
   LastFMTopBaseReportResponseInterface,
   LastFMTopAlbumsReportResponseInterface,
   LastFMTopArtistsReportResponseInterface,
   LastFMTopTracksReportResponseInterface,
   LastFMPlayCountByArtistResponseInterface,
-} from "../clients/api/lastfm/response.types";
-import type { UserActionType } from "./action.types";
-import type { UserReportType } from "./report.types";
+} from "@src/types/clients/api/lastfm/response.types";
 
 interface UserDataInterface {
   integration: string | null;

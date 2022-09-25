@@ -3,11 +3,11 @@ import MetricsProvider from "./metrics/metrics.provider";
 import NavBarProvider from "./navbar/navbar.provider";
 import UserInterfaceRootProvider from "./ui/ui.root.provider";
 import UserProvider from "./user/user.provider";
-import authVendor from "../clients/auth/vendor";
-import flagVendor from "../clients/flags/vendor";
-import Header, { HeaderProps } from "../components/header/header.component";
-import type { VendorAuthStateType } from "../clients/auth/vendor.types";
-import type { VendorFlagStateType } from "../clients/flags/vendor.types";
+import authVendor from "@src/clients/auth/vendor";
+import flagVendor from "@src/clients/flags/vendor";
+import Header, { HeaderProps } from "@src/components/header/header.component";
+import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
+import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 
 type RootProviderProps = {
   headerProps?: HeaderProps;

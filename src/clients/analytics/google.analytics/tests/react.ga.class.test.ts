@@ -1,20 +1,16 @@
 import ReactGA from "react-ga";
-import Events from "../../../../events/events";
-import { isProduction } from "../../../../utils/env";
 import VendorReactGA from "../react.ga.class";
+import Events from "@src/events/events";
+import { isProduction } from "@src/utils/env";
 
 jest.mock("react-ga", () => ({
-  __esModule: true,
-  default: {
-    event: jest.fn(),
-    initialize: jest.fn(),
-    pageview: jest.fn(),
-    set: jest.fn(),
-  },
+  event: jest.fn(),
+  initialize: jest.fn(),
+  pageview: jest.fn(),
+  set: jest.fn(),
 }));
 
-jest.mock("../../../../utils/env", () => ({
-  __esModule: true,
+jest.mock("@src/utils/env", () => ({
   isProduction: jest.fn(),
 }));
 

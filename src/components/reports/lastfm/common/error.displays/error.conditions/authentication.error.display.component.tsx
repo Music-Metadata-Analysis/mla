@@ -1,5 +1,5 @@
 import ConditionalErrorDisplayBase from "./error.condition.display.base.class";
-import Authentication from "../../../../../authentication/authentication.container";
+import Authentication from "@src/components/authentication/authentication.container";
 
 class AuthenticationErrorConditionalDisplay<
   ReportType

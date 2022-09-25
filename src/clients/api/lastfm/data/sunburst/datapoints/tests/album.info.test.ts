@@ -1,6 +1,6 @@
-import apiRoutes from "../../../../../../../config/apiRoutes";
 import LastFMAlbumInfo from "../album.info";
-import type UserSunBurstReportBaseState from "../../../../../../../providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import apiRoutes from "@src/config/apiRoutes";
+import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 
 describe("LastFMAlbumInfo", () => {
   const mockDispatch = jest.fn();
