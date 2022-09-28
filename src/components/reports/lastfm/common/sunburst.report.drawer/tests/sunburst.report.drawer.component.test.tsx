@@ -17,34 +17,25 @@ import type { d3Node } from "@src/types/reports/sunburst.types";
 jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("../nodes/node.list.component", () =>
-  createMockedComponent("SunBurstNodeList")
+  require("@fixtures/react").createComponent("SunBurstNodeList")
 );
 
 jest.mock("../panels/drawer.control.panel.component", () =>
-  createMockedComponent("SunBurstDrawerControl")
+  require("@fixtures/react").createComponent("SunBurstDrawerControl")
 );
 
 jest.mock("../panels/drawer.title.panel.component", () =>
-  createMockedComponent("SunBurstDrawerTitle")
+  require("@fixtures/react").createComponent("SunBurstDrawerTitle")
 );
 
 jest.mock("@src/components/reports/common/drawer/drawer.component", () =>
-  createMockedComponent("Drawer")
+  require("@fixtures/react").createComponent("Drawer")
 );
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Divider", "Flex"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Divider", "Flex"]);
 });
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("LastFMSunBurstReportDrawer", () => {
   let mockNode: SunBurstNodeEncapsulation;

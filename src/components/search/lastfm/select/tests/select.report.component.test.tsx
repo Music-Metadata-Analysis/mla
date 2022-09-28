@@ -24,10 +24,8 @@ jest.mock(
 
 jest.mock("@chakra-ui/react", () => {
   const { forwardRef } = require("react");
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  const chakraMock = factoryInstance.create(["Avatar", "Box", "Flex"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  const chakraMock = createChakraMock(["Avatar", "Box", "Flex"]);
   chakraMock.Avatar = jest.fn().mockImplementation(() => <div>MockAvatar</div>);
   chakraMock.BoxWithFwdRef = chakraMock.Box;
   chakraMock.Box = forwardRef(chakraMock.Box);
@@ -35,32 +33,20 @@ jest.mock("@chakra-ui/react", () => {
 });
 
 jest.mock("@src/components/billboard/billboard.component", () =>
-  createMockedComponent("BillBoard")
+  require("@fixtures/react").createComponent("Billboard")
 );
 
 jest.mock("../inlay/select.option.component", () =>
-  createMockedComponent("Option")
+  require("@fixtures/react").createComponent("Option")
 );
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  createMockedComponent("VerticalScrollBarComponent")
+  require("@fixtures/react").createComponent("VerticalScrollBarComponent")
 );
 
 jest.mock("@src/components/icons/lastfm/lastfm.icon", () =>
-  createMock("LastFMIcon")
+  jest.fn(() => <div>MockIcon</div>)
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
-
-const createMock = (name: string) =>
-  jest.fn(({ children }: { children: React.ReactChildren }) => {
-    return <div data-testid={name}>{children}</div>;
-  });
 
 describe("SearchSelection", () => {
   const mockRef = {

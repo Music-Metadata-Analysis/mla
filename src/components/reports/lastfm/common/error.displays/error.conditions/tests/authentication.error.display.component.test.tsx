@@ -7,15 +7,8 @@ import mockRouter from "@src/tests/fixtures/mock.router";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 jest.mock("@src/components/authentication/authentication.container", () =>
-  createMockedComponent("MockComponent")
+  require("@fixtures/react").createComponent("AuthenticationContainer")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("AuthenticationErrorConditionalDisplay", () => {
   let mockUserProperties: LastFMUserStateBase;
@@ -44,7 +37,9 @@ describe("AuthenticationErrorConditionalDisplay", () => {
       beforeEach(() => arrange());
 
       it("should render the auth component", async () => {
-        expect(await screen.findByTestId("MockComponent")).toBeTruthy();
+        expect(
+          await screen.findByTestId("AuthenticationContainer")
+        ).toBeTruthy();
       });
 
       it("should render with the correct props", async () => {
@@ -60,7 +55,7 @@ describe("AuthenticationErrorConditionalDisplay", () => {
       beforeEach(() => arrange());
 
       it("should NOT render the auth component", async () => {
-        expect(screen.queryByTestId("MockComponent")).toBeFalsy();
+        expect(screen.queryByTestId("AuthenticationContainer")).toBeFalsy();
       });
 
       it("should render with the correct props", async () => {

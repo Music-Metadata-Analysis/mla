@@ -12,15 +12,11 @@ jest.mock("@src/utils/voids", () => {
 jest.mock("flagsmith/isomorphic", () => ({ mock: "object" }));
 
 jest.mock("flagsmith/react", () =>
-  createProviderMock("FlagsmithProvider", "FlagsmithProvider")
+  require("@fixtures/react").createComponent(
+    "FlagsmithProvider",
+    "FlagsmithProvider"
+  )
 );
-
-const createProviderMock = (name: string, exportName = "default") => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name, exportName);
-};
 
 describe("FlagProvider", () => {
   const mockIdentity = "mockIdentity";

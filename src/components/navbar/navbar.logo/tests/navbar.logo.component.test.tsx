@@ -23,15 +23,8 @@ jest.mock("../../navbar.avatar/navbar.avatar.component", () => {
 });
 
 jest.mock("../../navbar.link/navbar.link.component", () =>
-  createMockedComponent("NavBarLink")
+  require("@fixtures/react").createComponent("NavBarLink")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("NavBarLogo", () => {
   beforeEach(() => {

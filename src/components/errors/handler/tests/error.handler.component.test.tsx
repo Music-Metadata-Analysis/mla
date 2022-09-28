@@ -3,15 +3,8 @@ import ErrorDisplay from "../../display/error.display.component";
 import ErrorHandler from "../error.handler.component";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
-
 jest.mock("../../display/error.display.component", () =>
-  createMockedComponent("ErrorDisplay")
+  require("@fixtures/react").createComponent("ErrorDisplay")
 );
 
 describe("ErrorHandler", () => {

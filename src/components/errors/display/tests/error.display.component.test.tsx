@@ -9,12 +9,12 @@ import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/components/billboard/billboard.component", () =>
-  createMockedComponent("BillBoard")
+  require("@fixtures/react").createComponent("Billboard")
 );
 
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
-  () => createMockedComponent("StyledButton")
+  () => require("@fixtures/react").createComponent("StyledButton")
 );
 
 jest.mock(
@@ -23,25 +23,13 @@ jest.mock(
 );
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Flex"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Flex"]);
 });
 
-jest.mock("@chakra-ui/icons", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.icon.factory.class");
-  return factoryInstance.create(["WarningTwoIcon"]);
-});
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
+jest.mock("@chakra-ui/icons", () =>
+  require("@fixtures/chakra/icons").createChakraIconMock(["WarningTwoIcon"])
+);
 
 describe("ErrorDisplay", () => {
   const mockErrorMessage = "Test Error";

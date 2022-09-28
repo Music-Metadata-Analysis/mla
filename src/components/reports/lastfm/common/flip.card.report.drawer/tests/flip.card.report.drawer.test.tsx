@@ -20,26 +20,16 @@ jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock(
   "@src/components/button/button.external.link/button.external.link.component",
-  () => {
-    const {
-      factoryInstance,
-    } = require("@src/tests/fixtures/mock.component.children.factory.class");
-    return factoryInstance.create("StyledButtonLink");
-  }
+  () => require("@fixtures/react").createComponent("StyledButtonLink")
 );
 
-jest.mock("@src/components/reports/common/drawer/drawer.component", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create("MockDrawer");
-});
+jest.mock("@src/components/reports/common/drawer/drawer.component", () =>
+  require("@fixtures/react").createComponent("MockDrawer")
+);
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Box", "Divider", "Img", "Text"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Box", "Divider", "Img", "Text"]);
 });
 
 const mockOnClose = jest.fn();

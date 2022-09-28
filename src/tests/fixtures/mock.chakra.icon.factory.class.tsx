@@ -18,4 +18,5 @@ class MockChakraIconComponents {
     return mockModule;
   };
 }
-export const factoryInstance = new MockChakraIconComponents();
+
+export const createChakraIconMock = new MockChakraIconComponents().create;

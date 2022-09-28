@@ -23,30 +23,21 @@ jest.mock(
 );
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  createMockedComponent("VerticalScrollBar")
+  require("@fixtures/react").createComponent("VerticalScrollBar")
 );
 
 jest.mock("../node.button.component", () =>
-  createMockedComponent("SunBurstNodeButton")
+  require("@fixtures/react").createComponent("SunBurstNodeButton")
 );
 
 jest.mock("../node.display.component", () =>
-  createMockedComponent("SunBurstNodeDisplay")
+  require("@fixtures/react").createComponent("SunBurstNodeDisplay")
 );
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Flex", "Text"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Flex", "Text"]);
 });
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("SunBurstEntityNodeList", () => {
   let mockNode: SunBurstNodeEncapsulation;

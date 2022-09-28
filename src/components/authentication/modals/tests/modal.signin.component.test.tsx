@@ -24,10 +24,8 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const { forwardRef } = require("react");
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  const instance = factoryInstance.create([
+  const { createChakraMock } = require("@fixtures/chakra");
+  const instance = createChakraMock([
     "Box",
     "Center",
     "Container",
@@ -62,15 +60,8 @@ jest.mock(
 
 jest.mock(
   "@src/components/clickable/click.link.internal/click.link.internal.component",
-  () => createMockedComponent("ClickLink")
+  () => require("@fixtures/react").createComponent("ClickLink")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 const mockOnClose = jest.fn();
 const mockSignIn = jest.fn();

@@ -6,19 +6,15 @@ import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  const instance = factoryInstance.create(["Switch"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  const instance = createChakraMock(["Switch"]);
   instance.useColorMode = jest.fn();
   return instance;
 });
 
 jest.mock("@chakra-ui/icons", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.icon.factory.class");
-  const instance = factoryInstance.create(["MoonIcon", "SunIcon"]);
+  const { createChakraIconMock } = require("@fixtures/chakra/icons");
+  const instance = createChakraIconMock(["MoonIcon", "SunIcon"]);
   instance.useColorMode = jest.fn();
   return instance;
 });

@@ -27,4 +27,5 @@ class MockChakraReactComponents {
     return mockModule;
   };
 }
-export const factoryInstance = new MockChakraReactComponents();
+
+export const createChakraMock = new MockChakraReactComponents().create;
