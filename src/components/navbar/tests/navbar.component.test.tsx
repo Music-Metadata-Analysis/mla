@@ -31,41 +31,32 @@ jest.mock("@src/hooks/navbar", () => () => mockNavBarHook);
 jest.mock("@src/hooks/lastfm", () => () => mockLastFMHook);
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
+  const { createChakraMock } = require("@fixtures/chakra");
   return {
-    ...factoryInstance.create(["Box", "Flex", "HStack", "IconButton", "Stack"]),
+    ...createChakraMock(["Box", "Flex", "HStack", "IconButton", "Stack"]),
     useDisclosure: () => mockUseDisclosure,
   };
 });
 
 jest.mock("../navbar.color.mode/navbar.color.mode.component", () =>
-  createMockedComponent("NavBarColorModeToggle")
+  require("@fixtures/react").createComponent("NavBarColorModeToggle")
 );
 
 jest.mock("../navbar.logo/navbar.logo.component", () =>
-  createMockedComponent("NavBarLogo")
+  require("@fixtures/react").createComponent("NavBarLogo")
 );
 
 jest.mock("../navbar.options/navbar.options.component", () =>
-  createMockedComponent("NavBarOptions")
+  require("@fixtures/react").createComponent("NavBarOptions")
 );
 
 jest.mock("../navbar.session.control/navbar.session.control.component", () =>
-  createMockedComponent("NavBarSession")
+  require("@fixtures/react").createComponent("NavBarSession")
 );
 
 jest.mock("../navbar.spinner/navbar.spinner.component", () =>
-  createMockedComponent("NavSpinner")
+  require("@fixtures/react").createComponent("NavSpinner")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 const mockedComponents = {
   NavBarLogo: "NavBarLogo",

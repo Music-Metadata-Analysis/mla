@@ -13,7 +13,7 @@ jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock(
   "@src/components/analytics/analytics.button/analytics.button.component",
-  () => createMockedComponent("AnalyticsWrapper")
+  () => require("@fixtures/react").createComponent("AnalyticsWrapper")
 );
 
 jest.mock("@chakra-ui/react", () => ({
@@ -21,22 +21,13 @@ jest.mock("@chakra-ui/react", () => ({
 }));
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Box", "Button"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Box", "Button"]);
 });
 
 jest.mock("@src/components/authentication/authentication.container", () => {
   return jest.fn(() => <div>MockComponent</div>);
 });
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 const mockUseDisclosure = jest.fn();
 

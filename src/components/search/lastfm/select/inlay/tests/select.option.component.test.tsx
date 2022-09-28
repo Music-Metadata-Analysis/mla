@@ -1,19 +1,12 @@
 import { render, screen } from "@testing-library/react";
-import Option from "../select.option.component";
+import Option, { testIDs } from "../select.option.component";
 import Button from "@src/components/button/button.standard/button.standard.component";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
-  () => createMockedComponent("Button")
+  () => require("@fixtures/react").createComponent("Button")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("SearchSelection", () => {
   const mockClickHandler = jest.fn();
@@ -81,7 +74,7 @@ describe("SearchSelection", () => {
       expect(Button).toBeCalledTimes(1);
       checkMockCall(Button, {
         analyticsName: "mockAnalyticsName",
-        "data-testid": "OptionButton",
+        "data-testid": testIDs.OptionButton,
         m: 1,
         w: [150, 150, 200],
       });

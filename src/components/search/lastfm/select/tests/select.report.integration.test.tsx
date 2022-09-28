@@ -18,15 +18,8 @@ jest.mock("next/router", () => ({
 }));
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  createMockedComponent("VerticalScrollBarComponent")
+  require("@fixtures/react").createComponent("VerticalScrollBarComponent")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 type translationKeyType = keyof typeof translations["select"][
   | "indicators"

@@ -12,48 +12,43 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
 import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 
-jest.mock("@src/clients/auth/vendor", () => ({
-  Provider: createProviderMock(providers.AuthVendorProvider, "Provider")[
-    "Provider"
-  ],
-}));
+jest.mock("@src/clients/auth/vendor", () => {
+  const { createComponent } = require("@fixtures/react");
+  return {
+    Provider: createComponent("AuthVendorProvider").default,
+  };
+});
 
-jest.mock("@src/clients/flags/vendor", () => ({
-  Provider: createProviderMock(providers.FlagVendorProvider, "Provider")[
-    "Provider"
-  ],
-}));
+jest.mock("@src/clients/flags/vendor", () => {
+  const { createComponent } = require("@fixtures/react");
+  return {
+    Provider: createComponent("FlagVendorProvider").default,
+  };
+});
 
 jest.mock("@src/components/header/header.component", () =>
-  createProviderMock(providers.Header)
+  require("@fixtures/react").createComponent("Header")
 );
 
 jest.mock("@src/providers/analytics/analytics.provider", () =>
-  createProviderMock(providers.AnalyticsProvider)
+  require("@fixtures/react").createComponent("AnalyticsProvider")
 );
 
 jest.mock("@src/providers/metrics/metrics.provider", () =>
-  createProviderMock(providers.MetricsProvider)
+  require("@fixtures/react").createComponent("MetricsProvider")
 );
 
 jest.mock("@src/providers/navbar/navbar.provider", () =>
-  createProviderMock(providers.NavBarProvider)
+  require("@fixtures/react").createComponent("NavBarProvider")
 );
 
 jest.mock("@src/providers/user/user.provider", () =>
-  createProviderMock(providers.UserProvider)
+  require("@fixtures/react").createComponent("UserProvider")
 );
 
 jest.mock("../ui/ui.root.provider", () =>
-  createProviderMock(providers.UserInterfaceRootProvider)
+  require("@fixtures/react").createComponent("UserInterfaceRootProvider")
 );
-
-const createProviderMock = (name: string, exportName = "default") => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name, exportName);
-};
 
 const providers = {
   AnalyticsProvider: "AnalyticsProvider",

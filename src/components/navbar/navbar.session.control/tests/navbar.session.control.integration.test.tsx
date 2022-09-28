@@ -19,7 +19,7 @@ jest.mock(
 
 jest.mock(
   "@src/components/analytics/analytics.button/analytics.button.component",
-  () => createMockedComponent("AnalyticsWrapper")
+  () => require("@fixtures/react").createComponent("AnalyticsWrapper")
 );
 
 jest.mock("@src/components/authentication/authentication.container", () => {
@@ -30,10 +30,8 @@ jest.mock("@src/components/authentication/authentication.container", () => {
 });
 
 jest.mock("@chakra-ui/icons", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.icon.factory.class");
-  const instance = factoryInstance.create(["LockIcon"]);
+  const { createChakraIconMock } = require("@fixtures/chakra/icons");
+  const instance = createChakraIconMock(["LockIcon"]);
   instance.useColorMode = jest.fn();
   return instance;
 });
@@ -47,13 +45,6 @@ jest.mock("react-icons/ri", () => ({
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   jest.fn(() => <div>MockVerticalScrollBar</div>)
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("NavSessionControl", () => {
   beforeEach(() => {

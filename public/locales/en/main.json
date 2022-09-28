@@ -67,6 +67,10 @@
     "search": {
       "title": "MLA: Search",
       "description": "Music Listening Analytics."
+    },
+    "terms": {
+      "title": "MLA: Terms",
+      "description": "Music Listening Analytics."
     }
   }
 }

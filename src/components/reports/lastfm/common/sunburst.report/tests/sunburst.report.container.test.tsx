@@ -31,19 +31,12 @@ jest.mock("../../error.displays/aggregate.error.display.component");
 
 jest.mock(
   "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component",
-  () => createMockedComponent("BillBoardProgressBar")
+  () => require("@fixtures/react").createComponent("BillBoardProgressBar")
 );
 
 jest.mock("../sunburst.report.component", () =>
-  createMockedComponent("SunBurstReport")
+  require("@fixtures/react").createComponent("SunBurstReport")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("SunBurstReportContainer", () => {
   const testUsername = "niall-byrne";

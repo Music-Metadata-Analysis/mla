@@ -11,10 +11,8 @@ import type { d3Node } from "@src/types/reports/sunburst.types";
 jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Text", "Box", "Container"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Text", "Box", "Container"]);
 });
 
 describe("SunBurstNodeDisplay", () => {

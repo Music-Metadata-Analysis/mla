@@ -15,7 +15,7 @@ import { truncate } from "@src/utils/strings";
 import type { BillBoardProgressBarDetails } from "../billboard.progress.bar.component";
 
 jest.mock("../../billboard.component", () =>
-  createMockedComponent("Billboard")
+  require("@fixtures/react").createComponent("Billboard")
 );
 
 jest.mock("@src/hooks/colour", () => () => mockColourHook);
@@ -25,23 +25,14 @@ jest.mock("@src/utils/strings", () => ({
 }));
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create([
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock([
     "Progress",
     "StatHelpText",
     "StatLabel",
     "StatNumber",
   ]);
 });
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("BillBoardProgressBar", () => {
   let isVisible: boolean;

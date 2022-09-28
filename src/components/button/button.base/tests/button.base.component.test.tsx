@@ -10,10 +10,8 @@ jest.mock("@src/hooks/colour", () => () => mockColourHook);
 jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Button"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Button"]);
 });
 
 describe("StandardButton", () => {

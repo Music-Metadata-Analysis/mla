@@ -10,10 +10,8 @@ jest.mock("@src/components/icons/svs/svs.icon", () =>
 );
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Container", "ListItem", "UnorderedList"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Container", "ListItem", "UnorderedList"]);
 });
 
 describe("AboutToggle", () => {

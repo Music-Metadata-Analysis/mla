@@ -7,22 +7,13 @@ import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/components/highlight/highlight.component", () =>
-  createMockedComponent("Highlight")
+  require("@fixtures/react").createComponent("Highlight")
 );
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Container", "ListItem", "UnorderedList"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Container", "ListItem", "UnorderedList"]);
 });
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("SplashToggle", () => {
   const mockT = new mockUseLocale("splash").t;

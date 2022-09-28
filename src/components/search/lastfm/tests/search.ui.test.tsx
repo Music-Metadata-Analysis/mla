@@ -10,10 +10,8 @@ import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  const chakraMock = factoryInstance.create(["Box", "Flex"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  const chakraMock = createChakraMock(["Box", "Flex"]);
   chakraMock.useToast = jest.fn();
   chakraMock.Avatar = jest.fn().mockImplementation(() => <div>MockAvatar</div>);
   return chakraMock;
@@ -24,26 +22,16 @@ jest.mock("@src/components/authentication/authentication.container", () =>
 );
 
 jest.mock("@src/components/billboard/billboard.component", () =>
-  createMockedComponent("BillBoard")
+  require("@fixtures/react").createComponent("BillBoard")
 );
 
-jest.mock("../search.container", () => createMock("SearchContainer"));
+jest.mock("../search.container", () =>
+  require("@fixtures/react").createComponent("SearchContainer")
+);
 
 jest.mock("@src/components/icons/lastfm/lastfm.icon", () =>
-  createMock("LastFMIcon")
+  require("@fixtures/react").createComponent("LastFMIcon")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
-
-const createMock = (name: string) =>
-  jest.fn(({ children }: { children: React.ReactChildren }) => {
-    return <div data-testid={name}>{children}</div>;
-  });
 
 describe("SearchUI", () => {
   const testField = "test_field";
