@@ -13,27 +13,18 @@ import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/commo
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
 jest.mock("@src/components/button/button.base/button.base.component", () =>
-  createMockedComponent("ButtonWithoutAnalytics")
+  require("@fixtures/react").createComponent("ButtonWithoutAnalytics")
 );
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Flex", "Text"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Flex", "Text"]);
 });
 
 jest.mock(
   "@src/hooks/locale",
   () => (filename: string) => new mockUseLocale(filename)
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("SunBurstDrawerControlPanel", () => {
   let currentProps: SunBurstDrawerControlPanelProps;

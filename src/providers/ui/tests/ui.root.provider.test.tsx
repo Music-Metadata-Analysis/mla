@@ -6,28 +6,21 @@ import UserInterfaceRootProvider from "../ui.root.provider";
 import BackGround from "@src/components/background/background.component";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/components/background/background.component", () => {
-  return createMockedComponent("BackGround");
-});
+jest.mock("@src/components/background/background.component", () =>
+  require("@fixtures/react").createComponent("BackGround")
+);
 
-jest.mock("../ui.chakra/ui.chakra.provider", () => {
-  return createMockedComponent("UserInterfaceChakraProvider");
-});
+jest.mock("../ui.chakra/ui.chakra.provider", () =>
+  require("@fixtures/react").createComponent("UserInterfaceChakraProvider")
+);
 
-jest.mock("../ui.popups/ui.popups.provider", () => {
-  return createMockedComponent("UserInterfacePopUpsProvider");
-});
+jest.mock("../ui.popups/ui.popups.provider", () =>
+  require("@fixtures/react").createComponent("UserInterfacePopUpsProvider")
+);
 
-jest.mock("../ui.images/ui.images.provider", () => {
-  return createMockedComponent("UserInterfaceImagesProvider");
-});
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
+jest.mock("../ui.images/ui.images.provider", () =>
+  require("@fixtures/react").createComponent("UserInterfaceImagesProvider")
+);
 
 describe("UserInterfaceRootProvider", () => {
   const mockChildComponent = "MockChildComponent";

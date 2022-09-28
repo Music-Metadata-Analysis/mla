@@ -12,11 +12,14 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock(
   "@src/components/clickable/click.link.external/click.link.external.component",
-  () => createMockedComponent("ClickLink")
+  () => {
+    const { createComponent } = require("@fixtures/react");
+    return createComponent("ClickLink");
+  }
 );
 
 jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
-  createMockedComponent("DimOnHover")
+  require("@fixtures/react").createComponent("DimOnHover")
 );
 
 jest.mock("@src/components/icons/svs/svs.icon", () =>
@@ -24,18 +27,9 @@ jest.mock("@src/components/icons/svs/svs.icon", () =>
 );
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Avatar", "Box", "Flex", "Text"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Avatar", "Box", "Flex", "Text"]);
 });
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("TermsOfServiceToggle", () => {
   const mockT = new mockUseLocale("legal").t;

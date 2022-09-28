@@ -1,8 +1,5 @@
 import type { StatusMessageType } from "@src/types/clients/api/api.client.types";
 
-export const STATUS_200_MESSAGE: StatusMessageType = {
-  detail: "Not Implemented.",
-};
 export const STATUS_400_MESSAGE: StatusMessageType = {
   detail: "Invalid Request.",
 };

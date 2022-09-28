@@ -8,15 +8,8 @@ import mockRouter from "@src/tests/fixtures/mock.router";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 jest.mock("@src/components/errors/display/error.display.component", () =>
-  createMockedComponent("MockComponent")
+  require("@fixtures/react").createComponent("ErrorDisplay")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("RateLimitedErrorConditionalDisplay", () => {
   let mockUserProperties: LastFMUserStateBase;
@@ -45,7 +38,7 @@ describe("RateLimitedErrorConditionalDisplay", () => {
       beforeEach(() => arrange());
 
       it("should render the error display component", async () => {
-        expect(await screen.findByTestId("MockComponent")).toBeTruthy();
+        expect(await screen.findByTestId("ErrorDisplay")).toBeTruthy();
       });
 
       it("should render with the correct props", async () => {
@@ -76,7 +69,7 @@ describe("RateLimitedErrorConditionalDisplay", () => {
       beforeEach(() => arrange());
 
       it("should NOT render the error display component", async () => {
-        expect(screen.queryByTestId("MockComponent")).toBeFalsy();
+        expect(screen.queryByTestId("ErrorDisplay")).toBeFalsy();
       });
 
       it("should render with the correct props", async () => {

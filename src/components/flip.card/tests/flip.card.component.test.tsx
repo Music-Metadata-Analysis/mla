@@ -7,10 +7,8 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  const chakraMock = factoryInstance.create(["Box", "Img", "Center", "Text"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  const chakraMock = createChakraMock(["Box", "Img", "Center", "Text"]);
   return chakraMock;
 });
 

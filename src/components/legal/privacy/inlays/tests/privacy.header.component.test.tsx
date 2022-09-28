@@ -6,10 +6,8 @@ import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Text"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Text"]);
 });
 
 describe("PrivacyHeader", () => {

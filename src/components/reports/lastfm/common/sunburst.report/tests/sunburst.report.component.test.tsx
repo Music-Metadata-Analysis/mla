@@ -35,18 +35,16 @@ jest.mock("@src/hooks/sunburst", () => () => mockUseSunBurstState);
 jest.mock("@src/hooks/navbar", () => () => mockNavBarHook);
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
+  const { createChakraMock } = require("@fixtures/chakra");
   const mock = {
-    ...factoryInstance.create(["Box", "Flex"]),
+    ...createChakraMock(["Box", "Flex"]),
     useDisclosure: () => mockDisclosure,
   };
   return mock;
 });
 
 jest.mock("@src/components/reports/common/sunburst/chart.ui.component", () =>
-  createMockedComponent("SunBurstChartUI")
+  require("@fixtures/react").createComponent("SunBurstChartUI")
 );
 
 jest.mock("@src/events/events", () => ({
@@ -61,27 +59,20 @@ jest.mock("../layout/sunburst.report.layout", () => ({
 }));
 
 jest.mock("../panels/control.panel.component", () =>
-  createMockedComponent("SunBurstControlPanel")
+  require("@fixtures/react").createComponent("SunBurstControlPanel")
 );
 
 jest.mock("../panels/info.panel.component", () =>
-  createMockedComponent("SunBurstInfoPanel")
+  require("@fixtures/react").createComponent("SunBurstInfoPanel")
 );
 
 jest.mock("../panels/not.visible.panel.component", () =>
-  createMockedComponent("SunBurstNotVisiblePanel")
+  require("@fixtures/react").createComponent("SunBurstNotVisiblePanel")
 );
 
 jest.mock("../panels/title.panel.component", () =>
-  createMockedComponent("SunBurstTitlePanel")
+  require("@fixtures/react").createComponent("SunBurstTitlePanel")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 const mockDisclosure = {
   isOpen: true,

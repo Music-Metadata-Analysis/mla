@@ -8,15 +8,11 @@ import type { userHookAsLastFMTop20TrackReport } from "@src/types/user/hook.type
 
 jest.mock(
   "@src/components/reports/lastfm/common/flip.card.report/flip.card.report.container",
-  () => createMockedComponent("FlipCardReportContainer")
+  () => {
+    const { createComponent } = require("@fixtures/react");
+    return createComponent("FlipCardReportContainer");
+  }
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("Top20TracksReportContainer", () => {
   const mockUsername = "niall-byrne";

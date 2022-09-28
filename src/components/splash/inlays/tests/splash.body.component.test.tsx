@@ -17,35 +17,32 @@ jest.mock(
 
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
-  () => createMockedComponent("Button")
+  () => {
+    const { createComponent } = require("@fixtures/react");
+    return createComponent("Button");
+  }
 );
 
 jest.mock(
   "@src/components/clickable/click.link.external/click.link.external.component",
-  () => createMockedComponent("ClickLink")
+  () => {
+    const { createComponent } = require("@fixtures/react");
+    return createComponent("ClickLink");
+  }
 );
 
 jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
-  createMockedComponent("DimOnHover")
+  require("@fixtures/react").createComponent("DimOnHover")
 );
 
 jest.mock("@src/components/highlight/highlight.component", () =>
-  createMockedComponent("Highlight")
+  require("@fixtures/react").createComponent("Highlight")
 );
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Avatar", "Box", "Flex", "Text"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Avatar", "Box", "Flex", "Text"]);
 });
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("SplashBody", () => {
   const mockT = new mockUseLocale("splash").t;

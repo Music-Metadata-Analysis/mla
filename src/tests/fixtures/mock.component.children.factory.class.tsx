@@ -29,4 +29,4 @@ class MockComponentWithChildrenFactory {
   };
 }
 
-export const factoryInstance = new MockComponentWithChildrenFactory();
+export const createComponent = new MockComponentWithChildrenFactory().create;

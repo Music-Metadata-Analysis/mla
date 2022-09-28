@@ -16,39 +16,29 @@ jest.mock(
   () => (filename: string) => new mockUseLocale(filename)
 );
 
-jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  const instance = factoryInstance.create(["Avatar", "Box", "Flex", "Text"]);
-  return instance;
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock([
+    "Avatar",
+    "Box",
+    "Flex",
+    "Text",
+  ])
+);
 
-jest.mock("@chakra-ui/icons", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.icon.factory.class");
-  const instance = factoryInstance.create(["CloseIcon"]);
-  return instance;
-});
+jest.mock("@chakra-ui/icons", () =>
+  require("@fixtures/chakra/icons").createChakraIconMock(["CloseIcon"])
+);
 
 jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock(
   "@src/components/clickable/click.link.external/click.link.external.component",
-  () => createMockedComponent("ClickLink")
+  () => require("@fixtures/react").createComponent("ClickLink")
 );
 
 jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
-  createMockedComponent("DimOnHover")
+  require("@fixtures/react").createComponent("DimOnHover")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("FeedbackDialogue", () => {
   const mockClose = jest.fn();

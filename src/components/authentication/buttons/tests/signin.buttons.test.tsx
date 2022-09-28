@@ -23,15 +23,11 @@ jest.mock("@src/components/button/button.spotify/spotify.login", () =>
 
 jest.mock(
   "@src/components/analytics/analytics.button/analytics.button.component",
-  () => createMockedComponent("AnalyticsWrapper")
+  () => {
+    const { createComponent } = require("@fixtures/react");
+    return createComponent("AnalyticsWrapper");
+  }
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 const mockSetClicked = jest.fn();
 const mockSignIn = jest.fn();

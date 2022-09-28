@@ -7,15 +7,11 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
-  () => createMockedComponent("Button")
+  () => {
+    const { createComponent } = require("@fixtures/react");
+    return createComponent("Button");
+  }
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("SplashFooter", () => {
   const mockT = new mockUseLocale("splash").t;

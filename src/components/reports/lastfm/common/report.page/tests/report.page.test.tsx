@@ -7,17 +7,10 @@ import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
 import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
-  createMockedComponent("ErrorBoundary")
+  require("@fixtures/react").createComponent("ErrorBoundary")
 );
 
 jest.mock("@src/hooks/lastfm", () => () => mockLastFMHook);
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 const MockReportContainer = jest.fn(() => <div>MockReportContainer</div>);
 const MockNoUserPage = jest.fn(() => <div>MockNoUserPage</div>);

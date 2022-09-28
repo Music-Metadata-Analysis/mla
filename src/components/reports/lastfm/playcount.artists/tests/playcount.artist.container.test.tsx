@@ -12,15 +12,8 @@ import {
 import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
 jest.mock("../../common/sunburst.report/sunburst.report.container", () =>
-  createMockedComponent("SunBurstContainer")
+  require("@fixtures/react").createComponent("SunBurstContainer")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("PlayCountByArtistContainer", () => {
   let currentProps: PlayCountByArtistContainerProps;

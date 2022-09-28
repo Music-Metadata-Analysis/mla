@@ -5,19 +5,15 @@ import ClickLink from "@src/components/clickable/click.link.external/click.link.
 
 jest.mock(
   "@src/components/clickable/click.link.external/click.link.external.component",
-  () => createMockedComponent("ClickLink")
+  () => {
+    const { createComponent } = require("@fixtures/react");
+    return createComponent("ClickLink");
+  }
 );
 
 jest.mock("../../button.base/button.base.component", () =>
-  createMockedComponent("BaseButton")
+  require("@fixtures/react").createComponent("BaseButton")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("ButtonLink", () => {
   const linkText = "Link";

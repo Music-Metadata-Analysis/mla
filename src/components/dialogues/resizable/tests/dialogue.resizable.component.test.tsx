@@ -7,26 +7,17 @@ import dialogueSettings from "@src/config/dialogue";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/components/billboard/billboard.component", () =>
-  createMockedComponent("BillBoard")
+  require("@fixtures/react").createComponent("Billboard")
 );
 
 jest.mock("@src/components/condition/condition.component", () =>
-  createMockedComponent("Condition")
+  require("@fixtures/react").createComponent("Condition")
 );
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Flex"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Flex"]);
 });
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("Dialogue", () => {
   const mockProps = {

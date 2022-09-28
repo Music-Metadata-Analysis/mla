@@ -7,24 +7,15 @@ import mockColourHook from "@src/hooks/tests/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("../../billboard.component", () =>
-  createMockedComponent("Billboard")
+  require("@fixtures/react").createComponent("Billboard")
 );
 
 jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Flex", "Spinner"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Flex", "Spinner"]);
 });
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("BillBoardSpinner", () => {
   const testTitle = "Test Title";
