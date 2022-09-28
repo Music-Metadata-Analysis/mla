@@ -4,7 +4,7 @@ import type { AggregateBaseReportResponseInterface } from "@src/types/integratio
 import type { UserContextInterface } from "@src/types/user/context.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 
-export const InitialAggregateReportState = <
+const InitialAggregateReportState = <
   AggregateBaseReportResponseInterface<unknown>
 >{
   status: {

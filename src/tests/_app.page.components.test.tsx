@@ -15,8 +15,8 @@ import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 import type { AppContext, AppProps } from "next/app";
 import type { Router } from "next/router";
 
-jest.mock("@src/providers/root.provider", () =>
-  createMockedComponent("RootProvider")
+jest.mock("../../src/providers/root.provider", () =>
+  require("@fixtures/react").createComponent("RootProvider")
 );
 
 jest.mock("@src/components/navbar/navbar.component", () =>
@@ -69,13 +69,6 @@ jest.mock("@src/utils/voids", () => {
 });
 
 const mockTranslationWrapper = "mockTranslationWrapper";
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("MLA", () => {
   let currentProps: AppProps;

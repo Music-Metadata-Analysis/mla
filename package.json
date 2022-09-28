@@ -63,6 +63,8 @@
     "@cypress/webpack-dev-server": "^1.8.3",
     "@emotion/jest": "^11.7.1",
     "@netlify/plugin-nextjs": "^4.16.0",
+    "@swc/core": "^1.3.3",
+    "@swc/jest": "^0.2.22",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/react-hooks": "^7.0.2",
@@ -132,6 +134,9 @@
       "<rootDir>/jest/setup/testing-library.js"
     ],
     "moduleNameMapper": {
+      "^@fixtures/chakra$": "<rootDir>/src/tests/fixtures/mock.chakra.react.factory.class.tsx",
+      "^@fixtures/chakra/icons$": "<rootDir>/src/tests/fixtures/mock.chakra.icon.factory.class.tsx",
+      "^@fixtures/react$": "<rootDir>/src/tests/fixtures/mock.component.children.factory.class.tsx",
       "^@locales/(.*)": "<rootDir>/public/locales/en/$1",
       "^@src/(.*)": "<rootDir>/src/$1",
       ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
@@ -142,6 +147,27 @@
       "./src"
     ],
     "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.(t|j)sx?$": [
+        "@swc/jest",
+        {
+          "sourceMaps": true,
+          "jsc": {
+            "parser": {
+              "syntax": "typescript",
+              "tsx": true,
+              "decorators": false,
+              "dynamicImport": false
+            },
+            "transform": {
+              "react": {
+                "runtime": "automatic"
+              }
+            }
+          }
+        }
+      ]
+    },
     "verbose": true
   }
 }

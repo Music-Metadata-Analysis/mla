@@ -11,10 +11,8 @@ import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/commo
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Container", "Text"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Container", "Text"]);
 });
 
 jest.mock(

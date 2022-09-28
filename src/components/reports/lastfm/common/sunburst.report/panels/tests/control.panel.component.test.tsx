@@ -11,30 +11,15 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create([
-    "Flex",
-    "Box",
-    "Stat",
-    "StatLabel",
-    "StatHelpText",
-  ]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Flex", "Box", "Stat", "StatLabel", "StatHelpText"]);
 });
 
 jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("@src/components/button/button.base/button.base.component", () =>
-  createMockedComponent("ButtonWithoutAnalytics")
+  require("@fixtures/react").createComponent("ButtonWithoutAnalytics")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 type MockD3Node = Omit<Partial<d3Node>, "parent"> & {
   parent?: Partial<d3Node> | null;

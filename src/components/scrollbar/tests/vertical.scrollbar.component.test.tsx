@@ -11,10 +11,8 @@ import type { RefObject } from "react";
 jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 jest.mock("@chakra-ui/react", () => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.chakra.react.factory.class");
-  return factoryInstance.create(["Box"]);
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Box"]);
 });
 
 describe("VerticalScrollBarComponent", () => {

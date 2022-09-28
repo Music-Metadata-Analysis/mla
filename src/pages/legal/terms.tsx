@@ -18,6 +18,6 @@ export default function TermsOfServicePage() {
 }
 
 export const getStaticProps = pagePropsGenerator({
-  pageKey: "privacy",
+  pageKey: "terms",
   translations: ["legal"],
 });

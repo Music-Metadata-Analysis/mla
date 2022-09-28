@@ -35,27 +35,20 @@ jest.mock("@src/components/authentication/authentication.container", () =>
 
 jest.mock(
   "@src/components/billboard/billboard.spinner/billboard.spinner.component",
-  () => createMockedComponent("BillBoardSpinner")
+  () => require("@fixtures/react").createComponent("BillBoardSpinner")
 );
 
 jest.mock("@src/components/errors/display/error.display.component", () =>
-  createMockedComponent("ErrorDisplay")
+  require("@fixtures/react").createComponent("ErrorDisplay")
 );
 
 jest.mock("../flip.card.report.component", () =>
-  createMockedComponent("FlipCardReport")
+  require("@fixtures/react").createComponent("FlipCardReport")
 );
 
 jest.mock("next/router", () => ({
   useRouter: () => mockRouter,
 }));
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("FlipCardReportContainer", () => {
   const testUsername = "niall-byrne";

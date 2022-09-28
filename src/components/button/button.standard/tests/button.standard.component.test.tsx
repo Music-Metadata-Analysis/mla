@@ -7,15 +7,8 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 jest.mock("../../button.base/button.base.component", () =>
-  createMockedComponent("BaseButton")
+  require("@fixtures/react").createComponent("BaseButton")
 );
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("StandardButton", () => {
   const linkText = "Link";

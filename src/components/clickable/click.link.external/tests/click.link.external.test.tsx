@@ -3,16 +3,11 @@ import NextLink from "next/link";
 import ClickExternalLink from "../click.link.external.component";
 import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
 
-jest.mock("next/link", () => createMockedComponent("NextLink"));
+jest.mock("next/link", () =>
+  require("@fixtures/react").createComponent("NextLink")
+);
 
 jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
-
-const createMockedComponent = (name: string) => {
-  const {
-    factoryInstance,
-  } = require("@src/tests/fixtures/mock.component.children.factory.class");
-  return factoryInstance.create(name);
-};
 
 describe("ButtonLink", () => {
   const linkText = "Link";
