@@ -6,6 +6,8 @@ import dialogueSettings from "@src/config/dialogue";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
+jest.mock("@src/hooks/router");
+
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Flex"]);

@@ -1,13 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import NextLink from "next/link";
 import ClickExternalLink from "../click.link.external.component";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 
 jest.mock("@src/hooks/analytics");
-
-jest.mock("next/link", () =>
-  require("@fixtures/react/parent").createComponent("NextLink")
-);
 
 describe("ButtonLink", () => {
   const linkText = "Link";
@@ -22,17 +17,10 @@ describe("ButtonLink", () => {
     render(<ClickExternalLink href={mockHref}>{linkText}</ClickExternalLink>);
   };
 
-  it("should render NextLink as expected", () => {
-    expect(NextLink).toBeCalledTimes(1);
-    const call = jest.mocked(NextLink).mock.calls[0];
-    expect(call[0].href).toBe(mockHref);
-    expect(call[0].passHref).toBe(true);
-    expect(call[0].children).toBeDefined();
-    expect(Object.keys(call[0]).length).toBe(3);
-  });
-
-  it("should pass the correct target to the <a> tag", async () => {
+  it("should render the <a> tag correctly", async () => {
     const LinkText = await screen.findByText(linkText);
+    expect(LinkText.parentElement).toHaveAttribute("href", mockHref);
+    expect(LinkText.parentElement).toHaveAttribute("rel", "noreferrer");
     expect(LinkText.parentElement).toHaveAttribute("target", "_blank");
   });
 

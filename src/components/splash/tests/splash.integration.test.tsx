@@ -5,15 +5,16 @@ import {
   within,
   waitFor,
 } from "@testing-library/react";
-import { RouterContext } from "next/dist/shared/lib/router-context";
 import Splash from "../splash.component";
 import translations from "@locales/splash.json";
 import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
 import routes from "@src/config/routes";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
-import mockRouter from "@src/tests/fixtures/mock.router";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 
 jest.mock("@src/hooks/locale");
+
+jest.mock("@src/hooks/router");
 
 describe("Splash", () => {
   beforeEach(() => {
@@ -21,11 +22,7 @@ describe("Splash", () => {
   });
 
   const arrange = () => {
-    return render(
-      <RouterContext.Provider value={mockRouter}>
-        <Splash />
-      </RouterContext.Provider>
-    );
+    return render(<Splash />);
   };
 
   describe("when rendered", () => {
@@ -66,7 +63,7 @@ describe("Splash", () => {
 
     describe("clicking on the start button", () => {
       beforeEach(async () => {
-        expect(mockRouter.push).toBeCalledTimes(0);
+        expect(mockRouterHook.push).toBeCalledTimes(0);
         const footer = await screen.findByTestId(
           testIDs.DialogueFooterComponent
         );
@@ -77,8 +74,10 @@ describe("Splash", () => {
       });
 
       it("should redirect to the search page", async () => {
-        await waitFor(() => expect(mockRouter.push).toBeCalledTimes(1));
-        expect(mockRouter.push).toBeCalledWith(routes.search.lastfm.selection);
+        await waitFor(() => expect(mockRouterHook.push).toBeCalledTimes(1));
+        expect(mockRouterHook.push).toBeCalledWith(
+          routes.search.lastfm.selection
+        );
       });
     });
   });

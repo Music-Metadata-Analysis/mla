@@ -5,6 +5,8 @@ import dialogueSettings from "@src/config/dialogue";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
+jest.mock("@src/hooks/router");
+
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
   () => require("@fixtures/react/parent").createComponent("Button")

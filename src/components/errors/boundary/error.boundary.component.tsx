@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
 import ErrorHandler, {
   ErrorHandlerProps,
 } from "../handler/error.handler.component";
 import useAnalytics from "@src/hooks/analytics";
+import useRouter from "@src/hooks/router";
 import type EventDefinition from "@src/events/event.class";
 
 interface ErrorBoundaryProps {

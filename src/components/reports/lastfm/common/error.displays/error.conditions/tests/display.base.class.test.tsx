@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import ConditionalErrorDisplayBase from "../error.condition.display.base.class";
 import { MockReportClass } from "@src/components/reports/lastfm/common/sunburst.report/tests/implementations/concrete.sunburst.report.class";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
-import mockRouter from "@src/tests/fixtures/mock.router";
 import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
@@ -29,7 +29,7 @@ describe("ConditionalErrorDisplayBase", () => {
     mockReport = new MockReportClass();
     render(
       <ConcreteErrorBase
-        router={mockRouter}
+        router={mockRouterHook}
         report={mockReport}
         userProperties={mockUserProperties}
       />

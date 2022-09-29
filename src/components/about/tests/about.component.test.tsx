@@ -6,6 +6,8 @@ import ToggleComponent from "../inlays/about.toggle.component";
 import Dialogue from "@src/components/dialogues/resizable/dialogue.resizable.component";
 import { checkTProp } from "@src/hooks/__mocks__/locale.mock";
 
+jest.mock("@src/hooks/router");
+
 jest.mock("@src/hooks/locale");
 
 jest.mock(

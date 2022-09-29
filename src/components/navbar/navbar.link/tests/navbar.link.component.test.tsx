@@ -2,14 +2,12 @@ import { Button } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import NavBarLink from "../navbar.link.component";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import mockRouter from "@src/tests/fixtures/mock.router";
 
 jest.mock("@src/hooks/colour");
 
-jest.mock("next/router", () => ({
-  useRouter: () => mockRouter,
-}));
+jest.mock("@src/hooks/router");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
@@ -18,7 +16,7 @@ jest.mock("@chakra-ui/react", () => {
 
 describe("NavBarLink", () => {
   const linkText = "Link";
-  const mockHref = "test";
+  const mockPath = "test";
   const mockClickTracker = jest.fn();
   let selected: boolean;
 
@@ -27,7 +25,7 @@ describe("NavBarLink", () => {
   const arrange = () => {
     render(
       <NavBarLink
-        href={mockHref}
+        path={mockPath}
         selected={selected}
         trackButtonClick={mockClickTracker}
       >
@@ -116,8 +114,8 @@ describe("NavBarLink", () => {
       });
 
       it("should route to the expected page", () => {
-        expect(mockRouter.push).toBeCalledTimes(1);
-        expect(mockRouter.push).toBeCalledWith(mockHref);
+        expect(mockRouterHook.push).toBeCalledTimes(1);
+        expect(mockRouterHook.push).toBeCalledWith(mockPath);
       });
     });
   });

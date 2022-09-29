@@ -1,18 +1,19 @@
 import { LockIcon } from "@chakra-ui/icons";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { RouterContext } from "next/dist/shared/lib/router-context";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import NavBarSessionControl from "../navbar.session.control.component";
 import authenticationTranslocations from "@locales/authentication.json";
 import { testIDs as modalIDs } from "@src/components/authentication/modals/modal.signin.component";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import mockRouter from "@src/tests/fixtures/mock.router";
 
 jest.mock("@src/hooks/auth");
 
 jest.mock("@src/hooks/locale");
+
+jest.mock("@src/hooks/router");
 
 jest.mock("@chakra-ui/icons", () =>
   require("@fixtures/chakra/icons").createChakraIconMock(["LockIcon"])
@@ -40,11 +41,7 @@ describe("NavSessionControl", () => {
   });
 
   const arrange = () => {
-    render(
-      <RouterContext.Provider value={mockRouter}>
-        <NavBarSessionControl />
-      </RouterContext.Provider>
-    );
+    render(<NavBarSessionControl />);
   };
 
   describe("when the user is logged in", () => {
@@ -108,7 +105,7 @@ describe("NavSessionControl", () => {
         });
 
         it("should NOT route back", async () => {
-          expect(mockRouter.back).toBeCalledTimes(0);
+          expect(mockRouterHook.back).toBeCalledTimes(0);
         });
       });
     });
