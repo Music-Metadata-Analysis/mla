@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 import SearchForm from "./search.form";
 import settings from "@src/config/lastfm";
 import useAuth from "@src/hooks/auth";
 import useNavBar from "@src/hooks/navbar";
+import useRouter from "@src/hooks/router";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 import type { FormikHelpers } from "formik";

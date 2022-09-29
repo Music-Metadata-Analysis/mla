@@ -6,15 +6,13 @@ import settings from "@src/config/lastfm";
 import routes from "@src/config/routes";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
-import mockRouter from "@src/tests/fixtures/mock.router";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 
 jest.mock("@src/hooks/auth");
 
 jest.mock("@src/hooks/locale");
 
-jest.mock("next/router", () => ({
-  useRouter: () => mockRouter,
-}));
+jest.mock("@src/hooks/router");
 
 jest.mock("@src/components/authentication/authentication.container", () =>
   require("@fixtures/react/child").createComponent(
@@ -148,8 +146,8 @@ describe("SearchTopTracks", () => {
           username: enteredUsername,
         };
         const query = new URLSearchParams(params);
-        expect(mockRouter.push).toBeCalledTimes(1);
-        expect(mockRouter.push).toBeCalledWith(
+        expect(mockRouterHook.push).toBeCalledTimes(1);
+        expect(mockRouterHook.push).toBeCalledWith(
           `${routes.reports.lastfm.top20tracks}?${query.toString()}`
         );
       });

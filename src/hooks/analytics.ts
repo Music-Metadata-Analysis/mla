@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
 import { useEffect, useContext, useState } from "react";
+import useRouter from "./router";
 import analyticsVendor from "@src/clients/analytics/vendor";
 import EventDefinition from "@src/events/event.class";
 import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
@@ -17,9 +17,9 @@ const useAnalytics = () => {
 
   useEffect(() => {
     if (!isTrackingRoutes) return;
-    router.events.on("routeChangeStart", handleRouteChange);
+    router.handlers.addRouteChangeHandler(handleRouteChange);
     return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
+      router.handlers.removeRouteChangeHandler(handleRouteChange);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTrackingRoutes]);

@@ -19,6 +19,8 @@ jest.mock("@src/hooks/flags");
 
 jest.mock("@src/hooks/locale");
 
+jest.mock("@src/hooks/router");
+
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   const chakraMock = createChakraMock(["Avatar", "Flex"], ["Box"]);

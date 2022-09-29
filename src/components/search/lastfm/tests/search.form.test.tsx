@@ -6,6 +6,8 @@ import StyledButton from "@src/components/button/button.standard/button.standard
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
+jest.mock("@src/hooks/router");
+
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Flex"]);

@@ -3,14 +3,12 @@ import AggregateErrorDisplayComponent from "../aggregate.error.display.component
 import Authentication from "@src/components/authentication/authentication.container";
 import ErrorDisplay from "@src/components/errors/display/error.display.component";
 import { MockReportClass } from "@src/components/reports/lastfm/common/sunburst.report/tests/implementations/concrete.sunburst.report.class";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import mockRouter from "@src/tests/fixtures/mock.router";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
-jest.mock("next/router", () => ({
-  useRouter: () => mockRouter,
-}));
+jest.mock("@src/hooks/router");
 
 jest.mock("@src/components/authentication/authentication.container", () =>
   require("@fixtures/react/child").createComponent("AuthenticationComponent")
@@ -68,8 +66,8 @@ describe("AggregateErrorDisplayComponent", () => {
         });
 
         it("should change urls to the search route", () => {
-          expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(mockReport.retryRoute);
+          expect(mockRouterHook.push).toBeCalledTimes(1);
+          expect(mockRouterHook.push).toBeCalledWith(mockReport.retryRoute);
         });
       });
     });
@@ -105,7 +103,7 @@ describe("AggregateErrorDisplayComponent", () => {
         });
 
         it("should reload the page", () => {
-          expect(mockRouter.reload).toBeCalledTimes(1);
+          expect(mockRouterHook.reload).toBeCalledTimes(1);
         });
       });
     });
@@ -129,8 +127,8 @@ describe("AggregateErrorDisplayComponent", () => {
         });
 
         it("should change urls to the search route", () => {
-          expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(mockReport.retryRoute);
+          expect(mockRouterHook.push).toBeCalledTimes(1);
+          expect(mockRouterHook.push).toBeCalledWith(mockReport.retryRoute);
         });
       });
     });
@@ -169,8 +167,8 @@ describe("AggregateErrorDisplayComponent", () => {
         });
 
         it("should change urls to the search route", () => {
-          expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(mockReport.retryRoute);
+          expect(mockRouterHook.push).toBeCalledTimes(1);
+          expect(mockRouterHook.push).toBeCalledWith(mockReport.retryRoute);
         });
       });
     });

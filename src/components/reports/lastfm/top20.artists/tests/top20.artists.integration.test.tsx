@@ -13,6 +13,8 @@ import UserArtistDataState from "@src/providers/user/encapsulations/lastfm/flipc
 
 jest.mock("@src/hooks/locale");
 
+jest.mock("@src/hooks/router");
+
 const mockImageIsLoaded = jest.fn();
 const mockT = new MockUseLocale("lastfm").t;
 const mockUsername = "test-username";

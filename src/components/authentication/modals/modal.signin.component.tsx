@@ -109,7 +109,7 @@ export default function ModalComponent({
               w={"100%"}
               onClick={() => onClose(true)}
             >
-              <ClickLink href={routes.legal.terms}>{t("terms")}</ClickLink>
+              <ClickLink path={routes.legal.terms}>{t("terms")}</ClickLink>
             </Flex>
           </ModalFooter>
         </Box>

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import Image from "next/image";
+import webFrameworkVendor from "@src/clients/web.framework/vendor";
 
-export const Icon = styled(Image)`
+export const Icon = styled(webFrameworkVendor.ImageShim)`
   border-radius: 50%;
   width: ${(props) => `${props.width}px`};
   height: ${(props) => `${props.height}px`};

@@ -1,13 +1,12 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import { RouterContext } from "next/dist/shared/lib/router-context";
 import NavBar, { testIDs } from "../navbar.component";
 import navbarTranslations from "@locales/navbar.json";
 import NavConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import NavBarProvider from "@src/providers/navbar/navbar.provider";
-import mockRouter from "@src/tests/fixtures/mock.router";
 import type { JSONstringType } from "@src/types/json.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 
@@ -20,6 +19,8 @@ jest.mock("@src/hooks/lastfm", () =>
 );
 
 jest.mock("@src/hooks/locale");
+
+jest.mock("@src/hooks/router");
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   require("@fixtures/react/child").createComponent("VerticalScrollBar")
@@ -63,11 +64,9 @@ describe("NavBar", () => {
   const arrange = () => {
     mockUserProperties = { ...thisMockUserProperties };
     render(
-      <RouterContext.Provider value={mockRouter}>
-        <NavBarProvider>
-          <NavBar menuConfig={config} />
-        </NavBarProvider>
-      </RouterContext.Provider>
+      <NavBarProvider>
+        <NavBar menuConfig={config} />
+      </NavBarProvider>
     );
   };
 
@@ -90,7 +89,7 @@ describe("NavBar", () => {
 
     describe(`when the "${link}" link is clicked`, () => {
       beforeEach(async () => {
-        jest.mocked(mockRouter.push).mockClear();
+        jest.mocked(mockRouterHook.push).mockClear();
         const searchRoot = await screen.findByTestId(searchRootTestId);
         await clickByString(link, searchRoot);
       });
@@ -105,13 +104,13 @@ describe("NavBar", () => {
 
       if (destination === "/") {
         it(`should route to ${destination}`, async () => {
-          expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(destination);
+          expect(mockRouterHook.push).toBeCalledTimes(1);
+          expect(mockRouterHook.push).toBeCalledWith(destination);
         });
       } else {
         it(`should route to ${destination}`, async () => {
-          expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(destination);
+          expect(mockRouterHook.push).toBeCalledTimes(1);
+          expect(mockRouterHook.push).toBeCalledWith(destination);
         });
       }
 

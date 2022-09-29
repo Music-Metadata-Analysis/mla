@@ -6,14 +6,14 @@ import navbarTranslations from "@locales/navbar.json";
 import routes from "@src/config/routes";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import mockRouter from "@src/tests/fixtures/mock.router";
-
-jest.mock("next/router", () => ({ useRouter: () => mockRouter }));
 
 jest.mock("@src/hooks/analytics");
 
 jest.mock("@src/hooks/locale");
+
+jest.mock("@src/hooks/router");
 
 jest.mock("../../navbar.avatar/navbar.avatar.component", () =>
   require("@fixtures/react/child").createComponent("NavBarAvatar")
@@ -30,15 +30,15 @@ describe("NavBarLogo", () => {
   });
 
   const arrange = () => {
-    mockRouter.pathname = routes.home;
+    mockRouterHook.path = routes.home;
     render(<NavBarLogo />);
   };
 
   it("should render the title NavBarLink with the correct props", () => {
     expect(NavBarLink).toBeCalledTimes(1);
     checkMockCall(NavBarLink, {
-      selected: routes.home === mockRouter.pathname,
-      href: routes.home,
+      selected: routes.home === mockRouterHook.path,
+      path: routes.home,
       trackButtonClick: mockAnalyticsHook.trackButtonClick,
     });
   });

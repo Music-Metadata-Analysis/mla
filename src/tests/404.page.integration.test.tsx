@@ -2,14 +2,12 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import translation from "@locales/main.json";
 import routes from "@src/config/routes";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import Custom404 from "@src/pages/404";
-import mockRouter from "@src/tests/fixtures/mock.router";
 
 jest.mock("@src/hooks/locale");
 
-jest.mock("next/router", () => ({
-  useRouter: () => mockRouter,
-}));
+jest.mock("@src/hooks/router");
 
 describe("404", () => {
   beforeEach(() => jest.clearAllMocks());
@@ -48,8 +46,8 @@ describe("404", () => {
       });
 
       it("should route us back to home", () => {
-        expect(mockRouter.push).toBeCalledTimes(1);
-        expect(mockRouter.push).toBeCalledWith(routes.home);
+        expect(mockRouterHook.push).toBeCalledTimes(1);
+        expect(mockRouterHook.push).toBeCalledWith(routes.home);
       });
     });
   });
