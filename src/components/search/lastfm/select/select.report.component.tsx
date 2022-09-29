@@ -1,5 +1,4 @@
 import { Box, Flex, Avatar } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { MutableRefObject, useEffect, useState } from "react";
 import Option from "./inlay/select.option.component";
 import Billboard from "@src/components/billboard/billboard.component";
@@ -9,6 +8,7 @@ import config from "@src/config/lastfm";
 import settings from "@src/config/navbar";
 import useFlags from "@src/hooks/flags";
 import useLocale from "@src/hooks/locale";
+import useRouter from "@src/hooks/router";
 
 export interface SearchSelectionProps {
   scrollRef: MutableRefObject<HTMLDivElement | null>;

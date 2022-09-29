@@ -5,7 +5,6 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
-import { RouterContext } from "next/dist/shared/lib/router-context";
 import AuthenticationContainer from "../authentication.container";
 import { testIDs as AuthModalTestIDs } from "../modals/modal.signin.component";
 import { testIDs as SpinnerModalTestIDs } from "../modals/modal.spinner.component";
@@ -15,13 +14,15 @@ import Events from "@src/events/events";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
-import mockRouter from "@src/tests/fixtures/mock.router";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 
 jest.mock("@src/hooks/analytics");
 
 jest.mock("@src/hooks/auth");
 
 jest.mock("@src/hooks/locale");
+
+jest.mock("@src/hooks/router");
 
 jest.mock("@chakra-ui/react", () => {
   const module = jest.requireActual("@chakra-ui/react");
@@ -53,11 +54,7 @@ describe("AuthenticationContainer", () => {
   });
 
   const arrange = () => {
-    render(
-      <RouterContext.Provider value={mockRouter}>
-        <AuthenticationContainer onModalClose={mockCallBack} />
-      </RouterContext.Provider>
-    );
+    render(<AuthenticationContainer onModalClose={mockCallBack} />);
   };
 
   const checkModal = () => {
@@ -180,16 +177,8 @@ describe("AuthenticationContainer", () => {
           });
 
           it("should route to the correct url", () => {
-            expect(mockRouter.push).toBeCalledTimes(1);
-            expect(mockRouter.push).toBeCalledWith(
-              routes.legal.terms,
-              routes.legal.terms,
-              {
-                locale: undefined,
-                scroll: undefined,
-                shallow: undefined,
-              }
-            );
+            expect(mockRouterHook.push).toBeCalledTimes(1);
+            expect(mockRouterHook.push).toBeCalledWith(routes.legal.terms);
           });
         });
 
@@ -208,7 +197,7 @@ describe("AuthenticationContainer", () => {
           });
 
           it("should NOT change the route", () => {
-            expect(mockRouter.push).toBeCalledTimes(0);
+            expect(mockRouterHook.push).toBeCalledTimes(0);
           });
         });
       });
@@ -237,8 +226,8 @@ describe("AuthenticationContainer", () => {
           });
 
           it("should push the correct url", () => {
-            expect(mockRouter.push).toBeCalledTimes(1);
-            expect(mockRouter.push).toBeCalledWith(routes.home);
+            expect(mockRouterHook.push).toBeCalledTimes(1);
+            expect(mockRouterHook.push).toBeCalledWith(routes.home);
           });
 
           it("should generate an analytics event", () => {

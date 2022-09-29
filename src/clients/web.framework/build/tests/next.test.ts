@@ -1,5 +1,5 @@
 import { PHASE_PRODUCTION_BUILD } from "next/constants";
-import { isBuildTime } from "../next";
+import isNextBuildTime from "../next";
 import type { MutableEnv } from "@src/types/process.types";
 
 describe("When node is running at next build time", () => {
@@ -13,9 +13,9 @@ describe("When node is running at next build time", () => {
     process.env = originalEnvironment;
   });
 
-  describe("isBuildTime", () => {
+  describe("isNextBuildTime", () => {
     it("should return true", () => {
-      expect(isBuildTime()).toBeTruthy();
+      expect(isNextBuildTime()).toBeTruthy();
     });
   });
 });
@@ -33,7 +33,7 @@ describe("When node is running outside of next build time", () => {
 
   describe("isBuildTime", () => {
     it("should return false", () => {
-      expect(isBuildTime()).toBeFalsy();
+      expect(isNextBuildTime()).toBeFalsy();
     });
   });
 });

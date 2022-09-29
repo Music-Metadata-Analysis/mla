@@ -1,69 +1,28 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { RouterContext } from "next/dist/shared/lib/router-context";
-import { useState } from "react";
+import {
+  ErrorBoundaryTestHarness,
+  testIDs,
+} from "./error.boundary.test.harness";
 import ErrorHandler from "../../handler/error.handler.component";
-import ErrorBoundary from "../error.boundary.component";
 import Events from "@src/events/events";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
-import mockRouter from "@src/tests/fixtures/mock.router";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 
 jest.mock("@src/hooks/analytics");
 
-jest.mock("../../handler/error.handler.component", () => {
-  const MockErrorHandler = () => (
-    <div data-testid={testIDs.ErrorHandlerComponent}>Error Component</div>
-  );
-  return jest.fn(() => <MockErrorHandler />);
-});
+jest.mock("@src/hooks/router");
 
-const mockTestRoute = "/";
-const mockStateReset = jest.fn();
-
-const ComponentWithError = () => {
-  throw new Error("test error");
-};
-
-const TestComponent = () => {
-  const [error, setError] = useState(false);
-
-  return (
-    <RouterContext.Provider value={mockRouter}>
-      <ErrorBoundary
-        eventDefinition={Events.General.Test}
-        route={mockTestRoute}
-        stateReset={mockStateReset}
-      >
-        <div data-testid={testIDs.TestComponent}>
-          <button
-            data-testid={testIDs.TriggerError}
-            onClick={() => setError(true)}
-          >
-            Trigger Error
-          </button>
-          {error ? (
-            <ComponentWithError />
-          ) : (
-            <div data-testid={testIDs.ChildComponent}>Child Component</div>
-          )}
-        </div>
-      </ErrorBoundary>
-    </RouterContext.Provider>
-  );
-};
-
-const testIDs = {
-  ChildComponent: "ChildComponent",
-  ErrorHandlerComponent: "ErrorHandlerComponent",
-  TestComponent: "TestComponent",
-  TriggerError: "TriggerError",
-};
+jest.mock("../../handler/error.handler.component", () =>
+  require("@fixtures/react/child").createComponent("ErrorHandler")
+);
 
 describe("ErrorBoundary", () => {
   let consoleErrorSpy: jest.SpyInstance;
+  const mockRoute = "/";
+  const mockStateReset = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
-    arrange();
     consoleErrorSpy = jest.spyOn(console, "error");
     consoleErrorSpy.mockImplementation(() => null);
   });
@@ -73,72 +32,81 @@ describe("ErrorBoundary", () => {
   });
 
   const arrange = () => {
-    render(<TestComponent />);
+    render(
+      <ErrorBoundaryTestHarness
+        mockRoute={mockRoute}
+        mockStateReset={mockStateReset}
+      />
+    );
   };
 
-  it("should be rendered with a test component", async () => {
-    await screen.findByTestId(testIDs.TestComponent);
-  });
-
-  it("should NOT yet generate an analytics event", () => {
-    expect(mockAnalyticsHook.event).toBeCalledTimes(0);
-  });
-
-  describe("when an error is thrown", () => {
-    beforeEach(async () => {
-      const link = await screen.findByTestId(testIDs.TriggerError);
-      fireEvent.click(link);
+  describe("when rendered inside the test harness", () => {
+    beforeEach(() => {
+      arrange();
     });
 
-    it("should report an error to jest", () => {
-      expect(consoleErrorSpy).toBeCalledTimes(2);
+    it("should render the test component", async () => {
+      expect(await screen.findByTestId(testIDs.TestComponent)).toBeTruthy();
     });
 
-    it("should NOT render the child component", () => {
-      expect(screen.queryByTestId(testIDs.ChildComponent)).toBeNull();
+    it("should render the component without an error", () => {
+      expect(screen.queryByTestId(testIDs.ComponentWithOutError)).toBeNull();
     });
 
-    it("should render the error handler component", async () => {
-      expect(screen.findByTestId(testIDs.ErrorHandlerComponent)).toBeTruthy();
-    });
-
-    it("should generate an analytics event", () => {
-      expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-      expect(mockAnalyticsHook.event).toBeCalledWith(Events.General.Test);
-    });
-
-    describe("when the error is reset", () => {
-      let resetError: () => void;
-
-      beforeEach(() => {
-        resetError =
-          jest.mocked(ErrorHandler).mock.calls[0][0].resetErrorBoundary;
-        resetError();
-      });
-
-      it("should call the state reset function", () => {
-        expect(mockStateReset).toBeCalledTimes(1);
-        expect(mockStateReset).toBeCalledWith();
-      });
-
-      it("should route to the configured destination", () => {
-        expect(mockRouter.push).toBeCalledTimes(1);
-        expect(mockRouter.push).toBeCalledWith(mockTestRoute);
-      });
-    });
-  });
-
-  describe("when an error is NOT thrown", () => {
-    it("should render the child component", async () => {
-      expect(await screen.findByTestId(testIDs.ChildComponent)).toBeTruthy();
-    });
-
-    it("should NOT render the error handler component", () => {
-      expect(screen.queryByTestId(testIDs.ErrorHandlerComponent)).toBeNull();
+    it("should NOT render the error handler component", async () => {
+      expect(screen.queryByTestId("ErrorHandler")).toBeNull();
     });
 
     it("should NOT generate an analytics event", () => {
       expect(mockAnalyticsHook.event).toBeCalledTimes(0);
+    });
+
+    describe("when the button is clicked", () => {
+      beforeEach(async () => {
+        const link = await screen.findByTestId(testIDs.ErrorTrigger);
+        fireEvent.click(link);
+      });
+
+      it("should report an error to the console", () => {
+        expect(consoleErrorSpy).toBeCalledTimes(2);
+        const call1 = consoleErrorSpy.mock.calls[0][0] as string;
+        const call2 = consoleErrorSpy.mock.calls[1][0] as string;
+        expect(call1).toContain("Test Error!");
+        expect(call2).toContain(testIDs.ComponentWithError);
+      });
+
+      it("should NOT render the component without an error", () => {
+        expect(screen.queryByTestId(testIDs.ComponentWithOutError)).toBeNull();
+      });
+
+      it("should render the error handler component", async () => {
+        expect(screen.findByTestId("ErrorHandler")).toBeTruthy();
+      });
+
+      it("should generate an analytics event", () => {
+        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
+        expect(mockAnalyticsHook.event).toBeCalledWith(Events.General.Test);
+      });
+
+      describe("when the error is reset", () => {
+        let resetError: () => void;
+
+        beforeEach(() => {
+          resetError = (ErrorHandler as jest.Mock).mock.calls[0][0]
+            .resetErrorBoundary;
+          resetError();
+        });
+
+        it("should call the state reset function", () => {
+          expect(mockStateReset).toBeCalledTimes(1);
+          expect(mockStateReset).toBeCalledWith();
+        });
+
+        it("should route to the configured destination", () => {
+          expect(mockRouterHook.push).toBeCalledTimes(1);
+          expect(mockRouterHook.push).toBeCalledWith(mockRoute);
+        });
+      });
     });
   });
 });

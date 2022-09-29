@@ -4,15 +4,13 @@ import translations from "@locales/lastfm.json";
 import config from "@src/config/lastfm";
 import mockUseFlags from "@src/hooks/__mocks__/flags.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
-import mockRouter from "@src/tests/fixtures/mock.router";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 
 jest.mock("@src/hooks/flags");
 
 jest.mock("@src/hooks/locale");
 
-jest.mock("next/router", () => ({
-  useRouter: () => mockRouter,
-}));
+jest.mock("@src/hooks/router");
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   require("@fixtures/react/parent").createComponent(
@@ -69,8 +67,8 @@ describe("SearchSelection", () => {
           });
 
           it("should route to the expected page", () => {
-            expect(mockRouter.push).toBeCalledTimes(1);
-            expect(mockRouter.push).toBeCalledWith(
+            expect(mockRouterHook.push).toBeCalledTimes(1);
+            expect(mockRouterHook.push).toBeCalledWith(
               config.select.options[index].route
             );
           });
@@ -127,8 +125,8 @@ describe("SearchSelection", () => {
           });
 
           it("should route to the expected page", () => {
-            expect(mockRouter.push).toBeCalledTimes(1);
-            expect(mockRouter.push).toBeCalledWith(
+            expect(mockRouterHook.push).toBeCalledTimes(1);
+            expect(mockRouterHook.push).toBeCalledWith(
               config.select.options[index].route
             );
           });

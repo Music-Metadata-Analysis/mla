@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 import FlipCardReport from "./flip.card.report.component";
 import Authentication from "@src/components/authentication/authentication.container";
@@ -8,6 +7,7 @@ import Events from "@src/events/events";
 import useAnalytics from "@src/hooks/analytics";
 import useLocale from "@src/hooks/locale";
 import useMetrics from "@src/hooks/metrics";
+import useRouter from "@src/hooks/router";
 import useUserInterface from "@src/hooks/ui";
 import type FlipCardBaseReport from "../flip.card.report/flip.card.report.base.class";
 import type UserState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";

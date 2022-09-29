@@ -215,7 +215,7 @@ describe("AuthenticationModal", () => {
   it("should call the ClickLink component correctly", () => {
     expect(ClickLink).toBeCalledTimes(1);
     checkMockCall(ClickLink, {
-      href: routes.legal.terms,
+      path: routes.legal.terms,
     });
   });
 });

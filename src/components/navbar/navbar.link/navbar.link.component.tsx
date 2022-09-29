@@ -1,18 +1,18 @@
-import { useRouter } from "next/router";
 import { StyledSelection } from "./navbar.link.styles";
 import useColour from "@src/hooks/colour";
+import useRouter from "@src/hooks/router";
 import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 import type { MouseEvent } from "react";
 
 interface NavLinkProps {
-  href: string;
+  path: string;
   selected: boolean;
   children: React.ReactNode;
   trackButtonClick: ButtonClickHandlerType;
 }
 
 const NavLink = ({
-  href,
+  path,
   selected,
   children,
   trackButtonClick,
@@ -23,10 +23,10 @@ const NavLink = ({
   const navigate = (
     e: MouseEvent<HTMLElement>,
     buttonName: string,
-    href: string
+    path: string
   ) => {
     trackButtonClick(e, buttonName);
-    router.push(href);
+    router.push(path);
   };
 
   return (
@@ -34,7 +34,7 @@ const NavLink = ({
       borderColor={selected ? navButtonColour.selectedBackground : transparent}
       onClick={(e) => {
         e.currentTarget.blur();
-        navigate(e, children as string, href);
+        navigate(e, children as string, path);
       }}
       pl={[1, 1, 2]}
       pr={[1, 1, 2]}

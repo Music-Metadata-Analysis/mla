@@ -8,6 +8,8 @@ import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 import mockStaticProps from "@src/utils/__mocks__/page.props.static.mock";
 import getPageProps from "@src/utils/page.props.static";
 
+jest.mock("@src/hooks/router");
+
 jest.mock("@src/utils/page.props.static");
 
 jest.mock("@src/components/errors/boundary/error.boundary.component", () =>

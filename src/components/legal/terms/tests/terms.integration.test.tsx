@@ -1,13 +1,14 @@
 import { render, screen, within } from "@testing-library/react";
-import { RouterContext } from "next/dist/shared/lib/router-context";
 import TermsOfService from "../terms.component";
 import translations from "@locales/legal.json";
 import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
 import externalLinks from "@src/config/external";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
-import mockRouter from "@src/tests/fixtures/mock.router";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 
 jest.mock("@src/hooks/locale");
+
+jest.mock("@src/hooks/router");
 
 describe("TermsOfService", () => {
   beforeEach(() => {
@@ -15,11 +16,7 @@ describe("TermsOfService", () => {
   });
 
   const arrange = () => {
-    return render(
-      <RouterContext.Provider value={mockRouter}>
-        <TermsOfService />
-      </RouterContext.Provider>
-    );
+    return render(<TermsOfService />);
   };
 
   describe("when rendered", () => {
@@ -61,7 +58,7 @@ describe("TermsOfService", () => {
       let button: HTMLButtonElement;
 
       beforeEach(async () => {
-        expect(mockRouter.push).toBeCalledTimes(0);
+        expect(mockRouterHook.push).toBeCalledTimes(0);
         const footer = await screen.findByTestId(
           testIDs.DialogueFooterComponent
         );
@@ -82,7 +79,7 @@ describe("TermsOfService", () => {
       let button: HTMLButtonElement;
 
       beforeEach(async () => {
-        expect(mockRouter.push).toBeCalledTimes(0);
+        expect(mockRouterHook.push).toBeCalledTimes(0);
         const footer = await screen.findByTestId(
           testIDs.DialogueFooterComponent
         );
