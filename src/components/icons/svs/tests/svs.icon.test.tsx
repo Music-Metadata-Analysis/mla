@@ -1,12 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import SVSIcon from "../svs.icon";
 import mainTranslations from "@locales/main.json";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
 describe("Icons", () => {
   const arrange = (

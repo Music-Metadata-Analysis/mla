@@ -1,77 +1,53 @@
 import { render, screen } from "@testing-library/react";
 import App from "next/app";
-import checkMockCall from "../../src/tests/fixtures/mock.component.call";
+import { createSimpleComponent } from "@fixtures/react/simple";
+import { mockAuthVendorSSRClient } from "@src/clients/auth/__mocks__/vendor.ssr.mock";
 import authVendorSSR from "@src/clients/auth/vendor.ssr";
+import { mockFlagVendorSSRClient } from "@src/clients/flags/__mocks__/vendor.ssr.mock";
 import flagVendorSSR from "@src/clients/flags/vendor.ssr";
+import { mockLocaleVendorHOCIdentifier } from "@src/clients/locale/__mocks__/vendor.mock";
 import Consent from "@src/components/consent/consent.component";
 import NavBar from "@src/components/navbar/navbar.component";
 import RootPopup from "@src/components/popups/root.popup";
 import NavConfig from "@src/config/navbar";
 import MLA, { getInitialProps } from "@src/pages/_app";
 import RootProvider from "@src/providers/root.provider";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import { normalizeUndefined } from "@src/utils/voids";
 import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
 import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 import type { AppContext, AppProps } from "next/app";
 import type { Router } from "next/router";
 
+jest.mock("@src/clients/auth/vendor.ssr");
+
+jest.mock("@src/clients/flags/vendor.ssr");
+
+jest.mock("@src/clients/locale/vendor");
+
+jest.mock("@src/utils/voids");
+
+jest.mock("next/app");
+
 jest.mock("../../src/providers/root.provider", () =>
-  require("@fixtures/react").createComponent("RootProvider")
+  require("@fixtures/react/parent").createComponent("RootProvider")
 );
 
 jest.mock("@src/components/navbar/navbar.component", () =>
-  jest.fn(() => <div>MockNavBar</div>)
+  require("@fixtures/react/child").createComponent("NavBar")
 );
 
 jest.mock("@src/components/popups/root.popup", () =>
-  jest.fn(() => <div>MockPopUpsRoot</div>)
+  require("@fixtures/react/child").createComponent("PopUpsRoot")
 );
 
 jest.mock("@src/components/consent/consent.component", () =>
-  jest.fn(() => <div>MockConsentBanner</div>)
+  require("@fixtures/react/child").createComponent("ConsentBanner")
 );
-
-jest.mock("next/app", () => ({
-  getInitialProps: jest.fn(),
-}));
-
-jest.mock("@src/clients/auth/vendor.ssr", () => ({
-  Client: jest.fn(() => ({
-    getSession: mockGetSession,
-  })),
-}));
-
-jest.mock("@src/clients/flags/vendor.ssr", () => ({
-  Client: jest.fn(() => ({
-    getState: mockGetState,
-  })),
-}));
-
-jest.mock("@src/clients/locale/vendor", () => {
-  return {
-    HOC: (Component: React.FC) =>
-      jest.fn((props) => {
-        return (
-          <div data-testid={mockTranslationWrapper}>
-            <Component {...props} />
-          </div>
-        );
-      }),
-  };
-});
-
-const mockGetSession = jest.fn();
-const mockGetState = jest.fn();
-
-jest.mock("@src/utils/voids", () => {
-  const module = require("@src/utils/tests/voids.mock");
-  return { normalizeUndefined: module.mockNormalizeUndefined };
-});
-
-const mockTranslationWrapper = "mockTranslationWrapper";
 
 describe("MLA", () => {
   let currentProps: AppProps;
+  const MockAppChildComponent = createSimpleComponent("MockAppChildComponent");
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -80,7 +56,7 @@ describe("MLA", () => {
 
   const createProps = () => {
     currentProps = {
-      Component: jest.fn(() => <div>MockComponent</div>),
+      Component: MockAppChildComponent,
       pageProps: {
         flagState: "mockFlagState",
         session: "mockSession",
@@ -128,7 +104,9 @@ describe("MLA", () => {
   });
 
   it("should wrap the MLA app in the appWithTranslation function", async () => {
-    expect(await screen.findByTestId(mockTranslationWrapper)).toBeTruthy();
+    expect(
+      await screen.findByTestId(mockLocaleVendorHOCIdentifier)
+    ).toBeTruthy();
   });
 
   describe("getInitialProps", () => {
@@ -145,12 +123,12 @@ describe("MLA", () => {
     } as unknown as AppContext;
     const mockSession = { group: "mockGroup" };
     const mockFlagState = "mockFlagState";
-    const mockExtraProps = { mockProp: "mockProp" };
+    const mockExtraProps = { pageProps: "mockPageProp" };
 
     beforeEach(async () => {
-      (App.getInitialProps as jest.Mock).mockReturnValue(mockExtraProps);
-      mockGetSession.mockReturnValue(mockSession);
-      mockGetState.mockReturnValue(mockFlagState);
+      jest.mocked(App.getInitialProps).mockResolvedValueOnce(mockExtraProps);
+      mockAuthVendorSSRClient.getSession.mockReturnValue(mockSession);
+      mockFlagVendorSSRClient.getState.mockReturnValue(mockFlagState);
 
       result = await getInitialProps(mockContext);
     });
@@ -163,15 +141,19 @@ describe("MLA", () => {
     it("should call the authVendor's SSR Client getSession method as expected", () => {
       expect(authVendorSSR.Client).toBeCalledTimes(1);
       expect(authVendorSSR.Client).toBeCalledWith();
-      expect(mockGetSession).toBeCalledTimes(1);
-      expect(mockGetSession).toBeCalledWith({ req: mockRequest });
+      expect(mockAuthVendorSSRClient.getSession).toBeCalledTimes(1);
+      expect(mockAuthVendorSSRClient.getSession).toBeCalledWith({
+        req: mockRequest,
+      });
     });
 
     it("should call the flagVendor's SSR Client getState method as expected", () => {
       expect(flagVendorSSR.Client).toBeCalledTimes(1);
       expect(flagVendorSSR.Client).toBeCalledWith();
-      expect(mockGetState).toBeCalledTimes(1);
-      expect(mockGetState).toBeCalledWith(mockSession.group);
+      expect(mockFlagVendorSSRClient.getState).toBeCalledTimes(1);
+      expect(mockFlagVendorSSRClient.getState).toBeCalledWith(
+        mockSession.group
+      );
     });
 
     it("should wrap the session in a normalizeUndefined call", () => {

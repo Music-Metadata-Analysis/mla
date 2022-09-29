@@ -1,4 +1,4 @@
-import mockUserState from "./fixtures/mock.state.1.json";
+import mockUserState from "./states/state.data.set.1.json";
 import SunBurstDrawer from "../../common/sunburst.report.drawer/sunburst.report.drawer.component";
 import SunBurstBaseReport from "../../common/sunburst.report/sunburst.report.base.class";
 import PlayCountByArtistNode from "../playcount.artists.node.class";

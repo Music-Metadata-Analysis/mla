@@ -11,8 +11,9 @@ jest.mock("react", () => {
 jest.mock("use-persisted-reducer", () =>
   jest.fn(() => mockUsePersistedReducer)
 );
+
 jest.mock(
-  "../local.storage.state/local.storage.state.tsx",
+  "../local.storage.state/local.storage.state",
   () => "mockUsePersistedState"
 );
 

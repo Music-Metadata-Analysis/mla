@@ -6,39 +6,43 @@ import SearchUI from "../search.ui";
 import Authentication from "@src/components/authentication/authentication.container";
 import Billboard from "@src/components/billboard/billboard.component";
 import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
-  const chakraMock = createChakraMock(["Box", "Flex"]);
-  chakraMock.useToast = jest.fn();
-  chakraMock.Avatar = jest.fn().mockImplementation(() => <div>MockAvatar</div>);
-  return chakraMock;
+  const chakraMocks = createChakraMock(["Avatar", "Box", "Flex"]);
+  chakraMocks.useToast = jest.fn();
+  return chakraMocks;
 });
 
 jest.mock("@src/components/authentication/authentication.container", () =>
-  jest.fn(() => <div>MockedAuthenticationComponent</div>)
+  require("@fixtures/react/child").createComponent(
+    "MockedAuthenticationComponent"
+  )
 );
 
 jest.mock("@src/components/billboard/billboard.component", () =>
-  require("@fixtures/react").createComponent("BillBoard")
+  require("@fixtures/react/parent").createComponent("BillBoard")
 );
 
 jest.mock("../search.container", () =>
-  require("@fixtures/react").createComponent("SearchContainer")
+  require("@fixtures/react/parent").createComponent("SearchContainer")
 );
 
 jest.mock("@src/components/icons/lastfm/lastfm.icon", () =>
-  require("@fixtures/react").createComponent("LastFMIcon")
+  require("@fixtures/react/parent").createComponent("LastFMIcon")
 );
 
 describe("SearchUI", () => {
+  let openError: (fieldname: string, message: string) => void;
+  let closeError: (fieldname: string) => void;
+
   const testField = "test_field";
   const testMessage = "test_message";
   const mockTitle = "Mock Title";
   const mockRoute = "/some/fancy/route/here";
-  const mockT = new mockUseLocale("lastfm");
+  const mockT = new MockUseLocale("lastfm");
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -46,6 +50,12 @@ describe("SearchUI", () => {
 
   const arrange = () => {
     render(<SearchUI t={mockT.t} title={mockTitle} route={mockRoute} />);
+  };
+
+  const assignErrorFunctions = () => {
+    const call = jest.mocked(SearchContainer).mock.calls[0][0];
+    openError = call.openError;
+    closeError = call.closeError;
   };
 
   describe("when rendered", () => {
@@ -80,9 +90,10 @@ describe("SearchUI", () => {
 
     it("should call Avatar as expected to display the logo", () => {
       expect(Avatar).toBeCalledTimes(1);
-      const call = (Avatar as jest.Mock).mock.calls[0][0];
+      const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.width).toStrictEqual([50, 50, 75]);
-      expect(renderToString(call.icon)).toBe(renderToString(<LastFMIcon />));
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(renderToString(call.icon!)).toBe(renderToString(<LastFMIcon />));
       expect(Object.keys(call).length).toBe(2);
     });
 
@@ -96,30 +107,20 @@ describe("SearchUI", () => {
   });
 
   describe("when the rendered error functions are called", () => {
-    let openError: (fieldname: string, message: string) => void;
-    let closeError: (fieldname: string) => void;
-    type mockToastType = jest.Mock & {
-      isActive: () => boolean;
-      close: () => null;
-      update: () => null;
-    };
-
-    const mockToast = jest.fn() as mockToastType;
-    mockToast.isActive = () => true;
-    mockToast.close = () => null;
-    mockToast.update = () => null;
+    type chakraToastType = jest.Mock &
+      Record<keyof ReturnType<typeof useToast>, jest.Mock>;
+    const mockToast = jest.fn() as chakraToastType;
+    mockToast.isActive = jest.fn();
+    mockToast.close = jest.fn();
+    mockToast.closeAll = jest.fn();
+    mockToast.update = jest.fn();
 
     describe("when a toast is present", () => {
       beforeEach(() => {
-        jest.clearAllMocks();
-        mockToast.isActive = jest.fn(() => true);
-        mockToast.close = jest.fn();
-        mockToast.update = jest.fn();
-        (useToast as jest.Mock).mockImplementation(() => mockToast);
+        jest.mocked(mockToast.isActive).mockReturnValueOnce(true);
+        jest.mocked(useToast).mockImplementation(() => mockToast);
         arrange();
-        const call = (SearchContainer as jest.Mock).mock.calls[0][0];
-        openError = call.openError;
-        closeError = call.closeError;
+        assignErrorFunctions();
       });
 
       describe("openError", () => {
@@ -157,13 +158,10 @@ describe("SearchUI", () => {
     describe("when a toast is NOT present", () => {
       beforeEach(() => {
         jest.clearAllMocks();
-        mockToast.isActive = jest.fn(() => false);
-        mockToast.close = jest.fn();
-        (useToast as jest.Mock).mockImplementation(() => mockToast);
+        jest.mocked(mockToast.isActive).mockReturnValueOnce(false);
+        jest.mocked(useToast).mockImplementation(() => mockToast);
         arrange();
-        const call = (SearchContainer as jest.Mock).mock.calls[0][0];
-        openError = call.openError;
-        closeError = call.closeError;
+        assignErrorFunctions();
       });
 
       describe("openError", () => {

@@ -1,11 +1,9 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockAuthHook from "./auth.mock.hook";
+import mockHookValues from "../__mocks__/auth.mock";
 import useAuth from "../auth";
 
-jest.mock("@src/clients/auth/vendor", () => ({
-  hook: () => mockAuthHook,
-}));
+jest.mock("@src/clients/auth/vendor");
 
 describe("useAuth", () => {
   let originalEnvironment: typeof process.env;
@@ -35,7 +33,7 @@ describe("useAuth", () => {
 
     it("should contain all the same properties as the mock hook", () => {
       const mockObjectKeys = dk(
-        mockAuthHook as unknown as Record<string, unknown>
+        mockHookValues as unknown as Record<string, unknown>
       ).sort();
       const hookKeys = dk(
         received.result.current as unknown as Record<string, unknown>
@@ -44,8 +42,8 @@ describe("useAuth", () => {
     });
 
     it("should contain the correct functions", () => {
-      expect(received.result.current.signIn).toBe(mockAuthHook.signIn);
-      expect(received.result.current.signOut).toBe(mockAuthHook.signOut);
+      expect(received.result.current.signIn).toBe(mockHookValues.signIn);
+      expect(received.result.current.signOut).toBe(mockHookValues.signOut);
     });
 
     it("should contain the correct defaults", () => {
@@ -59,8 +57,8 @@ describe("useAuth", () => {
       });
 
       it("should call the underlying vendor hook", () => {
-        expect(mockAuthHook.signIn).toBeCalledTimes(1);
-        expect(mockAuthHook.signIn).toBeCalledWith(mockOauthProviderName);
+        expect(mockHookValues.signIn).toBeCalledTimes(1);
+        expect(mockHookValues.signIn).toBeCalledWith(mockOauthProviderName);
       });
     });
 
@@ -70,8 +68,8 @@ describe("useAuth", () => {
       });
 
       it("should call the underlying vendor hook", () => {
-        expect(mockAuthHook.signOut).toBeCalledTimes(1);
-        expect(mockAuthHook.signOut).toBeCalledWith();
+        expect(mockHookValues.signOut).toBeCalledTimes(1);
+        expect(mockHookValues.signOut).toBeCalledWith();
       });
     });
   });

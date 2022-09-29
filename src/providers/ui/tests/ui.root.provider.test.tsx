@@ -7,19 +7,25 @@ import BackGround from "@src/components/background/background.component";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/components/background/background.component", () =>
-  require("@fixtures/react").createComponent("BackGround")
+  require("@fixtures/react/parent").createComponent("BackGround")
 );
 
 jest.mock("../ui.chakra/ui.chakra.provider", () =>
-  require("@fixtures/react").createComponent("UserInterfaceChakraProvider")
+  require("@fixtures/react/parent").createComponent(
+    "UserInterfaceChakraProvider"
+  )
 );
 
 jest.mock("../ui.popups/ui.popups.provider", () =>
-  require("@fixtures/react").createComponent("UserInterfacePopUpsProvider")
+  require("@fixtures/react/parent").createComponent(
+    "UserInterfacePopUpsProvider"
+  )
 );
 
 jest.mock("../ui.images/ui.images.provider", () =>
-  require("@fixtures/react").createComponent("UserInterfaceImagesProvider")
+  require("@fixtures/react/parent").createComponent(
+    "UserInterfaceImagesProvider"
+  )
 );
 
 describe("UserInterfaceRootProvider", () => {

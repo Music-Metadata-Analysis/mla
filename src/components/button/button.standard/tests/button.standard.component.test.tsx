@@ -1,13 +1,13 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import BaseButton from "../../button.base/button.base.component";
 import StyledButton from "../button.standard.component";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+jest.mock("@src/hooks/analytics");
 
 jest.mock("../../button.base/button.base.component", () =>
-  require("@fixtures/react").createComponent("BaseButton")
+  require("@fixtures/react/parent").createComponent("BaseButton")
 );
 
 describe("StandardButton", () => {
@@ -36,7 +36,7 @@ describe("StandardButton", () => {
     checkMockCall(BaseButton, {
       "data-testid": mockTestId,
     });
-    expect((BaseButton as jest.Mock).mock.calls[0][0].onClick).toBe(
+    expect(jest.mocked(BaseButton).mock.calls[0][0].onClick).toBe(
       mockClickHandler
     );
   });

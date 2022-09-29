@@ -1,18 +1,16 @@
 import SunBurstNodeEncapsulation from "../../common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 import PlayCountByArtistNodeEncapsulation from "../playcount.artists.node.class";
 import sunburstTranslations from "@locales/sunburst.json";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("@src/utils/strings", () => ({
-  capitalize: (value: string) => `capitalize(${value})`,
-}));
+jest.mock("@src/utils/strings");
 
 describe(PlayCountByArtistNodeEncapsulation.name, () => {
   let instance: PlayCountByArtistNodeEncapsulation;
   let mockNode: d3Node;
   const expectedLeafEntity = "tracks";
-  const mockT = new mockUseLocale("sunburst").t;
+  const mockT = new MockUseLocale("sunburst").t;
 
   const createProps = (nodeData: unknown) => {
     mockNode = nodeData as d3Node;

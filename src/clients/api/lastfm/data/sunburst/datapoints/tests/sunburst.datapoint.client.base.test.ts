@@ -1,35 +1,9 @@
 import { waitFor } from "@testing-library/react";
 import LastFMBaseSunBurstDataPointClient from "../sunburst.datapoint.client.base.class";
+import APIClient from "@src/clients/api/api.client.class";
 import EventDefinition from "@src/events/event.class";
 import InitialState from "@src/providers/user/user.initial";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
-
-jest.mock("@src/clients/api/api.client.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      request: mockRequest,
-    };
-  });
-});
-
-const mockRequest = jest.fn();
-const mockDispatch = jest.fn();
-const mockEvent = jest.fn();
-
-const mockState = {
-  errorMessage: "Mock Error Message",
-  lastfmPrefix: "A url to lastfm",
-  userProperties: JSON.parse(JSON.stringify(InitialState)),
-  getReportContent: jest.fn(),
-  getReport: jest.fn(),
-  getReportStatus: jest.fn(),
-  getDispatchState: jest.fn(),
-  updateWithResponse: jest.fn(),
-  getProfileImageUrl: jest.fn(),
-  getNextStep: jest.fn(),
-  throwError: jest.fn(),
-  removeEntity: jest.fn(),
-};
 
 class ConcreteLastFMBaseSunBurstDataClient<
   ReportType
@@ -38,12 +12,33 @@ class ConcreteLastFMBaseSunBurstDataClient<
 }
 
 describe("LastFMBaseSunBurstDataClient", () => {
-  const mockUserParams = { userName: "user1234" };
-  const mockParamWithArtist = { ...mockUserParams, artist: "Mock Artist" };
-  const mockAPIResponse = { data: "mocked data" };
+  let instance: ConcreteLastFMBaseSunBurstDataClient<LastFMTopAlbumsReportResponseInterface>;
+  let mockRequest: jest.SpyInstance;
+
   const integrationType = "LAST.FM";
   const reportType = "BASE";
-  let instance: ConcreteLastFMBaseSunBurstDataClient<LastFMTopAlbumsReportResponseInterface>;
+
+  const mockAPIResponse = { data: "mocked data" };
+  const mockUserParams = { userName: "user1234" };
+  const mockUserParamsWithArtist = { ...mockUserParams, artist: "Mock Artist" };
+
+  const mockDispatch = jest.fn();
+  const mockEvent = jest.fn();
+  const mockState = {
+    errorMessage: "Mock Error Message",
+    lastfmPrefix: "A url to lastfm",
+    userProperties: JSON.parse(JSON.stringify(InitialState)),
+    getReportContent: jest.fn(),
+    getReport: jest.fn(),
+    getReportStatus: jest.fn(),
+    getDispatchState: jest.fn(),
+    updateWithResponse: jest.fn(),
+    getProfileImageUrl: jest.fn(),
+    getNextStep: jest.fn(),
+    throwError: jest.fn(),
+    removeEntity: jest.fn(),
+  };
+
   const requestEvent = new EventDefinition({
     category: "LAST.FM",
     label: "REQUEST",
@@ -57,6 +52,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockRequest = jest.spyOn(APIClient.prototype, "request");
   });
 
   const arrange = () => {
@@ -101,17 +97,15 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
       describe("when the report is complete", () => {
         beforeEach(() => {
-          mockState.getReportStatus.mockImplementation(() => ({
+          mockState.getReportStatus.mockReturnValueOnce({
             complete: true,
-          }));
-          mockState.getDispatchState.mockImplementation(
-            () => mockCompleteReport
-          );
+          });
+          mockState.getDispatchState.mockReturnValueOnce(mockCompleteReport);
+          instance = arrange();
         });
 
         describe("when called with initial params", () => {
           beforeEach(() => {
-            instance = arrange();
             instance.retrieveReport(mockUserParams);
           });
 
@@ -156,14 +150,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
         describe("when called with non-initial params", () => {
           beforeEach(() => {
-            mockState.getReportStatus.mockImplementation(() => ({
-              complete: true,
-            }));
-            mockState.getDispatchState.mockImplementation(
-              () => mockCompleteReport
-            );
-            instance = arrange();
-            instance.retrieveReport(mockParamWithArtist);
+            instance.retrieveReport(mockUserParamsWithArtist);
           });
 
           checkUrl();
@@ -172,7 +159,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
             expect(mockState.updateWithResponse).toBeCalledTimes(1);
             expect(mockState.updateWithResponse).toBeCalledWith(
               mockAPIResponse,
-              mockParamWithArtist,
+              mockUserParamsWithArtist,
               instance.route
             );
           });
@@ -184,7 +171,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "SuccessFetch",
-              userName: mockParamWithArtist.userName,
+              userName: mockUserParamsWithArtist.userName,
               data: mockCompleteReport,
               integration: integrationType,
             });
@@ -199,17 +186,15 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
       describe("when the report is not complete", () => {
         beforeEach(() => {
-          mockState.getReportStatus.mockImplementation(() => ({
+          mockState.getReportStatus.mockReturnValueOnce({
             complete: false,
-          }));
-          mockState.getDispatchState.mockImplementation(
-            () => mockInCompleteReport
-          );
+          });
+          mockState.getDispatchState.mockReturnValueOnce(mockInCompleteReport);
+          instance = arrange();
         });
 
         describe("when called with initial params", () => {
           beforeEach(() => {
-            instance = arrange();
             instance.retrieveReport(mockUserParams);
           });
 
@@ -245,7 +230,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
         describe("when called with NON initial params", () => {
           beforeEach(() => {
-            instance.retrieveReport(mockParamWithArtist);
+            instance.retrieveReport(mockUserParamsWithArtist);
           });
 
           checkUrl();
@@ -254,7 +239,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
             expect(mockState.updateWithResponse).toBeCalledTimes(1);
             expect(mockState.updateWithResponse).toBeCalledWith(
               mockAPIResponse,
-              mockParamWithArtist,
+              mockUserParamsWithArtist,
               instance.route
             );
           });
@@ -280,12 +265,12 @@ describe("LastFMBaseSunBurstDataClient", () => {
     describe("when a request fails", () => {
       beforeEach(() => {
         setUpRetrieve(false, 400);
-        mockState.getDispatchState.mockImplementation(() => mockCompleteReport);
+        mockState.getDispatchState.mockReturnValueOnce(mockCompleteReport);
+        instance = arrange();
       });
 
       describe("when called with initial params", () => {
         beforeEach(() => {
-          instance = arrange();
           instance.retrieveReport(mockUserParams);
         });
 
@@ -324,8 +309,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
       describe("when called with NON initial params", () => {
         beforeEach(() => {
-          instance = arrange();
-          instance.retrieveReport(mockParamWithArtist);
+          instance.retrieveReport(mockUserParamsWithArtist);
         });
 
         checkUrl();
@@ -343,7 +327,9 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
         it("should remove the entity", () => {
           expect(mockState.removeEntity).toBeCalledTimes(1);
-          expect(mockState.removeEntity).toBeCalledWith(mockParamWithArtist);
+          expect(mockState.removeEntity).toBeCalledWith(
+            mockUserParamsWithArtist
+          );
         });
 
         it("should register events correctly", async () => {
@@ -355,14 +341,12 @@ describe("LastFMBaseSunBurstDataClient", () => {
     describe("when a request is unauthorized", () => {
       beforeEach(() => {
         setUpRetrieve(true, 401);
+        mockState.getDispatchState.mockReturnValueOnce(mockCompleteReport);
+        instance = arrange();
       });
 
       describe("when called with initial params", () => {
         beforeEach(() => {
-          mockState.getDispatchState.mockImplementation(
-            () => mockCompleteReport
-          );
-          instance = arrange();
           instance.retrieveReport(mockUserParams);
         });
 
@@ -397,11 +381,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
       describe("when called with NON initial params", () => {
         beforeEach(() => {
-          mockState.getDispatchState.mockImplementation(
-            () => mockCompleteReport
-          );
-          instance = arrange();
-          instance.retrieveReport(mockParamWithArtist);
+          instance.retrieveReport(mockUserParamsWithArtist);
         });
 
         checkUrl();
@@ -413,7 +393,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "UnauthorizedFetch",
-            userName: mockParamWithArtist.userName,
+            userName: mockUserParamsWithArtist.userName,
             integration: integrationType,
           });
         });
@@ -434,7 +414,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
     describe("when a request returns not found", () => {
       beforeEach(() => {
         setUpRetrieve(true, 404);
-        mockState.getDispatchState.mockImplementation(() => mockCompleteReport);
+        mockState.getDispatchState.mockReturnValueOnce(mockCompleteReport);
         instance = arrange();
       });
 
@@ -478,7 +458,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
       describe("when called with NON initial params", () => {
         beforeEach(() => {
-          instance.retrieveReport(mockParamWithArtist);
+          instance.retrieveReport(mockUserParamsWithArtist);
         });
 
         checkUrl();
@@ -496,7 +476,9 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
         it("should remove the entity", () => {
           expect(mockState.removeEntity).toBeCalledTimes(1);
-          expect(mockState.removeEntity).toBeCalledWith(mockParamWithArtist);
+          expect(mockState.removeEntity).toBeCalledWith(
+            mockUserParamsWithArtist
+          );
         });
 
         it("should register events correctly", async () => {
@@ -508,11 +490,11 @@ describe("LastFMBaseSunBurstDataClient", () => {
     describe("when a request is ratelimited", () => {
       beforeEach(() => {
         setUpRetrieve(true, 429);
+        instance = arrange();
       });
 
       describe("when called with initial params", () => {
         beforeEach(() => {
-          instance = arrange();
           instance.retrieveReport(mockUserParams);
         });
 
@@ -547,8 +529,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
       describe("when called with NON initial params", () => {
         beforeEach(() => {
-          instance = arrange();
-          instance.retrieveReport(mockParamWithArtist);
+          instance.retrieveReport(mockUserParamsWithArtist);
         });
 
         checkUrl();
@@ -580,26 +561,23 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
     describe("when a request time out", () => {
       beforeEach(() => {
-        mockState.getDispatchState.mockImplementation(
-          () => mockInCompleteReport
-        );
-        instance = arrange();
+        mockState.getDispatchState.mockReturnValueOnce(mockInCompleteReport);
       });
 
-      const waitForBackoff = async () => {
+      const waitForBackOff = async () => {
         await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
       };
 
       describe("with a retry header", () => {
         beforeEach(() => {
           setUpRetrieve(true, 503, { "retry-after": "0" });
+          instance = arrange();
         });
 
         describe("when called with initial params", () => {
           beforeEach(async () => {
-            instance = arrange();
             instance.retrieveReport(mockUserParams);
-            await waitForBackoff();
+            await waitForBackOff();
           });
 
           checkUrl();
@@ -624,9 +602,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
         describe("when called with NON initial params", () => {
           beforeEach(async () => {
-            instance = arrange();
-            instance.retrieveReport(mockParamWithArtist);
-            await waitForBackoff();
+            instance.retrieveReport(mockUserParamsWithArtist);
+            await waitForBackOff();
           });
 
           checkUrl();
@@ -650,13 +627,13 @@ describe("LastFMBaseSunBurstDataClient", () => {
       describe("without a retry header", () => {
         beforeEach(() => {
           setUpRetrieve(true, 503);
+          instance = arrange();
         });
 
         describe("when called with initial params", () => {
           beforeEach(async () => {
-            instance = arrange();
             instance.retrieveReport(mockUserParams);
-            await waitForBackoff();
+            await waitForBackOff();
           });
 
           checkUrl();
@@ -690,9 +667,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
         describe("when called with NON initial params", () => {
           beforeEach(async () => {
-            instance = arrange();
-            instance.retrieveReport(mockParamWithArtist);
-            await waitForBackoff();
+            instance.retrieveReport(mockUserParamsWithArtist);
+            await waitForBackOff();
           });
 
           checkUrl();
@@ -704,7 +680,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "FailureFetch",
-              userName: mockParamWithArtist.userName,
+              userName: mockUserParamsWithArtist.userName,
               integration: integrationType,
             });
           });

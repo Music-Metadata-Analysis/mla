@@ -2,7 +2,9 @@ import { render } from "@testing-library/react";
 import FeedbackPopup from "../feedback.popup";
 import RootPopup from "../root.popup";
 
-jest.mock("../feedback.popup", () => jest.fn(() => <div>FeedbackPopup</div>));
+jest.mock("../feedback.popup", () =>
+  require("@fixtures/react/child").createComponent("FeedbackPopup")
+);
 
 describe("RootPopup", () => {
   beforeEach(() => {

@@ -3,16 +3,12 @@ import { UserInterfacePopUpsReducer } from "../ui.popups.reducer";
 import type { UserInterfacePopUpsActionType } from "@src/types/ui/popups/ui.popups.action.types";
 import type { UserInterfacePopUpsStateInterface } from "@src/types/ui/popups/ui.popups.state.types";
 
-jest.mock("../ui.popups.reducer.states.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return mockStates;
-  });
-});
+jest.mock("../ui.popups.reducer.states.class", () => jest.fn(() => mockStates));
 
 const mockReturn = "MockReturnedState";
 const mockStates = {
-  HidePopUp: jest.fn().mockReturnValue(mockReturn),
-  ShowPopUp: jest.fn().mockReturnValue(mockReturn),
+  HidePopUp: jest.fn(() => mockReturn),
+  ShowPopUp: jest.fn(() => mockReturn),
 };
 
 describe("UserInterfacePopUpsReducer", () => {

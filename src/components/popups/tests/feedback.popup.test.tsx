@@ -4,24 +4,21 @@ import FeedbackPopUp from "../feedback.popup";
 import PopUp from "../popup/popup.component";
 import translations from "@locales/main.json";
 import settings from "@src/config/popups";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
-import mockMetricsHook from "@src/hooks/tests/metrics.mock.hook";
-import mockUserInterfaceHook from "@src/hooks/tests/ui.mock.hook";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
+import mockMetricsHook from "@src/hooks/__mocks__/metrics.mock";
+import mockUserInterfaceHook from "@src/hooks/__mocks__/ui.mock";
 
-jest.mock("@src/hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/auth");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
-jest.mock("@src/hooks/metrics", () => () => mockMetricsHook);
+jest.mock("@src/hooks/metrics");
 
-jest.mock("@src/hooks/ui", () => () => mockUserInterfaceHook);
+jest.mock("@src/hooks/ui");
 
 jest.mock("../popup/popup.component", () =>
-  jest.fn(() => <div>MockPopup</div>)
+  require("@fixtures/react/child").createComponent("Popup")
 );
 
 describe("FeedBackPopup", () => {
@@ -69,7 +66,7 @@ describe("FeedBackPopup", () => {
 
         it("should call the PopUp component", () => {
           expect(PopUp).toBeCalledTimes(1);
-          const call = (PopUp as jest.Mock).mock.calls[0][0];
+          const call = jest.mocked(PopUp).mock.calls[0][0];
           expect(call.name).toBe(mockPopUpName);
           expect(call.message).toBe(_t(translations.popups.FeedBack));
           expect(call.Component).toBe(FeedbackDialogue);
@@ -101,7 +98,7 @@ describe("FeedBackPopup", () => {
 
         it("should call the PopUp component", () => {
           expect(PopUp).toBeCalledTimes(1);
-          const call = (PopUp as jest.Mock).mock.calls[0][0];
+          const call = jest.mocked(PopUp).mock.calls[0][0];
           expect(call.name).toBe(mockPopUpName);
           expect(call.message).toBe(_t(translations.popups.FeedBack));
           expect(call.Component).toBe(FeedbackDialogue);

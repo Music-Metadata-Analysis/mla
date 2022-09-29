@@ -1,49 +1,37 @@
 import { LockIcon } from "@chakra-ui/icons";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import NavBarSessionControl from "../navbar.session.control.component";
-import Authentication from "@src/components/authentication/authentication.container";
+import authenticationTranslocations from "@locales/authentication.json";
 import { testIDs as modalIDs } from "@src/components/authentication/modals/modal.signin.component";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import mockRouter from "@src/tests/fixtures/mock.router";
 
-jest.mock("@src/hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/auth");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
+jest.mock("@src/hooks/locale");
+
+jest.mock("@chakra-ui/icons", () =>
+  require("@fixtures/chakra/icons").createChakraIconMock(["LockIcon"])
+);
+
+jest.mock("react-icons/ri", () =>
+  require("@fixtures/react/child").createComponent(
+    "RiLogoutBoxRLine",
+    "RiLogoutBoxRLine"
+  )
 );
 
 jest.mock(
   "@src/components/analytics/analytics.button/analytics.button.component",
-  () => require("@fixtures/react").createComponent("AnalyticsWrapper")
+  () => require("@fixtures/react/parent").createComponent("AnalyticsWrapper")
 );
 
-jest.mock("@src/components/authentication/authentication.container", () => {
-  const Component = jest.requireActual(
-    "@src/components/authentication/authentication.container"
-  ).default;
-  return jest.fn((props) => <Component {...props} />);
-});
-
-jest.mock("@chakra-ui/icons", () => {
-  const { createChakraIconMock } = require("@fixtures/chakra/icons");
-  const instance = createChakraIconMock(["LockIcon"]);
-  instance.useColorMode = jest.fn();
-  return instance;
-});
-
-jest.mock("react-icons/ri", () => ({
-  RiLogoutBoxRLine: jest
-    .fn()
-    .mockImplementation((props) => <div {...props}>MockRiLogoutBoxRLine</div>),
-}));
-
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  jest.fn(() => <div>MockVerticalScrollBar</div>)
+  require("@fixtures/react/child").createComponent("VerticalScrollBar")
 );
 
 describe("NavSessionControl", () => {
@@ -104,7 +92,11 @@ describe("NavSessionControl", () => {
       });
 
       it("should show the authentication modal ", async () => {
-        expect(Authentication).toBeCalledTimes(1);
+        await waitFor(async () =>
+          expect(
+            await screen.findByText(_t(authenticationTranslocations.title))
+          ).toBeVisible()
+        );
       });
 
       describe("when the modal is closed", () => {

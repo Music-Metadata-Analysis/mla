@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockUseNavBar from "./navbar.mock.hook";
+import mockHookValues from "../__mocks__/navbar.mock";
 import useNavBar from "../navbar";
 import NavConfig from "@src/config/navbar";
 import NavBarProvider from "@src/providers/navbar/navbar.provider";
@@ -62,7 +62,7 @@ describe("useNavBar", () => {
     });
 
     it("should contain all the same properties as the mock hook", () => {
-      const mockObjectKeys = dk(mockUseNavBar).sort();
+      const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(received.result.current).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });

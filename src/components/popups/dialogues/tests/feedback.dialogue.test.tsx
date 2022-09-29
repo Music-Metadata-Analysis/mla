@@ -7,13 +7,15 @@ import ClickLink from "@src/components/clickable/click.link.external/click.link.
 import SVSIcon from "@src/components/icons/svs/svs.icon";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
 import externalRoutes from "@src/config/external";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
+jest.mock("@src/hooks/colour");
+
+jest.mock("@src/hooks/locale");
+
+jest.mock("@chakra-ui/icons", () =>
+  require("@fixtures/chakra/icons").createChakraIconMock(["CloseIcon"])
 );
 
 jest.mock("@chakra-ui/react", () =>
@@ -25,19 +27,13 @@ jest.mock("@chakra-ui/react", () =>
   ])
 );
 
-jest.mock("@chakra-ui/icons", () =>
-  require("@fixtures/chakra/icons").createChakraIconMock(["CloseIcon"])
-);
-
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
-
 jest.mock(
   "@src/components/clickable/click.link.external/click.link.external.component",
-  () => require("@fixtures/react").createComponent("ClickLink")
+  () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 
 jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
-  require("@fixtures/react").createComponent("DimOnHover")
+  require("@fixtures/react/parent").createComponent("DimOnHover")
 );
 
 describe("FeedbackDialogue", () => {
@@ -55,10 +51,11 @@ describe("FeedbackDialogue", () => {
 
   it("should call Avatar as expected to display the logo", () => {
     expect(Avatar).toBeCalledTimes(1);
-    const call = (Avatar as jest.Mock).mock.calls[0][0];
+    const call = jest.mocked(Avatar).mock.calls[0][0];
     expect(call["data-testid"]).toBe(testIDs.FeedBackDialogueIcon);
     expect(call.width).toStrictEqual(50);
-    expect(renderToString(call.icon)).toBe(
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    expect(renderToString(call.icon!)).toBe(
       renderToString(<SVSIcon width={75} height={75} />)
     );
     expect(Object.keys(call).length).toBe(3);

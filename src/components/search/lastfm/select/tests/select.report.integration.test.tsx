@@ -2,23 +2,22 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import Select from "../select.report.component";
 import translations from "@locales/lastfm.json";
 import config from "@src/config/lastfm";
-import mockUseFlags from "@src/hooks/tests/flags.mock.hook";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockUseFlags from "@src/hooks/__mocks__/flags.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockRouter from "@src/tests/fixtures/mock.router";
 
-jest.mock("@src/hooks/flags", () => () => mockUseFlags);
+jest.mock("@src/hooks/flags");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
 jest.mock("next/router", () => ({
   useRouter: () => mockRouter,
 }));
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react").createComponent("VerticalScrollBarComponent")
+  require("@fixtures/react/parent").createComponent(
+    "VerticalScrollBarComponent"
+  )
 );
 
 type translationKeyType = keyof typeof translations["select"][
@@ -34,8 +33,7 @@ describe("SearchSelection", () => {
     enableAllFlags();
   });
 
-  const enableAllFlags = () =>
-    (mockUseFlags.isEnabled as jest.Mock).mockReturnValue(true);
+  const enableAllFlags = () => mockUseFlags.isEnabled.mockReturnValue(true);
 
   const arrange = () => {
     render(<Select scrollRef={mockRef} />);

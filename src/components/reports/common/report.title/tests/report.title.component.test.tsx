@@ -1,15 +1,15 @@
 import { Box, Container, Text } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
 import ReportTitle from "../report.title.component";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
+
+jest.mock("@src/hooks/colour");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Box", "Container", "Text"]);
 });
-
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 describe("ReportTitle", () => {
   const testProps = {

@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import AnalyticsGenericWrapper from "../analytics.generic.component";
 import Event from "@src/events/event.class";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+jest.mock("@src/hooks/analytics");
 
 describe("AnalyticsEventWrapper", () => {
   const buttonText = "Click Me";

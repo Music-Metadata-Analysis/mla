@@ -1,11 +1,9 @@
 import { extendTheme } from "@chakra-ui/react";
 import createTheme, { components } from "../ui.chakra.theme";
 
-jest.mock("@chakra-ui/react", () => {
-  return {
-    extendTheme: jest.fn((props) => props),
-  };
-});
+jest.mock("@chakra-ui/react", () => ({
+  extendTheme: jest.fn((props) => props),
+}));
 
 describe("theme", () => {
   let result: Record<string, string>;

@@ -1,20 +1,20 @@
 import { Button } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import NavBarLink from "../navbar.link.component";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import mockRouter from "@src/tests/fixtures/mock.router";
+
+jest.mock("@src/hooks/colour");
+
+jest.mock("next/router", () => ({
+  useRouter: () => mockRouter,
+}));
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Button"]);
 });
-
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
-
-jest.mock("next/router", () => ({
-  useRouter: () => mockRouter,
-}));
 
 describe("NavBarLink", () => {
   const linkText = "Link";

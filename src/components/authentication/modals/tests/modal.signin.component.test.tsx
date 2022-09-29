@@ -1,6 +1,6 @@
 import {
   // @ts-ignore: mocked with forwardRef
-  BoxWithFwdRef,
+  BoxWithRef,
   Center,
   Container,
   Flex,
@@ -18,49 +18,44 @@ import ModalComponent, { testIDs } from "../modal.signin.component";
 import ClickLink from "@src/components/clickable/click.link.internal/click.link.internal.component";
 import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
 import routes from "@src/config/routes";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
+jest.mock("@src/hooks/colour");
+
+jest.mock("@src/hooks/locale");
+
 jest.mock("@chakra-ui/react", () => {
-  const { forwardRef } = require("react");
   const { createChakraMock } = require("@fixtures/chakra");
-  const instance = createChakraMock([
-    "Box",
-    "Center",
-    "Container",
-    "Flex",
-    "Modal",
-    "ModalContent",
-    "ModalHeader",
-    "ModalFooter",
-    "ModalBody",
-  ]);
+  const instance = createChakraMock(
+    [
+      "Center",
+      "Container",
+      "Flex",
+      "Modal",
+      "ModalContent",
+      "ModalHeader",
+      "ModalFooter",
+      "ModalBody",
+    ],
+    ["Box"]
+  );
   instance.ModalOverlay = jest.fn(() => "ModalOverlay");
   instance.ModalCloseButton = jest.fn(() => "ModalCloseButton");
-  instance.BoxWithFwdRef = instance.Box;
-  instance.Box = forwardRef(instance.Box);
   return instance;
 });
 
 jest.mock("../../buttons/signin.buttons", () =>
-  jest.fn(() => <div>MockSignInButtons</div>)
+  require("@fixtures/react/child").createComponent("SignInButtons")
 );
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  jest.fn(() => <div>MockVerticalScrollBar</div>)
-);
-
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
-
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
+  require("@fixtures/react/child").createComponent("VerticalScrollBar")
 );
 
 jest.mock(
   "@src/components/clickable/click.link.internal/click.link.internal.component",
-  () => require("@fixtures/react").createComponent("ClickLink")
+  () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 
 const mockOnClose = jest.fn();
@@ -85,16 +80,16 @@ describe("AuthenticationModal", () => {
   };
 
   it("should call the Box component correctly", () => {
-    expect(BoxWithFwdRef).toBeCalledTimes(2);
+    expect(BoxWithRef).toBeCalledTimes(2);
     checkMockCall(
-      BoxWithFwdRef,
+      BoxWithRef,
       {
         borderWidth: 1,
       },
       0
     );
     checkMockCall(
-      BoxWithFwdRef,
+      BoxWithRef,
       {
         className: "scrollbar",
         id: "SignInProvidersScrollArea",
@@ -194,7 +189,7 @@ describe("AuthenticationModal", () => {
 
   it("should call the VerticalScrollBar component correctly", () => {
     expect(VerticalScrollBar).toBeCalledTimes(1);
-    const call = (VerticalScrollBar as jest.Mock).mock.calls[0][0];
+    const call = jest.mocked(VerticalScrollBar).mock.calls[0][0];
     expect(call.scrollRef).toBeDefined();
     expect(call.update).toBe(null);
     expect(call.horizontalOffset).toBe(10);
@@ -205,7 +200,7 @@ describe("AuthenticationModal", () => {
 
   it("should call the SignInButtons component correctly", () => {
     expect(SignInButtons).toBeCalledTimes(1);
-    const call = (SignInButtons as jest.Mock).mock.calls[0][0];
+    const call = jest.mocked(SignInButtons).mock.calls[0][0];
     expect(call.signIn).toBe(mockSignIn);
     expect(call.setClicked).toBe(mockSetClicked);
     expect(typeof call.t).toBe("function");

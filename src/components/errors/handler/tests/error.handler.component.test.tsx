@@ -4,7 +4,7 @@ import ErrorHandler from "../error.handler.component";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("../../display/error.display.component", () =>
-  require("@fixtures/react").createComponent("ErrorDisplay")
+  require("@fixtures/react/parent").createComponent("ErrorDisplay")
 );
 
 describe("ErrorHandler", () => {

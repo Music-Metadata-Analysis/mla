@@ -2,11 +2,10 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import { useTranslation } from "next-i18next";
 import useNextI18NextVendor from "../next-i18next";
-import mockUseFlagsHook from "@src/hooks/tests/locale.mock.hook";
+import { mockLocaleVendorHook as mockHookValues } from "@src/clients/locale/__mocks__/vendor.mock";
+import type { LocaleVendorHookInterface } from "@src/types/clients/locale/vendor.types";
 
-jest.mock("next-i18next", () => ({
-  useTranslation: jest.fn(),
-}));
+jest.mock("next-i18next");
 
 describe("useNextI18NextVendor", () => {
   let received: ReturnType<typeof arrange>;
@@ -17,9 +16,9 @@ describe("useNextI18NextVendor", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (useTranslation as jest.Mock).mockImplementation(() => ({
+    (useTranslation as jest.Mock).mockReturnValueOnce({
       t: mockT,
-    }));
+    });
   });
 
   const arrange = () => {
@@ -35,11 +34,12 @@ describe("useNextI18NextVendor", () => {
 
   const checkHookProperties = () => {
     it("should contain all the same properties as the mock hook", () => {
-      const mockObjectKeys = dk(
-        mockUseFlagsHook as unknown as Record<string, unknown>
-      ).sort();
+      const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(
-        received.result.current as unknown as Record<string, unknown>
+        received.result.current as Record<
+          keyof LocaleVendorHookInterface,
+          unknown
+        >
       ).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });

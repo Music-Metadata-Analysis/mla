@@ -2,20 +2,20 @@ import { Container, ListItem, UnorderedList } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import Toggle from "../about.toggle.component";
 import dialogueSettings from "@src/config/dialogue";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-
-jest.mock("@src/components/icons/svs/svs.icon", () =>
-  jest.fn(() => <div>MockIcon</div>)
-);
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Container", "ListItem", "UnorderedList"]);
 });
 
+jest.mock("@src/components/icons/svs/svs.icon", () =>
+  require("@fixtures/react/child").createComponent("Icon")
+);
+
 describe("AboutToggle", () => {
-  const mockT = new mockUseLocale("about").t;
+  const mockT = new MockUseLocale("about").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

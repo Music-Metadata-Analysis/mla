@@ -1,8 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { act, render, fireEvent } from "@testing-library/react";
-import { MockReportClass } from "./fixtures/mock.sunburst.report.class";
+import { MockReportClass } from "./implementations/concrete.sunburst.report.class";
 import * as layout from "../layout/sunburst.report.layout";
-import mockUseSunBurstLayout from "../layout/tests/fixtures/mock.sunburst.report.layout.hook";
 import SunBurstControlPanel from "../panels/control.panel.component";
 import SunBurstInfoPanel from "../panels/info.panel.component";
 import SunBurstNotVisiblePanel from "../panels/not.visible.panel.component";
@@ -12,27 +11,27 @@ import SunBurstReport, {
   SunBurstReportLayouts,
 } from "../sunburst.report.component";
 import SunBurstChartUI from "@src/components/reports/common/sunburst/chart.ui.component";
+import mockLayoutHookValues from "@src/components/reports/lastfm/common/sunburst.report/layout/__mocks__/sunburst.report.layout.hook.mock";
 import settings from "@src/config/sunburst";
 import Events from "@src/events/events";
-import mockUseAnalytics from "@src/hooks/tests/analytics.mock.hook";
-import mockNavBarHook from "@src/hooks/tests/navbar.mock.hook";
-import mockUseSunBurstState from "@src/hooks/tests/sunburst.mock.hook";
+import mockUseAnalytics from "@src/hooks/__mocks__/analytics.mock";
+import mockNavBarHook from "@src/hooks/__mocks__/navbar.mock";
+import mockSunBurstState from "@src/hooks/__mocks__/sunburst.mock";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import { getMockComponentProp } from "@src/tests/fixtures/mock.component.props";
 import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("@src/hooks/analytics", () => () => mockUseAnalytics);
+jest.mock("@src/hooks/analytics");
+
+jest.mock("@src/hooks/navbar");
+
+jest.mock("@src/hooks/sunburst");
 
 jest.mock(
-  "../layout/sunburst.report.layout.hook",
-  () => () => mockUseSunBurstLayout
+  "@src/components/reports/lastfm/common/sunburst.report/layout/sunburst.report.layout.hook"
 );
-
-jest.mock("@src/hooks/sunburst", () => () => mockUseSunBurstState);
-
-jest.mock("@src/hooks/navbar", () => () => mockNavBarHook);
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
@@ -43,13 +42,9 @@ jest.mock("@chakra-ui/react", () => {
   return mock;
 });
 
-jest.mock("@src/components/reports/common/sunburst/chart.ui.component", () =>
-  require("@fixtures/react").createComponent("SunBurstChartUI")
-);
-
 jest.mock("@src/events/events", () => ({
   LastFM: {
-    SunBurstNodeSelected: jest.fn().mockReturnValue("CorrectAnalyticsEvent!"),
+    SunBurstNodeSelected: jest.fn(() => "CorrectAnalyticsEvent!"),
   },
 }));
 
@@ -58,20 +53,24 @@ jest.mock("../layout/sunburst.report.layout", () => ({
   getLayoutType: jest.fn(),
 }));
 
+jest.mock("@src/components/reports/common/sunburst/chart.ui.component", () =>
+  require("@fixtures/react/parent").createComponent("SunBurstChartUI")
+);
+
 jest.mock("../panels/control.panel.component", () =>
-  require("@fixtures/react").createComponent("SunBurstControlPanel")
+  require("@fixtures/react/parent").createComponent("SunBurstControlPanel")
 );
 
 jest.mock("../panels/info.panel.component", () =>
-  require("@fixtures/react").createComponent("SunBurstInfoPanel")
+  require("@fixtures/react/parent").createComponent("SunBurstInfoPanel")
 );
 
 jest.mock("../panels/not.visible.panel.component", () =>
-  require("@fixtures/react").createComponent("SunBurstNotVisiblePanel")
+  require("@fixtures/react/parent").createComponent("SunBurstNotVisiblePanel")
 );
 
 jest.mock("../panels/title.panel.component", () =>
-  require("@fixtures/react").createComponent("SunBurstTitlePanel")
+  require("@fixtures/react/parent").createComponent("SunBurstTitlePanel")
 );
 
 const mockDisclosure = {
@@ -103,9 +102,9 @@ describe("SunBurstReport", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSunBurstState.getters.selectedNode ===
+    mockSunBurstState.getters.selectedNode ===
       (JSON.parse(JSON.stringify(nullNode)) as d3Node);
-    mockUseSunBurstState.getters.selectedNode.data = mockNode.data;
+    mockSunBurstState.getters.selectedNode.data = mockNode.data;
     createProps();
   });
 
@@ -128,7 +127,7 @@ describe("SunBurstReport", () => {
     display: "inline" | "none";
   }) => {
     it("should call the top level Flex component correctly", () => {
-      expect((Flex as jest.Mock).mock.calls.length).toBeGreaterThan(0);
+      expect(jest.mocked(Flex).mock.calls.length).toBeGreaterThan(0);
       checkMockCall(
         Flex,
         {
@@ -154,7 +153,7 @@ describe("SunBurstReport", () => {
   }) => {
     if (visible) {
       it("should call the layout control Flex component correctly", () => {
-        expect((Flex as jest.Mock).mock.calls.length).toBeGreaterThan(1);
+        expect(jest.mocked(Flex).mock.calls.length).toBeGreaterThan(1);
         checkMockCall(
           Flex,
           {
@@ -449,10 +448,8 @@ describe("SunBurstReport", () => {
         });
 
         it("should call the correct setter with the correct value", async () => {
-          expect(mockUseSunBurstState.setters.setSvgTransition).toBeCalledTimes(
-            1
-          );
-          expect(mockUseSunBurstState.setters.setSvgTransition).toBeCalledWith(
+          expect(mockSunBurstState.setters.setSvgTransition).toBeCalledTimes(1);
+          expect(mockSunBurstState.setters.setSvgTransition).toBeCalledWith(
             false
           );
         });
@@ -481,12 +478,12 @@ describe("SunBurstReport", () => {
             checkAnalytics();
 
             it("should call the correct setter with the correct value", async () => {
-              expect(
-                mockUseSunBurstState.setters.setSelectedNode
-              ).toBeCalledTimes(1);
-              expect(
-                mockUseSunBurstState.setters.setSelectedNode
-              ).toBeCalledWith(selectedNode);
+              expect(mockSunBurstState.setters.setSelectedNode).toBeCalledTimes(
+                1
+              );
+              expect(mockSunBurstState.setters.setSelectedNode).toBeCalledWith(
+                selectedNode
+              );
             });
           });
         });
@@ -505,12 +502,12 @@ describe("SunBurstReport", () => {
             checkAnalytics();
 
             it("should call the correct setter with the correct value", async () => {
-              expect(
-                mockUseSunBurstState.setters.setSelectedNode
-              ).toBeCalledTimes(1);
-              expect(
-                mockUseSunBurstState.setters.setSelectedNode
-              ).toBeCalledWith(selectedNode);
+              expect(mockSunBurstState.setters.setSelectedNode).toBeCalledTimes(
+                1
+              );
+              expect(mockSunBurstState.setters.setSelectedNode).toBeCalledWith(
+                selectedNode
+              );
             });
           });
         });
@@ -529,12 +526,12 @@ describe("SunBurstReport", () => {
             checkAnalytics();
 
             it("should call the correct setter with the correct value", async () => {
-              expect(
-                mockUseSunBurstState.setters.setSelectedNode
-              ).toBeCalledTimes(1);
-              expect(
-                mockUseSunBurstState.setters.setSelectedNode
-              ).toBeCalledWith(selectedNode);
+              expect(mockSunBurstState.setters.setSelectedNode).toBeCalledTimes(
+                1
+              );
+              expect(mockSunBurstState.setters.setSelectedNode).toBeCalledWith(
+                selectedNode
+              );
             });
           });
         });
@@ -542,19 +539,19 @@ describe("SunBurstReport", () => {
 
       describe("updateLayout", () => {
         beforeEach(() => {
-          mockUseSunBurstLayout.setters.setFitsOnScreen.mockClear();
-          mockUseSunBurstLayout.setters.setCurrentLayout.mockClear();
-          (layout.getLayoutType as jest.Mock).mockClear();
+          mockLayoutHookValues.setters.setFitsOnScreen.mockClear();
+          mockLayoutHookValues.setters.setCurrentLayout.mockClear();
+          jest.mocked(layout.getLayoutType).mockClear();
         });
 
         const checkFitsOnScreen = () => {
           it("should be called to update the layout", () => {
             expect(
-              mockUseSunBurstLayout.setters.setFitsOnScreen
+              mockLayoutHookValues.setters.setFitsOnScreen
             ).toBeCalledTimes(1);
-            expect(
-              mockUseSunBurstLayout.setters.setFitsOnScreen
-            ).toBeCalledWith(layout.canFitOnScreen());
+            expect(mockLayoutHookValues.setters.setFitsOnScreen).toBeCalledWith(
+              layout.canFitOnScreen()
+            );
           });
         };
 
@@ -570,15 +567,15 @@ describe("SunBurstReport", () => {
           const checkSetCurrentLayout = () => {
             it("should be called to update the layout", () => {
               expect(
-                mockUseSunBurstLayout.setters.setCurrentLayout
+                mockLayoutHookValues.setters.setCurrentLayout
               ).toBeCalledTimes(1);
               expect(
-                mockUseSunBurstLayout.setters.setCurrentLayout
+                mockLayoutHookValues.setters.setCurrentLayout
               ).toBeCalledWith(layoutType);
               expect(layout.getLayoutType).toBeCalledTimes(1);
               expect(layout.getLayoutType).toBeCalledWith(
-                mockUseSunBurstLayout.sections.info,
-                mockUseSunBurstLayout.sections.chart
+                mockLayoutHookValues.sections.info,
+                mockLayoutHookValues.sections.chart
               );
             });
           };
@@ -610,14 +607,14 @@ describe("SunBurstReport", () => {
 
   describe("fits on screen", () => {
     beforeEach(() => {
-      (layout.canFitOnScreen as jest.Mock).mockReturnValue(true);
-      mockUseSunBurstLayout.getters.fitsOnScreen = true;
+      jest.mocked(layout.canFitOnScreen).mockReturnValue(true);
+      mockLayoutHookValues.getters.fitsOnScreen = true;
     });
 
     describe("normal layout", () => {
       beforeEach(() => {
         (layout.getLayoutType as jest.Mock).mockReturnValue("normal");
-        mockUseSunBurstLayout.getters.currentLayout = "normal";
+        mockLayoutHookValues.getters.currentLayout = "normal";
       });
 
       describe("when visible is true", () => {
@@ -768,7 +765,7 @@ describe("SunBurstReport", () => {
     describe("wide layout", () => {
       beforeEach(() => {
         (layout.getLayoutType as jest.Mock).mockReturnValue("wide");
-        mockUseSunBurstLayout.getters.currentLayout = "wide";
+        mockLayoutHookValues.getters.currentLayout = "wide";
       });
 
       describe("when visible is true", () => {
@@ -920,13 +917,13 @@ describe("SunBurstReport", () => {
   describe("does not fit on screen", () => {
     beforeEach(() => {
       (layout.canFitOnScreen as jest.Mock).mockReturnValue(false);
-      mockUseSunBurstLayout.getters.fitsOnScreen = false;
+      mockLayoutHookValues.getters.fitsOnScreen = false;
     });
 
     describe("normal layout", () => {
       beforeEach(() => {
-        (layout.getLayoutType as jest.Mock).mockReturnValue("normal");
-        mockUseSunBurstLayout.getters.currentLayout = "normal";
+        jest.mocked(layout.getLayoutType).mockReturnValue("normal");
+        mockLayoutHookValues.getters.currentLayout = "normal";
       });
 
       describe("when visible is true", () => {
@@ -1077,7 +1074,7 @@ describe("SunBurstReport", () => {
     describe("wide layout", () => {
       beforeEach(() => {
         (layout.getLayoutType as jest.Mock).mockReturnValue("wide");
-        mockUseSunBurstLayout.getters.currentLayout = "wide";
+        mockLayoutHookValues.getters.currentLayout = "wide";
       });
 
       describe("when visible is true", () => {

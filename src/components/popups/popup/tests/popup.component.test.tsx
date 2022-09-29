@@ -5,12 +5,14 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import MockPopupDialogue, { testIDs } from "./fixtures/mock.popup.dialogue";
+import MockPopupDialogue, {
+  testIDs,
+} from "./implementations/concrete.popup.dialogue";
 import Popup from "../popup.component";
-import mockUserInterfaceHook from "@src/hooks/tests/ui.mock.hook";
+import mockUserInterfaceHook from "@src/hooks/__mocks__/ui.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/ui", () => () => mockUserInterfaceHook);
+jest.mock("@src/hooks/ui");
 
 describe("PopUp", () => {
   const mockName = "FeedBack";

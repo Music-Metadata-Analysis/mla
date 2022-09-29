@@ -8,7 +8,7 @@ import {
 import MockPopupDialogue, {
   testIDs,
   testColours,
-} from "./fixtures/mock.popup.dialogue";
+} from "./implementations/concrete.popup.dialogue";
 import Popup from "../popup.component";
 import UserInterfaceChakraProvider from "@src/providers/ui/ui.chakra/ui.chakra.provider";
 import { UserInterfacePopUpsContext } from "@src/providers/ui/ui.popups/ui.popups.provider";

@@ -1,4 +1,5 @@
 import LastFMApiEndpointFactoryV1 from "../v1.endpoint.base.class";
+import { mockAuthClient } from "@src/backend/integrations/auth/__mocks__/vendor.mock";
 import authVendor from "@src/backend/integrations/auth/vendor";
 import * as status from "@src/config/status";
 import { ProxyError } from "@src/errors/proxy.error.class";
@@ -45,17 +46,9 @@ class ConcreteErrorClass extends LastFMApiEndpointFactoryV1 {
   }
 }
 
-jest.mock("@src/backend/integrations/auth/vendor", () => ({
-  Client: jest.fn(() => ({
-    getSession: mockGetSession,
-  })),
-}));
+jest.mock("@src/backend/integrations/auth/vendor");
 
-jest.mock("@src/backend/api/lastfm/endpoint.common.logger", () => {
-  return jest.fn((req, res, next) => next());
-});
-
-const mockGetSession = jest.fn();
+jest.mock("@src/backend/api/lastfm/endpoint.common.logger");
 
 describe("LastFMApiEndpointFactoryV1", () => {
   let mockReq: MockAPIRequest;
@@ -93,8 +86,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
     });
 
     it("should call the getSession method with the correct props", () => {
-      expect(mockGetSession).toBeCalledTimes(1);
-      expect(mockGetSession).toBeCalledWith();
+      expect(mockAuthClient.getSession).toBeCalledTimes(1);
+      expect(mockAuthClient.getSession).toBeCalledWith();
     });
   };
 
@@ -109,7 +102,7 @@ describe("LastFMApiEndpointFactoryV1", () => {
 
   describe("with an authenticated user", () => {
     beforeEach(() => {
-      mockGetSession.mockResolvedValue(mockSession);
+      mockAuthClient.getSession.mockResolvedValue(mockSession);
     });
 
     describe("with a POST request", () => {
@@ -267,7 +260,7 @@ describe("LastFMApiEndpointFactoryV1", () => {
 
   describe("with an UNAUTHENTICATED user", () => {
     beforeEach(() => {
-      mockGetSession.mockResolvedValue(null);
+      mockAuthClient.getSession.mockResolvedValue(null);
     });
 
     describe("with a POST request", () => {

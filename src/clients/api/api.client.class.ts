@@ -7,37 +7,14 @@ import type {
 } from "@src/types/clients/api/api.client.types";
 
 class APIClient {
-  private handleUnsuccessful(
-    response: FetchResponse,
-    method: HttpMethodType,
-    url: string
-  ): FetchResponse {
-    if (!response.ok) {
-      throw Error(`${method}: ${url}`);
-    }
-    return response;
-  }
-
-  private handleKnownStatuses(response: FetchResponse): FetchResponse {
-    if (response.status in knownStatuses) {
-      return {
-        ok: true,
-        headers: response.headers,
-        status: response.status,
-        json: () => Promise.resolve(knownStatuses[response.status]),
-      } as FetchResponse;
-    }
-    return response;
-  }
-
-  request = async <RESPONSE>(
+  async request<RESPONSE>(
     url: string,
     params?: {
       method?: HttpMethodType;
       cache?: RequestCache;
       body?: unknown;
     }
-  ): Promise<ApiResponse<RESPONSE>> => {
+  ): Promise<ApiResponse<RESPONSE>> {
     const method = params?.method ? params.method : "GET";
     const cache = params?.cache ? params.cache : "default";
     const body = params?.body ? JSON.stringify(params.body) : undefined;
@@ -63,9 +40,32 @@ class APIClient {
       headers: this.getHeaders(fetchResponse),
       response: json,
     };
-  };
+  }
 
-  private getHeaders(response: FetchResponse) {
+  protected handleKnownStatuses(response: FetchResponse): FetchResponse {
+    if (response.status in knownStatuses) {
+      return {
+        ok: true,
+        headers: response.headers,
+        status: response.status,
+        json: () => Promise.resolve(knownStatuses[response.status]),
+      } as FetchResponse;
+    }
+    return response;
+  }
+
+  protected handleUnsuccessful(
+    response: FetchResponse,
+    method: HttpMethodType,
+    url: string
+  ): FetchResponse {
+    if (!response.ok) {
+      throw Error(`${method}: ${url}`);
+    }
+    return response;
+  }
+
+  protected getHeaders(response: FetchResponse) {
     const headers: Record<string, string> = {};
     for (const [key, value] of response.headers) {
       headers[key] = value;

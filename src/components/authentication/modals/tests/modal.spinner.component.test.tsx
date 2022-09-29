@@ -12,9 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import ModalSpinner, { testIDs } from "../modal.spinner.component";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
+
+jest.mock("@src/hooks/colour");
+
+jest.mock("@src/hooks/locale");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
@@ -33,16 +36,9 @@ jest.mock("@chakra-ui/react", () => {
   return instance;
 });
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
-
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
-
-const mockOnClose = jest.fn();
-
 describe("AuthenticationSpinnerModal", () => {
+  const mockOnClose = jest.fn();
+
   beforeEach(() => {
     jest.clearAllMocks();
     arrange();

@@ -2,13 +2,12 @@ import { getSession } from "next-auth/react";
 import NextAuthSSR from "../next-auth";
 import { isBuildTime } from "@src/utils/next";
 
-jest.mock("next-auth/react", () => ({
-  getSession: jest.fn(),
-}));
+jest.mock("next-auth/react");
 
-jest.mock("@src/utils/next", () => ({
-  isBuildTime: jest.fn(),
-}));
+jest.mock("@src/utils/next");
+
+const MockedIsBuildTime = jest.mocked(isBuildTime);
+const MockedGetSession = jest.mocked(getSession);
 
 describe("NextAuthSSR", () => {
   let instance: NextAuthSSR;
@@ -16,6 +15,7 @@ describe("NextAuthSSR", () => {
     name: "mockUser",
     email: "mock@mock.com",
     image: "https://mockprofile.com/mock.jpeg",
+    expires: "soon",
   };
   const mockRequest = {};
 
@@ -26,7 +26,7 @@ describe("NextAuthSSR", () => {
 
   describe("when running at build time", () => {
     beforeEach(() => {
-      (isBuildTime as jest.Mock).mockReturnValueOnce(true);
+      MockedIsBuildTime.mockReturnValueOnce(true);
     });
 
     describe("getSession", () => {
@@ -48,14 +48,14 @@ describe("NextAuthSSR", () => {
 
   describe("when running outside of build time", () => {
     beforeEach(() => {
-      (isBuildTime as jest.Mock).mockReturnValueOnce(false);
+      MockedIsBuildTime.mockReturnValueOnce(false);
     });
 
     describe("getSession", () => {
       let result: unknown;
 
       beforeEach(async () => {
-        (getSession as jest.Mock).mockResolvedValue(mockSession);
+        MockedGetSession.mockResolvedValue(mockSession);
         result = await instance.getSession(mockRequest);
       });
 

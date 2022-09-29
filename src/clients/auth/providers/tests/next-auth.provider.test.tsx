@@ -4,12 +4,12 @@ import NextAuthProvider from "../next-auth";
 import checkMockCalls from "@src/tests/fixtures/mock.component.call";
 import type { Session } from "next-auth";
 
-jest.mock("next-auth/react", () => {
-  const { createComponent } = require("@fixtures/react");
-  return {
-    SessionProvider: createComponent("SessionProvider").default,
-  };
-});
+jest.mock("next-auth/react", () =>
+  require("@fixtures/react/parent").createComponent(
+    "SessionProvider",
+    "SessionProvider"
+  )
+);
 
 describe("NextAuthProvider", () => {
   const mockSession = {

@@ -4,15 +4,13 @@ import HeaderComponent from "../inlays/terms.header.component";
 import ToggleComponent from "../inlays/terms.toggle.component";
 import TermsOfService from "../terms.component";
 import Dialogue from "@src/components/dialogues/resizable/dialogue.resizable.component";
-import { mockTProp, checkTProp } from "@src/hooks/tests/locale.mock.hook";
+import { checkTProp } from "@src/hooks/__mocks__/locale.mock";
 
-jest.mock("@src/hooks/locale.ts", () => (ns: string) => ({
-  t: new mockTProp(ns),
-}));
+jest.mock("@src/hooks/locale");
 
 jest.mock(
   "@src/components/dialogues/resizable/dialogue.resizable.component",
-  () => jest.fn(() => <div>MockDialogue</div>)
+  () => require("@fixtures/react/child").createComponent("Dialogue")
 );
 
 describe("TermsOfService", () => {
@@ -31,19 +29,18 @@ describe("TermsOfService", () => {
       name: "Dialogue",
       component: Dialogue,
       namespace: "legal",
-      arg: 0,
-      call: 0,
-      prop: "t",
     });
 
-    it("should call Dialogue as expected", () => {
+    it("should render the Dialogue component as expected", () => {
       expect(Dialogue).toBeCalledTimes(1);
-      const call = (Dialogue as jest.Mock).mock.calls[0][0];
+      const call = jest.mocked(Dialogue).mock.calls[0][0];
+      expect(call.t).toBeDefined();
       expect(call.titleKey).toBe("termsOfService.title");
       expect(typeof call.BodyComponent).toBe("function");
       expect(call.HeaderComponent).toBe(HeaderComponent);
       expect(call.FooterComponent).toBe(FooterComponent);
       expect(call.ToggleComponent).toBe(ToggleComponent);
+      expect(Object.keys(call).length).toBe(6);
     });
   });
 });

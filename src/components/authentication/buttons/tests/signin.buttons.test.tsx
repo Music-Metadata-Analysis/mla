@@ -8,7 +8,7 @@ import SignInButtons from "../signin.buttons";
 import authenticationTranslations from "@locales/authentication.json";
 import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
 import SpotifyLoginButton from "@src/components/button/button.spotify/spotify.login";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("react-social-login-buttons", () => ({
@@ -23,7 +23,7 @@ jest.mock("@src/components/button/button.spotify/spotify.login", () =>
 
 jest.mock(
   "@src/components/analytics/analytics.button/analytics.button.component",
-  () => require("@fixtures/react").createComponent("AnalyticsWrapper")
+  () => require("@fixtures/react/parent").createComponent("AnalyticsWrapper")
 );
 
 const mockSetClicked = jest.fn();
@@ -31,7 +31,7 @@ const mockSignIn = jest.fn();
 
 describe("AuthenticationComponent", () => {
   const buttonWidth = 245;
-  const mockT = new mockUseLocale("authentication").t;
+  const mockT = new MockUseLocale("authentication").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

@@ -1,37 +1,23 @@
+import { mockLastFMProxyMethods } from "@src/backend/integrations/lastfm/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import handleProxy, {
   endpointFactory,
 } from "@src/pages/api/v1/reports/lastfm/top20artists";
-import {
-  createAPIMocks,
-  mockSession,
-} from "@src/tests/fixtures/mock.authentication";
+import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type {
   MockAPIRequest,
   MockAPIResponse,
 } from "@src/types/api.endpoint.types";
 import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
-jest.mock("@src/backend/integrations/lastfm/proxy.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      getUserTopArtists: mockProxyMethod,
-    };
-  });
-});
+jest.mock("@src/backend/integrations/auth/vendor", () =>
+  require("@fixtures/integrations/auth").authenticated()
+);
 
-jest.mock("@src/backend/api/lastfm/endpoint.common.logger", () => {
-  return jest.fn((req, res, next) => next());
-});
+jest.mock("@src/backend/api/lastfm/endpoint.common.logger");
 
-jest.mock("@src/backend/integrations/auth/vendor", () => ({
-  Client: jest.fn(() => ({
-    getSession: mockGetSession,
-  })),
-}));
+jest.mock("@src/backend/integrations/lastfm/proxy.class");
 
-const mockGetSession = jest.fn();
-const mockProxyMethod = jest.fn();
 const testUrl = apiRoutes.v1.reports.lastfm.top20artists;
 
 type ArrangeArgs = {
@@ -63,8 +49,6 @@ describe(testUrl, () => {
   };
 
   describe("with a valid session", () => {
-    beforeEach(() => mockGetSession.mockResolvedValue(mockSession));
-
     describe("receives a POST request", () => {
       beforeEach(() => {
         method = "POST" as const;
@@ -77,7 +61,9 @@ describe(testUrl, () => {
 
         describe("with a valid lastfm response", () => {
           beforeEach(async () => {
-            mockProxyMethod.mockReturnValueOnce(Promise.resolve(mockResponse));
+            mockLastFMProxyMethods.getUserTopArtists.mockReturnValueOnce(
+              Promise.resolve(mockResponse)
+            );
             await arrange({ body: payload, method });
           });
 
@@ -93,7 +79,9 @@ describe(testUrl, () => {
           });
 
           it("should call the proxy method with the correct params", () => {
-            expect(mockProxyMethod).toBeCalledWith(payload.userName);
+            expect(mockLastFMProxyMethods.getUserTopArtists).toBeCalledWith(
+              payload.userName
+            );
           });
         });
       });

@@ -7,39 +7,36 @@ import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
 import dialogueSettings from "@src/config/dialogue";
 import lastFMConfig from "@src/config/lastfm";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
-
-jest.mock(
-  "@src/components/button/button.standard/button.standard.component",
-  () => require("@fixtures/react").createComponent("Button")
-);
-
-jest.mock(
-  "@src/components/clickable/click.link.external/click.link.external.component",
-  () => require("@fixtures/react").createComponent("ClickLink")
-);
-
-jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
-  require("@fixtures/react").createComponent("DimOnHover")
-);
-
-jest.mock("@src/components/highlight/highlight.component", () =>
-  require("@fixtures/react").createComponent("Highlight")
-);
+jest.mock("@src/hooks/locale");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Avatar", "Box", "Flex", "Text"]);
 });
 
+jest.mock(
+  "@src/components/button/button.standard/button.standard.component",
+  () => require("@fixtures/react/parent").createComponent("Button")
+);
+
+jest.mock(
+  "@src/components/clickable/click.link.external/click.link.external.component",
+  () => require("@fixtures/react/parent").createComponent("ClickLink")
+);
+
+jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
+  require("@fixtures/react/parent").createComponent("DimOnHover")
+);
+
+jest.mock("@src/components/highlight/highlight.component", () =>
+  require("@fixtures/react/parent").createComponent("Highlight")
+);
+
 describe("SplashBody", () => {
-  const mockT = new mockUseLocale("splash").t;
+  const mockT = new MockUseLocale("splash").t;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -54,9 +51,10 @@ describe("SplashBody", () => {
 
     it("should call Avatar as expected to display the logo", () => {
       expect(Avatar).toBeCalledTimes(1);
-      const call = (Avatar as jest.Mock).mock.calls[0][0];
+      const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.width).toStrictEqual(dialogueSettings.iconSizes);
-      expect(renderToString(call.icon)).toBe(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(renderToString(call.icon!)).toBe(
         renderToString(<LastFMIcon {...dialogueSettings.iconComponentProps} />)
       );
       expect(Object.keys(call).length).toBe(2);

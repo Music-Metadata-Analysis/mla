@@ -4,7 +4,7 @@ import PlayCountByArtistContainer, {
   PlayCountByArtistContainerProps,
 } from "../playcount.artists.container";
 import PlayCountByArtistReport from "../playcount.artists.report.class";
-import mockUserHook from "@src/hooks/tests/lastfm.mock.hook";
+import mockUserHook from "@src/hooks/__mocks__/lastfm.mock";
 import {
   getMockComponentProp,
   getMockComponentPropCount,
@@ -12,7 +12,7 @@ import {
 import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
 jest.mock("../../common/sunburst.report/sunburst.report.container", () =>
-  require("@fixtures/react").createComponent("SunBurstContainer")
+  require("@fixtures/react/parent").createComponent("SunBurstContainer")
 );
 
 describe("PlayCountByArtistContainer", () => {

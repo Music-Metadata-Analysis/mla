@@ -3,20 +3,20 @@ import { render } from "@testing-library/react";
 import SplashToggle from "../splash.toggle.component";
 import Highlight from "@src/components/highlight/highlight.component";
 import dialogueSettings from "@src/config/dialogue";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-
-jest.mock("@src/components/highlight/highlight.component", () =>
-  require("@fixtures/react").createComponent("Highlight")
-);
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Container", "ListItem", "UnorderedList"]);
 });
 
+jest.mock("@src/components/highlight/highlight.component", () =>
+  require("@fixtures/react/parent").createComponent("Highlight")
+);
+
 describe("SplashToggle", () => {
-  const mockT = new mockUseLocale("splash").t;
+  const mockT = new MockUseLocale("splash").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

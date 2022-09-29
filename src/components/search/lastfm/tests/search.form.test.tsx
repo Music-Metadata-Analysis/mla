@@ -3,28 +3,30 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SearchForm from "../search.form";
 import lastfmTranslations from "@locales/lastfm.json";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-
-jest.mock(
-  "@src/components/button/button.standard/button.standard.component",
-  () => {
-    const Original = jest.requireActual(
-      "@src/components/button/button.standard/button.standard.component"
-    ).default;
-    return jest.fn((props) => <Original {...props} />);
-  }
-);
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Flex"]);
 });
 
+jest.mock(
+  "@src/components/button/button.standard/button.standard.component",
+  () =>
+    jest.fn((props) =>
+      jest
+        .requireActual(
+          "@src/components/button/button.standard/button.standard.component"
+        )
+        .default(props)
+    )
+);
+
 describe("SearchForm", () => {
   beforeEach(() => jest.clearAllMocks());
 
-  const mockT = new mockUseLocale("lastfm");
+  const mockT = new MockUseLocale("lastfm");
   const mockValidate = jest.fn();
   const mockSubmit = jest.fn();
 

@@ -8,32 +8,32 @@ import lastfmTranslations from "@locales/lastfm.json";
 import StyledButtonLink from "@src/components/button/button.external.link/button.external.link.component";
 import Drawer from "@src/components/reports/common/drawer/drawer.component";
 import Events from "@src/events/events";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import UserAlbumState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+jest.mock("@src/hooks/analytics");
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
-
-jest.mock(
-  "@src/components/button/button.external.link/button.external.link.component",
-  () => require("@fixtures/react").createComponent("StyledButtonLink")
-);
-
-jest.mock("@src/components/reports/common/drawer/drawer.component", () =>
-  require("@fixtures/react").createComponent("MockDrawer")
-);
+jest.mock("@src/hooks/colour");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Box", "Divider", "Img", "Text"]);
 });
 
+jest.mock(
+  "@src/components/button/button.external.link/button.external.link.component",
+  () => require("@fixtures/react/parent").createComponent("StyledButtonLink")
+);
+
+jest.mock("@src/components/reports/common/drawer/drawer.component", () =>
+  require("@fixtures/react/parent").createComponent("Drawer")
+);
+
 const mockOnClose = jest.fn();
-const mockT = new mockUseLocale("lastfm").t;
+const mockT = new MockUseLocale("lastfm").t;
 const mockBaseUserProperties = {
   data: {
     integration: "LASTFM" as const,
@@ -156,7 +156,7 @@ describe("FlipCardReportDrawer", () => {
 
     it("should call StyledButtonLink once", () => {
       expect(StyledButtonLink).toBeCalledTimes(1);
-      const call = (StyledButtonLink as jest.Mock).mock.calls[0][0];
+      const call = jest.mocked(StyledButtonLink).mock.calls[0][0];
       expect(call.href).toBe(externalLink);
     });
   };

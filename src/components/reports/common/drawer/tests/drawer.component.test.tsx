@@ -10,8 +10,10 @@ import {
 } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import AlbumDrawer, { DrawerInterface, testIDs } from "../drawer.component";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
+
+jest.mock("@src/hooks/colour");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
@@ -25,8 +27,6 @@ jest.mock("@chakra-ui/react", () => {
     "DrawerContent",
   ]);
 });
-
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 const mockOnClose = jest.fn();
 

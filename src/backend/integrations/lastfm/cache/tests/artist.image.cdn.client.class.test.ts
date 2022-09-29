@@ -1,13 +1,7 @@
 import ArtistImageCdnClient from "../artist.image.cdn.client.class";
 import ArtistImageScraper from "../artist.image.scraper.class";
 
-jest.mock("../artist.image.scraper.class.ts", () =>
-  jest.fn(() => ({
-    getArtistImage: mockGetArtistImage,
-  }))
-);
-
-const mockGetArtistImage = jest.fn();
+jest.mock("../artist.image.scraper.class");
 
 describe(ArtistImageCdnClient.name, () => {
   const expectedCdnFolderPath = "lastfm/artists";
@@ -103,7 +97,9 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should NOT create a new object", () => {
-            expect(mockGetArtistImage).toBeCalledTimes(0);
+            expect(ArtistImageScraper.prototype.getArtistImage).toBeCalledTimes(
+              0
+            );
           });
 
           it("should NOT use the originServerClient", () => {
@@ -152,7 +148,9 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should NOT create a new object", () => {
-            expect(mockGetArtistImage).toBeCalledTimes(0);
+            expect(ArtistImageScraper.prototype.getArtistImage).toBeCalledTimes(
+              0
+            );
           });
 
           it("should NOT use the originServerClient", () => {
@@ -183,7 +181,9 @@ describe(ArtistImageCdnClient.name, () => {
           mockResponse.status = 404;
           mockResponse.ok = false;
           mockResponse.text = () => Promise.resolve("Not Found.");
-          mockGetArtistImage.mockResolvedValueOnce(`${mockObjectName}>Created`);
+          jest
+            .mocked(ArtistImageScraper.prototype.getArtistImage)
+            .mockResolvedValueOnce(`${mockObjectName}>Created`);
 
           result = await instance.query(mockObjectName);
         });
@@ -193,8 +193,10 @@ describe(ArtistImageCdnClient.name, () => {
         });
 
         it("should create a new object with the scraper", () => {
-          expect(mockGetArtistImage).toBeCalledTimes(1);
-          expect(mockGetArtistImage).toBeCalledWith(
+          expect(ArtistImageScraper.prototype.getArtistImage).toBeCalledTimes(
+            1
+          );
+          expect(ArtistImageScraper.prototype.getArtistImage).toBeCalledWith(
             mockObjectName,
             expectedScraperRetries
           );

@@ -2,16 +2,16 @@ import { render } from "@testing-library/react";
 import SplashFooter from "../splash.footer.component";
 import Button from "@src/components/button/button.standard/button.standard.component";
 import dialogueSettings from "@src/config/dialogue";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
-  () => require("@fixtures/react").createComponent("Button")
+  () => require("@fixtures/react/parent").createComponent("Button")
 );
 
 describe("SplashFooter", () => {
-  const mockT = new mockUseLocale("splash").t;
+  const mockT = new MockUseLocale("splash").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

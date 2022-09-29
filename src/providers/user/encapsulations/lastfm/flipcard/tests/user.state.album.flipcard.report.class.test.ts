@@ -1,6 +1,6 @@
-import { baseUserProperties } from "../../tests/fixtures/mock.user.state.data";
+import { baseUserProperties } from "../../tests/states/user.state.data.set";
 import UserAlbumState from "../user.state.album.flipcard.report.class";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,
@@ -10,7 +10,7 @@ import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
 describe("UserAlbumState", () => {
   let currentState: LastFMUserStateAlbumReport;
   let instance: UserAlbumState;
-  const mockT = new mockUseLocale("lastfm").t;
+  const mockT = new MockUseLocale("lastfm").t;
   let index: number;
 
   const resetState = () => {

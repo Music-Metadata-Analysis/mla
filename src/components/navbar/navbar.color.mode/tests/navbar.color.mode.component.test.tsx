@@ -2,51 +2,51 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Switch, useColorMode } from "@chakra-ui/react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import NavBarColorModeToggle, { TestIDs } from "../navbar.color.mode.component";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
+jest.mock("@src/hooks/analytics");
+
+jest.mock("@chakra-ui/icons", () =>
+  require("@fixtures/chakra/icons").createChakraIconMock([
+    "MoonIcon",
+    "SunIcon",
+  ])
+);
+
 jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  const instance = createChakraMock(["Switch"]);
-  instance.useColorMode = jest.fn();
-  return instance;
+  const mockModule = require("@fixtures/chakra").createChakraMock(["Switch"]);
+  mockModule.useColorMode = jest.fn();
+  return mockModule;
 });
 
-jest.mock("@chakra-ui/icons", () => {
-  const { createChakraIconMock } = require("@fixtures/chakra/icons");
-  const instance = createChakraIconMock(["MoonIcon", "SunIcon"]);
-  instance.useColorMode = jest.fn();
-  return instance;
-});
-
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
-
-let mockColorMode: "light" | "dark" = "light" as const;
 const mockToggleColorMode = jest.fn();
 
-const checkSwitch = ({ isChecked }: { isChecked: boolean }) => {
-  it("should render the Switch", () => {
-    expect(Switch).toBeCalledTimes(1);
-    checkMockCall(
-      Switch,
-      {
-        colorScheme: "yellow",
-        "data-testid": "ColorModeToggle",
-        isChecked: isChecked,
-        ml: [1, 2, 3],
-        mr: [0, 1, 2],
-      },
-      0,
-      ["onChange"]
-    );
-  });
-};
-
 describe("NavBarColorModeToggle", () => {
+  let mockColorMode: "light" | "dark" = "light" as const;
+
   beforeEach(() => jest.clearAllMocks());
 
   const arrange = () => {
     return render(<NavBarColorModeToggle />);
+  };
+
+  const checkSwitch = ({ isChecked }: { isChecked: boolean }) => {
+    it("should render the Switch", () => {
+      expect(Switch).toBeCalledTimes(1);
+      checkMockCall(
+        Switch,
+        {
+          colorScheme: "yellow",
+          "data-testid": "ColorModeToggle",
+          isChecked: isChecked,
+          ml: [1, 2, 3],
+          mr: [0, 1, 2],
+        },
+        0,
+        ["onChange"]
+      );
+    });
   };
 
   describe("when color mode is light", () => {
