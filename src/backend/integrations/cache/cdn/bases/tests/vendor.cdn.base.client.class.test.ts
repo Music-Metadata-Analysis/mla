@@ -55,7 +55,7 @@ describe(VendorCdnBaseClient.name, () => {
       ok: false,
       text: () => Promise.resolve("defaultValue"),
     };
-    (window.fetch as jest.Mock).mockResolvedValue(mockResponse);
+    jest.mocked(window.fetch as jest.Mock).mockResolvedValue(mockResponse);
   });
 
   const arrange = () =>

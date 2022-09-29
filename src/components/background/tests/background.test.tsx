@@ -3,17 +3,17 @@ import { render, screen } from "@testing-library/react";
 import BackGround from "../background.component";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Box"]);
-});
-
 jest.mock("@src/hooks/colour", () => {
   return () => ({
     bodyColour: {
       background: MockColor,
     },
   });
+});
+
+jest.mock("@chakra-ui/react", () => {
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Box"]);
 });
 
 const MockColor = "MockColor";

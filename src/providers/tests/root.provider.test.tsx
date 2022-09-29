@@ -12,42 +12,32 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
 import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 
-jest.mock("@src/clients/auth/vendor", () => {
-  const { createComponent } = require("@fixtures/react");
-  return {
-    Provider: createComponent("AuthVendorProvider").default,
-  };
-});
+jest.mock("@src/clients/auth/vendor");
 
-jest.mock("@src/clients/flags/vendor", () => {
-  const { createComponent } = require("@fixtures/react");
-  return {
-    Provider: createComponent("FlagVendorProvider").default,
-  };
-});
+jest.mock("@src/clients/flags/vendor");
 
 jest.mock("@src/components/header/header.component", () =>
-  require("@fixtures/react").createComponent("Header")
+  require("@fixtures/react/parent").createComponent("Header")
 );
 
 jest.mock("@src/providers/analytics/analytics.provider", () =>
-  require("@fixtures/react").createComponent("AnalyticsProvider")
+  require("@fixtures/react/parent").createComponent("AnalyticsProvider")
 );
 
 jest.mock("@src/providers/metrics/metrics.provider", () =>
-  require("@fixtures/react").createComponent("MetricsProvider")
+  require("@fixtures/react/parent").createComponent("MetricsProvider")
 );
 
 jest.mock("@src/providers/navbar/navbar.provider", () =>
-  require("@fixtures/react").createComponent("NavBarProvider")
+  require("@fixtures/react/parent").createComponent("NavBarProvider")
 );
 
 jest.mock("@src/providers/user/user.provider", () =>
-  require("@fixtures/react").createComponent("UserProvider")
+  require("@fixtures/react/parent").createComponent("UserProvider")
 );
 
 jest.mock("../ui/ui.root.provider", () =>
-  require("@fixtures/react").createComponent("UserInterfaceRootProvider")
+  require("@fixtures/react/parent").createComponent("UserInterfaceRootProvider")
 );
 
 const providers = {

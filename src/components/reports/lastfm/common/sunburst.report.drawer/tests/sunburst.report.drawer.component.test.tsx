@@ -8,34 +8,34 @@ import SunBurstReportDrawer, {
   LastFMSunBurstDrawerInterface,
 } from "../sunburst.report.drawer.component";
 import Drawer from "@src/components/reports/common/drawer/drawer.component";
-import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
-
-jest.mock("../nodes/node.list.component", () =>
-  require("@fixtures/react").createComponent("SunBurstNodeList")
-);
-
-jest.mock("../panels/drawer.control.panel.component", () =>
-  require("@fixtures/react").createComponent("SunBurstDrawerControl")
-);
-
-jest.mock("../panels/drawer.title.panel.component", () =>
-  require("@fixtures/react").createComponent("SunBurstDrawerTitle")
-);
-
-jest.mock("@src/components/reports/common/drawer/drawer.component", () =>
-  require("@fixtures/react").createComponent("Drawer")
-);
+jest.mock("@src/hooks/colour");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Divider", "Flex"]);
 });
+
+jest.mock("../nodes/node.list.component", () =>
+  require("@fixtures/react/parent").createComponent("SunBurstNodeList")
+);
+
+jest.mock("../panels/drawer.control.panel.component", () =>
+  require("@fixtures/react/parent").createComponent("SunBurstDrawerControl")
+);
+
+jest.mock("../panels/drawer.title.panel.component", () =>
+  require("@fixtures/react/parent").createComponent("SunBurstDrawerTitle")
+);
+
+jest.mock("@src/components/reports/common/drawer/drawer.component", () =>
+  require("@fixtures/react/parent").createComponent("Drawer")
+);
 
 describe("LastFMSunBurstReportDrawer", () => {
   let mockNode: SunBurstNodeEncapsulation;

@@ -2,7 +2,7 @@ import { cleanup, render, act } from "@testing-library/react";
 import {
   MockReportClass,
   MockUserStateEncapsulation,
-} from "./mock.last.fm.report.class";
+} from "./implementations/concrete.last.fm.report.class";
 import FlipCardBaseReport from "../flip.card.report.base.class";
 import FlipCardReport from "../flip.card.report.component";
 import FlipCardReportContainer from "../flip.card.report.container";
@@ -11,44 +11,41 @@ import Authentication from "@src/components/authentication/authentication.contai
 import BillBoardSpinner from "@src/components/billboard/billboard.spinner/billboard.spinner.component";
 import ErrorDisplay from "@src/components/errors/display/error.display.component";
 import Events from "@src/events/events";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
-import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
-import mockMetricsHook from "@src/hooks/tests/metrics.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
+import mockMetricsHook from "@src/hooks/__mocks__/metrics.mock";
 import UserInterfaceImageProvider from "@src/providers/ui/ui.images/ui.images.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import mockRouter from "@src/tests/fixtures/mock.router";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
 
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+jest.mock("@src/hooks/analytics");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
-jest.mock("@src/hooks/metrics", () => () => mockMetricsHook);
-
-jest.mock("@src/components/authentication/authentication.container", () =>
-  jest.fn(() => <div>MockedAuthenticationComponent</div>)
-);
-
-jest.mock(
-  "@src/components/billboard/billboard.spinner/billboard.spinner.component",
-  () => require("@fixtures/react").createComponent("BillBoardSpinner")
-);
-
-jest.mock("@src/components/errors/display/error.display.component", () =>
-  require("@fixtures/react").createComponent("ErrorDisplay")
-);
-
-jest.mock("../flip.card.report.component", () =>
-  require("@fixtures/react").createComponent("FlipCardReport")
-);
+jest.mock("@src/hooks/metrics");
 
 jest.mock("next/router", () => ({
   useRouter: () => mockRouter,
 }));
+
+jest.mock("@src/components/authentication/authentication.container", () =>
+  require("@fixtures/react/child").createComponent("AuthenticationComponent")
+);
+
+jest.mock(
+  "@src/components/billboard/billboard.spinner/billboard.spinner.component",
+  () => require("@fixtures/react/parent").createComponent("BillBoardSpinner")
+);
+
+jest.mock("@src/components/errors/display/error.display.component", () =>
+  require("@fixtures/react/parent").createComponent("ErrorDisplay")
+);
+
+jest.mock("../flip.card.report.component", () =>
+  require("@fixtures/react/parent").createComponent("FlipCardReport")
+);
 
 describe("FlipCardReportContainer", () => {
   const testUsername = "niall-byrne";
@@ -75,7 +72,7 @@ describe("FlipCardReportContainer", () => {
   });
 
   const getImageLoader = () => {
-    return (FlipCardReport as jest.Mock).mock.calls[0][0].imageIsLoaded;
+    return jest.mocked(FlipCardReport).mock.calls[0][0].imageIsLoaded;
   };
 
   const checkDataFetching = () => {
@@ -94,7 +91,7 @@ describe("FlipCardReportContainer", () => {
   const checkErrorDisplay = (errorKey: string) => {
     it("should render the ErrorDisplay as expected", () => {
       expect(ErrorDisplay).toBeCalledTimes(1);
-      const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
+      const call = jest.mocked(ErrorDisplay).mock.calls[0][0];
       expect(call.errorKey).toBe(errorKey);
       expect(typeof call.resetError).toBe("function");
       expect(Object.keys(call).length).toBe(2);
@@ -102,7 +99,7 @@ describe("FlipCardReportContainer", () => {
   };
 
   const checkFlipCardReportProps = (visible: boolean) => {
-    const call = (FlipCardReport as jest.Mock).mock.calls[0][0];
+    const call = jest.mocked(FlipCardReport).mock.calls[0][0];
     expect(call.userState).toBeInstanceOf(MockUserStateEncapsulation);
     expect(call.userState.userProperties).toBe(mockHookState.userProperties);
     expect(call.report).toBeInstanceOf(FlipCardBaseReport);
@@ -170,7 +167,7 @@ describe("FlipCardReportContainer", () => {
 
       describe("when resetError is called on ErrorDisplay", () => {
         beforeEach(() => {
-          const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
+          const call = jest.mocked(ErrorDisplay).mock.calls[0][0];
           call.resetError();
         });
 
@@ -288,7 +285,7 @@ describe("FlipCardReportContainer", () => {
 
       describe("when resetError is called on ErrorDisplay", () => {
         beforeEach(() => {
-          const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
+          const call = jest.mocked(ErrorDisplay).mock.calls[0][0];
           call.resetError();
         });
 
@@ -322,7 +319,7 @@ describe("FlipCardReportContainer", () => {
 
       describe("when resetError is called on ErrorDisplay", () => {
         beforeEach(() => {
-          const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
+          const call = jest.mocked(ErrorDisplay).mock.calls[0][0];
           call.resetError();
         });
 
@@ -472,7 +469,7 @@ describe("FlipCardReportContainer", () => {
 
           describe("when resetError is called on ErrorDisplay", () => {
             beforeEach(() => {
-              const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
+              const call = jest.mocked(ErrorDisplay).mock.calls[0][0];
               call.resetError();
             });
 

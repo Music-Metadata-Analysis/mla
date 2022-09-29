@@ -1,12 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import LastFMIcon from "../lastfm.icon";
 import mainTranslations from "@locales/main.json";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
-
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+import { _t } from "@src/hooks/__mocks__/locale.mock";
+jest.mock("@src/hooks/locale");
 
 describe("Icons", () => {
   const arrange = (

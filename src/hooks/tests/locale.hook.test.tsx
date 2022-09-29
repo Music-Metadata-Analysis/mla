@@ -1,11 +1,10 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockUseLocaleHook from "./locale.mock.hook";
+import mockHookValues from "../__mocks__/locale.mock";
 import useLocale from "../locale";
+import type { LocaleVendorHookInterface } from "@src/types/clients/locale/vendor.types";
 
-jest.mock("@src/clients/locale/vendor", () => ({
-  hook: () => mockUseLocaleHook,
-}));
+jest.mock("@src/clients/locale/vendor");
 
 describe("useLocale", () => {
   let originalEnvironment: typeof process.env;
@@ -36,33 +35,34 @@ describe("useLocale", () => {
     });
 
     it("should contain all the same properties as the mock hook", () => {
-      const mockObjectKeys = dk(
-        mockUseLocaleHook as unknown as Record<string, unknown>
-      ).sort();
+      const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(
-        received.result.current as unknown as Record<string, unknown>
+        received.result.current as Record<
+          keyof LocaleVendorHookInterface,
+          unknown
+        >
       ).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
 
     it("should contain the correct functions", () => {
-      expect(received.result.current.t).toBe(mockUseLocaleHook.t);
+      expect(received.result.current.t).toBe(mockHookValues.t);
     });
 
     describe("t", () => {
       let result: string;
 
       beforeEach(() => {
-        (mockUseLocaleHook.t as jest.Mock).mockReturnValueOnce(
-          mockTranslationResult
-        );
+        jest
+          .mocked(mockHookValues.t)
+          .mockReturnValueOnce(mockTranslationResult);
 
         result = received.result.current.t(mockTranslationKey);
       });
 
       it("should call the underlying vendor hook", () => {
-        expect(mockUseLocaleHook.t).toBeCalledTimes(1);
-        expect(mockUseLocaleHook.t).toBeCalledWith(mockTranslationKey);
+        expect(mockHookValues.t).toBeCalledTimes(1);
+        expect(mockHookValues.t).toBeCalledWith(mockTranslationKey);
       });
 
       it("should return the expected value", () => {

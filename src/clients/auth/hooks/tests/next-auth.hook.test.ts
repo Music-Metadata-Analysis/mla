@@ -4,7 +4,10 @@ import dk from "deep-keys";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import useNextAuth from "../next-auth";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
+import {
+  mockAuthHook,
+  mockUserProfile,
+} from "@src/clients/auth/__mocks__/vendor.mock";
 import type { AuthSessionType } from "@src/types/clients/auth/vendor.types";
 
 jest.mock("@src/hooks/utility/local.storage", () => ({
@@ -23,6 +26,7 @@ const useMockLocalStorageHook = () => {
 };
 
 let existingLocalStorageValue: { type: string | null };
+const MockedUseSession = useSession as jest.Mock;
 
 describe("useNextAuth", () => {
   let received: ReturnType<typeof arrange>;
@@ -119,7 +123,7 @@ describe("useNextAuth", () => {
     describe("with user who is signed in", () => {
       describe("with a complete profile", () => {
         beforeEach(() => {
-          (useSession as jest.Mock).mockImplementation(() => ({
+          MockedUseSession.mockImplementation(() => ({
             data: { ...mockSession },
             status: "authenticated",
           }));
@@ -143,7 +147,7 @@ describe("useNextAuth", () => {
 
       describe("with a profile missing a name", () => {
         beforeEach(() => {
-          (useSession as jest.Mock).mockImplementation(() => ({
+          MockedUseSession.mockImplementation(() => ({
             data: {
               ...mockSession,
               user: { ...mockSession.user, name: undefined },
@@ -175,7 +179,7 @@ describe("useNextAuth", () => {
 
       describe("with a profile missing an email", () => {
         beforeEach(() => {
-          (useSession as jest.Mock).mockImplementation(() => ({
+          MockedUseSession.mockImplementation(() => ({
             data: {
               ...mockSession,
               user: { ...mockSession.user, email: undefined },
@@ -207,7 +211,7 @@ describe("useNextAuth", () => {
 
       describe("with a profile missing an image", () => {
         beforeEach(() => {
-          (useSession as jest.Mock).mockImplementation(() => ({
+          MockedUseSession.mockImplementation(() => ({
             data: {
               ...mockSession,
               user: { ...mockSession.user, image: undefined },
@@ -239,7 +243,7 @@ describe("useNextAuth", () => {
 
       describe("with a profile missing a group", () => {
         beforeEach(() => {
-          (useSession as jest.Mock).mockImplementation(() => ({
+          MockedUseSession.mockImplementation(() => ({
             data: {
               user: { ...mockSession.user },
             },
@@ -271,7 +275,7 @@ describe("useNextAuth", () => {
 
     describe("with user who is NOT signed in", () => {
       beforeEach(() => {
-        (useSession as jest.Mock).mockImplementation(() => ({
+        MockedUseSession.mockImplementation(() => ({
           data: {
             user: { mock: "data" },
           },
@@ -294,7 +298,7 @@ describe("useNextAuth", () => {
 
     describe("with user who is in the process of signing in", () => {
       beforeEach(() => {
-        (useSession as jest.Mock).mockImplementation(() => ({
+        MockedUseSession.mockImplementation(() => ({
           data: {
             user: { mock: "data" },
           },

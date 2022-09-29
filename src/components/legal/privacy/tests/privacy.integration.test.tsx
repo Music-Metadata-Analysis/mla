@@ -4,13 +4,10 @@ import Privacy from "../privacy.component";
 import translations from "@locales/legal.json";
 import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
 import externalLinks from "@src/config/external";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockRouter from "@src/tests/fixtures/mock.router";
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
 describe("Privacy", () => {
   beforeEach(() => {

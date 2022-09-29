@@ -1,5 +1,7 @@
 import LastFMApiEndpointFactoryV2 from "../v2.endpoint.base.class";
+import { mockAuthClient } from "@src/backend/integrations/auth/__mocks__/vendor.mock";
 import authVendor from "@src/backend/integrations/auth/vendor";
+import { mockFlagClient } from "@src/backend/integrations/flags/__mocks__/vendor.mock";
 import flagVendor from "@src/backend/integrations/flags/vendor";
 import * as status from "@src/config/status";
 import { ProxyError } from "@src/errors/proxy.error.class";
@@ -60,24 +62,11 @@ class ConcreteProxyErrorClass extends LastFMApiEndpointFactoryV2 {
   }
 }
 
-jest.mock("@src/backend/integrations/auth/vendor", () => ({
-  Client: jest.fn(() => ({
-    getSession: mockGetSession,
-  })),
-}));
+jest.mock("@src/backend/integrations/auth/vendor");
 
-jest.mock("@src/backend/integrations/flags/vendor", () => ({
-  Client: jest.fn(() => ({
-    isEnabled: mockIsFeatureEnabled,
-  })),
-}));
+jest.mock("@src/backend/integrations/flags/vendor");
 
-jest.mock("@src/backend/api/lastfm/endpoint.common.logger", () => {
-  return jest.fn((req, res, next) => next());
-});
-
-const mockGetSession = jest.fn();
-const mockIsFeatureEnabled = jest.fn();
+jest.mock("@src/backend/api/lastfm/endpoint.common.logger");
 
 describe("LastFMApiEndpointFactoryV2", () => {
   let mockReq: MockAPIRequest;
@@ -118,8 +107,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
     });
 
     it("should call the getSession method with the correct props", () => {
-      expect(mockGetSession).toBeCalledTimes(1);
-      expect(mockGetSession).toBeCalledWith();
+      expect(mockAuthClient.getSession).toBeCalledTimes(1);
+      expect(mockAuthClient.getSession).toBeCalledWith();
     });
   };
 
@@ -132,7 +121,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
       expectedCalls > 0 ? " " : " NOT "
     }check the flag's status`, () => {
       expect(flagVendor.Client).toBeCalledTimes(expectedCalls);
-      expect(mockIsFeatureEnabled).toBeCalledTimes(expectedCalls);
+      expect(mockFlagClient.isEnabled).toBeCalledTimes(expectedCalls);
     });
 
     if (expectedCalls > 0) {
@@ -154,7 +143,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
   describe("with an authenticated user", () => {
     beforeEach(() => {
-      mockGetSession.mockResolvedValue(mockSession);
+      mockAuthClient.getSession.mockResolvedValue(mockSession);
     });
 
     describe("with a GET request", () => {
@@ -274,7 +263,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with an enabled flag", () => {
           beforeEach(async () => {
             requiredFlag = "mockFlag";
-            mockIsFeatureEnabled.mockReturnValueOnce(true);
+            mockFlagClient.isEnabled.mockReturnValueOnce(true);
           });
 
           describe("receives a request that generates an unknown proxy error", () => {
@@ -381,7 +370,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with an disabled flag", () => {
           beforeEach(async () => {
             requiredFlag = "mockFlag";
-            mockIsFeatureEnabled.mockReturnValueOnce(false);
+            mockFlagClient.isEnabled.mockReturnValueOnce(false);
           });
 
           describe("receives a request that generates an unknown proxy error", () => {
@@ -494,7 +483,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with an enabled flag", () => {
           beforeEach(async () => {
             requiredFlag = null;
-            mockIsFeatureEnabled.mockReturnValueOnce(false);
+            mockFlagClient.isEnabled.mockReturnValueOnce(false);
           });
 
           describe("receives a request", () => {
@@ -541,7 +530,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with a disabled flag", () => {
           beforeEach(async () => {
             requiredFlag = "mockFlag";
-            mockIsFeatureEnabled.mockReturnValueOnce(true);
+            mockFlagClient.isEnabled.mockReturnValueOnce(true);
           });
 
           describe("receives a request", () => {
@@ -593,7 +582,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
   });
 
   describe("with an UNAUTHENTICATED user", () => {
-    beforeEach(() => mockGetSession.mockResolvedValue(null));
+    beforeEach(() => mockAuthClient.getSession.mockResolvedValue(null));
 
     describe("with a GET request", () => {
       beforeEach(() => {
@@ -654,7 +643,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with an enabled flag", () => {
           beforeEach(async () => {
             requiredFlag = "mockFlag";
-            mockIsFeatureEnabled.mockReturnValueOnce(true);
+            mockFlagClient.isEnabled.mockReturnValueOnce(true);
           });
 
           describe("receives a request that generates any proxy error", () => {
@@ -701,7 +690,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with a disabled flag", () => {
           beforeEach(async () => {
             requiredFlag = "mockFlag";
-            mockIsFeatureEnabled.mockReturnValueOnce(false);
+            mockFlagClient.isEnabled.mockReturnValueOnce(false);
           });
 
           describe("receives a request that generates any proxy error", () => {
@@ -778,7 +767,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with an enabled flag", () => {
           beforeEach(async () => {
             requiredFlag = "mockFlag";
-            mockIsFeatureEnabled.mockReturnValueOnce(true);
+            mockFlagClient.isEnabled.mockReturnValueOnce(true);
           });
 
           describe("receives a request", () => {
@@ -803,7 +792,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with a disabled flag", () => {
           beforeEach(async () => {
             requiredFlag = "mockFlag";
-            mockIsFeatureEnabled.mockReturnValueOnce(false);
+            mockFlagClient.isEnabled.mockReturnValueOnce(false);
           });
 
           describe("receives a request", () => {
@@ -862,7 +851,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with an enabled flag", () => {
           beforeEach(async () => {
             requiredFlag = "mockFlag";
-            mockIsFeatureEnabled.mockReturnValueOnce(true);
+            mockFlagClient.isEnabled.mockReturnValueOnce(true);
           });
 
           describe("receives a request", () => {
@@ -885,7 +874,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with a disabled flag", () => {
           beforeEach(async () => {
             requiredFlag = "mockFlag";
-            mockIsFeatureEnabled.mockReturnValueOnce(false);
+            mockFlagClient.isEnabled.mockReturnValueOnce(false);
           });
 
           describe("receives a request", () => {

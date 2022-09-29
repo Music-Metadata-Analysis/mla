@@ -25,8 +25,8 @@
     "node-fetch": "^2.6.7"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.56.0",
-    "@aws-sdk/signature-v4-crt": "^3.56.0",
+    "@aws-sdk/client-s3": "^3.186.0",
+    "@aws-sdk/signature-v4-crt": "^3.186.0",
     "@chakra-ui/clickable": "^1.2.4",
     "@chakra-ui/icons": "^1.1.5",
     "@chakra-ui/react": "^1.8.6",
@@ -109,7 +109,8 @@
   "jest": {
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js,jsx,ts,tsx}",
-      "!<rootDir>/src/**/fixtures/*.{js,jsx,ts,tsx}"
+      "!<rootDir>/src/**/implementations/concrete*.{js,jsx,ts,tsx}",
+      "!<rootDir>/src/tests/fixtures/**/*.{js,jsx,ts,tsx}"
     ],
     "coveragePathIgnorePatterns": [],
     "coverageReporters": [
@@ -134,9 +135,13 @@
       "<rootDir>/jest/setup/testing-library.js"
     ],
     "moduleNameMapper": {
+      "^@fixtures/api/lastfm/logger$": "<rootDir>/src/backend/api/lastfm/tests/endpoint.common.logger.mock.ts",
       "^@fixtures/chakra$": "<rootDir>/src/tests/fixtures/mock.chakra.react.factory.class.tsx",
       "^@fixtures/chakra/icons$": "<rootDir>/src/tests/fixtures/mock.chakra.icon.factory.class.tsx",
-      "^@fixtures/react$": "<rootDir>/src/tests/fixtures/mock.component.children.factory.class.tsx",
+      "^@fixtures/integrations/auth$": "<rootDir>/src/backend/integrations/auth/__mocks__/vendor.mock.ts",
+      "^@fixtures/react/child$": "<rootDir>/src/tests/fixtures/mock.component.child.factory.class.tsx",
+      "^@fixtures/react/parent$": "<rootDir>/src/tests/fixtures/mock.component.parent.factory.class.tsx",
+      "^@fixtures/react/simple$": "<rootDir>/src/tests/fixtures/mock.component.simple.factory.class.tsx",
       "^@locales/(.*)": "<rootDir>/public/locales/en/$1",
       "^@src/(.*)": "<rootDir>/src/$1",
       ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
@@ -145,6 +150,9 @@
     },
     "roots": [
       "./src"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/src/.*/__mocks__"
     ],
     "testEnvironment": "jsdom",
     "transform": {

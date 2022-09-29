@@ -3,15 +3,11 @@ import { MetricsReducer } from "../metrics.reducer";
 import type { MetricsActionType } from "@src/types/metrics/action.types";
 import type { MetricsStateType } from "@src/types/metrics/state.types";
 
-jest.mock("../metrics.reducer.states.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return mockStates;
-  });
-});
+jest.mock("../metrics.reducer.states.class", () => jest.fn(() => mockStates));
 
 const mockReturn = "MockReturnedState";
 const mockStates = {
-  SearchMetric: jest.fn().mockReturnValue(mockReturn),
+  SearchMetric: jest.fn(() => mockReturn),
 };
 
 describe("MetricsReducer", () => {

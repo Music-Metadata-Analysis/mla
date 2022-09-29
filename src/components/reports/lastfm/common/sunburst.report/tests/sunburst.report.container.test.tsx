@@ -2,7 +2,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import {
   MockReportClass,
   MockUserStateEncapsulation,
-} from "./fixtures/mock.sunburst.report.class";
+} from "./implementations/concrete.sunburst.report.class";
 import AggregateErrorDisplayComponent from "../../error.displays/aggregate.error.display.component";
 import SunBurstBaseReport from "../sunburst.report.base.class";
 import SunBurstReport from "../sunburst.report.component";
@@ -11,31 +11,27 @@ import lastfm from "@locales/lastfm.json";
 import sunburst from "@locales/sunburst.json";
 import BillBoardProgressBar from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import apiRoutes from "@src/config/apiRoutes";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
-import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
-import mockMetricsHook from "@src/hooks/tests/metrics.mock.hook";
+import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+jest.mock("@src/hooks/analytics");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
-jest.mock("@src/hooks/metrics", () => () => mockMetricsHook);
+jest.mock("@src/hooks/metrics");
 
 jest.mock("../../error.displays/aggregate.error.display.component");
 
 jest.mock(
   "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component",
-  () => require("@fixtures/react").createComponent("BillBoardProgressBar")
+  () =>
+    require("@fixtures/react/parent").createComponent("BillBoardProgressBar")
 );
 
 jest.mock("../sunburst.report.component", () =>
-  require("@fixtures/react").createComponent("SunBurstReport")
+  require("@fixtures/react/parent").createComponent("SunBurstReport")
 );
 
 describe("SunBurstReportContainer", () => {
@@ -117,7 +113,7 @@ describe("SunBurstReportContainer", () => {
   };
 
   const checkSunBurstReportProps = (visible: boolean) => {
-    const call = (SunBurstReport as jest.Mock).mock.calls[0][0];
+    const call = jest.mocked(SunBurstReport).mock.calls[0][0];
     expect(call.userState).toBeInstanceOf(MockUserStateEncapsulation);
     expect(call.userState.userProperties).toStrictEqual(
       mockHookState.userProperties
@@ -164,9 +160,9 @@ describe("SunBurstReportContainer", () => {
 
     beforeEach(() => {
       const mockErrorDisplay = jest.fn(() => <div>{mockErrorDisplayText}</div>);
-      (AggregateErrorDisplayComponent as jest.Mock).mockImplementation(
-        mockErrorDisplay
-      );
+      jest
+        .mocked(AggregateErrorDisplayComponent)
+        .mockImplementation(mockErrorDisplay);
       mockHookState.userProperties.ready = false;
       mockHookState.userProperties.error = "FailureFetch";
       arrange();
@@ -178,7 +174,7 @@ describe("SunBurstReportContainer", () => {
       expect(AggregateErrorDisplayComponent).toBeCalledTimes(2);
 
       const checkCall = (index: number) => {
-        const call = (AggregateErrorDisplayComponent as jest.Mock).mock.calls[
+        const call = jest.mocked(AggregateErrorDisplayComponent).mock.calls[
           index
         ][0];
         expect(call.report).toBeInstanceOf(MockReportClass);
@@ -206,9 +202,9 @@ describe("SunBurstReportContainer", () => {
   describe("when an error display has NOT been triggered", () => {
     beforeEach(() => {
       const mockErrorDisplay = jest.fn(() => null);
-      (AggregateErrorDisplayComponent as jest.Mock).mockImplementation(
-        mockErrorDisplay
-      );
+      jest
+        .mocked(AggregateErrorDisplayComponent)
+        .mockImplementation(mockErrorDisplay);
     });
 
     describe("when the data is NOT in ready state", () => {

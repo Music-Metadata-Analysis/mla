@@ -10,9 +10,9 @@ jest.mock("react-ga", () => ({
   set: jest.fn(),
 }));
 
-jest.mock("@src/utils/env", () => ({
-  isProduction: jest.fn(),
-}));
+jest.mock("@src/utils/env");
+
+const MockedIsProduction = jest.mocked(isProduction);
 
 describe(VendorReactGA.name, () => {
   let instance: VendorReactGA;
@@ -43,7 +43,7 @@ describe(VendorReactGA.name, () => {
     describe("initialize", () => {
       describe("when running in Production", () => {
         beforeEach(() => {
-          (isProduction as jest.Mock).mockReturnValueOnce(true);
+          MockedIsProduction.mockReturnValueOnce(true);
           instance.initialize(mockAnalyticsID);
         });
 
@@ -57,7 +57,7 @@ describe(VendorReactGA.name, () => {
 
       describe("when NOT running in Production", () => {
         beforeEach(() => {
-          (isProduction as jest.Mock).mockReturnValueOnce(false);
+          MockedIsProduction.mockReturnValueOnce(false);
           instance.initialize(mockAnalyticsID);
         });
 

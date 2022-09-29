@@ -3,31 +3,33 @@ import { render } from "@testing-library/react";
 import NavBarSessionControl from "../navbar.session.control.component";
 import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
 import Authentication from "@src/components/authentication/authentication.container";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/auth");
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
+jest.mock("@src/hooks/colour");
+
+jest.mock("@chakra-ui/react", () => {
+  const mockModule = require("@fixtures/chakra").createChakraMock([
+    "Box",
+    "Button",
+  ]);
+  mockModule.useDisclosure = () => mockUseDisclosure();
+  return mockModule;
+});
 
 jest.mock(
   "@src/components/analytics/analytics.button/analytics.button.component",
-  () => require("@fixtures/react").createComponent("AnalyticsWrapper")
+  () => require("@fixtures/react/parent").createComponent("AnalyticsWrapper")
 );
 
-jest.mock("@chakra-ui/react", () => ({
-  useDisclosure: () => mockUseDisclosure(),
-}));
-
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Box", "Button"]);
-});
-
-jest.mock("@src/components/authentication/authentication.container", () => {
-  return jest.fn(() => <div>MockComponent</div>);
-});
+jest.mock("@src/components/authentication/authentication.container", () =>
+  require("@fixtures/react/child").createComponent(
+    "MockAuthenticationContainer"
+  )
+);
 
 const mockUseDisclosure = jest.fn();
 

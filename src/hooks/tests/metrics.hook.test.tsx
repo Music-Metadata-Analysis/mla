@@ -1,7 +1,7 @@
 import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockMetricsHook from "./metrics.mock.hook";
+import mockHookValues from "../__mocks__/metrics.mock";
 import useMetrics from "../metrics";
 import { InitialState } from "@src/providers/metrics/metrics.initial";
 import { MetricsContext } from "@src/providers/metrics/metrics.provider";
@@ -59,7 +59,7 @@ describe("useMetrics", () => {
     });
 
     it("should contain all the same properties as the mock hook", () => {
-      const mockObjectKeys = dk(mockMetricsHook).sort();
+      const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(received.result.current).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });

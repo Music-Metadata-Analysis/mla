@@ -4,28 +4,27 @@ import lastfmTranslations from "@locales/lastfm.json";
 import mainTranslations from "@locales/main.json";
 import settings from "@src/config/lastfm";
 import routes from "@src/config/routes";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import mockRouter from "@src/tests/fixtures/mock.router";
 
-jest.mock("@src/hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/auth");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
 jest.mock("next/router", () => ({
   useRouter: () => mockRouter,
 }));
 
 jest.mock("@src/components/authentication/authentication.container", () =>
-  jest.fn(() => <div>MockedAuthenticationComponent</div>)
+  require("@fixtures/react/child").createComponent(
+    "MockedAuthenticationComponent"
+  )
 );
 
 describe("SearchTopTracks", () => {
   let enteredUsername: string;
-  const mockT = new mockUseLocale("lastfm").t;
+  const mockT = new MockUseLocale("lastfm").t;
   const mockTitle = "mockTitle";
 
   beforeEach(() => {

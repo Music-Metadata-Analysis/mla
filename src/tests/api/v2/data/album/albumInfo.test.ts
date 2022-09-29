@@ -1,13 +1,11 @@
 import LastFMApiEndpointFactoryV2 from "@src/backend/api/lastfm/v2.endpoint.base.class";
+import { mockLastFMProxyMethods } from "@src/backend/integrations/lastfm/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import { STATUS_400_MESSAGE, STATUS_503_MESSAGE } from "@src/config/status";
 import handleProxy, {
   endpointFactory,
 } from "@src/pages/api/v2/data/artists/[artist]/albums/[album]";
-import {
-  createAPIMocks,
-  mockSession,
-} from "@src/tests/fixtures/mock.authentication";
+import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type {
   MockAPIRequest,
   MockAPIResponse,
@@ -15,26 +13,14 @@ import type {
 } from "@src/types/api.endpoint.types";
 import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
-jest.mock("@src/backend/integrations/lastfm/proxy.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      getAlbumInfo: mockProxyMethod,
-    };
-  });
-});
+jest.mock("@src/backend/integrations/auth/vendor", () =>
+  require("@fixtures/integrations/auth").authenticated()
+);
 
-jest.mock("@src/backend/api/lastfm/endpoint.common.logger", () => {
-  return jest.fn((req, res, next) => next());
-});
+jest.mock("@src/backend/api/lastfm/endpoint.common.logger");
 
-jest.mock("@src/backend/integrations/auth/vendor", () => ({
-  Client: jest.fn(() => ({
-    getSession: mockGetSession,
-  })),
-}));
+jest.mock("@src/backend/integrations/lastfm/proxy.class");
 
-const mockGetSession = jest.fn();
-const mockProxyMethod = jest.fn();
 const endpointUnderTest = apiRoutes.v2.data.artists.albumsGet;
 
 type ArrangeArgs = {
@@ -86,8 +72,6 @@ describe(endpointUnderTest, () => {
   });
 
   describe("with a valid session", () => {
-    beforeEach(() => mockGetSession.mockResolvedValue(mockSession));
-
     describe("with valid data", () => {
       describe("receives a GET request", () => {
         beforeEach(() => {
@@ -105,7 +89,7 @@ describe(endpointUnderTest, () => {
 
           describe("with a valid proxy response containing no userplaycount", () => {
             beforeEach(async () => {
-              mockProxyMethod.mockReturnValueOnce(
+              mockLastFMProxyMethods.getAlbumInfo.mockReturnValueOnce(
                 Promise.resolve(mockResponse)
               );
               await actRequest({ query, method });
@@ -124,7 +108,7 @@ describe(endpointUnderTest, () => {
             });
 
             it("should call the proxy method with the correct params", () => {
-              expect(mockProxyMethod).toBeCalledWith(
+              expect(mockLastFMProxyMethods.getAlbumInfo).toBeCalledWith(
                 query.artist,
                 query.album,
                 query.username
@@ -134,7 +118,7 @@ describe(endpointUnderTest, () => {
 
           describe("with a valid proxy response containing a valid userplaycount", () => {
             beforeEach(async () => {
-              mockProxyMethod.mockReturnValueOnce(
+              mockLastFMProxyMethods.getAlbumInfo.mockReturnValueOnce(
                 Promise.resolve(mockResponseWithUserPlayCount)
               );
               await actRequest({ query, method });
@@ -155,7 +139,7 @@ describe(endpointUnderTest, () => {
             });
 
             it("should call the proxy method with the correct params", () => {
-              expect(mockProxyMethod).toBeCalledWith(
+              expect(mockLastFMProxyMethods.getAlbumInfo).toBeCalledWith(
                 query.artist,
                 query.album,
                 query.username
@@ -165,7 +149,7 @@ describe(endpointUnderTest, () => {
 
           describe("with a proxy response containing an invalid userplaycount", () => {
             beforeEach(async () => {
-              mockProxyMethod.mockReturnValueOnce(
+              mockLastFMProxyMethods.getAlbumInfo.mockReturnValueOnce(
                 Promise.resolve(mockResponseWithInvalidUserPlayCount)
               );
               await actRequest({ query, method });
@@ -185,7 +169,7 @@ describe(endpointUnderTest, () => {
             });
 
             it("should call the proxy method with the correct params", () => {
-              expect(mockProxyMethod).toBeCalledWith(
+              expect(mockLastFMProxyMethods.getAlbumInfo).toBeCalledWith(
                 query.artist,
                 query.album,
                 query.username
@@ -206,7 +190,7 @@ describe(endpointUnderTest, () => {
           });
 
           it("should NOT call the proxy method", () => {
-            expect(mockProxyMethod).toBeCalledTimes(0);
+            expect(mockLastFMProxyMethods.getAlbumInfo).toBeCalledTimes(0);
           });
         });
       });

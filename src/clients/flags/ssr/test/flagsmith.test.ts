@@ -1,22 +1,15 @@
 import flagsmith from "flagsmith/isomorphic";
 import FlagSmithSSR from "../flagsmith";
 
-jest.mock("@src/utils/voids", () => {
-  const module = require("@src/utils/tests/voids.mock");
-  return {
-    normalizeNull: module.mockNormalizeNull,
-    normalizeUndefined: module.mockNormalizeUndefined,
-  };
-});
+jest.mock("@src/utils/voids");
 
-jest.mock("flagsmith/isomorphic", () => ({
-  init: jest.fn(),
-  getState: jest.fn(),
-}));
+jest.mock("flagsmith/isomorphic");
 
 describe("FlagSmithSSR", () => {
   const mockFlagEnvironment = "mockFlagEnvironment";
-  const mockFlagState = "mockFlagState";
+  const mockFlagState = { environmentID: "mocked" } as ReturnType<
+    typeof flagsmith.getState
+  >;
   const mockIdentity = "mockIdentity";
   let originalEnvironment: typeof process.env;
   let instance: FlagSmithSSR;
@@ -43,7 +36,7 @@ describe("FlagSmithSSR", () => {
     let result: unknown;
 
     beforeEach(async () => {
-      (flagsmith.getState as jest.Mock).mockReturnValueOnce(mockFlagState);
+      jest.mocked(flagsmith.getState).mockReturnValueOnce(mockFlagState);
       result = await instance.getState(mockIdentity);
     });
 

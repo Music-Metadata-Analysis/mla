@@ -9,20 +9,14 @@ import BillBoard from "../../billboard.component";
 import BillBoardProgressBar, {
   testIDs,
 } from "../billboard.progress.bar.component";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import { truncate } from "@src/utils/strings";
 import type { BillBoardProgressBarDetails } from "../billboard.progress.bar.component";
 
-jest.mock("../../billboard.component", () =>
-  require("@fixtures/react").createComponent("Billboard")
-);
+jest.mock("@src/hooks/colour");
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
-
-jest.mock("@src/utils/strings", () => ({
-  truncate: jest.fn().mockReturnValue("TruncatedString"),
-}));
+jest.mock("@src/utils/strings");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
@@ -34,13 +28,18 @@ jest.mock("@chakra-ui/react", () => {
   ]);
 });
 
+jest.mock("../../billboard.component", () =>
+  require("@fixtures/react/parent").createComponent("Billboard")
+);
+
 describe("BillBoardProgressBar", () => {
   let isVisible: boolean;
   let mockDetails: BillBoardProgressBarDetails;
-  const mockTruncatedString = "TruncatedString";
+  const mockResource = "abcdefghijklmnopqr";
   const testTitle = "Test Title";
   const mockValue = 72;
   const expectedMaxLength = 18;
+  const mockTruncatedString = `truncate@${expectedMaxLength}(${mockResource})`;
 
   const arrange = () => {
     render(

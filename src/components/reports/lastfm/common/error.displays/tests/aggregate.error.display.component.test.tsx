@@ -2,23 +2,23 @@ import { render } from "@testing-library/react";
 import AggregateErrorDisplayComponent from "../aggregate.error.display.component";
 import Authentication from "@src/components/authentication/authentication.container";
 import ErrorDisplay from "@src/components/errors/display/error.display.component";
-import { MockReportClass } from "@src/components/reports/lastfm/common/sunburst.report/tests/fixtures/mock.sunburst.report.class";
+import { MockReportClass } from "@src/components/reports/lastfm/common/sunburst.report/tests/implementations/concrete.sunburst.report.class";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import mockRouter from "@src/tests/fixtures/mock.router";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
-jest.mock("@src/components/authentication/authentication.container", () =>
-  jest.fn(() => <div>MockedAuthenticationComponent</div>)
-);
-
-jest.mock("@src/components/errors/display/error.display.component", () =>
-  require("@fixtures/react").createComponent("ErrorDisplay")
-);
-
 jest.mock("next/router", () => ({
   useRouter: () => mockRouter,
 }));
+
+jest.mock("@src/components/authentication/authentication.container", () =>
+  require("@fixtures/react/child").createComponent("AuthenticationComponent")
+);
+
+jest.mock("@src/components/errors/display/error.display.component", () =>
+  require("@fixtures/react/parent").createComponent("ErrorDisplay")
+);
 
 describe("AggregateErrorDisplayComponent", () => {
   let mockUserProperties: LastFMUserStateBase;
@@ -32,7 +32,7 @@ describe("AggregateErrorDisplayComponent", () => {
   const checkErrorDisplay = (errorKey: string) => {
     it("should render the ErrorDisplay as expected", () => {
       expect(ErrorDisplay).toBeCalledTimes(1);
-      const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
+      const call = jest.mocked(ErrorDisplay).mock.calls[0][0];
       expect(call.errorKey).toBe(errorKey);
       expect(typeof call.resetError).toBe("function");
       expect(Object.keys(call).length).toBe(2);
@@ -63,7 +63,7 @@ describe("AggregateErrorDisplayComponent", () => {
 
       describe("when resetError is called on ErrorDisplay", () => {
         beforeEach(() => {
-          const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
+          const call = jest.mocked(ErrorDisplay).mock.calls[0][0];
           call.resetError();
         });
 
@@ -100,7 +100,7 @@ describe("AggregateErrorDisplayComponent", () => {
 
       describe("when resetError is called on ErrorDisplay", () => {
         beforeEach(() => {
-          const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
+          const call = jest.mocked(ErrorDisplay).mock.calls[0][0];
           call.resetError();
         });
 
@@ -124,7 +124,7 @@ describe("AggregateErrorDisplayComponent", () => {
 
       describe("when resetError is called on ErrorDisplay", () => {
         beforeEach(() => {
-          const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
+          const call = jest.mocked(ErrorDisplay).mock.calls[0][0];
           call.resetError();
         });
 
@@ -164,7 +164,7 @@ describe("AggregateErrorDisplayComponent", () => {
 
       describe("when resetError is called on ErrorDisplay", () => {
         beforeEach(() => {
-          const call = (ErrorDisplay as jest.Mock).mock.calls[0][0];
+          const call = jest.mocked(ErrorDisplay).mock.calls[0][0];
           call.resetError();
         });
 

@@ -1,14 +1,16 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import NextI18NextSSR from "../next-i18next";
 
-jest.mock("next-i18next/serverSideTranslations", () => ({
-  serverSideTranslations: jest.fn(),
-}));
+jest.mock("next-i18next/serverSideTranslations");
+
+const MockedServerSideTranslations = jest.mocked(serverSideTranslations);
 
 describe("NextI18NextSSR", () => {
   const mockLocale = "mockLocale";
   const mockNamesSpaces = ["one", "two", "three"];
-  const mockTranslationData = "mockTranslationData";
+  const mockTranslationData = { _nextI18Next: {} } as Awaited<
+    ReturnType<typeof serverSideTranslations>
+  >;
   let instance: NextI18NextSSR;
 
   beforeEach(() => {
@@ -20,9 +22,7 @@ describe("NextI18NextSSR", () => {
     let result: unknown;
 
     beforeEach(async () => {
-      (serverSideTranslations as jest.Mock).mockReturnValue(
-        mockTranslationData
-      );
+      MockedServerSideTranslations.mockResolvedValueOnce(mockTranslationData);
       result = await instance.getTranslations();
     });
 

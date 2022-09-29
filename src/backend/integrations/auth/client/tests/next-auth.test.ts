@@ -5,14 +5,11 @@ import type { MockAPIRequest } from "@src/types/api.endpoint.types";
 import type { AuthVendorSessionType } from "@src/types/integrations/auth/vendor.types";
 import type { JWT } from "next-auth/jwt";
 
-jest.mock("@src/utils/voids", () => {
-  const module = require("@src/utils/tests/voids.mock");
-  return { normalizeNull: module.mockNormalizeNull };
-});
+jest.mock("@src/utils/voids");
 
-jest.mock("next-auth/jwt", () => ({
-  getToken: jest.fn(),
-}));
+jest.mock("next-auth/jwt");
+
+const MockedGetToken = jest.mocked(getToken);
 
 describe(NextAuthClient.name, () => {
   let instance: NextAuthClient;
@@ -66,9 +63,7 @@ describe(NextAuthClient.name, () => {
     beforeEach(() => arrange());
 
     describe("with a valid JWT", () => {
-      beforeEach(() =>
-        (getToken as jest.Mock).mockReturnValueOnce(mockValidJWT)
-      );
+      beforeEach(() => MockedGetToken.mockResolvedValueOnce(mockValidJWT));
 
       describe("getSession", () => {
         let result: AuthVendorSessionType;
@@ -92,9 +87,7 @@ describe(NextAuthClient.name, () => {
     });
 
     describe("with an incomplete JWT", () => {
-      beforeEach(() =>
-        (getToken as jest.Mock).mockReturnValueOnce(mockValidNullJWT)
-      );
+      beforeEach(() => MockedGetToken.mockResolvedValueOnce(mockValidNullJWT));
 
       describe("getSession", () => {
         let result: AuthVendorSessionType;
@@ -118,7 +111,7 @@ describe(NextAuthClient.name, () => {
     });
 
     describe("with a invalid JWT", () => {
-      beforeEach(() => (getToken as jest.Mock).mockReturnValueOnce(null));
+      beforeEach(() => MockedGetToken.mockResolvedValueOnce(null));
 
       describe("getToken", () => {
         let result: AuthVendorSessionType;

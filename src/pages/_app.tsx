@@ -9,12 +9,12 @@ import RootPopups from "@src/components/popups/root.popup";
 import NavConfig from "@src/config/navbar";
 import RootProvider from "@src/providers/root.provider";
 import { normalizeUndefined } from "@src/utils/voids";
-import type { AppProps } from "next/app";
+import type { VendorAppComponentProps } from "@src/clients/web.framework/vendor.types";
 
 function MLA({
   Component,
   pageProps: { flagState, session, headerProps, ...otherProps },
-}: AppProps) {
+}: VendorAppComponentProps) {
   return (
     <RootProvider
       flagState={flagState}

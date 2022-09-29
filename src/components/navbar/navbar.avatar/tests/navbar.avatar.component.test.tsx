@@ -1,20 +1,18 @@
 import { Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import NavBarAvatar from "../navbar.avatar.component";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
+jest.mock("@src/hooks/auth");
+
+jest.mock("@src/hooks/colour");
+
 jest.mock("@chakra-ui/react", () => {
-  return {
-    Avatar: jest.fn().mockImplementation(() => <div>MockComponent</div>),
-    Box: jest.requireActual("@chakra-ui/react").Box,
-  };
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Avatar"]);
 });
-
-jest.mock("@src/hooks/auth", () => () => mockAuthHook);
-
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
 
 describe("NavBarAvatar", () => {
   beforeEach(() => {

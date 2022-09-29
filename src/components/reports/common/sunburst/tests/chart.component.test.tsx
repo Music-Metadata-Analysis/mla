@@ -6,8 +6,8 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { RefObject, useState, Dispatch } from "react";
-import mockDataSet3 from "./fixtures/mock.sunburst.data.3.json";
-import mockDataSet4 from "./fixtures/mock.sunburst.data.4.json";
+import mockDataSet3 from "./data/sunburst.data.set.3.json";
+import mockDataSet4 from "./data/sunburst.data.set.4.json";
 import SunBurstChart, { testIDs, SunBurstChartProps } from "../chart.component";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import { getMockProp } from "@src/tests/fixtures/mock.component.props";
@@ -348,7 +348,7 @@ describe("SunBurstChart", () => {
         checkSVG({ expected: { containerSize: 500, size: 400 } });
       });
 
-      describe("with a data set changes to mockDataSet3", () => {
+      describe("with a data set changes to DataSet3", () => {
         beforeEach(() => {
           mockSetSelectedNode.mockClear();
           mockFinishTransition.mockClear();
@@ -363,7 +363,7 @@ describe("SunBurstChart", () => {
         checkVisibleLabels({
           expected: ["Other", "Caspian", "Other"],
         });
-        checkSnapShot({ name: "multi-snapshots/mockDataSet3" });
+        checkSnapShot({ name: "multi-snapshots/dataSet3" });
         checkColourMode({ expected: { foreground: "#000000" } });
         checkChartTitle({ expected: "100%" });
         checkCorrectNodeSelected({
@@ -395,7 +395,7 @@ describe("SunBurstChart", () => {
         "Other",
       ],
     });
-    checkSnapShot({ name: "multi-snapshots/mockDataSet4" });
+    checkSnapShot({ name: "multi-snapshots/dataSet4" });
     checkColourMode({ expected: { foreground: "#000000" } });
     checkChartTitle({ expected: "100%" });
     checkCorrectNodeSelected({

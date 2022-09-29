@@ -1,10 +1,10 @@
-import ConcreteBaseReportState from "../../flipcard/tests/fixtures/concrete.user.state.flipcard.report.class";
+import ConcreteBaseReportState from "./implementations/concrete.user.state.flipcard.report.class";
 import {
   baseUserProperties,
   mockUrls,
-} from "../../tests/fixtures/mock.user.state.data";
+} from "../../tests/states/user.state.data.set";
 import lastfmTranslations from "@locales/lastfm.json";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import type UserFlipCardBaseReportState from "../user.state.base.flipcard.report.class";
 import type { LastFMImageDataInterface } from "@src/types/integrations/lastfm/api.types";
 import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
@@ -12,7 +12,7 @@ import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
 describe("UserFlipCardBaseReportState", () => {
   let currentState: LastFMUserStateAlbumReport;
   let instance: UserFlipCardBaseReportState;
-  const mockT = new mockUseLocale("lastfm").t;
+  const mockT = new MockUseLocale("lastfm").t;
   let index: number;
   let size: LastFMImageDataInterface["size"];
 

@@ -2,29 +2,31 @@ import SunBurstDataClientBase from "../sunburst.client.base.class";
 import apiRoutes from "@src/config/apiRoutes";
 import InitialState from "@src/providers/user/user.initial";
 
-const mockDispatch = jest.fn();
-const mockEvent = jest.fn();
-const mockState = {
-  errorMessage: "Mock Error Message",
-  lastfmPrefix: "A url to lastfm",
-  userProperties: JSON.parse(JSON.stringify(InitialState)),
-  getReportContent: jest.fn(),
-  getReport: jest.fn(),
-  getReportStatus: jest.fn(),
-  getDispatchState: jest.fn(),
-  updateWithResponse: jest.fn(),
-  getProfileImageUrl: jest.fn(),
-  getNextStep: jest.fn(),
-  throwError: jest.fn(),
-  removeEntity: jest.fn(),
-};
+const mockDataPointClasses = [jest.fn(), jest.fn()];
 
 class ConcreteSunBurstDataClientBase extends SunBurstDataClientBase<unknown> {
-  dataPointClasses = [jest.fn(), jest.fn()];
+  dataPointClasses = mockDataPointClasses;
   defaultRoute = "/default/route";
 }
 
 describe("SunBurstDataClientBase", () => {
+  const mockDispatch = jest.fn();
+  const mockEvent = jest.fn();
+  const mockState = {
+    errorMessage: "Mock Error Message",
+    lastfmPrefix: "A url to lastfm",
+    userProperties: JSON.parse(JSON.stringify(InitialState)),
+    getReportContent: jest.fn(),
+    getReport: jest.fn(),
+    getReportStatus: jest.fn(),
+    getDispatchState: jest.fn(),
+    updateWithResponse: jest.fn(),
+    getProfileImageUrl: jest.fn(),
+    getNextStep: jest.fn(),
+    throwError: jest.fn(),
+    removeEntity: jest.fn(),
+  };
+
   beforeEach(() => jest.resetAllMocks());
 
   describe("when a concrete instances is instantiated", () => {
@@ -42,11 +44,15 @@ describe("SunBurstDataClientBase", () => {
 
     describe("when no operation has been defined", () => {
       beforeEach(() => {
-        (instance.dataPointClasses[1] as jest.Mock).mockImplementation(() => ({
-          retrieveReport: mockDataPointRetrieveReport,
-          route: "/default/route",
+        mockDataPointClasses[0].mockImplementationOnce(() => ({
+          getRoute: () => "",
         }));
-        mockState.getReportStatus.mockImplementation(() => ({}));
+        mockDataPointClasses[1].mockImplementationOnce(() => ({
+          retrieveReport: mockDataPointRetrieveReport,
+          getRoute: () => "/default/route",
+        }));
+        mockState.getReportStatus.mockReturnValue({});
+
         instance.retrieveReport(mockParams);
       });
 
@@ -58,16 +64,19 @@ describe("SunBurstDataClientBase", () => {
 
     describe("when a valid operation is pending on the report", () => {
       beforeEach(() => {
-        (instance.dataPointClasses[0] as jest.Mock).mockImplementation(() => ({
-          retrieveReport: mockDataPointRetrieveReport,
-          route: apiRoutes.v2.data.artists.albumsGet,
+        mockDataPointClasses[0].mockImplementationOnce(() => ({
+          getRoute: () => "",
         }));
-        mockState.getReportStatus.mockImplementation(() => ({
+        mockDataPointClasses[1].mockImplementationOnce(() => ({
+          retrieveReport: mockDataPointRetrieveReport,
+          getRoute: () => apiRoutes.v2.data.artists.albumsGet,
+        }));
+        mockState.getReportStatus.mockReturnValue({
           operation: {
             url: apiRoutes.v2.data.artists.albumsGet,
             params: { userName: "niall-byrne", artist: "Uchu Corbini" },
           },
-        }));
+        });
         instance.retrieveReport(mockParams);
       });
 
@@ -82,15 +91,17 @@ describe("SunBurstDataClientBase", () => {
 
     describe("when a invalid operation is pending on the report", () => {
       beforeEach(() => {
-        (instance.dataPointClasses[0] as jest.Mock).mockImplementation(() => ({
-          retrieveReport: mockDataPointRetrieveReport,
-          route: "unknown-route",
+        mockDataPointClasses[0].mockImplementationOnce(() => ({
+          getRoute: () => "unknown-route",
         }));
-        mockState.getReportStatus.mockImplementation(() => ({
+        mockDataPointClasses[1].mockImplementationOnce(() => ({
+          getRoute: () => "unknown-route",
+        }));
+        mockState.getReportStatus.mockReturnValue({
           operation: {
             url: apiRoutes.v2.data.artists.albumsGet,
           },
-        }));
+        });
         instance.retrieveReport(mockParams);
       });
 

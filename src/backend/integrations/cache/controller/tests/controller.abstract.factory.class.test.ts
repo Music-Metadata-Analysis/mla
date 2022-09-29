@@ -1,21 +1,22 @@
 import CacheControllerAbstractFactory from "../controller.abstract.factory.class";
 import CacheController from "../controller.class";
+import VendorCdnBaseClient from "@src/backend/integrations/cache/cdn/bases/vendor.cdn.base.client.class";
+import PersistanceVendorBaseClass from "@src/backend/integrations/persistance/client/bases/persistance.base.client.class";
 
-const mockCacheControllerImplementation = jest.fn();
-const mockOriginServerPersistanceClientImplementation = jest.fn();
-const mockOriginServerPersistanceClientClass = jest
-  .fn()
-  .mockReturnValue(mockOriginServerPersistanceClientImplementation);
-const mockCdnClientImplementation = jest.fn();
-const mockCdnClientClass = jest
-  .fn()
-  .mockReturnValue(mockCdnClientImplementation);
+jest.mock("../controller.class");
+
+jest.mock(
+  "@src/backend/integrations/persistance/client/bases/persistance.base.client.class"
+);
+
+jest.mock(
+  "@src/backend/integrations/cache/cdn/bases/vendor.cdn.base.client.class"
+);
 
 class ConcreteCacheControllerFactory extends CacheControllerAbstractFactory<string> {
-  protected OriginServerPersistanceClient =
-    mockOriginServerPersistanceClientClass;
-  protected CdnClient = mockCdnClientClass;
-  protected defaultResponse = "mockDefaultResponse";
+  OriginServerPersistanceClient = MockedPersistanceVendorBaseClass;
+  CdnClient = MockedVendorCdnBaseClient;
+  defaultResponse = "mockDefaultResponse";
 
   getPartitionName(): string {
     return "mockPartitionName";
@@ -26,9 +27,12 @@ class ConcreteCacheControllerFactory extends CacheControllerAbstractFactory<stri
   }
 }
 
-jest.mock("../controller.class", () =>
-  jest.fn(() => mockCacheControllerImplementation)
-);
+const MockedCacheController = jest.mocked(CacheController);
+const MockedPersistanceVendorBaseClass =
+  PersistanceVendorBaseClass as jest.Mock<PersistanceVendorBaseClass>;
+const MockedVendorCdnBaseClient = VendorCdnBaseClient as jest.Mock<
+  VendorCdnBaseClient<string>
+>;
 
 describe(CacheControllerAbstractFactory.name, () => {
   let instance: CacheControllerAbstractFactory<string>;
@@ -46,30 +50,30 @@ describe(CacheControllerAbstractFactory.name, () => {
       beforeEach(() => (result = instance.create()));
 
       it("should instantiate the OriginServerPersistanceClient as expected", () => {
-        expect(mockOriginServerPersistanceClientClass).toBeCalledTimes(1);
-        expect(mockOriginServerPersistanceClientClass).toBeCalledWith(
+        expect(MockedPersistanceVendorBaseClass).toBeCalledTimes(1);
+        expect(MockedPersistanceVendorBaseClass).toBeCalledWith(
           "mockPartitionName"
         );
       });
 
       it("should instantiate the CdnClient as expected", () => {
-        expect(mockCdnClientClass).toBeCalledTimes(1);
-        expect(mockCdnClientClass).toBeCalledWith(
-          mockOriginServerPersistanceClientImplementation,
+        expect(MockedVendorCdnBaseClient).toBeCalledTimes(1);
+        expect(MockedVendorCdnBaseClient).toBeCalledWith(
+          MockedPersistanceVendorBaseClass.mock.instances[0],
           "mockCdnHostName"
         );
       });
 
       it("should instantiate the CacheController as expected", () => {
-        expect(CacheController).toBeCalledTimes(1);
-        expect(CacheController).toBeCalledWith(
+        expect(MockedCacheController).toBeCalledTimes(1);
+        expect(MockedCacheController).toBeCalledWith(
           "mockDefaultResponse",
-          mockCdnClientImplementation
+          MockedVendorCdnBaseClient.mock.instances[0]
         );
       });
 
       it("should return the CacheController", () => {
-        expect(result).toBe(mockCacheControllerImplementation);
+        expect(result).toBe(MockedCacheController.mock.instances[0]);
       });
     });
   });

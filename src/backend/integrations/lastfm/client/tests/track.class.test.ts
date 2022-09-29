@@ -1,19 +1,8 @@
 import LastFMTrackClientAdapter from "../track.class";
+import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
 import type { ProxyError } from "@src/errors/proxy.error.class";
 import type { LastFMTrackInfoInterface } from "@src/types/integrations/lastfm/api.types";
 import type { LastFMExternalClientError } from "@src/types/integrations/lastfm/client.types";
-
-jest.mock("@toplast/lastfm", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      track: mockApiCalls,
-    };
-  });
-});
-
-const mockApiCalls = {
-  getInfo: jest.fn(),
-};
 
 describe("LastFMArtistClientAdapter", () => {
   const secretKey = "123VerySecret";
@@ -36,16 +25,16 @@ describe("LastFMArtistClientAdapter", () => {
 
     describe("when the request is successful", () => {
       beforeEach(() => {
-        mockApiCalls["getInfo"].mockReturnValueOnce(
-          Promise.resolve(JSON.parse(JSON.stringify(mockTrackInfo)))
+        mockVendorMethods.track.getInfo.mockResolvedValueOnce(
+          JSON.parse(JSON.stringify(mockTrackInfo))
         );
         instance = arrange(secretKey);
       });
 
       it("should call the external library correctly", async () => {
         res = await instance.getInfo(artist, track, username);
-        expect(mockApiCalls["getInfo"]).toBeCalledTimes(1);
-        expect(mockApiCalls["getInfo"]).toBeCalledWith({
+        expect(mockVendorMethods.track.getInfo).toBeCalledTimes(1);
+        expect(mockVendorMethods.track.getInfo).toBeCalledWith({
           artist,
           track,
           username,
@@ -59,14 +48,12 @@ describe("LastFMArtistClientAdapter", () => {
 
       beforeEach(() => {
         err = new Error("Test Error") as LastFMExternalClientError;
+        mockVendorMethods.track.getInfo.mockRejectedValueOnce(err);
       });
 
       describe("with a status code", () => {
         beforeEach(() => {
           err.statusCode = 999;
-          mockApiCalls["getInfo"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 
@@ -86,9 +73,6 @@ describe("LastFMArtistClientAdapter", () => {
 
       describe("without a status code", () => {
         beforeEach(() => {
-          mockApiCalls["getInfo"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 

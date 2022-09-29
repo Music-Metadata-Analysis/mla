@@ -4,6 +4,7 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
 import createRoutes, { getGroup } from "../next-auth";
+import { mockFlagGroup } from "@src/backend/integrations/flags/__mocks__/vendor.mock";
 import flagVendor from "@src/backend/integrations/flags/vendor";
 import settings from "@src/config/auth";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
@@ -12,32 +13,26 @@ import type {
   MockAPIResponse,
 } from "@src/types/api.endpoint.types";
 
-jest.mock("next-auth", () => jest.fn());
-jest.mock("next-auth/providers/facebook", () => jest.fn());
-jest.mock("next-auth/providers/github", () => jest.fn());
-jest.mock("next-auth/providers/google", () => jest.fn());
-jest.mock("next-auth/providers/spotify", () => jest.fn());
+jest.mock("next-auth");
+jest.mock("next-auth/providers/facebook");
+jest.mock("next-auth/providers/github");
+jest.mock("next-auth/providers/google");
+jest.mock("next-auth/providers/spotify");
 
-jest.mock("@src/backend/integrations/flags/vendor.ts", () => {
-  return {
-    Group: jest.fn(() => ({
-      getFromIdentifier: mockGetFromIdentifier,
-    })),
-  };
-});
-
-const mockGroup = "mockGroup";
-const MockProfilePersistanceClient = jest.fn(() => ({
-  persistProfile: mockPersistProfile,
-}));
-const mockGetFromIdentifier = jest.fn(() => mockGroup);
-const mockPersistProfile = jest.fn();
+jest.mock("@src/backend/integrations/flags/vendor");
 
 describe("NextAuthRoutes", () => {
-  const originalEnvironment = process.env;
   let mockReq: MockAPIRequest;
   let mockRes: MockAPIResponse;
   let mockValueIndex = 0;
+
+  const MockProfilePersistanceClient = jest.fn(() => ({
+    persistProfile: mockPersistProfile,
+  }));
+  const mockPersistProfile = jest.fn();
+
+  const originalEnvironment = process.env;
+  const mockGroup = "mockGroup";
 
   function mockValue() {
     const value = `mockValue${mockValueIndex}`;
@@ -62,6 +57,7 @@ describe("NextAuthRoutes", () => {
   beforeEach(() => {
     setupEnv();
     jest.clearAllMocks();
+    mockFlagGroup.getFromIdentifier.mockImplementation(() => mockGroup);
   });
 
   afterAll(() => {
@@ -91,8 +87,8 @@ describe("NextAuthRoutes", () => {
         });
 
         it("should call the getFromIdentifier method correctly", () => {
-          expect(mockGetFromIdentifier).toBeCalledTimes(1);
-          expect(mockGetFromIdentifier).toBeCalledWith(mockEmail);
+          expect(mockFlagGroup.getFromIdentifier).toBeCalledTimes(1);
+          expect(mockFlagGroup.getFromIdentifier).toBeCalledWith(mockEmail);
         });
       });
     });
@@ -109,8 +105,8 @@ describe("NextAuthRoutes", () => {
         });
 
         it("should call the getFromIdentifier method correctly", () => {
-          expect(mockGetFromIdentifier).toBeCalledTimes(1);
-          expect(mockGetFromIdentifier).toBeCalledWith(mockEmail);
+          expect(mockFlagGroup.getFromIdentifier).toBeCalledTimes(1);
+          expect(mockFlagGroup.getFromIdentifier).toBeCalledWith(mockEmail);
         });
       });
     });
@@ -213,8 +209,10 @@ describe("NextAuthRoutes", () => {
           });
 
           it("should call the getFromIdentifier method correctly", () => {
-            expect(mockGetFromIdentifier).toBeCalledTimes(1);
-            expect(mockGetFromIdentifier).toBeCalledWith(mockTestToken?.email);
+            expect(mockFlagGroup.getFromIdentifier).toBeCalledTimes(1);
+            expect(mockFlagGroup.getFromIdentifier).toBeCalledWith(
+              mockTestToken?.email
+            );
           });
 
           it("should assign the group as expected", () => {
@@ -336,8 +334,10 @@ describe("NextAuthRoutes", () => {
           });
 
           it("should call the getFromIdentifier method correctly", () => {
-            expect(mockGetFromIdentifier).toBeCalledTimes(1);
-            expect(mockGetFromIdentifier).toBeCalledWith(mockProfile?.email);
+            expect(mockFlagGroup.getFromIdentifier).toBeCalledTimes(1);
+            expect(mockFlagGroup.getFromIdentifier).toBeCalledWith(
+              mockProfile?.email
+            );
           });
 
           it("should instantiate the ProfilePersistanceClient class correctly", () => {

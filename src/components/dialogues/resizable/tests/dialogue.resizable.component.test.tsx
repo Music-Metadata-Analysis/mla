@@ -6,18 +6,18 @@ import Condition from "@src/components/condition/condition.component";
 import dialogueSettings from "@src/config/dialogue";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/components/billboard/billboard.component", () =>
-  require("@fixtures/react").createComponent("Billboard")
-);
-
-jest.mock("@src/components/condition/condition.component", () =>
-  require("@fixtures/react").createComponent("Condition")
-);
-
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Flex"]);
 });
+
+jest.mock("@src/components/billboard/billboard.component", () =>
+  require("@fixtures/react/parent").createComponent("Billboard")
+);
+
+jest.mock("@src/components/condition/condition.component", () =>
+  require("@fixtures/react/parent").createComponent("Condition")
+);
 
 describe("Dialogue", () => {
   const mockProps = {

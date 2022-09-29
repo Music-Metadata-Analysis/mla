@@ -1,7 +1,7 @@
 import {
   mockAlbumsReport,
   mockUserStateWithError,
-} from "./fixtures/mock.user.state.data";
+} from "./states/user.state.data";
 import UserReducerStateBase from "../states/user.reducer.states.base.class";
 import { InitialState } from "../user.initial";
 import { UserReducer } from "../user.reducer";
@@ -30,9 +30,7 @@ class ConcreteStateThree extends UserReducerStateBase<"StartFetch"> {
   }
 }
 
-jest.mock("../states/user.reducer.states", () => {
-  return () => mockClasses;
-});
+jest.mock("../states/user.reducer.states", () => () => mockClasses);
 
 const mockClasses = [ConcreteStateOne, ConcreteStateTwo, ConcreteStateThree];
 const mockReadyState = "mockReadyState";

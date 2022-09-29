@@ -1,24 +1,24 @@
 import { Flex, Box, Stat, StatLabel, StatHelpText } from "@chakra-ui/react";
 import { render, screen, within, fireEvent } from "@testing-library/react";
-import MockSunBurstNodeEncapsulation from "../../encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
+import MockSunBurstNodeEncapsulation from "../../encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import SunBurstControlPanel, {
   testIDs,
   SunBurstControlPanelProps,
 } from "../control.panel.component";
 import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { d3Node } from "@src/types/reports/sunburst.types";
+
+jest.mock("@src/hooks/colour");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Flex", "Box", "Stat", "StatLabel", "StatHelpText"]);
 });
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
-
 jest.mock("@src/components/button/button.base/button.base.component", () =>
-  require("@fixtures/react").createComponent("ButtonWithoutAnalytics")
+  require("@fixtures/react/parent").createComponent("ButtonWithoutAnalytics")
 );
 
 type MockD3Node = Omit<Partial<d3Node>, "parent"> & {

@@ -33,7 +33,7 @@ const checkMockCall = (
   styled = false,
   instances: instancePair[] = []
 ) => {
-  let call = { ...(component as jest.Mock).mock.calls[index][0] };
+  let call = { ...jest.mocked(component).mock.calls[index][0] };
   if ("children" in call) delete call.children;
   if (styled && call.className) delete call.className;
   functions.forEach((functionName) => {

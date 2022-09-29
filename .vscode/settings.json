@@ -51,6 +51,8 @@
     "topalbums",
     "topartists",
     "toplast",
+    "toptracks",
+    "unmock",
     "userplaycount"
   ],
   "cSpell.ignoreRegExpList": ["node_modules"],

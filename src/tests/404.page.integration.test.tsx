@@ -1,14 +1,11 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import translation from "@locales/main.json";
 import routes from "@src/config/routes";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import Custom404 from "@src/pages/404";
 import mockRouter from "@src/tests/fixtures/mock.router";
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
 jest.mock("next/router", () => ({
   useRouter: () => mockRouter,

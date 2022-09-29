@@ -1,5 +1,5 @@
 // @ts-ignore: mocked with forwardRef
-import { BoxWithFwdRef, Flex, Avatar } from "@chakra-ui/react";
+import { BoxWithRef, Flex, Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import Option from "../inlay/select.option.component";
@@ -10,49 +10,44 @@ import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
 import VerticalScrollBarComponent from "@src/components/scrollbar/vertical.scrollbar.component";
 import config from "@src/config/lastfm";
 import settings from "@src/config/navbar";
-import mockUseFlags from "@src/hooks/tests/flags.mock.hook";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockUseFlags from "@src/hooks/__mocks__/flags.mock";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { MutableRefObject } from "react";
 
-jest.mock("@src/hooks/flags", () => () => mockUseFlags);
+jest.mock("@src/hooks/flags");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
 jest.mock("@chakra-ui/react", () => {
-  const { forwardRef } = require("react");
   const { createChakraMock } = require("@fixtures/chakra");
-  const chakraMock = createChakraMock(["Avatar", "Box", "Flex"]);
-  chakraMock.Avatar = jest.fn().mockImplementation(() => <div>MockAvatar</div>);
-  chakraMock.BoxWithFwdRef = chakraMock.Box;
-  chakraMock.Box = forwardRef(chakraMock.Box);
+  const chakraMock = createChakraMock(["Avatar", "Flex"], ["Box"]);
   return chakraMock;
 });
 
 jest.mock("@src/components/billboard/billboard.component", () =>
-  require("@fixtures/react").createComponent("Billboard")
+  require("@fixtures/react/parent").createComponent("Billboard")
 );
 
 jest.mock("../inlay/select.option.component", () =>
-  require("@fixtures/react").createComponent("Option")
+  require("@fixtures/react/parent").createComponent("Option")
 );
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react").createComponent("VerticalScrollBarComponent")
+  require("@fixtures/react/parent").createComponent(
+    "VerticalScrollBarComponent"
+  )
 );
 
 jest.mock("@src/components/icons/lastfm/lastfm.icon", () =>
-  jest.fn(() => <div>MockIcon</div>)
+  require("@fixtures/react/child").createComponent("Icon")
 );
 
 describe("SearchSelection", () => {
   const mockRef = {
     current: { mock: "div" },
   } as unknown as MutableRefObject<HTMLDivElement | null>;
-  const mockT = new mockUseLocale("lastfm");
+  const mockT = new MockUseLocale("lastfm");
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -83,11 +78,11 @@ describe("SearchSelection", () => {
     });
 
     it("should call Box as expected to create a margin around the form", () => {
-      expect(BoxWithFwdRef).toBeCalledTimes(3);
-      checkMockCall(BoxWithFwdRef, { position: "relative" }, 0);
-      checkMockCall(BoxWithFwdRef, { mb: 1 }, 1);
+      expect(BoxWithRef).toBeCalledTimes(3);
+      checkMockCall(BoxWithRef, { position: "relative" }, 0);
+      checkMockCall(BoxWithRef, { mb: 1 }, 1);
       checkMockCall(
-        BoxWithFwdRef,
+        BoxWithRef,
         {
           className: "scrollbar",
           id: "SunburstDrawerEntityListScrollArea",
@@ -101,9 +96,10 @@ describe("SearchSelection", () => {
 
     it("should call Avatar as expected to display the logo", () => {
       expect(Avatar).toBeCalledTimes(1);
-      const call = (Avatar as jest.Mock).mock.calls[0][0];
+      const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.width).toStrictEqual([50, 50, 75]);
-      expect(renderToString(call.icon)).toBe(renderToString(<LastFMIcon />));
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(renderToString(call.icon!)).toBe(renderToString(<LastFMIcon />));
       expect(Object.keys(call).length).toBe(2);
     });
 
@@ -125,7 +121,7 @@ describe("SearchSelection", () => {
   const checkFlagsForOptions = (expectedCount: number) => {
     it(`should render an Option for each flag-enabled report, (${expectedCount} times)`, () => {
       expect(Option).toBeCalledTimes(expectedCount);
-      (Option as jest.Mock).mock.calls.forEach((mockCall, index) => {
+      jest.mocked(Option).mock.calls.forEach((mockCall, index) => {
         const call = mockCall[0];
         expect(typeof call.clickHandler).toBe("function");
         expect(call.analyticsName).toBe(
@@ -138,6 +134,7 @@ describe("SearchSelection", () => {
           mockT.t(config.select.options[index].indicatorTextKey)
         );
         expect(call.visibleIndicators).toBe(true);
+        expect(Object.keys(call).length).toBe(5);
       });
     });
   };
@@ -147,18 +144,16 @@ describe("SearchSelection", () => {
       const configuredFlags = config.select.options;
 
       expect(mockUseFlags.isEnabled).toBeCalledTimes(configuredFlags.length);
-      (mockUseFlags.isEnabled as jest.Mock).mock.calls.forEach(
-        (mockCall, index) => {
-          const call = mockCall;
-          expect(call).toEqual([configuredFlags[index].flag]);
-        }
-      );
+      mockUseFlags.isEnabled.mock.calls.forEach((mockCall, index) => {
+        const call = mockCall;
+        expect(call).toEqual([configuredFlags[index].flag]);
+      });
     });
   };
 
   describe(`when a flag is disabled`, () => {
     beforeEach(() => {
-      (mockUseFlags.isEnabled as jest.Mock)
+      mockUseFlags.isEnabled
         .mockReturnValueOnce(true)
         .mockReturnValueOnce(true)
         .mockReturnValueOnce(true)
@@ -180,7 +175,7 @@ describe("SearchSelection", () => {
 
   describe(`when all flags are enabled`, () => {
     beforeEach(() => {
-      (mockUseFlags.isEnabled as jest.Mock)
+      mockUseFlags.isEnabled
         .mockReturnValueOnce(true)
         .mockReturnValueOnce(true)
         .mockReturnValueOnce(true)

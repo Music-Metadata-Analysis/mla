@@ -15,19 +15,18 @@ jest.mock("@src/clients/locale/vendor.ssr", () => {
   };
 });
 
-interface mockReturnValueType {
-  props: {
-    i18NextProps: {
-      locale: string;
-      translations: string[];
-    };
-    headerProps: { pageKey: string };
-  };
-}
-
 describe("pageProps", () => {
   let generatedFunction: ReturnType<typeof pagePropsGenerator>;
-  let returnValue: mockReturnValueType;
+  let returnValue: {
+    props: {
+      i18NextProps?: {
+        locale: string;
+        translations: string[];
+      };
+      headerProps: { pageKey: string };
+    };
+  };
+
   const mockLocale = "en";
   const mockDefaultTranslations = ["authentication", "main", "navbar"];
   const mockTranslations = ["one", "two"];
@@ -49,17 +48,17 @@ describe("pageProps", () => {
 
     describe("the returned function, when called with a locale", () => {
       beforeEach(async () => {
-        returnValue = (await generatedFunction({
+        returnValue = await generatedFunction({
           locale: mockLocale,
-        })) as never as mockReturnValueType;
+        });
       });
 
       it("should return page props that contain the input locale", () => {
-        expect(returnValue.props.i18NextProps.locale).toBe(mockLocale);
+        expect(returnValue.props.i18NextProps?.locale).toBe(mockLocale);
       });
 
       it("should return page props that contain the correct translations", () => {
-        expect(returnValue.props.i18NextProps.translations).toStrictEqual(
+        expect(returnValue.props.i18NextProps?.translations).toStrictEqual(
           mockDefaultTranslations.concat(mockTranslations)
         );
       });
@@ -83,13 +82,13 @@ describe("pageProps", () => {
 
     describe("the returned function", () => {
       beforeEach(async () => {
-        returnValue = (await generatedFunction({
+        returnValue = await generatedFunction({
           locale: mockLocale,
-        })) as never as mockReturnValueType;
+        });
       });
 
       it("should return page props that contain the correct translations", () => {
-        expect(returnValue.props.i18NextProps.translations).toStrictEqual(
+        expect(returnValue.props.i18NextProps?.translations).toStrictEqual(
           mockDefaultTranslations
         );
       });

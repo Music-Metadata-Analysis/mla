@@ -2,57 +2,30 @@ import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
-import mockUseLastFMHook from "./lastfm.mock.hook";
+import mockHookValues from "../__mocks__/lastfm.mock";
 import useLastFM from "../lastfm";
+import LastFMPlayCountByArtistDataClient from "@src/clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class";
+import LastFMTopAlbumsReport from "@src/clients/api/lastfm/reports/top20.albums.class";
+import LastFMTopArtistsReport from "@src/clients/api/lastfm/reports/top20.artists.class";
+import LastFMTopTracksReport from "@src/clients/api/lastfm/reports/top20.tracks.class";
 import PlayCountByArtistStateEncapsulation from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import { InitialState } from "@src/providers/user/user.initial";
 import { UserContext } from "@src/providers/user/user.provider";
 import type { UserContextInterface } from "@src/types/user/context.types";
 
-jest.mock("@src/clients/api/lastfm/reports/top20.albums.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      retrieveReport: mockRetrieveTopAlbums,
-    };
-  });
-});
+jest.mock("@src/clients/api/lastfm/reports/top20.albums.class");
 
-jest.mock("@src/clients/api/lastfm/reports/top20.artists.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      retrieveReport: mockRetrieveTopArtists,
-    };
-  });
-});
+jest.mock("@src/clients/api/lastfm/reports/top20.artists.class");
 
-jest.mock("@src/clients/api/lastfm/reports/top20.tracks.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      retrieveReport: mockRetrieveTopTracks,
-    };
-  });
-});
+jest.mock("@src/clients/api/lastfm/reports/top20.tracks.class");
 
 jest.mock(
-  "@src/clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class",
-  () => {
-    return jest.fn().mockImplementation(() => {
-      return {
-        retrieveReport: mockRetrievePlayCountByArtist,
-      };
-    });
-  }
+  "@src/clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class"
 );
 
 jest.mock(
-  "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class",
-  () => jest.fn()
+  "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class"
 );
-
-const mockRetrieveTopAlbums = jest.fn();
-const mockRetrieveTopArtists = jest.fn();
-const mockRetrieveTopTracks = jest.fn();
-const mockRetrievePlayCountByArtist = jest.fn();
 
 interface MockUserContextWithChildren {
   children?: React.ReactNode;
@@ -111,15 +84,18 @@ describe("useLastFM", () => {
     });
 
     it("should contain all the same properties as the mock hook", () => {
-      const mockObjectKeys = dk(mockUseLastFMHook).sort();
+      const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(received.result.current).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
   });
 
   describe("clear", () => {
+    beforeEach(
+      async () => await act(async () => await received.result.current.clear())
+    );
+
     it("should dispatch the reducer correctly", async () => {
-      act(() => received.result.current.clear());
       await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
       expect(mockDispatch).toHaveBeenCalledWith({
         type: "ResetState",
@@ -128,8 +104,11 @@ describe("useLastFM", () => {
   });
 
   describe("ready", () => {
+    beforeEach(
+      async () => await act(async () => await received.result.current.ready())
+    );
+
     it("should dispatch the reducer correctly", async () => {
-      act(() => received.result.current.ready());
       await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
       expect(mockDispatch).toHaveBeenCalledWith({
         type: "ReadyFetch",
@@ -141,7 +120,14 @@ describe("useLastFM", () => {
   });
 
   describe("top20albums", () => {
+    let mockRetrieveTopAlbums: jest.SpyInstance;
+
     beforeEach(async () => {
+      mockRetrieveTopAlbums = jest.spyOn(
+        LastFMTopAlbumsReport.prototype,
+        "retrieveReport"
+      );
+
       act(() => received.result.current.top20albums(mockUserName));
     });
 
@@ -154,7 +140,14 @@ describe("useLastFM", () => {
   });
 
   describe("top20artists", () => {
+    let mockRetrieveTopArtists: jest.SpyInstance;
+
     beforeEach(async () => {
+      mockRetrieveTopArtists = jest.spyOn(
+        LastFMTopArtistsReport.prototype,
+        "retrieveReport"
+      );
+
       act(() => received.result.current.top20artists(mockUserName));
     });
 
@@ -167,7 +160,14 @@ describe("useLastFM", () => {
   });
 
   describe("top20tracks", () => {
+    let mockRetrieveTopTracks: jest.SpyInstance;
+
     beforeEach(async () => {
+      mockRetrieveTopTracks = jest.spyOn(
+        LastFMTopTracksReport.prototype,
+        "retrieveReport"
+      );
+
       act(() => received.result.current.top20tracks(mockUserName));
     });
 
@@ -180,7 +180,14 @@ describe("useLastFM", () => {
   });
 
   describe("playCountByArtist", () => {
+    let mockRetrievePlayCountByArtist: jest.SpyInstance;
+
     beforeEach(async () => {
+      mockRetrievePlayCountByArtist = jest.spyOn(
+        LastFMPlayCountByArtistDataClient.prototype,
+        "retrieveReport"
+      );
+
       act(() => received.result.current.playCountByArtist(mockUserName));
     });
 

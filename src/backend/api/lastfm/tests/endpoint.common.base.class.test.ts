@@ -5,12 +5,10 @@ import * as status from "@src/config/status";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type {
   BodyType,
-  MockAPIRequest,
-  MockAPIResponse,
-} from "@src/types/api.endpoint.types";
-import type {
   LastFMEndpointRequest,
   LastFMEndpointResponse,
+  MockAPIRequest,
+  MockAPIResponse,
 } from "@src/types/api.endpoint.types";
 import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 

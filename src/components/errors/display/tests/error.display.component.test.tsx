@@ -5,21 +5,13 @@ import ErrorDisplay from "../error.display.component";
 import translation from "@locales/main.json";
 import Billboard from "@src/components/billboard/billboard.component";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/components/billboard/billboard.component", () =>
-  require("@fixtures/react").createComponent("Billboard")
-);
+jest.mock("@src/hooks/locale");
 
-jest.mock(
-  "@src/components/button/button.standard/button.standard.component",
-  () => require("@fixtures/react").createComponent("StyledButton")
-);
-
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
+jest.mock("@chakra-ui/icons", () =>
+  require("@fixtures/chakra/icons").createChakraIconMock(["WarningTwoIcon"])
 );
 
 jest.mock("@chakra-ui/react", () => {
@@ -27,8 +19,13 @@ jest.mock("@chakra-ui/react", () => {
   return createChakraMock(["Flex"]);
 });
 
-jest.mock("@chakra-ui/icons", () =>
-  require("@fixtures/chakra/icons").createChakraIconMock(["WarningTwoIcon"])
+jest.mock("@src/components/billboard/billboard.component", () =>
+  require("@fixtures/react/parent").createComponent("Billboard")
+);
+
+jest.mock(
+  "@src/components/button/button.standard/button.standard.component",
+  () => require("@fixtures/react/parent").createComponent("StyledButton")
 );
 
 describe("ErrorDisplay", () => {
@@ -101,7 +98,7 @@ describe("ErrorDisplay", () => {
 
     it("should call the reset function when the Button is pressed", () => {
       expect(StyledButton).toBeCalledTimes(1);
-      expect((StyledButton as jest.Mock).mock.calls[0][0].onClick).toBe(
+      expect(jest.mocked(StyledButton).mock.calls[0][0].onClick).toBe(
         mockReset
       );
     });
@@ -155,7 +152,7 @@ describe("ErrorDisplay", () => {
 
     it("should call the reset function when the Button is pressed", () => {
       expect(StyledButton).toBeCalledTimes(1);
-      expect((StyledButton as jest.Mock).mock.calls[0][0].onClick).toBe(
+      expect(jest.mocked(StyledButton).mock.calls[0][0].onClick).toBe(
         mockReset
       );
     });

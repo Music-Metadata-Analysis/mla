@@ -5,10 +5,10 @@ import LastFmUserClientAdapter from "./client/user.class";
 import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 class LastFMProxy implements LastFMProxyInterface {
-  private albumClient: LastFmAlbumClientAdapter;
-  private artistClient: LastFmArtistClientAdapter;
-  private trackClient: LastFmTrackClientAdapter;
-  private userClient: LastFmUserClientAdapter;
+  protected albumClient: LastFmAlbumClientAdapter;
+  protected artistClient: LastFmArtistClientAdapter;
+  protected trackClient: LastFmTrackClientAdapter;
+  protected userClient: LastFmUserClientAdapter;
 
   constructor() {
     this.albumClient = new LastFmAlbumClientAdapter(process.env.LAST_FM_KEY);

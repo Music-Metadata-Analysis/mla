@@ -1,12 +1,12 @@
-import MockCompleteReport1 from "./fixtures/mock.state.data.1.json";
-import MockCompleteReport2 from "./fixtures/mock.state.data.2.json";
-import MockCompleteReport3 from "./fixtures/mock.state.data.3.json";
-import MockCompleteReport4 from "./fixtures/mock.state.data.4.json";
-import MockCompleteReport5 from "./fixtures/mock.state.data.5.json";
-import { MockReportClass } from "../../tests/fixtures/mock.sunburst.report.class";
+import MockCompleteReport1 from "./states/state.data.set.1.json";
+import MockCompleteReport2 from "./states/state.data.set.2.json";
+import MockCompleteReport3 from "./states/state.data.set.3.json";
+import MockCompleteReport4 from "./states/state.data.set.4.json";
+import MockCompleteReport5 from "./states/state.data.set.5.json";
+import { MockReportClass } from "../../tests/implementations/concrete.sunburst.report.class";
 import SunBurstDataTranslator from "../chart.data.class";
-import MockSunburstData4 from "@src/components/reports/common/sunburst/tests/fixtures/mock.sunburst.data.4.json";
-import MockSunburstData5 from "@src/components/reports/common/sunburst/tests/fixtures/mock.sunburst.data.5.json";
+import MockSunburstData4 from "@src/components/reports/common/sunburst/tests/data/sunburst.data.set.4.json";
+import MockSunburstData5 from "@src/components/reports/common/sunburst/tests/data/sunburst.data.set.5.json";
 import type { SunBurstAggregateReportContent } from "@src/types/clients/api/lastfm/sunburst.types";
 import type { SunBurstData } from "@src/types/reports/sunburst.types";
 

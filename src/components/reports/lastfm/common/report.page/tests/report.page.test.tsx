@@ -3,33 +3,33 @@ import Page from "../report.page";
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
+import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
 import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 
+jest.mock("@src/hooks/lastfm");
+
 jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
-  require("@fixtures/react").createComponent("ErrorBoundary")
+  require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
-
-jest.mock("@src/hooks/lastfm", () => () => mockLastFMHook);
-
-const MockReportContainer = jest.fn(() => <div>MockReportContainer</div>);
-const MockNoUserPage = jest.fn(() => <div>MockNoUserPage</div>);
-
-const mockWindowResponse = jest.fn();
-
-Object.defineProperty(window, "location", {
-  value: {
-    hash: {
-      endsWith: mockWindowResponse,
-      includes: mockWindowResponse,
-    },
-    assign: mockWindowResponse,
-  },
-  writable: true,
-});
 
 describe("ReportPage", () => {
   const testUser = "someuser";
+  const MockReportContainer = jest.fn(() => <div>MockReportContainer</div>);
+  const MockNoUserPage = jest.fn(() => <div>MockNoUserPage</div>);
+  const mockWindowResponse = jest.fn();
+
+  beforeAll(() => {
+    Object.defineProperty(window, "location", {
+      value: {
+        hash: {
+          endsWith: mockWindowResponse,
+          includes: mockWindowResponse,
+        },
+        assign: mockWindowResponse,
+      },
+      writable: true,
+    });
+  });
 
   beforeEach(() => jest.clearAllMocks());
 
