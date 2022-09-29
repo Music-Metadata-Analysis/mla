@@ -13,6 +13,8 @@ import { InitialState } from "@src/providers/user/user.initial";
 import { UserContext } from "@src/providers/user/user.provider";
 import type { UserContextInterface } from "@src/types/user/context.types";
 
+jest.mock("@src/hooks/router");
+
 jest.mock("@src/clients/api/lastfm/reports/top20.albums.class");
 
 jest.mock("@src/clients/api/lastfm/reports/top20.artists.class");

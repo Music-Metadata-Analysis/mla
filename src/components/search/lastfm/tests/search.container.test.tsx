@@ -1,5 +1,4 @@
 import { render, waitFor, cleanup } from "@testing-library/react";
-import { RouterContext } from "next/dist/shared/lib/router-context";
 import SearchContainer from "../search.container";
 import SearchForm from "../search.form";
 import lastfmTranslations from "@locales/lastfm.json";
@@ -7,14 +6,16 @@ import settings from "@src/config/lastfm";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import mockNavBarHook from "@src/hooks/__mocks__/navbar.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import mockRouter from "@src/tests/fixtures/mock.router";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
 
 jest.mock("@src/hooks/auth");
 
 jest.mock("@src/hooks/navbar");
+
+jest.mock("@src/hooks/router");
 
 jest.mock("../search.form", () =>
   require("@fixtures/react/child").createComponent(
@@ -39,14 +40,12 @@ describe("SearchContainer", () => {
 
   const arrange = () => {
     render(
-      <RouterContext.Provider value={mockRouter}>
-        <SearchContainer
-          closeError={mockCloseError}
-          openError={mockOpenError}
-          route={mockRoute}
-          t={mockT}
-        />
-      </RouterContext.Provider>
+      <SearchContainer
+        closeError={mockCloseError}
+        openError={mockOpenError}
+        route={mockRoute}
+        t={mockT}
+      />
     );
   };
 
@@ -175,8 +174,8 @@ describe("SearchContainer", () => {
 
         it("should redirect to the expected route", () => {
           const query = new URLSearchParams(mockFormContent);
-          expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(
+          expect(mockRouterHook.push).toBeCalledTimes(1);
+          expect(mockRouterHook.push).toBeCalledWith(
             `${mockRoute}?${query.toString()}`
           );
         });
@@ -207,7 +206,7 @@ describe("SearchContainer", () => {
         });
 
         it("should NOT redirect to the expected route", () => {
-          expect(mockRouter.push).toBeCalledTimes(0);
+          expect(mockRouterHook.push).toBeCalledTimes(0);
         });
       });
     });

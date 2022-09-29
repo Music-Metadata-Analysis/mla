@@ -1,12 +1,11 @@
 import { getSession } from "next-auth/react";
 import NextAuthSSR from "../next-auth";
-import { isBuildTime } from "@src/utils/next";
+import webFrameworkVendor from "@src/clients/web.framework/vendor";
 
 jest.mock("next-auth/react");
 
-jest.mock("@src/utils/next");
+jest.mock("@src/clients/web.framework/vendor");
 
-const MockedIsBuildTime = jest.mocked(isBuildTime);
 const MockedGetSession = jest.mocked(getSession);
 
 describe("NextAuthSSR", () => {
@@ -26,7 +25,7 @@ describe("NextAuthSSR", () => {
 
   describe("when running at build time", () => {
     beforeEach(() => {
-      MockedIsBuildTime.mockReturnValueOnce(true);
+      jest.mocked(webFrameworkVendor.isBuildTime).mockReturnValueOnce(true);
     });
 
     describe("getSession", () => {
@@ -48,7 +47,7 @@ describe("NextAuthSSR", () => {
 
   describe("when running outside of build time", () => {
     beforeEach(() => {
-      MockedIsBuildTime.mockReturnValueOnce(false);
+      jest.mocked(webFrameworkVendor.isBuildTime).mockReturnValueOnce(false);
     });
 
     describe("getSession", () => {

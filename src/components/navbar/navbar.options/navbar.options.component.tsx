@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
 import NavLink from "../navbar.link/navbar.link.component";
 import useAnalytics from "@src/hooks/analytics";
 import useLocale from "@src/hooks/locale";
+import useRouter from "@src/hooks/router";
 
 interface NavBarProps {
   menuConfig: { [index: string]: string };
@@ -17,8 +17,8 @@ const NavBarOptions = ({ menuConfig }: NavBarProps) => {
       {Object.keys(menuConfig).map((key) => (
         <NavLink
           key={key}
-          selected={router.pathname === menuConfig[key]}
-          href={menuConfig[key]}
+          selected={router.path === menuConfig[key]}
+          path={menuConfig[key]}
           trackButtonClick={analytics.trackButtonClick}
         >
           {t(`menu.${key}`)}

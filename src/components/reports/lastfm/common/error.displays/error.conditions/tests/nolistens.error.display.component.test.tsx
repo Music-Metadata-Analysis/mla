@@ -2,9 +2,9 @@ import { render, screen } from "@testing-library/react";
 import NoListensErrorConditionalDisplay from "../nolistens.error.display.component";
 import ErrorDisplay from "@src/components/errors/display/error.display.component";
 import { MockReportClass } from "@src/components/reports/lastfm/common/sunburst.report/tests/implementations/concrete.sunburst.report.class";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import mockRouter from "@src/tests/fixtures/mock.router";
 import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
@@ -31,7 +31,7 @@ describe("NoListensErrorConditionalDisplay", () => {
   const arrange = () => {
     render(
       <NoListensErrorConditionalDisplay
-        router={mockRouter}
+        router={mockRouterHook}
         report={mockReport}
         userProperties={mockUserProperties}
       />
@@ -79,8 +79,8 @@ describe("NoListensErrorConditionalDisplay", () => {
         });
 
         it("should push the router to the retryRoute", () => {
-          expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(mockReport.retryRoute);
+          expect(mockRouterHook.push).toBeCalledTimes(1);
+          expect(mockRouterHook.push).toBeCalledWith(mockReport.retryRoute);
         });
       });
     });

@@ -1,5 +1,4 @@
 import { useDisclosure } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SignInModal from "./modals/modal.signin.component";
 import SpinnerModal from "./modals/modal.spinner.component";
@@ -7,6 +6,7 @@ import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import useAnalytics from "@src/hooks/analytics";
 import useAuth from "@src/hooks/auth";
+import useRouter from "@src/hooks/router";
 import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
 
 export interface AuthenticationProps {

@@ -4,6 +4,8 @@ import externalLinks from "@src/config/external";
 
 jest.mock("@src/hooks/locale");
 
+jest.mock("@src/hooks/router");
+
 describe("FeedbackDialogue", () => {
   const mockClose = jest.fn();
   const mockMessage = "mockMessage";

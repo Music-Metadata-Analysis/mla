@@ -15,9 +15,9 @@ import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockMetricsHook from "@src/hooks/__mocks__/metrics.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import UserInterfaceImageProvider from "@src/providers/ui/ui.images/ui.images.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import mockRouter from "@src/tests/fixtures/mock.router";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
 
 jest.mock("@src/hooks/analytics");
@@ -26,9 +26,7 @@ jest.mock("@src/hooks/locale");
 
 jest.mock("@src/hooks/metrics");
 
-jest.mock("next/router", () => ({
-  useRouter: () => mockRouter,
-}));
+jest.mock("@src/hooks/router");
 
 jest.mock("@src/components/authentication/authentication.container", () =>
   require("@fixtures/react/child").createComponent("AuthenticationComponent")
@@ -172,8 +170,8 @@ describe("FlipCardReportContainer", () => {
         });
 
         it("should change urls to the search route", () => {
-          expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(report.retryRoute);
+          expect(mockRouterHook.push).toBeCalledTimes(1);
+          expect(mockRouterHook.push).toBeCalledWith(report.retryRoute);
         });
       });
     });
@@ -290,7 +288,7 @@ describe("FlipCardReportContainer", () => {
         });
 
         it("should reload the page", () => {
-          expect(mockRouter.reload).toBeCalledTimes(1);
+          expect(mockRouterHook.reload).toBeCalledTimes(1);
         });
       });
     });
@@ -324,8 +322,8 @@ describe("FlipCardReportContainer", () => {
         });
 
         it("should change urls to the search route", () => {
-          expect(mockRouter.push).toBeCalledTimes(1);
-          expect(mockRouter.push).toBeCalledWith(report.retryRoute);
+          expect(mockRouterHook.push).toBeCalledTimes(1);
+          expect(mockRouterHook.push).toBeCalledWith(report.retryRoute);
         });
       });
     });
@@ -474,8 +472,8 @@ describe("FlipCardReportContainer", () => {
             });
 
             it("should change urls to the search route", () => {
-              expect(mockRouter.push).toBeCalledTimes(1);
-              expect(mockRouter.push).toBeCalledWith(report.retryRoute);
+              expect(mockRouterHook.push).toBeCalledTimes(1);
+              expect(mockRouterHook.push).toBeCalledWith(report.retryRoute);
             });
           });
         });
