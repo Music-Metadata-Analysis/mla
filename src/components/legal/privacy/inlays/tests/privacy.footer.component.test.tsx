@@ -4,29 +4,29 @@ import PrivacyFooter from "../privacy.footer.component";
 import Button from "@src/components/button/button.external.link/button.external.link.component";
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-
-jest.mock(
-  "@src/components/button/button.external.link/button.external.link.component",
-  () => require("@fixtures/react").createComponent("Button")
-);
-
-jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
-  require("@fixtures/react").createComponent("DimOnHover")
-);
-
-jest.mock("@src/components/icons/svs/svs.icon", () =>
-  jest.fn(() => <div>MockIcon</div>)
-);
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Flex"]);
 });
 
+jest.mock(
+  "@src/components/button/button.external.link/button.external.link.component",
+  () => require("@fixtures/react/parent").createComponent("Button")
+);
+
+jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
+  require("@fixtures/react/parent").createComponent("DimOnHover")
+);
+
+jest.mock("@src/components/icons/svs/svs.icon", () =>
+  require("@fixtures/react/child").createComponent("Icon")
+);
+
 describe("PrivacyFooter", () => {
-  const mockT = new mockUseLocale("legal").t;
+  const mockT = new MockUseLocale("legal").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

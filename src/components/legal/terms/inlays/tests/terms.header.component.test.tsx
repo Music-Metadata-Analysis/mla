@@ -2,7 +2,7 @@ import { Container } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import TermsOfServiceHeader from "../terms.header.component";
 import dialogueSettings from "@src/config/dialogue";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
@@ -11,7 +11,7 @@ jest.mock("@chakra-ui/react", () => {
 });
 
 describe("TermsOfServiceHeader", () => {
-  const mockT = new mockUseLocale("legal").t;
+  const mockT = new MockUseLocale("legal").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

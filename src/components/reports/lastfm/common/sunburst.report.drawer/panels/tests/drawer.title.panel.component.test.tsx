@@ -4,21 +4,17 @@ import SunBurstDrawerTitlePanel, {
   testIDs,
   SunBurstDrawerTitlePanelProps,
 } from "../drawer.title.panel.component";
-import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
-import { mockUseLocale } from "@src/hooks/tests/locale.mock.hook";
+import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 import type { d3Node } from "@src/types/reports/sunburst.types";
+
+jest.mock("@src/hooks/locale");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Container", "Text"]);
 });
-
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
 
 describe("SunBurstDrawerTitlePanel", () => {
   let currentProps: SunBurstDrawerTitlePanelProps;

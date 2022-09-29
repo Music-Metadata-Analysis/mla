@@ -1,19 +1,8 @@
 import LastFMArtistClientAdapter from "../artist.class";
+import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
 import type { ProxyError } from "@src/errors/proxy.error.class";
 import type { LastFMArtistTopAlbumsInterface } from "@src/types/integrations/lastfm/api.types";
 import type { LastFMExternalClientError } from "@src/types/integrations/lastfm/client.types";
-
-jest.mock("@toplast/lastfm", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      artist: mockApiCalls,
-    };
-  });
-});
-
-const mockApiCalls = {
-  getTopAlbums: jest.fn(),
-};
 
 describe("LastFMArtistClientAdapter", () => {
   const secretKey = "123VerySecret";
@@ -34,16 +23,16 @@ describe("LastFMArtistClientAdapter", () => {
 
     describe("when the request is successful", () => {
       beforeEach(() => {
-        mockApiCalls["getTopAlbums"].mockReturnValueOnce(
-          Promise.resolve(JSON.parse(JSON.stringify(mockTopAlbumsResponse)))
+        mockVendorMethods.artist.getTopAlbums.mockResolvedValueOnce(
+          JSON.parse(JSON.stringify(mockTopAlbumsResponse))
         );
         instance = arrange(secretKey);
       });
 
       it("should call the external library correctly", async () => {
         res = await instance.getTopAlbums(artist);
-        expect(mockApiCalls["getTopAlbums"]).toBeCalledTimes(1);
-        expect(mockApiCalls["getTopAlbums"]).toBeCalledWith({
+        expect(mockVendorMethods.artist.getTopAlbums).toBeCalledTimes(1);
+        expect(mockVendorMethods.artist.getTopAlbums).toBeCalledWith({
           artist,
           limit: instance.reportCount,
           page: 1,
@@ -57,14 +46,12 @@ describe("LastFMArtistClientAdapter", () => {
 
       beforeEach(() => {
         err = new Error("Test Error") as LastFMExternalClientError;
+        mockVendorMethods.artist.getTopAlbums.mockRejectedValueOnce(err);
       });
 
       describe("with a status code", () => {
         beforeEach(async () => {
           err.statusCode = 999;
-          mockApiCalls["getTopAlbums"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 
@@ -84,9 +71,6 @@ describe("LastFMArtistClientAdapter", () => {
 
       describe("without a status code", () => {
         beforeEach(() => {
-          mockApiCalls["getTopAlbums"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 

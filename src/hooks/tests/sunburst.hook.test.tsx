@@ -1,11 +1,11 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockUseSunBurstState from "./sunburst.mock.hook";
+import mockHookValues from "../__mocks__/sunburst.mock";
 import useSunBurstState from "../sunburst";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
-describe("mockUseSunBurstState", () => {
+describe("useSunBurstState", () => {
   let received: ReturnType<typeof arrange>;
 
   beforeEach(() => {
@@ -58,7 +58,7 @@ describe("mockUseSunBurstState", () => {
     });
 
     it("should contain all the same properties as the mock hook", () => {
-      const mockObjectKeys = dk(mockUseSunBurstState).sort();
+      const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(received.result.current).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });

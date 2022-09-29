@@ -1,45 +1,13 @@
+import LastFmAlbumClientAdapter from "../client/album.class";
+import LastFmArtistClientAdapter from "../client/artist.class";
+import LastFmTrackClientAdapter from "../client/track.class";
+import LastFmUserClientAdapter from "../client/user.class";
 import LastFMProxy from "../proxy.class";
 
-jest.mock("../client/album.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      getInfo: mockGetInfo,
-    };
-  });
-});
-
-jest.mock("../client/artist.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      getTopAlbums: mockGetTopAlbums,
-    };
-  });
-});
-
-jest.mock("../client/track.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      getInfo: mockGetInfo,
-    };
-  });
-});
-
-jest.mock("../client/user.class", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      getTopAlbums: mockGetTopAlbums,
-      getTopArtists: mockGetTopArtists,
-      getTopTracks: mockGetTopTracks,
-      getUserProfile: mockGetUserProfile,
-    };
-  });
-});
-
-const mockGetInfo = jest.fn();
-const mockGetTopAlbums = jest.fn();
-const mockGetTopArtists = jest.fn();
-const mockGetTopTracks = jest.fn();
-const mockGetUserProfile = jest.fn();
+jest.mock("../client/album.class");
+jest.mock("../client/artist.class");
+jest.mock("../client/track.class");
+jest.mock("../client/user.class");
 
 describe("LastFMProxy", () => {
   let originalEnvironment: typeof process.env;
@@ -48,10 +16,14 @@ describe("LastFMProxy", () => {
   const artist = "The Cure";
   const album = "Wish";
   const track = "Open";
-  const instance = new LastFMProxy();
   const mockProfileResponse = { image: [], playcount: 0 };
   const mockInfoResponse = { info: "mocked information" };
   const mockTopAlbumsResponse = { albums: "Top albums" };
+  const mockTopArtistsResponse = { artists: "Top artists" };
+  const mockTopTracksResponse = { artists: "Top tracks" };
+  let underlyingClientMock1: jest.SpyInstance;
+  let underlyingClientMock2: jest.SpyInstance;
+  let instance: LastFMProxy;
   let artistMethods: "getArtistTopAlbums";
   let albumMethods: "getAlbumInfo";
   let trackMethods: "getTrackInfo";
@@ -67,57 +39,62 @@ describe("LastFMProxy", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    instance = new LastFMProxy();
   });
 
   afterAll(() => {
     process.env = originalEnvironment;
   });
 
-  const artistMethodCall = () => {
+  const actArtistMethodCall = () => {
     return instance[artistMethods](artist);
   };
 
-  const albumMethodCall = () => {
+  const actAlbumMethodCall = () => {
     return instance[albumMethods](artist, album, username);
   };
 
-  const trackMethodCall = () => {
+  const actTrackMethodCall = () => {
     return instance[trackMethods](artist, track, username);
   };
 
-  const userMethodCall = () => {
+  const actUserMethodCall = () => {
     return instance[userMethods](username);
   };
+
+  const arrangeSuccess = (spy: jest.SpyInstance, response: unknown) =>
+    spy.mockResolvedValueOnce(response);
+
+  const arrangeFail = (spy: jest.SpyInstance) =>
+    spy.mockRejectedValueOnce(new Error(mockError));
 
   describe("getAlbumInfo", () => {
     beforeEach(() => {
       albumMethods = "getAlbumInfo";
+      underlyingClientMock1 = jest.spyOn(
+        LastFmAlbumClientAdapter.prototype,
+        "getInfo"
+      );
     });
 
-    describe("when requests are successful", () => {
-      beforeEach(() => {
-        mockGetInfo.mockReturnValueOnce(Promise.resolve(mockInfoResponse));
-      });
+    describe("when all requests are successful", () => {
+      beforeEach(() => arrangeSuccess(underlyingClientMock1, mockInfoResponse));
 
       it("should return a valid response", async () => {
-        const response = await albumMethodCall();
-        expect(mockGetInfo).toBeCalledTimes(1);
-        expect(mockGetInfo).toBeCalledWith(artist, album, username);
+        const response = await actAlbumMethodCall();
+
+        expect(underlyingClientMock1).toBeCalledTimes(1);
+        expect(underlyingClientMock1).toBeCalledWith(artist, album, username);
         expect(response).toStrictEqual(mockInfoResponse);
       });
     });
 
     describe("when getInfo is unsuccessful", () => {
-      beforeEach(() => {
-        mockGetInfo.mockImplementationOnce(() =>
-          Promise.reject(() => {
-            throw new Error(mockError);
-          })
-        );
-      });
+      beforeEach(() => arrangeFail(underlyingClientMock1));
 
       it("should throw an error", async () => {
-        const test = async () => await albumMethodCall();
+        const test = async () => await actAlbumMethodCall();
+
         await expect(test).rejects.toThrow(mockError);
       });
     });
@@ -126,34 +103,32 @@ describe("LastFMProxy", () => {
   describe("getArtistTopAlbums", () => {
     beforeEach(() => {
       artistMethods = "getArtistTopAlbums";
+      underlyingClientMock1 = jest.spyOn(
+        LastFmArtistClientAdapter.prototype,
+        "getTopAlbums"
+      );
     });
 
     describe("when requests are successful", () => {
-      beforeEach(() => {
-        mockGetTopAlbums.mockReturnValueOnce(
-          Promise.resolve(mockTopAlbumsResponse)
-        );
-      });
+      beforeEach(() =>
+        arrangeSuccess(underlyingClientMock1, mockTopAlbumsResponse)
+      );
 
       it("should return a valid response", async () => {
-        const response = await artistMethodCall();
-        expect(mockGetTopAlbums).toBeCalledTimes(1);
-        expect(mockGetTopAlbums).toBeCalledWith(artist);
+        const response = await actArtistMethodCall();
+
+        expect(underlyingClientMock1).toBeCalledTimes(1);
+        expect(underlyingClientMock1).toBeCalledWith(artist);
         expect(response).toStrictEqual(mockTopAlbumsResponse);
       });
     });
 
     describe("when getTopAlbums is unsuccessful", () => {
-      beforeEach(() => {
-        mockGetTopAlbums.mockImplementationOnce(() =>
-          Promise.reject(() => {
-            throw new Error(mockError);
-          })
-        );
-      });
+      beforeEach(() => arrangeFail(underlyingClientMock1));
 
       it("should throw an error", async () => {
-        const test = async () => await artistMethodCall();
+        const test = async () => await actArtistMethodCall();
+
         await expect(test).rejects.toThrow(mockError);
       });
     });
@@ -162,32 +137,30 @@ describe("LastFMProxy", () => {
   describe("getTrackInfo", () => {
     beforeEach(() => {
       trackMethods = "getTrackInfo";
+      underlyingClientMock1 = jest.spyOn(
+        LastFmTrackClientAdapter.prototype,
+        "getInfo"
+      );
     });
 
     describe("when requests are successful", () => {
-      beforeEach(() => {
-        mockGetInfo.mockReturnValueOnce(Promise.resolve(mockInfoResponse));
-      });
+      beforeEach(() => arrangeSuccess(underlyingClientMock1, mockInfoResponse));
 
       it("should return a valid response", async () => {
-        const response = await trackMethodCall();
-        expect(mockGetInfo).toBeCalledTimes(1);
-        expect(mockGetInfo).toBeCalledWith(artist, track, username);
+        const response = await actTrackMethodCall();
+
+        expect(underlyingClientMock1).toBeCalledTimes(1);
+        expect(underlyingClientMock1).toBeCalledWith(artist, track, username);
         expect(response).toStrictEqual(mockInfoResponse);
       });
     });
 
     describe("when getInfo is unsuccessful", () => {
-      beforeEach(() => {
-        mockGetInfo.mockImplementationOnce(() =>
-          Promise.reject(() => {
-            throw new Error(mockError);
-          })
-        );
-      });
+      beforeEach(() => arrangeFail(underlyingClientMock1));
 
       it("should throw an error", async () => {
-        const test = async () => await trackMethodCall();
+        const test = async () => await actTrackMethodCall();
+
         await expect(test).rejects.toThrow(mockError);
       });
     });
@@ -196,24 +169,30 @@ describe("LastFMProxy", () => {
   describe("getUserTopAlbums", () => {
     beforeEach(() => {
       userMethods = "getUserTopAlbums";
+      underlyingClientMock1 = jest.spyOn(
+        LastFmUserClientAdapter.prototype,
+        "getTopAlbums"
+      );
+      underlyingClientMock2 = jest.spyOn(
+        LastFmUserClientAdapter.prototype,
+        "getUserProfile"
+      );
     });
 
     describe("when requests are successful", () => {
       beforeEach(() => {
-        mockGetTopAlbums.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserProfile.mockReturnValueOnce(
-          Promise.resolve(mockProfileResponse)
-        );
+        arrangeSuccess(underlyingClientMock1, mockTopAlbumsResponse);
+        arrangeSuccess(underlyingClientMock2, mockProfileResponse);
       });
 
       it("should return a valid response", async () => {
-        const response = await userMethodCall();
-        expect(mockGetTopAlbums).toBeCalledTimes(1);
-        expect(mockGetTopAlbums).toBeCalledWith(username);
-        expect(mockGetUserProfile).toBeCalledTimes(1);
-        expect(mockGetUserProfile).toBeCalledWith(username);
+        const response = await actUserMethodCall();
+        expect(underlyingClientMock1).toBeCalledTimes(1);
+        expect(underlyingClientMock1).toBeCalledWith(username);
+        expect(underlyingClientMock2).toBeCalledTimes(1);
+        expect(underlyingClientMock2).toBeCalledWith(username);
         expect(response).toStrictEqual({
-          albums: [],
+          albums: mockTopAlbumsResponse,
           image: mockProfileResponse.image,
           playcount: mockProfileResponse.playcount,
         });
@@ -222,36 +201,24 @@ describe("LastFMProxy", () => {
 
     describe("when getTopAlbums is unsuccessful", () => {
       beforeEach(() => {
-        mockGetTopAlbums.mockImplementationOnce(() =>
-          Promise.reject(() => {
-            throw new Error(mockError);
-          })
-        );
-        mockGetUserProfile.mockReturnValueOnce(
-          Promise.resolve(mockTopAlbumsResponse)
-        );
+        arrangeFail(underlyingClientMock1);
+        arrangeSuccess(underlyingClientMock2, mockProfileResponse);
       });
 
       it("should throw an error", async () => {
-        const test = async () => await userMethodCall();
+        const test = async () => await actUserMethodCall();
         await expect(test).rejects.toThrow(mockError);
       });
     });
 
     describe("when getUserImage is unsuccessful", () => {
       beforeEach(() => {
-        mockGetTopAlbums.mockReturnValueOnce(
-          Promise.resolve(mockTopAlbumsResponse)
-        );
-        mockGetUserProfile.mockImplementationOnce(() =>
-          Promise.reject(() => {
-            throw new Error(mockError);
-          })
-        );
+        arrangeSuccess(underlyingClientMock1, mockTopAlbumsResponse);
+        arrangeFail(underlyingClientMock2);
       });
 
       it("should throw an error", async () => {
-        const test = async () => await userMethodCall();
+        const test = async () => await actUserMethodCall();
         await expect(test).rejects.toThrow(mockError);
       });
     });
@@ -260,24 +227,30 @@ describe("LastFMProxy", () => {
   describe("getUserTopArtists", () => {
     beforeEach(() => {
       userMethods = "getUserTopArtists";
+      underlyingClientMock1 = jest.spyOn(
+        LastFmUserClientAdapter.prototype,
+        "getTopArtists"
+      );
+      underlyingClientMock2 = jest.spyOn(
+        LastFmUserClientAdapter.prototype,
+        "getUserProfile"
+      );
     });
 
     describe("when requests are successful", () => {
       beforeEach(() => {
-        mockGetTopArtists.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserProfile.mockReturnValueOnce(
-          Promise.resolve(mockProfileResponse)
-        );
+        arrangeSuccess(underlyingClientMock1, mockTopArtistsResponse);
+        arrangeSuccess(underlyingClientMock2, mockProfileResponse);
       });
 
       it("should return a valid response", async () => {
-        const response = await userMethodCall();
-        expect(mockGetTopArtists).toBeCalledTimes(1);
-        expect(mockGetTopArtists).toBeCalledWith(username);
-        expect(mockGetUserProfile).toBeCalledTimes(1);
-        expect(mockGetUserProfile).toBeCalledWith(username);
+        const response = await actUserMethodCall();
+        expect(underlyingClientMock1).toBeCalledTimes(1);
+        expect(underlyingClientMock1).toBeCalledWith(username);
+        expect(underlyingClientMock2).toBeCalledTimes(1);
+        expect(underlyingClientMock2).toBeCalledWith(username);
         expect(response).toStrictEqual({
-          artists: [],
+          artists: mockTopArtistsResponse,
           image: mockProfileResponse.image,
           playcount: mockProfileResponse.playcount,
         });
@@ -286,32 +259,24 @@ describe("LastFMProxy", () => {
 
     describe("when getTopArtists is unsuccessful", () => {
       beforeEach(() => {
-        mockGetTopArtists.mockImplementationOnce(() =>
-          Promise.reject(() => {
-            throw new Error(mockError);
-          })
-        );
-        mockGetUserProfile.mockReturnValueOnce(Promise.resolve([]));
+        arrangeFail(underlyingClientMock1);
+        arrangeSuccess(underlyingClientMock2, mockProfileResponse);
       });
 
       it("should throw an error", async () => {
-        const test = async () => await userMethodCall();
+        const test = async () => await actUserMethodCall();
         await expect(test).rejects.toThrow(mockError);
       });
     });
 
     describe("when getUserImage is unsuccessful", () => {
       beforeEach(() => {
-        mockGetTopArtists.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserProfile.mockImplementationOnce(() =>
-          Promise.reject(() => {
-            throw new Error(mockError);
-          })
-        );
+        arrangeSuccess(underlyingClientMock1, mockTopArtistsResponse);
+        arrangeFail(underlyingClientMock2);
       });
 
       it("should throw an error", async () => {
-        const test = async () => await userMethodCall();
+        const test = async () => await actUserMethodCall();
         await expect(test).rejects.toThrow(mockError);
       });
     });
@@ -320,24 +285,30 @@ describe("LastFMProxy", () => {
   describe("getUserTopTracks", () => {
     beforeEach(() => {
       userMethods = "getUserTopTracks";
+      underlyingClientMock1 = jest.spyOn(
+        LastFmUserClientAdapter.prototype,
+        "getTopTracks"
+      );
+      underlyingClientMock2 = jest.spyOn(
+        LastFmUserClientAdapter.prototype,
+        "getUserProfile"
+      );
     });
 
     describe("when requests are successful", () => {
       beforeEach(() => {
-        mockGetTopTracks.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserProfile.mockReturnValueOnce(
-          Promise.resolve(mockProfileResponse)
-        );
+        arrangeSuccess(underlyingClientMock1, mockTopTracksResponse);
+        arrangeSuccess(underlyingClientMock2, mockProfileResponse);
       });
 
       it("should return a valid response", async () => {
-        const response = await userMethodCall();
-        expect(mockGetTopTracks).toBeCalledTimes(1);
-        expect(mockGetTopTracks).toBeCalledWith(username);
-        expect(mockGetUserProfile).toBeCalledTimes(1);
-        expect(mockGetUserProfile).toBeCalledWith(username);
+        const response = await actUserMethodCall();
+        expect(underlyingClientMock1).toBeCalledTimes(1);
+        expect(underlyingClientMock1).toBeCalledWith(username);
+        expect(underlyingClientMock2).toBeCalledTimes(1);
+        expect(underlyingClientMock2).toBeCalledWith(username);
         expect(response).toStrictEqual({
-          tracks: [],
+          tracks: mockTopTracksResponse,
           image: mockProfileResponse.image,
           playcount: mockProfileResponse.playcount,
         });
@@ -346,32 +317,24 @@ describe("LastFMProxy", () => {
 
     describe("when getTopTracks is unsuccessful", () => {
       beforeEach(() => {
-        mockGetTopTracks.mockImplementationOnce(() =>
-          Promise.reject(() => {
-            throw new Error(mockError);
-          })
-        );
-        mockGetUserProfile.mockReturnValueOnce(Promise.resolve([]));
+        arrangeFail(underlyingClientMock1);
+        arrangeSuccess(underlyingClientMock2, mockProfileResponse);
       });
 
       it("should throw an error", async () => {
-        const test = async () => await userMethodCall();
+        const test = async () => await actUserMethodCall();
         await expect(test).rejects.toThrow(mockError);
       });
     });
 
     describe("when getUserImage is unsuccessful", () => {
       beforeEach(() => {
-        mockGetTopTracks.mockReturnValueOnce(Promise.resolve([]));
-        mockGetUserProfile.mockImplementationOnce(() =>
-          Promise.reject(() => {
-            throw new Error(mockError);
-          })
-        );
+        arrangeSuccess(underlyingClientMock1, mockTopTracksResponse);
+        arrangeFail(underlyingClientMock2);
       });
 
       it("should throw an error", async () => {
-        const test = async () => await userMethodCall();
+        const test = async () => await actUserMethodCall();
         await expect(test).rejects.toThrow(mockError);
       });
     });

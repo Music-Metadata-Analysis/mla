@@ -24,7 +24,7 @@
       "import { render, screen, within, fireEvent } from \"@testing-library/react\";",
       "",
       "/* Mock Hooks */",
-      "import mockAnalyticsHook from \"./src/hooks/tests/analytics.mock.hook\";",
+      "import mockAnalyticsHook from \"./src/hooks/tests/analytics.hook.mock\";",
       "import mockColourHook from \"./src/hooks/tests/colour.hook.mock\";",
       "",
       "jest.mock(\"./src/hooks/colour\", () => {",

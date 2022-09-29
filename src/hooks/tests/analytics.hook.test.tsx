@@ -2,13 +2,15 @@ import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
-import mockUseAnalytics from "./analytics.mock.hook";
+import mockHookValues from "../__mocks__/analytics.mock";
 import useAnalytics from "../analytics";
 import EventDefinition from "@src/events/event.class";
 import Events from "@src/events/events";
 import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
 import type { AnalyticsContextInterface } from "@src/types/analytics.types";
 import type { MutableEnv } from "@src/types/process.types";
+
+jest.mock("next/router");
 
 jest.mock("@src/clients/analytics/vendor", () => ({
   GoogleAnalytics: jest.fn(() => ({
@@ -17,8 +19,6 @@ jest.mock("@src/clients/analytics/vendor", () => ({
     routeChange: mockAnalyticsVendorRouteChange,
   })),
 }));
-
-jest.mock("next/router");
 
 interface MockAnalyticsContextWithChildren {
   children?: React.ReactNode;
@@ -117,7 +117,7 @@ describe("useAnalytics", () => {
     });
 
     it("should contain all the same properties as the mock hook", () => {
-      const mockObjectKeys = dk(mockUseAnalytics).sort();
+      const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(received.result.current).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });

@@ -1,24 +1,25 @@
 import { Container, Text, Center, Box } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import Billboard from "../billboard.component";
+import { createSimpleComponent } from "@fixtures/react/simple";
 import { settings } from "@src/config/billboard";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
-import mockNavBarHook from "@src/hooks/tests/navbar.mock.hook";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import mockNavBarHook from "@src/hooks/__mocks__/navbar.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
+
+jest.mock("@src/hooks/colour");
+
+jest.mock("@src/hooks/navbar");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Container", "Text", "Center", "Box"]);
 });
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
-
-jest.mock("@src/hooks/navbar", () => () => mockNavBarHook);
-
 describe("Billboard", () => {
   const mockTitle = "Title";
   const originalWindowHeight = window.innerHeight;
-  const MockChild = jest.fn().mockImplementation(() => <>{"MockChild"}</>);
+  const MockChild = createSimpleComponent("MockChild");
 
   afterAll(() => (window.innerHeight = originalWindowHeight));
 
@@ -125,7 +126,7 @@ describe("Billboard", () => {
         expectedTopMargin: 16,
         expectedBottomMargin: 3,
       });
-      checkChildComponents({ expectedCalls: 2 });
+      checkChildComponents({ expectedCalls: 1 });
     });
   });
 
@@ -157,7 +158,7 @@ describe("Billboard", () => {
         expectedTopMargin: 0,
         expectedBottomMargin: 3,
       });
-      checkChildComponents({ expectedCalls: 2 });
+      checkChildComponents({ expectedCalls: 1 });
     });
   });
 });

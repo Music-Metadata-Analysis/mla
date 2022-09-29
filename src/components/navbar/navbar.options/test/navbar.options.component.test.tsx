@@ -3,15 +3,12 @@ import * as router from "next/router";
 import NavLink from "../../navbar.link/navbar.link.component";
 import NavLinkOptions from "../navbar.options.component";
 import navbarTranslations from "@locales/navbar.json";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+jest.mock("@src/hooks/analytics");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
 jest.mock("../../navbar.link/navbar.link.component");
 
@@ -23,14 +20,15 @@ const mockConfig = {
 describe("NavBarOptions", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (NavLink as jest.Mock).mockImplementation(() => <div>MockNavLink</div>);
+    jest.mocked(NavLink).mockImplementation(() => <div>MockNavLink</div>);
   });
 
   const arrange = (pathname: string) => {
-    (jest.spyOn(router, "useRouter") as jest.Mock).mockImplementationOnce(
-      () => ({
-        pathname,
-      })
+    jest.spyOn(router, "useRouter").mockImplementationOnce(
+      () =>
+        ({
+          pathname,
+        } as router.NextRouter)
     );
     render(<NavLinkOptions menuConfig={mockConfig} />);
   };

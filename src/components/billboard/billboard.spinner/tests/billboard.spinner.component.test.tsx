@@ -3,19 +3,19 @@ import { render, screen } from "@testing-library/react";
 import BillBoard from "../../billboard.component";
 import BillBoardSpinner, { testIDs } from "../billboard.spinner.component";
 import { settings } from "@src/config/billboard";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("../../billboard.component", () =>
-  require("@fixtures/react").createComponent("Billboard")
-);
-
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
+jest.mock("@src/hooks/colour");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Flex", "Spinner"]);
 });
+
+jest.mock("../../billboard.component", () =>
+  require("@fixtures/react/parent").createComponent("Billboard")
+);
 
 describe("BillBoardSpinner", () => {
   const testTitle = "Test Title";

@@ -1,4 +1,7 @@
 import LastFMUserClientAdapter from "../user.class";
+import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
+import CacheController from "@src/backend/integrations/cache/controller/controller.class";
+import ArtistImageCacheFactory from "@src/backend/integrations/lastfm/cache/artist.image.cache.factory.class";
 import type { ProxyError } from "@src/errors/proxy.error.class";
 import type {
   LastFMAlbumDataInterface,
@@ -8,90 +11,51 @@ import type {
 } from "@src/types/integrations/lastfm/api.types";
 import type { LastFMExternalClientError } from "@src/types/integrations/lastfm/client.types";
 
-jest.mock("@toplast/lastfm", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      user: mockApiCalls,
-    };
-  });
-});
-
-jest.mock("../../cache/artist.image.cache.factory.class", () =>
-  jest.fn(() => ({
-    create: jest.fn(() => MockCache),
-  }))
+jest.mock(
+  "@src/backend/integrations/lastfm/cache/artist.image.cache.factory.class"
 );
 
-const MockCache = {
-  query: jest.fn(),
-  logCacheHitRate: jest.fn(),
-};
-
-const mockApiCalls = {
-  getTopAlbums: jest.fn(),
-  getTopArtists: jest.fn(),
-  getInfo: jest.fn(),
-  getTopTracks: jest.fn(),
-};
+jest.mock("@src/backend/integrations/cache/controller/controller.class");
 
 describe("LastFMUserClientAdapter", () => {
+  let instance: LastFMUserClientAdapter;
+  let mockCacheController: Record<keyof CacheController<string>, jest.Mock>;
   const secretKey = "123VerySecret";
   const username = "testuser";
-  const mockTopAlbumsResponse = { topalbums: { album: "response" } };
-  const mockTopArtistsResponseComplete = {
-    topartists: {
-      artist: [{ name: "mockArtist", image: [{ "#text": "none" }] }],
-    },
-  };
-  const mockTopArtistsResponseIncomplete = {
-    topartists: {
-      artist: [{ name: "mockArtist" }],
-    },
-  };
-  const mockTopTracksResponseComplete = {
-    toptracks: {
-      track: [
-        {
-          name: "mockTrack",
-          image: [{ "#text": "none" }],
-          artist: { name: "mockArtist" },
-        },
-      ],
-    },
-  };
-  const mockTopTracksResponseIncomplete = {
-    toptracks: {
-      track: [{ name: "mockTrack" }],
-    },
-  };
-  const mockProfileResponse = {
-    user: { image: "response", playcount: "0000" },
-  };
-  let instance: LastFMUserClientAdapter;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockCacheController = CacheController.prototype as unknown as Record<
+      keyof CacheController<string>,
+      jest.Mock
+    >;
   });
 
   const arrange = (secretKey: string) => {
+    jest
+      .spyOn(ArtistImageCacheFactory.prototype, "create")
+      .mockReturnValue(
+        mockCacheController as unknown as CacheController<string>
+      );
     return new LastFMUserClientAdapter(secretKey);
   };
 
   describe("getTopAlbums", () => {
     let res: LastFMAlbumDataInterface[];
+    const mockTopAlbumsResponse = { topalbums: { album: "response" } };
 
     describe("when the request is successful", () => {
       beforeEach(() => {
-        mockApiCalls["getTopAlbums"].mockReturnValueOnce(
-          Promise.resolve(JSON.parse(JSON.stringify(mockTopAlbumsResponse)))
+        mockVendorMethods.user.getTopAlbums.mockResolvedValueOnce(
+          JSON.parse(JSON.stringify(mockTopAlbumsResponse))
         );
         instance = arrange(secretKey);
       });
 
       it("should call the external library correctly", async () => {
         res = await instance.getTopAlbums(username);
-        expect(mockApiCalls["getTopAlbums"]).toBeCalledTimes(1);
-        expect(mockApiCalls["getTopAlbums"]).toBeCalledWith({
+        expect(mockVendorMethods.user.getTopAlbums).toBeCalledTimes(1);
+        expect(mockVendorMethods.user.getTopAlbums).toBeCalledWith({
           user: username,
           period: instance.reportPeriod,
           limit: instance.reportCount,
@@ -106,14 +70,12 @@ describe("LastFMUserClientAdapter", () => {
 
       beforeEach(() => {
         err = new Error("Test Error") as LastFMExternalClientError;
+        mockVendorMethods.user.getTopAlbums.mockRejectedValueOnce(err);
       });
 
       describe("with a status code", () => {
         beforeEach(() => {
           err.statusCode = 999;
-          mockApiCalls["getTopAlbums"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 
@@ -133,9 +95,6 @@ describe("LastFMUserClientAdapter", () => {
 
       describe("without a status code", () => {
         beforeEach(() => {
-          mockApiCalls["getTopAlbums"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 
@@ -158,31 +117,39 @@ describe("LastFMUserClientAdapter", () => {
   describe("getTopArtists", () => {
     let res: LastFMArtistDataInterface[];
     let mockImageUrl: string;
+    const mockTopArtistsResponseComplete = {
+      topartists: {
+        artist: [{ name: "mockArtist", image: [{ "#text": "none" }] }],
+      },
+    };
+    const mockTopArtistsResponseIncomplete = {
+      topartists: {
+        artist: [{ name: "mockArtist" }],
+      },
+    };
 
     describe("when the request is successful", () => {
       describe("with complete artist information", () => {
         beforeEach(async () => {
           mockImageUrl = "http://not/a/real/image";
-          mockApiCalls["getTopArtists"].mockReturnValueOnce(
-            Promise.resolve(
-              JSON.parse(JSON.stringify(mockTopArtistsResponseComplete))
-            )
+          mockVendorMethods.user.getTopArtists.mockResolvedValueOnce(
+            JSON.parse(JSON.stringify(mockTopArtistsResponseComplete))
           );
-          MockCache.query.mockReturnValueOnce(mockImageUrl);
+          mockCacheController.query.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
           res = await instance.getTopArtists(username);
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(MockCache.query).toBeCalledTimes(1);
-          expect(MockCache.query).toBeCalledWith(
+          expect(mockCacheController.query).toBeCalledTimes(1);
+          expect(mockCacheController.query).toBeCalledWith(
             mockTopArtistsResponseComplete.topartists.artist[0].name
           );
         });
 
         it("should call the external library correctly", () => {
-          expect(mockApiCalls["getTopArtists"]).toBeCalledTimes(1);
-          expect(mockApiCalls["getTopArtists"]).toBeCalledWith({
+          expect(mockVendorMethods.user.getTopArtists).toBeCalledTimes(1);
+          expect(mockVendorMethods.user.getTopArtists).toBeCalledWith({
             user: username,
             period: instance.reportPeriod,
             limit: instance.reportCount,
@@ -196,34 +163,32 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should log the cache hit rate", () => {
-          expect(MockCache.logCacheHitRate).toBeCalledTimes(1);
-          expect(MockCache.logCacheHitRate).toBeCalledWith();
+          expect(mockCacheController.logCacheHitRate).toBeCalledTimes(1);
+          expect(mockCacheController.logCacheHitRate).toBeCalledWith();
         });
       });
 
       describe("with incomplete artist information", () => {
         beforeEach(async () => {
           mockImageUrl = "http://not/a/real/image";
-          mockApiCalls["getTopArtists"].mockReturnValueOnce(
-            Promise.resolve(
-              JSON.parse(JSON.stringify(mockTopArtistsResponseIncomplete))
-            )
+          mockVendorMethods.user.getTopArtists.mockResolvedValueOnce(
+            JSON.parse(JSON.stringify(mockTopArtistsResponseIncomplete))
           );
-          MockCache.query.mockReturnValueOnce(mockImageUrl);
+          mockCacheController.query.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
           res = await instance.getTopArtists(username);
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(MockCache.query).toBeCalledTimes(1);
-          expect(MockCache.query).toBeCalledWith(
+          expect(mockCacheController.query).toBeCalledTimes(1);
+          expect(mockCacheController.query).toBeCalledWith(
             mockTopArtistsResponseComplete.topartists.artist[0].name
           );
         });
 
         it("should call the external library correctly", () => {
-          expect(mockApiCalls["getTopArtists"]).toBeCalledTimes(1);
-          expect(mockApiCalls["getTopArtists"]).toBeCalledWith({
+          expect(mockVendorMethods.user.getTopArtists).toBeCalledTimes(1);
+          expect(mockVendorMethods.user.getTopArtists).toBeCalledWith({
             user: username,
             period: instance.reportPeriod,
             limit: instance.reportCount,
@@ -236,8 +201,8 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should log the cache hit rate", () => {
-          expect(MockCache.logCacheHitRate).toBeCalledTimes(1);
-          expect(MockCache.logCacheHitRate).toBeCalledWith();
+          expect(mockCacheController.logCacheHitRate).toBeCalledTimes(1);
+          expect(mockCacheController.logCacheHitRate).toBeCalledWith();
         });
       });
     });
@@ -247,14 +212,12 @@ describe("LastFMUserClientAdapter", () => {
 
       beforeEach(() => {
         err = new Error("Test Error") as LastFMExternalClientError;
+        mockVendorMethods.user.getTopArtists.mockRejectedValueOnce(err);
       });
 
       describe("with a status code", () => {
         beforeEach(() => {
           err.statusCode = 999;
-          mockApiCalls["getTopArtists"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 
@@ -274,9 +237,6 @@ describe("LastFMUserClientAdapter", () => {
 
       describe("without a status code", () => {
         beforeEach(async () => {
-          mockApiCalls["getTopArtists"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 
@@ -298,19 +258,22 @@ describe("LastFMUserClientAdapter", () => {
 
   describe("getUserProfile", () => {
     let res: LastFMUserProfileInterface;
+    const mockProfileResponse = {
+      user: { image: "response", playcount: "0000" },
+    };
 
     describe("when the request is successful", () => {
       beforeEach(async () => {
-        mockApiCalls["getInfo"].mockReturnValueOnce(
-          Promise.resolve(JSON.parse(JSON.stringify(mockProfileResponse)))
+        mockVendorMethods.user.getInfo.mockResolvedValueOnce(
+          JSON.parse(JSON.stringify(mockProfileResponse))
         );
         instance = arrange(secretKey);
         res = await instance.getUserProfile(username);
       });
 
       it("should call the external library correctly", () => {
-        expect(mockApiCalls["getInfo"]).toBeCalledTimes(1);
-        expect(mockApiCalls["getInfo"]).toBeCalledWith({
+        expect(mockVendorMethods.user.getInfo).toBeCalledTimes(1);
+        expect(mockVendorMethods.user.getInfo).toBeCalledWith({
           user: username,
         });
         expect(res).toStrictEqual({
@@ -325,14 +288,12 @@ describe("LastFMUserClientAdapter", () => {
 
       beforeEach(() => {
         err = new Error("Test Error") as LastFMExternalClientError;
+        mockVendorMethods.user.getInfo.mockRejectedValueOnce(err);
       });
 
       describe("with a status code", () => {
         beforeEach(() => {
           err.statusCode = 999;
-          mockApiCalls["getInfo"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 
@@ -352,9 +313,6 @@ describe("LastFMUserClientAdapter", () => {
 
       describe("without a status code", () => {
         beforeEach(() => {
-          mockApiCalls["getInfo"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 
@@ -377,31 +335,45 @@ describe("LastFMUserClientAdapter", () => {
   describe("getTopTracks", () => {
     let res: LastFMTrackDataInterface[];
     let mockImageUrl: string;
+    const mockTopTracksResponseComplete = {
+      toptracks: {
+        track: [
+          {
+            name: "mockTrack",
+            image: [{ "#text": "none" }],
+            artist: { name: "mockArtist" },
+          },
+        ],
+      },
+    };
+    const mockTopTracksResponseIncomplete = {
+      toptracks: {
+        track: [{ name: "mockTrack" }],
+      },
+    };
 
     describe("when the request is successful", () => {
       describe("with complete track information", () => {
         beforeEach(async () => {
           mockImageUrl = "http://not/a/real/image";
-          mockApiCalls["getTopTracks"].mockReturnValueOnce(
-            Promise.resolve(
-              JSON.parse(JSON.stringify(mockTopTracksResponseComplete))
-            )
+          mockVendorMethods.user.getTopTracks.mockResolvedValueOnce(
+            JSON.parse(JSON.stringify(mockTopTracksResponseComplete))
           );
-          MockCache.query.mockReturnValueOnce(mockImageUrl);
+          mockCacheController.query.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
           res = await instance.getTopTracks(username);
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(MockCache.query).toBeCalledTimes(1);
-          expect(MockCache.query).toBeCalledWith(
+          expect(mockCacheController.query).toBeCalledTimes(1);
+          expect(mockCacheController.query).toBeCalledWith(
             mockTopTracksResponseComplete.toptracks.track[0].artist.name
           );
         });
 
         it("should call the external library correctly", () => {
-          expect(mockApiCalls["getTopTracks"]).toBeCalledTimes(1);
-          expect(mockApiCalls["getTopTracks"]).toBeCalledWith({
+          expect(mockVendorMethods.user.getTopTracks).toBeCalledTimes(1);
+          expect(mockVendorMethods.user.getTopTracks).toBeCalledWith({
             user: username,
             period: instance.reportPeriod,
             limit: instance.reportCount,
@@ -415,32 +387,30 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should log the cache hit rate", () => {
-          expect(MockCache.logCacheHitRate).toBeCalledTimes(1);
-          expect(MockCache.logCacheHitRate).toBeCalledWith();
+          expect(mockCacheController.logCacheHitRate).toBeCalledTimes(1);
+          expect(mockCacheController.logCacheHitRate).toBeCalledWith();
         });
       });
 
       describe("with incomplete track information", () => {
         beforeEach(async () => {
           mockImageUrl = "http://not/a/real/image";
-          mockApiCalls["getTopTracks"].mockReturnValueOnce(
-            Promise.resolve(
-              JSON.parse(JSON.stringify(mockTopTracksResponseIncomplete))
-            )
+          mockVendorMethods.user.getTopTracks.mockResolvedValueOnce(
+            JSON.parse(JSON.stringify(mockTopTracksResponseIncomplete))
           );
-          MockCache.query.mockReturnValueOnce(mockImageUrl);
+          mockCacheController.query.mockReturnValueOnce(mockImageUrl);
           instance = arrange(secretKey);
           res = await instance.getTopTracks(username);
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(MockCache.query).toBeCalledTimes(1);
-          expect(MockCache.query).toBeCalledWith(undefined);
+          expect(mockCacheController.query).toBeCalledTimes(1);
+          expect(mockCacheController.query).toBeCalledWith(undefined);
         });
 
         it("should call the external library correctly", () => {
-          expect(mockApiCalls["getTopTracks"]).toBeCalledTimes(1);
-          expect(mockApiCalls["getTopTracks"]).toBeCalledWith({
+          expect(mockVendorMethods.user.getTopTracks).toBeCalledTimes(1);
+          expect(mockVendorMethods.user.getTopTracks).toBeCalledWith({
             user: username,
             period: instance.reportPeriod,
             limit: instance.reportCount,
@@ -453,8 +423,8 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should log the cache hit rate", () => {
-          expect(MockCache.logCacheHitRate).toBeCalledTimes(1);
-          expect(MockCache.logCacheHitRate).toBeCalledWith();
+          expect(mockCacheController.logCacheHitRate).toBeCalledTimes(1);
+          expect(mockCacheController.logCacheHitRate).toBeCalledWith();
         });
       });
     });
@@ -464,14 +434,12 @@ describe("LastFMUserClientAdapter", () => {
 
       beforeEach(() => {
         err = new Error("Test Error") as LastFMExternalClientError;
+        mockVendorMethods.user.getTopTracks.mockRejectedValueOnce(err);
       });
 
       describe("with a status code", () => {
         beforeEach(() => {
           err.statusCode = 999;
-          mockApiCalls["getTopTracks"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 
@@ -491,15 +459,12 @@ describe("LastFMUserClientAdapter", () => {
 
       describe("without a status code", () => {
         beforeEach(() => {
-          mockApiCalls["getTopArtists"].mockImplementationOnce(() =>
-            Promise.reject(err)
-          );
           instance = arrange(secretKey);
         });
 
         it("should embed the status code as expected", async () => {
           try {
-            await instance.getTopArtists(username);
+            await instance.getTopTracks(username);
           } catch (receivedError) {
             expect((receivedError as ProxyError).message).toBe(
               `${err.message}`

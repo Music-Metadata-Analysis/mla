@@ -4,15 +4,12 @@ import { FlagsmithProvider, FlagsmithContextType } from "flagsmith/react";
 import FlagProvider from "../flagsmith";
 import checkMockCalls from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/utils/voids", () => {
-  const module = require("@src/utils/tests/voids.mock");
-  return { normalizeUndefined: module.mockNormalizeUndefined };
-});
+jest.mock("@src/utils/voids");
 
-jest.mock("flagsmith/isomorphic", () => ({ mock: "object" }));
+jest.mock("flagsmith/isomorphic");
 
 jest.mock("flagsmith/react", () =>
-  require("@fixtures/react").createComponent(
+  require("@fixtures/react/parent").createComponent(
     "FlagsmithProvider",
     "FlagsmithProvider"
   )

@@ -1,13 +1,15 @@
 import { render, waitFor, fireEvent } from "@testing-library/react";
-import MockSunBurstData from "./fixtures/mock.sunburst.data.4.json";
+import MockSunBurstData from "./data/sunburst.data.set.4.json";
 import SunBurstChartContainer from "../chart.container";
 import SunBurstChart from "@src/components/reports/common/sunburst/chart.component";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import type { d3Node, SunBurstData } from "@src/types/reports/sunburst.types";
 
-jest.mock("../chart.component", () => jest.fn(() => <div>MockComponent</div>));
+jest.mock("@src/hooks/colour");
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
+jest.mock("../chart.component", () =>
+  require("@fixtures/react/child").createComponent("ChartComponent")
+);
 
 describe("SunBurstChartContainer", () => {
   let visible: boolean;

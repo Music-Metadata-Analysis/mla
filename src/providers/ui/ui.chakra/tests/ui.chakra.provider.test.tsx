@@ -5,7 +5,7 @@ import createTheme from "../ui.chakra.theme";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
-  const { createComponent } = require("@fixtures/react");
+  const { createComponent } = require("@fixtures/react/parent");
   const mockedModules: { [index: string]: boolean | jest.Mock } = {};
   const providers = {
     ChakraProvider: "ChakraProvider",
@@ -20,7 +20,7 @@ jest.mock("@chakra-ui/react", () => {
 
 jest.mock("../ui.chakra.theme", () => {
   const chakra = jest.requireActual("@chakra-ui/react");
-  return jest.fn().mockImplementation(() => chakra.extendTheme({}));
+  return jest.fn(() => chakra.extendTheme({}));
 });
 
 describe("UserInterfaceChakraProvider", () => {

@@ -1,5 +1,5 @@
 import ReducerState from "../generic.ready.class";
-import { mockAlbumsReport } from "@src/providers/user/tests/fixtures/mock.user.state.data";
+import { mockAlbumsReport } from "@src/providers/user/tests/states/user.state.data";
 import type { UserActionType } from "@src/types/user/action.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 

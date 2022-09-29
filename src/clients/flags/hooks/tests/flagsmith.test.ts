@@ -2,22 +2,44 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import { useFlags, useFlagsmith } from "flagsmith/react";
 import useFlagSmithVendor from "../flagsmith";
+import { mockFlagsHook as mockHookValues } from "@src/clients/flags/__mocks__/vendor.mock";
 import useAuth from "@src/hooks/auth";
-import mockUseFlagsHook from "@src/hooks/tests/flags.mock.hook";
+import type { FlagVendorHookInterface } from "@src/types/clients/flags/vendor.types";
 
-jest.mock("flagsmith/react", () => ({
-  useFlags: jest.fn(),
-  useFlagsmith: jest.fn(),
-}));
+jest.mock("flagsmith/react");
 
-jest.mock("@src/hooks/auth", () => jest.fn());
+jest.mock("@src/hooks/auth");
+
+const MockUseAuth = jest.mocked(useAuth);
+const MockUseFlags = jest.mocked(useFlags);
+const MockUseFlagSmith = jest.mocked(useFlagsmith);
 
 describe("useFlagSmithVendor", () => {
   let originalEnvironment: typeof process.env;
   let received: ReturnType<typeof arrange>;
   let mockFlagName: string | null | undefined;
-  const mockIdentify = jest.fn();
+
   const mockGroup = "mockGroup";
+  const mockIdentify = jest.fn();
+
+  const mockAuthState = {
+    user: { group: "mockGroup" },
+  } as ReturnType<typeof MockUseAuth>;
+
+  const mockFlagState = {
+    enabledFlag: { enabled: true },
+    disabledFlag: { enabled: false },
+  } as unknown as ReturnType<typeof useFlags>;
+
+  const mockFlagSmithStateNotRegistered = {
+    identity: null,
+    identify: mockIdentify,
+  } as unknown as ReturnType<typeof MockUseFlagSmith>;
+
+  const mockFlagSmithStateRegistered = {
+    identity: "mockGroup",
+    identify: mockIdentify,
+  } as unknown as ReturnType<typeof MockUseFlagSmith>;
 
   beforeAll(() => {
     originalEnvironment = process.env;
@@ -37,13 +59,13 @@ describe("useFlagSmithVendor", () => {
 
   const checkHookRender = () => {
     it("should render the useAuth hook during render", () => {
-      expect(useAuth).toBeCalledTimes(1);
-      expect(useAuth).toBeCalledWith();
+      expect(MockUseAuth).toBeCalledTimes(1);
+      expect(MockUseAuth).toBeCalledWith();
     });
 
     it("should render the useFlagsmith hook during render", () => {
-      expect(useFlagsmith).toBeCalledTimes(1);
-      expect(useFlagsmith).toBeCalledWith();
+      expect(MockUseFlagSmith).toBeCalledTimes(1);
+      expect(MockUseFlagSmith).toBeCalledWith();
     });
   };
 
@@ -63,10 +85,13 @@ describe("useFlagSmithVendor", () => {
   const checkHookProperties = () => {
     it("should contain all the same properties as the mock hook", () => {
       const mockObjectKeys = dk(
-        mockUseFlagsHook as unknown as Record<string, unknown>
+        mockHookValues as Record<keyof FlagVendorHookInterface, unknown>
       ).sort();
       const hookKeys = dk(
-        received.result.current as unknown as Record<string, unknown>
+        received.result.current as Record<
+          keyof FlagVendorHookInterface,
+          unknown
+        >
       ).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
@@ -78,21 +103,13 @@ describe("useFlagSmithVendor", () => {
 
   describe("when rendered", () => {
     beforeEach(() => {
-      (useFlags as jest.Mock).mockImplementation(() => ({
-        enabledFlag: { enabled: true },
-        disabledFlag: { enabled: false },
-      }));
+      MockUseFlags.mockReturnValue(mockFlagState);
     });
 
     describe("with a group, that isn't registered,", () => {
       beforeEach(() => {
-        (useFlagsmith as jest.Mock).mockReturnValue({
-          identity: null,
-          identify: mockIdentify,
-        });
-        (useAuth as jest.Mock).mockReturnValue({
-          user: { group: "mockGroup" },
-        });
+        MockUseFlagSmith.mockReturnValue(mockFlagSmithStateNotRegistered);
+        MockUseAuth.mockReturnValue(mockAuthState);
         received = arrange();
       });
 
@@ -213,13 +230,8 @@ describe("useFlagSmithVendor", () => {
 
     describe("with a group, that is registered,", () => {
       beforeEach(() => {
-        (useFlagsmith as jest.Mock).mockReturnValue({
-          identity: "mockGroup",
-          identify: mockIdentify,
-        });
-        (useAuth as jest.Mock).mockReturnValue({
-          user: { group: "mockGroup" },
-        });
+        MockUseFlagSmith.mockReturnValue(mockFlagSmithStateRegistered);
+        MockUseAuth.mockReturnValue(mockAuthState);
         received = arrange();
       });
 

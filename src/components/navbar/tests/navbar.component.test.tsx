@@ -9,9 +9,9 @@ import NavBarOptions from "../navbar.options/navbar.options.component";
 import NavBarSessionControl from "../navbar.session.control/navbar.session.control.component";
 import NavSpinner from "../navbar.spinner/navbar.spinner.component";
 import NavConfig from "@src/config/navbar";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
-import mockLastFMHook from "@src/hooks/tests/lastfm.mock.hook";
-import mockNavBarHook from "@src/hooks/tests/navbar.mock.hook";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
+import mockNavBarHook from "@src/hooks/__mocks__/navbar.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import {
   getMockComponentProp,
@@ -19,16 +19,38 @@ import {
 } from "@src/tests/fixtures/mock.component.props";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
 
-jest.mock("@chakra-ui/icons", () => ({
-  CloseIcon: jest.fn(() => <div>{"CloseIconMock"}</div>),
-  HamburgerIcon: jest.fn(() => <div>{"HamburgerIconMock"}</div>),
-}));
+jest.mock("@src/hooks/colour");
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
+jest.mock("@src/hooks/lastfm");
 
-jest.mock("@src/hooks/navbar", () => () => mockNavBarHook);
+jest.mock("@src/hooks/navbar");
 
-jest.mock("@src/hooks/lastfm", () => () => mockLastFMHook);
+jest.mock("../navbar.color.mode/navbar.color.mode.component", () =>
+  require("@fixtures/react/parent").createComponent("NavBarColorModeToggle")
+);
+
+jest.mock("../navbar.logo/navbar.logo.component", () =>
+  require("@fixtures/react/parent").createComponent("NavBarLogo")
+);
+
+jest.mock("../navbar.options/navbar.options.component", () =>
+  require("@fixtures/react/parent").createComponent("NavBarOptions")
+);
+
+jest.mock("../navbar.session.control/navbar.session.control.component", () =>
+  require("@fixtures/react/parent").createComponent("NavBarSession")
+);
+
+jest.mock("../navbar.spinner/navbar.spinner.component", () =>
+  require("@fixtures/react/parent").createComponent("NavSpinner")
+);
+
+jest.mock("@chakra-ui/icons", () =>
+  require("@fixtures/chakra/icons").createChakraIconMock([
+    "CloseIcon",
+    "HamburgerIcon",
+  ])
+);
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
@@ -37,26 +59,6 @@ jest.mock("@chakra-ui/react", () => {
     useDisclosure: () => mockUseDisclosure,
   };
 });
-
-jest.mock("../navbar.color.mode/navbar.color.mode.component", () =>
-  require("@fixtures/react").createComponent("NavBarColorModeToggle")
-);
-
-jest.mock("../navbar.logo/navbar.logo.component", () =>
-  require("@fixtures/react").createComponent("NavBarLogo")
-);
-
-jest.mock("../navbar.options/navbar.options.component", () =>
-  require("@fixtures/react").createComponent("NavBarOptions")
-);
-
-jest.mock("../navbar.session.control/navbar.session.control.component", () =>
-  require("@fixtures/react").createComponent("NavBarSession")
-);
-
-jest.mock("../navbar.spinner/navbar.spinner.component", () =>
-  require("@fixtures/react").createComponent("NavSpinner")
-);
 
 const mockedComponents = {
   NavBarLogo: "NavBarLogo",
@@ -126,7 +128,7 @@ describe("NavBar", () => {
   };
 
   const checkProp = (
-    args: { component: unknown; call: number },
+    args: { component: typeof IconButton; call: number },
     propName: string,
     result: unknown
   ) => {
@@ -135,7 +137,7 @@ describe("NavBar", () => {
 
   const checkChakraBoxComponent = () => {
     it("should render the Chakra Box component with the expected props", () => {
-      expect((Box as jest.Mock).mock.calls.length).toBeGreaterThan(0);
+      expect(jest.mocked(Box).mock.calls.length).toBeGreaterThan(0);
       checkMockCall(Box, {
         bg: mockColourHook.componentColour.background,
         borderBottomStyle: "solid",

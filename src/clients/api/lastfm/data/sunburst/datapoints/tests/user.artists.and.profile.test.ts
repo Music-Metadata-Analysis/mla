@@ -1,4 +1,5 @@
 import UserArtistsAndProfile from "../user.artists.and.profile";
+import LastFMBaseClient from "@src/clients/api/lastfm/lastfm.api.client.base.class";
 import apiRoutes from "@src/config/apiRoutes";
 import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 
@@ -22,12 +23,12 @@ describe("UserArtistsAndProfile", () => {
       instance = arrange();
     });
 
-    it("should have the correct api route configured", () => {
-      expect(instance.route).toBe(apiRoutes.v2.reports.lastfm.top20artists);
+    it("should be an instance of the LastFMBaseClient abstract base class", () => {
+      expect(instance).toBeInstanceOf(LastFMBaseClient);
     });
 
-    it("should have the correct integration configured", () => {
-      expect(instance.integration).toBe("LAST.FM");
+    it("should have the correct api route configured", () => {
+      expect(instance.route).toBe(apiRoutes.v2.reports.lastfm.top20artists);
     });
 
     it("should have the correct event type configured", () => {

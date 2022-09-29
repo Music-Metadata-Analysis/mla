@@ -4,26 +4,23 @@ import NavBarLink from "../../navbar.link/navbar.link.component";
 import NavBarLogo from "../navbar.logo.component";
 import navbarTranslations from "@locales/navbar.json";
 import routes from "@src/config/routes";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import mockRouter from "@src/tests/fixtures/mock.router";
 
 jest.mock("next/router", () => ({ useRouter: () => mockRouter }));
 
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+jest.mock("@src/hooks/analytics");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
+jest.mock("@src/hooks/locale");
+
+jest.mock("../../navbar.avatar/navbar.avatar.component", () =>
+  require("@fixtures/react/child").createComponent("NavBarAvatar")
 );
 
-jest.mock("../../navbar.avatar/navbar.avatar.component", () => {
-  return jest.fn().mockImplementation(() => <div>MockComponent</div>);
-});
-
 jest.mock("../../navbar.link/navbar.link.component", () =>
-  require("@fixtures/react").createComponent("NavBarLink")
+  require("@fixtures/react/parent").createComponent("NavBarLink")
 );
 
 describe("NavBarLogo", () => {

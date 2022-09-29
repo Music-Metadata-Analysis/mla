@@ -6,25 +6,22 @@ import SunBurstDrawerControlPanel, {
 } from "../drawer.control.panel.component";
 import lastfm from "@locales/lastfm.json";
 import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
-import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
+jest.mock("@src/hooks/locale");
+
 jest.mock("@src/components/button/button.base/button.base.component", () =>
-  require("@fixtures/react").createComponent("ButtonWithoutAnalytics")
+  require("@fixtures/react/parent").createComponent("ButtonWithoutAnalytics")
 );
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Flex", "Text"]);
 });
-
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
 
 describe("SunBurstDrawerControlPanel", () => {
   let currentProps: SunBurstDrawerControlPanelProps;

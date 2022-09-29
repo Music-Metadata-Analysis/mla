@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockUseColour from "./colour.hook.mock";
+import mockHookValues from "../__mocks__/colour.mock";
 import useColour from "../colour";
 import type { Colour } from "@src/types/ui/chakra.types";
 
@@ -158,7 +158,7 @@ describe("useColour", () => {
     });
 
     it("should contain all the same properties as the mock colour hook", () => {
-      const mockObjectKeys = dk(mockUseColour).sort();
+      const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(received.result.current).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });

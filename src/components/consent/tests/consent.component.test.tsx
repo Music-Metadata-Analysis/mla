@@ -4,19 +4,16 @@ import CookieConsent from "react-cookie-consent";
 import Consent, { testIDs } from "../consent.component";
 import translations from "@locales/main.json";
 import { settings } from "@src/config/cookies";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+jest.mock("@src/hooks/analytics");
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
+jest.mock("@src/hooks/colour");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
 jest.mock("react-cookie-consent", () => {
   const Original = jest.requireActual("react-cookie-consent").default;

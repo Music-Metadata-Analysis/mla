@@ -7,37 +7,33 @@ import SunBurstEntityNodeList, {
   SunBurstEntityNodeListProps,
 } from "../node.list.component";
 import lastfm from "@locales/lastfm.json";
-import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/fixtures/mock.sunburst.node.encapsulation.class";
+import MockSunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
+jest.mock("@src/hooks/colour");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
-
-jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react").createComponent("VerticalScrollBar")
-);
-
-jest.mock("../node.button.component", () =>
-  require("@fixtures/react").createComponent("SunBurstNodeButton")
-);
-
-jest.mock("../node.display.component", () =>
-  require("@fixtures/react").createComponent("SunBurstNodeDisplay")
-);
+jest.mock("@src/hooks/locale");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Flex", "Text"]);
 });
+
+jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
+  require("@fixtures/react/parent").createComponent("VerticalScrollBar")
+);
+
+jest.mock("../node.button.component", () =>
+  require("@fixtures/react/parent").createComponent("SunBurstNodeButton")
+);
+
+jest.mock("../node.display.component", () =>
+  require("@fixtures/react/parent").createComponent("SunBurstNodeDisplay")
+);
 
 describe("SunBurstEntityNodeList", () => {
   let mockNode: SunBurstNodeEncapsulation;
@@ -138,7 +134,7 @@ describe("SunBurstEntityNodeList", () => {
       expect(childNodes.length).toBe(count);
 
       expect(component).toBeCalledTimes(count);
-      const calls = (component as jest.Mock).mock.calls;
+      const calls = jest.mocked(component).mock.calls;
       for (let index = 0; index < count; index++) {
         const call = calls[index][0];
         expect(call.index).toBe(index);
@@ -157,9 +153,8 @@ describe("SunBurstEntityNodeList", () => {
 
             beforeEach(async () => {
               child = currentProps.node.getChildren()[index];
-              const selectChildNode = (component as jest.Mock).mock.calls[
-                index
-              ][0].selectChildNode;
+              const selectChildNode =
+                jest.mocked(component).mock.calls[index][0].selectChildNode;
               act(() => selectChildNode(child));
             });
 

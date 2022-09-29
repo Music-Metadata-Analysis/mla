@@ -2,16 +2,27 @@ import { ColorModeScript } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import { Html, Head, Main, NextScript } from "next/document";
-import checkMockCall from "../../src/tests/fixtures/mock.component.call";
 import BaseDocument from "@src/pages/_document";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { Component } from "react";
 
-jest.mock("@chakra-ui/react", () => ({
-  ColorModeScript: jest.fn(() => <div>MockColourModeScript</div>),
-}));
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/react/child").createComponent(
+    "ColorModeScript",
+    "ColorModeScript"
+  )
+);
 
 jest.mock("next/document", () => {
   const { Component } = jest.requireActual("react");
+  const mockMain = require("@fixtures/react/child").createComponent(
+    "Main",
+    "Main"
+  );
+  const mockNextScript = require("@fixtures/react/child").createComponent(
+    "NextScript",
+    "NextScript"
+  );
   return {
     __esModule: true,
     default: Component,
@@ -22,8 +33,8 @@ jest.mock("next/document", () => {
         <title>Mock Head Component</title>
       </head>
     )),
-    Main: jest.fn(() => <div>MockMainComponent</div>),
-    NextScript: jest.fn(() => <div>MockMainComponent</div>),
+    ...mockMain,
+    ...mockNextScript,
   };
 });
 

@@ -4,8 +4,10 @@ import { useState } from "react";
 import ErrorHandler from "../../handler/error.handler.component";
 import ErrorBoundary from "../error.boundary.component";
 import Events from "@src/events/events";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockRouter from "@src/tests/fixtures/mock.router";
+
+jest.mock("@src/hooks/analytics");
 
 jest.mock("../../handler/error.handler.component", () => {
   const MockErrorHandler = () => (
@@ -13,8 +15,6 @@ jest.mock("../../handler/error.handler.component", () => {
   );
   return jest.fn(() => <MockErrorHandler />);
 });
-
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 const mockTestRoute = "/";
 const mockStateReset = jest.fn();
@@ -111,8 +111,8 @@ describe("ErrorBoundary", () => {
       let resetError: () => void;
 
       beforeEach(() => {
-        resetError = (ErrorHandler as jest.Mock).mock.calls[0][0]
-          .resetErrorBoundary;
+        resetError =
+          jest.mocked(ErrorHandler).mock.calls[0][0].resetErrorBoundary;
         resetError();
       });
 

@@ -15,14 +15,26 @@
     "noEmit": true,
     "paths": {
       "@cypress/*": ["cypress/*"],
+      "@fixtures/api/lastfm/logger": [
+        "src/backend/api/lastfm/tests/endpoint.common.logger.mock.ts"
+      ],
       "@fixtures/chakra": [
         "src/tests/fixtures/mock.chakra.react.factory.class.tsx"
       ],
       "@fixtures/chakra/icons": [
         "src/tests/fixtures/mock.chakra.icon.factory.class.tsx"
       ],
-      "@fixtures/react": [
-        "src/tests/fixtures/mock.component.children.factory.class.tsx"
+      "@fixtures/integrations/auth": [
+        "src/backend/integrations/auth/__mocks__/vendor.mock.ts"
+      ],
+      "@fixtures/react/child": [
+        "src/tests/fixtures/mock.component.child.factory.class.tsx"
+      ],
+      "@fixtures/react/parent": [
+        "src/tests/fixtures/mock.component.parent.factory.class.tsx"
+      ],
+      "@fixtures/react/simple": [
+        "src/tests/fixtures/mock.component.simple.factory.class.tsx"
       ],
       "@locales/*": ["public/locales/en/*"],
       "@public/*": ["public/*"],
@@ -34,7 +46,7 @@
     "target": "es5"
   },
   "exclude": ["node_modules", "public", "coverage"],
-  "include": ["types.d/*.d.ts", "*.d.ts", "src/**/*.ts", "src/**/*.tsx"],
+  "include": ["types.d/*.d.ts", "*.d.ts", "src/**/*.ts", "src/**/*.tsx", "src/providers/user/encapsulations/lastfm/tests/states/user.state.data.set.1ts"],
   "ts-node": {
     "require": ["tsconfig-paths/register"],
     "swc": true

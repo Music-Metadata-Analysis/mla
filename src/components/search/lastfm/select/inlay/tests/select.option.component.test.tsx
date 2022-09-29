@@ -5,7 +5,7 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
-  () => require("@fixtures/react").createComponent("Button")
+  () => require("@fixtures/react/parent").createComponent("Button")
 );
 
 describe("SearchSelection", () => {

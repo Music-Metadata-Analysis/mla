@@ -4,11 +4,11 @@ import VerticalScrollBarComponent, {
   testIDs,
   VerticalScrollBarProps,
 } from "../vertical.scrollbar.component";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { RefObject } from "react";
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
+jest.mock("@src/hooks/colour");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");

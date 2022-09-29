@@ -8,16 +8,13 @@ import { testIDs as lastFMDrawerIDs } from "@src/components/reports/lastfm/commo
 import FlipCardReport, {
   FlipCardReportProps,
 } from "@src/components/reports/lastfm/common/flip.card.report/flip.card.report.component";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import UserArtistDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.artist.flipcard.report.class";
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
 const mockImageIsLoaded = jest.fn();
-const mockT = new mockUseLocale("lastfm").t;
+const mockT = new MockUseLocale("lastfm").t;
 const mockUsername = "test-username";
 const mockUserProperties = {
   error: null,

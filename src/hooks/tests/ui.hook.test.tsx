@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockUserInterfaceHook from "./ui.mock.hook";
+import mockHookValues from "../__mocks__/ui.mock";
 import useUserInterface from "../ui";
 import { UserInterfaceImagesContext } from "@src/providers/ui/ui.images/ui.images.provider";
 import { UserInterfacePopUpsContext } from "@src/providers/ui/ui.popups/ui.popups.provider";
@@ -75,7 +75,7 @@ describe("useUserInterface", () => {
     });
 
     it("should contain all the same properties as the mock hook", () => {
-      const mockObjectKeys = dk(mockUserInterfaceHook).sort();
+      const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(received.result.current).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
@@ -139,7 +139,7 @@ describe("useUserInterface", () => {
 
         it("should increment the count", () => {
           expect(mockImagesLoaded).toBeCalledTimes(1);
-          const callback = (mockImagesLoaded as jest.Mock).mock.calls[0][0];
+          const callback = jest.mocked(mockImagesLoaded).mock.calls[0][0];
           expect(callback(1)).toBe(2);
         });
       });

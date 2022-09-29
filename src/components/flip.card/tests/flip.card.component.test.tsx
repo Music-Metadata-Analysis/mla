@@ -1,33 +1,31 @@
 import { Box, Img, Text } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import FlipCard, { FlipCardProps, testIDs } from "../flip.card.component";
-import mockColourHook from "@src/hooks/tests/colour.hook.mock";
+import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/colour", () => () => mockColourHook);
+jest.mock("@src/hooks/colour");
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  const chakraMock = createChakraMock(["Box", "Img", "Center", "Text"]);
-  return chakraMock;
-});
-
-const TestProps: FlipCardProps = {
-  index: 1,
-  currentlyFlipped: 0,
-  size: 50,
-  image: "/test/image.jpg",
-  rearImage: "/test/rearImage.jpg",
-  fallbackImage: "/test/fallbackImage.jpg",
-  flipperController: jest.fn(),
-  imageIsLoaded: jest.fn(),
-  noArtWork: "No Cover Art Found",
-  t: jest.fn((arg: string) => `t(${arg})`),
-};
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Box", "Img", "Center", "Text"])
+);
 
 describe("FlipCard", () => {
   let currentProps: FlipCardProps;
   const borderSize = 1;
+
+  const TestProps: FlipCardProps = {
+    index: 1,
+    currentlyFlipped: 0,
+    size: 50,
+    image: "/test/image.jpg",
+    rearImage: "/test/rearImage.jpg",
+    fallbackImage: "/test/fallbackImage.jpg",
+    flipperController: jest.fn(),
+    imageIsLoaded: jest.fn(),
+    noArtWork: "No Cover Art Found",
+    t: jest.fn((arg: string) => `t(${arg})`),
+  };
 
   const expectedBoxProps = {
     borderWidth: 1,
@@ -77,7 +75,7 @@ describe("FlipCard", () => {
         expect(image).toHaveAttribute("style", "position: relative;");
         expect(Img).toHaveBeenCalledTimes(2);
 
-        const mockCall = (Img as jest.Mock).mock.calls[0][0];
+        const mockCall = jest.mocked(Img).mock.calls[0][0];
         expect(mockCall.width).toBe(`${TestProps.size - borderSize * 2}px`);
         expect(mockCall.height).toBe(`${TestProps.size - borderSize * 2}px`);
         expect(typeof mockCall.onLoad).toBe("function");
@@ -97,7 +95,7 @@ describe("FlipCard", () => {
         );
         expect(Img).toHaveBeenCalledTimes(2);
 
-        const mockCall = (Img as jest.Mock).mock.calls[1][0];
+        const mockCall = jest.mocked(Img).mock.calls[1][0];
         expect(mockCall.width).toBe(`${TestProps.size - borderSize * 2}px`);
         expect(mockCall.height).toBe(`${TestProps.size - borderSize * 2}px`);
         expect(typeof mockCall.onLoad).toBe("function");
@@ -185,7 +183,7 @@ describe("FlipCard", () => {
       expect(image).toHaveAttribute("style", "position: relative;");
       expect(Img).toHaveBeenCalledTimes(2);
 
-      const mockCall = (Img as jest.Mock).mock.calls[0][0];
+      const mockCall = jest.mocked(Img).mock.calls[0][0];
       expect(mockCall.width).toBe(`${TestProps.size - borderSize * 2}px`);
       expect(mockCall.height).toBe(`${TestProps.size - borderSize * 2}px`);
       expect(typeof mockCall.onLoad).toBe("function");

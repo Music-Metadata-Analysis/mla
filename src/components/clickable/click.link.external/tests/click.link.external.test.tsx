@@ -1,13 +1,13 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import NextLink from "next/link";
 import ClickExternalLink from "../click.link.external.component";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+
+jest.mock("@src/hooks/analytics");
 
 jest.mock("next/link", () =>
-  require("@fixtures/react").createComponent("NextLink")
+  require("@fixtures/react/parent").createComponent("NextLink")
 );
-
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
 
 describe("ButtonLink", () => {
   const linkText = "Link";
@@ -24,7 +24,7 @@ describe("ButtonLink", () => {
 
   it("should render NextLink as expected", () => {
     expect(NextLink).toBeCalledTimes(1);
-    const call = (NextLink as jest.Mock).mock.calls[0];
+    const call = jest.mocked(NextLink).mock.calls[0];
     expect(call[0].href).toBe(mockHref);
     expect(call[0].passHref).toBe(true);
     expect(call[0].children).toBeDefined();

@@ -3,20 +3,13 @@ import Head from "next/head";
 import Header from "../header.component";
 import translation from "@locales/main.json";
 import settings from "@src/config/head";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 
-jest.mock("next/head", () => jest.fn());
+jest.mock("@src/hooks/locale");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("next/head");
 
-const MockNextHeader = ({
-  children,
-}: {
-  children: Array<React.ReactElement>;
-}) => {
+const MockNextHeader = ({ children }: { children?: unknown }) => {
   return <>{children}</>;
 };
 
@@ -24,7 +17,7 @@ describe("Header", () => {
   const testTranslationKey = "default";
 
   beforeEach(() => {
-    (Head as jest.Mock).mockImplementationOnce(MockNextHeader);
+    jest.mocked(Head).mockImplementationOnce(MockNextHeader);
   });
 
   const getMeta = (metaName: string): string | null => {

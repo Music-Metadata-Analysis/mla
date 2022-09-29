@@ -12,19 +12,16 @@ import { testIDs as SpinnerModalTestIDs } from "../modals/modal.spinner.componen
 import authenticationTranslations from "@locales/authentication.json";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import mockAnalyticsHook from "@src/hooks/tests/analytics.mock.hook";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockRouter from "@src/tests/fixtures/mock.router";
 
-jest.mock("@src/hooks/analytics", () => () => mockAnalyticsHook);
+jest.mock("@src/hooks/analytics");
 
-jest.mock("@src/hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/auth");
 
-jest.mock(
-  "@src/hooks/locale",
-  () => (filename: string) => new mockUseLocale(filename)
-);
+jest.mock("@src/hooks/locale");
 
 jest.mock("@chakra-ui/react", () => {
   const module = jest.requireActual("@chakra-ui/react");
@@ -35,7 +32,7 @@ jest.mock("@chakra-ui/react", () => {
 });
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  jest.fn(() => <div>MockVerticalScrollBar</div>)
+  require("@fixtures/react/child").createComponent("VerticalScrollBar")
 );
 
 const mockUseDisclosure = jest.fn();

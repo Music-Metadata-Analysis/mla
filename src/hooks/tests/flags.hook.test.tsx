@@ -1,11 +1,9 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockUseFlagsHook from "./flags.mock.hook";
+import mockHookValues from "../__mocks__/flags.mock";
 import useFlags from "../flags";
 
-jest.mock("@src/clients/flags/vendor", () => ({
-  hook: () => mockUseFlagsHook,
-}));
+jest.mock("@src/clients/flags/vendor");
 
 describe("useFlags", () => {
   let originalEnvironment: typeof process.env;
@@ -34,32 +32,28 @@ describe("useFlags", () => {
     });
 
     it("should contain all the same properties as the mock hook", () => {
-      const mockObjectKeys = dk(
-        mockUseFlagsHook as unknown as Record<string, unknown>
-      ).sort();
+      const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(
-        received.result.current as unknown as Record<string, unknown>
+        received.result.current as typeof mockHookValues
       ).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
 
     it("should contain the correct functions", () => {
-      expect(received.result.current.isEnabled).toBe(
-        mockUseFlagsHook.isEnabled
-      );
+      expect(received.result.current.isEnabled).toBe(mockHookValues.isEnabled);
     });
 
     describe("isEnabled", () => {
       let result: boolean;
 
       beforeEach(() => {
-        (mockUseFlagsHook.isEnabled as jest.Mock).mockReturnValueOnce(true);
+        jest.mocked(mockHookValues.isEnabled).mockReturnValueOnce(true);
         result = received.result.current.isEnabled(mockFlagName);
       });
 
       it("should call the underlying vendor hook", () => {
-        expect(mockUseFlagsHook.isEnabled).toBeCalledTimes(1);
-        expect(mockUseFlagsHook.isEnabled).toBeCalledWith(mockFlagName);
+        expect(mockHookValues.isEnabled).toBeCalledTimes(1);
+        expect(mockHookValues.isEnabled).toBeCalledWith(mockFlagName);
       });
 
       it("should return the expected value", () => {

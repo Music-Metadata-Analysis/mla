@@ -4,25 +4,25 @@ import SearchContainer from "../search.container";
 import SearchForm from "../search.form";
 import lastfmTranslations from "@locales/lastfm.json";
 import settings from "@src/config/lastfm";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/tests/auth.mock.hook";
-import { mockUseLocale, _t } from "@src/hooks/tests/locale.mock.hook";
-import mockNavBarHook from "@src/hooks/tests/navbar.mock.hook";
+import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
+import mockNavBarHook from "@src/hooks/__mocks__/navbar.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import mockRouter from "@src/tests/fixtures/mock.router";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
 
-jest.mock("../search.form", () => {
-  return jest
-    .fn()
-    .mockImplementation(() => <div id="username">MockSearchForm</div>);
-});
+jest.mock("@src/hooks/auth");
 
-jest.mock("@src/hooks/auth", () => () => mockAuthHook);
+jest.mock("@src/hooks/navbar");
 
-jest.mock("@src/hooks/navbar", () => {
-  return jest.fn().mockImplementation(() => mockNavBarHook);
-});
+jest.mock("../search.form", () =>
+  require("@fixtures/react/child").createComponent(
+    "MockSearchForm",
+    "default",
+    { id: "username" }
+  )
+);
 
 describe("SearchContainer", () => {
   let validateUserName: (username: string) => string | undefined;
@@ -33,7 +33,7 @@ describe("SearchContainer", () => {
   const mockRoute = "/a/very/fancy/route/to/something";
   const mockOpenError = jest.fn();
   const mockCloseError = jest.fn();
-  const mockT = new mockUseLocale("lastfm").t;
+  const mockT = new MockUseLocale("lastfm").t;
 
   beforeEach(() => jest.clearAllMocks());
 
@@ -84,8 +84,8 @@ describe("SearchContainer", () => {
     beforeEach(() => {
       arrange();
       expect(SearchForm).toBeCalledTimes(1);
-      validateUserName = (SearchForm as jest.Mock).mock.calls[0][0]
-        .validateUserName;
+      validateUserName =
+        jest.mocked(SearchForm).mock.calls[0][0].validateUserName;
     });
 
     describe("when called on a non-existing username (minimum length is 1)", () => {
@@ -151,7 +151,7 @@ describe("SearchContainer", () => {
     const arrangeHandleSubmit = () => {
       arrange();
       expect(SearchForm).toBeCalledTimes(1);
-      handleSubmit = (SearchForm as jest.Mock).mock.calls[0][0].handleSubmit;
+      handleSubmit = jest.mocked(SearchForm).mock.calls[0][0].handleSubmit;
     };
 
     const mockAction = {

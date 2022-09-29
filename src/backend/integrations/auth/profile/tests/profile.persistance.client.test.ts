@@ -1,15 +1,8 @@
 import ProfilePersistanceClient from "../profile.persistance.client.class";
+import { mockPersistanceClient } from "@src/backend/integrations/persistance/__mocks__/vendor.mock";
 import persistanceVendor from "@src/backend/integrations/persistance/vendor";
 
-jest.mock("@src/backend/integrations/persistance/vendor", () => {
-  return {
-    PersistanceClient: jest.fn(() => MockPersistanceClient),
-  };
-});
-
-const MockPersistanceClient = {
-  write: jest.fn(async () => null),
-};
+jest.mock("@src/backend/integrations/persistance/vendor");
 
 describe(ProfilePersistanceClient.name, () => {
   let instance: ProfilePersistanceClient;
@@ -47,8 +40,8 @@ describe(ProfilePersistanceClient.name, () => {
         });
 
         it("should call the underlying PersistanceClient as expected", () => {
-          expect(MockPersistanceClient.write).toBeCalledTimes(1);
-          expect(MockPersistanceClient.write).toBeCalledWith(
+          expect(mockPersistanceClient.write).toBeCalledTimes(1);
+          expect(mockPersistanceClient.write).toBeCalledWith(
             mockProfile.email,
             mockProfile,
             { ContentType: "application/json" }
@@ -62,7 +55,7 @@ describe(ProfilePersistanceClient.name, () => {
         });
 
         it("should NOT call the underlying PersistanceClient", () => {
-          expect(MockPersistanceClient.write).toBeCalledTimes(0);
+          expect(mockPersistanceClient.write).toBeCalledTimes(0);
         });
       });
     });

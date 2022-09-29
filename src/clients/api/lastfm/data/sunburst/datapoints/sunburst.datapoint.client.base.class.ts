@@ -8,7 +8,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
   ReportType,
   ResponseType
 > extends LastFMBaseClient<ResponseType> {
-  private encapsulatedState: UserSunBurstReportBaseState<ReportType>;
+  protected encapsulatedState: UserSunBurstReportBaseState<ReportType>;
 
   constructor(
     dispatch: userDispatchType,
@@ -19,15 +19,15 @@ abstract class LastFMBaseSunBurstDataPointClient<
     this.encapsulatedState = encapsulatedState;
   }
 
-  private isComplete() {
+  protected isComplete() {
     return this.encapsulatedState.getReportStatus().complete;
   }
 
-  private getDispatchState() {
+  protected getDispatchState() {
     return this.encapsulatedState.getDispatchState();
   }
 
-  private updateReport(params: LastFMReportParamsInterface) {
+  protected updateReport(params: LastFMReportParamsInterface) {
     this.encapsulatedState.updateWithResponse(
       this.response.response,
       params,
@@ -35,13 +35,13 @@ abstract class LastFMBaseSunBurstDataPointClient<
     );
   }
 
-  private isInitialParams(params: LastFMReportParamsInterface) {
+  protected isInitialParams(params: LastFMReportParamsInterface) {
     return (
       JSON.stringify(params) === JSON.stringify({ userName: params.userName })
     );
   }
 
-  handleBegin(params: LastFMReportParamsInterface): void {
+  protected handleBegin(params: LastFMReportParamsInterface): void {
     if (this.isInitialParams(params)) {
       super.handleBegin(params);
     } else {
@@ -51,7 +51,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
     }
   }
 
-  handleFailure(params: LastFMReportParamsInterface) {
+  protected handleFailure(params: LastFMReportParamsInterface) {
     if (this.isInitialParams(params)) {
       super.handleFailure(params);
     } else {
@@ -64,7 +64,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
     }
   }
 
-  handleNotFound(params: LastFMReportParamsInterface): void {
+  protected handleNotFound(params: LastFMReportParamsInterface): void {
     if (this.response.status === 404) {
       if (this.isInitialParams(params)) {
         super.handleNotFound(params);
@@ -79,7 +79,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
     }
   }
 
-  handleTimeout(params: LastFMReportParamsInterface): void {
+  protected handleTimeout(params: LastFMReportParamsInterface): void {
     if (this.response.status === 503) {
       const backOff = parseInt(this.response?.headers["retry-after"]);
       if (!isNaN(backOff)) {
@@ -94,7 +94,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
     }
   }
 
-  handleSuccessful(params: LastFMReportParamsInterface): void {
+  protected handleSuccessful(params: LastFMReportParamsInterface): void {
     if (this.response.status === 200) {
       this.updateReport(params);
       if (this.isComplete()) {

@@ -1,5 +1,5 @@
 import ReducerState from "../generic.reset.class";
-import { mockInitialReportData } from "@src/providers/user/tests/fixtures/mock.user.state.data";
+import { mockInitialReportData } from "@src/providers/user/tests/states/user.state.data";
 import type { UserActionType } from "@src/types/user/action.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 

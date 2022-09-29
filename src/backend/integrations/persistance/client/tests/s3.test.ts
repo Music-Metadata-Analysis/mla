@@ -2,18 +2,10 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import S3PersistenceClient from "../s3";
 import type { PersistanceClientHeaders } from "@src/types/integrations/persistance/vendor.types";
 
-jest.mock("@aws-sdk/client-s3", () => {
-  return {
-    S3Client: jest.fn(() => MockS3Client),
-    PutObjectCommand: jest.fn(() => MockBucketCommand),
-  };
-});
+jest.mock("@aws-sdk/client-s3");
 
-const MockS3Client = {
-  send: jest.fn(async () => null),
-};
-
-const MockBucketCommand = { MockCommand: "MockCommand" };
+const MockedS3Client = jest.mocked(S3Client);
+const MockedPutObjectCommand = jest.mocked(PutObjectCommand);
 
 describe(S3PersistenceClient.name, () => {
   let instance: S3PersistenceClient;
@@ -66,8 +58,8 @@ describe(S3PersistenceClient.name, () => {
     });
 
     it("should instantiate S3Client correctly", () => {
-      expect(S3Client).toBeCalledTimes(1);
-      expect(S3Client).toBeCalledWith({
+      expect(MockedS3Client).toBeCalledTimes(1);
+      expect(MockedS3Client).toBeCalledWith({
         credentials: {
           accessKeyId: "MockValue1",
           secretAccessKey: "MockValue2",
@@ -88,16 +80,18 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should create the expected PutObjectCommand", () => {
-            expect(PutObjectCommand).toBeCalledTimes(1);
-            expect(PutObjectCommand).toBeCalledWith({
+            expect(MockedPutObjectCommand).toBeCalledTimes(1);
+            expect(MockedPutObjectCommand).toBeCalledWith({
               ...expectedStringCommand,
               ...mockHeaders,
             });
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockS3Client.send).toBeCalledTimes(1);
-            expect(MockS3Client.send).toBeCalledWith(MockBucketCommand);
+            expect(MockedS3Client.mock.instances[0].send).toBeCalledTimes(1);
+            expect(MockedS3Client.mock.instances[0].send).toBeCalledWith(
+              MockedPutObjectCommand.mock.instances[0]
+            );
           });
         });
 
@@ -110,16 +104,18 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should create the expected PutObjectCommand", () => {
-            expect(PutObjectCommand).toBeCalledTimes(1);
-            expect(PutObjectCommand).toBeCalledWith({
+            expect(MockedPutObjectCommand).toBeCalledTimes(1);
+            expect(MockedPutObjectCommand).toBeCalledWith({
               ...expectedStringCommand,
               ...mockHeaders,
             });
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockS3Client.send).toBeCalledTimes(1);
-            expect(MockS3Client.send).toBeCalledWith(MockBucketCommand);
+            expect(MockedS3Client.mock.instances[0].send).toBeCalledTimes(1);
+            expect(MockedS3Client.mock.instances[0].send).toBeCalledWith(
+              MockedPutObjectCommand.mock.instances[0]
+            );
           });
         });
       });
@@ -135,16 +131,18 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should create the expected PutObjectCommand", () => {
-            expect(PutObjectCommand).toBeCalledTimes(1);
-            expect(PutObjectCommand).toBeCalledWith({
+            expect(MockedPutObjectCommand).toBeCalledTimes(1);
+            expect(MockedPutObjectCommand).toBeCalledWith({
               ...expectedObjectCommand,
               ...mockHeaders,
             });
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockS3Client.send).toBeCalledTimes(1);
-            expect(MockS3Client.send).toBeCalledWith(MockBucketCommand);
+            expect(MockedS3Client.mock.instances[0].send).toBeCalledTimes(1);
+            expect(MockedS3Client.mock.instances[0].send).toBeCalledWith(
+              MockedPutObjectCommand.mock.instances[0]
+            );
           });
         });
 
@@ -157,16 +155,18 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should create the expected PutObjectCommand", () => {
-            expect(PutObjectCommand).toBeCalledTimes(1);
-            expect(PutObjectCommand).toBeCalledWith({
+            expect(MockedPutObjectCommand).toBeCalledTimes(1);
+            expect(MockedPutObjectCommand).toBeCalledWith({
               ...expectedObjectCommand,
               ...mockHeaders,
             });
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockS3Client.send).toBeCalledTimes(1);
-            expect(MockS3Client.send).toBeCalledWith(MockBucketCommand);
+            expect(MockedS3Client.mock.instances[0].send).toBeCalledTimes(1);
+            expect(MockedS3Client.mock.instances[0].send).toBeCalledWith(
+              MockedPutObjectCommand.mock.instances[0]
+            );
           });
         });
       });
