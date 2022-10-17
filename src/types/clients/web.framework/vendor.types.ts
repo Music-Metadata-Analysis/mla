@@ -21,5 +21,6 @@ export interface VendorImageProps {
 export interface WebFrameworkVendor {
   ImageShim: (props: VendorImageProps) => JSX.Element;
   isBuildTime: () => boolean;
+  isSSR: () => boolean;
   routerHook: () => VendorRouterHookInterface;
 }

@@ -2,6 +2,7 @@ import type { VendorRouterHookInterface } from "@src/types/clients/web.framework
 
 export const mockImageShim = jest.fn();
 export const mockIsBuildTime = jest.fn();
+export const mockIsSSR = jest.fn();
 
 export const mockUseRouter = {
   back: jest.fn(),
