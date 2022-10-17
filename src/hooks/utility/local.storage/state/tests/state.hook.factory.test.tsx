@@ -1,14 +1,17 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import useLocalStorageState from "../local.storage.state";
+import createLocalStorageState from "../state.hook.factory";
 
-describe("useLocalStorageState", () => {
+describe("createLocalStorageState", () => {
+  let received: ReturnType<typeof arrange>;
+
   let setItem: jest.SpyInstance<void, [key: string, value: string]>;
   let getItem: jest.SpyInstance<string | null | undefined, [key: string]>;
-  let received: ReturnType<typeof arrange>;
+
   const mockInitialValue = { mock: "mockInitialValue" };
   const mockStorageKey = "mockStorageKey";
   const mockStorageValue = { mock: "mockStorageValue" };
   const mockError = new Error("MockError");
+
   const mockFunction = (prevState: { mock: string }) => ({
     mock: prevState.mock + ">FunctionReturn",
   });
@@ -21,11 +24,12 @@ describe("useLocalStorageState", () => {
 
   afterAll(() => {
     setItem.mockRestore();
+    getItem.mockRestore();
   });
 
   const arrange = () => {
     return renderHook(() =>
-      useLocalStorageState<{ mock: string }>(mockStorageKey, mockInitialValue)
+      createLocalStorageState(mockStorageKey)(mockInitialValue)
     );
   };
 

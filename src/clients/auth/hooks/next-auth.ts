@@ -1,5 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react";
-import { getPersistedUseState } from "@src/hooks/utility/local.storage";
+import PersistentStateFactory from "@src/hooks/utility/local.storage/persisted.state.hook.factory.class";
 import type {
   AuthVendorHookInterface,
   AuthServiceType,
@@ -7,9 +7,9 @@ import type {
 import type { Session } from "next-auth";
 
 const useNextAuth = (): AuthVendorHookInterface => {
-  const [oauth, setOauth] = getPersistedUseState()<{
-    type: string | null;
-  }>("oauth", {
+  const [oauth, setOauth] = new PersistentStateFactory().create("oauth")<{
+    type: AuthServiceType | null;
+  }>({
     type: null,
   });
   const { data, status } = useSession();
