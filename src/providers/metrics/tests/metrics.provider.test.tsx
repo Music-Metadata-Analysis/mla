@@ -1,18 +1,19 @@
 import { render } from "@testing-library/react";
 import { InitialState } from "../metrics.initial";
 import MetricsProvider, { MetricsContext } from "../metrics.provider";
-import { getPersistedUseReducer } from "@src/hooks/utility/local.storage";
+import PersistentReducerFactory from "@src/hooks/utility/persisted.reducer.factory";
 import type { MetricsContextInterface } from "@src/types/metrics/context.types";
 
-jest.mock("@src/hooks/utility/local.storage", () => ({
-  getPersistedUseReducer: jest.fn(() => mockReducer),
-}));
-
-const mockReducer = jest.fn(() => mockReducerProperties);
-const mockReducerProperties = [{ ...InitialState }, jest.fn()];
+jest.mock("@src/hooks/utility/persisted.reducer.factory");
 
 describe("MetricsProvider", () => {
   const received: Partial<MetricsContextInterface> = {};
+  const mockReducer = jest.fn(() => mockReducerProperties) as jest.Mock;
+  const mockReducerProperties = [{ ...InitialState }, jest.fn()];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   const arrange = () => {
     render(
@@ -31,12 +32,22 @@ describe("MetricsProvider", () => {
 
   describe("when initialized", () => {
     beforeEach(() => {
+      jest
+        .mocked(PersistentReducerFactory.prototype.create)
+        .mockReturnValueOnce(mockReducer);
       arrange();
     });
 
+    it("should instantiate the factory as expected", () => {
+      expect(PersistentReducerFactory).toBeCalledTimes(1);
+      expect(PersistentReducerFactory).toBeCalledWith();
+    });
+
     it("should create a persisted reducer with the expected local storage key", () => {
-      expect(getPersistedUseReducer).toBeCalledTimes(1);
-      expect(getPersistedUseReducer).toBeCalledWith("metrics");
+      expect(PersistentReducerFactory.prototype.create).toBeCalledTimes(1);
+      expect(PersistentReducerFactory.prototype.create).toBeCalledWith(
+        "metrics"
+      );
     });
 
     it("should contain the expected properties", () => {

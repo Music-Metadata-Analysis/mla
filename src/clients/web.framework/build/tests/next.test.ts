@@ -31,7 +31,7 @@ describe("When node is running outside of next build time", () => {
     process.env = originalEnvironment;
   });
 
-  describe("isBuildTime", () => {
+  describe("isNextBuildTime", () => {
     it("should return false", () => {
       expect(isNextBuildTime()).toBeFalsy();
     });
