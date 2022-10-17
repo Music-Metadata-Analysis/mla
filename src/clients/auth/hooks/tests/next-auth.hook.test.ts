@@ -8,11 +8,12 @@ import {
   mockAuthHook,
   mockUserProfile,
 } from "@src/clients/auth/__mocks__/vendor.mock";
+import PersistentStateFactory from "@src/hooks/utility/local.storage/persisted.state.hook.factory.class";
 import type { AuthSessionType } from "@src/types/clients/auth/vendor.types";
 
-jest.mock("@src/hooks/utility/local.storage", () => ({
-  getPersistedUseState: () => mockUseLocalStorage,
-}));
+jest.mock(
+  "@src/hooks/utility/local.storage//persisted.state.hook.factory.class"
+);
 
 jest.mock("next-auth/react", () => ({
   useSession: jest.fn(),
@@ -20,16 +21,16 @@ jest.mock("next-auth/react", () => ({
   signOut: jest.fn(),
 }));
 
-const mockUseLocalStorage = jest.fn(() => useMockLocalStorageHook());
-const useMockLocalStorageHook = () => {
-  return useState<{ type: string | null }>(existingLocalStorageValue);
-};
-
-let existingLocalStorageValue: { type: string | null };
 const MockedUseSession = useSession as jest.Mock;
 
 describe("useNextAuth", () => {
   let received: ReturnType<typeof arrange>;
+  let existingLocalStorageValue: { type: string | null };
+
+  const useMockLocalStorageHook = jest.fn(() =>
+    useState<{ type: string | null }>(existingLocalStorageValue)
+  );
+
   const mockOauthProvider = "google";
   const mockSession = {
     group: "mockGroup",
@@ -43,6 +44,9 @@ describe("useNextAuth", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest
+      .mocked(PersistentStateFactory.prototype.create)
+      .mockReturnValue(useMockLocalStorageHook);
   });
 
   const arrange = () => {
@@ -50,9 +54,19 @@ describe("useNextAuth", () => {
   };
 
   const checkLocalStorage = () => {
-    it("should initialize local storage access as expected", () => {
-      expect(mockUseLocalStorage).toBeCalledTimes(1);
-      expect(mockUseLocalStorage).toBeCalledWith("oauth", { type: null });
+    it("should instantiate the factory as expected", () => {
+      expect(PersistentStateFactory).toBeCalledTimes(1);
+      expect(PersistentStateFactory).toBeCalledWith();
+    });
+
+    it("should initialize the local storage hook with the correct partition name", () => {
+      expect(PersistentStateFactory.prototype.create).toBeCalledTimes(1);
+      expect(PersistentStateFactory.prototype.create).toBeCalledWith("oauth");
+    });
+
+    it("should initialize the state with the expected value", () => {
+      expect(useMockLocalStorageHook).toBeCalledTimes(1);
+      expect(useMockLocalStorageHook).toBeCalledWith({ type: null });
     });
   };
 
