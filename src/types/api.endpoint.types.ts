@@ -8,6 +8,7 @@ import type {
 
 export interface LastFMEndpointRequest extends NextApiRequest {
   proxyResponse?: string;
+  proxyTimeoutInstance?: NodeJS.Timeout;
 }
 
 export type LastFMEndpointResponse = NextApiResponse;
