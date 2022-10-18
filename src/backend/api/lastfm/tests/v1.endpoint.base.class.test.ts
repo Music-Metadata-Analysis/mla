@@ -1,3 +1,4 @@
+import { waitFor } from "@testing-library/react";
 import LastFMApiEndpointFactoryV1 from "../v1.endpoint.base.class";
 import { mockAuthClient } from "@src/backend/integrations/auth/__mocks__/vendor.mock";
 import authVendor from "@src/backend/integrations/auth/vendor";
@@ -51,15 +52,17 @@ jest.mock("@src/backend/integrations/auth/vendor");
 jest.mock("@src/backend/api/lastfm/endpoint.common.logger");
 
 describe("LastFMApiEndpointFactoryV1", () => {
-  let mockReq: MockAPIRequest;
-  let mockRes: MockAPIResponse;
-  let payload: undefined | Record<string, string>;
+  let clearTimeOut: jest.SpyInstance;
   let factory:
     | LastFMApiEndpointFactoryV1
     | ConcreteTimeoutClass
     | ConcreteErrorClass;
   let originalEnvironment: typeof process.env;
+  let payload: undefined | Record<string, string>;
   let method: HttpMethodType;
+  let mockReq: MockAPIRequest;
+  let mockRes: MockAPIResponse;
+
   const mockJWTSecret = "MockValue1";
 
   const setupEnv = () => {
@@ -72,6 +75,7 @@ describe("LastFMApiEndpointFactoryV1", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    clearTimeOut = jest.spyOn(window, "clearTimeout");
     setupEnv();
   });
 
@@ -88,6 +92,18 @@ describe("LastFMApiEndpointFactoryV1", () => {
     it("should call the getSession method with the correct props", () => {
       expect(mockAuthClient.getSession).toBeCalledTimes(1);
       expect(mockAuthClient.getSession).toBeCalledWith();
+    });
+  };
+
+  const checkTimeoutCleared = () => {
+    it("should clear the timeout", async () => {
+      await waitFor(() => expect(clearTimeOut).toBeCalledTimes(1));
+    });
+  };
+
+  const checkTimeoutNotCleared = () => {
+    it("should NOT clear the timeout", () => {
+      expect(clearTimeOut).toBeCalledTimes(0);
     });
   };
 
@@ -129,6 +145,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           checkJWT();
+
+          checkTimeoutCleared();
         });
 
         describe("receives a request that generates an ratelimited proxy error", () => {
@@ -146,6 +164,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           checkJWT();
+
+          checkTimeoutCleared();
         });
 
         describe("receives a request that generates an not found proxy error", () => {
@@ -163,6 +183,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           checkJWT();
+
+          checkTimeoutCleared();
         });
 
         describe("receives a TIMED OUT request", () => {
@@ -183,6 +205,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           checkJWT();
+
+          checkTimeoutNotCleared();
         });
       });
 
@@ -205,6 +229,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           checkJWT();
+
+          checkTimeoutNotCleared();
         });
       });
 
@@ -227,6 +253,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           checkJWT();
+
+          checkTimeoutNotCleared();
         });
       });
     });
@@ -287,6 +315,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           checkJWT();
+
+          checkTimeoutNotCleared();
         });
 
         describe("receives a TIMED OUT request", () => {
@@ -307,6 +337,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           checkJWT();
+
+          checkTimeoutNotCleared();
         });
       });
 
@@ -329,6 +361,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           checkJWT();
+
+          checkTimeoutNotCleared();
         });
       });
 
@@ -351,6 +385,8 @@ describe("LastFMApiEndpointFactoryV1", () => {
           });
 
           checkJWT();
+
+          checkTimeoutNotCleared();
         });
       });
     });
