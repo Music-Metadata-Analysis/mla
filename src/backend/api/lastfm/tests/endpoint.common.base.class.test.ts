@@ -82,9 +82,18 @@ describe("LastFMEndpointBase", () => {
         factory.createTimeout(mockReq, mockRes, mockTimeout);
       });
 
-      describe("when called", () => {
-        it("should modify the response status code to 503", async () => {
+      it("should attach a timeout instance on the request", () => {
+        expect(
+          (mockReq as LastFMEndpointRequest).proxyTimeoutInstance
+        ).toBeDefined();
+      });
+
+      describe("when the timeout fires", () => {
+        beforeEach(async () => {
           await waitFor(() => expect(mockRes._getStatusCode()).toBe(503));
+        });
+
+        it("should modify the response status code to 503", async () => {
           expect(mockRes._getJSONData()).toStrictEqual(
             status.STATUS_503_MESSAGE
           );
@@ -97,6 +106,12 @@ describe("LastFMEndpointBase", () => {
               "retry-after": 0,
             })
           );
+        });
+
+        it("should clear the timeout instance on the request", () => {
+          expect(
+            (mockReq as LastFMEndpointRequest).proxyTimeoutInstance
+          ).toBeUndefined();
         });
       });
     });
@@ -116,11 +131,17 @@ describe("LastFMEndpointBase", () => {
 
         describe("when called", () => {
           beforeEach(async () => {
-            factory.clearTimeout();
+            factory.clearTimeout(mockReq);
           });
 
           it("should clear the timeout", async () => {
             await waitFor(() => expect(clearTimeOut).toBeCalledTimes(1));
+          });
+
+          it("should clear the timeout instance on the request", () => {
+            expect(
+              (mockReq as LastFMEndpointRequest).proxyTimeoutInstance
+            ).toBeUndefined();
           });
         });
       });

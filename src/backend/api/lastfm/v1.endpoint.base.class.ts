@@ -38,7 +38,7 @@ export default abstract class LastFMApiEndpointFactoryV1 extends LastFMEndpointB
           this.proxy = new LastFMProxy();
           this.createTimeout(req, res, next);
           const proxyResponse = await this.getProxyResponse(req.body);
-          this.clearTimeout();
+          this.clearTimeout(req);
           req.proxyResponse = "Success!";
           res.setHeader("Sunset", this.sunsetDate.toDateString());
           res.status(200).json(proxyResponse);

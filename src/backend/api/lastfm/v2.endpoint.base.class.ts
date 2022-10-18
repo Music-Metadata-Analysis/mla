@@ -92,7 +92,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
     this.proxy = new LastFMProxy();
     this.createTimeout(req, res, next);
     const proxyResponse = await this.getProxyResponse(params);
-    this.clearTimeout();
+    this.clearTimeout(req);
     return proxyResponse;
   }
 
