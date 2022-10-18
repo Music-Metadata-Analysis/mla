@@ -1,3 +1,4 @@
+import { waitFor } from "@testing-library/react";
 import LastFMApiEndpointFactoryV2 from "../v2.endpoint.base.class";
 import { mockAuthClient } from "@src/backend/integrations/auth/__mocks__/vendor.mock";
 import authVendor from "@src/backend/integrations/auth/vendor";
@@ -69,16 +70,18 @@ jest.mock("@src/backend/integrations/flags/vendor");
 jest.mock("@src/backend/api/lastfm/endpoint.common.logger");
 
 describe("LastFMApiEndpointFactoryV2", () => {
-  let mockReq: MockAPIRequest;
-  let mockRes: MockAPIResponse;
+  let clearTimeOut: jest.SpyInstance;
   let factory:
     | LastFMApiEndpointFactoryV2
     | ConcreteTimeoutClass
     | ConcreteErrorClass;
   let method: HttpMethodType;
+  let mockReq: MockAPIRequest;
+  let mockRes: MockAPIResponse;
   let originalEnvironment: typeof process.env;
   let requiredFlag: string | null;
   let username: [string] | null;
+
   const mockJWTSecret = "MockValue1";
   const mockFlagEnvironment = "MockValue2";
 
@@ -93,6 +96,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    clearTimeOut = jest.spyOn(window, "clearTimeout");
     setupEnv();
   });
 
@@ -129,6 +133,18 @@ describe("LastFMApiEndpointFactoryV2", () => {
         expect(flagVendor.Client).toBeCalledWith(mockFlagEnvironment);
       });
     }
+  };
+
+  const checkTimeoutCleared = () => {
+    it("should clear the timeout", async () => {
+      await waitFor(() => expect(clearTimeOut).toBeCalledTimes(1));
+    });
+  };
+
+  const checkTimeoutNotCleared = () => {
+    it("should NOT clear the timeout", () => {
+      expect(clearTimeOut).toBeCalledTimes(0);
+    });
   };
 
   const actRequest = async () => {
@@ -175,6 +191,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutCleared();
           });
 
           describe("receives a request that generates an invalid proxy response", () => {
@@ -197,6 +215,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutCleared();
           });
 
           describe("receives a request that generates an ratelimited proxy error", () => {
@@ -257,6 +277,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
 
@@ -282,6 +304,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 1 });
+
+            checkTimeoutCleared();
           });
 
           describe("receives a request that generates an invalid proxy response", () => {
@@ -304,6 +328,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 1 });
+
+            checkTimeoutCleared();
           });
 
           describe("receives a request that generates an ratelimited proxy error", () => {
@@ -323,6 +349,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 1 });
+
+            checkTimeoutCleared();
           });
 
           describe("receives a request that generates an not found proxy error", () => {
@@ -342,6 +370,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 1 });
+
+            checkTimeoutCleared();
           });
 
           describe("receives a TIMED OUT request", () => {
@@ -364,6 +394,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 1 });
+
+            checkTimeoutNotCleared();
           });
         });
 
@@ -389,6 +421,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 1 });
+
+            checkTimeoutNotCleared();
           });
 
           describe("receives a request that generates an invalid proxy response", () => {
@@ -411,6 +445,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 1 });
+
+            checkTimeoutNotCleared();
           });
 
           describe("receives a request that generates an ratelimited proxy error", () => {
@@ -430,6 +466,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 1 });
+
+            checkTimeoutNotCleared();
           });
 
           describe("receives a request that generates an not found proxy error", () => {
@@ -449,6 +487,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 1 });
+
+            checkTimeoutNotCleared();
           });
 
           describe("receives a TIMED OUT request", () => {
@@ -471,6 +511,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 1 });
+
+            checkTimeoutNotCleared();
           });
         });
       });
@@ -502,6 +544,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
 
@@ -524,6 +568,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
 
@@ -549,6 +595,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
       });
@@ -615,6 +663,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
 
           describe("receives a TIMED OUT request", () => {
@@ -637,6 +687,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
 
@@ -662,6 +714,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
 
           describe("receives a TIMED OUT request", () => {
@@ -684,6 +738,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
 
@@ -709,6 +765,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
 
           describe("receives a TIMED OUT request", () => {
@@ -731,6 +789,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
       });
@@ -761,6 +821,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
 
@@ -786,6 +848,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
 
@@ -811,6 +875,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkJWT();
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
       });
@@ -845,6 +911,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             });
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
 
@@ -868,6 +936,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             });
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
 
@@ -891,6 +961,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
             });
 
             checkFeatureFlagLookup({ expectedCalls: 0 });
+
+            checkTimeoutNotCleared();
           });
         });
       });

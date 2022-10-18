@@ -36,7 +36,7 @@ export default abstract class LastFMEndpointBase {
     res: LastFMEndpointResponse,
     next: () => void
   ) => {
-    this.clearTimeout();
+    this.clearTimeout(req);
     req.proxyResponse = err.toString();
     if (err.clientStatusCode && knownStatuses[err.clientStatusCode]) {
       res
@@ -53,15 +53,19 @@ export default abstract class LastFMEndpointBase {
     res: LastFMEndpointResponse,
     next: () => void
   ) => {
-    this.connectionTimeout = setTimeout(() => {
+    req.proxyTimeoutInstance = setTimeout(() => {
       req.proxyResponse = "Timed out! Please retry this request!";
       res.setHeader("retry-after", 0);
       res.status(503).json(status.STATUS_503_MESSAGE);
+      delete req.proxyTimeoutInstance;
       next();
     }, this.timeOut);
   };
 
-  clearTimeout = () => {
-    if (this.connectionTimeout) clearTimeout(this.connectionTimeout);
+  clearTimeout = (req: LastFMEndpointRequest) => {
+    if (req.proxyTimeoutInstance) {
+      clearTimeout(req.proxyTimeoutInstance);
+      delete req.proxyTimeoutInstance;
+    }
   };
 }
