@@ -24,7 +24,9 @@ jest.mock("../chart/chart.data.class");
 describe("SunBurstBaseReport", () => {
   let instance: SunBurstBaseReport<PlayCountByArtistState>;
   let mockUserState: LastFMUserStateBase;
+
   const mockT = new MockUseLocale("sunburst").t;
+  const mockTranslatedRemainderKey = "mockTranslatedRemainderKey";
 
   describe("When instantiated with a concrete implementation", () => {
     beforeEach(() => {
@@ -207,13 +209,17 @@ describe("SunBurstBaseReport", () => {
           mockConvert.mockReturnValueOnce({ mock: "return_value" });
           result = instance.getSunBurstData(
             MockCompleteReport1 as LastFMUserStateBase,
-            "Top Artists"
+            "Top Artists",
+            mockTranslatedRemainderKey
           );
         });
 
         it("should instantiate the SunBurstDataTranslator class", () => {
           expect(SunBurstDataTranslator).toBeCalledTimes(1);
-          expect(SunBurstDataTranslator).toBeCalledWith(instance.entityKeys);
+          expect(SunBurstDataTranslator).toBeCalledWith(
+            instance.entityKeys,
+            mockTranslatedRemainderKey
+          );
         });
 
         it("should call the convert method of the sunBurstDataTranslator class", () => {

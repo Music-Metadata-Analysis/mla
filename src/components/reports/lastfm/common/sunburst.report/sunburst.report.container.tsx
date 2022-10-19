@@ -94,7 +94,10 @@ export default function SunBurstReportContainer<
       />
       <SunBurstReport<UserStateType>
         report={report}
-        visible={user.userProperties.ready}
+        visible={
+          report.getReportData(user.userProperties).status.complete &&
+          user.userProperties.ready
+        }
         userState={report.getEncapsulatedUserState(user.userProperties)}
         lastFMt={lastFMt}
         sunBurstT={sunBurstT}

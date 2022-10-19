@@ -20,7 +20,7 @@ exports[`SunBurstChart with mockDataSet4 when the component's props change with 
           style="cursor: pointer;"
         >
           <title>
-            Top Artists/Other
+            Top Artists/Unidentified
 174,116
           </title>
         </path>
@@ -42,7 +42,7 @@ exports[`SunBurstChart with mockDataSet4 when the component's props change with 
           style="cursor: pointer;"
         >
           <title>
-            Top Artists/Caspian/Other
+            Top Artists/Caspian/Unidentified
 4,384
           </title>
         </path>
@@ -169,7 +169,7 @@ exports[`SunBurstChart with mockDataSet4 when the component's props change with 
           style="fill: #000000;"
           transform="rotate(85.42290060954107) translate(75,0) rotate(0)"
         >
-          Other
+          Unidentified
         </text>
         <text
           class="NodeLabel"
@@ -187,7 +187,7 @@ exports[`SunBurstChart with mockDataSet4 when the component's props change with 
           style="fill: #000000;"
           transform="rotate(265.26270716840463) translate(125,0) rotate(180)"
         >
-          Other
+          Unidentified
         </text>
         <text
           class="NodeLabel"
