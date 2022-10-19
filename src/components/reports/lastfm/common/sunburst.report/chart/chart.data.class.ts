@@ -2,11 +2,13 @@ import type { SunBurstAggregateReportContent } from "@src/types/clients/api/last
 import type { SunBurstData } from "@src/types/reports/sunburst.types";
 
 class SunBurstDataTranslator {
-  entityKeys: Array<SunBurstData["entity"]>;
-  valueKey = "playcount" as const;
+  protected entityKeys: Array<SunBurstData["entity"]>;
+  protected remainderKey: string;
+  protected valueKey = "playcount" as const;
 
-  constructor(entityKeys: Array<SunBurstData["entity"]>) {
+  constructor(entityKeys: Array<SunBurstData["entity"]>, remainderKey: string) {
     this.entityKeys = entityKeys;
+    this.remainderKey = remainderKey;
   }
 
   convert(
@@ -14,78 +16,110 @@ class SunBurstDataTranslator {
     stateContent: SunBurstAggregateReportContent[],
     entityType: SunBurstData["entity"]
   ) {
+    const childrenEntityType = this.getChildrenEntityType(stateContent);
+
     let totalCount = 0;
-    const childEntityType = this.getChildEntity(stateContent);
 
     stateContent.forEach((state) => {
       totalCount += state[this.valueKey];
-      this.createNode(sunBurstData, state, entityType, childEntityType);
+      this.createChartNode(
+        { sunBurstData, state, entityType },
+        childrenEntityType
+      );
     });
-    this.createRemainderNode(sunBurstData, entityType, totalCount);
-    if (childEntityType !== "unknown") {
-      delete sunBurstData.value;
-    }
+
+    this.createRemainderChartNode({ sunBurstData, entityType }, totalCount);
+    this.removeIdentifiedChartValues({
+      sunBurstData,
+      childrenEntityType: childrenEntityType,
+    });
+
     return sunBurstData;
   }
 
-  private getChildEntity(stateContent: SunBurstAggregateReportContent[]) {
+  protected getChildrenEntityType(
+    stateContent: SunBurstAggregateReportContent[]
+  ) {
+    let match: SunBurstData["entity"] = "unknown";
     if (stateContent.length > 0) {
       const contentEntryKeys = Object.keys(stateContent[0]);
-      const match = this.entityKeys.find((entity) => {
-        return contentEntryKeys.includes(entity);
-      });
-      if (match) return match;
+      match =
+        this.entityKeys.find((entity) => {
+          return contentEntryKeys.includes(entity);
+        }) || "unknown";
     }
-    return "unknown";
+    return match;
   }
 
-  private createNode = (
-    sunBurstData: SunBurstData,
-    state: SunBurstAggregateReportContent,
-    entityType: SunBurstData["entity"],
-    childEntityType: SunBurstData["entity"]
+  protected createChartNode = (
+    selection: {
+      sunBurstData: SunBurstData;
+      state: SunBurstAggregateReportContent;
+      entityType: SunBurstData["entity"];
+    },
+    childrenEntityType: SunBurstData["entity"]
   ) => {
-    if (state[this.valueKey] > 0 || this.isLeafNode(entityType)) {
-      const node = {
-        entity: entityType,
-        name: state.name,
-      } as SunBurstData;
-      if (state[this.valueKey]) node.value = state[this.valueKey];
-      sunBurstData.children?.push(node);
-      const children = state[
-        childEntityType
+    if (
+      selection.state[this.valueKey] > 0 ||
+      this.isLeafNode(selection.entityType)
+    ) {
+      const node: SunBurstData = {
+        entity: selection.entityType,
+        name: selection.state.name,
+      };
+      if (selection.state[this.valueKey])
+        node.value = selection.state[this.valueKey];
+      selection.sunBurstData.children?.push(node);
+      const children = selection.state[
+        childrenEntityType
       ] as SunBurstAggregateReportContent[];
       if (children) {
         node["children"] = [];
-        this.convert(node, children, childEntityType);
+        this.convert(node, children, childrenEntityType);
       }
     }
   };
 
-  private createRemainderNode(
-    sunBurstData: SunBurstData,
-    entityType: SunBurstData["entity"],
+  protected createRemainderChartNode(
+    selection: {
+      sunBurstData: SunBurstData;
+      entityType: SunBurstData["entity"];
+    },
     totalCount: number
   ) {
-    if (Array.isArray(sunBurstData.children) && !this.isLeafNode(entityType)) {
-      const sunBurstChildren = sunBurstData.children as SunBurstData[];
-      const remainder = this.getValue(sunBurstData) - totalCount;
+    if (
+      selection.sunBurstData.children &&
+      !this.isLeafNode(selection.entityType)
+    ) {
+      const remainder = this.getValue(selection.sunBurstData) - totalCount;
       if (remainder > 0) {
-        sunBurstChildren?.push({
-          entity: entityType,
-          name: "Other", // Needs to be translated
+        selection.sunBurstData.children?.push({
+          entity: selection.entityType,
+          name: this.remainderKey,
           value: remainder,
         });
+        if (selection.sunBurstData.children.length === 1) {
+          delete selection.sunBurstData.value;
+        }
       }
     }
   }
 
-  private isLeafNode(entity: SunBurstData["entity"]) {
+  protected isLeafNode(entity: SunBurstData["entity"]) {
     return entity === this.entityKeys[this.entityKeys.length - 1];
   }
 
-  private getValue(sunBurstData: SunBurstData) {
+  protected getValue(sunBurstData: SunBurstData) {
     return Number(sunBurstData.value);
+  }
+
+  protected removeIdentifiedChartValues(selection: {
+    sunBurstData: SunBurstData;
+    childrenEntityType: SunBurstData["entity"];
+  }) {
+    if (selection.childrenEntityType !== "unknown") {
+      delete selection.sunBurstData.value;
+    }
   }
 }
 

@@ -35,23 +35,15 @@ jest.mock("../sunburst.report.component", () =>
 );
 
 describe("SunBurstReportContainer", () => {
-  const testUsername = "niall-byrne";
   let mockHookState: userHookAsLastFMPlayCountByArtistReport;
-  const report = new MockReportClass();
+
   const mockReportData = {
     albums: [],
     artists: [],
     tracks: [],
     playCountByArtist: {
       created: "",
-      content: [
-        {
-          name: "The Cure",
-          playcount: 100,
-          fetched: true,
-          albums: [],
-        },
-      ],
+      content: [],
       status: {
         complete: false,
         steps_total: 0,
@@ -66,6 +58,18 @@ describe("SunBurstReportContainer", () => {
     ],
     playcount: 0,
   };
+
+  const mockReportDataContent = [
+    {
+      name: "The Cure",
+      playcount: 100,
+      fetched: true,
+      albums: [],
+    },
+  ];
+
+  const report = new MockReportClass();
+  const testUsername = "niall-byrne";
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -450,7 +454,7 @@ describe("SunBurstReportContainer", () => {
           mockHookState.userProperties.profileUrl = "http://myprofile.com";
         });
 
-        describe("when the user has listens", () => {
+        describe("when the report is complete", () => {
           beforeEach(() => {
             mockHookState.userProperties.data.report = mockReportData;
             mockHookState.userProperties.data.report.playCountByArtist.status =
@@ -459,43 +463,108 @@ describe("SunBurstReportContainer", () => {
                 steps_complete: 20,
                 steps_total: 20,
               };
-            arrange();
           });
 
-          checkDataFetching();
+          describe("when the user has listens", () => {
+            beforeEach(() => {
+              mockHookState.userProperties.data.report.playCountByArtist.content =
+                mockReportDataContent;
+              mockHookState.userProperties.data.report.playcount = 100;
+              arrange();
+            });
 
-          it("should call the BillBoardProgressBar twice (0% and 100%, toggling it off)", () => {
-            expect(BillBoardProgressBar).toBeCalledTimes(2);
-            checkMockCall(
-              BillBoardProgressBar,
-              {
-                visible: false,
-                title: expectedBillBoardTitle(),
-                details: {
-                  resource: "",
-                  type: "",
+            checkDataFetching();
+
+            it("should call the BillBoardProgressBar twice (0% and 100%, toggling it off)", () => {
+              expect(BillBoardProgressBar).toBeCalledTimes(2);
+              checkMockCall(
+                BillBoardProgressBar,
+                {
+                  visible: false,
+                  title: expectedBillBoardTitle(),
+                  details: {
+                    resource: "",
+                    type: "",
+                  },
+                  value: 0,
                 },
-                value: 0,
-              },
-              0
-            );
-            checkMockCall(
-              BillBoardProgressBar,
-              {
-                visible: false,
-                title: expectedBillBoardTitle(),
-                details: {
-                  resource: "",
-                  type: "",
+                0
+              );
+              checkMockCall(
+                BillBoardProgressBar,
+                {
+                  visible: false,
+                  title: expectedBillBoardTitle(),
+                  details: {
+                    resource: "",
+                    type: "",
+                  },
+                  value: 100,
                 },
-                value: 100,
-              },
-              1
-            );
+                1
+              );
+            });
+
+            it("should call the SunBurstReport (visible)", () => {
+              checkSunBurstReportProps(true);
+            });
+          });
+        });
+
+        describe("when the report is NOT complete", () => {
+          beforeEach(() => {
+            mockHookState.userProperties.data.report = mockReportData;
+            mockHookState.userProperties.data.report.playCountByArtist.status =
+              {
+                complete: false,
+                steps_complete: 19,
+                steps_total: 20,
+              };
           });
 
-          it("should call the SunBurstReport (visible)", () => {
-            checkSunBurstReportProps(true);
+          describe("when the user has listens", () => {
+            beforeEach(() => {
+              mockHookState.userProperties.data.report.playCountByArtist.content =
+                mockReportDataContent;
+              mockHookState.userProperties.data.report.playcount = 100;
+              arrange();
+            });
+
+            checkDataFetching();
+
+            it("should call the BillBoardProgressBar twice (0% and 95%, toggling it off)", () => {
+              expect(BillBoardProgressBar).toBeCalledTimes(2);
+              checkMockCall(
+                BillBoardProgressBar,
+                {
+                  visible: false,
+                  title: expectedBillBoardTitle(),
+                  details: {
+                    resource: "",
+                    type: "",
+                  },
+                  value: 0,
+                },
+                0
+              );
+              checkMockCall(
+                BillBoardProgressBar,
+                {
+                  visible: false,
+                  title: expectedBillBoardTitle(),
+                  details: {
+                    resource: "",
+                    type: "",
+                  },
+                  value: 95,
+                },
+                1
+              );
+            });
+
+            it("should call the SunBurstReport (visible)", () => {
+              checkSunBurstReportProps(false);
+            });
           });
         });
       });

@@ -88,17 +88,21 @@ export default abstract class SunBurstBaseReport<T extends UserState<unknown>>
 
   getSunBurstData(
     userProperties: T["userProperties"],
-    rootTag: string
+    rootTag: string,
+    remainderTag: string
   ): SunBurstData {
-    const sunBurstData = {
+    const rootNode = {
       name: rootTag,
       entity: "root" as const,
       value: userProperties.data.report.playcount,
       children: [],
     };
-    const translator = new SunBurstDataTranslator(this.entityKeys);
+    const translator = new SunBurstDataTranslator(
+      this.entityKeys,
+      remainderTag
+    );
     const result = translator.convert(
-      sunBurstData,
+      rootNode,
       this.getReportData(userProperties).content as AggregateReportContent[],
       this.getEntityTopLevel()
     );

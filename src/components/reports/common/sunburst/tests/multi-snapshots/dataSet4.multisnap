@@ -20,7 +20,7 @@ exports[`SunBurstChart with mockDataSet4 should match the snapshot on file: mult
           style="cursor: pointer;"
         >
           <title>
-            Top Artists/Other
+            Top Artists/Unidentified
 174,116
           </title>
         </path>
@@ -64,7 +64,7 @@ exports[`SunBurstChart with mockDataSet4 should match the snapshot on file: mult
           style="cursor: pointer;"
         >
           <title>
-            Top Artists/Lights & Motion/Other
+            Top Artists/Lights & Motion/Unidentified
 1,873
           </title>
         </path>
@@ -97,7 +97,7 @@ exports[`SunBurstChart with mockDataSet4 should match the snapshot on file: mult
           style="cursor: pointer;"
         >
           <title>
-            Top Artists/Caspian/Other
+            Top Artists/Caspian/Unidentified
 4,384
           </title>
         </path>
@@ -467,7 +467,7 @@ exports[`SunBurstChart with mockDataSet4 should match the snapshot on file: mult
           style="fill: #000000;"
           transform="rotate(79.99088778963812) translate(75,0) rotate(0)"
         >
-          Other
+          Unidentified
         </text>
         <text
           class="NodeLabel"
@@ -503,7 +503,7 @@ exports[`SunBurstChart with mockDataSet4 should match the snapshot on file: mult
           style="fill: #000000;"
           transform="rotate(257.05903410570164) translate(125,0) rotate(180)"
         >
-          Other
+          Unidentified
         </text>
         <text
           class="NodeLabel"
@@ -530,7 +530,7 @@ exports[`SunBurstChart with mockDataSet4 should match the snapshot on file: mult
           style="fill: #000000;"
           transform="rotate(265.40939859411617) translate(125,0) rotate(180)"
         >
-          Other
+          Unidentified
         </text>
         <text
           class="NodeLabel"

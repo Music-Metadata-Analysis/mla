@@ -168,7 +168,12 @@ export default function SunBurstReport<
                 breakPoints={breakPoints}
                 data={report.getSunBurstData(
                   userState.userProperties,
-                  lastFMt(`${String(report.getReportTranslationKey())}.rootTag`)
+                  lastFMt(
+                    `${String(report.getReportTranslationKey())}.rootTag`
+                  ),
+                  lastFMt(
+                    `${String(report.getReportTranslationKey())}.remainderTag`
+                  )
                 )}
                 finishTransition={finishSvgTransition}
                 leafEntity={report.getEntityLeaf()}
