@@ -24,9 +24,9 @@
             { "entity": "tracks", "name": "...Reprise" }
           ]
         },
-        { "entity": "albums", "name": "Other", "value": 4384 }
+        { "entity": "albums", "name": "Unidentified", "value": 4384 }
       ]
     },
-    { "entity": "artists", "name": "Other", "value": 174116 }
+    { "entity": "artists", "name": "Unidentified", "value": 174116 }
   ]
 }

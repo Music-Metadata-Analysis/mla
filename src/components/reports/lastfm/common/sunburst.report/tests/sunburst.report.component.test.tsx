@@ -381,6 +381,9 @@ describe("SunBurstReport", () => {
               mockUserState.userProperties,
               mockLastFMt(
                 `${String(mockReport.getReportTranslationKey())}.rootTag`
+              ),
+              mockLastFMt(
+                `${String(mockReport.getReportTranslationKey())}.remainderTag`
               )
             ),
             leafEntity: mockReport.getEntityLeaf(),

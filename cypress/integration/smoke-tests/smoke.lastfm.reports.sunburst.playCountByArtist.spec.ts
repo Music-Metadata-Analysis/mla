@@ -3,10 +3,13 @@ import { authenticate } from "@cypress/fixtures/auth";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { sunBurstReports } from "@cypress/fixtures/reports";
 import { baseUrl } from "@cypress/fixtures/setup";
+import LastFmTranslations from "@locales/lastfm.json";
+import SunBurstTranslations from "@locales/sunburst.json";
 import routes from "@src/config/routes";
 
 describe("Count By Artist SunBurst Report", async () => {
   const authorizationCookieName = getAuthorizationCookieName();
+  const timeout = 40000;
 
   before(() => baseUrl());
 
@@ -29,7 +32,7 @@ describe("Count By Artist SunBurst Report", async () => {
           });
 
           it("should display an input field for a lastfm username", () => {
-            cy.get('input[name="username"]', { timeout: 20000 });
+            cy.get('input[name="username"]', { timeout });
           });
 
           describe("when we enter a username", () => {
@@ -43,20 +46,18 @@ describe("Count By Artist SunBurst Report", async () => {
             it("should load a title for the report", () => {
               const titleElement = cy.get(
                 `[data-testid="SunBurstTitlePanelTitle"]`,
-                {
-                  timeout: 40000,
-                }
+                { timeout }
               );
 
               titleElement
-                .contains("My Top Artist Playcounts")
+                .contains(LastFmTranslations.playCountByArtist.title)
                 .should("be.visible");
             });
 
             it("should load an svg with the correct title element", () => {
               const svgTitleElement = cy.get(
                 `[id="SunburstPercentageDisplay"]`,
-                { timeout: 40000 }
+                { timeout }
               );
 
               svgTitleElement.contains("100%").should("be.visible");
@@ -73,18 +74,18 @@ describe("Count By Artist SunBurst Report", async () => {
               it("should display the artist list", () => {
                 const artistList = cy.get(
                   `[data-testid="SunBurstEntityNodeListTitle"]`,
-                  {
-                    timeout: 40000,
-                  }
+                  { timeout }
                 );
 
-                artistList.contains("Artists").should("be.visible");
+                artistList
+                  .contains(SunBurstTranslations.entities.artists)
+                  .should("be.visible");
               });
 
               describe("when an artist is clicked", () => {
                 before(() => {
                   const artistList = cy.get(`[data-testid="NodeNameText"]`, {
-                    timeout: 40000,
+                    timeout,
                   });
                   artistList.click();
                 });
@@ -92,19 +93,19 @@ describe("Count By Artist SunBurst Report", async () => {
                 it("should display the album list", () => {
                   const albumList = cy.get(
                     `[data-testid="SunBurstEntityNodeListTitle"]`,
-                    {
-                      timeout: 40000,
-                    }
+                    { timeout }
                   );
 
-                  albumList.contains("Albums").should("be.visible");
+                  albumList
+                    .contains(SunBurstTranslations.entities.albums)
+                    .should("be.visible");
                 });
               });
 
               describe("when an album is clicked", () => {
                 before(() => {
                   const albumList = cy.get(`[data-testid="NodeNameText"]`, {
-                    timeout: 40000,
+                    timeout,
                   });
                   albumList.click();
                 });
@@ -112,13 +113,13 @@ describe("Count By Artist SunBurst Report", async () => {
                 it("should display the track list- no information available", () => {
                   const artistList = cy.get(
                     `[data-testid="SunBurstEntityNodeListTitle"]`,
-                    {
-                      timeout: 40000,
-                    }
+                    { timeout }
                   );
 
                   artistList
-                    .contains("No information available")
+                    .contains(
+                      LastFmTranslations.playCountByArtist.drawer.noInformation
+                    )
                     .should("be.visible");
                 });
               });

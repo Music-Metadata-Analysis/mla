@@ -9,6 +9,7 @@ import { RefObject, useState, Dispatch } from "react";
 import mockDataSet3 from "./data/sunburst.data.set.3.json";
 import mockDataSet4 from "./data/sunburst.data.set.4.json";
 import SunBurstChart, { testIDs, SunBurstChartProps } from "../chart.component";
+import LastFMTranslations from "@locales/lastfm.json";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import { getMockProp } from "@src/tests/fixtures/mock.component.props";
 import type { SunBurstData, d3Node } from "@src/types/reports/sunburst.types";
@@ -28,9 +29,6 @@ type CheckClickProps = {
 };
 
 describe("SunBurstChart", () => {
-  const expectedPadding = 10;
-  const multiExtension = ".multisnap";
-
   let instance: SunBurstChart;
   let currentProps: SunBurstChartProps;
   let mockContainerSize: number;
@@ -47,6 +45,10 @@ describe("SunBurstChart", () => {
     SetStateAction<SunBurstChartProps["selectedNode"]>
   >;
   let testContainerUpdateProps: Dispatch<SetStateAction<SunBurstChartProps>>;
+
+  const expectedPadding = 10;
+  const multiExtension = ".multisnap";
+  const remainderKey = LastFMTranslations.playCountByArtist.remainderTag;
 
   const mockSetSelectedNode = jest.fn((node: d3Node) =>
     act(() => testContainerSetSelection(node))
@@ -361,7 +363,7 @@ describe("SunBurstChart", () => {
         checkSVG({ expected: { containerSize: 500, size: 300 } });
         checkTransition({ transitionType: "the initial render" });
         checkVisibleLabels({
-          expected: ["Other", "Caspian", "Other"],
+          expected: [remainderKey, "Caspian", remainderKey],
         });
         checkSnapShot({ name: "multi-snapshots/dataSet3" });
         checkColourMode({ expected: { foreground: "#000000" } });
@@ -370,14 +372,14 @@ describe("SunBurstChart", () => {
           selected: mockDataSet3 as SunBurstData,
         });
         checkClickSequence({
-          title: "Top Artists/Other",
+          title: `Top Artists/${remainderKey}`,
           expected: withChildren(mockDataSet3).children[1],
           visibleLabels: [],
           percentage: "97.46%",
           parentClick: {
             expected: withChildren(mockDataSet3),
             percentage: "100%",
-            visibleLabels: ["Other", "Caspian", "Other"],
+            visibleLabels: [remainderKey, "Caspian", remainderKey],
           },
         });
       });
@@ -387,12 +389,12 @@ describe("SunBurstChart", () => {
     checkTransition({ transitionType: "the initial render" });
     checkVisibleLabels({
       expected: [
-        "Other",
+        remainderKey,
         "Lights & Motion",
         "Caspian",
         "Reanimation",
-        "Other",
-        "Other",
+        remainderKey,
+        remainderKey,
       ],
     });
     checkSnapShot({ name: "multi-snapshots/dataSet4" });
@@ -402,7 +404,7 @@ describe("SunBurstChart", () => {
       selected: mockDataSet4 as SunBurstData,
     });
     checkClickSequence({
-      title: "Top Artists/Other",
+      title: `Top Artists/${remainderKey}`,
       expected: withChildren(mockDataSet4).children[2],
       visibleLabels: [],
       percentage: "94.44%",
@@ -410,12 +412,12 @@ describe("SunBurstChart", () => {
         expected: withChildren(mockDataSet4),
         percentage: "100%",
         visibleLabels: [
-          "Other",
+          remainderKey,
           "Lights & Motion",
           "Caspian",
           "Reanimation",
-          "Other",
-          "Other",
+          remainderKey,
+          remainderKey,
         ],
       },
     });
@@ -423,7 +425,7 @@ describe("SunBurstChart", () => {
       title: "Top Artists/Lights & Motion",
       expected: withChildren(mockDataSet4).children[0],
       percentage: "3.10%",
-      visibleLabels: ["Reanimation", "Other", "Chronicle", "Bloom"],
+      visibleLabels: ["Reanimation", remainderKey, "Chronicle", "Bloom"],
       subClick: {
         title: "Top Artists/Lights & Motion/Reanimation",
         expected: withChildren(mockDataSet4.children[0]).children[1],
@@ -432,7 +434,7 @@ describe("SunBurstChart", () => {
         parentClick: {
           expected: withChildren(mockDataSet4).children[0],
           percentage: "3.10%",
-          visibleLabels: ["Reanimation", "Other", "Chronicle", "Bloom"],
+          visibleLabels: ["Reanimation", remainderKey, "Chronicle", "Bloom"],
         },
       },
     });
@@ -440,7 +442,7 @@ describe("SunBurstChart", () => {
       title: "Top Artists/Caspian",
       expected: withChildren(mockDataSet4).children[1],
       percentage: "2.46%",
-      visibleLabels: ["Other", "The Four Trees"],
+      visibleLabels: [remainderKey, "The Four Trees"],
       subClick: {
         title: "Top Artists/Caspian/The Four Trees",
         expected: withChildren(mockDataSet4.children[1]).children[0],
@@ -449,7 +451,7 @@ describe("SunBurstChart", () => {
         parentClick: {
           expected: withChildren(mockDataSet4).children[1],
           percentage: "2.46%",
-          visibleLabels: ["Other", "The Four Trees"],
+          visibleLabels: [remainderKey, "The Four Trees"],
         },
       },
     });
