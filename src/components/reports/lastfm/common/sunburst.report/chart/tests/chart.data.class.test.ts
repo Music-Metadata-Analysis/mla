@@ -5,6 +5,7 @@ import MockCompleteReport4 from "./states/state.data.set.4.json";
 import MockCompleteReport5 from "./states/state.data.set.5.json";
 import { MockReportClass } from "../../tests/implementations/concrete.sunburst.report.class";
 import SunBurstDataTranslator from "../chart.data.class";
+import LastFMTranslations from "@locales/lastfm.json";
 import MockSunburstData4 from "@src/components/reports/common/sunburst/tests/data/sunburst.data.set.4.json";
 import MockSunburstData5 from "@src/components/reports/common/sunburst/tests/data/sunburst.data.set.5.json";
 import type { SunBurstAggregateReportContent } from "@src/types/clients/api/lastfm/sunburst.types";
@@ -24,7 +25,10 @@ describe("SunBurstDataTranslator", () => {
         children: [],
       };
       const report = new MockReportClass();
-      instance = new SunBurstDataTranslator(report.entityKeys);
+      instance = new SunBurstDataTranslator(
+        report.entityKeys,
+        LastFMTranslations.playCountByArtist.remainderTag
+      );
     });
 
     const arrange = (
@@ -64,7 +68,7 @@ describe("SunBurstDataTranslator", () => {
             children: [
               {
                 entity: "artists",
-                name: "Other",
+                name: "Unidentified",
                 value: 184368,
               },
             ],
@@ -90,15 +94,14 @@ describe("SunBurstDataTranslator", () => {
                 children: [
                   {
                     entity: "albums",
-                    name: "Other",
+                    name: "Unidentified",
                     value: 5709,
                   },
                 ],
-                value: 5709,
               },
               {
                 entity: "artists",
-                name: "Other",
+                name: "Unidentified",
                 value: 178659,
               },
             ],
@@ -130,14 +133,14 @@ describe("SunBurstDataTranslator", () => {
                   },
                   {
                     entity: "albums",
-                    name: "Other",
+                    name: "Unidentified",
                     value: 4820,
                   },
                 ],
               },
               {
                 entity: "artists",
-                name: "Other",
+                name: "Unidentified",
                 value: 178659,
               },
             ],
@@ -206,14 +209,14 @@ describe("SunBurstDataTranslator", () => {
                   },
                   {
                     entity: "albums",
-                    name: "Other",
+                    name: "Unidentified",
                     value: 4820,
                   },
                 ],
               },
               {
                 entity: "artists",
-                name: "Other",
+                name: "Unidentified",
                 value: 178659,
               },
             ],

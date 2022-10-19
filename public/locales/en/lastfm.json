@@ -12,22 +12,23 @@
     }
   },
   "playCountByArtist": {
-    "searchTitle": "Playcount by Artist Report",
-    "title": "My Top Artist Playcounts",
     "communication": "Retrieving Results...",
-    "noArtWork": "No Art Work",
     "drawer": {
       "artWorkAltText": "Promo Art Work",
       "noInformation": "No information available.",
-      "value": "Playcount",
-      "percentage": "% of total"
+      "percentage": "% of total",
+      "value": "Playcount"
     },
-    "rootTag": "Top Artists",
+    "noArtWork": "No Art Work",
     "panel": {
-      "value": "Playcount",
       "control": "Select",
-      "leafNodeControl": "Tracks"
-    }
+      "leafNodeControl": "Tracks",
+      "value": "Playcount"
+    },
+    "remainderTag": "Unidentified",
+    "rootTag": "Top Artists",
+    "searchTitle": "Playcount by Artist Report",
+    "title": "My Top Artist Playcounts"
   },
   "search": {
     "fieldPlaceholder": "last.fm username",
