@@ -1,4 +1,4 @@
-import { ChakraProvider, CSSReset, ColorModeProvider } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import UserInterfaceProvider from "../ui.chakra.provider";
 import createTheme from "../ui.chakra.theme";
@@ -6,16 +6,26 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const { createComponent } = require("@fixtures/react/parent");
-  const mockedModules: { [index: string]: boolean | jest.Mock } = {};
+  const mockedModule: { [index: string]: string | boolean | jest.Mock } = {};
   const providers = {
     ChakraProvider: "ChakraProvider",
     ColorModeProvider: "ColorModeProvider",
     CSSReset: "CSSReset",
   };
-  Object.keys(providers).forEach((thisModule) => {
-    mockedModules[thisModule as string] = createComponent(thisModule).default;
+  const moduleFunctions = ["cookieStorageManager"];
+
+  Object.keys(providers).forEach((thisProvider) => {
+    mockedModule[thisProvider as string] =
+      createComponent(thisProvider).default;
   });
-  return mockedModules;
+  moduleFunctions.forEach((thisFunction) => {
+    mockedModule[thisFunction as string] = jest
+      .fn()
+      .mockReturnValue(thisFunction);
+  });
+  mockedModule["localStorageManager"] = "localStorageManager";
+
+  return mockedModule;
 });
 
 jest.mock("../ui.chakra.theme", () => {
@@ -24,45 +34,68 @@ jest.mock("../ui.chakra.theme", () => {
 });
 
 describe("UserInterfaceChakraProvider", () => {
+  let cookies: { [key: string]: string } | string;
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = async () => {
     render(
-      <UserInterfaceProvider>
+      <UserInterfaceProvider cookies={cookies}>
         <div data-testid={"UserInterfaceProvider"}>Test</div>
       </UserInterfaceProvider>
     );
   };
 
-  describe("When Rendered", () => {
+  const checkCreateTheme = () => {
     it("should call createTheme", () => {
-      arrange();
       expect(createTheme).toBeCalledTimes(1);
       expect(createTheme).toBeCalledWith();
     });
+  };
 
-    it("should initialize the ChakraProvider Provider", () => {
-      arrange();
-      expect(ChakraProvider).toBeCalledTimes(1);
-      checkMockCall(ChakraProvider, { theme: createTheme() });
-    });
-
+  const checkCSSReset = () => {
     it("should initialize the CSSReset", () => {
-      arrange();
       expect(CSSReset).toBeCalledTimes(1);
       checkMockCall(CSSReset, {});
     });
+  };
 
-    it("should initialize the ColorModeProvider", () => {
+  describe("when passed a string of cookies", () => {
+    beforeEach(() => {
+      cookies = "mockCookieString";
+
       arrange();
-      expect(ColorModeProvider).toBeCalledTimes(1);
-      checkMockCall(ColorModeProvider, {
-        options: {
-          useSystemColorMode: false,
-          initialColorMode: "dark",
-        },
+    });
+
+    checkCreateTheme();
+    checkCSSReset();
+
+    it("should initialize the ChakraProvider Provider", () => {
+      expect(ChakraProvider).toBeCalledTimes(1);
+      checkMockCall(ChakraProvider, {
+        colorModeManager: "localStorageManager",
+        theme: createTheme(),
+      });
+    });
+  });
+
+  describe("when passed an object of cookies", () => {
+    beforeEach(() => {
+      cookies = { mockCookie: "mockCookieValue" };
+
+      arrange();
+    });
+
+    checkCreateTheme();
+    checkCSSReset();
+
+    it("should initialize the ChakraProvider Provider", () => {
+      expect(ChakraProvider).toBeCalledTimes(1);
+      checkMockCall(ChakraProvider, {
+        colorModeManager: "localStorageManager",
+        theme: createTheme(),
       });
     });
   });

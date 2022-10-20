@@ -113,8 +113,6 @@ jobs:
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: error deploying branch!"
 
   deploy_stage:
-    needs: [success_notification]
-
     runs-on: ubuntu-latest
 
     steps:

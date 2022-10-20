@@ -2,7 +2,7 @@ import ErrorBoundary from "@src/components/errors/boundary/error.boundary.compon
 import Splash from "@src/components/splash/splash.component";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import pagePropsGenerator from "@src/utils/page.props.static";
+import pagePropsGenerator from "@src/utils/page.props.server.side";
 import { voidFn } from "@src/utils/voids";
 
 export default function SplashPage() {
@@ -17,7 +17,7 @@ export default function SplashPage() {
   );
 }
 
-export const getStaticProps = pagePropsGenerator({
+export const getServerSideProps = pagePropsGenerator({
   pageKey: "home",
   translations: ["splash"],
 });
