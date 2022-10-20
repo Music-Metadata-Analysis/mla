@@ -1,7 +1,7 @@
 import FourOhFour from "../../404";
 import ReportPage from "@src/components/reports/lastfm/common/report.page/report.page";
 import Top20AlbumsReport from "@src/components/reports/lastfm/top20.albums/top20.albums.container";
-import pagePropsGenerator from "@src/utils/page.props.static";
+import pagePropsGenerator from "@src/utils/page.props.server.side";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
 
 export default function LastFMTop20Albums() {
@@ -13,7 +13,7 @@ export default function LastFMTop20Albums() {
   );
 }
 
-export const getStaticProps = pagePropsGenerator({
+export const getServerSideProps = pagePropsGenerator({
   pageKey: "lastfm",
   translations: ["cards", "lastfm"],
 });

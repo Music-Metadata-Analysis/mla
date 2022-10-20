@@ -10,6 +10,7 @@ import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
 import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 
 type RootProviderProps = {
+  cookies: { [key: string]: string } | string;
   headerProps?: HeaderProps;
   children: React.ReactChild | React.ReactChild[];
   flagState: VendorFlagStateType;
@@ -17,6 +18,7 @@ type RootProviderProps = {
 };
 
 const RootProvider = ({
+  cookies,
   children,
   session,
   flagState,
@@ -25,7 +27,7 @@ const RootProvider = ({
   return (
     <authVendor.Provider session={session}>
       <flagVendor.Provider state={flagState}>
-        <UserInterfaceRootProvider>
+        <UserInterfaceRootProvider cookies={cookies}>
           <MetricsProvider>
             <UserProvider>
               <AnalyticsProvider>
