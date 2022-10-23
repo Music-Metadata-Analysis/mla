@@ -30,7 +30,7 @@
     "@chakra-ui/clickable": "^1.2.6",
     "@chakra-ui/icons": "^2.0.11",
     "@chakra-ui/react": "^1.8.8",
-    "@emotion/react": "^11.8.2",
+    "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.6.0",
     "@toplast/lastfm": "https://github.com/niall-byrne/lastfm#dev",
     "cheerio": "^1.0.0-rc.10",
