@@ -2,7 +2,7 @@ import ErrorBoundary from "@src/components/errors/boundary/error.boundary.compon
 import Privacy from "@src/components/legal/privacy/privacy.component";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import pagePropsGenerator from "@src/utils/page.props.static";
+import pagePropsGenerator from "@src/utils/page.props.server.side";
 import { voidFn } from "@src/utils/voids";
 
 export default function PrivacyPage() {
@@ -17,7 +17,7 @@ export default function PrivacyPage() {
   );
 }
 
-export const getStaticProps = pagePropsGenerator({
+export const getServerSideProps = pagePropsGenerator({
   pageKey: "privacy",
   translations: ["legal"],
 });

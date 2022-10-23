@@ -3,7 +3,7 @@ import SearchUI from "@src/components/search/lastfm/search.ui";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import useLocale from "@src/hooks/locale";
-import pagePropsGenerator from "@src/utils/page.props.static";
+import pagePropsGenerator from "@src/utils/page.props.server.side";
 import { voidFn } from "@src/utils/voids";
 
 export default function SearchLastFMTop20Tracks() {
@@ -24,7 +24,7 @@ export default function SearchLastFMTop20Tracks() {
   );
 }
 
-export const getStaticProps = pagePropsGenerator({
+export const getServerSideProps = pagePropsGenerator({
   pageKey: "search",
   translations: ["lastfm"],
 });

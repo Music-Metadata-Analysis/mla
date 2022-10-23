@@ -7,7 +7,7 @@ const i18n = {
   fallbackLng: {
     default: ["en"],
   },
-  debug: isNotProductionOrTest(),
+  debug: false,
   locales: ["en"],
   defaultLocale: "en",
   defaultNS: "main",

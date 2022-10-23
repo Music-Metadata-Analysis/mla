@@ -13,10 +13,11 @@ import type { VendorAppComponentProps } from "@src/clients/web.framework/vendor.
 
 function MLA({
   Component,
-  pageProps: { flagState, session, headerProps, ...otherProps },
+  pageProps: { cookies, flagState, session, headerProps, ...otherProps },
 }: VendorAppComponentProps) {
   return (
     <RootProvider
+      cookies={cookies}
       flagState={flagState}
       session={session}
       headerProps={headerProps}

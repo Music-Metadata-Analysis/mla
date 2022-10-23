@@ -30,6 +30,7 @@ jest.mock("../ui.images/ui.images.provider", () =>
 
 describe("UserInterfaceRootProvider", () => {
   const mockChildComponent = "MockChildComponent";
+  const mockCookies = { mockCookie: "mockCookieValue" };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -37,7 +38,7 @@ describe("UserInterfaceRootProvider", () => {
 
   const arrange = () => {
     return render(
-      <UserInterfaceRootProvider>
+      <UserInterfaceRootProvider cookies={mockCookies}>
         <div>{mockChildComponent}</div>
       </UserInterfaceRootProvider>
     );
@@ -53,7 +54,7 @@ describe("UserInterfaceRootProvider", () => {
 
     it("should call UserInterfaceChakraProvider with the correct props", () => {
       expect(UserInterfaceChakraProvider).toBeCalledTimes(1);
-      checkMockCall(UserInterfaceChakraProvider, {});
+      checkMockCall(UserInterfaceChakraProvider, { cookies: mockCookies });
     });
 
     it("should call UserInterfacePopupProvider with the correct props", () => {
