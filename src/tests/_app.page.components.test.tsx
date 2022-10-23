@@ -58,6 +58,7 @@ describe("MLA", () => {
     currentProps = {
       Component: MockAppChildComponent,
       pageProps: {
+        cookies: "mockCookies",
         flagState: "mockFlagState",
         session: "mockSession",
         headerProps: "mockHeaderProps",
@@ -75,6 +76,7 @@ describe("MLA", () => {
   it("should render the RootProvider with the correct props", () => {
     expect(RootProvider).toBeCalledTimes(1);
     checkMockCall(RootProvider, {
+      cookies: currentProps.pageProps.cookies,
       flagState: currentProps.pageProps.flagState,
       session: currentProps.pageProps.session,
       headerProps: currentProps.pageProps.headerProps,
@@ -112,6 +114,7 @@ describe("MLA", () => {
   describe("getInitialProps", () => {
     let result: {
       pageProps: {
+        cookies?: unknown;
         pageProps: unknown;
         session: VendorAuthStateType | undefined;
         flagState: VendorFlagStateType;

@@ -24,6 +24,10 @@ describe("theme", () => {
 
     it("should generate the expected body", async () => {
       expect(result).toStrictEqual({
+        config: {
+          initialColorMode: "dark",
+          useSystemColorMode: false,
+        },
         styles: {
           global: {
             body: {

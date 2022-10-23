@@ -15,17 +15,19 @@ jest.mock("@src/clients/locale/vendor.ssr", () => {
   };
 });
 
+type MLAPageProps = {
+  props: {
+    i18NextProps?: {
+      locale: string;
+      translations: string[];
+    };
+    headerProps: { pageKey: string };
+  };
+};
+
 describe("pageProps", () => {
   let generatedFunction: ReturnType<typeof pagePropsGenerator>;
-  let returnValue: {
-    props: {
-      i18NextProps?: {
-        locale: string;
-        translations: string[];
-      };
-      headerProps: { pageKey: string };
-    };
-  };
+  let returnValue: MLAPageProps;
 
   const mockLocale = "en";
   const mockDefaultTranslations = ["authentication", "main", "navbar"];
@@ -48,9 +50,9 @@ describe("pageProps", () => {
 
     describe("the returned function, when called with a locale", () => {
       beforeEach(async () => {
-        returnValue = await generatedFunction({
+        returnValue = (await generatedFunction({
           locale: mockLocale,
-        });
+        })) as MLAPageProps;
       });
 
       it("should return page props that contain the input locale", () => {
@@ -82,9 +84,9 @@ describe("pageProps", () => {
 
     describe("the returned function", () => {
       beforeEach(async () => {
-        returnValue = await generatedFunction({
+        returnValue = (await generatedFunction({
           locale: mockLocale,
-        });
+        })) as MLAPageProps;
       });
 
       it("should return page props that contain the correct translations", () => {

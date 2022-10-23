@@ -26,7 +26,7 @@ describe("PopUp", () => {
 
   const arrange = () => {
     render(
-      <UserInterfaceChakraProvider>
+      <UserInterfaceChakraProvider cookies={"mockCookies"}>
         <UserInterfacePopUpsContext.Provider
           value={{
             dispatch: mockDispatch,

@@ -3,9 +3,15 @@ import UserInterfaceImagesProvider from "./ui.images/ui.images.provider";
 import UserInterfacePopUpsProvider from "./ui.popups/ui.popups.provider";
 import BackGround from "@src/components/background/background.component";
 
-const UserInterfaceRootProvider = ({ children }: { children: JSX.Element }) => {
+const UserInterfaceRootProvider = ({
+  children,
+  cookies,
+}: {
+  children: JSX.Element;
+  cookies: { [key: string]: string } | string;
+}) => {
   return (
-    <UserInterfaceChakraProvider>
+    <UserInterfaceChakraProvider cookies={cookies}>
       <UserInterfaceImagesProvider>
         <UserInterfacePopUpsProvider>
           <BackGround>{children}</BackGround>
