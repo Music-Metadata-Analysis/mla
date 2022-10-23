@@ -1,22 +1,26 @@
-import { ChakraProvider, ColorModeProvider, CSSReset } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
+import createColourModeManager from "./chakra.colour.mode.manager";
 import createTheme from "./ui.chakra.theme";
 
 const UserInterfaceChakraProvider = ({
   children,
+  cookies,
 }: {
   children: JSX.Element;
+  cookies: { [key: string]: string } | string;
 }) => {
+  const theme = createTheme();
+
   return (
-    <ChakraProvider theme={createTheme()}>
-      <ColorModeProvider
-        options={{
-          useSystemColorMode: false,
-          initialColorMode: "dark",
-        }}
-      >
-        <CSSReset />
-        {children}
-      </ColorModeProvider>
+    <ChakraProvider
+      colorModeManager={createColourModeManager(
+        cookies,
+        theme.config.initialColorMode
+      )}
+      theme={theme}
+    >
+      <CSSReset />
+      {children}
     </ChakraProvider>
   );
 };

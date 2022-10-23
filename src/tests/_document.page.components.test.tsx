@@ -3,15 +3,17 @@ import { render } from "@testing-library/react";
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import { Html, Head, Main, NextScript } from "next/document";
 import BaseDocument from "@src/pages/_document";
+import createTheme from "@src/providers/ui/ui.chakra/ui.chakra.theme";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { Component } from "react";
 
-jest.mock("@chakra-ui/react", () =>
-  require("@fixtures/react/child").createComponent(
+jest.mock("@chakra-ui/react", () => ({
+  ...jest.requireActual("@chakra-ui/react"),
+  ...require("@fixtures/react/child").createComponent(
     "ColorModeScript",
     "ColorModeScript"
-  )
-);
+  ),
+}));
 
 jest.mock("next/document", () => {
   const { Component } = jest.requireActual("react");
@@ -65,7 +67,9 @@ describe("BaseDocument", () => {
 
   it("should render the ColorModeScript with the correct props", () => {
     expect(ColorModeScript).toBeCalledTimes(1);
-    checkMockCall(ColorModeScript, {});
+    checkMockCall(ColorModeScript, {
+      initialColorMode: createTheme().config.initialColorMode,
+    });
   });
 
   it("should render the Main component with the correct props", () => {

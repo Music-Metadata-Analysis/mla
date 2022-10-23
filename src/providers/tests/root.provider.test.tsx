@@ -53,6 +53,7 @@ const providers = {
 };
 
 describe("RootProvider", () => {
+  const mockCookies = { mockCookie: "mockCookieValue" };
   const mockPageKey = "test";
   const mockFlagState = {
     serverState: {
@@ -76,6 +77,7 @@ describe("RootProvider", () => {
     const headerProps = pageKey ? { pageKey } : undefined;
     render(
       <RootProvider
+        cookies={mockCookies}
         session={mockSession}
         headerProps={headerProps}
         flagState={flagState}

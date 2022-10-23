@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import translation from "@locales/main.json";
+import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import routes from "@src/config/routes";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
@@ -9,6 +10,8 @@ jest.mock("@src/hooks/locale");
 
 jest.mock("@src/hooks/router");
 
+jest.mock("@src/clients/web.framework/vendor");
+
 describe("404", () => {
   beforeEach(() => jest.clearAllMocks());
 
@@ -16,8 +19,12 @@ describe("404", () => {
     render(<Custom404 />);
   };
 
-  describe("when rendered", () => {
-    beforeEach(() => arrange());
+  describe("when rendered at run time", () => {
+    beforeEach(() => {
+      mockIsBuildTime.mockReturnValue(false);
+
+      arrange();
+    });
 
     it("should display the correct error title", async () => {
       expect(

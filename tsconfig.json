@@ -46,7 +46,7 @@
     "target": "es5"
   },
   "exclude": ["node_modules", "public", "coverage"],
-  "include": ["types.d/*.d.ts", "*.d.ts", "src/**/*.ts", "src/**/*.tsx", "src/providers/user/encapsulations/lastfm/tests/states/user.state.data.set.1ts"],
+  "include": ["types.d/*.d.ts", "*.d.ts", "src/**/*.ts", "src/**/*.tsx"],
   "ts-node": {
     "require": ["tsconfig-paths/register"],
     "swc": true

@@ -18,6 +18,10 @@ export const components = {
 
 const createTheme = () =>
   extendTheme({
+    config: {
+      initialColorMode: "dark",
+      useSystemColorMode: false,
+    },
     styles: {
       global: {
         body: {

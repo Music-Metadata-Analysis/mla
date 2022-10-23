@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react";
+import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
 import ErrorDisplay from "@src/components/errors/display/error.display.component";
 import routes from "@src/config/routes";
@@ -11,6 +12,8 @@ import getPageProps from "@src/utils/page.props.static";
 jest.mock("@src/hooks/router");
 
 jest.mock("@src/utils/page.props.static");
+
+jest.mock("@src/clients/web.framework/vendor");
 
 jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
@@ -38,8 +41,28 @@ describe("404", () => {
 
   beforeEach(() => jest.clearAllMocks());
 
-  describe("when rendered", () => {
-    beforeEach(() => arrange());
+  describe("when rendered at build time", () => {
+    beforeEach(() => {
+      mockIsBuildTime.mockReturnValue(true);
+
+      arrange();
+    });
+
+    it("should NOT call the ErrorBoundary component", () => {
+      expect(ErrorBoundary).toBeCalledTimes(0);
+    });
+
+    it("should NOT call the ErrorDisplay component", () => {
+      expect(ErrorDisplay).toBeCalledTimes(0);
+    });
+  });
+
+  describe("when rendered at run time", () => {
+    beforeEach(() => {
+      mockIsBuildTime.mockReturnValue(false);
+
+      arrange();
+    });
 
     it("should call the ErrorBoundary correctly", () => {
       expect(ErrorBoundary).toBeCalledTimes(1);
