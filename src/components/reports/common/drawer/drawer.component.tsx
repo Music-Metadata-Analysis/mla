@@ -25,7 +25,7 @@ export const testIDs = {
   DrawerHeader: "DrawerHeader",
 };
 
-const LastFMReportDrawer = ({
+const ReportDrawer = ({
   children,
   title,
   isOpen,
@@ -93,4 +93,4 @@ const LastFMReportDrawer = ({
   );
 };
 
-export default LastFMReportDrawer;
+export default ReportDrawer;

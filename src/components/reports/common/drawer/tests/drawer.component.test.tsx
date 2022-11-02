@@ -9,15 +9,14 @@ import {
   DrawerContentProps,
 } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import AlbumDrawer, { DrawerInterface, testIDs } from "../drawer.component";
+import ReportDrawer, { DrawerInterface, testIDs } from "../drawer.component";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/colour");
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock([
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock([
     "Divider",
     "Drawer",
     "DrawerBody",
@@ -25,12 +24,10 @@ jest.mock("@chakra-ui/react", () => {
     "DrawerOverlay",
     "DrawerCloseButton",
     "DrawerContent",
-  ]);
-});
+  ])
+);
 
-const mockOnClose = jest.fn();
-
-describe("AlbumDrawer", () => {
+describe("ReportDrawer", () => {
   let mockAlwaysOpen: boolean;
   let mockIsOpen: boolean;
   let mockTitle: undefined | string;
@@ -38,6 +35,9 @@ describe("AlbumDrawer", () => {
   let currentProps: DrawerInterface;
 
   const mockChildComponent = "mockChildComponent";
+  const mockOnClose = jest.fn();
+
+  beforeEach(() => jest.clearAllMocks());
 
   const createProps = () =>
     (currentProps = {
@@ -48,12 +48,10 @@ describe("AlbumDrawer", () => {
       placement: mockPlacement,
     });
 
-  beforeEach(() => jest.clearAllMocks());
-
   const arrange = () => {
     createProps();
     return render(
-      <AlbumDrawer {...currentProps}>{mockChildComponent}</AlbumDrawer>
+      <ReportDrawer {...currentProps}>{mockChildComponent}</ReportDrawer>
     );
   };
 

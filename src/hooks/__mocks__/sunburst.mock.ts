@@ -1,13 +1,18 @@
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 
 const mockValues = {
-  setters: {
-    setSelectedNode: jest.fn(),
-    setSvgTransition: jest.fn(),
+  drawer: {
+    setFalse: jest.fn(),
+    setTrue: jest.fn(),
+    state: false,
   },
-  getters: {
-    selectedNode: nullNode,
-    svgTransition: false,
+  node: {
+    selected: nullNode,
+    setSelected: jest.fn(),
+  },
+  svg: {
+    isTransitioning: false,
+    setTransitioning: jest.fn(),
   },
 };
 

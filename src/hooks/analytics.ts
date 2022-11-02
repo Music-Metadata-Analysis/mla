@@ -83,3 +83,5 @@ const useAnalytics = () => {
 };
 
 export default useAnalytics;
+
+export type AnalyticsHookType = ReturnType<typeof useAnalytics>;

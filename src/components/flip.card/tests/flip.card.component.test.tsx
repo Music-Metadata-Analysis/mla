@@ -1,224 +1,341 @@
-import { Box, Img, Text } from "@chakra-ui/react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { Box, Center, Img, Text } from "@chakra-ui/react";
+import { render, screen, within } from "@testing-library/react";
+import ReactCardFlip from "react-card-flip";
 import FlipCard, { FlipCardProps, testIDs } from "../flip.card.component";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/colour");
 
+jest.mock("@src/hooks/locale");
+
 jest.mock("@chakra-ui/react", () =>
-  require("@fixtures/chakra").createChakraMock(["Box", "Img", "Center", "Text"])
+  require("@fixtures/chakra").createChakraMock([
+    "Box",
+    "Center",
+    "Img",
+    "Center",
+    "Text",
+  ])
+);
+
+jest.mock("react-card-flip", () =>
+  require("@fixtures/react/parent").createComponent("ReactCardFlip")
 );
 
 describe("FlipCard", () => {
   let currentProps: FlipCardProps;
-  const borderSize = 1;
+  const mockBorderSize = 1;
 
-  const TestProps: FlipCardProps = {
+  const mockOnClick = jest.fn();
+  const mockOnLoad = jest.fn();
+  const mockOnLoadError = jest.fn();
+  const mockT = new MockUseLocale("cards").t;
+
+  const baseProps: FlipCardProps = {
+    cardSize: 50,
+    currentlyFlipped: null,
+    hasLoadError: false,
+    imageFrontActiveSrc: "/test/image.jpg",
+    imageRearSrc: "/test/rearImage.jpg",
     index: 1,
-    currentlyFlipped: 0,
-    size: 50,
-    image: "/test/image.jpg",
-    rearImage: "/test/rearImage.jpg",
-    fallbackImage: "/test/fallbackImage.jpg",
-    flipperController: jest.fn(),
-    imageIsLoaded: jest.fn(),
-    noArtWork: "No Cover Art Found",
-    t: jest.fn((arg: string) => `t(${arg})`),
-  };
-
-  const expectedBoxProps = {
-    borderWidth: 1,
-    borderColor: mockColourHook.flipCardColour.border,
-    bg: mockColourHook.flipCardColour.background,
-    color: mockColourHook.flipCardColour.foreground,
-    width: TestProps.size,
-    height: TestProps.size,
-    cursor: "pointer",
-    sx: {
-      "&:hover": {
-        opacity: 0.5,
-      },
-    },
+    noArtWorkText: "No Cover Art Found",
+    onClick: mockOnClick,
+    onLoad: mockOnLoad,
+    onLoadError: mockOnLoadError,
+    t: mockT,
   };
 
   beforeEach(() => {
-    currentProps = { ...TestProps };
     jest.clearAllMocks();
+    resetProps();
   });
+
+  const resetProps = () => {
+    currentProps = { ...baseProps };
+  };
 
   const arrange = () => {
     return render(<FlipCard {...currentProps} />);
   };
 
-  describe("when loaded with a valid image", () => {
-    describe("when NOT flipped", () => {
-      beforeEach(() => {
-        currentProps.index = 1;
-        currentProps.currentlyFlipped = null;
-        arrange();
-      });
-
-      it("should call Box twice with the correct props", () => {
-        expect(Box).toBeCalledTimes(2);
-        checkMockCall(Box, expectedBoxProps, 0);
-        checkMockCall(Box, expectedBoxProps, 1);
-      });
-
-      it("should render the front image correctly", async () => {
-        const image = await screen.findByTestId(testIDs.flipFrontImage);
-        expect(image).toHaveAttribute("src", TestProps.image);
-        expect(image).toHaveAttribute(
-          "alt",
-          `t(frontAltText): ${TestProps.index + 1}`
-        );
-        expect(image).toHaveAttribute("style", "position: relative;");
-        expect(Img).toHaveBeenCalledTimes(2);
-
-        const mockCall = jest.mocked(Img).mock.calls[0][0];
-        expect(mockCall.width).toBe(`${TestProps.size - borderSize * 2}px`);
-        expect(mockCall.height).toBe(`${TestProps.size - borderSize * 2}px`);
-        expect(typeof mockCall.onLoad).toBe("function");
-        expect(typeof mockCall.onError).toBe("function");
-      });
-
-      it("should render the rear image correctly", async () => {
-        const image = await screen.findByTestId(testIDs.flipRearImage);
-        expect(image).toHaveAttribute("src", TestProps.rearImage);
-        expect(image).toHaveAttribute(
-          "alt",
-          `t(rearAltText): ${TestProps.index + 1}`
-        );
-        expect(image).toHaveAttribute(
-          "style",
-          "position: relative; opacity: 0.5;"
-        );
-        expect(Img).toHaveBeenCalledTimes(2);
-
-        const mockCall = jest.mocked(Img).mock.calls[1][0];
-        expect(mockCall.width).toBe(`${TestProps.size - borderSize * 2}px`);
-        expect(mockCall.height).toBe(`${TestProps.size - borderSize * 2}px`);
-        expect(typeof mockCall.onLoad).toBe("function");
-      });
-
-      it("should call Text once with the correct props", async () => {
-        expect(Text).toBeCalledTimes(1);
-        checkMockCall(Text, {
-          color: mockColourHook.flipCardColour.textRear,
-          "data-testid": testIDs.flipRearText,
-          style: {
-            position: "absolute",
+  const checkReactCardFlipProps = () => {
+    it("should render the ReactCardFlip component with the correct props", () => {
+      expect(ReactCardFlip).toBeCalledTimes(1);
+      checkMockCall(
+        ReactCardFlip,
+        {
+          containerStyle: {
+            margin: 2,
+            width: currentProps.cardSize,
+            height: currentProps.cardSize,
           },
-          fontSize: "3xl",
-        });
-
-        const text = await screen.findByTestId(testIDs.flipRearText);
-        expect(text.innerHTML).toBe(`<strong>${TestProps.index + 1}</strong>`);
-      });
-
-      it("should call imageIsLoaded on the front image load", () => {
-        fireEvent.load(screen.getByTestId(testIDs.flipFrontImage));
-        expect(TestProps.imageIsLoaded).toBeCalledTimes(1);
-      });
-
-      it("should call imageIsLoaded on the rear image load", () => {
-        fireEvent.load(screen.getByTestId(testIDs.flipRearImage));
-        expect(TestProps.imageIsLoaded).toBeCalledTimes(1);
-      });
-
-      describe("when the front image is clicked", () => {
-        beforeEach(() => {
-          fireEvent.click(screen.getByTestId(testIDs.flipFrontImage));
-        });
-
-        it("should call the flipperController as expected", () => {
-          expect(TestProps.flipperController).toBeCalledTimes(1);
-          expect(TestProps.flipperController).toBeCalledWith(TestProps.index);
-        });
-      });
-    });
-
-    describe("when flipped", () => {
-      beforeEach(() => {
-        currentProps.index = 1;
-        currentProps.currentlyFlipped = 1;
-        arrange();
-      });
-
-      it("should call Box twice with the correct props", () => {
-        expect(Box).toBeCalledTimes(2);
-        checkMockCall(Box, expectedBoxProps, 0);
-        checkMockCall(Box, expectedBoxProps, 1);
-      });
-
-      describe("when the rear image is clicked", () => {
-        beforeEach(() => {
-          fireEvent.click(screen.getByTestId(testIDs.flipRearImage));
-        });
-
-        it("should call the flipperController as expected", () => {
-          expect(TestProps.flipperController).toBeCalledTimes(1);
-          expect(TestProps.flipperController).toBeCalledWith(null);
-        });
-      });
-    });
-  });
-
-  describe("when loaded with a invalid image", () => {
-    beforeEach(() => {
-      currentProps.index = 1;
-      currentProps.currentlyFlipped = null;
-      arrange();
-      jest.clearAllMocks();
-      fireEvent.error(screen.getByTestId(testIDs.flipFrontImage));
-    });
-
-    it("should render the front image correctly", async () => {
-      const image = await screen.findByTestId(testIDs.flipFrontImage);
-      expect(image).toHaveAttribute("src", TestProps.fallbackImage);
-      expect(image).toHaveAttribute(
-        "alt",
-        `t(frontAltText): ${TestProps.index + 1}`
+          isFlipped: currentProps.currentlyFlipped === currentProps.index,
+          flipDirection: "horizontal",
+        },
+        0
       );
-      expect(image).toHaveAttribute("style", "position: relative;");
-      expect(Img).toHaveBeenCalledTimes(2);
-
-      const mockCall = jest.mocked(Img).mock.calls[0][0];
-      expect(mockCall.width).toBe(`${TestProps.size - borderSize * 2}px`);
-      expect(mockCall.height).toBe(`${TestProps.size - borderSize * 2}px`);
-      expect(typeof mockCall.onLoad).toBe("function");
-      expect(typeof mockCall.onError).toBe("function");
     });
+  };
 
-    it("should call Text twice, the first call has error props", async () => {
+  const checkChakraBoxProps = () => {
+    it("should render the chakra Box component with the correct props", () => {
+      expect(Box).toBeCalledTimes(4);
+      checkMockCall(
+        Box,
+        {
+          borderWidth: mockBorderSize,
+          borderColor: mockColourHook.flipCardColour.border,
+          bg: mockColourHook.flipCardColour.background,
+          color: mockColourHook.flipCardColour.foreground,
+          width: currentProps.cardSize,
+          height: currentProps.cardSize,
+          cursor: "pointer",
+          sx: {
+            "&:hover": {
+              opacity: 0.5,
+            },
+          },
+        },
+        0
+      );
+      checkMockCall(
+        Box,
+        {
+          style: { border: "2px" },
+        },
+        1
+      );
+      checkMockCall(
+        Box,
+        {
+          borderWidth: mockBorderSize,
+          borderColor: mockColourHook.flipCardColour.border,
+          bg: mockColourHook.flipCardColour.background,
+          color: mockColourHook.flipCardColour.foreground,
+          width: currentProps.cardSize,
+          height: currentProps.cardSize,
+          cursor: "pointer",
+          sx: {
+            "&:hover": {
+              opacity: 0.5,
+            },
+          },
+        },
+        2
+      );
+      checkMockCall(
+        Box,
+        {
+          style: { border: "2px" },
+        },
+        3
+      );
+    });
+  };
+
+  const checkChakraCenterProps = () => {
+    it("should render the chakra Center component with the correct props", () => {
+      expect(Center).toBeCalledTimes(2);
+      checkMockCall(
+        Center,
+        {
+          width: `${currentProps.cardSize - mockBorderSize * 2}px`,
+          height: `${currentProps.cardSize - mockBorderSize * 2}px`,
+        },
+        0
+      );
+      checkMockCall(
+        Center,
+        {
+          width: `${currentProps.cardSize - mockBorderSize * 2}px`,
+          height: `${currentProps.cardSize - mockBorderSize * 2}px`,
+        },
+        1
+      );
+    });
+  };
+
+  const checkChakraImageProps = () => {
+    it("should render the chakra Center component with the correct props", () => {
+      expect(Img).toBeCalledTimes(2);
+      checkMockCall(
+        Img,
+        {
+          alt: `${mockT("frontAltText")}: ${currentProps.index + 1}`,
+          "data-testid": testIDs.flipFrontImage,
+          height: `${currentProps.cardSize - mockBorderSize * 2}px`,
+          onError: currentProps.onLoadError,
+          onLoad: currentProps.onLoad,
+          src: currentProps.imageFrontActiveSrc,
+          style: { position: "relative" },
+          width: `${currentProps.cardSize - mockBorderSize * 2}px`,
+        },
+        0
+      );
+      checkMockCall(
+        Img,
+        {
+          alt: `${mockT("rearAltText")}: ${currentProps.index + 1}`,
+          "data-testid": testIDs.flipRearImage,
+          height: `${currentProps.cardSize - mockBorderSize * 2}px`,
+          onLoad: currentProps.onLoad,
+          src: currentProps.imageRearSrc,
+          style: { position: "relative", opacity: 0.5 },
+          width: `${currentProps.cardSize - mockBorderSize * 2}px`,
+        },
+        1
+      );
+    });
+  };
+
+  const checkChakraTextPropsWithFront = () => {
+    it("should render the chakra Text component with the correct props", () => {
       expect(Text).toBeCalledTimes(2);
       checkMockCall(
         Text,
         {
-          "data-testid": testIDs.flipFrontText,
           color: mockColourHook.flipCardColour.textFront,
-          style: {
-            position: "absolute",
-          },
+          "data-testid": testIDs.flipFrontText,
           fontSize: "sm",
+          style: { position: "absolute" },
         },
         0
       );
       checkMockCall(
         Text,
         {
-          "data-testid": testIDs.flipRearText,
           color: mockColourHook.flipCardColour.textRear,
-          style: {
-            position: "absolute",
-          },
+          "data-testid": testIDs.flipRearText,
           fontSize: "3xl",
+          style: { position: "absolute" },
         },
         1
       );
+    });
+  };
 
-      const text = await screen.findByTestId(testIDs.flipFrontText);
-      expect(text.innerHTML).toBe(`<strong>${currentProps.noArtWork}</strong>`);
+  const checkChakraTextPropsWithOutFront = () => {
+    it("should render the chakra Text component with the correct props", () => {
+      expect(Text).toBeCalledTimes(1);
+      checkMockCall(
+        Text,
+        {
+          color: mockColourHook.flipCardColour.textRear,
+          "data-testid": testIDs.flipRearText,
+          fontSize: "3xl",
+          style: { position: "absolute" },
+        },
+        0
+      );
+    });
+  };
+
+  const checkChakraTextContent = ({
+    testId,
+    text,
+  }: {
+    testId: string;
+    text: string;
+  }) => {
+    it(`should render the correct text inside the chakra Text component (test id: ${testId})`, async () => {
+      const element = await screen.findByTestId(testId);
+      expect(
+        await within(element.parentElement as HTMLElement).findByText(text)
+      ).toBeTruthy();
+    });
+  };
+
+  describe("when there is NOT a load error", () => {
+    beforeEach(() => (currentProps.hasLoadError = false));
+
+    describe("when the card is flipped", () => {
+      beforeEach(() => {
+        currentProps.currentlyFlipped = 1;
+        currentProps.index = 1;
+
+        arrange();
+      });
+
+      checkReactCardFlipProps();
+      checkChakraBoxProps();
+      checkChakraCenterProps();
+      checkChakraImageProps();
+      checkChakraTextPropsWithOutFront();
+      checkChakraTextContent({
+        testId: testIDs.flipRearImage,
+        text: "2",
+      });
+    });
+
+    describe("when the card is NOT flipped", () => {
+      beforeEach(() => {
+        currentProps.currentlyFlipped = null;
+        currentProps.index = 1;
+
+        arrange();
+      });
+
+      checkReactCardFlipProps();
+      checkChakraBoxProps();
+      checkChakraCenterProps();
+      checkChakraImageProps();
+      checkChakraTextPropsWithOutFront();
+      checkChakraTextContent({
+        testId: testIDs.flipRearImage,
+        text: "2",
+      });
+    });
+  });
+
+  describe("when there is a load error", () => {
+    beforeEach(() => (currentProps.hasLoadError = true));
+
+    describe("when the card is flipped", () => {
+      beforeEach(() => {
+        currentProps.currentlyFlipped = 1;
+        currentProps.index = 1;
+
+        arrange();
+      });
+
+      checkReactCardFlipProps();
+      checkChakraBoxProps();
+      checkChakraCenterProps();
+      checkChakraImageProps();
+      checkChakraTextPropsWithFront();
+      checkChakraTextContent({
+        testId: testIDs.flipFrontImage,
+        text: baseProps.noArtWorkText,
+      });
+      checkChakraTextContent({
+        testId: testIDs.flipRearImage,
+        text: "2",
+      });
+    });
+
+    describe("when the card is NOT flipped", () => {
+      beforeEach(() => {
+        currentProps.currentlyFlipped = null;
+        currentProps.index = 1;
+
+        arrange();
+      });
+
+      checkReactCardFlipProps();
+      checkChakraBoxProps();
+      checkChakraCenterProps();
+      checkChakraImageProps();
+      checkChakraTextPropsWithFront();
+      checkChakraTextContent({
+        testId: testIDs.flipFrontImage,
+        text: baseProps.noArtWorkText,
+      });
+      checkChakraTextContent({
+        testId: testIDs.flipRearImage,
+        text: "2",
+      });
     });
   });
 });

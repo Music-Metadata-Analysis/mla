@@ -1,6 +1,7 @@
 import Report from "../top20.albums.report.class";
-import FlipCardDrawer from "@src/components/reports/lastfm/common/flip.card.report.drawer/flip.card.report.drawer.component";
+import FlipCardDrawerContainer from "@src/components/reports/lastfm/common/drawer/flip.card/flip.card.report.drawer.container";
 import routes from "@src/config/routes";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import UserAlbumDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 import type { LastFMAlbumDataInterface } from "@src/types/integrations/lastfm/api.types";
 
@@ -16,7 +17,7 @@ describe("Top20AlbumsReport", () => {
       name: "mock_artist2",
     },
   ];
-  const mockUserProperties = {
+  const mockReportProperties = {
     error: null,
     inProgress: false,
     profileUrl: null,
@@ -38,22 +39,24 @@ describe("Top20AlbumsReport", () => {
   });
 
   it("should have the correct instance values", () => {
-    expect(report.analyticsReportType).toBe("TOP20 ALBUMS");
-    expect(report.drawerArtWorkAltText).toBe(
+    expect(report.getAnalyticsReportType()).toBe("TOP20 ALBUMS");
+    expect(report.getDrawerArtWorkAltTextTranslationKey()).toBe(
       "top20Albums.drawer.artWorkAltText"
     );
-    expect(report.drawerComponent).toBe(FlipCardDrawer);
-    expect(report.encapsulationClass).toBe(UserAlbumDataState);
-    expect(report.retryRoute).toBe(routes.search.lastfm.top20albums);
-    expect(report.translationKey).toBe("top20Albums");
-    expect(report.hookMethod).toBe("top20albums");
+    expect(report.getDrawerComponent()).toBe(FlipCardDrawerContainer);
+    expect(
+      report.getEncapsulatedReportState(mockReportProperties, _t)
+    ).toBeInstanceOf(UserAlbumDataState);
+    expect(report.getRetryRoute()).toBe(routes.search.lastfm.top20albums);
+    expect(report.getReportTranslationKey()).toBe("top20Albums");
+    expect(report.getHookMethod()).toBe("top20albums");
   });
 
   describe("getNumberOfImageLoads", () => {
     let value: number;
 
     beforeEach(() => {
-      value = report.getNumberOfImageLoads(mockUserProperties);
+      value = report.getNumberOfImageLoads(mockReportProperties);
     });
 
     it("should match the expected value", () => {
@@ -65,7 +68,7 @@ describe("Top20AlbumsReport", () => {
     let value: LastFMAlbumDataInterface[];
 
     beforeEach(() => {
-      value = report.getReportData(mockUserProperties);
+      value = report.getReportData(mockReportProperties);
     });
 
     it("should match the expected value", () => {

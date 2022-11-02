@@ -23,3 +23,5 @@ const useNavBar = () => {
 };
 
 export default useNavBar;
+
+export type NavBarHookType = ReturnType<typeof useNavBar>;

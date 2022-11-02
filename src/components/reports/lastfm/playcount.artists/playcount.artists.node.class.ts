@@ -1,4 +1,4 @@
-import SunBurstNodeEncapsulation from "../common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base";
 import { capitalize } from "@src/utils/strings";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
@@ -12,7 +12,7 @@ export default class PlayCountByArtistNodeEncapsulation extends SunBurstNodeEnca
     return this.withModifier(rounded, precision);
   }
 
-  private withModifier(rounded: number, precision: number) {
+  protected withModifier(rounded: number, precision: number) {
     if (rounded === 0) return ">1";
     if (rounded <= 1 && rounded > precision) return ">1";
     return String(rounded);

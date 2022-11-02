@@ -1,6 +1,6 @@
-import SunBurstNodeEncapsulation from "../../common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 import PlayCountByArtistNodeEncapsulation from "../playcount.artists.node.class";
 import sunburstTranslations from "@locales/sunburst.json";
+import SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 

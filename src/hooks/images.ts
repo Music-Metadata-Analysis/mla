@@ -12,3 +12,5 @@ const useImagesController = () => {
 };
 
 export default useImagesController;
+
+export type ImagesControllerHookType = ReturnType<typeof useImagesController>;

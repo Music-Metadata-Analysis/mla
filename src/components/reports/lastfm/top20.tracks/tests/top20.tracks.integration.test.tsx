@@ -1,57 +1,51 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import Top20TracksReport from "../top20.tracks.report.class";
+import Top20TracksContainer, {
+  Top20TracksReportContainerProps,
+} from "../top20.tracks.container";
 import cardTranslations from "@locales/cards.json";
 import translations from "@locales/lastfm.json";
 import { testIDs as drawerTestIDs } from "@src/components/reports/common/drawer/drawer.component";
-import { testIDs as lastFMDrawerIDs } from "@src/components/reports/lastfm/common/flip.card.report.drawer/flip.card.report.drawer.component";
-import FlipCardReport, {
-  FlipCardReportProps,
-} from "@src/components/reports/lastfm/common/flip.card.report/flip.card.report.component";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
-import UserTrackDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.track.flipcard.report.class";
+import { testIDs as lastFMDrawerIDs } from "@src/components/reports/lastfm/common/drawer/flip.card/flip.card.report.drawer.component";
+import mockImageControllerHook from "@src/hooks/__mocks__/images.mock";
+import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
+import type { userHookAsLastFMTop20TrackReport } from "@src/types/user/hook.types";
 
 jest.mock("@src/hooks/locale");
 
+jest.mock("@src/hooks/images");
+
 jest.mock("@src/hooks/router");
 
-const mockImageIsLoaded = jest.fn();
-const mockT = new MockUseLocale("lastfm").t;
-const mockUsername = "test-username";
-const mockUserProperties = {
-  error: null,
-  inProgress: false,
-  profileUrl: null,
-  ready: true,
-  retries: 3,
-  userName: mockUsername,
-  data: {
-    report: {
-      tracks: [],
-      image: [],
-      playcount: 0,
-    },
-    integration: "LASTFM" as const,
-  },
-};
-let mockPropertyIndex = 1;
-
-const Top20ReportBaseProps: FlipCardReportProps<UserTrackDataState> = {
-  report: new Top20TracksReport(),
-  imageIsLoaded: mockImageIsLoaded,
-  userState: new UserTrackDataState(mockUserProperties, mockT),
-  visible: true,
-  t: mockT,
-};
-
-const generateMockProperty = () => {
-  const colour = `mockProperty${mockPropertyIndex}`;
-  mockPropertyIndex++;
-  return colour;
-};
-
 describe("Top20TracksReport", () => {
-  let currentProps: FlipCardReportProps<UserTrackDataState>;
+  let currentProps: Top20TracksReportContainerProps;
+  let mockPropertyIndex = 1;
+
+  const generateMockProperty = () => {
+    const mockProperty = `mockProperty${mockPropertyIndex}`;
+    mockPropertyIndex++;
+    return mockProperty;
+  };
+
+  const mockUsername = "test-username";
+  const mockReportProperties = {
+    error: null,
+    inProgress: false,
+    profileUrl: null,
+    ready: true,
+    retries: 3,
+    userName: mockUsername,
+    data: {
+      report: {
+        tracks: [],
+        image: [],
+        playcount: 0,
+      },
+      integration: "LASTFM" as const,
+    },
+  };
+
   const reportKey = "tracks";
   const translationKey = "top20Tracks";
   const testUrl = "https://thecorrect/url";
@@ -90,25 +84,37 @@ describe("Top20TracksReport", () => {
     },
   ];
 
+  const Top20ReportBaseProps = {
+    lastfm: mockLastFMHook as userHookAsLastFMTop20TrackReport,
+    userName: mockUsername,
+  };
+
   beforeEach(() => jest.clearAllMocks());
 
   const resetProps = () => {
     currentProps = { ...Top20ReportBaseProps };
+    currentProps.lastfm.userProperties = mockReportProperties;
+    currentProps.lastfm.userProperties.data.report.tracks = {
+      ...mockTrackData,
+    };
   };
-
-  const getDataSet = () => getReport()[reportKey];
-  const getReport = () => currentProps.userState.userProperties.data.report;
-  const getTranslation = () => translations[translationKey];
-  const getDrawerTitle = (index: number) =>
-    `${getDataSet()[index - 1].artist?.name}: ${getDataSet()[index - 1].name}`;
 
   const arrange = () => {
     return render(
       <ChakraProvider>
-        <FlipCardReport {...currentProps} />
+        <Top20TracksContainer {...currentProps} />
       </ChakraProvider>
     );
   };
+
+  const getDataSet = () => getReport()[reportKey];
+
+  const getDrawerTitle = (index: number) =>
+    `${getDataSet()[index - 1].artist?.name}: ${getDataSet()[index - 1].name}`;
+
+  const getReport = () => currentProps.lastfm.userProperties.data.report;
+
+  const getTranslation = () => translations[translationKey];
 
   const clickCard = async (index: number) => {
     const CardFrontImage = (await screen.findByAltText(
@@ -118,10 +124,22 @@ describe("Top20TracksReport", () => {
     return CardFrontImage;
   };
 
+  const checkReportTitle = () => {
+    it("should render the report title text correctly", async () => {
+      expect(await screen.findByText(_t(getTranslation().title))).toBeTruthy();
+
+      expect(
+        await screen.findByText(
+          currentProps.lastfm.userProperties.userName as string
+        )
+      ).toBeTruthy();
+    });
+  };
+
   describe("when data is available", () => {
     beforeEach(() => {
       resetProps();
-      currentProps.userState.userProperties.inProgress = false;
+      currentProps.lastfm.userProperties.inProgress = false;
       getReport()[reportKey] = mockTrackData;
     });
 
@@ -131,7 +149,7 @@ describe("Top20TracksReport", () => {
         `${_t(cardTranslations.frontAltText)}: 1`
       )) as HTMLImageElement;
       fireEvent.load(CardFrontImage);
-      expect(mockImageIsLoaded).toBeCalledTimes(1);
+      expect(mockImageControllerHook.load).toBeCalledTimes(1);
     });
 
     describe("with the drawer closed", () => {
@@ -139,30 +157,10 @@ describe("Top20TracksReport", () => {
         arrange();
       });
 
-      it("should render the report title text correctly", async () => {
-        expect(
-          await screen.findByText(_t(getTranslation().title))
-        ).toBeTruthy();
-        expect(
-          await screen.findByText(
-            currentProps.userState.userProperties.userName as string
-          )
-        ).toBeTruthy();
-      });
+      checkReportTitle();
 
-      it("should render the flip cards correctly", async () => {
-        for (let i = 0; i < getDataSet().length; i++) {
-          expect(
-            await screen.findByAltText(
-              `${_t(cardTranslations.frontAltText)}: ${i + 1}`
-            )
-          ).toBeTruthy();
-          expect(
-            await screen.findByAltText(
-              `${_t(cardTranslations.rearAltText)}: ${i + 1}`
-            )
-          ).toBeTruthy();
-        }
+      it("should NOT render the drawer ", () => {
+        expect(screen.queryByTestId(drawerTestIDs.Drawer)).toBeFalsy();
       });
 
       describe("when a card is clicked", () => {
@@ -203,13 +201,24 @@ describe("Top20TracksReport", () => {
     });
 
     describe("when the drawer is open", () => {
+      const selected = 1;
+
       beforeEach(async () => {
         arrange();
-        await clickCard(1);
+
+        await clickCard(selected);
       });
 
-      it("should render a title", async () => {
-        expect(await screen.findByText(getDrawerTitle(1))).toBeTruthy();
+      checkReportTitle();
+
+      it("should render the drawer component", async () => {
+        expect(
+          await screen.findByTestId(drawerTestIDs.DrawerBody)
+        ).toBeTruthy();
+      });
+
+      it("should render the drawer title correctly ", async () => {
+        expect(await screen.findByText(getDrawerTitle(selected))).toBeTruthy();
       });
 
       it("should render the rank correctly", async () => {
@@ -221,7 +230,9 @@ describe("Top20TracksReport", () => {
             _t(translations.flipCardReport.drawer.rank)
           )
         ).toBeTruthy();
-        expect(await within(rankElement).findByText(": 1")).toBeTruthy();
+        expect(
+          await within(rankElement).findByText(`: ${selected}`)
+        ).toBeTruthy();
       });
 
       it("should render the playcount correctly", async () => {
@@ -234,7 +245,9 @@ describe("Top20TracksReport", () => {
           )
         ).toBeTruthy();
         expect(
-          await within(playCountElement).findByText(`: ${mockPlayCounts[0]}`)
+          await within(playCountElement).findByText(
+            `: ${mockPlayCounts[selected - 1]}`
+          )
         ).toBeTruthy();
       });
 
@@ -267,7 +280,7 @@ describe("Top20TracksReport", () => {
   describe("when data is unavailable", () => {
     beforeEach(() => {
       resetProps();
-      currentProps.userState.userProperties.inProgress = true;
+      currentProps.lastfm.userProperties.inProgress = true;
       arrange();
     });
 
