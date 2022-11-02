@@ -3,7 +3,7 @@ import Top20TracksContainer from "../top20.tracks.container";
 import Top20TracksReport from "../top20.tracks.report.class";
 import FlipCardReportContainer from "@src/components/reports/lastfm/common/flip.card.report/flip.card.report.container";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
-import UserInterfaceImageProvider from "@src/providers/ui/ui.images/ui.images.provider";
+import ImagesControllerProvider from "@src/providers/controllers/images/images.provider";
 import type { userHookAsLastFMTop20TrackReport } from "@src/types/user/hook.types";
 
 jest.mock(
@@ -24,12 +24,12 @@ describe("Top20TracksReportContainer", () => {
 
   const arrange = () => {
     render(
-      <UserInterfaceImageProvider>
+      <ImagesControllerProvider>
         <Top20TracksContainer
           userName={mockUsername}
           user={mockTypedLastFMHook}
         />
-      </UserInterfaceImageProvider>
+      </ImagesControllerProvider>
     );
   };
 

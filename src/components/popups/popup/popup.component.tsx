@@ -1,17 +1,17 @@
 import { useToast, useColorMode } from "@chakra-ui/react";
 import { useEffect } from "react";
-import useUserInterface from "@src/hooks/ui";
-import type { UserInterfacePopUpsComponentType } from "@src/types/ui/popups/ui.component.popups.types";
-import type { PopUpNameType } from "@src/types/ui/popups/ui.popups.state.types";
+import usePopUps from "@src/hooks/popups";
+import type { PopUpComponentType } from "@src/types/controllers/popups/component.popups.types";
+import type { PopUpComponentNameType } from "@src/types/controllers/popups/popups.state.types";
 
 export interface PopUpProps {
-  name: PopUpNameType;
+  name: PopUpComponentNameType;
   message: string;
-  Component: UserInterfacePopUpsComponentType;
+  Component: PopUpComponentType;
 }
 
 export default function PopUp({ name, message, Component }: PopUpProps) {
-  const ui = useUserInterface();
+  const popups = usePopUps();
   const toast = useToast();
   const { colorMode } = useColorMode();
   const toastProps = {
@@ -32,7 +32,7 @@ export default function PopUp({ name, message, Component }: PopUpProps) {
   const closeToast = () => {
     if (toast.isActive(name)) {
       toast.close(name);
-      ui.popups.close(name);
+      popups.close(name);
     }
   };
 
@@ -53,7 +53,7 @@ export default function PopUp({ name, message, Component }: PopUpProps) {
   }, []);
 
   useEffect(() => {
-    if (ui.popups.status(name)) {
+    if (popups.status(name)) {
       openOrUpdateToast();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,6 +1,6 @@
 import type { LastFMDrawerInterface } from "../flip.card.report.drawer/flip.card.report.drawer.component";
 import type translations from "@locales/lastfm.json";
-import type useUserInterface from "@src/hooks/ui";
+import type useImagesController from "@src/hooks/images";
 import type UserState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
 import type { IntegrationRequestType } from "@src/types/analytics.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
@@ -48,12 +48,12 @@ export default abstract class FlipCardBaseReport<T extends UserState> {
 
   queryIsDataReady(
     userProperties: T["userProperties"],
-    ui: ReturnType<typeof useUserInterface>
+    imagesController: ReturnType<typeof useImagesController>
   ) {
     if (userProperties.inProgress) return false;
     if (userProperties.ready) return false;
     if (userProperties.error) return false;
-    if (ui.images.count < this.getNumberOfImageLoads(userProperties))
+    if (imagesController.count < this.getNumberOfImageLoads(userProperties))
       return false;
     return true;
   }

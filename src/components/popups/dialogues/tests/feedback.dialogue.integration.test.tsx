@@ -46,7 +46,7 @@ describe("FeedbackDialogue", () => {
       fireEvent.click(button);
     });
 
-    it("should nolonger show the expected text", async () => {
+    it("should no longer show the expected text", async () => {
       expect(mockClose).toBeCalledTimes(1);
     });
   });

@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import NavConfig from "@src/config/navbar";
-import { NavBarContext } from "@src/providers/navbar/navbar.provider";
+import { NavBarControllerContext } from "@src/providers/controllers/navbar/navbar.provider";
 
 const useNavBar = () => {
-  const context = useContext(NavBarContext);
+  const context = useContext(NavBarControllerContext);
 
   const limitedNavBarHide = () => {
     if (window.innerHeight < NavConfig.minimumHeightDuringInput) {

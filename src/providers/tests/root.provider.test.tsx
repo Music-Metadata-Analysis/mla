@@ -1,6 +1,6 @@
 import { waitFor, screen, render } from "@testing-library/react";
+import ControllersRootProvider from "../controllers/controllers.root.provider";
 import MetricsProvider from "../metrics/metrics.provider";
-import NavBarProvider from "../navbar/navbar.provider";
 import RootProvider from "../root.provider";
 import UserInterfaceRootProvider from "../ui/ui.root.provider";
 import UserProvider from "../user/user.provider";
@@ -24,12 +24,12 @@ jest.mock("@src/providers/analytics/analytics.provider", () =>
   require("@fixtures/react/parent").createComponent("AnalyticsProvider")
 );
 
-jest.mock("@src/providers/metrics/metrics.provider", () =>
-  require("@fixtures/react/parent").createComponent("MetricsProvider")
+jest.mock("@src/providers/controllers/controllers.root.provider.tsx", () =>
+  require("@fixtures/react/parent").createComponent("ControllersRootProvider")
 );
 
-jest.mock("@src/providers/navbar/navbar.provider", () =>
-  require("@fixtures/react/parent").createComponent("NavBarProvider")
+jest.mock("@src/providers/metrics/metrics.provider", () =>
+  require("@fixtures/react/parent").createComponent("MetricsProvider")
 );
 
 jest.mock("@src/providers/user/user.provider", () =>
@@ -43,10 +43,10 @@ jest.mock("../ui/ui.root.provider", () =>
 const providers = {
   AnalyticsProvider: "AnalyticsProvider",
   AuthVendorProvider: "AuthVendorProvider",
+  ControllersRootProvider: "ControllersRootProvider",
   FlagVendorProvider: "FlagVendorProvider",
   Header: "Header",
   MetricsProvider: "MetricsProvider",
-  NavBarProvider: "NavBarProvider",
   RootProvider: "RootProvider",
   UserProvider: "UserProvider",
   UserInterfaceRootProvider: "UserInterfaceRootProvider",
@@ -144,14 +144,15 @@ describe("RootProvider", () => {
       expect(await screen.findByTestId(providers.AnalyticsProvider)).toBeTruthy;
     });
 
+    it("should initialize the ControllersRootProvider Provider", async () => {
+      await waitFor(() => expect(ControllersRootProvider).toBeCalledTimes(1));
+      expect(await screen.findByTestId(providers.ControllersRootProvider))
+        .toBeTruthy;
+    });
+
     it("should initialize the MetricsProvider", async () => {
       await waitFor(() => expect(MetricsProvider).toBeCalledTimes(1));
       expect(await screen.findByTestId(providers.MetricsProvider)).toBeTruthy;
-    });
-
-    it("should initialize the NavBar Provider", async () => {
-      await waitFor(() => expect(NavBarProvider).toBeCalledTimes(1));
-      expect(await screen.findByTestId(providers.NavBarProvider)).toBeTruthy;
     });
 
     it("should initialize the UserProvider", async () => {

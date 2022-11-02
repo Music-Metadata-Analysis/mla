@@ -1,7 +1,5 @@
-import UserInterfaceChakraProvider from "./ui.chakra/ui.chakra.provider";
-import UserInterfaceImagesProvider from "./ui.images/ui.images.provider";
-import UserInterfacePopUpsProvider from "./ui.popups/ui.popups.provider";
-import BackGround from "@src/components/background/background.component";
+import BackGround from "./background/background.component";
+import UserInterfaceChakraProvider from "./chakra/chakra.provider";
 
 const UserInterfaceRootProvider = ({
   children,
@@ -12,11 +10,7 @@ const UserInterfaceRootProvider = ({
 }) => {
   return (
     <UserInterfaceChakraProvider cookies={cookies}>
-      <UserInterfaceImagesProvider>
-        <UserInterfacePopUpsProvider>
-          <BackGround>{children}</BackGround>
-        </UserInterfacePopUpsProvider>
-      </UserInterfaceImagesProvider>
+      <BackGround>{children}</BackGround>
     </UserInterfaceChakraProvider>
   );
 };
