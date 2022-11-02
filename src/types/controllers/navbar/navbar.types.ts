@@ -1,4 +1,4 @@
-import type { ToggleHookType } from "@src/hooks/utility/toggle";
+import type { ToggleHookType } from "@src/hooks/utility/toggle.hook";
 
 export interface NavBarControllerContextInterface {
   hamburger: ToggleHookType;

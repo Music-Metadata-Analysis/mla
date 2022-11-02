@@ -9,15 +9,14 @@ import {
   DrawerContentProps,
 } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import AlbumDrawer, { DrawerInterface, testIDs } from "../drawer.component";
+import ReportDrawer, { ReportDrawerProps, testIDs } from "../drawer.component";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/colour");
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock([
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock([
     "Divider",
     "Drawer",
     "DrawerBody",
@@ -25,19 +24,20 @@ jest.mock("@chakra-ui/react", () => {
     "DrawerOverlay",
     "DrawerCloseButton",
     "DrawerContent",
-  ]);
-});
+  ])
+);
 
-const mockOnClose = jest.fn();
-
-describe("AlbumDrawer", () => {
+describe("ReportDrawer", () => {
   let mockAlwaysOpen: boolean;
   let mockIsOpen: boolean;
   let mockTitle: undefined | string;
   let mockPlacement: "bottom" | "left" | "right" | "top";
-  let currentProps: DrawerInterface;
+  let currentProps: ReportDrawerProps;
 
   const mockChildComponent = "mockChildComponent";
+  const mockOnClose = jest.fn();
+
+  beforeEach(() => jest.clearAllMocks());
 
   const createProps = () =>
     (currentProps = {
@@ -48,12 +48,10 @@ describe("AlbumDrawer", () => {
       placement: mockPlacement,
     });
 
-  beforeEach(() => jest.clearAllMocks());
-
   const arrange = () => {
     createProps();
     return render(
-      <AlbumDrawer {...currentProps}>{mockChildComponent}</AlbumDrawer>
+      <ReportDrawer {...currentProps}>{mockChildComponent}</ReportDrawer>
     );
   };
 
@@ -62,9 +60,9 @@ describe("AlbumDrawer", () => {
     isOpen,
     placement,
   }: {
-    alwaysOpen: DrawerInterface["alwaysOpen"];
-    isOpen: DrawerInterface["isOpen"];
-    placement: DrawerInterface["placement"];
+    alwaysOpen: ReportDrawerProps["alwaysOpen"];
+    isOpen: ReportDrawerProps["isOpen"];
+    placement: ReportDrawerProps["placement"];
   }) => {
     it("should call the Drawer component with the expected props", () => {
       expect(Drawer).toBeCalledTimes(1);
@@ -86,8 +84,8 @@ describe("AlbumDrawer", () => {
     alwaysOpen,
     isOpen,
   }: {
-    alwaysOpen: DrawerInterface["alwaysOpen"];
-    isOpen: DrawerInterface["isOpen"];
+    alwaysOpen: ReportDrawerProps["alwaysOpen"];
+    isOpen: ReportDrawerProps["isOpen"];
   }) => {
     if (alwaysOpen || !isOpen) {
       it("should NOT call the DrawerOverlay component", () => {
@@ -106,7 +104,7 @@ describe("AlbumDrawer", () => {
     isOpen,
   }: {
     borderProps: DrawerContentProps;
-    isOpen: DrawerInterface["isOpen"];
+    isOpen: ReportDrawerProps["isOpen"];
   }) => {
     if (isOpen) {
       it("should call the DrawerContent component with the expected props", () => {
@@ -135,7 +133,7 @@ describe("AlbumDrawer", () => {
   const checkDrawerCloseButtonProps = ({
     isOpen,
   }: {
-    isOpen: DrawerInterface["isOpen"];
+    isOpen: ReportDrawerProps["isOpen"];
   }) => {
     if (isOpen) {
       it("should call the DrawerCloseButton component with the expected props", () => {
@@ -162,8 +160,8 @@ describe("AlbumDrawer", () => {
     title,
     isOpen,
   }: {
-    title: DrawerInterface["title"];
-    isOpen: DrawerInterface["isOpen"];
+    title: ReportDrawerProps["title"];
+    isOpen: ReportDrawerProps["isOpen"];
   }) => {
     if (title && isOpen) {
       it("should call the DrawerHeader component with the correct props", () => {
@@ -189,7 +187,7 @@ describe("AlbumDrawer", () => {
   const checkDrawerBodyProps = ({
     isOpen,
   }: {
-    isOpen: DrawerInterface["isOpen"];
+    isOpen: ReportDrawerProps["isOpen"];
   }) => {
     if (isOpen) {
       it("should call the DrawerBody component with the expected props", () => {
@@ -206,7 +204,7 @@ describe("AlbumDrawer", () => {
   const checkDividerProps = ({
     isOpen,
   }: {
-    isOpen: DrawerInterface["isOpen"];
+    isOpen: ReportDrawerProps["isOpen"];
   }) => {
     if (isOpen) {
       it("should call the Divider component with the expected props", () => {
@@ -239,7 +237,7 @@ describe("AlbumDrawer", () => {
   const checkChildComponent = ({
     isOpen,
   }: {
-    isOpen: DrawerInterface["isOpen"];
+    isOpen: ReportDrawerProps["isOpen"];
   }) => {
     if (isOpen) {
       it("should render the child component", async () => {

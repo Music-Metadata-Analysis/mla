@@ -13,7 +13,7 @@ interface LastFMReportPage<T extends userHookAsLastFM> {
 
 interface ReportContainerProps<T extends userHookAsLastFM> {
   userName: string;
-  user: T;
+  lastfm: T;
 }
 
 export default function LastFMReportPage<T extends userHookAsLastFM>({
@@ -23,7 +23,7 @@ export default function LastFMReportPage<T extends userHookAsLastFM>({
   const [userName, setUserName] = useState<string | null | undefined>(
     undefined
   );
-  const user = useLastFM() as T;
+  const reportHook = useLastFM() as T;
 
   useEffect(() => {
     if (userName === undefined) {
@@ -44,9 +44,9 @@ export default function LastFMReportPage<T extends userHookAsLastFM>({
     <ErrorBoundary
       eventDefinition={Events.General.Error}
       route={routes.home}
-      stateReset={user.clear}
+      stateReset={reportHook.clear}
     >
-      <ReportContainer userName={userName} user={user} />
+      <ReportContainer userName={userName} lastfm={reportHook} />
     </ErrorBoundary>
   );
 }

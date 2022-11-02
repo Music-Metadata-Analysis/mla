@@ -3,7 +3,7 @@ import useColour from "@src/hooks/colour";
 
 interface ReportTitleProps {
   title: string;
-  userName: string | null;
+  userName: string;
   size: number;
 }
 
@@ -11,26 +11,24 @@ const ReportTitle = ({ size, title, userName }: ReportTitleProps) => {
   const { componentColour, transparent } = useColour();
   const maxWidth = 4 * size + 20;
 
-  if (!userName) return null;
-
   return (
     <Box
+      bg={componentColour.background}
+      color={componentColour.foreground}
+      mb={"5px"}
       ml={"5px"}
       mr={"5px"}
       mt={"45px"}
-      mb={"5px"}
-      color={componentColour.foreground}
       p={3}
-      bg={componentColour.background}
       w={"100%"}
     >
       <Container
         centerContent={true}
         maxW={`${maxWidth}px`}
-        textAlign={"center"}
         sx={{
           caretColor: transparent,
         }}
+        textAlign={"center"}
       >
         <Text fontSize={["xl", "2xl", "3xl"]}>{userName}</Text>
         <Text fontSize={["l", "xl", "2xl"]}>{title}</Text>

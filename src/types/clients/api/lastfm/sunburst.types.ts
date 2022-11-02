@@ -1,6 +1,6 @@
 import type SunburstDataPointClient from "@src/clients/api/lastfm/data/sunburst/datapoints/sunburst.datapoint.client.base.class";
 import type LastFMSunburstDataClient from "@src/clients/api/lastfm/data/sunburst/sunburst.client.base.class";
-import type SunBurstNodeEncapsulation from "@src/components/reports/lastfm/common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
+import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { EventCreatorType } from "@src/types/analytics.types";
 import type { SunBurstData } from "@src/types/reports/sunburst.types";
@@ -20,9 +20,9 @@ export type SunBurstAggregateReportContent = {
 } & { playcount: number; name: string };
 
 export interface SunBurstDrawerNodeComponentProps {
-  node: SunBurstNodeEncapsulation;
+  node: SunBurstNodeAbstractBase;
   index: number;
-  selectChildNode: (node: SunBurstNodeEncapsulation) => void;
+  selectChildNode: (node: SunBurstNodeAbstractBase) => void;
 }
 
 export type SunBurstDataPointClientConstructor<EncapsulationType> = {

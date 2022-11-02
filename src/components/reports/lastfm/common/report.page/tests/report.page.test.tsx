@@ -70,7 +70,7 @@ describe("ReportPage", () => {
           MockReportContainer,
           {
             userName: testUser,
-            user: mockLastFMHook,
+            lastfm: mockLastFMHook,
           },
           0,
           ["stateReset"]

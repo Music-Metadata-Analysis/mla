@@ -1,6 +1,6 @@
-import SunBurstNodeEncapsulation from "../../common/sunburst.report/encapsulations/sunburst.node.encapsulation.base";
 import PlayCountByArtistNodeEncapsulation from "../playcount.artists.node.class";
 import sunburstTranslations from "@locales/sunburst.json";
+import SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
@@ -27,8 +27,8 @@ describe(PlayCountByArtistNodeEncapsulation.name, () => {
     (instance = new PlayCountByArtistNodeEncapsulation(mockNode));
 
   const checkInstance = () => {
-    it("should be a subclass of SunBurstNodeEncapsulation", () => {
-      expect(instance).toBeInstanceOf(SunBurstNodeEncapsulation);
+    it("should be a subclass of SunBurstNodeAbstractBase", () => {
+      expect(instance).toBeInstanceOf(SunBurstNodeAbstractBase);
       expect(instance.leafEntity).toBe(expectedLeafEntity);
     });
   };

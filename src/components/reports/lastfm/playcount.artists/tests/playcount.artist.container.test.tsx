@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react";
-import SunBurstContainer from "../../common/sunburst.report/sunburst.report.container";
 import PlayCountByArtistContainer, {
   PlayCountByArtistContainerProps,
 } from "../playcount.artists.container";
 import PlayCountByArtistReport from "../playcount.artists.report.class";
+import SunBurstContainer from "@src/components/reports/lastfm/common/report.component/sunburst/sunburst.report.container";
 import mockUserHook from "@src/hooks/__mocks__/lastfm.mock";
 import {
   getMockComponentProp,
@@ -11,8 +11,9 @@ import {
 } from "@src/tests/fixtures/mock.component.props";
 import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
-jest.mock("../../common/sunburst.report/sunburst.report.container", () =>
-  require("@fixtures/react/parent").createComponent("SunBurstContainer")
+jest.mock(
+  "@src/components/reports/lastfm/common/report.component/sunburst/sunburst.report.container",
+  () => require("@fixtures/react/parent").createComponent("SunBurstContainer")
 );
 
 describe("PlayCountByArtistContainer", () => {
@@ -25,7 +26,7 @@ describe("PlayCountByArtistContainer", () => {
   const createProps = () =>
     (currentProps = {
       userName: "test-user",
-      user: mockUserHook as userHookAsLastFMPlayCountByArtistReport,
+      lastfm: mockUserHook as userHookAsLastFMPlayCountByArtistReport,
     });
 
   const arrange = () => {
@@ -42,8 +43,11 @@ describe("PlayCountByArtistContainer", () => {
         3
       );
       expect(
-        getMockComponentProp({ component: SunBurstContainer, propName: "user" })
-      ).toBe(currentProps.user);
+        getMockComponentProp({
+          component: SunBurstContainer,
+          propName: "lastfm",
+        })
+      ).toBe(currentProps.lastfm);
       expect(
         getMockComponentProp({
           component: SunBurstContainer,
