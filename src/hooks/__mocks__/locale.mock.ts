@@ -17,10 +17,10 @@ export class MockUseLocale implements LocaleVendorHookInterface {
     this.json = require(`@locales/${namespace}.json`);
   }
 
-  t = (key: string) => {
+  t = jest.fn((key: string) => {
     const translation = this.recursiveKeyLookup(key, this.json) as string;
     return _t(translation);
-  };
+  });
 
   protected recursiveKeyLookup = (
     translationDotKey: string,

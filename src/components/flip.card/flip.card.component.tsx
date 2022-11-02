@@ -1,20 +1,21 @@
 import { Box, Img, Center, Text } from "@chakra-ui/react";
-import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
 import useColour from "@src/hooks/colour";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export interface FlipCardProps {
-  currentlyFlipped: null | number;
-  fallbackImage: string;
-  image: string;
+  cardSize: number;
+  currentlyFlipped: number | null;
+  hasLoadError: boolean;
+  imageFrontActiveSrc: string;
+  imageRearSrc: string;
   index: number;
-  rearImage: string;
-  size: number;
-  flipperController: (index: number | null) => void;
-  imageIsLoaded: () => void;
+  noArtWorkText: string;
+
+  onClick: () => void;
+  onLoad: () => void;
+  onLoadError: () => void;
   t: tFunctionType;
-  noArtWork: string;
 }
 
 export const testIDs = {
@@ -25,35 +26,26 @@ export const testIDs = {
 };
 
 export default function FlipCard({
+  cardSize,
   currentlyFlipped,
-  fallbackImage,
-  image,
+  hasLoadError,
+  imageFrontActiveSrc,
+  imageRearSrc,
   index,
-  noArtWork,
-  rearImage,
-  size,
-  flipperController,
-  imageIsLoaded,
+  noArtWorkText,
+  onClick,
+  onLoad,
+  onLoadError,
   t,
 }: FlipCardProps) {
   const { flipCardColour } = useColour();
-  const [hasError, setError] = useState(false);
 
-  const isFlipped = currentlyFlipped === index;
   const border = 1;
-
-  const flipper = () => {
-    if (isFlipped) {
-      flipperController(null);
-    } else {
-      flipperController(index);
-    }
-  };
 
   return (
     <ReactCardFlip
-      containerStyle={{ margin: 2, width: size, height: size }}
-      isFlipped={isFlipped}
+      containerStyle={{ margin: 2, width: cardSize, height: cardSize }}
+      isFlipped={currentlyFlipped === index}
       flipDirection="horizontal"
     >
       <Box
@@ -61,9 +53,9 @@ export default function FlipCard({
         borderColor={flipCardColour.border}
         bg={flipCardColour.background}
         color={flipCardColour.foreground}
-        width={size}
-        height={size}
-        onClick={flipper}
+        width={cardSize}
+        height={cardSize}
+        onClick={onClick}
         cursor={"pointer"}
         sx={{
           "&:hover": {
@@ -71,35 +63,35 @@ export default function FlipCard({
           },
         }}
       >
-        <div style={{ border: "2px" }}>
+        <Box style={{ border: "2px" }}>
           <Center
-            width={`${size - border * 2}px`}
-            height={`${size - border * 2}px`}
+            height={`${cardSize - border * 2}px`}
+            width={`${cardSize - border * 2}px`}
           >
             <Img
-              data-testid={testIDs.flipFrontImage}
-              src={hasError ? fallbackImage : image}
               alt={`${t("frontAltText")}: ${index + 1}`}
-              width={`${size - border * 2}px`}
-              height={`${size - border * 2}px`}
-              onLoad={() => imageIsLoaded()}
-              onError={() => setError(true)}
+              data-testid={testIDs.flipFrontImage}
+              height={`${cardSize - border * 2}px`}
+              onError={onLoadError}
+              onLoad={onLoad}
+              src={imageFrontActiveSrc}
               style={{
                 position: "relative",
               }}
+              width={`${cardSize - border * 2}px`}
             />
-            {hasError ? (
+            {hasLoadError ? (
               <Text
-                data-testid={testIDs.flipFrontText}
-                style={{ position: "absolute" }}
-                fontSize={"sm"}
                 color={flipCardColour.textFront}
+                data-testid={testIDs.flipFrontText}
+                fontSize={"sm"}
+                style={{ position: "absolute" }}
               >
-                <strong>{noArtWork}</strong>
+                <strong>{noArtWorkText}</strong>
               </Text>
             ) : null}
           </Center>
-        </div>
+        </Box>
       </Box>
 
       <Box
@@ -107,9 +99,9 @@ export default function FlipCard({
         borderColor={flipCardColour.border}
         bg={flipCardColour.background}
         color={flipCardColour.foreground}
-        width={size}
-        height={size}
-        onClick={flipper}
+        width={cardSize}
+        height={cardSize}
+        onClick={onClick}
         cursor={"pointer"}
         sx={{
           "&:hover": {
@@ -117,33 +109,33 @@ export default function FlipCard({
           },
         }}
       >
-        <div style={{ border: "2px" }}>
+        <Box style={{ border: "2px" }}>
           <Center
-            width={`${size - border * 2}px`}
-            height={`${size - border * 2}px`}
+            height={`${cardSize - border * 2}px`}
+            width={`${cardSize - border * 2}px`}
           >
             <Img
-              data-testid={testIDs.flipRearImage}
-              src={rearImage}
               alt={`${t("rearAltText")}: ${index + 1}`}
-              width={`${size - border * 2}px`}
-              height={`${size - border * 2}px`}
-              onLoad={() => imageIsLoaded()}
+              data-testid={testIDs.flipRearImage}
+              height={`${cardSize - border * 2}px`}
+              onLoad={onLoad}
+              src={imageRearSrc}
               style={{
                 position: "relative",
                 opacity: 0.5,
               }}
+              width={`${cardSize - border * 2}px`}
             />
             <Text
-              data-testid={testIDs.flipRearText}
               color={flipCardColour.textRear}
+              data-testid={testIDs.flipRearText}
               style={{ position: "absolute" }}
               fontSize={"3xl"}
             >
               <strong>{index + 1}</strong>
             </Text>
           </Center>
-        </div>
+        </Box>
       </Box>
     </ReactCardFlip>
   );

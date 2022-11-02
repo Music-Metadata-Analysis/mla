@@ -2,11 +2,12 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/navbar.mock";
 import useNavBar from "../navbar";
-import mockToggleHook from "../utility/__mocks__/toggle.mock";
+import mockToggleHook from "../utility/__mocks__/toggle.hook.mock";
 import NavConfig from "@src/config/navbar";
-import useToggle from "@src/hooks/utility/toggle";
+import useToggle from "@src/hooks/utility/toggle.hook";
 import NavBarProvider from "@src/providers/controllers/navbar/navbar.provider";
-import { makeUnique } from "@src/tests/fixtures/mock.utility";
+import { checkIsToggle } from "@src/tests/fixtures/hooks/toggle.hook";
+import makeUniqueHookMock from "@src/tests/fixtures/hooks/unique";
 import type { NavBarControllerContextInterface } from "@src/types/controllers/navbar/navbar.types";
 import type { ReactNode } from "react";
 
@@ -15,16 +16,16 @@ interface MockInterfaceContextWithChildren {
   mockContext: NavBarControllerContextInterface;
 }
 
-jest.mock("@src/hooks/utility/toggle");
+jest.mock("@src/hooks/utility/toggle.hook");
 
 describe("useNavBar", () => {
   let originalEnvironment: typeof process.env;
   let received: ReturnType<typeof arrange>;
 
   const mockToggleHooks = [
-    makeUnique<typeof mockToggleHook>(mockToggleHook),
-    makeUnique<typeof mockToggleHook>(mockToggleHook),
-    makeUnique<typeof mockToggleHook>(mockToggleHook),
+    makeUniqueHookMock<typeof mockToggleHook>(mockToggleHook),
+    makeUniqueHookMock<typeof mockToggleHook>(mockToggleHook),
+    makeUniqueHookMock<typeof mockToggleHook>(mockToggleHook),
   ];
 
   beforeAll(() => {
@@ -96,18 +97,6 @@ describe("useNavBar", () => {
     });
   };
 
-  const checkToggle = (name: keyof typeof mockHookValues) => {
-    it(`should contain a ${name} property, with the functions of a toggle hook`, () => {
-      expect(typeof received.result.current[name].setFalse).toBe("function");
-      expect(typeof received.result.current[name].setTrue).toBe("function");
-      expect(typeof received.result.current[name].toggle).toBe("function");
-    });
-
-    it(`should contain a ${name} property, with the state boolean of a toggle hook`, () => {
-      expect(typeof received.result.current[name].state).toBe("boolean");
-    });
-  };
-
   describe("when rendered", () => {
     beforeEach(() => {
       received = arrange();
@@ -119,9 +108,9 @@ describe("useNavBar", () => {
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
 
-    checkToggle("hamburger");
-    checkToggle("mobileMenu");
-    checkToggle("navigation");
+    checkIsToggle(() => received.result.current, "hamburger");
+    checkIsToggle(() => received.result.current, "mobileMenu");
+    checkIsToggle(() => received.result.current, "navigation");
   });
 
   describe("when on a larger screen", () => {

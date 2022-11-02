@@ -10,7 +10,7 @@ import {
 import useColour from "@src/hooks/colour";
 import type { PropsWithChildren } from "react";
 
-export interface DrawerInterface {
+export interface ReportDrawerProps {
   title?: string;
   isOpen: boolean;
   onClose: () => void;
@@ -25,14 +25,14 @@ export const testIDs = {
   DrawerHeader: "DrawerHeader",
 };
 
-const LastFMReportDrawer = ({
+const ReportDrawer = ({
   children,
   title,
   isOpen,
   onClose,
   alwaysOpen,
   placement,
-}: PropsWithChildren<DrawerInterface>) => {
+}: PropsWithChildren<ReportDrawerProps>) => {
   const { componentColour, transparent } = useColour();
 
   const placementOpposites = {
@@ -93,4 +93,4 @@ const LastFMReportDrawer = ({
   );
 };
 
-export default LastFMReportDrawer;
+export default ReportDrawer;
