@@ -5,13 +5,15 @@ import splash from "@locales/splash.json";
 import routes from "@src/config/routes";
 
 describe("Splash Page", () => {
+  const timeout = 5000;
+
   before(() => {
     baseUrl();
     cy.visit(routes.home);
   });
 
   it("should render the title correctly", () => {
-    cy.contains(splash.title).should("be.visible", { timeout: 5000 });
+    cy.contains(splash.title).should("be.visible", { timeout });
   });
 
   it("should render the credit text correctly", () => {
@@ -45,8 +47,8 @@ describe("Splash Page", () => {
   describe("when we view the cookie consent banner", () => {
     let CookieConsent: Cypress.Chainable<JQuery<Node>>;
 
-    beforeEach(() => {
-      CookieConsent = cy.get(".CookieConsent", { timeout: 1000 });
+    before(() => {
+      CookieConsent = cy.get(".CookieConsent", { timeout });
     });
 
     it("should display the cookie consent banner", () => {
@@ -66,7 +68,7 @@ describe("Splash Page", () => {
     });
 
     describe("when we click the accept button", () => {
-      beforeEach(() => {
+      before(() => {
         CookieConsent.contains(main.analytics.acceptMessage).click();
       });
 

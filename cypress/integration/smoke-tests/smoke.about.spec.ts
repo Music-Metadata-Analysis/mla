@@ -2,14 +2,16 @@ import { baseUrl } from "@cypress/fixtures/setup";
 import about from "@locales/about.json";
 import routes from "@src/config/routes";
 
-describe("Splash Page", () => {
+describe("About Page", () => {
+  const timeout = 5000;
+
   before(() => {
     baseUrl();
     cy.visit(routes.about);
   });
 
   it("should render the correct page title", () => {
-    cy.contains(about.title).should("be.visible", { timeout: 5000 });
+    cy.contains(about.title).should("be.visible", { timeout });
   });
 
   it("should render the correct company name", () => {
