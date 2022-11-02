@@ -5,21 +5,21 @@ import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
 import { baseUrl } from "@cypress/fixtures/setup";
 import routes from "@src/config/routes";
 
-describe("LastFM Report Selection", () => {
+describe("LastFM Report Selection (Enabled)", () => {
   const authorizationCookieName = getAuthorizationCookieName();
   const reports = flipCardReports.concat(Object.values(sunBurstReports));
 
-  before(() => {
-    baseUrl();
-    authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN);
-    cy.visit("/");
-  });
+  before(() => baseUrl());
 
   reports.forEach((report) => {
     describe(report, () => {
       describe("when we are logged in", () => {
+        before(() =>
+          authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN)
+        );
+
         describe("when we visit the search selection screen", () => {
-          beforeEach(() => cy.visit(routes.search.lastfm.selection));
+          before(() => cy.visit(routes.search.lastfm.selection));
 
           it(`should contain the '${report}' report`, () => {
             cy.contains(report).should("be.visible");

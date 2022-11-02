@@ -17,14 +17,13 @@ describe("Count By Artist SunBurst Report", async () => {
     describe("when we are logged in", () => {
       before(() => {
         authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN);
-        cy.visit("/");
       });
 
       describe("when we visit the search selection screen", () => {
         before(() => cy.visit(routes.search.lastfm.selection));
 
         describe(`when we select the '${sunBurstReports.playCountByArtist}' report`, () => {
-          let Report;
+          let Report: Cypress.Chainable<undefined>;
 
           before(() => {
             Report = cy.contains(sunBurstReports.playCountByArtist);
@@ -36,7 +35,7 @@ describe("Count By Artist SunBurst Report", async () => {
           });
 
           describe("when we enter a username", () => {
-            let Input;
+            let Input: Cypress.Chainable<JQuery<HTMLElement>>;
 
             before(() => {
               Input = cy.get('input[name="username"]');

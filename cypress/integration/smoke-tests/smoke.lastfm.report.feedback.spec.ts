@@ -7,12 +7,14 @@ import translations from "@locales/main.json";
 import metrics from "@src/config/metrics";
 import routes from "@src/config/routes";
 
-describe("Feedback dialogue test", () => {
+describe("Feedback Dialogue", () => {
   const authorizationCookieName = getAuthorizationCookieName();
   const expectedFlipCards = 20;
   const report = flipCardReports[0];
-  const thresholdSearchMetricValue = { SearchMetric: 4 };
   const timeout = 40000;
+  const thresholdSearchMetricValue = { SearchMetric: 4 };
+
+  before(() => baseUrl());
 
   describe("when local storage contains a threshold search metric value", () => {
     before(() => {
@@ -26,7 +28,6 @@ describe("Feedback dialogue test", () => {
 
     describe("when we are logged in", () => {
       before(() => {
-        baseUrl();
         authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN);
       });
 

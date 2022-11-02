@@ -4,14 +4,12 @@ import authentication from "@locales/authentication.json";
 import lastfm from "@locales/lastfm.json";
 import routes from "@src/config/routes";
 
-describe("LastFM Report Selection Protected", () => {
+describe("LastFM Report Selection (Unauthenticated)", () => {
   const reports = flipCardReports.concat(Object.values(sunBurstReports));
   const openAuthReports = [reports[0]];
+  const timeout = 5000;
 
-  before(() => {
-    baseUrl();
-    cy.visit("/");
-  });
+  before(() => baseUrl());
 
   openAuthReports.forEach((report) => {
     describe(report, () => {
@@ -22,7 +20,7 @@ describe("LastFM Report Selection Protected", () => {
 
         it("should render the correct page title", () => {
           cy.contains(lastfm.select.title).should("be.visible", {
-            timeout: 5000,
+            timeout,
           });
         });
 
