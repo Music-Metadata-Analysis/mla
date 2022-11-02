@@ -6,44 +6,45 @@ import { baseUrl } from "@cypress/fixtures/setup";
 import routes from "@src/config/routes";
 
 describe("Flip Card Reports", () => {
-  const expectedFlipCards = 20;
   const authorizationCookieName = getAuthorizationCookieName();
+  const expectedFlipCards = 20;
+  const timeout = 40000;
 
-  before(() => {
-    baseUrl();
-    authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN);
-    cy.visit("/");
-  });
+  before(() => baseUrl());
 
   flipCardReports.forEach((report) => {
     describe(report, () => {
       describe("when we are logged in", () => {
+        before(() =>
+          authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN)
+        );
+
         describe("when we visit the search selection screen", () => {
-          beforeEach(() => cy.visit(routes.search.lastfm.selection));
+          before(() => cy.visit(routes.search.lastfm.selection));
 
           describe(`when we select the '${report}' report`, () => {
-            let Report;
+            let Report: Cypress.Chainable<undefined>;
 
-            beforeEach(() => {
+            before(() => {
               Report = cy.contains(report);
               Report.click();
             });
 
             it("should display an input field for a lastfm username", () => {
-              cy.get('input[name="username"]', { timeout: 20000 });
+              cy.get('input[name="username"]', { timeout });
             });
 
             describe("when we enter a username", () => {
-              let Input;
+              let Input: Cypress.Chainable<JQuery<HTMLElement>>;
 
-              beforeEach(() => {
+              before(() => {
                 Input = cy.get('input[name="username"]');
                 Input.type("niall-byrne{enter}");
               });
 
               it("should load 20 flip cards for the expected report", () => {
                 for (let i = 1; i <= expectedFlipCards; i++) {
-                  cy.get(`[alt="Image: ${i}"]`, { timeout: 40000 });
+                  cy.get(`[alt="Image: ${i}"]`, { timeout });
                 }
               });
             });
