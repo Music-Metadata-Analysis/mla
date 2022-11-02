@@ -5,10 +5,10 @@ import BillBoardSpinner from "@src/components/billboard/billboard.spinner/billbo
 import ErrorDisplay from "@src/components/errors/display/error.display.component";
 import Events from "@src/events/events";
 import useAnalytics from "@src/hooks/analytics";
+import useImagesController from "@src/hooks/images";
 import useLocale from "@src/hooks/locale";
 import useMetrics from "@src/hooks/metrics";
 import useRouter from "@src/hooks/router";
-import useUserInterface from "@src/hooks/ui";
 import type FlipCardBaseReport from "../flip.card.report/flip.card.report.base.class";
 import type UserState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
 import type { IntegrationRequestType } from "@src/types/analytics.types";
@@ -28,10 +28,10 @@ export default function FlipCardReportContainer<
   const metrics = useMetrics();
   const report = new reportClass();
   const router = useRouter();
-  const ui = useUserInterface();
+  const imagesController = useImagesController();
 
   useEffect(() => {
-    ui.images.reset();
+    imagesController.reset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -50,7 +50,7 @@ export default function FlipCardReportContainer<
   }, [user]);
 
   useEffect(() => {
-    if (report.queryIsDataReady(user.userProperties, ui)) {
+    if (report.queryIsDataReady(user.userProperties, imagesController)) {
       user.ready();
       metrics.increment("SearchMetric");
       analytics.event(
@@ -60,7 +60,7 @@ export default function FlipCardReportContainer<
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ui.images.count, user.userProperties]);
+  }, [imagesController.count, user.userProperties]);
 
   if (user.userProperties.error === "RatelimitedFetch") {
     return (
@@ -110,7 +110,7 @@ export default function FlipCardReportContainer<
       />
       <FlipCardReport<UserStateType>
         report={report}
-        imageIsLoaded={ui.images.load}
+        imageIsLoaded={imagesController.load}
         visible={user.userProperties.ready}
         userState={report.getEncapsulatedUserState(user.userProperties, t)}
         t={t}

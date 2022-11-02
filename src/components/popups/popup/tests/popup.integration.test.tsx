@@ -10,8 +10,8 @@ import MockPopupDialogue, {
   testColours,
 } from "./implementations/concrete.popup.dialogue";
 import Popup from "../popup.component";
-import UserInterfaceChakraProvider from "@src/providers/ui/ui.chakra/ui.chakra.provider";
-import { UserInterfacePopUpsContext } from "@src/providers/ui/ui.popups/ui.popups.provider";
+import { PopUpsControllerContext } from "@src/providers/controllers/popups/popups.provider";
+import UserInterfaceChakraProvider from "@src/providers/ui/chakra/chakra.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 describe("PopUp", () => {
@@ -27,7 +27,7 @@ describe("PopUp", () => {
   const arrange = () => {
     render(
       <UserInterfaceChakraProvider cookies={"mockCookies"}>
-        <UserInterfacePopUpsContext.Provider
+        <PopUpsControllerContext.Provider
           value={{
             dispatch: mockDispatch,
             status: { [mockPopUpName]: { status: isOpen } },
@@ -38,7 +38,7 @@ describe("PopUp", () => {
             message={mockMessage}
             Component={MockPopupDialogue}
           />
-        </UserInterfacePopUpsContext.Provider>
+        </PopUpsControllerContext.Provider>
       </UserInterfaceChakraProvider>
     );
   };

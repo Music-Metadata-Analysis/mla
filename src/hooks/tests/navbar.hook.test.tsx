@@ -5,14 +5,14 @@ import useNavBar from "../navbar";
 import mockToggleHook from "../utility/__mocks__/toggle.mock";
 import NavConfig from "@src/config/navbar";
 import useToggle from "@src/hooks/utility/toggle";
-import NavBarProvider from "@src/providers/navbar/navbar.provider";
+import NavBarProvider from "@src/providers/controllers/navbar/navbar.provider";
 import { makeUnique } from "@src/tests/fixtures/mock.utility";
-import type { NavBarContextInterface } from "@src/types/navbar.types";
+import type { NavBarControllerContextInterface } from "@src/types/controllers/navbar/navbar.types";
 import type { ReactNode } from "react";
 
 interface MockInterfaceContextWithChildren {
   children?: ReactNode;
-  mockContext: NavBarContextInterface;
+  mockContext: NavBarControllerContextInterface;
 }
 
 jest.mock("@src/hooks/utility/toggle");

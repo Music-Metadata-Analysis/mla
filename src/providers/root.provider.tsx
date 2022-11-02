@@ -1,6 +1,6 @@
 import AnalyticsProvider from "./analytics/analytics.provider";
+import ControllersProvider from "./controllers/controllers.root.provider";
 import MetricsProvider from "./metrics/metrics.provider";
-import NavBarProvider from "./navbar/navbar.provider";
 import UserInterfaceRootProvider from "./ui/ui.root.provider";
 import UserProvider from "./user/user.provider";
 import authVendor from "@src/clients/auth/vendor";
@@ -27,18 +27,18 @@ const RootProvider = ({
   return (
     <authVendor.Provider session={session}>
       <flagVendor.Provider state={flagState}>
-        <UserInterfaceRootProvider cookies={cookies}>
-          <MetricsProvider>
-            <UserProvider>
-              <AnalyticsProvider>
-                <NavBarProvider>
+        <AnalyticsProvider>
+          <UserInterfaceRootProvider cookies={cookies}>
+            <ControllersProvider>
+              <MetricsProvider>
+                <UserProvider>
                   <Header pageKey={headerProps.pageKey} />
                   {children}
-                </NavBarProvider>
-              </AnalyticsProvider>
-            </UserProvider>
-          </MetricsProvider>
-        </UserInterfaceRootProvider>
+                </UserProvider>
+              </MetricsProvider>
+            </ControllersProvider>
+          </UserInterfaceRootProvider>
+        </AnalyticsProvider>
       </flagVendor.Provider>
     </authVendor.Provider>
   );

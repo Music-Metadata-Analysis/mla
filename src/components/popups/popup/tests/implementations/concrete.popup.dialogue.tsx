@@ -1,5 +1,5 @@
 import { useColorMode, useColorModeValue } from "@chakra-ui/react";
-import type { UserInterfacePopUpsComponentProps } from "@src/types/ui/popups/ui.component.popups.types";
+import type { PopUpComponentProps } from "@src/types/controllers/popups/component.popups.types";
 
 export const testIDs = {
   MockPopUpComponent: "MockPopUpComponent",
@@ -14,7 +14,7 @@ export const testColours = {
 };
 
 const MockPopUpComponent = jest.fn(
-  ({ message, onClose }: UserInterfacePopUpsComponentProps) => {
+  ({ message, onClose }: PopUpComponentProps) => {
     const { toggleColorMode } = useColorMode();
     const colour = useColorModeValue(testColours.light, testColours.dark);
 

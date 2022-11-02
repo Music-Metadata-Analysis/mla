@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import { Html, Head, Main, NextScript } from "next/document";
 import BaseDocument from "@src/pages/_document";
-import createTheme from "@src/providers/ui/ui.chakra/ui.chakra.theme";
+import createTheme from "@src/providers/ui/chakra/chakra.theme";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { Component } from "react";
 
