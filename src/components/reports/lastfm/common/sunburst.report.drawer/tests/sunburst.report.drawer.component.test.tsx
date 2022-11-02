@@ -88,7 +88,7 @@ describe("LastFMSunBurstReportDrawer", () => {
             mt: "10px",
             mb: "10px",
             orientation: "horizontal",
-            bg: mockColourHook.componentColour.details,
+            borderColor: mockColourHook.componentColour.foreground,
           },
           0,
           []
@@ -99,7 +99,7 @@ describe("LastFMSunBurstReportDrawer", () => {
             mt: "10px",
             mb: "10px",
             orientation: "horizontal",
-            bg: mockColourHook.componentColour.details,
+            borderColor: mockColourHook.componentColour.foreground,
           },
           1,
           []

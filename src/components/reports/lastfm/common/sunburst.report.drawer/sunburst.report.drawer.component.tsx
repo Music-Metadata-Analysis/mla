@@ -69,7 +69,7 @@ export default function LastFMSunBurstDrawer({
           mt={"10px"}
           mb={"10px"}
           orientation="horizontal"
-          bg={componentColour.details}
+          borderColor={componentColour.foreground}
         />
         <SunBurstDrawerControl
           node={node}
@@ -79,7 +79,7 @@ export default function LastFMSunBurstDrawer({
           mt={"10px"}
           mb={"10px"}
           orientation="horizontal"
-          bg={componentColour.details}
+          borderColor={componentColour.foreground}
         />
         <SunBurstNodeList
           node={node}
