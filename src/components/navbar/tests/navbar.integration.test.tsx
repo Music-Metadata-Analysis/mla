@@ -9,7 +9,7 @@ import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
-import NavBarProvider from "@src/providers/navbar/navbar.provider";
+import NavBarControllerProvider from "@src/providers/controllers/navbar/navbar.provider";
 import type { JSONstringType } from "@src/types/json.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 
@@ -71,9 +71,9 @@ describe("NavBar", () => {
   const arrange = () => {
     mockUserProperties = { ...thisMockUserProperties };
     render(
-      <NavBarProvider>
+      <NavBarControllerProvider>
         <NavBar config={config} />
-      </NavBarProvider>
+      </NavBarControllerProvider>
     );
   };
 

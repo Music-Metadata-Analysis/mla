@@ -7,7 +7,7 @@ import settings from "@src/config/popups";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockMetricsHook from "@src/hooks/__mocks__/metrics.mock";
-import mockUserInterfaceHook from "@src/hooks/__mocks__/ui.mock";
+import mockPopUpsHook from "@src/hooks/__mocks__/popups.mock";
 
 jest.mock("@src/hooks/auth");
 
@@ -15,7 +15,7 @@ jest.mock("@src/hooks/locale");
 
 jest.mock("@src/hooks/metrics");
 
-jest.mock("@src/hooks/ui");
+jest.mock("@src/hooks/popups");
 
 jest.mock("../popup/popup.component", () =>
   require("@fixtures/react/child").createComponent("Popup")
@@ -46,21 +46,19 @@ describe("FeedBackPopup", () => {
 
       describe("popup state is closed", () => {
         beforeEach(() => {
-          mockUserInterfaceHook.popups.status.mockReturnValue(false);
+          mockPopUpsHook.status.mockReturnValue(false);
           arrange();
         });
 
         it("should toggle the PopUp to open", () => {
-          expect(mockUserInterfaceHook.popups.open).toBeCalledTimes(1);
-          expect(mockUserInterfaceHook.popups.open).toBeCalledWith(
-            mockPopUpName
-          );
+          expect(mockPopUpsHook.open).toBeCalledTimes(1);
+          expect(mockPopUpsHook.open).toBeCalledWith(mockPopUpName);
         });
       });
 
       describe("popup state is open", () => {
         beforeEach(() => {
-          mockUserInterfaceHook.popups.status.mockReturnValue(true);
+          mockPopUpsHook.status.mockReturnValue(true);
           arrange();
         });
 
@@ -81,7 +79,7 @@ describe("FeedBackPopup", () => {
 
       describe("popup state is closed", () => {
         beforeEach(() => {
-          mockUserInterfaceHook.popups.status.mockReturnValue(false);
+          mockPopUpsHook.status.mockReturnValue(false);
           arrange();
         });
 
@@ -92,7 +90,7 @@ describe("FeedBackPopup", () => {
 
       describe("popup state is open", () => {
         beforeEach(() => {
-          mockUserInterfaceHook.popups.status.mockReturnValue(true);
+          mockPopUpsHook.status.mockReturnValue(true);
           arrange();
         });
 
@@ -126,18 +124,18 @@ describe("FeedBackPopup", () => {
 
       describe("popup state is closed", () => {
         beforeEach(() => {
-          mockUserInterfaceHook.popups.status.mockReturnValue(false);
+          mockPopUpsHook.status.mockReturnValue(false);
           arrange();
         });
 
         it("should NOT toggle the PopUp to open", () => {
-          expect(mockUserInterfaceHook.popups.open).toBeCalledTimes(0);
+          expect(mockPopUpsHook.open).toBeCalledTimes(0);
         });
       });
 
       describe("popup state is open", () => {
         beforeEach(() => {
-          mockUserInterfaceHook.popups.status.mockReturnValue(true);
+          mockPopUpsHook.status.mockReturnValue(true);
         });
 
         it("should NOT call the PopUp component", () => {
@@ -153,7 +151,7 @@ describe("FeedBackPopup", () => {
 
       describe("popup state is closed", () => {
         beforeEach(() => {
-          mockUserInterfaceHook.popups.status.mockReturnValue(false);
+          mockPopUpsHook.status.mockReturnValue(false);
           arrange();
         });
 
@@ -164,7 +162,7 @@ describe("FeedBackPopup", () => {
 
       describe("popup state is open", () => {
         beforeEach(() => {
-          mockUserInterfaceHook.popups.status.mockReturnValue(true);
+          mockPopUpsHook.status.mockReturnValue(true);
           arrange();
         });
 

@@ -5,7 +5,7 @@ import SVSIcon from "@src/components/icons/svs/svs.icon";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
 import externalLinks from "@src/config/external";
 import useColour from "@src/hooks/colour";
-import type { UserInterfacePopUpsComponentProps } from "@src/types/ui/popups/ui.component.popups.types";
+import type { PopUpComponentProps } from "@src/types/controllers/popups/component.popups.types";
 
 export const testIDs = {
   FeedBackDialogueCloseButton: "FeedBackDialogueCloseButton",
@@ -15,7 +15,7 @@ export const testIDs = {
 export default function FeedbackDialogue({
   message,
   onClose,
-}: UserInterfacePopUpsComponentProps) {
+}: PopUpComponentProps) {
   const { feedbackColour } = useColour();
 
   return (

@@ -9,10 +9,10 @@ import MockPopupDialogue, {
   testIDs,
 } from "./implementations/concrete.popup.dialogue";
 import Popup from "../popup.component";
-import mockUserInterfaceHook from "@src/hooks/__mocks__/ui.mock";
+import mockPopUpsHook from "@src/hooks/__mocks__/popups.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/ui");
+jest.mock("@src/hooks/popups");
 
 describe("PopUp", () => {
   const mockName = "FeedBack";
@@ -32,7 +32,7 @@ describe("PopUp", () => {
 
   describe("when the popup has it's state set to open", () => {
     beforeEach(() => {
-      mockUserInterfaceHook.popups.status.mockImplementation(() => true);
+      mockPopUpsHook.status.mockImplementation(() => true);
       arrange();
     });
 
@@ -56,19 +56,19 @@ describe("PopUp", () => {
 
     describe("when unmounted", () => {
       beforeEach(() => {
-        mockUserInterfaceHook.popups.close.mockClear();
+        mockPopUpsHook.close.mockClear();
         cleanup();
       });
 
       it("should set the status to closed", async () => {
-        expect(mockUserInterfaceHook.popups.close).toBeCalledTimes(1);
-        expect(mockUserInterfaceHook.popups.close).toBeCalledWith(mockName);
+        expect(mockPopUpsHook.close).toBeCalledTimes(1);
+        expect(mockPopUpsHook.close).toBeCalledWith(mockName);
       });
     });
 
     describe("when closed", () => {
       beforeEach(async () => {
-        mockUserInterfaceHook.popups.close.mockClear();
+        mockPopUpsHook.close.mockClear();
         const component = await screen.findByText(mockMessage);
         fireEvent.click(component);
       });
@@ -80,18 +80,18 @@ describe("PopUp", () => {
       });
 
       it("should set the status to closed", async () => {
-        expect(mockUserInterfaceHook.popups.close).toBeCalledTimes(1);
-        expect(mockUserInterfaceHook.popups.close).toBeCalledWith(mockName);
+        expect(mockPopUpsHook.close).toBeCalledTimes(1);
+        expect(mockPopUpsHook.close).toBeCalledWith(mockName);
       });
 
       describe("when unmounted", () => {
         beforeEach(() => {
-          mockUserInterfaceHook.popups.close.mockClear();
+          mockPopUpsHook.close.mockClear();
           cleanup();
         });
 
         it("should NOT set the status again", async () => {
-          expect(mockUserInterfaceHook.popups.close).toBeCalledTimes(0);
+          expect(mockPopUpsHook.close).toBeCalledTimes(0);
         });
       });
     });
@@ -99,7 +99,7 @@ describe("PopUp", () => {
 
   describe("when the popup has it's state set to closed", () => {
     beforeEach(() => {
-      mockUserInterfaceHook.popups.status.mockImplementation(() => false);
+      mockPopUpsHook.status.mockImplementation(() => false);
       arrange();
     });
 

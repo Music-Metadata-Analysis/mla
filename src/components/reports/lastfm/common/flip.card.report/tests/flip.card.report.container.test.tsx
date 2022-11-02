@@ -16,7 +16,7 @@ import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockMetricsHook from "@src/hooks/__mocks__/metrics.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
-import UserInterfaceImageProvider from "@src/providers/ui/ui.images/ui.images.provider";
+import ImagesControllerProvider from "@src/providers/controllers/images/images.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
 
@@ -126,13 +126,13 @@ describe("FlipCardReportContainer", () => {
 
   const arrange = () => {
     render(
-      <UserInterfaceImageProvider>
+      <ImagesControllerProvider>
         <FlipCardReportContainer
           userName={testUsername}
           user={mockHookState}
           reportClass={MockReportClass}
         />
-      </UserInterfaceImageProvider>
+      </ImagesControllerProvider>
     );
   };
 

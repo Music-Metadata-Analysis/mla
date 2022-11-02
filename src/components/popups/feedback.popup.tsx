@@ -5,14 +5,14 @@ import settings from "@src/config/popups";
 import useAuth from "@src/hooks/auth";
 import useLocale from "@src/hooks/locale";
 import useMetrics from "@src/hooks/metrics";
-import useUserInterface from "@src/hooks/ui";
+import usePopUps from "@src/hooks/popups";
 
 const popUpName = "FeedBack" as const;
 
 export default function FeedbackPopUp() {
   const { metrics } = useMetrics();
   const { status: authStatus } = useAuth();
-  const ui = useUserInterface();
+  const popups = usePopUps();
   const { t } = useLocale("main");
 
   useEffect(() => {
@@ -20,12 +20,12 @@ export default function FeedbackPopUp() {
       settings[popUpName].searchMetricCount.includes(metrics["SearchMetric"]) &&
       authStatus === "authenticated"
     ) {
-      ui.popups.open(popUpName);
+      popups.open(popUpName);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metrics]);
 
-  if (!ui.popups.status(popUpName) || authStatus !== "authenticated") {
+  if (!popups.status(popUpName) || authStatus !== "authenticated") {
     return null;
   }
 
