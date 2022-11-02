@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import { InitialState } from "../metrics.initial";
 import MetricsProvider, { MetricsContext } from "../metrics.provider";
+import settings from "@src/config/metrics";
 import PersistentReducerFactory from "@src/hooks/utility/local.storage/persisted.reducer.hook.factory.class";
 import type { MetricsContextInterface } from "@src/types/metrics/context.types";
 
@@ -50,7 +51,7 @@ describe("MetricsProvider", () => {
     it("should create a persisted reducer with the expected local storage key", () => {
       expect(PersistentReducerFactory.prototype.create).toBeCalledTimes(1);
       expect(PersistentReducerFactory.prototype.create).toBeCalledWith(
-        "metrics"
+        settings.localStorageKey
       );
     });
 

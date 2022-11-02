@@ -64,12 +64,13 @@ describe("FeedbackDialogue", () => {
   it("should call the Box component correctly", () => {
     expect(Box).toBeCalledTimes(1);
     checkMockCall(Box, {
-      mb: [5, 5, 8],
       bg: mockColourHook.feedbackColour.background,
-      color: mockColourHook.feedbackColour.foreground,
       borderColor: mockColourHook.feedbackColour.border,
-      borderWidth: 1,
       borderRadius: 20,
+      borderWidth: 1,
+      color: mockColourHook.feedbackColour.foreground,
+      mb: [5, 5, 8],
+      "data-testid": testIDs.FeedBackDialogue,
     });
   });
 

@@ -8,6 +8,7 @@ import useColour from "@src/hooks/colour";
 import type { PopUpComponentProps } from "@src/types/controllers/popups/component.popups.types";
 
 export const testIDs = {
+  FeedBackDialogue: "FeedBackDialogue",
   FeedBackDialogueCloseButton: "FeedBackDialogueCloseButton",
   FeedBackDialogueIcon: "FeedBackDialogueIcon",
 };
@@ -20,12 +21,13 @@ export default function FeedbackDialogue({
 
   return (
     <Box
-      mb={[5, 5, 8]}
       bg={feedbackColour.background}
-      color={feedbackColour.foreground}
       borderColor={feedbackColour.border}
-      borderWidth={1}
       borderRadius={20}
+      borderWidth={1}
+      color={feedbackColour.foreground}
+      data-testid={testIDs.FeedBackDialogue}
+      mb={[5, 5, 8]}
     >
       <Flex align={"center"} justify={"center"} mt={2}>
         <ClickLink href={externalLinks.svsContact}>
