@@ -6,7 +6,7 @@ import UserInterfaceRootProvider from "../ui/ui.root.provider";
 import UserProvider from "../user/user.provider";
 import authVendor from "@src/clients/auth/vendor";
 import flagVendor from "@src/clients/flags/vendor";
-import Header from "@src/components/header/header.component";
+import HeaderContainer from "@src/components/header/header.container";
 import AnalyticsProvider from "@src/providers/analytics/analytics.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
@@ -16,8 +16,8 @@ jest.mock("@src/clients/auth/vendor");
 
 jest.mock("@src/clients/flags/vendor");
 
-jest.mock("@src/components/header/header.component", () =>
-  require("@fixtures/react/parent").createComponent("Header")
+jest.mock("@src/components/header/header.container", () =>
+  require("@fixtures/react/parent").createComponent("HeaderContainer")
 );
 
 jest.mock("@src/providers/analytics/analytics.provider", () =>
@@ -45,7 +45,7 @@ const providers = {
   AuthVendorProvider: "AuthVendorProvider",
   ControllersRootProvider: "ControllersRootProvider",
   FlagVendorProvider: "FlagVendorProvider",
-  Header: "Header",
+  HeaderContainer: "HeaderContainer",
   MetricsProvider: "MetricsProvider",
   RootProvider: "RootProvider",
   UserProvider: "UserProvider",
@@ -90,12 +90,12 @@ describe("RootProvider", () => {
   describe("When Rendered, with flagState, but without a pageKey", () => {
     beforeEach(() => arrange(mockFlagState));
 
-    it("should call the Header component correctly", async () => {
-      await waitFor(() => expect(Header).toBeCalledTimes(1));
+    it("should call the HeaderContainer component correctly", async () => {
+      await waitFor(() => expect(HeaderContainer).toBeCalledTimes(1));
       await waitFor(() =>
-        expect(Header).toBeCalledWith({ pageKey: "default" }, {})
+        expect(HeaderContainer).toBeCalledWith({ pageKey: "default" }, {})
       );
-      expect(await screen.findByTestId(providers.Header)).toBeTruthy;
+      expect(await screen.findByTestId(providers.HeaderContainer)).toBeTruthy;
     });
 
     it("should call the FlagVendorProvider component correctly", async () => {
@@ -113,12 +113,12 @@ describe("RootProvider", () => {
   describe("When Rendered, with flagState and a pageKey", () => {
     beforeEach(() => arrange(mockFlagState, mockPageKey));
 
-    it("should call the Header component correctly", async () => {
-      await waitFor(() => expect(Header).toBeCalledTimes(1));
+    it("should call the HeaderContainer component correctly", async () => {
+      await waitFor(() => expect(HeaderContainer).toBeCalledTimes(1));
       await waitFor(() =>
-        expect(Header).toBeCalledWith({ pageKey: mockPageKey }, {})
+        expect(HeaderContainer).toBeCalledWith({ pageKey: mockPageKey }, {})
       );
-      expect(await screen.findByTestId(providers.Header)).toBeTruthy;
+      expect(await screen.findByTestId(providers.HeaderContainer)).toBeTruthy;
     });
 
     it("should initialize the AuthVendorProvider", async () => {
