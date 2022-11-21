@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export interface VendorRouterHookInterface {
   back: () => void;
   path: string;
@@ -19,6 +21,7 @@ export interface VendorImageProps {
 }
 
 export interface WebFrameworkVendor {
+  HeadShim: (props: { children: ReactNode }) => JSX.Element;
   ImageShim: (props: VendorImageProps) => JSX.Element;
   isBuildTime: () => boolean;
   isSSR: () => boolean;

@@ -1,24 +1,16 @@
 import { waitFor, render } from "@testing-library/react";
-import Head from "next/head";
-import Header from "../header.component";
-import translation from "@locales/main.json";
+import Header, { HeaderProps } from "../header.component";
+import { mockHeadShim } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import settings from "@src/config/head";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
+import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/locale");
-
-jest.mock("next/head");
-
-const MockNextHeader = ({ children }: { children?: unknown }) => {
-  return <>{children}</>;
-};
+jest.mock("@src/clients/web.framework/vendor");
 
 describe("Header", () => {
-  const testTranslationKey = "default";
-
-  beforeEach(() => {
-    jest.mocked(Head).mockImplementationOnce(MockNextHeader);
-  });
+  const currentProps: HeaderProps = {
+    descriptionText: "mockDescriptionText",
+    titleText: "mockTitleText",
+  };
 
   const getMeta = (metaName: string): string | null => {
     const metas = document.getElementsByTagName("meta");
@@ -41,25 +33,28 @@ describe("Header", () => {
   };
 
   const arrange = () => {
-    return render(<Header pageKey={testTranslationKey} />);
+    return render(<Header {...currentProps} />);
   };
 
-  describe("When given a test pageKey", () => {
+  describe("when rendered", () => {
     beforeEach(() => {
       arrange();
     });
 
+    it("should render the web framework's HeadShim component", () => {
+      expect(mockHeadShim).toBeCalledTimes(1);
+      checkMockCall(mockHeadShim, {}, 0);
+    });
+
     it("sets the title appropriately", async () => {
       await waitFor(() =>
-        expect(document.title).toEqual(_t(translation.pages.default.title))
+        expect(document.title).toEqual(currentProps.titleText)
       );
     });
 
     it("should have the correct description metadata set", async () => {
       await waitFor(() =>
-        expect(getMeta("description")).toEqual(
-          _t(translation.pages.default.description)
-        )
+        expect(getMeta("description")).toEqual(currentProps.descriptionText)
       );
     });
 

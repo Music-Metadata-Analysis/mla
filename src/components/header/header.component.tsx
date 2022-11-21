@@ -1,22 +1,20 @@
-import Head from "next/head";
+import webFrameworkVendor from "@src/clients/web.framework/vendor";
 import settings from "@src/config/head";
-import useLocale from "@src/hooks/locale";
 
 export interface HeaderProps {
-  pageKey: string;
+  titleText: string;
+  descriptionText: string;
 }
 
-const Header = ({ pageKey }: HeaderProps) => {
-  const { t } = useLocale("main");
-
+const Header = ({ descriptionText, titleText }: HeaderProps) => {
   return (
     <>
-      <Head>
-        <title>{t(`pages.${pageKey}.title`)}</title>
-        <meta name="description" content={t(`pages.${pageKey}.description`)} />
-        <link rel="icon" href={settings.favicon} />{" "}
+      <webFrameworkVendor.HeadShim>
+        <title>{titleText}</title>
+        <meta name="description" content={descriptionText} />
+        <link rel="icon" href={settings.favicon} />
         <link rel="apple-touch-icon" href={settings.appleTouchIcon} />
-      </Head>
+      </webFrameworkVendor.HeadShim>
     </>
   );
 };
