@@ -22,6 +22,36 @@ env:
   NETLIFY_CLI: netlify-cli
 
 jobs:
+  architecture:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Architecture Enforcement -- Checkout Repository
+        uses: actions/checkout@v2.4.0
+
+      - name: Architecture Enforcement -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      - name: Architecture Enforcement -- Setup Environment
+        run: |
+          source .github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Architecture Enforcement -- Run Enforcement Script
+        run: |
+          source .github/scripts/architecture.sh "src/components/button"
+          source .github/scripts/architecture.sh "src/components/condition"
+          source .github/scripts/architecture.sh "src/components/flip.card"
+          source .github/scripts/architecture.sh "src/components/highlight"
+          source .github/scripts/architecture.sh "src/components/reports"
+
+      - name: Architecture Enforcement -- Report Job Status
+        if: ${{ failure() }}
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: architecture enforcement check has failed!"
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -377,6 +407,7 @@ jobs:
   success_notification:
     needs:
       [
+        architecture,
         build,
         lint,
         security_test,
