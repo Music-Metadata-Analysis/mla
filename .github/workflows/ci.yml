@@ -45,6 +45,7 @@ jobs:
           source .github/scripts/architecture.sh "src/components/condition"
           source .github/scripts/architecture.sh "src/components/flip.card"
           source .github/scripts/architecture.sh "src/components/highlight"
+          source .github/scripts/architecture.sh "src/components/navbar"
           source .github/scripts/architecture.sh "src/components/reports"
 
       - name: Architecture Enforcement -- Report Job Status

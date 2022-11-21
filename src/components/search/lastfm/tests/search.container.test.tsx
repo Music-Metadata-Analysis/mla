@@ -5,15 +5,15 @@ import lastfmTranslations from "@locales/lastfm.json";
 import settings from "@src/config/lastfm";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
-import mockNavBarHook from "@src/hooks/__mocks__/navbar.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockNavBarControllerHook from "@src/hooks/controllers/__mocks__/navbar.controller.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
 
 jest.mock("@src/hooks/auth");
 
-jest.mock("@src/hooks/navbar");
+jest.mock("@src/hooks/controllers/navbar.controller.hook");
 
 jest.mock("@src/hooks/router");
 
@@ -51,21 +51,21 @@ describe("SearchContainer", () => {
 
   it("should attempt to hide the NavBar during render", () => {
     arrange();
-    expect(mockNavBarHook.navigation.setFalse).toBeCalledTimes(1);
+    expect(mockNavBarControllerHook.navigation.setFalse).toBeCalledTimes(1);
   });
 
   it("should attempt to hide the NavBar during a screen resize", () => {
     arrange();
-    expect(mockNavBarHook.navigation.setFalse).toBeCalledTimes(1);
+    expect(mockNavBarControllerHook.navigation.setFalse).toBeCalledTimes(1);
     global.dispatchEvent(new Event("resize"));
-    expect(mockNavBarHook.navigation.setFalse).toBeCalledTimes(2);
+    expect(mockNavBarControllerHook.navigation.setFalse).toBeCalledTimes(2);
   });
 
   it("should show the NavBar during cleanup", async () => {
     arrange();
     cleanup();
     await waitFor(() =>
-      expect(mockNavBarHook.navigation.setTrue).toBeCalledTimes(1)
+      expect(mockNavBarControllerHook.navigation.setTrue).toBeCalledTimes(1)
     );
   });
 

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import SearchForm from "./search.form";
 import settings from "@src/config/lastfm";
 import useAuth from "@src/hooks/auth";
-import useNavBar from "@src/hooks/navbar";
+import useNavBarLayoutController from "@src/hooks/controllers/navbar.controller.hook";
 import useRouter from "@src/hooks/router";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
@@ -22,7 +22,7 @@ export default function SearchContainer({
   t,
 }: SearchContainerProps) {
   const { user: authSession, status: authStatus } = useAuth();
-  const navBar = useNavBar();
+  const navBar = useNavBarLayoutController();
   const router = useRouter();
 
   useEffect(() => {

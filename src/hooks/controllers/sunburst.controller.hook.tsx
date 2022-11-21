@@ -1,11 +1,11 @@
 import { useState } from "react";
-import useNavBar from "@src/hooks/navbar";
+import useNavBarLayoutController from "@src/hooks/controllers/navbar.controller.hook";
 import useToggle from "@src/hooks/utility/toggle.hook";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
 const useSunBurstController = () => {
-  const navbar = useNavBar();
+  const navbar = useNavBarLayoutController();
   const [selectedNode, setSelectedNode] = useState<d3Node>(nullNode as d3Node);
   const [svgTransitioning, setSvgTransitioning] = useState<boolean>(false);
   const drawer = useToggle(false);
