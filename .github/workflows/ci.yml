@@ -39,15 +39,19 @@ jobs:
         env:
           WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
-      - name: Architecture Enforcement -- Run Enforcement Script
+      - name: Architecture Enforcement -- Run Global Enforcement Script
         run: |
-          source .github/scripts/architecture.sh "src/components/button"
-          source .github/scripts/architecture.sh "src/components/condition"
-          source .github/scripts/architecture.sh "src/components/flip.card"
-          source .github/scripts/architecture.sh "src/components/header"
-          source .github/scripts/architecture.sh "src/components/highlight"
-          source .github/scripts/architecture.sh "src/components/navbar"
-          source .github/scripts/architecture.sh "src/components/reports"
+          source .github/scripts/architecture.sh
+
+      - name: Architecture Enforcement -- Run Path Enforcement Script
+        run: |
+          source .github/scripts/architecture-path.sh "src/components/button"
+          source .github/scripts/architecture-path.sh "src/components/condition"
+          source .github/scripts/architecture-path.sh "src/components/flip.card"
+          source .github/scripts/architecture-path.sh "src/components/header"
+          source .github/scripts/architecture-path.sh "src/components/highlight"
+          source .github/scripts/architecture-path.sh "src/components/navbar"
+          source .github/scripts/architecture-path.sh "src/components/reports"
 
       - name: Architecture Enforcement -- Report Job Status
         if: ${{ failure() }}
