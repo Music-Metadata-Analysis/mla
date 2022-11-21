@@ -4,12 +4,12 @@ import Billboard from "../billboard.component";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import { settings } from "@src/config/billboard";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
-import mockNavBarHook from "@src/hooks/__mocks__/navbar.mock";
+import mockNavBarControllerHook from "@src/hooks/controllers/__mocks__/navbar.controller.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/colour");
 
-jest.mock("@src/hooks/navbar");
+jest.mock("@src/hooks/controllers/navbar.controller.hook");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
@@ -99,7 +99,7 @@ describe("Billboard", () => {
   };
 
   describe("when the navbar is visible", () => {
-    beforeEach(() => (mockNavBarHook.navigation.state = true));
+    beforeEach(() => (mockNavBarControllerHook.navigation.state = true));
 
     describe("when the screen height is >= the threshold", () => {
       beforeEach(() => {
@@ -131,7 +131,7 @@ describe("Billboard", () => {
   });
 
   describe("when the navbar is NOT visible", () => {
-    beforeEach(() => (mockNavBarHook.navigation.state = false));
+    beforeEach(() => (mockNavBarControllerHook.navigation.state = false));
 
     describe("when the screen height is >= the threshold", () => {
       beforeEach(() => {

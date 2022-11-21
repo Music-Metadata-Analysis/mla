@@ -1,12 +1,12 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import useSunBurstController from "../sunburst.controller.hook";
-import mockNavBarHook from "@src/hooks/__mocks__/navbar.mock";
+import mockNavBarControllerHook from "@src/hooks/controllers/__mocks__/navbar.controller.hook.mock";
 import mockHookValues from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("@src/hooks/navbar");
+jest.mock("@src/hooks/controllers/navbar.controller.hook");
 
 describe("useSunBurstController", () => {
   let received: ReturnType<typeof arrange>;
@@ -67,8 +67,8 @@ describe("useSunBurstController", () => {
       });
 
       it("should disable the navbar's mobile menu", () => {
-        expect(mockNavBarHook.hamburger.setFalse).toBeCalledTimes(1);
-        expect(mockNavBarHook.hamburger.setFalse).toBeCalledWith();
+        expect(mockNavBarControllerHook.hamburger.setFalse).toBeCalledTimes(1);
+        expect(mockNavBarControllerHook.hamburger.setFalse).toBeCalledWith();
       });
     });
 
@@ -82,8 +82,8 @@ describe("useSunBurstController", () => {
       });
 
       it("should enable the navbar's mobile menu", () => {
-        expect(mockNavBarHook.hamburger.setTrue).toBeCalledTimes(1);
-        expect(mockNavBarHook.hamburger.setTrue).toBeCalledWith();
+        expect(mockNavBarControllerHook.hamburger.setTrue).toBeCalledTimes(1);
+        expect(mockNavBarControllerHook.hamburger.setTrue).toBeCalledWith();
       });
     });
 

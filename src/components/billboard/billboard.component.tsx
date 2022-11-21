@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Condition from "@src/components/condition/condition.component";
 import { settings } from "@src/config/billboard";
 import useColour from "@src/hooks/colour";
-import useNavBar from "@src/hooks/navbar";
+import useNavBarLayoutController from "@src/hooks/controllers/navbar.controller.hook";
 
 interface BillboardProps {
   title: string;
@@ -13,7 +13,7 @@ interface BillboardProps {
 const Billboard = ({ children, title }: BillboardProps) => {
   const { componentColour, transparent } = useColour();
   const [showTitle, setShowTitle] = useState<boolean>(true);
-  const { navigation } = useNavBar();
+  const { navigation } = useNavBarLayoutController();
 
   const getNavBarOffset = () => {
     if (navigation.state) return 16;

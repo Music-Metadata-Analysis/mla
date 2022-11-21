@@ -4,7 +4,7 @@ import authVendorSSR from "@src/clients/auth/vendor.ssr";
 import flagVendorSSR from "@src/clients/flags/vendor.ssr";
 import localeVendor from "@src/clients/locale/vendor";
 import Consent from "@src/components/consent/consent.component";
-import NavBar from "@src/components/navbar/navbar.component";
+import NavBarContainer from "@src/components/navbar/navbar.container";
 import RootPopups from "@src/components/popups/root.popup";
 import NavConfig from "@src/config/navbar";
 import RootProvider from "@src/providers/root.provider";
@@ -22,7 +22,7 @@ function MLA({
       session={session}
       headerProps={headerProps}
     >
-      <NavBar config={NavConfig.menuConfig} />
+      <NavBarContainer config={NavConfig.menuConfig} />
       <Component {...otherProps} />
       <RootPopups />
       <Consent />
