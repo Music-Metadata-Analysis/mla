@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
-import NavBar from "../navbar.component";
-import mockControllerHook from "../navbar.hooks/__mocks__/navbar.ui.controller.mock";
+import NavBarContainer from "../navbar.container";
+import mockControllerHook from "../navbar.controllers/__mocks__/navbar.ui.controller.mock";
 import NavBarRootContainer from "../navbar.root/navbar.root.container";
 import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import NavConfig from "@src/config/navbar";
@@ -10,7 +10,7 @@ jest.mock("@src/hooks/auth");
 
 jest.mock("@src/hooks/lastfm");
 
-jest.mock("../navbar.hooks/navbar.ui.controller");
+jest.mock("../navbar.controllers/navbar.ui.controller");
 
 jest.mock("@src/clients/web.framework/vendor");
 
@@ -18,11 +18,11 @@ jest.mock("../navbar.root/navbar.root.container", () =>
   require("@fixtures/react/child").createComponent(["NavBarRootContainer"])
 );
 
-describe("NavBar", () => {
+describe("NavBarContainer", () => {
   beforeEach(() => jest.clearAllMocks());
 
   const arrange = () => {
-    render(<NavBar config={NavConfig.menuConfig} />);
+    render(<NavBarContainer config={NavConfig.menuConfig} />);
   };
 
   const checkNotRendered = () => {

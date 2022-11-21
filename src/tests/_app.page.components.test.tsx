@@ -7,7 +7,7 @@ import { mockFlagVendorSSRClient } from "@src/clients/flags/__mocks__/vendor.ssr
 import flagVendorSSR from "@src/clients/flags/vendor.ssr";
 import { mockLocaleVendorHOCIdentifier } from "@src/clients/locale/__mocks__/vendor.mock";
 import Consent from "@src/components/consent/consent.component";
-import NavBar from "@src/components/navbar/navbar.component";
+import NavBarContainer from "@src/components/navbar/navbar.container";
 import RootPopup from "@src/components/popups/root.popup";
 import NavConfig from "@src/config/navbar";
 import MLA, { getInitialProps } from "@src/pages/_app";
@@ -33,8 +33,8 @@ jest.mock("../../src/providers/root.provider", () =>
   require("@fixtures/react/parent").createComponent("RootProvider")
 );
 
-jest.mock("@src/components/navbar/navbar.component", () =>
-  require("@fixtures/react/child").createComponent("NavBar")
+jest.mock("@src/components/navbar/navbar.container", () =>
+  require("@fixtures/react/child").createComponent("NavBarContainer")
 );
 
 jest.mock("@src/components/popups/root.popup", () =>
@@ -83,9 +83,9 @@ describe("MLA", () => {
     });
   });
 
-  it("should render the NavBar with the correct props", () => {
-    expect(NavBar).toBeCalledTimes(1);
-    checkMockCall(NavBar, { config: NavConfig.menuConfig });
+  it("should render the NavBarContainer with the correct props", () => {
+    expect(NavBarContainer).toBeCalledTimes(1);
+    checkMockCall(NavBarContainer, { config: NavConfig.menuConfig });
   });
 
   it("should render the passed Component with the correct props", () => {

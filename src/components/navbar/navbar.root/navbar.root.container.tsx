@@ -3,8 +3,9 @@ import NavBar from "./navbar.root.component";
 import useAnalytics from "@src/hooks/analytics";
 import useAuth from "@src/hooks/auth";
 import useLastFM from "@src/hooks/lastfm";
+import useLocale from "@src/hooks/locale";
 import useRouter from "@src/hooks/router";
-import type { NavBarControllerHookType } from "../navbar.hooks/navbar.ui.controller";
+import type { NavBarControllerHookType } from "../navbar.controllers/navbar.ui.controller";
 
 interface NavBarRootContainerProps {
   config: { [index: string]: string };
@@ -17,6 +18,7 @@ export default function NavBarRootContainer({
 }: NavBarRootContainerProps) {
   const analytics = useAnalytics();
   const { status: authStatus, user } = useAuth();
+  const { t: navBarT } = useLocale("navbar");
   const { userProperties } = useLastFM();
   const router = useRouter();
 
@@ -33,6 +35,7 @@ export default function NavBarRootContainer({
       analytics={{ trackButtonClick: analytics.trackButtonClick }}
       controls={controller.controls}
       config={config}
+      navBarT={navBarT}
       transaction={isTransaction()}
       router={{ path: router.path }}
       rootReference={controller.rootReference}

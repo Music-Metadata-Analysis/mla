@@ -4,9 +4,7 @@ import NavBarLinkContainer from "../../navbar.link/navbar.link.container";
 import NavBarLogo from "../navbar.logo.component";
 import navbarTranslations from "@locales/navbar.json";
 import routes from "@src/config/routes";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
-
-jest.mock("@src/hooks/locale");
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 
 jest.mock("../../navbar.avatar/navbar.avatar.component", () =>
   require("@fixtures/react/child").createComponent("NavBarAvatar")
@@ -20,12 +18,14 @@ describe("NavBarLogo", () => {
   let mockCurrentPath: string;
   let mockTransaction: boolean;
 
-  const mockCloseMobileMenu = jest.fn();
-  const mockTracker = jest.fn();
   const mockAuthData = {
     name: "mockUser",
     image: "https://mock/profile/url",
   };
+
+  const mockNavBarT = new MockUseLocale("navbar").t;
+  const mockCloseMobileMenu = jest.fn();
+  const mockTracker = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -36,6 +36,7 @@ describe("NavBarLogo", () => {
       <NavBarLogo
         closeMobileMenu={mockCloseMobileMenu}
         currentPath={mockCurrentPath}
+        navBarT={mockNavBarT}
         tracker={mockTracker}
         transaction={mockTransaction}
         user={mockAuthData}

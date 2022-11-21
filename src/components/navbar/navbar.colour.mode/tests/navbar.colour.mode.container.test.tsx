@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
 import NavBarColorModeToggle from "../navbar.colour.mode.component";
 import NavBarColourModeContainer from "../navbar.colour.mode.container";
-import mockColourHook from "@src/components/navbar/navbar.hooks/__mocks__/navbar.ui.colour.mode.mock";
+import { mockColourModeHook } from "@src/clients/ui.framework/__mocks__/vendor.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { ChangeEvent } from "react";
 
-jest.mock("@src/components/navbar/navbar.hooks/navbar.ui.colour.mode");
+jest.mock("@src/clients/ui.framework/vendor");
 
 jest.mock("../navbar.colour.mode.component", () =>
   require("@fixtures/react/child").createComponent(["NavBarToggle"])
@@ -31,7 +31,7 @@ describe("NavBarLinkContainer", () => {
       checkMockCall(
         NavBarColorModeToggle,
         {
-          colourMode: mockColourHook.colourMode,
+          colourMode: mockColourModeHook.colourMode,
         },
         0,
         ["handleChange"]
@@ -61,15 +61,15 @@ describe("NavBarLinkContainer", () => {
       });
 
       it("should toggle the colour mode", () => {
-        expect(mockColourHook.toggle).toBeCalledTimes(1);
-        expect(mockColourHook.toggle).toBeCalledWith();
+        expect(mockColourModeHook.toggle).toBeCalledTimes(1);
+        expect(mockColourModeHook.toggle).toBeCalledWith();
       });
     });
   };
 
   describe("when colour mode is 'light'", () => {
     beforeEach(() => {
-      mockColourHook.colourMode = "light";
+      mockColourModeHook.colourMode = "light" as const;
 
       arrange();
     });
@@ -80,7 +80,7 @@ describe("NavBarLinkContainer", () => {
 
   describe("when colour mode is 'dark'", () => {
     beforeEach(() => {
-      mockColourHook.colourMode = "dark";
+      mockColourModeHook.colourMode = "dark" as const;
 
       arrange();
     });

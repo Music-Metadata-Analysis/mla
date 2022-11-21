@@ -1,5 +1,5 @@
 import NavBarColourModeToggle from "./navbar.colour.mode.component";
-import useColourMode from "@src/components/navbar/navbar.hooks/navbar.ui.colour.mode";
+import uiVendor from "@src/clients/ui.framework/vendor";
 import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 import type { ChangeEvent } from "react";
 
@@ -10,7 +10,7 @@ interface NavBarColourModeToggleProps {
 export default function NavBarColourModeContainer({
   tracker,
 }: NavBarColourModeToggleProps) {
-  const { colourMode, toggle } = useColourMode();
+  const { colourMode, toggle } = uiVendor.colourModeHook();
 
   const handleChange = (e: ChangeEvent<HTMLElement>) => {
     e.target.blur();

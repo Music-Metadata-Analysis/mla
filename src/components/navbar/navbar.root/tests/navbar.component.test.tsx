@@ -4,7 +4,7 @@ import { BoxWithRef, Flex, IconButton } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import ReactDOMServer from "react-dom/server";
 import NavBarColourModeContainer from "../../navbar.colour.mode/navbar.colour.mode.container";
-import mockControllerHook from "../../navbar.hooks/__mocks__/navbar.ui.controller.mock";
+import mockControllerHook from "../../navbar.controllers/__mocks__/navbar.ui.controller.mock";
 import NavBarLogo from "../../navbar.logo/navbar.logo.component";
 import NavBarMobileMenu from "../../navbar.mobile.menu/navbar.mobile.menu.component";
 import NavBarOptions from "../../navbar.options/navbar.options.component";
@@ -14,6 +14,7 @@ import NavBarRoot, { testIDs } from "../navbar.root.component";
 import navConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import {
@@ -78,6 +79,8 @@ describe("NavBar", () => {
     image: "https://mock/image.png",
   };
 
+  const mockNavBarT = new MockUseLocale("navbar").t;
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -88,6 +91,7 @@ describe("NavBar", () => {
         analytics={{ trackButtonClick: mockAnalyticsHook.trackButtonClick }}
         config={mockConfig}
         controls={mockControllerHook.controls}
+        navBarT={mockNavBarT}
         transaction={mockTransaction}
         rootReference={mockControllerHook.rootReference}
         router={{ path: mockRouterHook.path }}
@@ -217,6 +221,7 @@ describe("NavBar", () => {
       checkMockCall(NavBarLogo, {
         closeMobileMenu: mockControllerHook.controls.mobileMenu.setFalse,
         currentPath: mockRouterHook.path,
+        navBarT: mockNavBarT,
         transaction: mockTransaction,
         tracker: mockAnalyticsHook.trackButtonClick,
         user: mockUserAuth,
@@ -268,6 +273,7 @@ describe("NavBar", () => {
           closeMobileMenu: mockControllerHook.controls.mobileMenu.setFalse,
           config: mockConfig,
           currentPath: mockRouterHook.path,
+          navBarT: mockNavBarT,
           transaction: mockTransaction,
           tracker: mockAnalyticsHook.trackButtonClick,
         },
@@ -285,6 +291,7 @@ describe("NavBar", () => {
           analytics: { trackButtonClick: mockAnalyticsHook.trackButtonClick },
           config: mockConfig,
           controls: mockControllerHook.controls,
+          navBarT: mockNavBarT,
           transaction: mockTransaction,
           router: { path: mockRouterHook.path },
         },

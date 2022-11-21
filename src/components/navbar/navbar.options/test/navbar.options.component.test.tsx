@@ -2,9 +2,7 @@ import { render } from "@testing-library/react";
 import NavLinkContainer from "../../navbar.link/navbar.link.container";
 import NavBarOptions from "../navbar.options.component";
 import navbarTranslations from "@locales/navbar.json";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
-
-jest.mock("@src/hooks/locale");
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 
 jest.mock("../../navbar.link/navbar.link.container", () =>
   require("@fixtures/react/child").createComponent("NavBarLinkContainer")
@@ -14,6 +12,7 @@ describe("NavBarOptions", () => {
   let mockCurrentPath: string;
   let mockTransaction: boolean;
 
+  const mockNavBarT = new MockUseLocale("navbar").t;
   const mockTracker = jest.fn();
   const mockCloseMobileMenu = jest.fn();
 
@@ -35,6 +34,7 @@ describe("NavBarOptions", () => {
         closeMobileMenu={mockCloseMobileMenu}
         config={mockConfig}
         currentPath={mockCurrentPath}
+        navBarT={mockNavBarT}
         tracker={mockTracker}
         transaction={mockTransaction}
       />

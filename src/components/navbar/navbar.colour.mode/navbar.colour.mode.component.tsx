@@ -1,6 +1,6 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Switch } from "@chakra-ui/react";
-import type { ColourModeType } from "@src/types/clients/ui/vendor.types";
+import type { ColourModeType } from "@src/types/clients/ui.framework/vendor.types";
 import type { ChangeEvent } from "react";
 
 export const testIDs = {

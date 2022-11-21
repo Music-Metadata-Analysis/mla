@@ -7,8 +7,9 @@ import NavBarOptions from "../navbar.options/navbar.options.component";
 import NavBarSessionControlContainer from "../navbar.session.control/navbar.session.control.container";
 import NavBarSpinner from "../navbar.spinner/navbar.spinner.component";
 import useColour from "@src/hooks/colour";
-import type { NavBarControllerHookType } from "../navbar.hooks/navbar.ui.controller";
+import type { NavBarControllerHookType } from "../navbar.controllers/navbar.ui.controller";
 import type { ButtonClickHandlerType } from "@src/types/analytics.types";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export const testIDs = {
   NavBarRoot: "NavBarRoot",
@@ -20,6 +21,7 @@ interface NavBarRootProps {
   analytics: { trackButtonClick: ButtonClickHandlerType };
   config: { [index: string]: string };
   controls: NavBarControllerHookType["controls"];
+  navBarT: tFunctionType;
   transaction: boolean;
   rootReference: NavBarControllerHookType["rootReference"];
   router: { path: string };
@@ -30,6 +32,7 @@ export default function NavBarRoot({
   analytics,
   config,
   controls,
+  navBarT,
   transaction,
   rootReference,
   router,
@@ -42,6 +45,7 @@ export default function NavBarRoot({
       closeMobileMenu={controls.mobileMenu.setFalse}
       config={config}
       currentPath={router.path}
+      navBarT={navBarT}
       transaction={transaction}
       tracker={analytics.trackButtonClick}
     />
@@ -68,6 +72,7 @@ export default function NavBarRoot({
         <NavBarLogo
           closeMobileMenu={controls.mobileMenu.setFalse}
           currentPath={router.path}
+          navBarT={navBarT}
           transaction={transaction}
           tracker={analytics.trackButtonClick}
           user={user}
@@ -107,6 +112,7 @@ export default function NavBarRoot({
         analytics={{ trackButtonClick: analytics.trackButtonClick }}
         config={config}
         controls={controls}
+        navBarT={navBarT}
         transaction={transaction}
         router={router}
       />

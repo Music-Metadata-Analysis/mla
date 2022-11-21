@@ -14,10 +14,6 @@ jest.mock("../navbar.session.control.component", () =>
   require("@fixtures/react/child").createComponent("NavBarSessionControl")
 );
 
-jest.mock("@chakra-ui/icons", () =>
-  require("@fixtures/chakra/icons").createChakraIconMock(["LockIcon"])
-);
-
 jest.mock(
   "@src/components/analytics/analytics.button/analytics.button.component",
   () => require("@fixtures/react/parent").createComponent("AnalyticsWrapper")

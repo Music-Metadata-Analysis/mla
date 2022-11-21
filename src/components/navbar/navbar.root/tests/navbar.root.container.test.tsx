@@ -1,12 +1,14 @@
 import { render } from "@testing-library/react";
-import mockControllerHook from "../../navbar.hooks/__mocks__/navbar.ui.controller.mock";
+import mockControllerHook from "../../navbar.controllers/__mocks__/navbar.ui.controller.mock";
 import NavBarRoot from "../navbar.root.component";
 import NavBarRootContainer from "../navbar.root.container";
 import NavConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockAuthHook from "@src/hooks/__mocks__/auth.mock";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import useLocale from "@src/hooks/locale";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/analytics");
@@ -15,6 +17,8 @@ jest.mock("@src/hooks/auth");
 
 jest.mock("@src/hooks/lastfm");
 
+jest.mock("@src/hooks/locale");
+
 jest.mock("@src/hooks/router");
 
 jest.mock("../navbar.root.component", () =>
@@ -22,7 +26,12 @@ jest.mock("../navbar.root.component", () =>
 );
 
 describe("NavBarRootContainer", () => {
-  beforeEach(() => jest.clearAllMocks());
+  const mockNavBarT = new MockUseLocale("navbar").t;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.mocked(useLocale).mockReturnValueOnce({ t: mockNavBarT });
+  });
 
   const arrange = () => {
     render(
@@ -49,6 +58,7 @@ describe("NavBarRootContainer", () => {
             analytics: { trackButtonClick: mockAnalyticsHook.trackButtonClick },
             controls: mockControllerHook.controls,
             config: NavConfig.menuConfig,
+            navBarT: mockNavBarT,
             transaction: expectedTransactionValue,
             router: { path: mockRouterHook.path },
             rootReference: mockControllerHook.rootReference,

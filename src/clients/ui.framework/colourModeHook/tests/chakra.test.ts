@@ -1,14 +1,14 @@
 import { useColorMode } from "@chakra-ui/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockHookValues from "../__mocks__/navbar.ui.colour.mode.mock";
-import useColourMode from "../navbar.ui.colour.mode";
+import useChakraColourMode from "../chakra";
+import { mockColourModeHook } from "@src/clients/ui.framework/__mocks__/vendor.mock";
 
 jest.mock("@chakra-ui/react", () => ({
   useColorMode: jest.fn(),
 }));
 
-describe("useColourMode", () => {
+describe("useChakraColourMode", () => {
   let received: ReturnType<typeof arrange>;
 
   const mockColorMode = "light";
@@ -26,7 +26,7 @@ describe("useColourMode", () => {
   });
 
   const arrange = () => {
-    return renderHook(() => useColourMode());
+    return renderHook(() => useChakraColourMode());
   };
 
   describe("when rendered", () => {
@@ -36,7 +36,7 @@ describe("useColourMode", () => {
 
     it("should contain all the same properties as the mock hook", () => {
       const mockObjectKeys = dk(
-        mockHookValues as unknown as Record<string, unknown>
+        mockColourModeHook as unknown as Record<string, unknown>
       ).sort();
       const hookKeys = dk(
         received.result.current as unknown as Record<string, unknown>

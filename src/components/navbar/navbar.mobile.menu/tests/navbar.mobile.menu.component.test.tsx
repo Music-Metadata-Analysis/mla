@@ -1,10 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import mockControllerHook from "../../navbar.hooks/__mocks__/navbar.ui.controller.mock";
+import mockControllerHook from "../../navbar.controllers/__mocks__/navbar.ui.controller.mock";
 import NavBarOptions from "../../navbar.options/navbar.options.component";
 import NavBarMobileMenu, { testIDs } from "../navbar.mobile.menu.component";
 import navConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
@@ -24,6 +25,8 @@ describe("NavBarMobileMenu", () => {
     NavBarOptions: "NavBarOptions",
   };
 
+  const mockNavBarT = new MockUseLocale("navbar").t;
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -34,6 +37,7 @@ describe("NavBarMobileMenu", () => {
         analytics={{ trackButtonClick: mockAnalyticsHook.trackButtonClick }}
         config={mockConfig}
         controls={mockControllerHook.controls}
+        navBarT={mockNavBarT}
         transaction={mockTransaction}
         router={{ path: mockRouterHook.path }}
       />
@@ -71,6 +75,7 @@ describe("NavBarMobileMenu", () => {
           closeMobileMenu: mockControllerHook.controls.mobileMenu.setFalse,
           config: mockConfig,
           currentPath: mockRouterHook.path,
+          navBarT: mockNavBarT,
           transaction: mockTransaction,
           tracker: mockAnalyticsHook.trackButtonClick,
         },

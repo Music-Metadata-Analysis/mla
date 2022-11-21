@@ -1,4 +1,4 @@
-import useNavBarDisplayController from "./navbar.hooks/navbar.ui.controller";
+import useNavBarDisplayController from "./navbar.controllers/navbar.ui.controller";
 import NavBarRootContainer from "./navbar.root/navbar.root.container";
 import webFrameworkVendor from "@src/clients/web.framework/vendor";
 import Condition from "@src/components/condition/condition.component";

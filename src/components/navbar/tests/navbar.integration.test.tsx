@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import NavBar from "../navbar.component";
+import NavBarContainer from "../navbar.container";
 import { testIDs as NavBarMobileMenuTestIDs } from "../navbar.mobile.menu/navbar.mobile.menu.component";
 import { testIDs as NavBarRootTestIDs } from "../navbar.root/navbar.root.component";
 import navbarTranslations from "@locales/navbar.json";
@@ -72,7 +72,7 @@ describe("NavBar", () => {
     mockUserProperties = { ...thisMockUserProperties };
     render(
       <NavBarControllerProvider>
-        <NavBar config={config} />
+        <NavBarContainer config={config} />
       </NavBarControllerProvider>
     );
   };
