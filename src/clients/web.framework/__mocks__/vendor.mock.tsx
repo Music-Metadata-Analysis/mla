@@ -1,5 +1,9 @@
 import type { VendorRouterHookInterface } from "@src/types/clients/web.framework/vendor.types";
 
+export const mockHeadShim = jest.fn(({ children }: { children?: unknown }) => {
+  return <>{children}</>;
+});
+
 export const mockImageShim = jest.fn();
 export const mockIsBuildTime = jest.fn();
 export const mockIsSSR = jest.fn();

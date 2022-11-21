@@ -5,13 +5,15 @@ import UserInterfaceRootProvider from "./ui/ui.root.provider";
 import UserProvider from "./user/user.provider";
 import authVendor from "@src/clients/auth/vendor";
 import flagVendor from "@src/clients/flags/vendor";
-import Header, { HeaderProps } from "@src/components/header/header.component";
+import HeaderContainer, {
+  HeaderContainerProps,
+} from "@src/components/header/header.container";
 import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
 import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 
 type RootProviderProps = {
   cookies: { [key: string]: string } | string;
-  headerProps?: HeaderProps;
+  headerProps?: HeaderContainerProps;
   children: React.ReactChild | React.ReactChild[];
   flagState: VendorFlagStateType;
   session?: VendorAuthStateType;
@@ -32,7 +34,7 @@ const RootProvider = ({
             <ControllersProvider>
               <MetricsProvider>
                 <UserProvider>
-                  <Header pageKey={headerProps.pageKey} />
+                  <HeaderContainer pageKey={headerProps.pageKey} />
                   {children}
                 </UserProvider>
               </MetricsProvider>

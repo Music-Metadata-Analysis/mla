@@ -1,4 +1,5 @@
 import {
+  mockHeadShim,
   mockImageShim,
   mockIsBuildTime,
   mockIsSSR,
@@ -7,6 +8,7 @@ import {
 import type { WebFrameworkVendor } from "@src/types/clients/web.framework/vendor.types";
 
 const webFrameworkVendor: WebFrameworkVendor = {
+  HeadShim: mockHeadShim,
   ImageShim: mockImageShim,
   isBuildTime: mockIsBuildTime,
   isSSR: mockIsSSR,
