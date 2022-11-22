@@ -1,12 +1,12 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import AnalyticsButtonWrapper from "../analytics.button.component";
+import AnalyticsInternalLinkWrapperContainer from "../analytics.link.internal.container";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 
 jest.mock("@src/hooks/analytics");
 
-describe("ButtonAnalyticsWrapper", () => {
+describe("AnalyticsInternalLinkWrapper", () => {
   const buttonText = "Click Me";
-  const mockButtonName = "test button";
+  const mockLinkName = "test button";
   const mockClick = jest.fn();
 
   beforeEach(() => {
@@ -16,9 +16,9 @@ describe("ButtonAnalyticsWrapper", () => {
 
   const arrange = () => {
     render(
-      <AnalyticsButtonWrapper buttonName={mockButtonName}>
+      <AnalyticsInternalLinkWrapperContainer href={mockLinkName}>
         <button onClick={mockClick}>{buttonText}</button>
-      </AnalyticsButtonWrapper>
+      </AnalyticsInternalLinkWrapperContainer>
     );
   };
 
@@ -34,10 +34,10 @@ describe("ButtonAnalyticsWrapper", () => {
     });
 
     it("should call the button tracker", () => {
-      expect(mockAnalyticsHook.trackButtonClick).toBeCalledTimes(1);
-      const call = mockAnalyticsHook.trackButtonClick.mock.calls[0];
+      expect(mockAnalyticsHook.trackInternalLinkClick).toBeCalledTimes(1);
+      const call = mockAnalyticsHook.trackInternalLinkClick.mock.calls[0];
       expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-      expect(call[1]).toBe(mockButtonName);
+      expect(call[1]).toBe(mockLinkName);
       expect(Object.keys(call).length).toBe(2);
     });
   });

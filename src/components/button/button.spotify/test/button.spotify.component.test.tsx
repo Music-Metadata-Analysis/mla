@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import SpotifyButton, { Icon } from "../spotify.login";
+import SpotifyButton, { Icon } from "../button.spotify.component";
 
 describe("SpotifyButton", () => {
   const testText = "Testing Text";

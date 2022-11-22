@@ -1,23 +1,22 @@
 import { Box } from "@chakra-ui/react";
-import AnalyticsWrapper from "@src/components/analytics/analytics.link.internal/analytics.link.internal.component";
-import useRouter from "@src/hooks/router";
-import type { PropsWithChildren } from "react";
+import AnalyticsButtonWrapperContainer from "@src/components/analytics/analytics.link.internal/analytics.link.internal.container";
+import type { MouseEventHandler, PropsWithChildren } from "react";
 
 interface ClickLinkProps {
+  clickHandler: MouseEventHandler<HTMLDivElement>;
   path: string;
 }
 
 export default function ClickInternalLink({
   children,
+  clickHandler,
   path,
 }: PropsWithChildren<ClickLinkProps>) {
-  const router = useRouter();
-
   return (
-    <AnalyticsWrapper href={path}>
-      <Box onClick={() => router.push(path)} cursor={"pointer"}>
+    <AnalyticsButtonWrapperContainer href={path}>
+      <Box onClick={clickHandler} cursor={"pointer"}>
         {children}
       </Box>
-    </AnalyticsWrapper>
+    </AnalyticsButtonWrapperContainer>
   );
 }

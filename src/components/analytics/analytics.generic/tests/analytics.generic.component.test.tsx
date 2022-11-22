@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import AnalyticsExternalLinkWrapper from "../analytics.link.external.component";
+import AnalyticsGenericWrapper from "../analytics.generic.component";
 
-describe("AnalyticsExternalLinkWrapper", () => {
+describe("AnalyticsEventWrapper", () => {
   const buttonText = "Click Me";
 
   const mockAnalyticsClick = jest.fn();
@@ -14,9 +14,9 @@ describe("AnalyticsExternalLinkWrapper", () => {
 
   const arrange = () => {
     render(
-      <AnalyticsExternalLinkWrapper clickHandler={mockAnalyticsClick}>
+      <AnalyticsGenericWrapper clickHandler={mockAnalyticsClick}>
         <button onClick={mockClick}>{buttonText}</button>
-      </AnalyticsExternalLinkWrapper>
+      </AnalyticsGenericWrapper>
     );
   };
 

@@ -1,18 +1,15 @@
-import useAnalytics from "@src/hooks/analytics";
-import type EventDefinition from "@src/events/event.class";
+import type { MouseEventHandler } from "react";
 
 interface AnalyticsGenericWrapperProps {
-  eventDefinition: EventDefinition;
+  clickHandler: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode;
 }
 
 const AnalyticsGenericWrapper = ({
-  eventDefinition,
+  clickHandler,
   children,
 }: AnalyticsGenericWrapperProps) => {
-  const analytics = useAnalytics();
-
-  return <div onClick={() => analytics.event(eventDefinition)}>{children}</div>;
+  return <div onClick={clickHandler}>{children}</div>;
 };
 
 export default AnalyticsGenericWrapper;
