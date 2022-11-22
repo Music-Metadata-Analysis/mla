@@ -1,4 +1,4 @@
-import About from "@src/components/about/about.component";
+import AboutContainer from "@src/components/about/about.container";
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
@@ -12,7 +12,7 @@ export default function AboutPage() {
       route={routes.home}
       stateReset={voidFn}
     >
-      <About />
+      <AboutContainer />
     </ErrorBoundary>
   );
 }

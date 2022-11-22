@@ -5,7 +5,7 @@ import {
   within,
   waitFor,
 } from "@testing-library/react";
-import About from "../about.component";
+import AboutContainer from "../about.container";
 import translations from "@locales/about.json";
 import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
 import routes from "@src/config/routes";
@@ -22,7 +22,7 @@ describe("About", () => {
   });
 
   const arrange = () => {
-    return render(<About />);
+    return render(<AboutContainer />);
   };
 
   describe("when rendered", () => {

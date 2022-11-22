@@ -1,14 +1,10 @@
-import { Container, UnorderedList, ListItem } from "@chakra-ui/react";
+import { Box, Container, UnorderedList, ListItem } from "@chakra-ui/react";
 import dialogueSettings from "@src/config/dialogue";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { DialogueInlayComponentInterface } from "@src/types/components/dialogue.types";
 
-export default function PrivacyToggle({ t }: { t: tFunctionType }) {
+export default function PrivacyToggle({ t }: DialogueInlayComponentInterface) {
   return (
-    <div
-      style={{
-        listStylePosition: "outside",
-      }}
-    >
+    <Box listStylePosition={"outside"}>
       <Container
         centerContent
         pl={5}
@@ -29,6 +25,6 @@ export default function PrivacyToggle({ t }: { t: tFunctionType }) {
           </ListItem>
         </UnorderedList>
       </Container>
-    </div>
+    </Box>
   );
 }

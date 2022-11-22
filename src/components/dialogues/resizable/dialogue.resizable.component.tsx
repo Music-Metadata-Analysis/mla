@@ -1,9 +1,9 @@
-import { Flex } from "@chakra-ui/react";
-import { FC, useEffect, useState } from "react";
+import { Box, Flex } from "@chakra-ui/react";
 import Billboard from "@src/components/billboard/billboard.component";
 import Condition from "@src/components/condition/condition.component";
-import dialogueSettings from "@src/config/dialogue";
+import type { RouterHookType } from "@src/hooks/router";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
 
 export const testIDs = {
   DialogueHeaderComponent: "DialogueHeaderComponent",
@@ -13,58 +13,59 @@ export const testIDs = {
 };
 
 export interface DialogueProps {
-  FooterComponent: FC<{ t: tFunctionType }>;
+  BodyComponent?: DialogueInlayComponentType;
+  FooterComponent?: DialogueInlayComponentType;
+  HeaderComponent?: DialogueInlayComponentType;
+  router: RouterHookType;
   t: tFunctionType;
-  titleKey: string;
-  BodyComponent: FC<{ t: tFunctionType }>;
-  HeaderComponent: FC<{ t: tFunctionType }>;
-  ToggleComponent: FC<{ t: tFunctionType }>;
+  titleText: string;
+  ToggleComponent?: DialogueInlayComponentType;
+  toggleState: boolean;
 }
 
 export default function Dialogue({
-  t,
-  titleKey,
   BodyComponent,
   FooterComponent,
   HeaderComponent,
+  t,
+  titleText,
   ToggleComponent,
+  toggleState,
+  router,
 }: DialogueProps) {
-  const [visible, setVisible] = useState(true);
-
-  const recalculateHeight = () => {
-    if (window.innerHeight < dialogueSettings.toggleMinimumDisplayHeight) {
-      setVisible(false);
-    } else {
-      setVisible(true);
-    }
+  const OptionalComponent = (props: {
+    component?: DialogueInlayComponentType;
+    id: string;
+  }) => {
+    if (!props.component) return null;
+    return (
+      <Box data-testid={props.id}>
+        <props.component t={t} router={router} />
+      </Box>
+    );
   };
 
-  useEffect(() => {
-    recalculateHeight();
-    window.addEventListener("resize", recalculateHeight);
-    return () => {
-      window.removeEventListener("resize", recalculateHeight);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
-    <Billboard title={t(titleKey)}>
+    <Billboard title={titleText}>
       <Flex direction={"column"} justify={"center"} align={"center"}>
-        <div data-testid={testIDs.DialogueHeaderComponent}>
-          <HeaderComponent t={t} />
-        </div>
-        <Condition isTrue={visible}>
-          <div data-testid={testIDs.DialogueToggleComponent}>
-            <ToggleComponent t={t} />
-          </div>
+        <OptionalComponent
+          component={HeaderComponent}
+          id={testIDs.DialogueHeaderComponent}
+        />
+        <Condition isTrue={toggleState}>
+          <OptionalComponent
+            component={ToggleComponent}
+            id={testIDs.DialogueToggleComponent}
+          />
         </Condition>
-        <div data-testid={testIDs.DialogueBodyComponent}>
-          <BodyComponent t={t} />
-        </div>
-        <div data-testid={testIDs.DialogueFooterComponent}>
-          <FooterComponent t={t} />
-        </div>
+        <OptionalComponent
+          component={BodyComponent}
+          id={testIDs.DialogueBodyComponent}
+        />
+        <OptionalComponent
+          component={FooterComponent}
+          id={testIDs.DialogueFooterComponent}
+        />
       </Flex>
     </Billboard>
   );

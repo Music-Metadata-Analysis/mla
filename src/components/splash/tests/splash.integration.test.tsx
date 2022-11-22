@@ -5,7 +5,7 @@ import {
   within,
   waitFor,
 } from "@testing-library/react";
-import Splash from "../splash.component";
+import SplashContainer from "../splash.container";
 import translations from "@locales/splash.json";
 import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
 import routes from "@src/config/routes";
@@ -22,7 +22,7 @@ describe("Splash", () => {
   });
 
   const arrange = () => {
-    return render(<Splash />);
+    return render(<SplashContainer />);
   };
 
   describe("when rendered", () => {

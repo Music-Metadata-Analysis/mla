@@ -3,12 +3,12 @@ import { render } from "@testing-library/react";
 import PrivacyHeader from "../privacy.header.component";
 import dialogueSettings from "@src/config/dialogue";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Text"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Text"])
+);
 
 describe("PrivacyHeader", () => {
   const mockT = new MockUseLocale("legal").t;
@@ -18,7 +18,7 @@ describe("PrivacyHeader", () => {
   });
 
   const arrange = () => {
-    return render(<PrivacyHeader t={mockT} />);
+    return render(<PrivacyHeader router={mockUseRouter} t={mockT} />);
   };
 
   describe("when rendered", () => {

@@ -1,5 +1,5 @@
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import Privacy from "@src/components/legal/privacy/privacy.component";
+import PrivacyContainer from "@src/components/legal/privacy/privacy.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import pagePropsGenerator from "@src/utils/page.props.server.side";
@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       route={routes.home}
       stateReset={voidFn}
     >
-      <Privacy />
+      <PrivacyContainer />
     </ErrorBoundary>
   );
 }

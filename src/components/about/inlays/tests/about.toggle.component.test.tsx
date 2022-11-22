@@ -1,14 +1,19 @@
-import { Container, ListItem, UnorderedList } from "@chakra-ui/react";
+import { Box, Container, ListItem, UnorderedList } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import Toggle from "../about.toggle.component";
 import dialogueSettings from "@src/config/dialogue";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Container", "ListItem", "UnorderedList"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock([
+    "Box",
+    "Container",
+    "ListItem",
+    "UnorderedList",
+  ])
+);
 
 jest.mock("@src/components/icons/svs/svs.icon", () =>
   require("@fixtures/react/child").createComponent("Icon")
@@ -22,11 +27,22 @@ describe("AboutToggle", () => {
   });
 
   const arrange = () => {
-    return render(<Toggle t={mockT} />);
+    return render(<Toggle router={mockUseRouter} t={mockT} />);
   };
 
   describe("when rendered", () => {
     beforeEach(() => arrange());
+
+    it("should call Box with the correct props", () => {
+      expect(Box).toBeCalledTimes(1);
+      checkMockCall(
+        Box,
+        {
+          listStylePosition: "outside",
+        },
+        0
+      );
+    });
 
     it("should call Container with the correct props", () => {
       expect(Container).toBeCalledTimes(1);

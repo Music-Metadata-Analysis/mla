@@ -1,5 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
-import Privacy from "../privacy.component";
+import PrivacyContainer from "../privacy.container";
 import translations from "@locales/legal.json";
 import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
 import externalLinks from "@src/config/external";
@@ -16,7 +16,7 @@ describe("Privacy", () => {
   });
 
   const arrange = () => {
-    return render(<Privacy />);
+    return render(<PrivacyContainer />);
   };
 
   describe("when rendered", () => {

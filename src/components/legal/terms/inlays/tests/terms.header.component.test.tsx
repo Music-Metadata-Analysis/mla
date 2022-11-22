@@ -3,12 +3,12 @@ import { render } from "@testing-library/react";
 import TermsOfServiceHeader from "../terms.header.component";
 import dialogueSettings from "@src/config/dialogue";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Container"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Container"])
+);
 
 describe("TermsOfServiceHeader", () => {
   const mockT = new MockUseLocale("legal").t;
@@ -18,7 +18,7 @@ describe("TermsOfServiceHeader", () => {
   });
 
   const arrange = () => {
-    return render(<TermsOfServiceHeader t={mockT} />);
+    return render(<TermsOfServiceHeader router={mockUseRouter} t={mockT} />);
   };
 
   describe("when rendered", () => {

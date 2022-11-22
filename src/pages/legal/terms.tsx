@@ -1,5 +1,5 @@
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import TermsOfService from "@src/components/legal/terms/terms.component";
+import TermsOfServiceContainer from "@src/components/legal/terms/terms.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import pagePropsGenerator from "@src/utils/page.props.server.side";
@@ -12,7 +12,7 @@ export default function TermsOfServicePage() {
       route={routes.home}
       stateReset={voidFn}
     >
-      <TermsOfService />
+      <TermsOfServiceContainer />
     </ErrorBoundary>
   );
 }
