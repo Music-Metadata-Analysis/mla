@@ -1,21 +1,15 @@
-import useAnalytics from "@src/hooks/analytics";
+import type { MouseEventHandler } from "react";
 
 interface AnalyticsWrapperProps {
-  buttonName: string;
+  clickHandler: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode;
 }
 
 const AnalyticsButtonWrapper = ({
-  buttonName,
+  clickHandler,
   children,
 }: AnalyticsWrapperProps) => {
-  const analytics = useAnalytics();
-
-  return (
-    <div onClick={(e) => analytics.trackButtonClick(e, buttonName)}>
-      {children}
-    </div>
-  );
+  return <div onClick={clickHandler}>{children}</div>;
 };
 
 export default AnalyticsButtonWrapper;

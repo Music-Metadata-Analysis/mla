@@ -26,11 +26,6 @@ jest.mock("react-icons/ri", () =>
   )
 );
 
-jest.mock(
-  "@src/components/analytics/analytics.button/analytics.button.component",
-  () => require("@fixtures/react/parent").createComponent("AnalyticsWrapper")
-);
-
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   require("@fixtures/react/child").createComponent("VerticalScrollBar")
 );

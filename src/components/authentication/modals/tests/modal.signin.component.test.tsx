@@ -15,7 +15,7 @@ import {
 import { render } from "@testing-library/react";
 import SignInButtons from "../../buttons/signin.buttons";
 import ModalComponent, { testIDs } from "../modal.signin.component";
-import ClickLink from "@src/components/clickable/click.link.internal/click.link.internal.component";
+import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
 import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
 import routes from "@src/config/routes";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
@@ -54,7 +54,7 @@ jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
 );
 
 jest.mock(
-  "@src/components/clickable/click.link.internal/click.link.internal.component",
+  "@src/components/clickable/click.link.internal/click.link.internal.container",
   () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 
@@ -212,9 +212,9 @@ describe("AuthenticationModal", () => {
     checkMockCall(ModalFooter, {});
   });
 
-  it("should call the ClickLink component correctly", () => {
-    expect(ClickLink).toBeCalledTimes(1);
-    checkMockCall(ClickLink, {
+  it("should call the ClickLinkInternalContainer component correctly", () => {
+    expect(ClickLinkInternalContainer).toBeCalledTimes(1);
+    checkMockCall(ClickLinkInternalContainer, {
       path: routes.legal.terms,
     });
   });

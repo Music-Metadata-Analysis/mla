@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import SignInButtons from "../buttons/signin.buttons";
-import ClickLink from "@src/components/clickable/click.link.internal/click.link.internal.component";
+import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
 import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
 import routes from "@src/config/routes";
 import useColours from "@src/hooks/colour";
@@ -109,7 +109,9 @@ export default function ModalComponent({
               w={"100%"}
               onClick={() => onClose(true)}
             >
-              <ClickLink path={routes.legal.terms}>{t("terms")}</ClickLink>
+              <ClickLinkInternalContainer path={routes.legal.terms}>
+                {t("terms")}
+              </ClickLinkInternalContainer>
             </Flex>
           </ModalFooter>
         </Box>

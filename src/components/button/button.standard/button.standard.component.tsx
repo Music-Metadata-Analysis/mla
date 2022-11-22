@@ -1,5 +1,5 @@
 import BaseButton from "../button.base/button.base.component";
-import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
+import AnalyticsButtonWrapper from "@src/components/analytics/analytics.button/analytics.button.container";
 import type { ButtonProps } from "@chakra-ui/react";
 import type { PropsWithChildren } from "react";
 
@@ -13,8 +13,8 @@ export default function StyledButton({
   ...buttonProps
 }: PropsWithChildren<StyledButtonProps>) {
   return (
-    <AnalyticsWrapper buttonName={analyticsName}>
+    <AnalyticsButtonWrapper buttonName={analyticsName}>
       <BaseButton {...buttonProps}>{children}</BaseButton>
-    </AnalyticsWrapper>
+    </AnalyticsButtonWrapper>
   );
 }

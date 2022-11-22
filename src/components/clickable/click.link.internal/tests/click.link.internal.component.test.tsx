@@ -2,20 +2,19 @@ import { Box } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ClickInternalLink from "../click.link.internal.component";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/analytics");
-
-jest.mock("@src/hooks/router");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Box"])
 );
 
-describe("ButtonLink", () => {
+describe("ClickInternalLink", () => {
   const linkText = "Link";
-  const mockHref = "/mock/internal/href";
+  const mockPath = "/mock/internal/path";
+
+  const mockRouterClick = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -23,7 +22,11 @@ describe("ButtonLink", () => {
   });
 
   const arrange = () => {
-    render(<ClickInternalLink path={mockHref}>{linkText}</ClickInternalLink>);
+    render(
+      <ClickInternalLink clickHandler={mockRouterClick} path={mockPath}>
+        {linkText}
+      </ClickInternalLink>
+    );
   };
 
   it("should render Box Component as expected", () => {
@@ -42,13 +45,12 @@ describe("ButtonLink", () => {
       expect(mockAnalyticsHook.trackInternalLinkClick).toBeCalledTimes(1);
       const call = mockAnalyticsHook.trackInternalLinkClick.mock.calls[0];
       expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
-      expect(call[1]).toBe(mockHref);
+      expect(call[1]).toBe(mockPath);
       expect(Object.keys(call).length).toBe(2);
     });
 
-    it("should navigate to the selected page", () => {
-      expect(mockRouterHook.push).toBeCalledTimes(1);
-      expect(mockRouterHook.push).toBeCalledWith(mockHref);
+    it("should call the routing click handler", () => {
+      expect(mockRouterClick).toBeCalledTimes(1);
     });
   });
 });

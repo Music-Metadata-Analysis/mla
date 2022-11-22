@@ -1,7 +1,7 @@
 import { Box, Button } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import NavBarSessionControl from "../navbar.session.control.component";
-import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
+import AnalyticsButtonWrapperContainer from "@src/components/analytics/analytics.button/analytics.button.container";
 import Authentication from "@src/components/authentication/authentication.container";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
@@ -20,8 +20,11 @@ jest.mock("@chakra-ui/react", () => {
 });
 
 jest.mock(
-  "@src/components/analytics/analytics.button/analytics.button.component",
-  () => require("@fixtures/react/parent").createComponent("AnalyticsWrapper")
+  "@src/components/analytics/analytics.button/analytics.button.container",
+  () =>
+    require("@fixtures/react/parent").createComponent(
+      "AnalyticsButtonWrapperContainer"
+    )
 );
 
 jest.mock("@src/components/authentication/authentication.container", () =>
@@ -61,11 +64,13 @@ describe("NavSessionControl", () => {
   }: {
     expectedCallCount: number;
   }) => {
-    it("should call the AnalyticsWrapper component with the expected props", () => {
-      expect(AnalyticsWrapper).toBeCalledTimes(expectedCallCount);
+    it("should call the AnalyticsButtonWrapperContainer component with the expected props", () => {
+      expect(AnalyticsButtonWrapperContainer).toBeCalledTimes(
+        expectedCallCount
+      );
       for (let i = 0; i < expectedCallCount; i++) {
         checkMockCall(
-          AnalyticsWrapper,
+          AnalyticsButtonWrapperContainer,
           { buttonName: mockAnalyticsButtonName },
           0
         );

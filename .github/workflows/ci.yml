@@ -46,7 +46,9 @@ jobs:
       - name: Architecture Enforcement -- Run Path Enforcement Script
         run: |
           source .github/scripts/architecture-path.sh "src/components/about"
+          source .github/scripts/architecture-path.sh "src/components/analytics"
           source .github/scripts/architecture-path.sh "src/components/button"
+          source .github/scripts/architecture-path.sh "src/components/clickable"
           source .github/scripts/architecture-path.sh "src/components/condition"
           source .github/scripts/architecture-path.sh "src/components/dialogues"
           source .github/scripts/architecture-path.sh "src/components/flip.card"
