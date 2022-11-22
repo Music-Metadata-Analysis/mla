@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import Privacy from "@src/components/legal/privacy/privacy.component";
+import PrivacyContainer from "@src/components/legal/privacy/privacy.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import Page, { getServerSideProps } from "@src/pages/legal/privacy";
@@ -14,8 +14,8 @@ jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
-jest.mock("@src/components/legal/privacy/privacy.component", () =>
-  require("@fixtures/react/parent").createComponent("Privacy")
+jest.mock("@src/components/legal/privacy/privacy.container", () =>
+  require("@fixtures/react/parent").createComponent("PrivacyContainer")
 );
 
 describe("getStaticProps", () => {
@@ -56,8 +56,8 @@ describe("Privacy", () => {
     });
 
     it("should call the Privacy component", () => {
-      expect(Privacy).toBeCalledTimes(1);
-      mockCheckCall(Privacy, {});
+      expect(PrivacyContainer).toBeCalledTimes(1);
+      mockCheckCall(PrivacyContainer, {});
     });
   });
 });

@@ -2,24 +2,26 @@ import { render } from "@testing-library/react";
 import BodyComponent from "../inlays/splash.body.component";
 import FooterComponent from "../inlays/splash.footer.component";
 import ToggleComponent from "../inlays/splash.toggle.component";
-import Splash from "../splash.component";
-import Dialogue from "@src/components/dialogues/resizable/dialogue.resizable.component";
-import { checkTProp } from "@src/hooks/__mocks__/locale.mock";
+import SplashContainer from "../splash.container";
+import DialogueContainer from "@src/components/dialogues/resizable/dialogue.resizable.container";
+import { checkTProp, MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 
 jest.mock("@src/hooks/locale");
 
 jest.mock(
-  "@src/components/dialogues/resizable/dialogue.resizable.component",
-  () => require("@fixtures/react/child").createComponent("Dialogue")
+  "@src/components/dialogues/resizable/dialogue.resizable.container",
+  () => require("@fixtures/react/child").createComponent("DialogueContainer")
 );
 
-describe("Splash", () => {
+describe("SplashContainer", () => {
+  const mockT = new MockUseLocale("splash").t;
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = () => {
-    return render(<Splash />);
+    return render(<SplashContainer />);
   };
 
   describe("when rendered", () => {
@@ -27,20 +29,20 @@ describe("Splash", () => {
 
     checkTProp({
       name: "Dialogue",
-      component: Dialogue,
+      component: DialogueContainer,
       namespace: "splash",
     });
 
     it("should render the Dialogue component as expected", () => {
-      expect(Dialogue).toBeCalledTimes(1);
-      const call = jest.mocked(Dialogue).mock.calls[0][0];
+      expect(DialogueContainer).toBeCalledTimes(1);
+      const call = jest.mocked(DialogueContainer).mock.calls[0][0];
       expect(call.t).toBeDefined();
-      expect(call.titleKey).toBe("title");
+      expect(call.titleText).toBe(mockT("title"));
       expect(call.BodyComponent).toBe(BodyComponent);
-      expect(typeof call.HeaderComponent).toBe("function");
+      expect(call.HeaderComponent).toBeUndefined();
       expect(call.FooterComponent).toBe(FooterComponent);
       expect(call.ToggleComponent).toBe(ToggleComponent);
-      expect(Object.keys(call).length).toBe(6);
+      expect(Object.keys(call).length).toBe(5);
     });
   });
 });

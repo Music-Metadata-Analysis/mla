@@ -2,12 +2,12 @@ import { Flex } from "@chakra-ui/react";
 import Button from "@src/components/button/button.standard/button.standard.component";
 import dialogueSettings from "@src/config/dialogue";
 import routes from "@src/config/routes";
-import useRouter from "@src/hooks/router";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { DialogueInlayComponentInterface } from "@src/types/components/dialogue.types";
 
-export default function PrivacyButtons({ t }: { t: tFunctionType }) {
-  const router = useRouter();
-
+export default function PrivacyButtons({
+  router,
+  t,
+}: DialogueInlayComponentInterface) {
   return (
     <Flex>
       <Button

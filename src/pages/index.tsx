@@ -1,5 +1,5 @@
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import Splash from "@src/components/splash/splash.component";
+import SplashContainer from "@src/components/splash/splash.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import pagePropsGenerator from "@src/utils/page.props.server.side";
@@ -12,7 +12,7 @@ export default function SplashPage() {
       route={routes.home}
       stateReset={voidFn}
     >
-      <Splash />
+      <SplashContainer />
     </ErrorBoundary>
   );
 }

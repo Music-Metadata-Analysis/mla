@@ -4,9 +4,9 @@ import SVSIcon from "@src/components/icons/svs/svs.icon";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { DialogueInlayComponentInterface } from "@src/types/components/dialogue.types";
 
-export default function PrivacyBody({ t }: { t: tFunctionType }) {
+export default function PrivacyBody({ t }: DialogueInlayComponentInterface) {
   return (
     <>
       <Center>

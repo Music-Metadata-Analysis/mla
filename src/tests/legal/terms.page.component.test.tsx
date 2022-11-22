@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import TermsOfService from "@src/components/legal/terms/terms.component";
+import TermsOfServiceContainer from "@src/components/legal/terms/terms.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import Page, { getServerSideProps } from "@src/pages/legal/terms";
@@ -14,8 +14,8 @@ jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
-jest.mock("@src/components/legal/terms/terms.component", () =>
-  require("@fixtures/react/parent").createComponent("TermsOfService")
+jest.mock("@src/components/legal/terms/terms.container", () =>
+  require("@fixtures/react/parent").createComponent("TermsOfServiceContainer")
 );
 
 describe("getStaticProps", () => {
@@ -56,8 +56,8 @@ describe("Terms", () => {
     });
 
     it("should call the TermsOfService component", () => {
-      expect(TermsOfService).toBeCalledTimes(1);
-      mockCheckCall(TermsOfService, {});
+      expect(TermsOfServiceContainer).toBeCalledTimes(1);
+      mockCheckCall(TermsOfServiceContainer, {});
     });
   });
 });

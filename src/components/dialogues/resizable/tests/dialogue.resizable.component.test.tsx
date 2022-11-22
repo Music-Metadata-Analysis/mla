@@ -1,124 +1,359 @@
-import { Flex } from "@chakra-ui/react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
-import Dialogue from "../dialogue.resizable.component";
+import { Box, Flex } from "@chakra-ui/react";
+import { render, screen, within } from "@testing-library/react";
+import Dialogue, {
+  DialogueProps,
+  testIDs,
+} from "../dialogue.resizable.component";
+import { createSimpleComponent } from "@fixtures/react/simple";
+import { mockUseRouter } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import Billboard from "@src/components/billboard/billboard.component";
-import Condition from "@src/components/condition/condition.component";
-import dialogueSettings from "@src/config/dialogue";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Flex"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Box", "Flex"])
+);
 
 jest.mock("@src/components/billboard/billboard.component", () =>
   require("@fixtures/react/parent").createComponent("Billboard")
 );
 
-jest.mock("@src/components/condition/condition.component", () =>
-  require("@fixtures/react/parent").createComponent("Condition")
-);
-
 describe("Dialogue", () => {
-  const mockProps = {
-    t: jest.fn((arg) => `t(${arg})`),
-    titleKey: "mockTitleKey",
-    BodyComponent: jest.fn(() => <>MockBodyComponent</>),
-    FooterComponent: jest.fn(() => <>MockFooterComponent</>),
-    HeaderComponent: jest.fn(() => <>MockHeaderComponent</>),
-    ToggleComponent: jest.fn(() => <>MockToggleComponent</>),
+  let currentProps: DialogueProps;
+
+  const mockT = new MockUseLocale("splash").t;
+  const mockBody = createSimpleComponent(testIDs.DialogueBodyComponent);
+  const mockFooter = createSimpleComponent(testIDs.DialogueFooterComponent);
+  const mockHeader = createSimpleComponent(testIDs.DialogueHeaderComponent);
+  const mockToggle = createSimpleComponent(testIDs.DialogueToggleComponent);
+
+  const baseProps: DialogueProps = {
+    BodyComponent: mockBody,
+    FooterComponent: mockFooter,
+    HeaderComponent: mockHeader,
+    router: mockUseRouter,
+    t: mockT,
+    titleText: "mockTitleText",
+    ToggleComponent: mockToggle,
+    toggleState: true,
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
+    resetProps();
   });
 
   const arrange = () => {
-    return render(<Dialogue {...mockProps} />);
+    return render(<Dialogue {...currentProps} />);
   };
 
-  describe("when rendered", () => {
-    beforeEach(() => arrange());
+  const resetProps = () => {
+    currentProps = { ...baseProps };
+  };
 
-    it("should call Billboard with the correct props", () => {
+  const checkBillboardComponentRender = () => {
+    it("should call the Billboard component with the expected props", () => {
       expect(Billboard).toBeCalledTimes(1);
-      checkMockCall(Billboard, { title: `t(${mockProps.titleKey})` });
+      checkMockCall(
+        Billboard,
+        {
+          title: currentProps.titleText,
+        },
+        0
+      );
     });
+  };
 
-    it("should call Condition with the correct props", () => {
-      expect(Condition).toBeCalledTimes(1);
-      checkMockCall(Condition, {
-        isTrue: true,
-      });
-    });
-
-    it("should call Flex with the correct props", () => {
+  const checkChakraFlexComponentRender = () => {
+    it("should call the chakra Flex component with the expected props", () => {
       expect(Flex).toBeCalledTimes(1);
-      checkMockCall(Flex, {
-        align: "center",
-        direction: "column",
-        justify: "center",
-      });
+      checkMockCall(
+        Flex,
+        {
+          direction: "column",
+          justify: "center",
+          align: "center",
+        },
+        0
+      );
+    });
+  };
+
+  const checkChakraBoxComponentRender = () => {
+    it("should call the chakra Box component the expected number of times", () => {
+      let expectedCalls = [
+        currentProps.HeaderComponent,
+        currentProps.BodyComponent,
+        currentProps.FooterComponent,
+      ].reduce((total, element) => (element ? total + 1 : total), 0);
+
+      if (currentProps.ToggleComponent && currentProps.toggleState) {
+        expectedCalls += 1;
+      }
+
+      expect(Box).toBeCalledTimes(expectedCalls);
+    });
+  };
+
+  const checkOptionalComponentCall = (
+    component: DialogueInlayComponentType,
+    name: string
+  ) => {
+    it(`should call the ${name} with the expected props`, () => {
+      expect(component).toBeCalledTimes(1);
+      checkMockCall(
+        component,
+        {
+          t: currentProps.t,
+          router: currentProps.router,
+        },
+        0
+      );
+    });
+  };
+
+  const checkWrappedInChakraBox = (
+    component: DialogueInlayComponentType,
+    testId: string,
+    name: string
+  ) => {
+    it(`should wrap the ${name} in a chakra Box component`, async () => {
+      const call = jest
+        .mocked(Box)
+        .mock.calls.find((call) => call[0]["data-testid"] == testId);
+      expect(call).toBeDefined();
+      expect(
+        await within(await screen.findByTestId(testId)).findByText(testId)
+      ).toBeTruthy();
+    });
+  };
+
+  const checkHeaderComponentRender = () => {
+    checkOptionalComponentCall(mockHeader, "HeaderComponent");
+    checkWrappedInChakraBox(
+      mockHeader,
+      testIDs.DialogueHeaderComponent,
+      "HeaderComponent"
+    );
+  };
+
+  const checkNoHeaderComponentRender = () => {
+    it("should NOT render the HeaderComponent as expected", () => {
+      expect(mockHeader).toBeCalledTimes(0);
+    });
+  };
+
+  const checkToggleComponentRender = () => {
+    checkOptionalComponentCall(mockToggle, "ToggleComponent");
+    checkWrappedInChakraBox(
+      mockToggle,
+      testIDs.DialogueToggleComponent,
+      "ToggleComponent"
+    );
+  };
+
+  const checkNoToggleComponentRender = () => {
+    it("should NOT render the ToggleComponent as expected", () => {
+      expect(mockToggle).toBeCalledTimes(0);
+    });
+  };
+
+  const checkBodyComponentRender = () => {
+    checkOptionalComponentCall(mockBody, "BodyComponent");
+    checkWrappedInChakraBox(
+      mockBody,
+      testIDs.DialogueBodyComponent,
+      "BodyComponent"
+    );
+  };
+
+  const checkNoBodyComponentRender = () => {
+    it("should NOT render the BodyComponent as expected", () => {
+      expect(mockBody).toBeCalledTimes(0);
+    });
+  };
+
+  const checkFooterComponentRender = () => {
+    checkOptionalComponentCall(mockFooter, "FooterComponent");
+    checkWrappedInChakraBox(
+      mockFooter,
+      testIDs.DialogueFooterComponent,
+      "FooterComponent"
+    );
+  };
+
+  const checkNoFooterComponentRender = () => {
+    it("should NOT render the FooterComponent as expected", () => {
+      expect(mockFooter).toBeCalledTimes(0);
+    });
+  };
+
+  describe("with toggleState set to true", () => {
+    beforeEach(() => {
+      currentProps.toggleState = true;
     });
 
-    it("should call BodyComponent with the correct props", () => {
-      expect(mockProps.BodyComponent).toBeCalledTimes(1);
-      checkMockCall(mockProps.BodyComponent, { t: mockProps.t });
-    });
-
-    it("should call HeaderComponent with the correct props", () => {
-      expect(mockProps.HeaderComponent).toBeCalledTimes(1);
-      checkMockCall(mockProps.HeaderComponent, { t: mockProps.t });
-    });
-
-    it("should call ToggleComponent with the correct props", () => {
-      expect(mockProps.ToggleComponent).toBeCalledTimes(1);
-      checkMockCall(mockProps.ToggleComponent, { t: mockProps.t });
-    });
-
-    it("should call FooterComponent with the correct props", () => {
-      expect(mockProps.FooterComponent).toBeCalledTimes(1);
-      checkMockCall(mockProps.FooterComponent, { t: mockProps.t });
-    });
-
-    describe("when the screen is resized vertically", () => {
-      const originalWindowInnerHeight = window.innerHeight;
-
-      beforeAll(() => {
-        Object.defineProperty(window, "innerHeight", {
-          writable: true,
-          configurable: true,
-          value: dialogueSettings.toggleMinimumDisplayHeight - 1,
-        });
+    describe("with all component props", () => {
+      beforeEach(() => {
+        arrange();
       });
 
-      beforeEach(async () => {
-        fireEvent.resize(window.document);
+      checkBillboardComponentRender();
+      checkChakraFlexComponentRender();
+      checkChakraBoxComponentRender();
+      checkHeaderComponentRender();
+      checkToggleComponentRender();
+      checkBodyComponentRender();
+      checkFooterComponentRender();
+    });
+
+    describe("without a BodyComponent", () => {
+      beforeEach(() => {
+        currentProps.BodyComponent = undefined;
+
+        arrange();
       });
 
-      afterAll(() => {
-        Object.defineProperty(window, "innerHeight", {
-          value: originalWindowInnerHeight,
-        });
+      checkBillboardComponentRender();
+      checkChakraFlexComponentRender();
+      checkChakraBoxComponentRender();
+      checkHeaderComponentRender();
+      checkToggleComponentRender();
+      checkNoBodyComponentRender();
+      checkFooterComponentRender();
+    });
+
+    describe("without a FooterComponent", () => {
+      beforeEach(() => {
+        currentProps.FooterComponent = undefined;
+
+        arrange();
       });
 
-      it("should update the props on the condition element", async () => {
-        await waitFor(() => expect(Condition).toBeCalledTimes(2));
-        checkMockCall(
-          Condition,
-          {
-            isTrue: true,
-          },
-          0
-        );
-        checkMockCall(
-          Condition,
-          {
-            isTrue: false,
-          },
-          1
-        );
+      checkBillboardComponentRender();
+      checkChakraFlexComponentRender();
+      checkChakraBoxComponentRender();
+      checkHeaderComponentRender();
+      checkToggleComponentRender();
+      checkBodyComponentRender();
+      checkNoFooterComponentRender();
+    });
+
+    describe("without a HeaderComponent", () => {
+      beforeEach(() => {
+        currentProps.HeaderComponent = undefined;
+
+        arrange();
       });
+
+      checkBillboardComponentRender();
+      checkChakraFlexComponentRender();
+      checkChakraBoxComponentRender();
+      checkNoHeaderComponentRender();
+      checkToggleComponentRender();
+      checkBodyComponentRender();
+      checkFooterComponentRender();
+    });
+
+    describe("without a ToggleComponent", () => {
+      beforeEach(() => {
+        currentProps.ToggleComponent = undefined;
+
+        arrange();
+      });
+
+      checkBillboardComponentRender();
+      checkChakraFlexComponentRender();
+      checkChakraBoxComponentRender();
+      checkHeaderComponentRender();
+      checkNoToggleComponentRender();
+      checkBodyComponentRender();
+      checkFooterComponentRender();
+    });
+  });
+
+  describe("with toggleState set to false", () => {
+    beforeEach(() => {
+      currentProps.toggleState = false;
+    });
+
+    describe("with all component props", () => {
+      beforeEach(() => {
+        arrange();
+      });
+
+      checkBillboardComponentRender();
+      checkChakraFlexComponentRender();
+      checkChakraBoxComponentRender();
+      checkHeaderComponentRender();
+      checkNoToggleComponentRender();
+      checkBodyComponentRender();
+      checkFooterComponentRender();
+    });
+
+    describe("without a BodyComponent", () => {
+      beforeEach(() => {
+        currentProps.BodyComponent = undefined;
+
+        arrange();
+      });
+
+      checkBillboardComponentRender();
+      checkChakraFlexComponentRender();
+      checkChakraBoxComponentRender();
+      checkHeaderComponentRender();
+      checkNoToggleComponentRender();
+      checkNoBodyComponentRender();
+      checkFooterComponentRender();
+    });
+
+    describe("without a FooterComponent", () => {
+      beforeEach(() => {
+        currentProps.FooterComponent = undefined;
+
+        arrange();
+      });
+
+      checkBillboardComponentRender();
+      checkChakraFlexComponentRender();
+      checkChakraBoxComponentRender();
+      checkHeaderComponentRender();
+      checkNoToggleComponentRender();
+      checkBodyComponentRender();
+      checkNoFooterComponentRender();
+    });
+
+    describe("without a HeaderComponent", () => {
+      beforeEach(() => {
+        currentProps.HeaderComponent = undefined;
+
+        arrange();
+      });
+
+      checkBillboardComponentRender();
+      checkChakraFlexComponentRender();
+      checkChakraBoxComponentRender();
+      checkNoHeaderComponentRender();
+      checkNoToggleComponentRender();
+      checkBodyComponentRender();
+      checkFooterComponentRender();
+    });
+
+    describe("without a ToggleComponent", () => {
+      beforeEach(() => {
+        currentProps.ToggleComponent = undefined;
+
+        arrange();
+      });
+
+      checkBillboardComponentRender();
+      checkChakraFlexComponentRender();
+      checkChakraBoxComponentRender();
+      checkHeaderComponentRender();
+      checkNoToggleComponentRender();
+      checkBodyComponentRender();
+      checkFooterComponentRender();
     });
   });
 });

@@ -2,9 +2,11 @@ import { Flex } from "@chakra-ui/react";
 import Button from "@src/components/button/button.external.link/button.external.link.component";
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { DialogueInlayComponentInterface } from "@src/types/components/dialogue.types";
 
-export default function TermsOfServiceFooter({ t }: { t: tFunctionType }) {
+export default function TermsOfServiceFooter({
+  t,
+}: DialogueInlayComponentInterface) {
   return (
     <Flex>
       <Button

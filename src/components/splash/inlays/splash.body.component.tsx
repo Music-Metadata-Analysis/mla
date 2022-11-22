@@ -4,9 +4,9 @@ import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
 import dialogueSettings from "@src/config/dialogue";
 import lastFMConfig from "@src/config/lastfm";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { DialogueInlayComponentInterface } from "@src/types/components/dialogue.types";
 
-export default function PrivacyText({ t }: { t: tFunctionType }) {
+export default function PrivacyText({ t }: DialogueInlayComponentInterface) {
   return (
     <Flex align={"center"} justify={"center"} direction={"column"}>
       <Box mb={[3, 3, 7]}>

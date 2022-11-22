@@ -4,13 +4,16 @@ import SplashToggle from "../splash.toggle.component";
 import Highlight from "@src/components/highlight/highlight.component";
 import dialogueSettings from "@src/config/dialogue";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Container", "ListItem", "UnorderedList"]);
-});
-
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock([
+    "Container",
+    "ListItem",
+    "UnorderedList",
+  ])
+);
 jest.mock("@src/components/highlight/highlight.component", () =>
   require("@fixtures/react/parent").createComponent("Highlight")
 );
@@ -23,7 +26,7 @@ describe("SplashToggle", () => {
   });
 
   const arrange = () => {
-    return render(<SplashToggle t={mockT} />);
+    return render(<SplashToggle router={mockUseRouter} t={mockT} />);
   };
 
   describe("when rendered", () => {
