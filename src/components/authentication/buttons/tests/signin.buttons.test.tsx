@@ -6,7 +6,7 @@ import {
 } from "react-social-login-buttons";
 import SignInButtons from "../signin.buttons";
 import authenticationTranslations from "@locales/authentication.json";
-import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
+import AnalyticsButtonWrapper from "@src/components/analytics/analytics.button/analytics.button.container";
 import SpotifyLoginButton from "@src/components/button/button.spotify/spotify.login";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
@@ -22,8 +22,9 @@ jest.mock("@src/components/button/button.spotify/spotify.login", () =>
 );
 
 jest.mock(
-  "@src/components/analytics/analytics.button/analytics.button.component",
-  () => require("@fixtures/react/parent").createComponent("AnalyticsWrapper")
+  "@src/components/analytics/analytics.button/analytics.button.container",
+  () =>
+    require("@fixtures/react/parent").createComponent("AnalyticsButtonWrapper")
 );
 
 const mockSetClicked = jest.fn();
@@ -49,30 +50,30 @@ describe("AuthenticationComponent", () => {
   };
 
   it("should call the AnalyticsWrapper component correctly", () => {
-    expect(AnalyticsWrapper).toBeCalledTimes(4);
+    expect(AnalyticsButtonWrapper).toBeCalledTimes(4);
     checkMockCall(
-      AnalyticsWrapper,
+      AnalyticsButtonWrapper,
       {
         buttonName: "Facebook Login",
       },
       0
     );
     checkMockCall(
-      AnalyticsWrapper,
+      AnalyticsButtonWrapper,
       {
         buttonName: "Github Login",
       },
       1
     );
     checkMockCall(
-      AnalyticsWrapper,
+      AnalyticsButtonWrapper,
       {
         buttonName: "Google Login",
       },
       2
     );
     checkMockCall(
-      AnalyticsWrapper,
+      AnalyticsButtonWrapper,
       {
         buttonName: "Spotify Login",
       },

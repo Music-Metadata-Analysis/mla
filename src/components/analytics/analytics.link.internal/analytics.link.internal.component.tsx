@@ -1,21 +1,15 @@
-import useAnalytics from "@src/hooks/analytics";
+import type { MouseEventHandler } from "react";
 
-interface AnalyticsLinkWrapperProps {
-  href: string;
+interface AnalyticsInternalLinkWrapperProps {
+  clickHandler: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode;
 }
 
-const AnalyticsLinkWrapper = ({
-  href,
+const AnalyticsInternalLinkWrapper = ({
+  clickHandler,
   children,
-}: AnalyticsLinkWrapperProps) => {
-  const analytics = useAnalytics();
-
-  return (
-    <div onClick={(e) => analytics.trackInternalLinkClick(e, href)}>
-      {children}
-    </div>
-  );
+}: AnalyticsInternalLinkWrapperProps) => {
+  return <div onClick={clickHandler}>{children}</div>;
 };
 
-export default AnalyticsLinkWrapper;
+export default AnalyticsInternalLinkWrapper;

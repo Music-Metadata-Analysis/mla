@@ -1,7 +1,7 @@
 import { LockIcon } from "@chakra-ui/icons";
 import { Box, Button } from "@chakra-ui/react";
 import { RiLogoutBoxRLine } from "react-icons/ri";
-import AnalyticsWrapper from "@src/components/analytics/analytics.button/analytics.button.component";
+import AnalyticsButtonWrapperContainer from "@src/components/analytics/analytics.button/analytics.button.container";
 import Authentication from "@src/components/authentication/authentication.container";
 import useColour from "@src/hooks/colour";
 import type { MouseEvent } from "react";
@@ -30,7 +30,7 @@ const NavBarSessionControl = ({
         onModalClose={onAuthenticationModalClose}
       />
       <Box pl={[0, 2, 2]} pr={[0, 0.5]}>
-        <AnalyticsWrapper buttonName={analyticsButtonName}>
+        <AnalyticsButtonWrapperContainer buttonName={analyticsButtonName}>
           <Button
             onClick={handleClick}
             borderColor={transparent}
@@ -49,7 +49,7 @@ const NavBarSessionControl = ({
               <RiLogoutBoxRLine size={20} data-testid={buttonType} />
             )}
           </Button>
-        </AnalyticsWrapper>
+        </AnalyticsButtonWrapperContainer>
       </Box>
     </>
   );

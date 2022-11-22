@@ -1,4 +1,4 @@
-import AnalyticsWrapper from "@src/components/analytics/analytics.link.external/analytics.link.external.component";
+import AnalyticsExternalLinkWrapper from "@src/components/analytics/analytics.link.external/analytics.link.external.container";
 import type { PropsWithChildren } from "react";
 
 interface ClickLinkProps {
@@ -11,7 +11,9 @@ export default function ClickExternalLink({
 }: PropsWithChildren<ClickLinkProps>) {
   return (
     <a href={href} target="_blank" rel="noreferrer">
-      <AnalyticsWrapper href={href}>{children}</AnalyticsWrapper>
+      <AnalyticsExternalLinkWrapper href={href}>
+        {children}
+      </AnalyticsExternalLinkWrapper>
     </a>
   );
 }

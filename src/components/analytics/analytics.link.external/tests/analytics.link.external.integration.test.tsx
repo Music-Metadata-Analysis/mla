@@ -1,18 +1,12 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import AnalyticsGenericWrapper from "../analytics.generic.component";
-import Event from "@src/events/event.class";
+import AnalyticsExternalLinkWrapperContainer from "../analytics.link.external.container";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 
 jest.mock("@src/hooks/analytics");
 
-describe("AnalyticsEventWrapper", () => {
+describe("AnalyticsExternalLinkWrapper", () => {
   const buttonText = "Click Me";
-  const mockEvent = new Event({
-    category: "TEST",
-    label: "TEST",
-    action: "Test Event",
-    value: 0,
-  });
+  const mockLink = "https://example.com";
   const mockClick = jest.fn();
 
   beforeEach(() => {
@@ -22,9 +16,9 @@ describe("AnalyticsEventWrapper", () => {
 
   const arrange = () => {
     render(
-      <AnalyticsGenericWrapper eventDefinition={mockEvent}>
+      <AnalyticsExternalLinkWrapperContainer href={mockLink}>
         <button onClick={mockClick}>{buttonText}</button>
-      </AnalyticsGenericWrapper>
+      </AnalyticsExternalLinkWrapperContainer>
     );
   };
 
@@ -39,9 +33,12 @@ describe("AnalyticsEventWrapper", () => {
       fireEvent.click(link as HTMLElement);
     });
 
-    it("should call the event tracker", () => {
-      expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-      expect(mockAnalyticsHook.event).toBeCalledWith(mockEvent);
+    it("should call the button tracker", () => {
+      expect(mockAnalyticsHook.trackExternalLinkClick).toBeCalledTimes(1);
+      const call = mockAnalyticsHook.trackExternalLinkClick.mock.calls[0];
+      expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
+      expect(call[1]).toBe(mockLink);
+      expect(Object.keys(call).length).toBe(2);
     });
   });
 });
