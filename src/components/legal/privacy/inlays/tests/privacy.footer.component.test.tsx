@@ -5,13 +5,12 @@ import Button from "@src/components/button/button.external.link/button.external.
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Flex"]);
-});
-
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Flex"])
+);
 jest.mock(
   "@src/components/button/button.external.link/button.external.link.component",
   () => require("@fixtures/react/parent").createComponent("Button")
@@ -33,7 +32,7 @@ describe("PrivacyFooter", () => {
   });
 
   const arrange = () => {
-    return render(<PrivacyFooter t={mockT} />);
+    return render(<PrivacyFooter router={mockUseRouter} t={mockT} />);
   };
 
   describe("when rendered", () => {

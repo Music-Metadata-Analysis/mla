@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import Splash from "@src/components/splash/splash.component";
+import SplashContainer from "@src/components/splash/splash.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import Page, { getServerSideProps } from "@src/pages/index";
@@ -14,8 +14,8 @@ jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
-jest.mock("@src/components/splash/splash.component", () =>
-  require("@fixtures/react/parent").createComponent("Splash")
+jest.mock("@src/components/splash/splash.container", () =>
+  require("@fixtures/react/parent").createComponent("SplashContainer")
 );
 
 describe("getStaticProps", () => {
@@ -56,8 +56,8 @@ describe("Splash", () => {
     });
 
     it("should call the Splash component", () => {
-      expect(Splash).toBeCalledTimes(1);
-      mockCheckCall(Splash, {});
+      expect(SplashContainer).toBeCalledTimes(1);
+      mockCheckCall(SplashContainer, {});
     });
   });
 });

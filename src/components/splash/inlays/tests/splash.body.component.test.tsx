@@ -8,14 +8,19 @@ import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
 import dialogueSettings from "@src/config/dialogue";
 import lastFMConfig from "@src/config/lastfm";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/locale");
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Avatar", "Box", "Flex", "Text"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock([
+    "Avatar",
+    "Box",
+    "Flex",
+    "Text",
+  ])
+);
 
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
@@ -43,7 +48,7 @@ describe("SplashBody", () => {
   });
 
   const arrange = () => {
-    return render(<SplashBody t={mockT} />);
+    return render(<SplashBody router={mockUseRouter} t={mockT} />);
   };
 
   describe("when rendered", () => {

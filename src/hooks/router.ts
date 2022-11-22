@@ -7,3 +7,5 @@ const useRouter = (): VendorRouterHookInterface => {
 };
 
 export default useRouter;
+
+export type RouterHookType = ReturnType<typeof useRouter>;

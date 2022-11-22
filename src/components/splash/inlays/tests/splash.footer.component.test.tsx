@@ -3,9 +3,8 @@ import SplashFooter from "../splash.footer.component";
 import Button from "@src/components/button/button.standard/button.standard.component";
 import dialogueSettings from "@src/config/dialogue";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-
-jest.mock("@src/hooks/router");
 
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
@@ -20,7 +19,7 @@ describe("SplashFooter", () => {
   });
 
   const arrange = () => {
-    return render(<SplashFooter t={mockT} />);
+    return render(<SplashFooter router={mockUseRouter} t={mockT} />);
   };
 
   describe("when rendered", () => {

@@ -4,14 +4,12 @@ import Footer from "../about.footer.component";
 import Button from "@src/components/button/button.standard/button.standard.component";
 import dialogueSettings from "@src/config/dialogue";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/router");
-
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Flex"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Flex"])
+);
 
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
@@ -30,7 +28,7 @@ describe("About", () => {
   });
 
   const arrange = () => {
-    return render(<Footer t={mockT} />);
+    return render(<Footer router={mockUseRouter} t={mockT} />);
   };
 
   describe("when rendered", () => {

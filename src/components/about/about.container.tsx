@@ -1,20 +1,19 @@
 import BodyComponent from "./inlays/about.body.component";
 import FooterComponent from "./inlays/about.footer.component";
 import ToggleComponent from "./inlays/about.toggle.component";
-import Dialogue from "@src/components/dialogues/resizable/dialogue.resizable.component";
+import DialogueContainer from "@src/components/dialogues/resizable/dialogue.resizable.container";
 import useLocale from "@src/hooks/locale";
 
-export default function About() {
+export default function AboutContainer() {
   const { t } = useLocale("about");
 
   return (
-    <Dialogue
-      t={t}
-      titleKey={"title"}
-      HeaderComponent={() => <></>}
-      ToggleComponent={ToggleComponent}
+    <DialogueContainer
       BodyComponent={BodyComponent}
       FooterComponent={FooterComponent}
+      t={t}
+      titleText={t("title")}
+      ToggleComponent={ToggleComponent}
     />
   );
 }

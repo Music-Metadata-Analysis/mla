@@ -1,5 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
-import TermsOfService from "../terms.component";
+import TermsOfServiceContainer from "../terms.container";
 import translations from "@locales/legal.json";
 import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
 import externalLinks from "@src/config/external";
@@ -16,7 +16,7 @@ describe("TermsOfService", () => {
   });
 
   const arrange = () => {
-    return render(<TermsOfService />);
+    return render(<TermsOfServiceContainer />);
   };
 
   describe("when rendered", () => {
