@@ -1,28 +1,24 @@
 import { render } from "@testing-library/react";
-import AuthenticationContainer from "../authentication.container";
-import ModalSignInComponent from "../modals/modal.signin.component";
+import AuthenticationSignInModalContainer from "../authentication.container";
+import ModalSignInComponent from "../modals/signin/modal.signin.container";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import mockToggleHook from "@src/hooks/utility/__mocks__/toggle.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/auth");
 
 jest.mock("@src/hooks/router");
 
-jest.mock("@chakra-ui/react", () => ({
-  useDisclosure: () => mockUseDisclosure(),
-}));
+jest.mock("@src/hooks/utility/toggle");
 
-jest.mock("../modals/modal.signin.component", () =>
-  require("@fixtures/react/child").createComponent("Component")
+jest.mock("../modals/signin/modal.signin.container", () =>
+  require("@fixtures/react/child").createComponent(
+    "AuthenticationSignInModalContainer"
+  )
 );
-
-const mockUseDisclosure = jest.fn();
 
 describe("AuthenticationContainer", () => {
   let modalHidden: boolean;
-  let modalOpen: boolean;
-  const mockOnOpen = jest.fn();
-  const mockOnClose = jest.fn();
 
   const ModalComponentFunctionProps = [
     "signIn",
@@ -34,13 +30,7 @@ describe("AuthenticationContainer", () => {
   beforeEach(() => jest.clearAllMocks());
 
   const arrange = () => {
-    mockUseDisclosure.mockReturnValue({
-      isOpen: modalOpen,
-      onOpen: mockOnOpen,
-      onClose: mockOnClose,
-    });
-
-    render(<AuthenticationContainer hidden={modalHidden} />);
+    render(<AuthenticationSignInModalContainer hidden={modalHidden} />);
   };
 
   describe("when the modal is NOT hidden", () => {
@@ -50,7 +40,7 @@ describe("AuthenticationContainer", () => {
 
     describe("modal is open", () => {
       beforeEach(() => {
-        modalOpen = true;
+        mockToggleHook.state = true;
       });
 
       describe("user is logged in", () => {
@@ -73,12 +63,12 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should close the modal on render", () => {
-          expect(mockOnClose).toBeCalledTimes(1);
-          expect(mockOnClose).toBeCalledWith();
+          expect(mockToggleHook.setFalse).toBeCalledTimes(1);
+          expect(mockToggleHook.setFalse).toBeCalledWith();
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockOnOpen).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
         });
       });
 
@@ -102,18 +92,18 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should NOT close the modal on render", () => {
-          expect(mockOnClose).toBeCalledTimes(0);
+          expect(mockToggleHook.setFalse).toBeCalledTimes(0);
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockOnOpen).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
         });
       });
     });
 
     describe("modal is closed", () => {
       beforeEach(() => {
-        modalOpen = false;
+        mockToggleHook.state = false;
       });
 
       describe("user is logged in", () => {
@@ -136,11 +126,12 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should close the modal on render", () => {
-          expect(mockOnClose).toBeCalledTimes(1);
+          expect(mockToggleHook.setFalse).toBeCalledTimes(1);
+          expect(mockToggleHook.setFalse).toBeCalledWith();
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockOnOpen).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
         });
       });
 
@@ -164,25 +155,25 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should NOT close the modal on render", () => {
-          expect(mockOnClose).toBeCalledTimes(0);
+          expect(mockToggleHook.setFalse).toBeCalledTimes(0);
         });
 
         it("should open the modal on render", () => {
-          expect(mockOnOpen).toBeCalledTimes(1);
-          expect(mockOnOpen).toBeCalledWith();
+          expect(mockToggleHook.setTrue).toBeCalledTimes(1);
+          expect(mockToggleHook.setTrue).toBeCalledWith();
         });
       });
     });
   });
 
-  describe("modal is hidden", () => {
+  describe("when the modal is hidden", () => {
     beforeEach(() => {
       modalHidden = true;
     });
 
     describe("modal is open", () => {
       beforeEach(() => {
-        modalOpen = true;
+        mockToggleHook.state = true;
       });
 
       describe("user is logged in", () => {
@@ -197,11 +188,12 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should close the modal on render", () => {
-          expect(mockOnClose).toBeCalledTimes(1);
+          expect(mockToggleHook.setFalse).toBeCalledTimes(1);
+          expect(mockToggleHook.setFalse).toBeCalledWith();
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockOnOpen).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
         });
       });
 
@@ -217,18 +209,18 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should NOT close the modal on render", () => {
-          expect(mockOnClose).toBeCalledTimes(0);
+          expect(mockToggleHook.setFalse).toBeCalledTimes(0);
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockOnOpen).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
         });
       });
     });
 
     describe("modal is closed", () => {
       beforeEach(() => {
-        modalOpen = false;
+        mockToggleHook.state = false;
       });
 
       describe("user is logged in", () => {
@@ -243,11 +235,12 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should close the modal on render", () => {
-          expect(mockOnClose).toBeCalledTimes(1);
+          expect(mockToggleHook.setFalse).toBeCalledTimes(1);
+          expect(mockToggleHook.setFalse).toBeCalledWith();
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockOnOpen).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
         });
       });
 
@@ -263,12 +256,12 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should NOT close the modal on render", () => {
-          expect(mockOnClose).toBeCalledTimes(0);
+          expect(mockToggleHook.setFalse).toBeCalledTimes(0);
         });
 
         it("should open the modal on render", () => {
-          expect(mockOnOpen).toBeCalledTimes(1);
-          expect(mockOnOpen).toBeCalledWith();
+          expect(mockToggleHook.setTrue).toBeCalledTimes(1);
+          expect(mockToggleHook.setTrue).toBeCalledWith();
         });
       });
     });

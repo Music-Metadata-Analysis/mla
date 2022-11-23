@@ -3,59 +3,65 @@ import {
   Center,
   Container,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
 } from "@chakra-ui/react";
-import { render } from "@testing-library/react";
-import ModalSpinner, { testIDs } from "../modal.spinner.component";
+import { render, screen, within } from "@testing-library/react";
+import AuthenticationSpinnerModal, {
+  testIDs,
+} from "../modal.spinner.component";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/colour");
 
-jest.mock("@src/hooks/locale");
-
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  const instance = createChakraMock([
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock([
     "Box",
     "Center",
     "Container",
     "Modal",
-    "ModalContent",
-    "ModalHeader",
-    "ModalFooter",
     "ModalBody",
+    "ModalContent",
+    "ModalFooter",
+    "ModalHeader",
+    "ModalOverlay",
     "Spinner",
-  ]);
-  instance.ModalOverlay = jest.fn(() => "ModalOverlay");
-  return instance;
-});
+  ])
+);
 
 describe("AuthenticationSpinnerModal", () => {
+  const mockTitleText = "mockTitleText";
+
   const mockOnClose = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
+
     arrange();
   });
 
   const arrange = () => {
-    render(<ModalSpinner onClose={mockOnClose} />);
+    render(
+      <AuthenticationSpinnerModal
+        onClose={mockOnClose}
+        titleText={mockTitleText}
+      />
+    );
   };
 
-  it("should call the Box component correctly", () => {
+  it("should render the Box component correctly", () => {
     expect(Box).toBeCalledTimes(1);
     checkMockCall(Box, {
       borderWidth: 1,
     });
   });
 
-  it("should call the Modal component correctly", () => {
+  it("should render the Modal component correctly", () => {
     expect(Modal).toBeCalledTimes(1);
     checkMockCall(Modal, {
       isCentered: true,
@@ -65,12 +71,12 @@ describe("AuthenticationSpinnerModal", () => {
     });
   });
 
-  it("should call the ModalOverlay component correctly", () => {
+  it("should render the ModalOverlay component correctly", () => {
     expect(ModalOverlay).toBeCalledTimes(1);
     checkMockCall(ModalOverlay, {});
   });
 
-  it("should call the ModalContent component correctly", () => {
+  it("should render the ModalContent component correctly", () => {
     expect(ModalContent).toBeCalledTimes(1);
     checkMockCall(ModalContent, {
       color: mockColourHook.modalColour.foreground,
@@ -79,31 +85,38 @@ describe("AuthenticationSpinnerModal", () => {
     });
   });
 
-  it("should call the Container component correctly", () => {
+  it("should render the Container component correctly", () => {
     expect(Container).toBeCalledTimes(1);
     checkMockCall(Container, {
       centerContent: true,
     });
   });
 
-  it("should call the ModalHeader component correctly", () => {
+  it("should render the ModalHeader component correctly", () => {
     expect(ModalHeader).toBeCalledTimes(1);
     checkMockCall(ModalHeader, {
       "data-testid": testIDs.AuthenticationSpinnerModalTitle,
     });
   });
 
-  it("should call the ModalBody component correctly", () => {
+  it("should render the title text correctly", async () => {
+    const container = await screen.findByTestId(
+      testIDs.AuthenticationSpinnerModalTitle
+    );
+    expect(await within(container).findByText(mockTitleText)).toBeTruthy();
+  });
+
+  it("should render the ModalBody component correctly", () => {
     expect(ModalBody).toBeCalledTimes(1);
     checkMockCall(ModalBody, {});
   });
 
-  it("should call the Center component correctly", () => {
+  it("should render the Center component correctly", () => {
     expect(Center).toBeCalledTimes(1);
     checkMockCall(Center, {});
   });
 
-  it("should call the Spinner component correctly", () => {
+  it("should render the Spinner component correctly", () => {
     expect(Spinner).toBeCalledTimes(1);
     checkMockCall(Spinner, {
       size: "xl",
@@ -113,7 +126,7 @@ describe("AuthenticationSpinnerModal", () => {
     });
   });
 
-  it("should call the ModalFooter component correctly", () => {
+  it("should render the ModalFooter component correctly", () => {
     expect(ModalFooter).toBeCalledTimes(1);
     checkMockCall(ModalFooter, {});
   });

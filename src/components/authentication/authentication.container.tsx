@@ -1,12 +1,12 @@
-import { useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import SignInModal from "./modals/modal.signin.component";
-import SpinnerModal from "./modals/modal.spinner.component";
+import SignInModalContainer from "./modals/signin/modal.signin.container";
+import SpinnerModalContainer from "./modals/spinner/modal.spinner.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import useAnalytics from "@src/hooks/analytics";
 import useAuth from "@src/hooks/auth";
 import useRouter from "@src/hooks/router";
+import useToggle from "@src/hooks/utility/toggle";
 import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
 
 export interface AuthenticationProps {
@@ -19,24 +19,24 @@ export default function Authentication({
   onModalClose = undefined,
 }: AuthenticationProps) {
   const analytics = useAnalytics();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const modalToggle = useToggle();
   const { status: authStatus, signIn } = useAuth();
   const router = useRouter();
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
-    if (isOpen && !hidden) {
+    if (modalToggle.state && !hidden) {
       analytics.event(Events.Auth.OpenModal);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hidden, isOpen]);
+  }, [hidden, modalToggle.state]);
 
   useEffect(() => {
-    if (!isOpen && authStatus === "unauthenticated") {
-      onOpen();
+    if (!modalToggle.state && authStatus === "unauthenticated") {
+      modalToggle.setTrue();
     }
     if (authStatus !== "unauthenticated") {
-      onClose();
+      modalToggle.setFalse();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authStatus]);
@@ -54,12 +54,12 @@ export default function Authentication({
 
   if (hidden) return null;
 
-  if (clicked) return <SpinnerModal onClose={onClose} />;
+  if (clicked) return <SpinnerModalContainer onClose={modalToggle.setFalse} />;
 
   return (
-    <SignInModal
+    <SignInModalContainer
       signIn={handleSignIn}
-      isOpen={isOpen}
+      isOpen={modalToggle.state}
       onClose={handleClose}
       setClicked={setClicked}
     />

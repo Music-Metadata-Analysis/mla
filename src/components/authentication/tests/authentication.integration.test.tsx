@@ -6,8 +6,8 @@ import {
   within,
 } from "@testing-library/react";
 import AuthenticationContainer from "../authentication.container";
-import { testIDs as AuthModalTestIDs } from "../modals/modal.signin.component";
-import { testIDs as SpinnerModalTestIDs } from "../modals/modal.spinner.component";
+import { testIDs as AuthModalTestIDs } from "../modals/signin/modal.signin.component";
+import { testIDs as SpinnerModalTestIDs } from "../modals/spinner/modal.spinner.component";
 import authenticationTranslations from "@locales/authentication.json";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
@@ -15,6 +15,7 @@ import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockToggleHook from "@src/hooks/utility/__mocks__/toggle.mock";
 
 jest.mock("@src/hooks/analytics");
 
@@ -24,30 +25,21 @@ jest.mock("@src/hooks/locale");
 
 jest.mock("@src/hooks/router");
 
-jest.mock("@chakra-ui/react", () => {
-  const module = jest.requireActual("@chakra-ui/react");
-  return {
-    ...module,
-    useDisclosure: () => mockUseDisclosure(),
-  };
-});
+jest.mock("@src/hooks/utility/toggle");
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   require("@fixtures/react/child").createComponent("VerticalScrollBar")
 );
 
-const mockUseDisclosure = jest.fn();
-
 describe("AuthenticationContainer", () => {
-  const mockOnOpen = jest.fn();
-  const mockOnClose = jest.fn();
+  let mockCallBack: (() => void) | undefined;
+
   const providers: (keyof typeof authenticationTranslations.buttons)[] = [
     "facebook",
     "github",
     "google",
     "spotify",
   ];
-  let mockCallBack: (() => void) | undefined;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -137,13 +129,7 @@ describe("AuthenticationContainer", () => {
   };
 
   describe("modal is open", () => {
-    beforeEach(() => {
-      mockUseDisclosure.mockReturnValue({
-        isOpen: true,
-        onOpen: mockOnOpen,
-        onClose: mockOnClose,
-      });
-    });
+    beforeEach(() => (mockToggleHook.state = true));
 
     describe("user is logged in", () => {
       beforeEach(() => {
@@ -172,8 +158,8 @@ describe("AuthenticationContainer", () => {
           });
 
           it("should close the modal", () => {
-            expect(mockOnClose).toBeCalledTimes(1);
-            expect(mockOnClose).toBeCalledWith();
+            expect(mockToggleHook.setFalse).toBeCalledTimes(1);
+            expect(mockToggleHook.setFalse).toBeCalledWith();
           });
 
           it("should route to the correct url", () => {
@@ -242,13 +228,7 @@ describe("AuthenticationContainer", () => {
   });
 
   describe("modal is closed", () => {
-    beforeEach(() => {
-      mockUseDisclosure.mockReturnValue({
-        isOpen: false,
-        onOpen: mockOnOpen,
-        onClose: mockOnClose,
-      });
-    });
+    beforeEach(() => (mockToggleHook.state = false));
 
     describe("user is NOT logged in", () => {
       beforeEach(() => {

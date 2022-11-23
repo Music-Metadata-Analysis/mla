@@ -11,14 +11,14 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { useRef } from "react";
-import SignInButtons from "../buttons/signin.buttons";
+import SignInButtons from "@src/components/authentication/buttons/signin.buttons";
 import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
 import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
 import routes from "@src/config/routes";
 import useColours from "@src/hooks/colour";
-import useLocale from "@src/hooks/locale";
 import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
+import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { RefObject } from "react";
 
 export const testIDs = {
   AuthenticationModalCloseButton: "AuthenticationCloseButton",
@@ -27,22 +27,32 @@ export const testIDs = {
   AuthenticationLoginButtons: "AuthenticationLoginButtons",
 };
 
-export interface AuthenticationProps {
+export const ids = {
+  SignInProvidersScrollArea: "SignInProvidersScrollArea",
+};
+
+export interface AuthenticationSignInModalProps {
+  authenticationT: tFunctionType;
   isOpen: boolean;
   onClose: (overrideCloseBehavior?: boolean) => void;
+  scrollRef: RefObject<HTMLDivElement>;
   setClicked: (value: boolean) => void;
   signIn: (provider: AuthServiceType) => void;
+  termsText: string;
+  titleText: string;
 }
 
-export default function ModalComponent({
+export default function AuthenticationSignInModal({
+  authenticationT,
   isOpen,
   onClose,
+  scrollRef,
   setClicked,
   signIn,
-}: AuthenticationProps) {
-  const { t } = useLocale("authentication");
+  termsText,
+  titleText,
+}: AuthenticationSignInModalProps) {
   const { modalColour } = useColours();
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
     <Modal
@@ -69,7 +79,7 @@ export default function ModalComponent({
         <Box borderWidth={1}>
           <Container centerContent={true}>
             <ModalHeader data-testid={testIDs.AuthenticationModalTitle}>
-              {t("title")}
+              {titleText}
             </ModalHeader>
           </Container>
           <ModalBody pl={2} pr={2}>
@@ -78,7 +88,7 @@ export default function ModalComponent({
                 maxHeight={"calc(100vh - 150px)"}
                 className={"scrollbar"}
                 ref={scrollRef}
-                id={"SignInProvidersScrollArea"}
+                id={ids.SignInProvidersScrollArea}
               >
                 <VerticalScrollBar
                   scrollRef={scrollRef}
@@ -92,7 +102,7 @@ export default function ModalComponent({
                   data-testid={testIDs.AuthenticationLoginButtons}
                 >
                   <SignInButtons
-                    t={t}
+                    t={authenticationT}
                     signIn={signIn}
                     setClicked={setClicked}
                   />
@@ -110,7 +120,7 @@ export default function ModalComponent({
               onClick={() => onClose(true)}
             >
               <ClickLinkInternalContainer path={routes.legal.terms}>
-                {t("terms")}
+                {termsText}
               </ClickLinkInternalContainer>
             </Flex>
           </ModalFooter>
