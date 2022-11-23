@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import NavBarSessionControlContainer from "../navbar.session.control.container";
 import authenticationTranslocations from "@locales/authentication.json";
-import { testIDs as modalIDs } from "@src/components/authentication/modals/modal.signin.component";
+import { testIDs as modalIDs } from "@src/components/authentication/modals/signin/modal.signin.component";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";

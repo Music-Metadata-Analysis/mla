@@ -47,6 +47,7 @@ jobs:
         run: |
           source .github/scripts/architecture-path.sh "src/components/about"
           source .github/scripts/architecture-path.sh "src/components/analytics"
+          source .github/scripts/architecture-path.sh "src/components/authentication"
           source .github/scripts/architecture-path.sh "src/components/button"
           source .github/scripts/architecture-path.sh "src/components/clickable"
           source .github/scripts/architecture-path.sh "src/components/condition"
