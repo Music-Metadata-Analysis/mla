@@ -4,7 +4,7 @@ import {
   GithubLoginButton,
   GoogleLoginButton,
 } from "react-social-login-buttons";
-import SignInButtons from "../signin.buttons";
+import SignInButtons from "../signin.buttons.component";
 import authenticationTranslations from "@locales/authentication.json";
 import AnalyticsButtonWrapper from "@src/components/analytics/analytics.button/analytics.button.container";
 import SpotifyLoginButton from "@src/components/button/button.spotify/button.spotify.component";
@@ -28,11 +28,10 @@ jest.mock(
     require("@fixtures/react/parent").createComponent("AnalyticsButtonWrapper")
 );
 
-const mockSetClicked = jest.fn();
-const mockSignIn = jest.fn();
-
 describe("AuthenticationComponent", () => {
   const buttonWidth = 245;
+
+  const mockHandleSignIn = jest.fn();
   const mockT = new MockUseLocale("authentication").t;
 
   beforeEach(() => {
@@ -41,13 +40,7 @@ describe("AuthenticationComponent", () => {
   });
 
   const arrange = () => {
-    render(
-      <SignInButtons
-        setClicked={mockSetClicked}
-        signIn={mockSignIn}
-        t={mockT}
-      />
-    );
+    render(<SignInButtons handleSignIn={mockHandleSignIn} t={mockT} />);
   };
 
   it("should call the AnalyticsWrapper component correctly", () => {

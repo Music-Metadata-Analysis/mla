@@ -9,22 +9,15 @@ import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export interface AuthenticationProviderProps {
-  setClicked: (value: boolean) => void;
-  signIn: (provider: AuthServiceType) => void;
+  handleSignIn: (provider: AuthServiceType) => void;
   t: tFunctionType;
 }
 
 export default function SignInButtons({
-  setClicked,
-  signIn,
+  handleSignIn,
   t,
 }: AuthenticationProviderProps) {
   const buttonWidth = 245;
-
-  const handleSignIn = (provider: AuthServiceType) => {
-    setClicked(true);
-    signIn(provider);
-  };
 
   return (
     <>
