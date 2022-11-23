@@ -168,7 +168,7 @@ describe("SearchContainer", () => {
       describe("when submitted with a username", () => {
         beforeEach(() => handleSubmit(mockFormContent, mockAction));
 
-        it("should NOT call setSubmitting as expected", () => {
+        it("should NOT call setSubmitting", () => {
           expect(mockAction.setSubmitting).toBeCalledTimes(0);
         });
 
@@ -205,7 +205,7 @@ describe("SearchContainer", () => {
           );
         });
 
-        it("should NOT redirect to the expected route", () => {
+        it("should NOT redirect", () => {
           expect(mockRouterHook.push).toBeCalledTimes(0);
         });
       });

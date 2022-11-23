@@ -267,11 +267,11 @@ describe("NextAuthRoutes", () => {
             });
           });
 
-          it("should NOT instantiate the flag vendor's Group class correctly", () => {
+          it("should NOT instantiate the flag vendor's Group class", () => {
             expect(flagVendor.Group).toBeCalledTimes(0);
           });
 
-          it("should NOT assign the group as expected", () => {
+          it("should NOT assign the group", () => {
             expect(mockTestToken?.group).toBeUndefined();
           });
 
@@ -298,7 +298,7 @@ describe("NextAuthRoutes", () => {
             expect(flagVendor.Group).toBeCalledTimes(0);
           });
 
-          it("should NOT assign the group as expected", () => {
+          it("should NOT assign the group", () => {
             expect(mockTestSession?.group).toBeUndefined();
           });
 
@@ -371,7 +371,7 @@ describe("NextAuthRoutes", () => {
             eventHandler({ profile: mockTestProfile });
           });
 
-          it("should NOT instantiate the flag vendor's Group class correctly", () => {
+          it("should NOT instantiate the flag vendor's Group class", () => {
             expect(flagVendor.Group).toBeCalledTimes(0);
           });
 

@@ -134,7 +134,7 @@ describe("SunBurstEntityNodeListContainer", () => {
   };
 
   const checkNodeListComponentNotCalledProps = () => {
-    it("should NOT render the SunBurstEntityNodeList with the correct props", () => {
+    it("should NOT render the SunBurstEntityNodeList component", () => {
       expect(SunBurstEntityNodeList).toBeCalledTimes(0);
     });
   };

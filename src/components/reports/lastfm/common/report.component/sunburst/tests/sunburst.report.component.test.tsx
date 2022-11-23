@@ -365,7 +365,7 @@ describe("SunBurstReport", () => {
     });
 
     if (calls > 0) {
-      it("should call the SunBurstNotVisiblePanel component correctly", () => {
+      it("should call the SunBurstNotVisiblePanel component", () => {
         expect(SunBurstErrorPanel).toBeCalledTimes(1);
         checkMockCall(
           SunBurstErrorPanel,
