@@ -101,7 +101,7 @@ describe("FlipCardDrawerContainer", () => {
 
   const checkEffectHookDoesNotEmitEvent = () => {
     describe("useEffect (analytics)", () => {
-      it("should NOT emit the expected analytics event", () => {
+      it("should NOT emit an analytics event", () => {
         expect(mockAnalyticsHook.event).toBeCalledTimes(0);
       });
     });

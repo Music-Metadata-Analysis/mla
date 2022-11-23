@@ -139,7 +139,7 @@ describe("Dialogue", () => {
   };
 
   const checkNoHeaderComponentRender = () => {
-    it("should NOT render the HeaderComponent as expected", () => {
+    it("should NOT render the HeaderComponent", () => {
       expect(mockHeader).toBeCalledTimes(0);
     });
   };
@@ -154,7 +154,7 @@ describe("Dialogue", () => {
   };
 
   const checkNoToggleComponentRender = () => {
-    it("should NOT render the ToggleComponent as expected", () => {
+    it("should NOT render the ToggleComponent", () => {
       expect(mockToggle).toBeCalledTimes(0);
     });
   };
@@ -169,7 +169,7 @@ describe("Dialogue", () => {
   };
 
   const checkNoBodyComponentRender = () => {
-    it("should NOT render the BodyComponent as expected", () => {
+    it("should NOT render the BodyComponent", () => {
       expect(mockBody).toBeCalledTimes(0);
     });
   };
@@ -184,7 +184,7 @@ describe("Dialogue", () => {
   };
 
   const checkNoFooterComponentRender = () => {
-    it("should NOT render the FooterComponent as expected", () => {
+    it("should NOT render the FooterComponent", () => {
       expect(mockFooter).toBeCalledTimes(0);
     });
   };
