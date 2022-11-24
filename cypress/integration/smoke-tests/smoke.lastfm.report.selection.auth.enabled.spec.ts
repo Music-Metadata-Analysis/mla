@@ -1,18 +1,20 @@
 import env from "@cypress/config/env";
-import { authenticate } from "@cypress/fixtures/auth";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
-import { baseUrl } from "@cypress/fixtures/setup";
+import { authenticate } from "@cypress/fixtures/spec/auth.spec";
+import { checkBillboardTitle } from "@cypress/fixtures/spec/responsiveness.spec";
+import { setup } from "@cypress/fixtures/spec/setup.spec";
+import lastfm from "@locales/lastfm.json";
 import routes from "@src/config/routes";
 
 describe("LastFM Report Selection (Enabled)", () => {
   const authorizationCookieName = getAuthorizationCookieName();
-  const reports = flipCardReports.concat(Object.values(sunBurstReports));
+  const reports = flipCardReports.concat(sunBurstReports);
 
-  before(() => baseUrl());
+  before(() => setup());
 
-  reports.forEach((report) => {
-    describe(report, () => {
+  reports.forEach((reportConfig) => {
+    describe(reportConfig.reportName, () => {
       describe("when we are logged in", () => {
         before(() =>
           authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN)
@@ -21,11 +23,13 @@ describe("LastFM Report Selection (Enabled)", () => {
         describe("when we visit the search selection screen", () => {
           before(() => cy.visit(routes.search.lastfm.selection));
 
-          it(`should contain the '${report}' report`, () => {
-            cy.contains(report).should("be.visible");
+          it(`should contain the '${reportConfig.reportName}' report`, () => {
+            cy.contains(reportConfig.reportName).should("be.visible");
           });
         });
       });
     });
+
+    checkBillboardTitle({ titleText: lastfm.select.title });
   });
 });

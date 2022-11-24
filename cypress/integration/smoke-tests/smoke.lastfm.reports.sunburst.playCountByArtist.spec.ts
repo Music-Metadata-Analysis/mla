@@ -1,8 +1,8 @@
 import env from "@cypress/config/env";
-import { authenticate } from "@cypress/fixtures/auth";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { sunBurstReports } from "@cypress/fixtures/reports";
-import { baseUrl } from "@cypress/fixtures/setup";
+import { authenticate } from "@cypress/fixtures/spec/auth.spec";
+import { setup } from "@cypress/fixtures/spec/setup.spec";
 import LastFmTranslations from "@locales/lastfm.json";
 import SunBurstTranslations from "@locales/sunburst.json";
 import routes from "@src/config/routes";
@@ -11,9 +11,11 @@ describe("Count By Artist SunBurst Report", async () => {
   const authorizationCookieName = getAuthorizationCookieName();
   const timeout = 40000;
 
-  before(() => baseUrl());
+  const reportConfig = sunBurstReports[0];
 
-  describe(sunBurstReports.playCountByArtist, () => {
+  before(() => setup());
+
+  describe(reportConfig.reportName, () => {
     describe("when we are logged in", () => {
       before(() => {
         authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN);
@@ -22,11 +24,11 @@ describe("Count By Artist SunBurst Report", async () => {
       describe("when we visit the search selection screen", () => {
         before(() => cy.visit(routes.search.lastfm.selection));
 
-        describe(`when we select the '${sunBurstReports.playCountByArtist}' report`, () => {
+        describe(`when we select the '${reportConfig.reportName}' report`, () => {
           let Report: Cypress.Chainable<undefined>;
 
           before(() => {
-            Report = cy.contains(sunBurstReports.playCountByArtist);
+            Report = cy.contains(reportConfig.reportName);
             Report.click();
           });
 

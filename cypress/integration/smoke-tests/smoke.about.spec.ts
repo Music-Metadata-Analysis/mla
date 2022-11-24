@@ -1,4 +1,5 @@
-import { baseUrl } from "@cypress/fixtures/setup";
+import { checkDialogueToggle } from "@cypress/fixtures/spec/responsiveness.spec";
+import { setup } from "@cypress/fixtures/spec/setup.spec";
 import about from "@locales/about.json";
 import routes from "@src/config/routes";
 
@@ -6,7 +7,7 @@ describe("About Page", () => {
   const timeout = 5000;
 
   before(() => {
-    baseUrl();
+    setup();
     cy.visit(routes.about);
   });
 
@@ -23,4 +24,6 @@ describe("About Page", () => {
     cy.contains(about.aboutText2).should("be.visible");
     cy.contains(about.aboutText3).should("be.visible");
   });
+
+  checkDialogueToggle({ titleText: about.title, toggleText: about.aboutText1 });
 });

@@ -1,18 +1,19 @@
 import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
-import { baseUrl } from "@cypress/fixtures/setup";
+import { setup } from "@cypress/fixtures/spec/setup.spec";
 import authentication from "@locales/authentication.json";
 import lastfm from "@locales/lastfm.json";
 import routes from "@src/config/routes";
 
 describe("LastFM Report Selection (Unauthenticated)", () => {
-  const reports = flipCardReports.concat(Object.values(sunBurstReports));
-  const openAuthReports = [reports[0]];
+  const reports = flipCardReports.concat(sunBurstReports);
   const timeout = 5000;
 
-  before(() => baseUrl());
+  const openAuthReports = [reports[0]];
 
-  openAuthReports.forEach((report) => {
-    describe(report, () => {
+  before(() => setup());
+
+  openAuthReports.forEach((reportConfig) => {
+    describe(reportConfig.reportName, () => {
       describe("when we are NOT logged in", () => {
         before(() => {
           cy.visit(routes.search.lastfm.selection);
@@ -25,14 +26,14 @@ describe("LastFM Report Selection (Unauthenticated)", () => {
         });
 
         it("should render the correct button text", () => {
-          cy.contains(report).should("be.visible");
+          cy.contains(reportConfig.reportName).should("be.visible");
         });
 
-        describe(`when we select the ${report} report`, () => {
+        describe(`when we select the ${reportConfig.reportName} report`, () => {
           let Report: Cypress.Chainable<undefined>;
 
           before(() => {
-            Report = cy.contains(report);
+            Report = cy.contains(reportConfig.reportName);
             Report.click();
           });
 

@@ -1,6 +1,9 @@
 import { loadEnvConfig } from "@next/env";
 import { writeFile } from "fs";
-import { AllAccessIdentity, NoAccessIdentity } from "@cypress/fixtures/auth";
+import {
+  AllAccessIdentity,
+  NoAccessIdentity,
+} from "@cypress/fixtures/spec/auth.spec";
 import authVendor from "@cypress/vendors/auth/vendor";
 import type { envVarType } from "@cypress/types/env";
 

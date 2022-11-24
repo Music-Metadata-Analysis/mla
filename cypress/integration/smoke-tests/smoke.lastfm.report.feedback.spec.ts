@@ -1,8 +1,8 @@
 import env from "@cypress/config/env";
-import { authenticate } from "@cypress/fixtures/auth";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { flipCardReports } from "@cypress/fixtures/reports";
-import { baseUrl } from "@cypress/fixtures/setup";
+import { authenticate } from "@cypress/fixtures/spec/auth.spec";
+import { setup } from "@cypress/fixtures/spec/setup.spec";
 import translations from "@locales/main.json";
 import metrics from "@src/config/metrics";
 import routes from "@src/config/routes";
@@ -10,11 +10,11 @@ import routes from "@src/config/routes";
 describe("Feedback Dialogue", () => {
   const authorizationCookieName = getAuthorizationCookieName();
   const expectedFlipCards = 20;
-  const report = flipCardReports[0];
-  const timeout = 40000;
   const thresholdSearchMetricValue = { SearchMetric: 4 };
+  const timeout = 40000;
+  const report = flipCardReports[0].reportName;
 
-  before(() => baseUrl());
+  before(() => setup());
 
   describe("when local storage contains a threshold search metric value", () => {
     before(() => {
