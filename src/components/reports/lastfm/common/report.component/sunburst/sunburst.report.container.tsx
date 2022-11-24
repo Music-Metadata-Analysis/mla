@@ -84,7 +84,7 @@ export default function SunBurstReportContainer<
     >
       <BillBoardProgressBar
         details={report.getProgressDetails(lastfm.userProperties, sunBurstT)}
-        title={lastFMt(
+        titleText={lastFMt(
           `${String(report.getReportTranslationKey())}.communication`
         )}
         visible={!lastfm.userProperties.ready}

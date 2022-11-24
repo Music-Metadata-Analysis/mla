@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import Billboard from "@src/components/billboard/billboard.component";
+import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import Condition from "@src/components/condition/condition.component";
 import type { RouterHookType } from "@src/hooks/router";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
@@ -46,7 +46,7 @@ export default function Dialogue({
   };
 
   return (
-    <Billboard title={titleText}>
+    <BillboardContainer titleText={titleText}>
       <Flex direction={"column"} justify={"center"} align={"center"}>
         <OptionalComponent
           component={HeaderComponent}
@@ -67,6 +67,6 @@ export default function Dialogue({
           id={testIDs.DialogueFooterComponent}
         />
       </Flex>
-    </Billboard>
+    </BillboardContainer>
   );
 }

@@ -5,10 +5,10 @@ import {
   StatNumber,
 } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import BillBoard from "../../billboard.component";
 import BillBoardProgressBar, {
   testIDs,
 } from "../billboard.progress.bar.component";
+import BillBoardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import { truncate } from "@src/utils/strings";
@@ -18,18 +18,17 @@ jest.mock("@src/hooks/colour");
 
 jest.mock("@src/utils/strings");
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock([
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock([
     "Progress",
     "StatHelpText",
     "StatLabel",
     "StatNumber",
-  ]);
-});
+  ])
+);
 
-jest.mock("../../billboard.component", () =>
-  require("@fixtures/react/parent").createComponent("Billboard")
+jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
+  require("@fixtures/react/parent").createComponent("BillboardContainer")
 );
 
 describe("BillBoardProgressBar", () => {
@@ -47,7 +46,7 @@ describe("BillBoardProgressBar", () => {
         value={mockValue}
         details={mockDetails}
         visible={isVisible}
-        title={testTitle}
+        titleText={testTitle}
       />
     );
   };
@@ -71,8 +70,8 @@ describe("BillBoardProgressBar", () => {
     });
 
     it("should render the billboard", () => {
-      expect(BillBoard).toBeCalledTimes(1);
-      checkMockCall(BillBoard, { title: testTitle });
+      expect(BillBoardContainer).toBeCalledTimes(1);
+      checkMockCall(BillBoardContainer, { titleText: testTitle });
     });
 
     it("should render the details", () => {
@@ -113,8 +112,8 @@ describe("BillBoardProgressBar", () => {
     });
 
     it("should render the billboard", () => {
-      expect(BillBoard).toBeCalledTimes(1);
-      checkMockCall(BillBoard, { title: testTitle });
+      expect(BillBoardContainer).toBeCalledTimes(1);
+      checkMockCall(BillBoardContainer, { titleText: testTitle });
     });
 
     it("should render the details", () => {
