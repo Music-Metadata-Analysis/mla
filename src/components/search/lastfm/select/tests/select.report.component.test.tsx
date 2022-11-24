@@ -5,7 +5,7 @@ import { renderToString } from "react-dom/server";
 import Option from "../inlay/select.option.component";
 import Select from "../select.report.component";
 import translations from "@locales/lastfm.json";
-import Billboard from "@src/components/billboard/billboard.component";
+import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
 import VerticalScrollBarComponent from "@src/components/scrollbar/vertical.scrollbar.component";
 import config from "@src/config/lastfm";
@@ -21,14 +21,12 @@ jest.mock("@src/hooks/locale");
 
 jest.mock("@src/hooks/router");
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  const chakraMock = createChakraMock(["Avatar", "Flex"], ["Box"]);
-  return chakraMock;
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Avatar", "Flex"], ["Box"])
+);
 
-jest.mock("@src/components/billboard/billboard.component", () =>
-  require("@fixtures/react/parent").createComponent("Billboard")
+jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
+  require("@fixtures/react/parent").createComponent("BillboardContainer")
 );
 
 jest.mock("../inlay/select.option.component", () =>
@@ -61,7 +59,12 @@ describe("SearchSelection", () => {
 
   const checkChakraComponents = () => {
     it("should call Billboard with the correct props", () => {
-      checkMockCall(Billboard, { title: _t(translations.select.title) }, 0, []);
+      checkMockCall(
+        BillboardContainer,
+        { titleText: _t(translations.select.title) },
+        0,
+        []
+      );
     });
 
     it("should call Flex as expected to center content", () => {

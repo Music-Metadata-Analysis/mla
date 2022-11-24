@@ -188,11 +188,11 @@ describe("SunBurstReportContainer", () => {
           currentLastFMHookState.userProperties,
           mockSunBurstT
         ),
-        title: _t(lastfm[mockReport.translationKey].communication),
-        visible: !currentLastFMHookState.userProperties.ready,
+        titleText: _t(lastfm[mockReport.translationKey].communication),
         value: mockReport.getProgressPercentage(
           currentLastFMHookState.userProperties
         ),
+        visible: !currentLastFMHookState.userProperties.ready,
       });
     });
 

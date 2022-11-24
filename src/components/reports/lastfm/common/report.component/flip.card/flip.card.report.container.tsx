@@ -81,7 +81,9 @@ export default function FlipCardReportContainer<
       userProperties={reportHook.userProperties}
     >
       <BillBoardSpinner
-        title={t(`${String(report.getReportTranslationKey())}.communication`)}
+        titleText={t(
+          `${String(report.getReportTranslationKey())}.communication`
+        )}
         visible={!reportHook.userProperties.ready}
       />
       <Condition isTrue={!reportHook.userProperties.inProgress}>

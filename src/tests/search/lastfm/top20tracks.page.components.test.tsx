@@ -65,7 +65,7 @@ describe("SearchIntegrationTest", () => {
         SearchUI,
         {
           route: routes.reports.lastfm.top20tracks,
-          title: _t(lastfmTranslations.top20Tracks.searchTitle),
+          titleText: _t(lastfmTranslations.top20Tracks.searchTitle),
         },
         0,
         ["t"]

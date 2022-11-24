@@ -15,7 +15,7 @@ describe("ClickInternalLinkContainer", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     arrange();
   });
 

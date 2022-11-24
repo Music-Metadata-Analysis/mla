@@ -1,6 +1,6 @@
 import { WarningTwoIcon } from "@chakra-ui/icons";
 import { Container, Flex, useColorModeValue } from "@chakra-ui/react";
-import Billboard from "@src/components/billboard/billboard.component";
+import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
 import useLocale from "@src/hooks/locale";
 
@@ -20,7 +20,7 @@ const ErrorDisplay = ({ errorKey, resetError, error }: ErrorHandlerProps) => {
   };
 
   return (
-    <Billboard title={t(`errors.${errorKey}.title`)}>
+    <BillboardContainer titleText={t(`errors.${errorKey}.title`)}>
       <Flex direction={"column"} align={"center"} justify={"center"}>
         <WarningTwoIcon color={iconColor} boxSize={50} />
         <Container
@@ -36,7 +36,7 @@ const ErrorDisplay = ({ errorKey, resetError, error }: ErrorHandlerProps) => {
           {t(`errors.${errorKey}.resetButton`)}
         </StyledButton>
       </Flex>
-    </Billboard>
+    </BillboardContainer>
   );
 };
 

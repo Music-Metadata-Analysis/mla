@@ -8,7 +8,7 @@ import {
   StatHelpText,
   StatNumber,
 } from "@chakra-ui/react";
-import BillBoard from "../billboard.component";
+import BillBoardContainer from "../billboard.base/billboard.container";
 import useColour from "@src/hooks/colour";
 import { truncate } from "@src/utils/strings";
 
@@ -23,7 +23,7 @@ export type BillBoardProgressBarDetails = {
 };
 
 interface BillBoardProgressBarProps {
-  title: string;
+  titleText: string;
   visible: boolean;
   value: number;
   details: BillBoardProgressBarDetails;
@@ -31,7 +31,7 @@ interface BillBoardProgressBarProps {
 
 const BillBoardProgressBar = ({
   visible,
-  title,
+  titleText,
   value,
   details,
 }: BillBoardProgressBarProps) => {
@@ -47,7 +47,7 @@ const BillBoardProgressBar = ({
       data-testid={testIDs.BillBoardProgressBarVisibilityControl}
       style={{ display: visible ? "inline" : "none" }}
     >
-      <BillBoard title={title}>
+      <BillBoardContainer titleText={titleText}>
         <Box pt={3} pb={3}>
           <Progress
             data-testid={testIDs.BillBoardProgressBar}
@@ -71,7 +71,7 @@ const BillBoardProgressBar = ({
             </Stat>
           </StatGroup>
         </Flex>
-      </BillBoard>
+      </BillBoardContainer>
     </div>
   );
 };

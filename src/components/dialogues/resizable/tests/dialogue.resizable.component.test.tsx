@@ -6,7 +6,7 @@ import Dialogue, {
 } from "../dialogue.resizable.component";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import { mockUseRouter } from "@src/clients/web.framework/__mocks__/vendor.mock";
-import Billboard from "@src/components/billboard/billboard.component";
+import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
@@ -15,8 +15,8 @@ jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Box", "Flex"])
 );
 
-jest.mock("@src/components/billboard/billboard.component", () =>
-  require("@fixtures/react/parent").createComponent("Billboard")
+jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
+  require("@fixtures/react/parent").createComponent("BillboardContainer")
 );
 
 describe("Dialogue", () => {
@@ -54,11 +54,11 @@ describe("Dialogue", () => {
 
   const checkBillboardComponentRender = () => {
     it("should call the Billboard component with the expected props", () => {
-      expect(Billboard).toBeCalledTimes(1);
+      expect(BillboardContainer).toBeCalledTimes(1);
       checkMockCall(
-        Billboard,
+        BillboardContainer,
         {
-          title: currentProps.titleText,
+          titleText: currentProps.titleText,
         },
         0
       );

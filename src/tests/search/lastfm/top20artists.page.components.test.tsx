@@ -67,7 +67,7 @@ describe("SearchTopArtists", () => {
         SearchUI,
         {
           route: routes.reports.lastfm.top20artists,
-          title: _t(lastfmTranslations.top20Artists.searchTitle),
+          titleText: _t(lastfmTranslations.top20Artists.searchTitle),
         },
         0,
         ["t"]

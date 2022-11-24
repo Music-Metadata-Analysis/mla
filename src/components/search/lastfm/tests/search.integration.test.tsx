@@ -36,7 +36,7 @@ describe("SearchTopTracks", () => {
     render(
       <SearchUI
         t={mockT}
-        title={mockTitle}
+        titleText={mockTitle}
         route={routes.reports.lastfm.top20tracks}
       />
     );

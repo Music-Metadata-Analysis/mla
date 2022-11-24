@@ -17,7 +17,7 @@ export default function SearchLastFMTop20Artists() {
     >
       <SearchUI
         t={t}
-        title={t("top20Artists.searchTitle")}
+        titleText={t("top20Artists.searchTitle")}
         route={routes.reports.lastfm.top20artists}
       />
     </ErrorBoundary>
