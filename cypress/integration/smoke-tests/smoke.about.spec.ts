@@ -1,4 +1,6 @@
-import { baseUrl } from "@cypress/fixtures/setup";
+import checkBillboardTitle from "@cypress/fixtures/spec/responsiveness/billboard.spec";
+import checkDialogueToggle from "@cypress/fixtures/spec/responsiveness/dialogue.spec";
+import { setup } from "@cypress/fixtures/spec/setup.spec";
 import about from "@locales/about.json";
 import routes from "@src/config/routes";
 
@@ -6,7 +8,7 @@ describe("About Page", () => {
   const timeout = 5000;
 
   before(() => {
-    baseUrl();
+    setup();
     cy.visit(routes.about);
   });
 
@@ -23,4 +25,7 @@ describe("About Page", () => {
     cy.contains(about.aboutText2).should("be.visible");
     cy.contains(about.aboutText3).should("be.visible");
   });
+
+  checkBillboardTitle({ timeout, titleText: about.title });
+  checkDialogueToggle({ timeout, toggleText: about.aboutText1 });
 });

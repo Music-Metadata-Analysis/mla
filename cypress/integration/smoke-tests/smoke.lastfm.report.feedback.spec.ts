@@ -1,20 +1,21 @@
 import env from "@cypress/config/env";
-import { authenticate } from "@cypress/fixtures/auth";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { flipCardReports } from "@cypress/fixtures/reports";
-import { baseUrl } from "@cypress/fixtures/setup";
+import { authenticate } from "@cypress/fixtures/spec/auth.spec";
+import { setup } from "@cypress/fixtures/spec/setup.spec";
 import translations from "@locales/main.json";
+import { testIDs as feedBackTestIDs } from "@src/components/popups/popups.components/feedback.popup.identifiers";
 import metrics from "@src/config/metrics";
 import routes from "@src/config/routes";
 
 describe("Feedback Dialogue", () => {
   const authorizationCookieName = getAuthorizationCookieName();
   const expectedFlipCards = 20;
-  const report = flipCardReports[0];
-  const timeout = 40000;
   const thresholdSearchMetricValue = { SearchMetric: 4 };
+  const timeout = 40000;
+  const report = flipCardReports[0].reportName;
 
-  before(() => baseUrl());
+  before(() => setup());
 
   describe("when local storage contains a threshold search metric value", () => {
     before(() => {
@@ -35,11 +36,8 @@ describe("Feedback Dialogue", () => {
         before(() => cy.visit(routes.search.lastfm.selection));
 
         describe(`when we select the '${report}' report`, () => {
-          let Report: Cypress.Chainable<undefined>;
-
           before(() => {
-            Report = cy.contains(report);
-            Report.click();
+            cy.contains(report).click();
           });
 
           it("should display an input field for a lastfm username", () => {
@@ -47,11 +45,8 @@ describe("Feedback Dialogue", () => {
           });
 
           describe("when we enter a username", () => {
-            let Input: Cypress.Chainable<JQuery<HTMLElement>>;
-
             before(() => {
-              Input = cy.get('input[name="username"]');
-              Input.type("niall-byrne{enter}");
+              cy.get('input[name="username"]').type("niall-byrne{enter}");
             });
 
             it("should load 20 flip cards for the expected report", () => {
@@ -64,20 +59,26 @@ describe("Feedback Dialogue", () => {
               let Dialogue: Cypress.Chainable<JQuery<HTMLElement>>;
 
               before(() => {
-                Dialogue = cy.get(`[data-testid="FeedBackDialogue"]`, {
-                  timeout,
-                });
+                Dialogue = cy.get(
+                  `[data-testid="${feedBackTestIDs.FeedBackDialogue}"]`,
+                  {
+                    timeout,
+                  }
+                );
               });
 
               it("should display the feedback dialogue icon", () => {
-                Dialogue.contains(`[data-testid="FeedBackDialogueIcon"]`, {
-                  timeout,
-                });
+                Dialogue.contains(
+                  `[data-testid="${feedBackTestIDs.FeedBackDialogueIcon}"]`,
+                  {
+                    timeout,
+                  }
+                );
               });
 
               it("should display the feedback dialogue close button", () => {
                 Dialogue.contains(
-                  `[data-testid="FeedBackDialogueCloseButton"]`,
+                  `[data-testid="${feedBackTestIDs.FeedBackDialogueCloseButton}"]`,
                   {
                     timeout,
                   }
