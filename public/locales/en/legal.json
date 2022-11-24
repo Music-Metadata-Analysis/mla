@@ -2,7 +2,7 @@
   "privacy": {
     "title": "Privacy Policy",
     "company": "Shared Vision Solutions",
-    "text1": "We collect some basic information about you when you use our site.  Please review our privacy policy, and reach out if you have any questions or concerns.",
+    "text1": "We collect some basic information about you when you use our site. Please review our privacy policy, and reach out if you have any questions or concerns.",
     "buttons": {
       "policy": "View Policy",
       "contact": "Contact Us"
@@ -11,8 +11,8 @@
   "termsOfService": {
     "title": "Terms of Service",
     "company": "Shared Vision Solutions",
-    "text1": "This service is provided for free, and we kindly ask you set your expectations accordingly.  Please review our terms of service for further details.",
-    "text2": "You should be atleast 16 years of age when accessing this website.",
+    "text1": "This service is provided for free, and we kindly ask you set your expectations accordingly. Please review our terms of service for further details.",
+    "text2": "You should be at least 16 years of age when accessing this website.",
     "buttons": {
       "terms": "View Terms",
       "contact": "Contact Us"

@@ -1,5 +1,5 @@
 import * as jwt from "next-auth/jwt";
-import type { IdentityType } from "@cypress/fixtures/auth";
+import type { IdentityType } from "@cypress/fixtures/spec/auth.spec";
 
 export default async function generateNextAuthToken(identity: IdentityType) {
   const settings = {

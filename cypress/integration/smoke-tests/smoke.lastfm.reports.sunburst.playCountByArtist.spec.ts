@@ -1,19 +1,27 @@
 import env from "@cypress/config/env";
-import { authenticate } from "@cypress/fixtures/auth";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { sunBurstReports } from "@cypress/fixtures/reports";
-import { baseUrl } from "@cypress/fixtures/setup";
+import { authenticate } from "@cypress/fixtures/spec/auth.spec";
+import { setup } from "@cypress/fixtures/spec/setup.spec";
 import LastFmTranslations from "@locales/lastfm.json";
 import SunBurstTranslations from "@locales/sunburst.json";
+import { classes as SunBurstSVGclasses } from "@src/components/reports/common/chart/sunburst/svg/svg.identifiers";
+import { testIDs as SunBurstDrawerButtonIDs } from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.button/node.button.identifiers";
+import { testIDs as SunBurstDrawerListIDs } from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.list/node.list.identifiers";
+import { testIDs as SunBurstControlIDs } from "@src/components/reports/lastfm/common/report.component/sunburst/panels/control/control.panel.identifiers";
+import { testIDs as SunBurstTitleIDs } from "@src/components/reports/lastfm/common/report.component/sunburst/panels/title/title.panel.identifiers";
+import { fields } from "@src/components/search/lastfm/forms/username/username.form.identifiers";
 import routes from "@src/config/routes";
 
 describe("Count By Artist SunBurst Report", async () => {
   const authorizationCookieName = getAuthorizationCookieName();
   const timeout = 40000;
 
-  before(() => baseUrl());
+  const reportConfig = sunBurstReports[0];
 
-  describe(sunBurstReports.playCountByArtist, () => {
+  before(() => setup());
+
+  describe(reportConfig.reportName, () => {
     describe("when we are logged in", () => {
       before(() => {
         authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN);
@@ -22,104 +30,103 @@ describe("Count By Artist SunBurst Report", async () => {
       describe("when we visit the search selection screen", () => {
         before(() => cy.visit(routes.search.lastfm.selection));
 
-        describe(`when we select the '${sunBurstReports.playCountByArtist}' report`, () => {
-          let Report: Cypress.Chainable<undefined>;
-
+        describe(`when we select the '${reportConfig.reportName}' report`, () => {
           before(() => {
-            Report = cy.contains(sunBurstReports.playCountByArtist);
-            Report.click();
+            cy.contains(reportConfig.reportName, { timeout }).click();
           });
 
           it("should display an input field for a lastfm username", () => {
-            cy.get('input[name="username"]', { timeout });
+            cy.get(`input[name="${fields.username}"]`, { timeout }).should(
+              "be.visible",
+              {
+                timeout,
+              }
+            );
           });
 
           describe("when we enter a username", () => {
-            let Input: Cypress.Chainable<JQuery<HTMLElement>>;
-
             before(() => {
-              Input = cy.get('input[name="username"]');
-              Input.type("test-account-2{enter}");
+              cy.get(`input[name="${fields.username}"]`, { timeout }).type(
+                "test-account-2{enter}"
+              );
             });
 
             it("should load a title for the report", () => {
-              const titleElement = cy.get(
-                `[data-testid="SunBurstTitlePanelTitle"]`,
+              cy.get(
+                `[data-testid="${SunBurstTitleIDs.SunBurstTitlePanelTitle}"]`,
                 { timeout }
-              );
-
-              titleElement
-                .contains(LastFmTranslations.playCountByArtist.title)
-                .should("be.visible");
+              )
+                .contains(LastFmTranslations.playCountByArtist.title, {
+                  timeout,
+                })
+                .should("be.visible", { timeout });
             });
 
             it("should load an svg with the correct title element", () => {
-              const svgTitleElement = cy.get(
-                `[id="SunburstPercentageDisplay"]`,
-                { timeout }
-              );
-
-              svgTitleElement.contains("100%").should("be.visible");
+              cy.get(`.${SunBurstSVGclasses.SunburstPercentageDisplay}`, {
+                timeout,
+              })
+                .contains("100%", { timeout })
+                .should("be.visible", { timeout });
             });
 
             describe("when the 'select' button is clicked", () => {
               before(() => {
-                const button = cy.get(
-                  '[data-testid="SunBurstControlPanelSelect"]'
-                );
-                button.click();
+                cy.get(
+                  `[data-testid="${SunBurstControlIDs.SunBurstControlPanelSelect}"]`,
+                  { timeout }
+                ).click();
               });
 
               it("should display the artist list", () => {
-                const artistList = cy.get(
-                  `[data-testid="SunBurstEntityNodeListTitle"]`,
+                cy.get(
+                  `[data-testid="${SunBurstDrawerListIDs.SunBurstEntityNodeListTitle}"]`,
                   { timeout }
-                );
-
-                artistList
-                  .contains(SunBurstTranslations.entities.artists)
-                  .should("be.visible");
+                )
+                  .contains(SunBurstTranslations.entities.artists, { timeout })
+                  .should("be.visible", { timeout });
               });
 
               describe("when an artist is clicked", () => {
                 before(() => {
-                  const artistList = cy.get(`[data-testid="NodeNameText"]`, {
-                    timeout,
-                  });
-                  artistList.click();
+                  cy.get(
+                    `[data-testid="${SunBurstDrawerButtonIDs.NodeNameText}"]`,
+                    { timeout }
+                  ).click();
                 });
 
                 it("should display the album list", () => {
-                  const albumList = cy.get(
-                    `[data-testid="SunBurstEntityNodeListTitle"]`,
+                  cy.get(
+                    `[data-testid="${SunBurstDrawerListIDs.SunBurstEntityNodeListTitle}"]`,
                     { timeout }
-                  );
-
-                  albumList
-                    .contains(SunBurstTranslations.entities.albums)
-                    .should("be.visible");
+                  )
+                    .contains(SunBurstTranslations.entities.albums, { timeout })
+                    .should("be.visible", {
+                      timeout,
+                    });
                 });
               });
 
               describe("when an album is clicked", () => {
                 before(() => {
-                  const albumList = cy.get(`[data-testid="NodeNameText"]`, {
-                    timeout,
-                  });
-                  albumList.click();
+                  cy.get(
+                    `[data-testid="${SunBurstDrawerButtonIDs.NodeNameText}"]`,
+                    { timeout }
+                  ).click();
                 });
 
                 it("should display the track list- no information available", () => {
-                  const artistList = cy.get(
-                    `[data-testid="SunBurstEntityNodeListTitle"]`,
+                  cy.get(
+                    `[data-testid="${SunBurstDrawerListIDs.SunBurstEntityNodeListTitle}"]`,
                     { timeout }
-                  );
-
-                  artistList
+                  )
                     .contains(
-                      LastFmTranslations.playCountByArtist.drawer.noInformation
+                      LastFmTranslations.playCountByArtist.drawer.noInformation,
+                      { timeout }
                     )
-                    .should("be.visible");
+                    .should("be.visible", {
+                      timeout,
+                    });
                 });
               });
             });
