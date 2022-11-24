@@ -3,7 +3,7 @@ import { Flex } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
 import ErrorDisplay from "../error.display.component";
 import translation from "@locales/main.json";
-import Billboard from "@src/components/billboard/billboard.component";
+import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
@@ -14,13 +14,12 @@ jest.mock("@chakra-ui/icons", () =>
   require("@fixtures/chakra/icons").createChakraIconMock(["WarningTwoIcon"])
 );
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Flex"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Flex"])
+);
 
-jest.mock("@src/components/billboard/billboard.component", () =>
-  require("@fixtures/react/parent").createComponent("Billboard")
+jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
+  require("@fixtures/react/parent").createComponent("BillboardContainer")
 );
 
 jest.mock(
@@ -53,9 +52,9 @@ describe("ErrorDisplay", () => {
     });
 
     it("should render the billboard correctly", () => {
-      expect(Billboard).toBeCalledTimes(1);
-      checkMockCall(Billboard, {
-        title: _t(translatedErrors[translationIndex].title),
+      expect(BillboardContainer).toBeCalledTimes(1);
+      checkMockCall(BillboardContainer, {
+        titleText: _t(translatedErrors[translationIndex].title),
       });
     });
 
@@ -111,9 +110,9 @@ describe("ErrorDisplay", () => {
     });
 
     it("should render the billboard correctly", () => {
-      expect(Billboard).toBeCalledTimes(1);
-      checkMockCall(Billboard, {
-        title: _t(translatedErrors[translationIndex].title),
+      expect(BillboardContainer).toBeCalledTimes(1);
+      checkMockCall(BillboardContainer, {
+        titleText: _t(translatedErrors[translationIndex].title),
       });
     });
 

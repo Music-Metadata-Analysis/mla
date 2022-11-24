@@ -67,7 +67,7 @@ describe("SearchTopAlbums", () => {
         SearchUI,
         {
           route: routes.reports.lastfm.playCountByArtist,
-          title: _t(lastfmTranslations.playCountByArtist.searchTitle),
+          titleText: _t(lastfmTranslations.playCountByArtist.searchTitle),
         },
         0,
         ["t"]

@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import {
   ErrorBoundaryTestHarness,
   testIDs,
-} from "./error.boundary.test.harness";
+} from "./error.boundary.test.harness.component";
 import ErrorHandler from "../../handler/error.handler.component";
 import Events from "@src/events/events";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
@@ -18,7 +18,9 @@ jest.mock("../../handler/error.handler.component", () =>
 
 describe("ErrorBoundary", () => {
   let consoleErrorSpy: jest.SpyInstance;
+
   const mockRoute = "/";
+
   const mockStateReset = jest.fn();
 
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { Spinner, Flex } from "@chakra-ui/react";
-import BillBoard from "../billboard.component";
+import BillBoardContainer from "../billboard.base/billboard.container";
 import { settings } from "@src/config/billboard";
 import useColour from "@src/hooks/colour";
 
@@ -9,11 +9,11 @@ export const testIDs = {
 };
 
 interface BillBoardSpinnerProps {
-  title: string;
+  titleText: string;
   visible: boolean;
 }
 
-const BillBoardSpinner = ({ visible, title }: BillBoardSpinnerProps) => {
+const BillBoardSpinner = ({ visible, titleText }: BillBoardSpinnerProps) => {
   const { componentColour } = useColour();
 
   const titleIsDisplayed = () => {
@@ -25,7 +25,7 @@ const BillBoardSpinner = ({ visible, title }: BillBoardSpinnerProps) => {
       data-testid={testIDs.BillboardSpinnerVisibilityControl}
       style={{ display: visible ? "inline" : "none" }}
     >
-      <BillBoard title={title}>
+      <BillBoardContainer titleText={titleText}>
         <Flex justify={"center"} pt={10} pb={titleIsDisplayed() ? 20 : 10}>
           <Spinner
             data-testid={testIDs.BillboardSpinner}
@@ -37,7 +37,7 @@ const BillBoardSpinner = ({ visible, title }: BillBoardSpinnerProps) => {
             size={"xl"}
           />
         </Flex>
-      </BillBoard>
+      </BillBoardContainer>
     </div>
   );
 };

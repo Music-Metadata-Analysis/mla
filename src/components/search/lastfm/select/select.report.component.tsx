@@ -1,7 +1,7 @@
 import { Box, Flex, Avatar } from "@chakra-ui/react";
 import { MutableRefObject, useEffect, useState } from "react";
 import Option from "./inlay/select.option.component";
-import Billboard from "@src/components/billboard/billboard.component";
+import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
 import VerticalScrollBarComponent from "@src/components/scrollbar/vertical.scrollbar.component";
 import config from "@src/config/lastfm";
@@ -50,7 +50,7 @@ export default function SearchSelection({ scrollRef }: SearchSelectionProps) {
   }, []);
 
   return (
-    <Billboard title={t("select.title")}>
+    <BillboardContainer titleText={t("select.title")}>
       <Box position={"relative"}>
         <Flex justify={"space-evenly"} align={"center"}>
           <Box mb={1}>
@@ -95,6 +95,6 @@ export default function SearchSelection({ scrollRef }: SearchSelectionProps) {
           </Box>
         </Flex>
       </Box>
-    </Billboard>
+    </BillboardContainer>
   );
 }

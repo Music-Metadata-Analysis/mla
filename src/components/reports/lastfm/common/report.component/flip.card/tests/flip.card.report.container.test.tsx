@@ -211,7 +211,7 @@ describe("FlipCardReportContainer", () => {
     it("should render the BillBoardProgressBar with the expected props", () => {
       expect(BillBoardSpinner).toBeCalledTimes(1);
       checkMockCall(BillBoardSpinner, {
-        title: _t(lastfm[mockReport.translationKey].communication),
+        titleText: _t(lastfm[mockReport.translationKey].communication),
         visible: !currentLastFMHookState.userProperties.ready,
       });
     });

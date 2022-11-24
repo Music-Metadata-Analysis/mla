@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import SearchContainer from "../search.container";
 import SearchUI from "../search.ui";
 import Authentication from "@src/components/authentication/authentication.container";
-import Billboard from "@src/components/billboard/billboard.component";
+import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
@@ -22,8 +22,8 @@ jest.mock("@src/components/authentication/authentication.container", () =>
   )
 );
 
-jest.mock("@src/components/billboard/billboard.component", () =>
-  require("@fixtures/react/parent").createComponent("BillBoard")
+jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
+  require("@fixtures/react/parent").createComponent("BillBoardContainer")
 );
 
 jest.mock("../search.container", () =>
@@ -49,7 +49,7 @@ describe("SearchUI", () => {
   });
 
   const arrange = () => {
-    render(<SearchUI t={mockT.t} title={mockTitle} route={mockRoute} />);
+    render(<SearchUI t={mockT.t} titleText={mockTitle} route={mockRoute} />);
   };
 
   const assignErrorFunctions = () => {
@@ -68,9 +68,9 @@ describe("SearchUI", () => {
       checkMockCall(Authentication, {});
     });
 
-    it("should call Billboard with the correct props", () => {
-      expect(Billboard).toBeCalledTimes(1);
-      checkMockCall(Billboard, { title: mockTitle }, 0, []);
+    it("should call BillboardContainer with the correct props", () => {
+      expect(BillboardContainer).toBeCalledTimes(1);
+      checkMockCall(BillboardContainer, { titleText: mockTitle }, 0, []);
     });
 
     it("should call Flex as expected to center content", () => {

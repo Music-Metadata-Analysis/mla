@@ -1,20 +1,19 @@
 import { Flex, Spinner } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import BillBoard from "../../billboard.component";
 import BillBoardSpinner, { testIDs } from "../billboard.spinner.component";
+import BillBoardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import { settings } from "@src/config/billboard";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/colour");
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Flex", "Spinner"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Flex", "Spinner"])
+);
 
-jest.mock("../../billboard.component", () =>
-  require("@fixtures/react/parent").createComponent("Billboard")
+jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
+  require("@fixtures/react/parent").createComponent("BillboardContainer")
 );
 
 describe("BillBoardSpinner", () => {
@@ -36,15 +35,15 @@ describe("BillBoardSpinner", () => {
   afterAll(() => (window.innerHeight = originalWindowHeight));
 
   const actRender = (visibility: boolean) => {
-    render(<BillBoardSpinner visible={visibility} title={testTitle} />);
+    render(<BillBoardSpinner visible={visibility} titleText={testTitle} />);
   };
 
   beforeEach(() => jest.clearAllMocks());
 
   const checkBillBoardComponent = () => {
     it("should call the BillBoard component with the correct props", () => {
-      expect(BillBoard).toBeCalledTimes(1);
-      checkMockCall(BillBoard, { title: testTitle });
+      expect(BillBoardContainer).toBeCalledTimes(1);
+      checkMockCall(BillBoardContainer, { titleText: testTitle });
     });
   };
 

@@ -1,17 +1,17 @@
 import { Box, Flex, useToast, Avatar } from "@chakra-ui/react";
 import SearchContainer from "./search.container";
 import Authentication from "@src/components/authentication/authentication.container";
-import Billboard from "@src/components/billboard/billboard.component";
+import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 interface SearchUIProps {
   route: string;
-  title: string;
+  titleText: string;
   t: tFunctionType;
 }
 
-export default function SearchUI({ route, title, t }: SearchUIProps) {
+export default function SearchUI({ route, titleText, t }: SearchUIProps) {
   const toast = useToast();
 
   const closeError = (fieldname: string) => {
@@ -40,7 +40,7 @@ export default function SearchUI({ route, title, t }: SearchUIProps) {
   };
 
   return (
-    <Billboard title={title}>
+    <BillboardContainer titleText={titleText}>
       <Authentication />
       <Flex justify={"space-evenly"} align={"center"} w={"100%"}>
         <Box>
@@ -58,6 +58,6 @@ export default function SearchUI({ route, title, t }: SearchUIProps) {
           />
         </Box>
       </Flex>
-    </Billboard>
+    </BillboardContainer>
   );
 }
