@@ -1,11 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import SearchUI from "../search.ui";
+import SearchContainer from "../search.container";
 import lastfmTranslations from "@locales/lastfm.json";
 import mainTranslations from "@locales/main.json";
 import settings from "@src/config/lastfm";
 import routes from "@src/config/routes";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
+import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 
 jest.mock("@src/hooks/auth");
@@ -22,7 +22,6 @@ jest.mock("@src/components/authentication/authentication.container", () =>
 
 describe("SearchTopTracks", () => {
   let enteredUsername: string;
-  const mockT = new MockUseLocale("lastfm").t;
   const mockTitle = "mockTitle";
 
   beforeEach(() => {
@@ -34,8 +33,7 @@ describe("SearchTopTracks", () => {
 
   const arrange = () => {
     render(
-      <SearchUI
-        t={mockT}
+      <SearchContainer
         titleText={mockTitle}
         route={routes.reports.lastfm.top20tracks}
       />

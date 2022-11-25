@@ -54,6 +54,7 @@ const mockValues = {
     background: mockColour(),
     border: mockColour(),
     foreground: mockColour(),
+    placeHolder: mockColour(),
   },
   modalColour: {
     background: mockColour(),

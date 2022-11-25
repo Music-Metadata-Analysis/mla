@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import lastfmTranslations from "@locales/lastfm.json";
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import SearchUI from "@src/components/search/lastfm/search.ui";
+import SearchContainer from "@src/components/search/lastfm/search.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
@@ -18,8 +18,8 @@ jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
-jest.mock("@src/components/search/lastfm/search.ui", () =>
-  require("@fixtures/react/parent").createComponent("SearchUI")
+jest.mock("@src/components/search/lastfm/search.container", () =>
+  require("@fixtures/react/parent").createComponent("SearchContainer")
 );
 
 describe("getStaticProps", () => {
@@ -46,7 +46,7 @@ describe("SearchIntegrationTest", () => {
   describe("when rendered", () => {
     beforeEach(() => arrange());
 
-    it("should call the ErrorBoundary correctly", () => {
+    it("should render the ErrorBoundary component with the correct props", () => {
       expect(ErrorBoundary).toBeCalledTimes(1);
       mockCheckCall(
         ErrorBoundary,
@@ -59,16 +59,15 @@ describe("SearchIntegrationTest", () => {
       );
     });
 
-    it("should call the ErrorDisplay correctly", () => {
-      expect(SearchUI).toBeCalledTimes(1);
+    it("should render the SearchContainer component with the correct props", () => {
+      expect(SearchContainer).toBeCalledTimes(1);
       mockCheckCall(
-        SearchUI,
+        SearchContainer,
         {
           route: routes.reports.lastfm.top20tracks,
           titleText: _t(lastfmTranslations.top20Tracks.searchTitle),
         },
-        0,
-        ["t"]
+        0
       );
     });
   });

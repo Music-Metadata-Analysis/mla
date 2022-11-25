@@ -1,37 +1,37 @@
 import { Flex } from "@chakra-ui/react";
-import Indicator from "./select.indicator.component";
+import ReportIndicator from "./report.indicator.component";
 import Button from "@src/components/button/button.standard/button.standard.component";
 
-export interface SearchSelectionOptionProps {
+export interface ReportOptionProps {
   analyticsName: string;
   buttonText: string;
-  indicatorText: string;
-  visibleIndicators: boolean;
   clickHandler: () => void;
+  displayIndicator: boolean;
+  indicatorText: string;
 }
 
 export const testIDs = {
   OptionButton: "OptionButton",
 };
 
-export default function SearchSelectionOption({
+export default function ReportOption({
   analyticsName,
   buttonText,
   indicatorText,
-  visibleIndicators,
+  displayIndicator,
   clickHandler,
-}: SearchSelectionOptionProps) {
+}: ReportOptionProps) {
   const selectButtonWidths = [150, 150, 200];
 
   return (
-    <Flex mt={2} align={"center"} justify={"center"}>
-      <Indicator visible={visibleIndicators} indication={indicatorText} />
+    <Flex align={"center"} justify={"center"} mt={2}>
+      <ReportIndicator visible={displayIndicator} indication={indicatorText} />
       <Button
         data-testid={testIDs.OptionButton}
         m={1}
         w={selectButtonWidths}
         analyticsName={analyticsName}
-        onClick={() => clickHandler()}
+        onClick={clickHandler}
       >
         {buttonText}
       </Button>

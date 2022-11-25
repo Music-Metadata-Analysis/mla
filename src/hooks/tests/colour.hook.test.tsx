@@ -55,6 +55,14 @@ describe("useColour", () => {
       assertLenIs(received.result.current.buttonColour, 4);
     });
 
+    it("should contain the consentColour properties", () => {
+      assertIsString(received.result.current.consentColour.accept.background);
+      assertIsString(received.result.current.consentColour.decline.background);
+      assertLenIs(received.result.current.consentColour, 2);
+      assertLenIs(received.result.current.consentColour.accept, 1);
+      assertLenIs(received.result.current.consentColour.decline, 1);
+    });
+
     it("should contain the componentColour properties", () => {
       assertIsString(received.result.current.componentColour.background);
       assertIsString(received.result.current.componentColour.border);
@@ -62,14 +70,6 @@ describe("useColour", () => {
       assertIsString(received.result.current.componentColour.details);
       assertIsString(received.result.current.componentColour.scheme);
       assertLenIs(received.result.current.componentColour, 5);
-    });
-
-    it("should contain the consentColour properties", () => {
-      assertIsString(received.result.current.consentColour.accept.background);
-      assertIsString(received.result.current.consentColour.decline.background);
-      assertLenIs(received.result.current.consentColour, 2);
-      assertLenIs(received.result.current.consentColour.accept, 1);
-      assertLenIs(received.result.current.consentColour.decline, 1);
     });
 
     it("should contain the feedbackColour properties", () => {
@@ -99,14 +99,15 @@ describe("useColour", () => {
       assertIsString(received.result.current.inputColour.background);
       assertIsString(received.result.current.inputColour.border);
       assertIsString(received.result.current.inputColour.foreground);
-      assertLenIs(received.result.current.inputColour, 3);
+      assertIsString(received.result.current.inputColour.placeHolder);
+      assertLenIs(received.result.current.inputColour, 4);
     });
 
     it("should contain the modalColour properties", () => {
-      assertIsString(received.result.current.inputColour.background);
-      assertIsString(received.result.current.inputColour.border);
-      assertIsString(received.result.current.inputColour.foreground);
-      assertLenIs(received.result.current.inputColour, 3);
+      assertIsString(received.result.current.modalColour.background);
+      assertIsString(received.result.current.modalColour.border);
+      assertIsString(received.result.current.modalColour.foreground);
+      assertLenIs(received.result.current.modalColour, 3);
     });
 
     it("should contain the navButtonColour properties", () => {

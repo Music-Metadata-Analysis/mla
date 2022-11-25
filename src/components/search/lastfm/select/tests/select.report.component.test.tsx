@@ -2,24 +2,16 @@
 import { BoxWithRef, Flex, Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
-import Option from "../inlay/select.option.component";
-import Select from "../select.report.component";
-import translations from "@locales/lastfm.json";
+import Option from "../option/report.option.component";
+import ReportSelect, {
+  ReportSelectProps,
+  ids,
+} from "../select.report.component";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
-import VerticalScrollBarComponent from "@src/components/scrollbar/vertical.scrollbar.component";
-import config from "@src/config/lastfm";
+import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
 import settings from "@src/config/navbar";
-import mockUseFlags from "@src/hooks/__mocks__/flags.mock";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import type { MutableRefObject } from "react";
-
-jest.mock("@src/hooks/flags");
-
-jest.mock("@src/hooks/locale");
-
-jest.mock("@src/hooks/router");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Avatar", "Flex"], ["Box"])
@@ -29,14 +21,12 @@ jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
   require("@fixtures/react/parent").createComponent("BillboardContainer")
 );
 
-jest.mock("../inlay/select.option.component", () =>
-  require("@fixtures/react/parent").createComponent("Option")
+jest.mock("../option/report.option.component", () =>
+  require("@fixtures/react/parent").createComponent("ReportOption")
 );
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react/parent").createComponent(
-    "VerticalScrollBarComponent"
-  )
+  require("@fixtures/react/parent").createComponent("VerticalScrollBar")
 );
 
 jest.mock("@src/components/icons/lastfm/lastfm.icon", () =>
@@ -44,24 +34,45 @@ jest.mock("@src/components/icons/lastfm/lastfm.icon", () =>
 );
 
 describe("SearchSelection", () => {
+  let currentProps: ReportSelectProps;
+
   const mockRef = {
-    current: { mock: "div" },
-  } as unknown as MutableRefObject<HTMLDivElement | null>;
-  const mockT = new MockUseLocale("lastfm");
+    current: null,
+    value: "mocked",
+  };
+
+  const generateMockReportOption = (key: number, display: boolean) => ({
+    analyticsName: `analyticsName${key}`,
+    buttonText: `buttonText${key}`,
+    clickHandler: jest.fn(),
+    indicatorText: `indicatorText${key}`,
+    displayIndicator: display,
+  });
+
+  const baseProps: ReportSelectProps = {
+    reportOptionProps: [generateMockReportOption(1, true)],
+    scrollRef: mockRef,
+    titleText: "mockTitleText",
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
+    resetProps();
   });
 
-  const actRender = () => {
-    render(<Select scrollRef={mockRef} />);
+  const arrange = () => {
+    render(<ReportSelect {...currentProps} />);
+  };
+
+  const resetProps = () => {
+    currentProps = { ...baseProps };
   };
 
   const checkChakraComponents = () => {
     it("should call Billboard with the correct props", () => {
       checkMockCall(
         BillboardContainer,
-        { titleText: _t(translations.select.title) },
+        { titleText: currentProps.titleText },
         0,
         []
       );
@@ -90,7 +101,7 @@ describe("SearchSelection", () => {
         BoxWithRef,
         {
           className: "scrollbar",
-          id: "SunburstDrawerEntityListScrollArea",
+          id: ids.LastFMReportSelectScrollArea,
           maxHeight: `calc(100vh - ${settings.offset}px)`,
           overflow: "scroll",
           position: "relative",
@@ -109,13 +120,13 @@ describe("SearchSelection", () => {
     });
 
     it("should call VerticalScrollBarComponent as expected", () => {
-      expect(VerticalScrollBarComponent).toBeCalledTimes(1);
+      expect(VerticalScrollBar).toBeCalledTimes(1);
       checkMockCall(
-        VerticalScrollBarComponent,
+        VerticalScrollBar,
         {
           horizontalOffset: 0,
-          scrollRef: mockRef,
-          update: mockRef.current,
+          scrollRef: currentProps.scrollRef,
+          update: currentProps.scrollRef.current,
           verticalOffset: 0,
         },
         0
@@ -123,80 +134,55 @@ describe("SearchSelection", () => {
     });
   };
 
-  const checkFlagsForOptions = (expectedCount: number) => {
-    it(`should render an Option for each flag-enabled report, (${expectedCount} times)`, () => {
-      expect(Option).toBeCalledTimes(expectedCount);
-      jest.mocked(Option).mock.calls.forEach((mockCall, index) => {
-        const call = mockCall[0];
-        expect(typeof call.clickHandler).toBe("function");
-        expect(call.analyticsName).toBe(
-          config.select.options[index].analyticsName
-        );
-        expect(call.buttonText).toBe(
-          mockT.t(config.select.options[index].buttonTextKey)
-        );
-        expect(call.indicatorText).toBe(
-          mockT.t(config.select.options[index].indicatorTextKey)
-        );
-        expect(call.visibleIndicators).toBe(true);
-        expect(Object.keys(call).length).toBe(5);
+  const checkReportOptionRenders = () => {
+    it("should render an Option for each configured reportOptionProp", () => {
+      expect(Option).toBeCalledTimes(currentProps.reportOptionProps.length);
+
+      (
+        currentProps.reportOptionProps as unknown[] as Record<string, unknown>[]
+      ).forEach((optionProp, index) => {
+        checkMockCall(Option, optionProp, index);
       });
     });
   };
 
-  const checkFlagIsEnabledCalls = () => {
-    it(`should call the isEnabled hook function as expected`, () => {
-      const configuredFlags = config.select.options;
+  describe("with the label visibility indicator set to true", () => {
+    const displayIndicator = true;
 
-      expect(mockUseFlags.isEnabled).toBeCalledTimes(configuredFlags.length);
-      mockUseFlags.isEnabled.mock.calls.forEach((mockCall, index) => {
-        const call = mockCall;
-        expect(call).toEqual([configuredFlags[index].flag]);
-      });
-    });
-  };
-
-  describe(`when a flag is disabled`, () => {
-    beforeEach(() => {
-      mockUseFlags.isEnabled
-        .mockReturnValueOnce(true)
-        .mockReturnValueOnce(true)
-        .mockReturnValueOnce(true)
-        .mockReturnValueOnce(false);
-    });
-
-    describe("when rendered", () => {
+    describe("with a set of enabled reports", () => {
       beforeEach(() => {
-        actRender();
+        currentProps.reportOptionProps = [
+          generateMockReportOption(1, displayIndicator),
+          generateMockReportOption(2, displayIndicator),
+          generateMockReportOption(3, displayIndicator),
+        ];
+
+        arrange();
       });
 
       checkChakraComponents();
-
-      checkFlagIsEnabledCalls();
-
-      checkFlagsForOptions(3);
+      checkReportOptionRenders();
     });
   });
 
-  describe(`when all flags are enabled`, () => {
-    beforeEach(() => {
-      mockUseFlags.isEnabled
-        .mockReturnValueOnce(true)
-        .mockReturnValueOnce(true)
-        .mockReturnValueOnce(true)
-        .mockReturnValueOnce(true);
-    });
+  describe("with the label visibility indicator set to false", () => {
+    const displayIndicator = false;
 
-    describe("when rendered", () => {
+    describe("with a different set of enabled reports", () => {
       beforeEach(() => {
-        actRender();
+        currentProps.reportOptionProps = [
+          generateMockReportOption(1, displayIndicator),
+          generateMockReportOption(2, displayIndicator),
+          generateMockReportOption(3, displayIndicator),
+          generateMockReportOption(4, displayIndicator),
+          generateMockReportOption(5, displayIndicator),
+        ];
+
+        arrange();
       });
 
       checkChakraComponents();
-
-      checkFlagIsEnabledCalls();
-
-      checkFlagsForOptions(4);
+      checkReportOptionRenders();
     });
   });
 });
