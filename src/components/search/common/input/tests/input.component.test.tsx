@@ -35,6 +35,7 @@ describe("StyledInput", () => {
         borderColor: mockColourHook.inputColour.border,
         borderWidth: 1,
         color: mockColourHook.inputColour.foreground,
+        _placeholder: { color: mockColourHook.inputColour.placeHolder },
         "data-testid": mockTestID,
       });
     });

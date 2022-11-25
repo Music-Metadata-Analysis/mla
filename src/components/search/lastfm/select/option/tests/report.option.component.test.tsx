@@ -1,19 +1,26 @@
+import { Flex } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import Option, { testIDs } from "../select.option.component";
+import ReportOption, { testIDs } from "../report.option.component";
 import Button from "@src/components/button/button.standard/button.standard.component";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
+
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Flex"])
+);
 
 jest.mock(
   "@src/components/button/button.standard/button.standard.component",
   () => require("@fixtures/react/parent").createComponent("Button")
 );
 
-describe("SearchSelection", () => {
-  const mockClickHandler = jest.fn();
+describe("ReportOption", () => {
+  let display: boolean;
+
   const mockAnalyticsName = "mockAnalyticsName";
   const mockButtonText = "mockButtonText";
   const mockIndicatorText = "mockIndicatorText";
-  let visible: boolean;
+
+  const mockClickHandler = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -21,19 +28,43 @@ describe("SearchSelection", () => {
 
   const arrange = () => {
     render(
-      <Option
+      <ReportOption
         analyticsName={mockAnalyticsName}
         buttonText={mockButtonText}
         clickHandler={mockClickHandler}
-        visibleIndicators={visible}
+        displayIndicator={display}
         indicatorText={mockIndicatorText}
       />
     );
   };
 
+  const checkChakraFlexRender = () => {
+    it("should render the chakra Flex component with the correct props", () => {
+      expect(Flex).toBeCalledTimes(1);
+      checkMockCall(Flex, {
+        align: "center",
+        justify: "center",
+        mt: 2,
+      });
+    });
+  };
+
+  const checkButtonRender = () => {
+    it("should render the Button component with the correct props", () => {
+      expect(Button).toBeCalledTimes(1);
+      checkMockCall(Button, {
+        analyticsName: mockAnalyticsName,
+        "data-testid": testIDs.OptionButton,
+        m: 1,
+        w: [150, 150, 200],
+      });
+    });
+  };
+
   describe("when indicators are visible", () => {
     beforeEach(() => {
-      visible = true;
+      display = true;
+
       arrange();
     });
 
@@ -45,20 +76,14 @@ describe("SearchSelection", () => {
       expect(await screen.findByText(mockButtonText)).toBeTruthy();
     });
 
-    it("should render the button with the correct props", () => {
-      expect(Button).toBeCalledTimes(1);
-      checkMockCall(Button, {
-        analyticsName: "mockAnalyticsName",
-        "data-testid": "OptionButton",
-        m: 1,
-        w: [150, 150, 200],
-      });
-    });
+    checkChakraFlexRender();
+    checkButtonRender();
   });
 
   describe("when indicators are NOT visible", () => {
     beforeEach(() => {
-      visible = false;
+      display = false;
+
       arrange();
     });
 
@@ -70,14 +95,7 @@ describe("SearchSelection", () => {
       expect(await screen.findByText(mockButtonText)).toBeTruthy();
     });
 
-    it("should render the button with the correct props", () => {
-      expect(Button).toBeCalledTimes(1);
-      checkMockCall(Button, {
-        analyticsName: "mockAnalyticsName",
-        "data-testid": testIDs.OptionButton,
-        m: 1,
-        w: [150, 150, 200],
-      });
-    });
+    checkChakraFlexRender();
+    checkButtonRender();
   });
 });

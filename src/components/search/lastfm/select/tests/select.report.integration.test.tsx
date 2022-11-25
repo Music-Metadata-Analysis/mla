@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Select from "../select.report.component";
+import SelectContainer from "../select.report.container";
 import translations from "@locales/lastfm.json";
 import config from "@src/config/lastfm";
 import mockUseFlags from "@src/hooks/__mocks__/flags.mock";
@@ -13,9 +13,7 @@ jest.mock("@src/hooks/locale");
 jest.mock("@src/hooks/router");
 
 jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react/parent").createComponent(
-    "VerticalScrollBarComponent"
-  )
+  require("@fixtures/react/child").createComponent("VerticalScrollBar")
 );
 
 type translationKeyType = keyof typeof translations["select"][
@@ -24,7 +22,6 @@ type translationKeyType = keyof typeof translations["select"][
 
 describe("SearchSelection", () => {
   const translationKeys = ["topAlbums", "topArtists", "topTracks"];
-  const mockRef = { current: null, type: "mockRef" };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -34,7 +31,7 @@ describe("SearchSelection", () => {
   const enableAllFlags = () => mockUseFlags.isEnabled.mockReturnValue(true);
 
   const arrange = () => {
-    render(<Select scrollRef={mockRef} />);
+    render(<SelectContainer />);
   };
 
   describe("when rendered on a screen above the configured threshold", () => {

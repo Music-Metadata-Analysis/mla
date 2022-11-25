@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import Select from "@src/components/search/lastfm/select/select.report.component";
+import SelectContainer from "@src/components/search/lastfm/select/select.report.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import Page, { getServerSideProps } from "@src/pages/search/lastfm/index";
@@ -10,8 +10,8 @@ import getPageProps from "@src/utils/page.props.server.side";
 
 jest.mock("@src/utils/page.props.server.side");
 
-jest.mock("@src/components/search/lastfm/select/select.report.component", () =>
-  require("@fixtures/react/child").createComponent("SelectComponent")
+jest.mock("@src/components/search/lastfm/select/select.report.container", () =>
+  require("@fixtures/react/child").createComponent("SelectContainer")
 );
 
 jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
@@ -46,7 +46,7 @@ describe("SearchSelectionPage", () => {
   describe("when rendered", () => {
     beforeEach(() => arrange());
 
-    it("should call the ErrorBoundary correctly", () => {
+    it("should render the ErrorBoundary with the correct props", () => {
       expect(ErrorBoundary).toBeCalledTimes(1);
       mockCheckCall(
         ErrorBoundary,
@@ -59,9 +59,9 @@ describe("SearchSelectionPage", () => {
       );
     });
 
-    it("should call the Select correctly", () => {
-      expect(Select).toBeCalledTimes(1);
-      mockCheckCall(Select, { scrollRef: { current: null } }, 0);
+    it("should render the SelectContainer with the correct props", () => {
+      expect(SelectContainer).toBeCalledTimes(1);
+      mockCheckCall(SelectContainer, {}, 0);
     });
   });
 });

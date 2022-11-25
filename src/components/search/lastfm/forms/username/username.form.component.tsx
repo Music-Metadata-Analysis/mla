@@ -7,25 +7,26 @@ import {
   FormikProps,
   FormikHelpers,
 } from "formik";
-import StyledInput from "../common/input/input.component";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import StyledInput from "@src/components/search/common/input/input.component";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 
-interface SearchFormProps {
-  t: tFunctionType;
-  validateUserName: (username: string) => string | undefined;
+interface UserNameFormProps {
   handleSubmit: (
     values: LastFMUserSearchInterface,
     actions: FormikHelpers<LastFMUserSearchInterface>
   ) => void;
+  placeHolderText: string;
+  submitButtonText: string;
+  validateUserName: (username: string) => string | undefined;
 }
 
-export default function SearchForm({
-  t,
-  validateUserName,
+export default function UserNameForm({
   handleSubmit,
-}: SearchFormProps) {
+  placeHolderText,
+  submitButtonText,
+  validateUserName,
+}: UserNameFormProps) {
   return (
     <Formik
       initialValues={{ username: "" }}
@@ -48,7 +49,7 @@ export default function SearchForm({
                   <StyledInput
                     {...field}
                     id="username"
-                    placeholder={t("search.fieldPlaceholder")}
+                    placeholder={placeHolderText}
                     width={["150px", "300px", "400px", "500px"]}
                   />
                 </FormControl>
@@ -63,7 +64,7 @@ export default function SearchForm({
                 type="submit"
                 width={["50px", "100px", "100px"]}
               >
-                {t("search.buttonText")}
+                {submitButtonText}
               </StyledButton>
             </Flex>
           </Flex>

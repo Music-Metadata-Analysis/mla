@@ -5,6 +5,14 @@ interface VendorColourModeHookInterface {
   toggle: () => void;
 }
 
+export interface VendorFormHookInterface {
+  error: {
+    close: (fieldname: string) => void;
+    open: (fieldname: string, message: string) => void;
+  };
+}
+
 export interface UIFrameworkVendor {
   colourModeHook: () => VendorColourModeHookInterface;
+  formHook: () => VendorFormHookInterface;
 }

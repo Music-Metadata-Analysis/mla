@@ -56,6 +56,7 @@ const useColour = () => {
       background: chooseColour("gray.400", "gray.700"),
       border: chooseColour("gray.500", "gray.600"),
       foreground: chooseColour("gray.900", "gray.200"),
+      placeHolder: chooseColour("gray.300", "gray.400"),
     },
     modalColour: {
       background: chooseColour("gray.400", "gray.700"),

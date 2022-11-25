@@ -1,5 +1,5 @@
 import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import SearchUI from "@src/components/search/lastfm/search.ui";
+import SearchContainer from "@src/components/search/lastfm/search.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import useLocale from "@src/hooks/locale";
@@ -15,8 +15,7 @@ export default function SearchLastFMTop20Tracks() {
       route={routes.home}
       stateReset={voidFn}
     >
-      <SearchUI
-        t={t}
+      <SearchContainer
         titleText={t("top20Tracks.searchTitle")}
         route={routes.reports.lastfm.top20tracks}
       />

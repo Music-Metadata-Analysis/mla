@@ -9,6 +9,7 @@ const StyledInput = (props: InputProps) => {
       borderColor={inputColour.border}
       bg={inputColour.background}
       color={inputColour.foreground}
+      _placeholder={{ color: inputColour.placeHolder }}
       {...props}
     />
   );

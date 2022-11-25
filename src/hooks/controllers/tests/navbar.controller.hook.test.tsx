@@ -2,7 +2,6 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/navbar.controller.hook.mock";
 import useNavBarController from "../navbar.controller.hook";
-import NavConfig from "@src/config/navbar";
 import mockToggleHook from "@src/hooks/utility/__mocks__/toggle.hook.mock";
 import useToggle from "@src/hooks/utility/toggle.hook";
 import NavBarProvider from "@src/providers/controllers/navbar/navbar.provider";
@@ -18,8 +17,7 @@ interface MockInterfaceContextWithChildren {
 
 jest.mock("@src/hooks/utility/toggle.hook");
 
-describe("useNavBar", () => {
-  let originalEnvironment: typeof process.env;
+describe("useNavBarController", () => {
   let received: ReturnType<typeof arrange>;
 
   const mockToggleHooks = [
@@ -27,14 +25,6 @@ describe("useNavBar", () => {
     makeUniqueHookMock<typeof mockToggleHook>(mockToggleHook),
     makeUniqueHookMock<typeof mockToggleHook>(mockToggleHook),
   ];
-
-  beforeAll(() => {
-    originalEnvironment = process.env;
-  });
-
-  afterAll(() => {
-    process.env = originalEnvironment;
-  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -113,136 +103,63 @@ describe("useNavBar", () => {
     checkIsToggle(() => received.result.current, "navigation");
   });
 
-  describe("when on a larger screen", () => {
-    beforeEach(() => {
-      global.innerHeight = NavConfig.minimumHeightDuringInput;
+  describe("the hamburger controls", () => {
+    checkControl({
+      property: "hamburger",
+      toggleFunction: "setFalse",
+      mockIndex: 0,
     });
 
-    describe("the hamburger controls", () => {
-      checkControl({
-        property: "hamburger",
-        toggleFunction: "setFalse",
-        mockIndex: 0,
-      });
-
-      checkControl({
-        property: "hamburger",
-        toggleFunction: "setTrue",
-        mockIndex: 0,
-      });
-
-      checkControl({
-        property: "hamburger",
-        toggleFunction: "toggle",
-        mockIndex: 0,
-      });
+    checkControl({
+      property: "hamburger",
+      toggleFunction: "setTrue",
+      mockIndex: 0,
     });
 
-    describe("the mobileMenu controls", () => {
-      checkControl({
-        property: "mobileMenu",
-        toggleFunction: "setFalse",
-        mockIndex: 1,
-      });
-
-      checkControl({
-        property: "mobileMenu",
-        toggleFunction: "setTrue",
-        mockIndex: 1,
-      });
-
-      checkControl({
-        property: "mobileMenu",
-        toggleFunction: "toggle",
-        mockIndex: 1,
-      });
-    });
-
-    describe("the navigation controls", () => {
-      checkControl({
-        property: "navigation",
-        toggleFunction: "setFalse",
-        mockIndex: 2,
-        notCalled: true,
-      });
-
-      checkControl({
-        property: "navigation",
-        toggleFunction: "setTrue",
-        mockIndex: 2,
-      });
-
-      checkControl({
-        property: "navigation",
-        toggleFunction: "toggle",
-        mockIndex: 2,
-      });
+    checkControl({
+      property: "hamburger",
+      toggleFunction: "toggle",
+      mockIndex: 0,
     });
   });
 
-  describe("when on a smaller screen", () => {
-    beforeEach(() => {
-      global.innerHeight = NavConfig.minimumHeightDuringInput - 1;
+  describe("the mobileMenu controls", () => {
+    checkControl({
+      property: "mobileMenu",
+      toggleFunction: "setFalse",
+      mockIndex: 1,
     });
 
-    describe("the hamburger controls", () => {
-      checkControl({
-        property: "hamburger",
-        toggleFunction: "setFalse",
-        mockIndex: 0,
-      });
-
-      checkControl({
-        property: "hamburger",
-        toggleFunction: "setTrue",
-        mockIndex: 0,
-      });
-
-      checkControl({
-        property: "hamburger",
-        toggleFunction: "toggle",
-        mockIndex: 0,
-      });
+    checkControl({
+      property: "mobileMenu",
+      toggleFunction: "setTrue",
+      mockIndex: 1,
     });
 
-    describe("the mobileMenu controls", () => {
-      checkControl({
-        property: "mobileMenu",
-        toggleFunction: "setFalse",
-        mockIndex: 1,
-      });
+    checkControl({
+      property: "mobileMenu",
+      toggleFunction: "toggle",
+      mockIndex: 1,
+    });
+  });
 
-      checkControl({
-        property: "mobileMenu",
-        toggleFunction: "setTrue",
-        mockIndex: 1,
-      });
-
-      checkControl({
-        property: "mobileMenu",
-        toggleFunction: "toggle",
-        mockIndex: 1,
-      });
+  describe("the navBar controls", () => {
+    checkControl({
+      property: "navigation",
+      toggleFunction: "setFalse",
+      mockIndex: 2,
     });
 
-    describe("the navBar controls", () => {
-      checkControl({
-        property: "navigation",
-        toggleFunction: "setFalse",
-        mockIndex: 2,
-      });
+    checkControl({
+      property: "navigation",
+      toggleFunction: "setTrue",
+      mockIndex: 2,
+    });
 
-      checkControl({
-        property: "navigation",
-        toggleFunction: "setTrue",
-        mockIndex: 2,
-      });
-
-      checkControl({
-        property: "navigation",
-        toggleFunction: "toggle",
-        mockIndex: 2,
-      });
+    checkControl({
+      property: "navigation",
+      toggleFunction: "toggle",
+      mockIndex: 2,
     });
   });
 });

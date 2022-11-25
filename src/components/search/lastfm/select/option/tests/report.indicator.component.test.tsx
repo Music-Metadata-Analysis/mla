@@ -1,28 +1,31 @@
 import { Box } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import Indicator from "../select.indicator.component";
+import ReportIndicator from "../report.indicator.component";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Box"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Box"])
+);
 
-describe("SearchSelectionIndicator", () => {
-  const mockIndicatorText = "mockIndicatorText";
+describe("ReportIndicator", () => {
   let visible: boolean;
+
+  const mockIndicatorText = "mockIndicatorText";
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   const arrange = () => {
-    render(<Indicator visible={visible} indication={mockIndicatorText} />);
+    render(
+      <ReportIndicator visible={visible} indication={mockIndicatorText} />
+    );
   };
 
   describe("when indicators are visible", () => {
     beforeEach(() => {
       visible = true;
+
       arrange();
     });
 
@@ -41,6 +44,7 @@ describe("SearchSelectionIndicator", () => {
   describe("when indicators are NOT visible", () => {
     beforeEach(() => {
       visible = false;
+
       arrange();
     });
 
