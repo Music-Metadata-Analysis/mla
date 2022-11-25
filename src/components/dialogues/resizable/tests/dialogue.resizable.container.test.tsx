@@ -1,4 +1,4 @@
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import Dialogue from "../dialogue.resizable.component";
 import DialogueContainer, {
   DialogueContainerProps,
@@ -7,9 +7,13 @@ import { createSimpleComponent } from "@fixtures/react/simple";
 import { mockUseRouter } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import dialogueSettings from "@src/config/dialogue";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import mockUseWindowThreshold from "@src/hooks/ui/__mocks__/window.threshold.hook.mock";
+import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/router");
+
+jest.mock("@src/hooks/ui/window.threshold.hook");
 
 jest.mock("../dialogue.resizable.component", () =>
   require("@fixtures/react/child").createComponent("Dialogue")
@@ -60,14 +64,12 @@ describe("DialogueContainer", () => {
   };
 
   const checkDialogueProps = ({
-    expectedCalls,
     expectedToggleState,
   }: {
-    expectedCalls: number;
     expectedToggleState: boolean;
   }) => {
     it("should call the Dialogue component with the expected props", async () => {
-      await waitFor(() => expect(Dialogue).toBeCalledTimes(expectedCalls));
+      await waitFor(() => expect(Dialogue).toBeCalledTimes(1));
       checkMockCall(
         Dialogue,
         {
@@ -80,34 +82,25 @@ describe("DialogueContainer", () => {
           ToggleComponent: currentProps.ToggleComponent,
           router: mockUseRouter,
         },
-        expectedCalls - 1
+        0
       );
     });
   };
 
-  const triggerScreenSizeChange = ({
-    expectedCalls,
-    expectedToggleState,
-    newHeight,
-  }: {
-    expectedCalls: number;
-    expectedToggleState: boolean;
-    newHeight: number;
-  }) => {
-    describe("when the screen size is changed", () => {
-      beforeEach(() => {
-        window.innerHeight = newHeight;
-
-        fireEvent.resize(window);
+  const checkWindowThreshold = () => {
+    it("should initialize the window threshold with the correct settings", () => {
+      expect(useWindowThreshold).toBeCalledTimes(1);
+      expect(useWindowThreshold).toBeCalledWith({
+        axis: "innerHeight",
+        threshold: dialogueSettings.toggleMinimumDisplayHeight,
+        lowState: false,
       });
-
-      checkDialogueProps({ expectedCalls, expectedToggleState });
     });
   };
 
-  describe("when the screen is >= threshold vertical size", () => {
+  describe("when the window threshold state is true", () => {
     beforeEach(() => {
-      window.innerHeight = dialogueSettings.toggleMinimumDisplayHeight;
+      mockUseWindowThreshold.state = true;
     });
 
     describe("with all component props", () => {
@@ -115,12 +108,8 @@ describe("DialogueContainer", () => {
         arrange();
       });
 
-      checkDialogueProps({ expectedCalls: 1, expectedToggleState: true });
-      triggerScreenSizeChange({
-        expectedCalls: 2,
-        expectedToggleState: false,
-        newHeight: dialogueSettings.toggleMinimumDisplayHeight - 1,
-      });
+      checkWindowThreshold();
+      checkDialogueProps({ expectedToggleState: true });
     });
 
     describe("without a BodyComponent", () => {
@@ -130,12 +119,8 @@ describe("DialogueContainer", () => {
         arrange();
       });
 
-      checkDialogueProps({ expectedCalls: 1, expectedToggleState: true });
-      triggerScreenSizeChange({
-        expectedCalls: 2,
-        expectedToggleState: false,
-        newHeight: dialogueSettings.toggleMinimumDisplayHeight - 1,
-      });
+      checkWindowThreshold();
+      checkDialogueProps({ expectedToggleState: true });
     });
 
     describe("without a FooterComponent", () => {
@@ -145,12 +130,8 @@ describe("DialogueContainer", () => {
         arrange();
       });
 
-      checkDialogueProps({ expectedCalls: 1, expectedToggleState: true });
-      triggerScreenSizeChange({
-        expectedCalls: 2,
-        expectedToggleState: false,
-        newHeight: dialogueSettings.toggleMinimumDisplayHeight - 1,
-      });
+      checkWindowThreshold();
+      checkDialogueProps({ expectedToggleState: true });
     });
 
     describe("without a HeaderComponent", () => {
@@ -160,12 +141,8 @@ describe("DialogueContainer", () => {
         arrange();
       });
 
-      checkDialogueProps({ expectedCalls: 1, expectedToggleState: true });
-      triggerScreenSizeChange({
-        expectedCalls: 2,
-        expectedToggleState: false,
-        newHeight: dialogueSettings.toggleMinimumDisplayHeight - 1,
-      });
+      checkWindowThreshold();
+      checkDialogueProps({ expectedToggleState: true });
     });
 
     describe("without a ToggleComponent", () => {
@@ -175,18 +152,14 @@ describe("DialogueContainer", () => {
         arrange();
       });
 
-      checkDialogueProps({ expectedCalls: 1, expectedToggleState: true });
-      triggerScreenSizeChange({
-        expectedCalls: 2,
-        expectedToggleState: false,
-        newHeight: dialogueSettings.toggleMinimumDisplayHeight - 1,
-      });
+      checkWindowThreshold();
+      checkDialogueProps({ expectedToggleState: true });
     });
   });
 
-  describe("when the screen is < threshold vertical size", () => {
+  describe("when the window threshold state is false", () => {
     beforeEach(() => {
-      window.innerHeight = dialogueSettings.toggleMinimumDisplayHeight - 1;
+      mockUseWindowThreshold.state = false;
     });
 
     describe("with all component props", () => {
@@ -194,12 +167,8 @@ describe("DialogueContainer", () => {
         arrange();
       });
 
-      checkDialogueProps({ expectedCalls: 2, expectedToggleState: false });
-      triggerScreenSizeChange({
-        newHeight: dialogueSettings.toggleMinimumDisplayHeight,
-        expectedCalls: 3,
-        expectedToggleState: true,
-      });
+      checkWindowThreshold();
+      checkDialogueProps({ expectedToggleState: false });
     });
 
     describe("without a BodyComponent", () => {
@@ -209,12 +178,7 @@ describe("DialogueContainer", () => {
         arrange();
       });
 
-      checkDialogueProps({ expectedCalls: 2, expectedToggleState: false });
-      triggerScreenSizeChange({
-        newHeight: dialogueSettings.toggleMinimumDisplayHeight,
-        expectedCalls: 3,
-        expectedToggleState: true,
-      });
+      checkDialogueProps({ expectedToggleState: false });
     });
 
     describe("without a FooterComponent", () => {
@@ -224,12 +188,8 @@ describe("DialogueContainer", () => {
         arrange();
       });
 
-      checkDialogueProps({ expectedCalls: 2, expectedToggleState: false });
-      triggerScreenSizeChange({
-        newHeight: dialogueSettings.toggleMinimumDisplayHeight,
-        expectedCalls: 3,
-        expectedToggleState: true,
-      });
+      checkWindowThreshold();
+      checkDialogueProps({ expectedToggleState: false });
     });
 
     describe("without a HeaderComponent", () => {
@@ -239,12 +199,8 @@ describe("DialogueContainer", () => {
         arrange();
       });
 
-      checkDialogueProps({ expectedCalls: 2, expectedToggleState: false });
-      triggerScreenSizeChange({
-        newHeight: dialogueSettings.toggleMinimumDisplayHeight,
-        expectedCalls: 3,
-        expectedToggleState: true,
-      });
+      checkWindowThreshold();
+      checkDialogueProps({ expectedToggleState: false });
     });
 
     describe("without a ToggleComponent", () => {
@@ -254,12 +210,8 @@ describe("DialogueContainer", () => {
         arrange();
       });
 
-      checkDialogueProps({ expectedCalls: 2, expectedToggleState: false });
-      triggerScreenSizeChange({
-        newHeight: dialogueSettings.toggleMinimumDisplayHeight,
-        expectedCalls: 3,
-        expectedToggleState: true,
-      });
+      checkWindowThreshold();
+      checkDialogueProps({ expectedToggleState: false });
     });
   });
 });

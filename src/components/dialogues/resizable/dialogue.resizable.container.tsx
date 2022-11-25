@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import Dialogue from "./dialogue.resizable.component";
 import dialogueSettings from "@src/config/dialogue";
 import useRouter from "@src/hooks/router";
-import useToggle from "@src/hooks/utility/toggle.hook";
+import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
 
@@ -23,25 +22,12 @@ export default function DialogueContainer({
   titleText,
   ToggleComponent,
 }: DialogueContainerProps) {
-  const { setFalse, setTrue, state } = useToggle(true);
   const router = useRouter();
-
-  const recalculateHeight = () => {
-    if (window.innerHeight < dialogueSettings.toggleMinimumDisplayHeight) {
-      setFalse();
-    } else {
-      setTrue();
-    }
-  };
-
-  useEffect(() => {
-    recalculateHeight();
-    window.addEventListener("resize", recalculateHeight);
-    return () => {
-      window.removeEventListener("resize", recalculateHeight);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const toggle = useWindowThreshold({
+    axis: "innerHeight",
+    lowState: false,
+    threshold: dialogueSettings.toggleMinimumDisplayHeight,
+  });
 
   return (
     <Dialogue
@@ -51,7 +37,7 @@ export default function DialogueContainer({
       t={t}
       titleText={titleText}
       ToggleComponent={ToggleComponent}
-      toggleState={state}
+      toggleState={toggle.state}
       router={router}
     />
   );
