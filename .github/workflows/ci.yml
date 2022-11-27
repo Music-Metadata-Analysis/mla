@@ -55,6 +55,7 @@ jobs:
           source .github/scripts/architecture-path.sh "src/components/flip.card"
           source .github/scripts/architecture-path.sh "src/components/header"
           source .github/scripts/architecture-path.sh "src/components/highlight"
+          source .github/scripts/architecture-path.sh "src/components/icons"
           source .github/scripts/architecture-path.sh "src/components/legal"
           source .github/scripts/architecture-path.sh "src/components/navbar"
           source .github/scripts/architecture-path.sh "src/components/reports"

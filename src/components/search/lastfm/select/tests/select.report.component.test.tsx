@@ -8,7 +8,7 @@ import ReportSelect, {
   ids,
 } from "../select.report.component";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
-import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
+import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
 import settings from "@src/config/navbar";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
@@ -29,8 +29,8 @@ jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
   require("@fixtures/react/parent").createComponent("VerticalScrollBar")
 );
 
-jest.mock("@src/components/icons/lastfm/lastfm.icon", () =>
-  require("@fixtures/react/child").createComponent("Icon")
+jest.mock("@src/components/icons/lastfm/lastfm.icon.container", () =>
+  require("@fixtures/react/child").createComponent("LastFMIconContainer")
 );
 
 describe("SearchSelection", () => {
@@ -115,7 +115,9 @@ describe("SearchSelection", () => {
       const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.width).toStrictEqual([50, 50, 75]);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(renderToString(call.icon!)).toBe(renderToString(<LastFMIcon />));
+      expect(renderToString(call.icon!)).toBe(
+        renderToString(<LastFMIconContainer />)
+      );
       expect(Object.keys(call).length).toBe(2);
     });
 

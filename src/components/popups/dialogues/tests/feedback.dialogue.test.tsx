@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import FeedbackDialogue, { testIDs } from "../feedback.dialogue";
 import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
-import SVSIcon from "@src/components/icons/svs/svs.icon";
+import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
 import externalRoutes from "@src/config/external";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
@@ -56,7 +56,7 @@ describe("FeedbackDialogue", () => {
     expect(call.width).toStrictEqual(50);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(renderToString(call.icon!)).toBe(
-      renderToString(<SVSIcon width={75} height={75} />)
+      renderToString(<SVSIconContainer width={75} height={75} />)
     );
     expect(Object.keys(call).length).toBe(3);
   });

@@ -5,7 +5,7 @@ import UserNameFormContainer from "../forms/username/username.form.container";
 import Search from "../search.component";
 import Authentication from "@src/components/authentication/authentication.container";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
-import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
+import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () =>
@@ -26,8 +26,8 @@ jest.mock("../forms/username/username.form.container.tsx", () =>
   require("@fixtures/react/parent").createComponent("UsernameFormContainer")
 );
 
-jest.mock("@src/components/icons/lastfm/lastfm.icon", () =>
-  require("@fixtures/react/parent").createComponent("LastFMIcon")
+jest.mock("@src/components/icons/lastfm/lastfm.icon.container", () =>
+  require("@fixtures/react/parent").createComponent("LastFMIconContainer")
 );
 
 describe("Search", () => {
@@ -77,7 +77,9 @@ describe("Search", () => {
       const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.width).toStrictEqual([50, 50, 75]);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(renderToString(call.icon!)).toBe(renderToString(<LastFMIcon />));
+      expect(renderToString(call.icon!)).toBe(
+        renderToString(<LastFMIconContainer />)
+      );
       expect(Object.keys(call).length).toBe(2);
     });
 
