@@ -2,7 +2,7 @@ import { Box, Flex, Avatar } from "@chakra-ui/react";
 import UserNameFormContainer from "./forms/username/username.form.container";
 import Authentication from "@src/components/authentication/authentication.container";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
-import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
+import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 
 interface SearchProps {
   route: string;
@@ -16,7 +16,7 @@ export default function Search({ route, titleText }: SearchProps) {
       <Flex justify={"space-evenly"} align={"center"} w={"100%"}>
         <Box>
           <Avatar
-            icon={<LastFMIcon width={100} height={100} />}
+            icon={<LastFMIconContainer width={100} height={100} />}
             width={[50, 50, 75]}
           />
         </Box>

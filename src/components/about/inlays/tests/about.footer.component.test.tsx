@@ -16,10 +16,6 @@ jest.mock(
   () => require("@fixtures/react/parent").createComponent("Button")
 );
 
-jest.mock("@src/components/icons/svs/svs.icon", () =>
-  require("@fixtures/react/child").createComponent("Icon")
-);
-
 describe("About", () => {
   const mockT = new MockUseLocale("about").t;
 

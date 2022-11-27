@@ -17,15 +17,6 @@ jest.mock(
   () => require("@fixtures/react/parent").createComponent("Button")
 );
 
-jest.mock(
-  "@src/components/styles/hover.dim/hover.dim.styles",
-  () => () => require("@fixtures/react/parent").createComponent("DimOnHover")
-);
-
-jest.mock("@src/components/icons/svs/svs.icon", () =>
-  require("@fixtures/react/child").createComponent("Icon")
-);
-
 describe("TermsOfServiceFooter", () => {
   const mockT = new MockUseLocale("legal").t;
 

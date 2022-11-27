@@ -15,10 +15,6 @@ jest.mock("@chakra-ui/react", () =>
   ])
 );
 
-jest.mock("@src/components/icons/svs/svs.icon", () =>
-  require("@fixtures/react/child").createComponent("Icon")
-);
-
 describe("AboutToggle", () => {
   const mockT = new MockUseLocale("about").t;
 

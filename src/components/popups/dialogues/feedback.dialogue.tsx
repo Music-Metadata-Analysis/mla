@@ -1,7 +1,7 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
-import SVSIcon from "@src/components/icons/svs/svs.icon";
+import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
 import externalLinks from "@src/config/external";
 import useColour from "@src/hooks/colour";
@@ -34,7 +34,7 @@ export default function FeedbackDialogue({
           <DimOnHover ml={2} mb={2}>
             <Avatar
               data-testid={testIDs.FeedBackDialogueIcon}
-              icon={<SVSIcon width={75} height={75} />}
+              icon={<SVSIconContainer width={75} height={75} />}
               width={50}
             />
           </DimOnHover>

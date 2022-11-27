@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import SplashBody from "../splash.body.component";
 import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
-import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
+import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
 import dialogueSettings from "@src/config/dialogue";
 import lastFMConfig from "@src/config/lastfm";
@@ -60,7 +60,9 @@ describe("SplashBody", () => {
       expect(call.width).toStrictEqual(dialogueSettings.iconSizes);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(renderToString(call.icon!)).toBe(
-        renderToString(<LastFMIcon {...dialogueSettings.iconComponentProps} />)
+        renderToString(
+          <LastFMIconContainer {...dialogueSettings.iconComponentProps} />
+        )
       );
       expect(Object.keys(call).length).toBe(2);
     });

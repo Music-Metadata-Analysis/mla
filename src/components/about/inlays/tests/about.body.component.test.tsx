@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import Body from "../about.body.component";
 import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
-import SVSIcon from "@src/components/icons/svs/svs.icon";
+import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
@@ -30,8 +30,8 @@ jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
   require("@fixtures/react/parent").createComponent("DimOnHover")
 );
 
-jest.mock("@src/components/icons/svs/svs.icon", () =>
-  require("@fixtures/react/child").createComponent("Icon")
+jest.mock("@src/components/icons/svs/svs.icon.container", () =>
+  require("@fixtures/react/child").createComponent("SVSIconContainer")
 );
 
 describe("AboutBody", () => {
@@ -54,7 +54,9 @@ describe("AboutBody", () => {
       expect(call.width).toStrictEqual(dialogueSettings.iconSizes);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(renderToString(call.icon!)).toBe(
-        renderToString(<SVSIcon {...dialogueSettings.iconComponentProps} />)
+        renderToString(
+          <SVSIconContainer {...dialogueSettings.iconComponentProps} />
+        )
       );
       expect(Object.keys(call).length).toBe(2);
     });

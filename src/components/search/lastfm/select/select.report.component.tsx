@@ -1,7 +1,7 @@
 import { Box, Flex, Avatar } from "@chakra-ui/react";
 import Option from "./option/report.option.component";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
-import LastFMIcon from "@src/components/icons/lastfm/lastfm.icon";
+import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
 import settings from "@src/config/navbar";
 import type { ReportOptionProps } from "./option/report.option.component";
@@ -32,7 +32,7 @@ export default function ReportSelect({
         <Flex justify={"space-evenly"} align={"center"}>
           <Box mb={1}>
             <Avatar
-              icon={<LastFMIcon width={100} height={100} />}
+              icon={<LastFMIconContainer width={100} height={100} />}
               width={[50, 50, 75]}
             />
           </Box>
