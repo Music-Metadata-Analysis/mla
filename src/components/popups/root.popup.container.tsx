@@ -1,11 +1,11 @@
-import FeedbackPopup from "./feedback.popup";
+import FeedbackPopUpContainer from "./feedback.popup.container";
 import Condition from "../condition/condition.component";
 import webFrameworkVendor from "@src/clients/web.framework/vendor";
 
-export default function RootPopup() {
+export default function RootPopUpContainer() {
   return (
     <Condition isTrue={!webFrameworkVendor.isSSR()}>
-      <FeedbackPopup />
+      <FeedbackPopUpContainer />
     </Condition>
   );
 }

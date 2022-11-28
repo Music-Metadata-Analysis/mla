@@ -1,19 +1,25 @@
 import { useEffect } from "react";
-import Feedback from "./dialogues/feedback.dialogue";
-import PopUp from "./popup/popup.component";
+import FeedbackPopUp from "./popups.components/feedback.popup.component";
 import settings from "@src/config/popups";
 import useAuth from "@src/hooks/auth";
+import usePopUpsController from "@src/hooks/controllers/popups.controller.hook";
 import useLocale from "@src/hooks/locale";
 import useMetrics from "@src/hooks/metrics";
-import usePopUps from "@src/hooks/popups";
+import usePopUpsGenerator from "@src/hooks/ui/popups.generator.hook";
 
 const popUpName = "FeedBack" as const;
 
-export default function FeedbackPopUp() {
-  const { metrics } = useMetrics();
+export default function FeedbackPopUpContainer() {
   const { status: authStatus } = useAuth();
-  const popups = usePopUps();
   const { t } = useLocale("main");
+  const { metrics } = useMetrics();
+  const popups = usePopUpsController();
+
+  usePopUpsGenerator({
+    component: FeedbackPopUp,
+    message: t(`popups.${popUpName}`),
+    name: popUpName,
+  });
 
   useEffect(() => {
     if (
@@ -25,15 +31,5 @@ export default function FeedbackPopUp() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metrics]);
 
-  if (!popups.status(popUpName) || authStatus !== "authenticated") {
-    return null;
-  }
-
-  return (
-    <PopUp
-      name={popUpName}
-      message={t(`popups.${popUpName}`)}
-      Component={Feedback}
-    />
-  );
+  return null;
 }

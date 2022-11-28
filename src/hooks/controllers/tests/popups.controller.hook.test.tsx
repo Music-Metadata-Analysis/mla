@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockHookValues from "../__mocks__/popups.mock";
-import usePopUps from "../popups";
+import mockHookValues from "../__mocks__/popups.controller.hook.mock";
+import usePopUpsController from "../popups.controller.hook";
 import { PopUpsControllerContext } from "@src/providers/controllers/popups/popups.provider";
 import type { PopUpsControllerContextInterface } from "@src/types/controllers/popups/popups.context.types";
 import type { ReactNode } from "react";
@@ -11,11 +11,13 @@ interface MockInterfaceContextWithChildren {
   mockPopupContext: PopUpsControllerContextInterface;
 }
 
-describe("usePopUps", () => {
+describe("usePopUpsController", () => {
   let received: ReturnType<typeof arrange>;
 
-  const mockPopUpDispatch = jest.fn();
   const mockPopup = "FeedBack" as const;
+  const mockPopUpState = { [mockPopup]: { status: false } };
+
+  const mockPopUpDispatch = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -33,7 +35,7 @@ describe("usePopUps", () => {
   };
 
   const arrange = (providerPopupProps: PopUpsControllerContextInterface) => {
-    return renderHook(() => usePopUps(), {
+    return renderHook(() => usePopUpsController(), {
       wrapper: providerWrapper,
       initialProps: {
         mockPopupContext: providerPopupProps,
@@ -44,7 +46,7 @@ describe("usePopUps", () => {
   describe("when rendered", () => {
     beforeEach(() => {
       received = arrange({
-        status: { [mockPopup]: { status: false } },
+        state: mockPopUpState,
         dispatch: mockPopUpDispatch,
       });
     });
@@ -56,21 +58,8 @@ describe("usePopUps", () => {
     });
 
     it("should contain the correct functions", () => {
-      expect(received.result.current.close).toBeInstanceOf(Function);
       expect(received.result.current.open).toBeInstanceOf(Function);
       expect(received.result.current.status).toBeInstanceOf(Function);
-    });
-
-    describe("when close is called on a pop-up", () => {
-      beforeEach(() => received.result.current.close(mockPopup));
-
-      it("should set the state to closed", () => {
-        expect(mockPopUpDispatch).toBeCalledTimes(1);
-        expect(mockPopUpDispatch).toBeCalledWith({
-          name: "FeedBack",
-          type: "HidePopUp",
-        });
-      });
     });
 
     describe("when open is called on a pop-up", () => {

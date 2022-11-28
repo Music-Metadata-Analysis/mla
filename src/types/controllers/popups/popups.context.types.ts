@@ -6,6 +6,6 @@ export type PopUpsControllerDispatchType = (
 ) => void;
 
 export interface PopUpsControllerContextInterface {
-  status: PopUpsControllerStateInterface;
+  state: PopUpsControllerStateInterface;
   dispatch: PopUpsControllerDispatchType;
 }

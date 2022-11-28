@@ -8,7 +8,7 @@ import flagVendorSSR from "@src/clients/flags/vendor.ssr";
 import { mockLocaleVendorHOCIdentifier } from "@src/clients/locale/__mocks__/vendor.mock";
 import Consent from "@src/components/consent/consent.component";
 import NavBarContainer from "@src/components/navbar/navbar.container";
-import RootPopup from "@src/components/popups/root.popup";
+import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
 import MLA, { getInitialProps } from "@src/pages/_app";
 import RootProvider from "@src/providers/root.provider";
@@ -37,8 +37,8 @@ jest.mock("@src/components/navbar/navbar.container", () =>
   require("@fixtures/react/child").createComponent("NavBarContainer")
 );
 
-jest.mock("@src/components/popups/root.popup", () =>
-  require("@fixtures/react/child").createComponent("PopUpsRoot")
+jest.mock("@src/components/popups/root.popup.container", () =>
+  require("@fixtures/react/child").createComponent("RootPopUpContainer")
 );
 
 jest.mock("@src/components/consent/consent.component", () =>
@@ -95,9 +95,9 @@ describe("MLA", () => {
     });
   });
 
-  it("should render the RootPopup component with the correct props", () => {
-    expect(RootPopup).toBeCalledTimes(1);
-    checkMockCall(RootPopup, {});
+  it("should render the RootPopUpContainer component with the correct props", () => {
+    expect(RootPopUpContainer).toBeCalledTimes(1);
+    checkMockCall(RootPopUpContainer, {});
   });
 
   it("should render the Consent component with the correct props", () => {
