@@ -11,3 +11,5 @@ export const mockFormHook = {
     open: jest.fn(),
   },
 };
+
+export const mockPopUpHook = null;

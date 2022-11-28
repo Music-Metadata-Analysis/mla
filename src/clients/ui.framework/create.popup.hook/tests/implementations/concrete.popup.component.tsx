@@ -4,8 +4,8 @@ import type { PopUpComponentProps } from "@src/types/controllers/popups/componen
 export const testIDs = {
   MockPopUpComponent: "MockPopUpComponent",
   MockPopUpComponentCloseButton: "MockPopUpComponentCloseButton",
+  MockPopUpComponentColourIndicator: "MockPopUpComponentColourIndicator",
   MockPopUpComponentColourToggle: "MockPopUpComponentColourToggle",
-  MockPopUpComponentColourMeasure: "MockPopUpComponentColourMeasure",
 };
 
 export const testColours = {
@@ -20,25 +20,22 @@ const MockPopUpComponent = jest.fn(
 
     return (
       <div data-testid={testIDs.MockPopUpComponent}>
-        <div data-testid={testIDs.MockPopUpComponentColourMeasure}>
+        <div
+          data-testid={testIDs.MockPopUpComponentCloseButton}
+          onClick={onClose}
+        >
+          {message}
+        </div>
+        <div data-testid={testIDs.MockPopUpComponentColourIndicator}>
           {colour}
         </div>
         <div
           data-testid={testIDs.MockPopUpComponentColourToggle}
-          onClick={() => toggleColorMode()}
-        >
-          {mockColourModeToggle}
-        </div>
-        <div
-          data-testid={testIDs.MockPopUpComponentCloseButton}
-          onClick={() => onClose()}
-        >
-          {message}
-        </div>
+          onClick={toggleColorMode}
+        />
       </div>
     );
   }
 );
 
-export const mockColourModeToggle = "Toggle Colour Mode";
 export default MockPopUpComponent;

@@ -5,7 +5,7 @@ import flagVendorSSR from "@src/clients/flags/vendor.ssr";
 import localeVendor from "@src/clients/locale/vendor";
 import Consent from "@src/components/consent/consent.component";
 import NavBarContainer from "@src/components/navbar/navbar.container";
-import RootPopups from "@src/components/popups/root.popup";
+import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
 import RootProvider from "@src/providers/root.provider";
 import { normalizeUndefined } from "@src/utils/voids";
@@ -24,7 +24,7 @@ function MLA({
     >
       <NavBarContainer config={NavConfig.menuConfig} />
       <Component {...otherProps} />
-      <RootPopups />
+      <RootPopUpContainer />
       <Consent />
     </RootProvider>
   );

@@ -7,7 +7,7 @@ export const InitialState = <PopUpsControllerStateInterface>{
 };
 
 const InitialContext = <PopUpsControllerContextInterface>{
-  status: InitialState,
+  state: InitialState,
   dispatch: voidFn,
 };
 

@@ -2,7 +2,7 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
-import FeedbackDialogue, { testIDs } from "../feedback.dialogue";
+import FeedbackPopUp, { testIDs } from "../feedback.popup.component";
 import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
 import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
@@ -36,7 +36,7 @@ jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
   require("@fixtures/react/parent").createComponent("DimOnHover")
 );
 
-describe("FeedbackDialogue", () => {
+describe("FeedbackPopUp", () => {
   const mockClose = jest.fn();
   const mockMessage = "mockMessage";
 
@@ -46,7 +46,7 @@ describe("FeedbackDialogue", () => {
   });
 
   const arrange = () => {
-    render(<FeedbackDialogue message={mockMessage} onClose={mockClose} />);
+    render(<FeedbackPopUp message={mockMessage} onClose={mockClose} />);
   };
 
   it("should call Avatar as expected to display the logo", () => {

@@ -11,15 +11,15 @@ interface PopUpsControllerProviderProps {
 const PopUpsControllerProvider = ({
   children,
 }: PopUpsControllerProviderProps) => {
-  const [status, dispatch] = useReducer(
+  const [state, dispatch] = useReducer(
     PopUpsControllerReducer,
-    InitialContext.status
+    InitialContext.state
   );
 
   return (
     <PopUpsControllerContext.Provider
       value={{
-        status,
+        state,
         dispatch,
       }}
     >

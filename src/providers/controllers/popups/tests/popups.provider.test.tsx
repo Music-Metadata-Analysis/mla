@@ -29,7 +29,7 @@ describe("PopUpsControllerProvider", () => {
 
     it("should contain the expected properties", () => {
       const properties = received as PopUpsControllerContextInterface;
-      expect(properties.status).toStrictEqual({
+      expect(properties.state).toStrictEqual({
         FeedBack: { status: false },
       });
       expect(typeof properties.dispatch).toBe("function");

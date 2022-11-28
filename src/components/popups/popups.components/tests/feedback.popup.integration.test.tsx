@@ -1,12 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import FeedbackDialogue, { testIDs } from "../feedback.dialogue";
+import FeedbackPopUp, { testIDs } from "../feedback.popup.component";
 import externalLinks from "@src/config/external";
 
 jest.mock("@src/hooks/locale");
 
 jest.mock("@src/hooks/router");
 
-describe("FeedbackDialogue", () => {
+describe("FeedbackPopUp", () => {
   const mockClose = jest.fn();
   const mockMessage = "mockMessage";
 
@@ -16,7 +16,7 @@ describe("FeedbackDialogue", () => {
   });
 
   const arrange = () => {
-    render(<FeedbackDialogue message={mockMessage} onClose={mockClose} />);
+    render(<FeedbackPopUp message={mockMessage} onClose={mockClose} />);
   };
 
   describe("when rendered", () => {
