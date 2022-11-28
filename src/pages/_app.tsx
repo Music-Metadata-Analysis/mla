@@ -3,7 +3,7 @@ import "../styles/globals.css";
 import authVendorSSR from "@src/clients/auth/vendor.ssr";
 import flagVendorSSR from "@src/clients/flags/vendor.ssr";
 import localeVendor from "@src/clients/locale/vendor";
-import Consent from "@src/components/consent/consent.component";
+import ConsentContainer from "@src/components/consent/consent.container";
 import NavBarContainer from "@src/components/navbar/navbar.container";
 import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
@@ -25,7 +25,7 @@ function MLA({
       <NavBarContainer config={NavConfig.menuConfig} />
       <Component {...otherProps} />
       <RootPopUpContainer />
-      <Consent />
+      <ConsentContainer />
     </RootProvider>
   );
 }

@@ -1,11 +1,7 @@
 import { Text } from "@chakra-ui/react";
-import Cookies from "js-cookie";
-import { useEffect } from "react";
 import CookieConsent from "react-cookie-consent";
 import { settings } from "@src/config/cookies";
-import useAnalytics from "@src/hooks/analytics";
 import useColours from "@src/hooks/colour";
-import useLocale from "@src/hooks/locale";
 
 export const testIDs = {
   consentDialogue: "consentDialogue",
@@ -13,33 +9,33 @@ export const testIDs = {
   consentMessageLine2: "consentMessageLine2",
 };
 
-export default function Consent() {
-  const analytics = useAnalytics();
+export interface ConsentProps {
+  acceptButtonText: string;
+  declineButtonText: string;
+  consentMessageLine1Text: string;
+  consentMessageLine2Text: string;
+  onAccept: () => void;
+}
+
+export default function Consent({
+  acceptButtonText,
+  declineButtonText,
+  consentMessageLine1Text,
+  consentMessageLine2Text,
+  onAccept,
+}: ConsentProps) {
   const {
     utilities: { colourToCSS },
     componentColour,
     buttonColour,
     consentColour,
   } = useColours();
-  const { t } = useLocale("main");
-
-  const accept = () => {
-    analytics.setup();
-  };
-
-  useEffect(() => {
-    const existingConsent = Cookies.get(settings.consentCookieName);
-    if (existingConsent === "true") {
-      accept();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <CookieConsent
       visible={"byCookieValue"}
       cookieName={settings.consentCookieName}
-      onAccept={accept}
+      onAccept={onAccept}
       style={{
         borderTopWidth: "1px",
         borderTopColor: colourToCSS(buttonColour.border),
@@ -62,20 +58,20 @@ export default function Consent() {
       }}
       setDeclineCookie={false}
       enableDeclineButton
-      buttonText={t("analytics.acceptMessage")}
-      declineButtonText={t("analytics.declineMessage")}
+      buttonText={acceptButtonText}
+      declineButtonText={declineButtonText}
     >
       <Text
         data-testid={testIDs.consentMessageLine1}
         fontSize={["xs", "sm", "m"]}
       >
-        {t("analytics.message1")}
+        {consentMessageLine1Text}
       </Text>
       <Text
         data-testid={testIDs.consentMessageLine2}
         fontSize={["sm", "m", "l"]}
       >
-        <strong>{t("analytics.message2")}</strong>
+        <strong>{consentMessageLine2Text}</strong>
       </Text>
     </CookieConsent>
   );

@@ -1,19 +1,16 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import Cookies from "js-cookie";
+import { Text } from "@chakra-ui/react";
+import { render, screen, within } from "@testing-library/react";
 import CookieConsent from "react-cookie-consent";
-import Consent, { testIDs } from "../consent.component";
-import translations from "@locales/main.json";
+import Consent, { ConsentProps, testIDs } from "../consent.component";
 import { settings } from "@src/config/cookies";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-
-jest.mock("@src/hooks/analytics");
 
 jest.mock("@src/hooks/colour");
 
-jest.mock("@src/hooks/locale");
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Text"])
+);
 
 jest.mock("react-cookie-consent", () => {
   const Original = jest.requireActual("react-cookie-consent").default;
@@ -23,118 +20,91 @@ jest.mock("react-cookie-consent", () => {
 });
 
 describe("Consent", () => {
-  beforeEach(() => jest.clearAllMocks());
+  const currentProps: ConsentProps = {
+    acceptButtonText: "mockAcceptButtonText",
+    declineButtonText: "mockDeclineButtonText",
+    consentMessageLine1Text: "mockConsentMessageLine1Text",
+    consentMessageLine2Text: "mockConsentMessageLine2Text",
+    onAccept: jest.fn(),
+  };
 
-  const arrange = () => render(<Consent />);
+  beforeEach(() => {
+    jest.clearAllMocks();
 
-  describe("when a consent cookie is present", () => {
-    beforeEach(() => {
-      Cookies.set(settings.consentCookieName, "true");
-      arrange();
-    });
-
-    it("should hide the banner", () => {
-      expect(screen.queryByTestId(testIDs.consentMessageLine1)).toBeNull();
-    });
-
-    it("should initialize analytics", () => {
-      expect(mockAnalyticsHook.setup).toBeCalledTimes(1);
-    });
+    arrange();
   });
 
-  describe("when a consent cookie is NOT present", () => {
-    beforeEach(() => {
-      Cookies.remove(settings.consentCookieName);
-      arrange();
-    });
+  const arrange = () => render(<Consent {...currentProps} />);
 
-    it("should display the banner", async () => {
-      const messageBox1 = await screen.findByTestId(
-        testIDs.consentMessageLine1
-      );
-      const messageBox2 = await screen.findByTestId(
-        testIDs.consentMessageLine2
-      );
-      expect(messageBox1.innerHTML).toBe(_t(translations.analytics.message1));
-      expect(messageBox2.innerHTML).toBe(
-        `<strong>${_t(translations.analytics.message2)}</strong>`
-      );
-    });
+  it("should render the chakra Text component with the correct props", () => {
+    expect(Text).toBeCalledTimes(2);
+    checkMockCall(
+      Text,
+      {
+        "data-testid": testIDs.consentMessageLine1,
+        fontSize: ["xs", "sm", "m"],
+      },
+      0
+    );
+    checkMockCall(
+      Text,
+      {
+        "data-testid": testIDs.consentMessageLine2,
+        fontSize: ["sm", "m", "l"],
+      },
+      1
+    );
+  });
 
-    it("should display the buttons", async () => {
-      expect(
-        await screen.findByText(_t(translations.analytics.acceptMessage))
-      ).toBeTruthy();
-      expect(
-        await screen.findByText(_t(translations.analytics.declineMessage))
-      ).toBeTruthy();
-    });
+  it("should render the first consent message inside a Text component", async () => {
+    expect(
+      await within(
+        await screen.findByTestId(testIDs.consentMessageLine1)
+      ).findByText(currentProps.consentMessageLine1Text)
+    ).toBeTruthy();
+  });
 
-    it("should style the banner correctly", () => {
-      expect(CookieConsent).toBeCalledTimes(1);
-      checkMockCall(
-        CookieConsent as never as React.FC,
-        {
-          buttonStyle: {
-            background: `converted(${mockColourHook.consentColour.accept.background})`,
-            color: `converted(${mockColourHook.buttonColour.foreground})`,
-          },
-          buttonText: _t(translations.analytics.acceptMessage),
-          contentStyle: {
-            flex: "1 0",
-          },
-          cookieName: settings.consentCookieName,
-          declineButtonStyle: {
-            background: `converted(${mockColourHook.consentColour.decline.background})`,
-            color: `converted(${mockColourHook.buttonColour.foreground})`,
-          },
-          declineButtonText: _t(translations.analytics.declineMessage),
-          enableDeclineButton: true,
-          setDeclineCookie: false,
-          style: {
-            background: `converted(${mockColourHook.componentColour.background})`,
-            borderTopColor: `converted(${mockColourHook.buttonColour.border})`,
-            borderTopStyle: "solid",
-            borderTopWidth: "1px",
-            color: `converted(${mockColourHook.componentColour.foreground})`,
-            flexDirection: "column",
-            zIndex: 999,
-          },
-          visible: "byCookieValue",
+  it("should render the second consent message inside a Text component", async () => {
+    const messageBox2 = await screen.findByTestId(testIDs.consentMessageLine2);
+    expect(messageBox2.innerHTML).toBe(
+      `<strong>${currentProps.consentMessageLine2Text}</strong>`
+    );
+  });
+
+  it("should render the CookieConsent component with the correct props", () => {
+    expect(CookieConsent).toBeCalledTimes(1);
+    checkMockCall(
+      CookieConsent as never as React.FC,
+      {
+        buttonStyle: {
+          background: `converted(${mockColourHook.consentColour.accept.background})`,
+          color: `converted(${mockColourHook.buttonColour.foreground})`,
         },
-        0,
-        ["onAccept"]
-      );
-    });
-
-    describe("when accept is pressed", () => {
-      beforeEach(async () => {
-        const button = await screen.findByText(
-          _t(translations.analytics.acceptMessage)
-        );
-        fireEvent.click(button);
-      });
-
-      it("should set a cookie", () => {
-        expect(Cookies.get(settings.consentCookieName)).toBe("true");
-      });
-
-      it("should initialize analytics", () => {
-        expect(mockAnalyticsHook.setup).toBeCalledTimes(1);
-      });
-    });
-
-    describe("when decline is pressed", () => {
-      beforeEach(async () => {
-        const button = await screen.findByText(
-          _t(translations.analytics.declineMessage)
-        );
-        fireEvent.click(button);
-      });
-
-      it("should hide the banner", () => {
-        expect(screen.queryByTestId(testIDs.consentMessageLine1)).toBeNull();
-      });
-    });
+        buttonText: currentProps.acceptButtonText,
+        contentStyle: {
+          flex: "1 0",
+        },
+        cookieName: settings.consentCookieName,
+        declineButtonStyle: {
+          background: `converted(${mockColourHook.consentColour.decline.background})`,
+          color: `converted(${mockColourHook.buttonColour.foreground})`,
+        },
+        declineButtonText: currentProps.declineButtonText,
+        enableDeclineButton: true,
+        setDeclineCookie: false,
+        style: {
+          background: `converted(${mockColourHook.componentColour.background})`,
+          borderTopColor: `converted(${mockColourHook.buttonColour.border})`,
+          borderTopStyle: "solid",
+          borderTopWidth: "1px",
+          color: `converted(${mockColourHook.componentColour.foreground})`,
+          flexDirection: "column",
+          zIndex: 999,
+        },
+        visible: "byCookieValue",
+      },
+      0,
+      ["onAccept"]
+    );
   });
 });
