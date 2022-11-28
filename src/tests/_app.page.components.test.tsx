@@ -6,7 +6,7 @@ import authVendorSSR from "@src/clients/auth/vendor.ssr";
 import { mockFlagVendorSSRClient } from "@src/clients/flags/__mocks__/vendor.ssr.mock";
 import flagVendorSSR from "@src/clients/flags/vendor.ssr";
 import { mockLocaleVendorHOCIdentifier } from "@src/clients/locale/__mocks__/vendor.mock";
-import Consent from "@src/components/consent/consent.component";
+import ConsentContainer from "@src/components/consent/consent.container";
 import NavBarContainer from "@src/components/navbar/navbar.container";
 import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
@@ -41,8 +41,8 @@ jest.mock("@src/components/popups/root.popup.container", () =>
   require("@fixtures/react/child").createComponent("RootPopUpContainer")
 );
 
-jest.mock("@src/components/consent/consent.component", () =>
-  require("@fixtures/react/child").createComponent("ConsentBanner")
+jest.mock("@src/components/consent/consent.container", () =>
+  require("@fixtures/react/child").createComponent("ConsentContainer")
 );
 
 describe("MLA", () => {
@@ -100,9 +100,9 @@ describe("MLA", () => {
     checkMockCall(RootPopUpContainer, {});
   });
 
-  it("should render the Consent component with the correct props", () => {
-    expect(Consent).toBeCalledTimes(1);
-    checkMockCall(Consent, {});
+  it("should render the ConsentContainer component with the correct props", () => {
+    expect(ConsentContainer).toBeCalledTimes(1);
+    checkMockCall(ConsentContainer, {});
   });
 
   it("should wrap the MLA app in the appWithTranslation function", async () => {
