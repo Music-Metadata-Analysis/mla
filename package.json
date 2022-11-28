@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "cd ./node_modules//@toplast/lastfm && yarn install && yarn run build",
+    "postinstall": "cd ./node_modules//@toplast/lastfm && yarn add typescript@4.8.4 && yarn install && yarn run build",
     "build": "next build",
     "clean": "eslint --fix ./src ./cypress; prettier --write \"./(src|cypress)/**/*.+(ts|tsx|js|jsx|json|yml|yaml|css|scss|md|vue)\"",
     "compile": "tsc",
