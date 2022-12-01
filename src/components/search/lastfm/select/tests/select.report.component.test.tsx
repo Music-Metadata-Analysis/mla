@@ -9,7 +9,7 @@ import ReportSelect, {
 } from "../select.report.component";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
-import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
+import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import settings from "@src/config/navbar";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
@@ -25,8 +25,12 @@ jest.mock("../option/report.option.component", () =>
   require("@fixtures/react/parent").createComponent("ReportOption")
 );
 
-jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react/parent").createComponent("VerticalScrollBar")
+jest.mock(
+  "@src/components/scrollbars/vertical/vertical.scrollbar.container",
+  () =>
+    require("@fixtures/react/parent").createComponent(
+      "VerticalScrollBarContainer"
+    )
 );
 
 jest.mock("@src/components/icons/lastfm/lastfm.icon.container", () =>
@@ -122,9 +126,9 @@ describe("SearchSelection", () => {
     });
 
     it("should call VerticalScrollBarComponent as expected", () => {
-      expect(VerticalScrollBar).toBeCalledTimes(1);
+      expect(VerticalScrollBarContainer).toBeCalledTimes(1);
       checkMockCall(
-        VerticalScrollBar,
+        VerticalScrollBarContainer,
         {
           horizontalOffset: 0,
           scrollRef: currentProps.scrollRef,

@@ -27,8 +27,12 @@ jest.mock("@src/hooks/router");
 
 jest.mock("@src/clients/web.framework/vendor");
 
-jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react/child").createComponent("VerticalScrollBar")
+jest.mock(
+  "@src/components/scrollbars/vertical/vertical.scrollbar.container",
+  () =>
+    require("@fixtures/react/child").createComponent(
+      "VerticalScrollBarContainer"
+    )
 );
 
 const getMockedUserProperties = () => mockUserProperties;
