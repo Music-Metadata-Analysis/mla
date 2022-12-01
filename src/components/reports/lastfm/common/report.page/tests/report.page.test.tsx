@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import Page from "../report.page";
-import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
@@ -8,7 +8,7 @@ import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/lastfm");
 
-jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
+jest.mock("@src/components/errors/boundary/error.boundary.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
@@ -52,9 +52,9 @@ describe("ReportPage", () => {
       });
 
       it("should call the ErrorBoundary correctly", () => {
-        expect(ErrorBoundary).toBeCalledTimes(1);
+        expect(ErrorBoundaryContainer).toBeCalledTimes(1);
         mockCheckCall(
-          ErrorBoundary,
+          ErrorBoundaryContainer,
           {
             route: routes.home,
             eventDefinition: Events.General.Error,

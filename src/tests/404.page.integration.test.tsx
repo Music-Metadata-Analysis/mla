@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import translation from "@locales/main.json";
+import translation from "@locales/errors.json";
 import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import routes from "@src/config/routes";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
@@ -28,26 +28,26 @@ describe("404", () => {
 
     it("should display the correct error title", async () => {
       expect(
-        await screen.findByText(_t(translation.errors[404].title))
+        await screen.findByText(_t(translation["404"].title))
       ).toBeTruthy();
     });
 
     it("should display the correct error message", async () => {
       expect(
-        await screen.findByText(_t(translation.errors[404].message))
+        await screen.findByText(_t(translation["404"].message))
       ).toBeTruthy();
     });
 
     it("should display the correct button label", async () => {
       expect(
-        await screen.findByText(_t(translation.errors[404].resetButton))
+        await screen.findByText(_t(translation["404"].resetButton))
       ).toBeTruthy();
     });
 
     describe("when the reset button is clicked", () => {
       beforeEach(async () => {
         const link = await screen.findByText(
-          _t(translation.errors[404].resetButton)
+          _t(translation["404"].resetButton)
         );
         fireEvent.click(link);
       });

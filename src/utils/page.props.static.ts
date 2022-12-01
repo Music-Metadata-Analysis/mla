@@ -14,7 +14,7 @@ const pagePropsGenerator = ({
   const getPageProps: GetStaticProps = async (props) => {
     const translator = new localeVendorSSR.Client(
       props.locale,
-      ["authentication", "main", "navbar"].concat(translations)
+      ["authentication", "errors", "main", "navbar"].concat(translations)
     );
     const translationData =
       (await translator.getTranslations()) as LocaleVendorSSRReturnType;

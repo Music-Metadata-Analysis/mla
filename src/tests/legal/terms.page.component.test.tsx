@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import TermsOfServiceContainer from "@src/components/legal/terms/terms.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
@@ -10,7 +10,7 @@ import getPageProps from "@src/utils/page.props.server.side";
 
 jest.mock("@src/utils/page.props.server.side");
 
-jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
+jest.mock("@src/components/errors/boundary/error.boundary.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
@@ -43,9 +43,9 @@ describe("Terms", () => {
     beforeEach(() => arrange());
 
     it("should call the ErrorBoundary component correctly", () => {
-      expect(ErrorBoundary).toBeCalledTimes(1);
+      expect(ErrorBoundaryContainer).toBeCalledTimes(1);
       mockCheckCall(
-        ErrorBoundary,
+        ErrorBoundaryContainer,
         {
           route: routes.home,
           eventDefinition: Events.General.Error,

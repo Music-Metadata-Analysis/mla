@@ -33,6 +33,9 @@ const mockValues = {
       background: mockColour(),
     },
   },
+  errorColour: {
+    icon: mockColour(),
+  },
   feedbackColour: {
     background: mockColour(),
     border: mockColour(),

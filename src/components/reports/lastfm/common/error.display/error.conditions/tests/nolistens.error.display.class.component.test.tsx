@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import NoListensErrorConditionalDisplay from "../nolistens.error.display.class.component";
-import ErrorDisplayContainer from "@src/components/errors/display/error.display.component";
+import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import { MockReportClass } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.sunburst.report.class";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
@@ -9,7 +9,7 @@ import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/la
 import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
-jest.mock("@src/components/errors/display/error.display.component", () =>
+jest.mock("@src/components/errors/display/error.display.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorDisplayContainer")
 );
 
@@ -38,14 +38,14 @@ describe("NoListensErrorConditionalDisplay", () => {
     );
   };
 
-  const checkResetError = () => {
-    describe("resetError", () => {
-      let resetError: () => void;
+  const checkHandleClick = () => {
+    describe("handleClick", () => {
+      let handleClick: () => void;
 
       beforeEach(() => {
-        resetError = jest.mocked(ErrorDisplayContainer).mock.calls[0][0]
-          .resetError;
-        resetError();
+        handleClick = jest.mocked(ErrorDisplayContainer).mock.calls[0][0]
+          .handleClick;
+        handleClick();
       });
 
       it("should push the router to the retryRoute", () => {
@@ -86,11 +86,11 @@ describe("NoListensErrorConditionalDisplay", () => {
           ErrorDisplayContainer,
           { errorKey: "userWithNoListens" },
           0,
-          ["resetError"]
+          ["handleClick"]
         );
       });
 
-      checkResetError();
+      checkHandleClick();
     });
   });
 
@@ -127,7 +127,7 @@ describe("NoListensErrorConditionalDisplay", () => {
           ErrorDisplayContainer,
           { errorKey: "userWithNoListens" },
           0,
-          ["resetError"]
+          ["handleClick"]
         );
       });
     });
