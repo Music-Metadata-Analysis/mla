@@ -1,5 +1,6 @@
 import { useState } from "react";
-import ErrorBoundary from "../error.boundary.component";
+import ErrorBoundary from "../react-error-boundary";
+import { createSimpleComponent } from "@fixtures/react/simple";
 import Events from "@src/events/events";
 
 export const testIDs = {
@@ -13,9 +14,7 @@ const ComponentWithError = () => {
   throw new Error("Test Error!");
 };
 
-const ComponentWithOutError = () =>
-  require("@fixtures/react/child").createComponent("ComponentWithoutError")
-    .default;
+const ComponentWithOutError = createSimpleComponent("ComponentWithOutError");
 
 interface ErrorBoundaryTestHarnessProps {
   mockRoute: string;

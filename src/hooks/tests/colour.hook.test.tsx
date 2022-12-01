@@ -39,7 +39,7 @@ describe("useColour", () => {
     };
 
     it("should contain the correct number of top level properties", () => {
-      assertLenIs(received.result.current, 13);
+      assertLenIs(received.result.current, 14);
     });
 
     it("should contain the bodyColour background color", () => {
@@ -70,6 +70,11 @@ describe("useColour", () => {
       assertIsString(received.result.current.componentColour.details);
       assertIsString(received.result.current.componentColour.scheme);
       assertLenIs(received.result.current.componentColour, 5);
+    });
+
+    it("should contain the errorColour properties", () => {
+      assertIsString(received.result.current.errorColour.icon);
+      assertLenIs(received.result.current.errorColour, 1);
     });
 
     it("should contain the feedbackColour properties", () => {

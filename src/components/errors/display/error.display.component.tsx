@@ -1,39 +1,42 @@
 import { WarningTwoIcon } from "@chakra-ui/icons";
-import { Container, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
-import useLocale from "@src/hooks/locale";
+import useColour from "@src/hooks/colour";
 
-export interface ErrorHandlerProps {
-  error?: Error;
-  resetError: () => void;
-  errorKey: string;
+export interface ErrorDisplayProps {
+  buttonText: string;
+  children: string;
+  handleClick: () => void;
+  titleText: string;
 }
 
-const ErrorDisplay = ({ errorKey, resetError, error }: ErrorHandlerProps) => {
-  const { t } = useLocale("main");
-  const iconColor = useColorModeValue("yellow.800", "yellow.200");
-
-  const displayMessage = () => {
-    if (error) return <div>{error.message}</div>;
-    return <div>{t(`errors.${errorKey}.message`)}</div>;
-  };
+const ErrorDisplay = ({
+  buttonText,
+  children,
+  handleClick,
+  titleText,
+}: ErrorDisplayProps) => {
+  const { errorColour } = useColour();
 
   return (
-    <BillboardContainer titleText={t(`errors.${errorKey}.title`)}>
-      <Flex direction={"column"} align={"center"} justify={"center"}>
-        <WarningTwoIcon color={iconColor} boxSize={50} />
+    <BillboardContainer titleText={titleText}>
+      <Flex align={"center"} direction={"column"} justify={"center"}>
+        <WarningTwoIcon color={errorColour.icon} boxSize={50} />
         <Container
-          fontSize={[20, 24, 30]}
           centerContent={true}
+          fontSize={[20, 24, 30]}
           maxW={"medium"}
           textAlign={"center"}
         >
-          {displayMessage()}
+          {children}
         </Container>
-        <br />
-        <StyledButton analyticsName={"Clear Error State"} onClick={resetError}>
-          {t(`errors.${errorKey}.resetButton`)}
+        <StyledButton
+          analyticsName={"Clear Error State"}
+          mt={5}
+          onClick={handleClick}
+        >
+          {buttonText}
         </StyledButton>
       </Flex>
     </BillboardContainer>

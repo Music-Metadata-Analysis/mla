@@ -1,0 +1,32 @@
+{
+  "404": {
+    "title": "Whoops!",
+    "message": "These are not the droids you're looking for...",
+    "resetButton": "Try Again!"
+  },
+  "generic": {
+    "title": "An error has occurred!",
+    "message": "",
+    "resetButton": "Try Again!"
+  },
+  "lastfmCommunications": {
+    "title": "Something went horribly wrong!",
+    "message": "We couldn't get your request through to last.fm!",
+    "resetButton": "Give it Another Shot!"
+  },
+  "lastfmRatelimited": {
+    "title": "Eeek! A 409 Error!",
+    "message": "Can you wait a second, and retry that search?",
+    "resetButton": "Retry my Search"
+  },
+  "userWithNoListens": {
+    "title": "Not much of a music fan.",
+    "message": "This user hasn't listened to anything...",
+    "resetButton": "Try someone else!"
+  },
+  "userNotFound": {
+    "title": "Is that your REAL name?",
+    "message": "This user does not appear to exist...",
+    "resetButton": "Try someone else!"
+  }
+}

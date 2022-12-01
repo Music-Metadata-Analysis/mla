@@ -1,5 +1,5 @@
 import ErrorBase from "./bases/error.base.class.component";
-import ErrorDisplayContainer from "@src/components/errors/display/error.display.component";
+import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 
 class NoListensErrorConditionalDisplay<
   ReportType,
@@ -15,7 +15,7 @@ class NoListensErrorConditionalDisplay<
     return (
       <ErrorDisplayContainer
         errorKey={"userWithNoListens"}
-        resetError={() =>
+        handleClick={() =>
           this.props.router.push(this.props.report.getRetryRoute())
         }
       />

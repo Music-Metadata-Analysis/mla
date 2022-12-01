@@ -34,7 +34,12 @@ describe("pageProps", () => {
 
   const mockCookieContent = "mockCookieValue";
   const mockLocale = "en";
-  const mockDefaultTranslations = ["authentication", "main", "navbar"];
+  const mockDefaultTranslations = [
+    "authentication",
+    "errors",
+    "main",
+    "navbar",
+  ];
   const mockTranslations = ["one", "two"];
   const mockPageKey = "test";
 

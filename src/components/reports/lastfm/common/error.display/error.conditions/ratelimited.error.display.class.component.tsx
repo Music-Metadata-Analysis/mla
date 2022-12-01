@@ -1,5 +1,5 @@
 import ErrorConditionBase from "./bases/error.condition.base.class.component";
-import ErrorDisplayContainer from "@src/components/errors/display/error.display.component";
+import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 
 class RateLimitedErrorConditionalDisplay<
   ReportType,
@@ -11,7 +11,7 @@ class RateLimitedErrorConditionalDisplay<
     return (
       <ErrorDisplayContainer
         errorKey={"lastfmRatelimited"}
-        resetError={() => this.props.router.reload()}
+        handleClick={() => this.props.router.reload()}
       />
     );
   }

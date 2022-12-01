@@ -1,5 +1,5 @@
 import { useState, useEffect, FC } from "react";
-import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import settings from "@src/config/lastfm";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
@@ -41,12 +41,12 @@ export default function LastFMReportPage<T extends userHookAsLastFM>({
   }
 
   return (
-    <ErrorBoundary
+    <ErrorBoundaryContainer
       eventDefinition={Events.General.Error}
       route={routes.home}
       stateReset={reportHook.clear}
     >
       <ReportContainer userName={userName} lastfm={reportHook} />
-    </ErrorBoundary>
+    </ErrorBoundaryContainer>
   );
 }

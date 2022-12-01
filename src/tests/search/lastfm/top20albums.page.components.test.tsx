@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import lastfmTranslations from "@locales/lastfm.json";
-import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import SearchContainer from "@src/components/search/lastfm/search.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
@@ -14,7 +14,7 @@ jest.mock("@src/hooks/locale");
 
 jest.mock("@src/utils/page.props.server.side");
 
-jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
+jest.mock("@src/components/errors/boundary/error.boundary.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
@@ -47,9 +47,9 @@ describe("SearchTopAlbums", () => {
     beforeEach(() => arrange());
 
     it("should render the ErrorBoundary component with the correct props", () => {
-      expect(ErrorBoundary).toBeCalledTimes(1);
+      expect(ErrorBoundaryContainer).toBeCalledTimes(1);
       mockCheckCall(
-        ErrorBoundary,
+        ErrorBoundaryContainer,
         {
           route: routes.home,
           eventDefinition: Events.General.Error,

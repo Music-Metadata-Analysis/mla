@@ -1,4 +1,4 @@
-import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import TermsOfServiceContainer from "@src/components/legal/terms/terms.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
@@ -7,13 +7,13 @@ import { voidFn } from "@src/utils/voids";
 
 export default function TermsOfServicePage() {
   return (
-    <ErrorBoundary
+    <ErrorBoundaryContainer
       eventDefinition={Events.General.Error}
       route={routes.home}
       stateReset={voidFn}
     >
       <TermsOfServiceContainer />
-    </ErrorBoundary>
+    </ErrorBoundaryContainer>
   );
 }
 
