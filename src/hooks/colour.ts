@@ -35,6 +35,9 @@ const useColour = () => {
       foreground: chooseColour("gray.700", "gray.300"),
       scheme: "gray",
     },
+    errorColour: {
+      icon: chooseColour("yellow.800", "yellow.200"),
+    },
     feedbackColour: {
       background: chooseColour("blue.300", "blue.300"),
       border: chooseColour("gray.900", "gray.900"),

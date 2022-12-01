@@ -53,6 +53,7 @@ jobs:
           source .github/scripts/architecture-path.sh "src/components/condition"
           source .github/scripts/architecture-path.sh "src/components/consent"
           source .github/scripts/architecture-path.sh "src/components/dialogues"
+          source .github/scripts/architecture-path.sh "src/components/errors"
           source .github/scripts/architecture-path.sh "src/components/flip.card"
           source .github/scripts/architecture-path.sh "src/components/header"
           source .github/scripts/architecture-path.sh "src/components/highlight"

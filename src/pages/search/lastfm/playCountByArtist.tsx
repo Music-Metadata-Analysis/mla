@@ -1,4 +1,4 @@
-import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
+import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import SearchContainer from "@src/components/search/lastfm/search.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
@@ -10,7 +10,7 @@ export default function SearchLastFMTop20Albums() {
   const { t } = useLocale("lastfm");
 
   return (
-    <ErrorBoundary
+    <ErrorBoundaryContainer
       eventDefinition={Events.General.Error}
       route={routes.home}
       stateReset={voidFn}
@@ -19,7 +19,7 @@ export default function SearchLastFMTop20Albums() {
         titleText={t("playCountByArtist.searchTitle")}
         route={routes.reports.lastfm.playCountByArtist}
       />
-    </ErrorBoundary>
+    </ErrorBoundaryContainer>
   );
 }
 

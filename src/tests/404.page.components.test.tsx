@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
-import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import ErrorDisplay from "@src/components/errors/display/error.display.component";
+import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
+import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import Page, { getStaticProps } from "@src/pages/404";
@@ -15,12 +15,12 @@ jest.mock("@src/utils/page.props.static");
 
 jest.mock("@src/clients/web.framework/vendor");
 
-jest.mock("@src/components/errors/boundary/error.boundary.component", () =>
+jest.mock("@src/components/errors/boundary/error.boundary.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
-jest.mock("@src/components/errors/display/error.display.component", () =>
-  require("@fixtures/react/parent").createComponent("ErrorDisplay")
+jest.mock("@src/components/errors/display/error.display.container", () =>
+  require("@fixtures/react/parent").createComponent("ErrorDisplayContainer")
 );
 
 describe("getStaticProps", () => {
@@ -49,11 +49,11 @@ describe("404", () => {
     });
 
     it("should NOT call the ErrorBoundary component", () => {
-      expect(ErrorBoundary).toBeCalledTimes(0);
+      expect(ErrorBoundaryContainer).toBeCalledTimes(0);
     });
 
     it("should NOT call the ErrorDisplay component", () => {
-      expect(ErrorDisplay).toBeCalledTimes(0);
+      expect(ErrorDisplayContainer).toBeCalledTimes(0);
     });
   });
 
@@ -65,9 +65,9 @@ describe("404", () => {
     });
 
     it("should call the ErrorBoundary correctly", () => {
-      expect(ErrorBoundary).toBeCalledTimes(1);
+      expect(ErrorBoundaryContainer).toBeCalledTimes(1);
       mockCheckCall(
-        ErrorBoundary,
+        ErrorBoundaryContainer,
         {
           route: routes.home,
           eventDefinition: Events.General.Error,
@@ -78,8 +78,10 @@ describe("404", () => {
     });
 
     it("should call the ErrorDisplay correctly", () => {
-      expect(ErrorDisplay).toBeCalledTimes(1);
-      mockCheckCall(ErrorDisplay, { errorKey: "404" }, 0, ["resetError"]);
+      expect(ErrorDisplayContainer).toBeCalledTimes(1);
+      mockCheckCall(ErrorDisplayContainer, { errorKey: "404" }, 0, [
+        "handleClick",
+      ]);
     });
   });
 });

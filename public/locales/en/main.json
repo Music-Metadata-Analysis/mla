@@ -9,37 +9,6 @@
     "message1": "This website uses third party cookies to collect usage data so that we can improve the service.  These cookies are stored in your browser as an identity tag, and are sent to the server with each request.",
     "message2": "Are you comfortable allowing us to do this?"
   },
-  "errors": {
-    "404": {
-      "title": "Whoops!",
-      "message": "These are not the droids you're looking for...",
-      "resetButton": "Try Again!"
-    },
-    "generic": {
-      "title": "An error has occurred!",
-      "resetButton": "Try Again!"
-    },
-    "lastfmCommunications": {
-      "title": "Something went horribly wrong!",
-      "message": "We couldn't get your request through to last.fm!",
-      "resetButton": "Give it Another Shot!"
-    },
-    "lastfmRatelimited": {
-      "title": "Eeek! A 409 Error!",
-      "message": "Can you wait a second, and retry that search?",
-      "resetButton": "Retry my Search"
-    },
-    "userWithNoListens": {
-      "title": "Not much of a music fan.",
-      "message": "This user hasn't listened to anything...",
-      "resetButton": "Try someone else!"
-    },
-    "userNotFound": {
-      "title": "Is that your REAL name?",
-      "message": "This user does not appear to exist...",
-      "resetButton": "Try someone else!"
-    }
-  },
   "popups": {
     "FeedBack": "How can we make this app better?  Click the eye and let us know!"
   },

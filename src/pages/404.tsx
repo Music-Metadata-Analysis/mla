@@ -1,7 +1,7 @@
 import webFrameworkVendor from "@src/clients/web.framework/vendor";
 import Condition from "@src/components/condition/condition.component";
-import ErrorBoundary from "@src/components/errors/boundary/error.boundary.component";
-import ErrorDisplay from "@src/components/errors/display/error.display.component";
+import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
+import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import useRouter from "@src/hooks/router";
@@ -17,13 +17,13 @@ export default function Custom404() {
 
   return (
     <Condition isTrue={!webFrameworkVendor.isBuildTime()}>
-      <ErrorBoundary
+      <ErrorBoundaryContainer
         eventDefinition={Events.General.Error}
         route={routes.home}
         stateReset={voidFn}
       >
-        <ErrorDisplay errorKey={"404"} resetError={goHome} />
-      </ErrorBoundary>
+        <ErrorDisplayContainer errorKey={"404"} handleClick={goHome} />
+      </ErrorBoundaryContainer>
     </Condition>
   );
 }

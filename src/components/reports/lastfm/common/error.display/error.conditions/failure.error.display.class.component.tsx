@@ -1,5 +1,5 @@
 import ErrorConditionBase from "./bases/error.condition.base.class.component";
-import ErrorDisplayContainer from "@src/components/errors/display/error.display.component";
+import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 
 class FetchErrorConditionalDisplay<
   ReportType,
@@ -11,7 +11,7 @@ class FetchErrorConditionalDisplay<
     return (
       <ErrorDisplayContainer
         errorKey={"lastfmCommunications"}
-        resetError={() =>
+        handleClick={() =>
           this.props.router.push(this.props.report.getRetryRoute())
         }
       />
