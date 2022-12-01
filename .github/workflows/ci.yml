@@ -61,6 +61,7 @@ jobs:
           source .github/scripts/architecture-path.sh "src/components/navbar"
           source .github/scripts/architecture-path.sh "src/components/popups"
           source .github/scripts/architecture-path.sh "src/components/reports"
+          source .github/scripts/architecture-path.sh "src/components/scrollbars"
           source .github/scripts/architecture-path.sh "src/components/search"
           source .github/scripts/architecture-path.sh "src/components/splash"
 

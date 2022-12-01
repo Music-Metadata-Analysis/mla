@@ -2,7 +2,7 @@ import { Box, Flex, Avatar } from "@chakra-ui/react";
 import Option from "./option/report.option.component";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
-import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
+import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import settings from "@src/config/navbar";
 import type { ReportOptionProps } from "./option/report.option.component";
 import type { MutableRefObject } from "react";
@@ -36,7 +36,7 @@ export default function ReportSelect({
               width={[50, 50, 75]}
             />
           </Box>
-          <VerticalScrollBar
+          <VerticalScrollBarContainer
             horizontalOffset={0}
             scrollRef={scrollRef}
             update={scrollRef.current}

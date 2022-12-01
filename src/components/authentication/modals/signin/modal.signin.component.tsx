@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import SignInButtons from "@src/components/authentication/buttons/signin.buttons.component";
 import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
-import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
+import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import routes from "@src/config/routes";
 import useColours from "@src/hooks/colour";
 import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
@@ -88,7 +88,7 @@ export default function AuthenticationSignInModal({
                 ref={scrollRef}
                 id={ids.SignInProvidersScrollArea}
               >
-                <VerticalScrollBar
+                <VerticalScrollBarContainer
                   scrollRef={scrollRef}
                   update={null}
                   horizontalOffset={10}

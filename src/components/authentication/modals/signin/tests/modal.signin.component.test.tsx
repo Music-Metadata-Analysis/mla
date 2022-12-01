@@ -20,7 +20,7 @@ import AuthenticationSignInComponent, {
 } from "../modal.signin.component";
 import SignInButtons from "@src/components/authentication/buttons/signin.buttons.component";
 import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
-import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
+import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import routes from "@src/config/routes";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
@@ -51,8 +51,12 @@ jest.mock(
   () => require("@fixtures/react/child").createComponent("SignInButtons")
 );
 
-jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react/child").createComponent("VerticalScrollBar")
+jest.mock(
+  "@src/components/scrollbars/vertical/vertical.scrollbar.container",
+  () =>
+    require("@fixtures/react/child").createComponent(
+      "VerticalScrollBarContainer"
+    )
 );
 
 jest.mock(
@@ -233,8 +237,8 @@ describe("AuthenticationModal", () => {
 
   const checkVerticalScrollBarComponentRender = () => {
     it("should call the VerticalScrollBar component correctly", () => {
-      expect(VerticalScrollBar).toBeCalledTimes(1);
-      const call = jest.mocked(VerticalScrollBar).mock.calls[0][0];
+      expect(VerticalScrollBarContainer).toBeCalledTimes(1);
+      const call = jest.mocked(VerticalScrollBarContainer).mock.calls[0][0];
       expect(call.scrollRef).toBeDefined();
       expect(call.update).toBe(null);
       expect(call.horizontalOffset).toBe(10);
