@@ -14,8 +14,12 @@ jest.mock("../navbar.session.control.component", () =>
   require("@fixtures/react/child").createComponent("NavBarSessionControl")
 );
 
-jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react/child").createComponent("VerticalScrollBar")
+jest.mock(
+  "@src/components/scrollbars/vertical/vertical.scrollbar.container",
+  () =>
+    require("@fixtures/react/child").createComponent(
+      "VerticalScrollBarContainer"
+    )
 );
 
 describe("NavBarSessionControlContainer", () => {

@@ -8,7 +8,7 @@ import SunBurstEntityNodeList, {
 import SunBurstNodeButton from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.button/node.button.component";
 import SunBurstNodeDisplay from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.display/node.display.component";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
-import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
+import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
@@ -16,8 +16,12 @@ jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Flex", "Text"])
 );
 
-jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react/parent").createComponent("VerticalScrollBar")
+jest.mock(
+  "@src/components/scrollbars/vertical/vertical.scrollbar.container",
+  () =>
+    require("@fixtures/react/parent").createComponent(
+      "VerticalScrollBarContainer"
+    )
 );
 
 jest.mock(
@@ -157,9 +161,9 @@ describe("SunBurstEntityNodeList", () => {
 
   const checkScrollBarProps = () => {
     it("should render the VerticalScrollBar component with the expected", () => {
-      expect(VerticalScrollBar).toBeCalledTimes(1);
+      expect(VerticalScrollBarContainer).toBeCalledTimes(1);
       checkMockCall(
-        VerticalScrollBar,
+        VerticalScrollBarContainer,
         {
           scrollRef: currentProps.scrollRef,
           update: currentProps.node,

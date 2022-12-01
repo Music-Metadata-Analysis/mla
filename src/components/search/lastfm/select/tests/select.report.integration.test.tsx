@@ -12,8 +12,12 @@ jest.mock("@src/hooks/locale");
 
 jest.mock("@src/hooks/router");
 
-jest.mock("@src/components/scrollbar/vertical.scrollbar.component", () =>
-  require("@fixtures/react/child").createComponent("VerticalScrollBar")
+jest.mock(
+  "@src/components/scrollbars/vertical/vertical.scrollbar.container",
+  () =>
+    require("@fixtures/react/child").createComponent(
+      "VerticalScrollBarContainer"
+    )
 );
 
 type translationKeyType = keyof typeof translations["select"][

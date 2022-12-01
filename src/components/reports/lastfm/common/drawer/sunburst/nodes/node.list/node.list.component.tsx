@@ -1,5 +1,5 @@
 import { Text, Flex } from "@chakra-ui/react";
-import VerticalScrollBar from "@src/components/scrollbar/vertical.scrollbar.component";
+import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type { SunBurstDrawerNodeComponentProps } from "@src/types/clients/api/lastfm/sunburst.types";
 import type { FC, RefObject } from "react";
@@ -44,7 +44,7 @@ export default function SunBurstEntityNodeList({
         ref={scrollRef}
         className={"scrollbar"}
       >
-        <VerticalScrollBar
+        <VerticalScrollBarContainer
           scrollRef={scrollRef}
           update={node}
           horizontalOffset={10}
