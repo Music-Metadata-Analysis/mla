@@ -5,7 +5,7 @@ import { renderToString } from "react-dom/server";
 import FeedbackPopUp, { testIDs } from "../feedback.popup.component";
 import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
 import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
-import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
+import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import externalRoutes from "@src/config/external";
 import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
@@ -32,7 +32,7 @@ jest.mock(
   () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 
-jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
+jest.mock("@src/components/styles/hover.dim/hover.dim.style", () =>
   require("@fixtures/react/parent").createComponent("DimOnHover")
 );
 

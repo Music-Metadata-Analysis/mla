@@ -43,29 +43,6 @@ jobs:
         run: |
           source .github/scripts/architecture.sh
 
-      - name: Architecture Enforcement -- Run Path Enforcement Script
-        run: |
-          source .github/scripts/architecture-path.sh "src/components/about"
-          source .github/scripts/architecture-path.sh "src/components/analytics"
-          source .github/scripts/architecture-path.sh "src/components/authentication"
-          source .github/scripts/architecture-path.sh "src/components/button"
-          source .github/scripts/architecture-path.sh "src/components/clickable"
-          source .github/scripts/architecture-path.sh "src/components/condition"
-          source .github/scripts/architecture-path.sh "src/components/consent"
-          source .github/scripts/architecture-path.sh "src/components/dialogues"
-          source .github/scripts/architecture-path.sh "src/components/errors"
-          source .github/scripts/architecture-path.sh "src/components/flip.card"
-          source .github/scripts/architecture-path.sh "src/components/header"
-          source .github/scripts/architecture-path.sh "src/components/highlight"
-          source .github/scripts/architecture-path.sh "src/components/icons"
-          source .github/scripts/architecture-path.sh "src/components/legal"
-          source .github/scripts/architecture-path.sh "src/components/navbar"
-          source .github/scripts/architecture-path.sh "src/components/popups"
-          source .github/scripts/architecture-path.sh "src/components/reports"
-          source .github/scripts/architecture-path.sh "src/components/scrollbars"
-          source .github/scripts/architecture-path.sh "src/components/search"
-          source .github/scripts/architecture-path.sh "src/components/splash"
-
       - name: Architecture Enforcement -- Report Job Status
         if: ${{ failure() }}
         run: |

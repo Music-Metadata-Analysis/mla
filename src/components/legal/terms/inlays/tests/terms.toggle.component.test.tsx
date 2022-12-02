@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import TermsOfServiceToggle from "../terms.toggle.component";
 import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
 import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
-import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
+import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
@@ -25,7 +25,7 @@ jest.mock(
   () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 
-jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
+jest.mock("@src/components/styles/hover.dim/hover.dim.style", () =>
   require("@fixtures/react/parent").createComponent("DimOnHover")
 );
 

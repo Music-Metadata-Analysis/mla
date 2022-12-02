@@ -2,7 +2,7 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
 import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
-import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
+import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import externalLinks from "@src/config/external";
 import useColour from "@src/hooks/colour";
 import type { PopUpComponentProps } from "@src/types/controllers/popups/component.popups.types";
