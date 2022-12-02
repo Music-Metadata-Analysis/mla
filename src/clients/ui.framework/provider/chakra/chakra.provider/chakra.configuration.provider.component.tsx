@@ -1,8 +1,8 @@
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
-import createColourModeManager from "./chakra.colour.mode.manager";
-import createTheme from "./chakra.theme";
+import createColourModeManager from "./utilities/chakra.colour.mode.manager.utility";
+import createTheme from "./utilities/chakra.theme.utility";
 
-const UserInterfaceChakraProvider = ({
+const ChakraConfigurationProvider = ({
   children,
   cookies,
 }: {
@@ -25,4 +25,4 @@ const UserInterfaceChakraProvider = ({
   );
 };
 
-export default UserInterfaceChakraProvider;
+export default ChakraConfigurationProvider;

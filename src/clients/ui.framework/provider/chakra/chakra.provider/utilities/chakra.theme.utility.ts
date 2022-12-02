@@ -1,4 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
+import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
 
 export const components = {
   Drawer: {
@@ -16,11 +17,11 @@ export const components = {
   },
 };
 
-const createTheme = () =>
+const createChakraTheme = () =>
   extendTheme({
     config: {
-      initialColorMode: "dark",
-      useSystemColorMode: false,
+      initialColorMode: uiFrameworkVendor.config.initialColourMode,
+      useSystemColorMode: uiFrameworkVendor.config.useSystemColourMode,
     },
     styles: {
       global: {
@@ -33,4 +34,4 @@ const createTheme = () =>
     components,
   });
 
-export default createTheme;
+export default createChakraTheme;

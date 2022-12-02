@@ -1,11 +1,11 @@
 import { extendTheme } from "@chakra-ui/react";
-import createTheme, { components } from "../chakra.theme";
+import createChakraTheme, { components } from "../chakra.theme.utility";
 
 jest.mock("@chakra-ui/react", () => ({
   extendTheme: jest.fn((props) => props),
 }));
 
-describe("theme", () => {
+describe("createChakraTheme", () => {
   let result: Record<string, string>;
 
   beforeEach(() => {
@@ -13,7 +13,7 @@ describe("theme", () => {
   });
 
   const arrange = () => {
-    result = createTheme();
+    result = createChakraTheme();
   };
 
   describe("when called", () => {

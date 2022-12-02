@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import SplashBody from "../splash.body.component";
 import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
-import DimOnHover from "@src/components/styles/hover.dim/hover.dim.styles";
+import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import dialogueSettings from "@src/config/dialogue";
 import lastFMConfig from "@src/config/lastfm";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
@@ -32,7 +32,7 @@ jest.mock(
   () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 
-jest.mock("@src/components/styles/hover.dim/hover.dim.styles", () =>
+jest.mock("@src/components/styles/hover.dim/hover.dim.style", () =>
   require("@fixtures/react/parent").createComponent("DimOnHover")
 );
 

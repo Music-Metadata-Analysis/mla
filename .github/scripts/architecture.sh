@@ -24,12 +24,15 @@ main() {
   ! grep -E -r "@aws-sdk/client-s3" src | grep -E -v "src/backend/integrations/persistance" || false
 
   # Enforce UI Framework Isolation
-  # In Progress...
-  #! grep -E -r "@chakra-ui" src | grep -E -v "component.ts|component.test.ts|src/clients/ui.framework" || false
+  ! grep -E -r "@chakra-ui" src | grep -E -v "src/clients/ui\.framework|src/tests/fixtures/|src/pages/_document\.tsx|src/tests/_document.*\.test\.tsx" | grep -E -v "component\.ts|component\.test\.ts|integration\.test\.ts|style\.ts|style\.test\.ts" || false
 
   # Enforce Web Framework Isolation
   ! grep -E -r "next/" src | grep -E -v "next-i18next" | grep -E -v "src/clients/web.framework|src/tests/_app.page.components.test.tsx|src/tests/_document.page.components.test.tsx|_document.tsx|_app.tsx" || false
 
+
+
+  # Enforce Separation of Business Logic (No hook usage inside component level files.)
+  ! grep -E -r "= use" src/components  | grep -E "component\.ts" | grep -E -v useColour || false
 
 }
 
