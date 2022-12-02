@@ -2,10 +2,10 @@ import { waitFor, screen, render } from "@testing-library/react";
 import ControllersRootProvider from "../controllers/controllers.root.provider";
 import MetricsProvider from "../metrics/metrics.provider";
 import RootProvider from "../root.provider";
-import UserInterfaceRootProvider from "../ui/ui.root.provider";
 import UserProvider from "../user/user.provider";
 import authVendor from "@src/clients/auth/vendor";
 import flagVendor from "@src/clients/flags/vendor";
+import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
 import HeaderContainer from "@src/components/header/header.container";
 import AnalyticsProvider from "@src/providers/analytics/analytics.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
@@ -15,6 +15,8 @@ import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 jest.mock("@src/clients/auth/vendor");
 
 jest.mock("@src/clients/flags/vendor");
+
+jest.mock("@src/clients/ui.framework/vendor");
 
 jest.mock("@src/components/header/header.container", () =>
   require("@fixtures/react/parent").createComponent("HeaderContainer")
@@ -36,10 +38,6 @@ jest.mock("@src/providers/user/user.provider", () =>
   require("@fixtures/react/parent").createComponent("UserProvider")
 );
 
-jest.mock("../ui/ui.root.provider", () =>
-  require("@fixtures/react/parent").createComponent("UserInterfaceRootProvider")
-);
-
 const providers = {
   AnalyticsProvider: "AnalyticsProvider",
   AuthVendorProvider: "AuthVendorProvider",
@@ -48,8 +46,8 @@ const providers = {
   HeaderContainer: "HeaderContainer",
   MetricsProvider: "MetricsProvider",
   RootProvider: "RootProvider",
+  UserInterfaceVendorProvider: "UserInterfaceVendorProvider",
   UserProvider: "UserProvider",
-  UserInterfaceRootProvider: "UserInterfaceRootProvider",
 };
 
 describe("RootProvider", () => {
@@ -160,9 +158,12 @@ describe("RootProvider", () => {
       expect(await screen.findByTestId(providers.UserProvider)).toBeTruthy;
     });
 
-    it("should initialize the UserInterfaceProvider", async () => {
-      await waitFor(() => expect(UserInterfaceRootProvider).toBeCalledTimes(1));
-      expect(await screen.findByTestId(providers.UserInterfaceRootProvider))
+    it("should initialize the UserInterfaceVendorProvider", async () => {
+      await waitFor(() =>
+        expect(uiFrameworkVendor.Provider).toBeCalledTimes(1)
+      );
+      checkMockCall(uiFrameworkVendor.Provider, { cookies: mockCookies });
+      expect(await screen.findByTestId(providers.UserInterfaceVendorProvider))
         .toBeTruthy;
     });
 

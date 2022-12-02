@@ -1,24 +1,22 @@
 import { Box } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import DimOnHover from "../hover.dim.styles";
+import DimOnHover from "../hover.dim.style";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Box"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Box"])
+);
 
 describe("DimOnHover", () => {
-  const mockChildComponent = "mockChildComponent";
+  const MockChildComponent = "MockChildComponent";
   let element: Element;
 
   beforeEach(async () => {
     arrange();
-    element = await screen.findByText(mockChildComponent);
   });
 
   const arrange = () => {
-    render(<DimOnHover>{mockChildComponent}</DimOnHover>);
+    render(<DimOnHover>{MockChildComponent}</DimOnHover>);
   };
 
   it("should call Box with the correct props", () => {
@@ -27,6 +25,7 @@ describe("DimOnHover", () => {
   });
 
   it("should match the expected styles", async () => {
+    element = await screen.findByText(MockChildComponent);
     expect(element).toHaveStyleRule("filter", "opacity(50%)", {
       target: "hover",
     });

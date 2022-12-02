@@ -1,5 +1,5 @@
 import { localStorageManager } from "@chakra-ui/react";
-import createColourModeManager from "../chakra.colour.mode.manager";
+import createColourModeManager from "../chakra.colour.mode.manager.utility";
 
 jest.mock("@chakra-ui/react", () => ({
   cookieStorageManager: jest.fn(() => mockCookieStorageManager),

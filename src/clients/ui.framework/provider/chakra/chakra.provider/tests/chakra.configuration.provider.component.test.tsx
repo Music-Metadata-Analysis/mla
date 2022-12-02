@@ -1,7 +1,8 @@
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import UserInterfaceProvider from "../chakra.provider";
-import createTheme from "../chakra.theme";
+import ChakraConfigurationProvider from "../chakra.configuration.provider.component";
+import createColourModeManager from "../utilities/chakra.colour.mode.manager.utility";
+import createChakraTheme from "../utilities/chakra.theme.utility";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
@@ -20,39 +21,41 @@ jest.mock("@chakra-ui/react", () => {
   return mockedModule;
 });
 
-jest.mock("../chakra.colour.mode.manager", () =>
-  jest.fn(() => mockColourModeManager)
-);
+jest.mock("../utilities/chakra.colour.mode.manager.utility");
 
-jest.mock("../chakra.theme", () => {
+jest.mock("../utilities/chakra.theme.utility", () => {
   const chakra = jest.requireActual("@chakra-ui/react");
   return jest.fn(() => chakra.extendTheme({}));
 });
 
-const mockColourModeManager = {
-  get: jest.fn(),
-  set: jest.fn(),
-};
-
-describe("UserInterfaceChakraProvider", () => {
+describe("ChakraConfigurationProvider", () => {
   let cookies: { [key: string]: string } | string;
+
+  const mockColourModeManager = {
+    get: jest.fn(),
+    set: jest.fn(),
+    type: "cookie" as const,
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest
+      .mocked(createColourModeManager)
+      .mockImplementation(() => mockColourModeManager);
   });
 
   const arrange = async () => {
     render(
-      <UserInterfaceProvider cookies={cookies}>
+      <ChakraConfigurationProvider cookies={cookies}>
         <div data-testid={"UserInterfaceProvider"}>Test</div>
-      </UserInterfaceProvider>
+      </ChakraConfigurationProvider>
     );
   };
 
   const checkCreateTheme = () => {
     it("should call createTheme", () => {
-      expect(createTheme).toBeCalledTimes(1);
-      expect(createTheme).toBeCalledWith();
+      expect(createChakraTheme).toBeCalledTimes(1);
+      expect(createChakraTheme).toBeCalledWith();
     });
   };
 
@@ -77,7 +80,7 @@ describe("UserInterfaceChakraProvider", () => {
       expect(ChakraProvider).toBeCalledTimes(1);
       checkMockCall(ChakraProvider, {
         colorModeManager: mockColourModeManager,
-        theme: createTheme(),
+        theme: createChakraTheme(),
       });
     });
   });
@@ -96,7 +99,7 @@ describe("UserInterfaceChakraProvider", () => {
       expect(ChakraProvider).toBeCalledTimes(1);
       checkMockCall(ChakraProvider, {
         colorModeManager: mockColourModeManager,
-        theme: createTheme(),
+        theme: createChakraTheme(),
       });
     });
   });

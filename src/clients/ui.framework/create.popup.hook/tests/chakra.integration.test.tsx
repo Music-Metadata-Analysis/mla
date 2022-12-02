@@ -10,9 +10,9 @@ import MockPopUpComponent, {
   testColours,
 } from "./implementations/concrete.popup.component";
 import useChakraPopUp from "../chakra";
+import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
 import usePopUpsController from "@src/hooks/controllers/popups.controller.hook";
 import PopUpsControllerProvider from "@src/providers/controllers/popups/popups.provider";
-import UserInterfaceRootProvider from "@src/providers/ui/ui.root.provider";
 
 describe("useChakraPopUp", () => {
   const mockDataId = "mockDataId";
@@ -37,11 +37,11 @@ describe("useChakraPopUp", () => {
 
   const arrange = () => {
     render(
-      <UserInterfaceRootProvider cookies={""}>
+      <uiFrameworkVendor.Provider cookies={""}>
         <PopUpsControllerProvider>
           <PopUpHarness />
         </PopUpsControllerProvider>
-      </UserInterfaceRootProvider>
+      </uiFrameworkVendor.Provider>
     );
   };
 

@@ -1,24 +1,16 @@
 import { Box } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import BackGround from "../background.component";
+import ChakraMainBackGround from "../background.component";
+import mockVendorColourHook from "@src/clients/ui.framework/__mocks__/vendor.colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/colour", () => {
-  return () => ({
-    bodyColour: {
-      background: MockColor,
-    },
-  });
-});
+jest.mock("@src/clients/ui.framework/vendor");
 
-jest.mock("@chakra-ui/react", () => {
-  const { createChakraMock } = require("@fixtures/chakra");
-  return createChakraMock(["Box"]);
-});
+jest.mock("@chakra-ui/react", () =>
+  require("@fixtures/chakra").createChakraMock(["Box"])
+);
 
-const MockColor = "MockColor";
-
-describe("Background", () => {
+describe("ChakraMainBackGround", () => {
   const mockChildComponent = "MockChildComponent";
 
   beforeEach(() => {
@@ -27,9 +19,9 @@ describe("Background", () => {
 
   const arrange = () => {
     return render(
-      <BackGround>
+      <ChakraMainBackGround>
         <div>{mockChildComponent}</div>
-      </BackGround>
+      </ChakraMainBackGround>
     );
   };
 
@@ -39,7 +31,7 @@ describe("Background", () => {
     it("should call Box with the correct props", () => {
       expect(Box).toBeCalledTimes(1);
       checkMockCall(Box, {
-        bg: MockColor,
+        bg: mockVendorColourHook.bodyColour.background,
         minHeight: "100vh",
         minWidth: "100%",
       });
