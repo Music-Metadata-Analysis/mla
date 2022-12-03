@@ -25,3 +25,5 @@ export const authenticated = () => ({
     })
   ),
 });
+
+export const mockAuthConfig = { maxAge: 1000 };

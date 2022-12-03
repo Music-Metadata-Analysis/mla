@@ -3,8 +3,8 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
+import nextAuthConfiguration from "@src/backend/integrations/auth/config/next-auth";
 import flagVendor from "@src/backend/integrations/flags/vendor";
-import settings from "@src/config/auth";
 import type { ProfilePersistanceClientConstructorType } from "@src/types/integrations/auth/vendor.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -41,7 +41,7 @@ const createRoutes = (
         secret: process.env.AUTH_MASTER_JWT_SECRET,
       },
       session: {
-        maxAge: settings.maxAge,
+        maxAge: nextAuthConfiguration.maxAge,
         strategy: "jwt",
       },
       providers: [
