@@ -6,7 +6,7 @@ import ReportSelectContainer from "../select.report.container";
 import translations from "@locales/lastfm.json";
 import { mockUseRouter } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import config from "@src/config/lastfm";
-import mockUseFlags from "@src/hooks/__mocks__/flags.mock";
+import mockUseFlags from "@src/hooks/__mocks__/flags.hook.mock";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
 import mockUseWindowThreshold from "@src/hooks/ui/__mocks__/window.threshold.hook.mock";
 import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
@@ -17,7 +17,7 @@ jest.mock("react", () => ({
   useRef: jest.fn(),
 }));
 
-jest.mock("@src/hooks/flags");
+jest.mock("@src/hooks/flags.hook");
 
 jest.mock("@src/hooks/locale");
 

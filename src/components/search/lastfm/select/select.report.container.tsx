@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import ReportSelect from "./select.report.component";
 import config from "@src/config/lastfm";
-import useFlags from "@src/hooks/flags";
+import useFlags from "@src/hooks/flags.hook";
 import useLocale from "@src/hooks/locale";
 import useRouter from "@src/hooks/router";
 import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
