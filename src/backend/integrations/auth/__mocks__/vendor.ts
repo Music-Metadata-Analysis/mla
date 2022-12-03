@@ -1,9 +1,10 @@
-import { mockAuthClient } from "./vendor.mock";
+import { mockAuthClient, mockAuthConfig } from "./vendor.mock";
 import type { AuthVendor } from "@src/types/integrations/auth/vendor.types";
 
 const authVendor: AuthVendor = {
-  Client: jest.fn(() => mockAuthClient),
+  config: mockAuthConfig,
   ApiRoutes: jest.fn(),
+  Client: jest.fn(() => mockAuthClient),
 };
 
 export default authVendor;

@@ -1,4 +1,7 @@
-import type { VendorProfileType } from "@src/backend/integrations/auth/vendor.types";
+import type {
+  VendorConfigType,
+  VendorProfileType,
+} from "@src/backend/integrations/auth/vendor.types";
 
 export type AuthVendorSessionType = {
   email: string | null;
@@ -20,6 +23,7 @@ export interface ProfilePersistanceClientInterface {
 }
 
 export interface AuthVendor {
+  config: VendorConfigType;
   Client: new (...args: unknown[]) => AuthVendorClientInterface;
   ApiRoutes: (...args: unknown[]) => unknown;
 }

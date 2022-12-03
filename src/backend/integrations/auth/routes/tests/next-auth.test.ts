@@ -4,9 +4,9 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
 import createRoutes, { getGroup } from "../next-auth";
+import nextAuthConfiguration from "@src/backend/integrations/auth/config/next-auth";
 import { mockFlagGroup } from "@src/backend/integrations/flags/__mocks__/vendor.mock";
 import flagVendor from "@src/backend/integrations/flags/vendor";
-import settings from "@src/config/auth";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type {
   MockAPIRequest,
@@ -168,7 +168,7 @@ describe("NextAuthRoutes", () => {
     it("should initialize the Session", async () => {
       expect(NextAuth).toBeCalledTimes(1);
       const call = (NextAuth as jest.Mock).mock.calls[0][2];
-      expect(call.session.maxAge).toBe(settings.maxAge);
+      expect(call.session.maxAge).toBe(nextAuthConfiguration.maxAge);
       expect(call.session.strategy).toBe("jwt");
     });
 
