@@ -3,10 +3,10 @@ import { render, screen, within } from "@testing-library/react";
 import CookieConsent from "react-cookie-consent";
 import Consent, { ConsentProps, testIDs } from "../consent.component";
 import { settings } from "@src/config/cookies";
-import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/colour");
+jest.mock("@src/hooks/ui/colour.hook");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Text"])

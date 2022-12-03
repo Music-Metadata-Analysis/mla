@@ -7,7 +7,7 @@ import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
 import useLocale from "@src/hooks/locale";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/colour");
+jest.mock("@src/hooks/ui/colour.hook");
 
 jest.mock("@src/hooks/locale");
 

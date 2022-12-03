@@ -2,7 +2,7 @@ import { Box, Divider, Flex, Img, Text } from "@chakra-ui/react";
 import StyledButtonLink from "@src/components/button/button.external.link/button.external.link.component";
 import ReportDrawer from "@src/components/reports/common/drawer/drawer.component";
 import settings from "@src/config/flip.card";
-import useColour from "@src/hooks/colour";
+import useColour from "@src/hooks/ui/colour.hook";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export interface FlipCardDrawerProps {

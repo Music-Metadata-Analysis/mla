@@ -1,10 +1,10 @@
 import { Input } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import StyledInput from "../input.component";
-import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/colour");
+jest.mock("@src/hooks/ui/colour.hook");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");

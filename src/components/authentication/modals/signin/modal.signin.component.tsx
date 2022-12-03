@@ -15,7 +15,7 @@ import SignInButtons from "@src/components/authentication/buttons/signin.buttons
 import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import routes from "@src/config/routes";
-import useColours from "@src/hooks/colour";
+import useColours from "@src/hooks/ui/colour.hook";
 import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { RefObject } from "react";

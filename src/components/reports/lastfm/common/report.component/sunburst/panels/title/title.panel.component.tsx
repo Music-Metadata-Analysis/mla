@@ -1,5 +1,5 @@
 import { Text, Box, Container } from "@chakra-ui/react";
-import useColour from "@src/hooks/colour";
+import useColour from "@src/hooks/ui/colour.hook";
 
 export const testIDs = {
   SunBurstTitlePanelTitle: "SunBurstTitlePanelTitle",

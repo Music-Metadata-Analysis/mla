@@ -7,10 +7,10 @@ import ClickLink from "@src/components/clickable/click.link.external/click.link.
 import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import externalRoutes from "@src/config/external";
-import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/colour");
+jest.mock("@src/hooks/ui/colour.hook");
 
 jest.mock("@src/hooks/locale");
 

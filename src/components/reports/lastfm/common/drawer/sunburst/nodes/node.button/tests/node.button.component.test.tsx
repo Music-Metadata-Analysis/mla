@@ -2,14 +2,14 @@ import { Flex, Text, Box, Container } from "@chakra-ui/react";
 import { render, screen, within, fireEvent } from "@testing-library/react";
 import SunBurstNodeButton, { testIDs } from "../node.button.component";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
-import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import RGBA from "@src/utils/colours/rgba.class";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type { SunBurstDrawerNodeComponentProps } from "@src/types/clients/api/lastfm/sunburst.types";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("@src/hooks/colour");
+jest.mock("@src/hooks/ui/colour.hook");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock([

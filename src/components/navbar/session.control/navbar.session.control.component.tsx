@@ -3,7 +3,7 @@ import { Box, Button } from "@chakra-ui/react";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import AnalyticsButtonWrapperContainer from "@src/components/analytics/analytics.button/analytics.button.container";
 import Authentication from "@src/components/authentication/authentication.container";
-import useColour from "@src/hooks/colour";
+import useColour from "@src/hooks/ui/colour.hook";
 import type { MouseEvent } from "react";
 
 export interface NavSessionControlProps {

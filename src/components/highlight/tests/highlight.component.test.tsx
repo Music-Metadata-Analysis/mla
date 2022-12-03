@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
 import Highlight from "../highlight.component";
-import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
@@ -9,7 +9,7 @@ jest.mock("@chakra-ui/react", () => {
   return createChakraMock(["Box"]);
 });
 
-jest.mock("@src/hooks/colour");
+jest.mock("@src/hooks/ui/colour.hook");
 
 describe("Highlight", () => {
   const mockChildComponent = "MockChildComponent";

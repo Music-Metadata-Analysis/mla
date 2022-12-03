@@ -1,7 +1,7 @@
 import { Text } from "@chakra-ui/react";
 import CookieConsent from "react-cookie-consent";
 import { settings } from "@src/config/cookies";
-import useColours from "@src/hooks/colour";
+import useColours from "@src/hooks/ui/colour.hook";
 
 export const testIDs = {
   consentDialogue: "consentDialogue",

@@ -6,7 +6,7 @@ import NavBarMobileMenu from "../mobile.menu/navbar.mobile.menu.component";
 import NavBarOptions from "../options/navbar.options.component";
 import NavBarSessionControlContainer from "../session.control/navbar.session.control.container";
 import NavBarSpinner from "../spinner/navbar.spinner.component";
-import useColour from "@src/hooks/colour";
+import useColour from "@src/hooks/ui/colour.hook";
 import type { NavBarControllerHookType } from "../controllers/navbar.layout.controller.hook";
 import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
