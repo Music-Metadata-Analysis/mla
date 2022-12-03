@@ -7,3 +7,5 @@ const useFlags = (): FlagVendorHookInterface => {
 };
 
 export default useFlags;
+
+export type FlagsHookType = ReturnType<typeof useFlags>;

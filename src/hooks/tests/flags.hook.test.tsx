@@ -1,25 +1,16 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockHookValues from "../__mocks__/flags.mock";
-import useFlags from "../flags";
+import mockHookValues from "../__mocks__/flags.hook.mock";
+import useFlags from "../flags.hook";
+import flagVendor from "@src/clients/flags/vendor";
 
 jest.mock("@src/clients/flags/vendor");
 
 describe("useFlags", () => {
-  let originalEnvironment: typeof process.env;
   let received: ReturnType<typeof arrange>;
-  const mockFlagName = "mockFlag";
-
-  beforeAll(() => {
-    originalEnvironment = process.env;
-  });
 
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  afterAll(() => {
-    process.env = originalEnvironment;
   });
 
   const arrange = () => {
@@ -31,34 +22,21 @@ describe("useFlags", () => {
       received = arrange();
     });
 
-    it("should contain all the same properties as the mock hook", () => {
+    it("should contain all the same properties as the mock colour hook", () => {
       const mockObjectKeys = dk(mockHookValues).sort();
       const hookKeys = dk(
-        received.result.current as typeof mockHookValues
+        received.result.current as unknown as Record<string, unknown>
       ).sort();
       expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
 
-    it("should contain the correct functions", () => {
-      expect(received.result.current.isEnabled).toBe(mockHookValues.isEnabled);
+    it("should call the underlying vendor hook during render", () => {
+      expect(flagVendor.hook).toBeCalledTimes(1);
+      expect(flagVendor.hook).toBeCalledWith();
     });
 
-    describe("isEnabled", () => {
-      let result: boolean;
-
-      beforeEach(() => {
-        jest.mocked(mockHookValues.isEnabled).mockReturnValueOnce(true);
-        result = received.result.current.isEnabled(mockFlagName);
-      });
-
-      it("should call the underlying vendor hook", () => {
-        expect(mockHookValues.isEnabled).toBeCalledTimes(1);
-        expect(mockHookValues.isEnabled).toBeCalledWith(mockFlagName);
-      });
-
-      it("should return the expected value", () => {
-        expect(result).toBe(true);
-      });
+    it("should return the vendor hook", () => {
+      expect(received.result.current).toBe(mockHookValues);
     });
   });
 });

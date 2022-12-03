@@ -2,11 +2,11 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import SelectContainer from "../select.report.container";
 import translations from "@locales/lastfm.json";
 import config from "@src/config/lastfm";
-import mockUseFlags from "@src/hooks/__mocks__/flags.mock";
+import mockUseFlags from "@src/hooks/__mocks__/flags.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 
-jest.mock("@src/hooks/flags");
+jest.mock("@src/hooks/flags.hook");
 
 jest.mock("@src/hooks/locale");
 
