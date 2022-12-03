@@ -3,11 +3,11 @@ import { render } from "@testing-library/react";
 import SunBurstChart, { SunBurstChartProps } from "../chart.component";
 import SunBurstChartSVGContainer from "@src/components/reports/common/chart/sunburst/svg/svg.container";
 import settings from "@src/config/sunburst";
-import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("@src/hooks/colour");
+jest.mock("@src/hooks/ui/colour.hook");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Box", "Center"])

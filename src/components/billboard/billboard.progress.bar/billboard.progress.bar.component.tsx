@@ -9,7 +9,7 @@ import {
   StatNumber,
 } from "@chakra-ui/react";
 import BillBoardContainer from "../billboard.base/billboard.container";
-import useColour from "@src/hooks/colour";
+import useColour from "@src/hooks/ui/colour.hook";
 import { truncate } from "@src/utils/strings";
 
 export const testIDs = {

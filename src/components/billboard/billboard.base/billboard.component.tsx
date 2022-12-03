@@ -1,6 +1,6 @@
 import { Text, Container, Center, Box } from "@chakra-ui/react";
 import Condition from "@src/components/condition/condition.component";
-import useColour from "@src/hooks/colour";
+import useColour from "@src/hooks/ui/colour.hook";
 
 export const testIDs = {
   BillBoardTitle: "BillBoardTitle",
