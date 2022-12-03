@@ -9,12 +9,12 @@ import BillBoardProgressBar, {
   testIDs,
 } from "../billboard.progress.bar.component";
 import BillBoardContainer from "@src/components/billboard/billboard.base/billboard.container";
-import mockColourHook from "@src/hooks/__mocks__/colour.mock";
+import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import { truncate } from "@src/utils/strings";
 import type { BillBoardProgressBarDetails } from "../billboard.progress.bar.component";
 
-jest.mock("@src/hooks/colour");
+jest.mock("@src/hooks/ui/colour.hook");
 
 jest.mock("@src/utils/strings");
 

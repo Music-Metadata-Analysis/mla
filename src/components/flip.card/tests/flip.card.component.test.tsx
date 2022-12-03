@@ -2,11 +2,11 @@ import { Box, Center, Img, Text } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import ReactCardFlip from "react-card-flip";
 import FlipCard, { FlipCardProps, testIDs } from "../flip.card.component";
-import mockColourHook from "@src/hooks/__mocks__/colour.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/colour");
+jest.mock("@src/hooks/ui/colour.hook");
 
 jest.mock("@src/hooks/locale");
 

@@ -10,7 +10,7 @@ import {
   ModalBody,
   Spinner,
 } from "@chakra-ui/react";
-import useColours from "@src/hooks/colour";
+import useColours from "@src/hooks/ui/colour.hook";
 
 export const testIDs = {
   AuthenticationSpinnerModalTitle: "AuthenticationSpinnerModalTitle",

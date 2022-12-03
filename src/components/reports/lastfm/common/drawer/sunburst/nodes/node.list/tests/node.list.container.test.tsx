@@ -13,7 +13,7 @@ import type { SunBurstDrawerNodeComponentProps } from "@src/types/clients/api/la
 import type { d3Node } from "@src/types/reports/sunburst.types";
 import type { FC } from "react";
 
-jest.mock("@src/hooks/colour");
+jest.mock("@src/hooks/ui/colour.hook");
 
 jest.mock("@src/hooks/locale");
 

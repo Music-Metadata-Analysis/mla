@@ -3,7 +3,7 @@ import SunBurstNodeListContainer from "./nodes/node.list/node.list.container";
 import SunBurstDrawerControlContainer from "./panels/control/drawer.control.panel.container";
 import SunBurstDrawerTitleContainer from "./panels/title/drawer.title.panel.container";
 import ReportDrawer from "@src/components/reports/common/drawer/drawer.component";
-import useColour from "@src/hooks/colour";
+import useColour from "@src/hooks/ui/colour.hook";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type { RefObject } from "react";
 
