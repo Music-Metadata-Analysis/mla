@@ -3,37 +3,141 @@
 
 set -eo pipefail
 
+API_PATH_NAME_REGEX="([a-z0-9\./]+|\[[a-z0-9\./]+\])/"
+API_ENDPOINT_NAME_REGEX="[A-Za-z0-9\./]+\.ts$|\[[A-Za-z0-9\./]+\]\.ts$"
+
+PATH_NAME_REGEX="([a-z0-9\./]+/)"
+FILENAME_REGEX="([a-z0-9\.]+)"
+
+CLASS_FILENAME_REGEX="(${FILENAME_REGEX}+\.class\.(test\.)*ts)"
+CLASS_MOCK_FILENAME_REGEX="(${FILENAME_REGEX}+\.class\.mock\.ts)"
+
+COMPONENT_FILENAME_REGEX="src/components/${PATH_NAME_REGEX}+${FILENAME_REGEX}+\.(component|container|integration\.test|page|style)"
+
+HOOK_DEFINITION_REGEX="const use[A-Z]+|function use[A-Z]+"
+HOOK_FILENAME_REGEX="(${FILENAME_REGEX}+\.hook\.(test\.)*tsx)"
+HOOK_FACTORY_REGEX="(${FILENAME_REGEX}+\.hook\.factory\.(test\.)*tsx)"
+HOOK_MOCK_FILENAME_REGEX="(${FILENAME_REGEX}+\.hook\.mock\.tsx)"
+HOOK_FULL_PATH_REGEX="src/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*(${HOOK_FILENAME_REGEX}|${HOOK_FACTORY_REGEX}):"
+HOOK_MOCK_LOCATOR_REGEX="src/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*__mocks__/.*"
+HOOK_MOCK_FULL_PATH_REGEX="src/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*__mocks__/(${CLASS_FILENAME_REGEX}|${CLASS_MOCK_FILENAME_REGEX}|${HOOK_FILENAME_REGEX}|${HOOK_MOCK_FILENAME_REGEX})"
+
+UI_FRAMEWORK_WHITELIST_REGEX="src/pages/_document\.tsx|src/tests/_document.*\.test\.tsx"
+WEB_FRAMEWORK_WHITELIST_REGEX="_app.tsx|_document.tsx|src/tests/_app.page.components.test.tsx|src/tests/_document.page.components.test.tsx"
+
+error_decoupling() {
+  (echo "** $1 framework usage is not decoupled." && false)
+}
+
+error_naming_convention() {
+  (echo "** File Naming convention violation." && false)
+}
+
+error_type_imports() {
+  (echo "** Type import violation." && false)
+}
+
+
+excludes() {
+  grep -Ev "$1"
+}
+
+includes() {
+  grep -E "$1"
+}
+
+search() {
+  grep -Er "$1" "$2"
+}
+
+excludes_vendor_locations() {
+  excludes "src/clients/$1|src/backend/integrations/$1" 
+}
+
+
 main() {
-  
+
+  echo "*** Architecture Enforcement ***"
+
+  echo "Framework Decoupling..."
+
   # Enforce Analytics Framework Isolation
-  ! grep -E -r "react-ga" src | grep -E -v "src/clients/analytics" || false
+  echo "  Checking Analytics Framework Isolation..."
+  ! search 'from "react-ga' src | excludes_vendor_locations "analytics" || error_decoupling "Analytics"
 
   # Enforce Auth Framework Isolation
-  ! grep -E -r "next-auth" src | grep -E -v "src/clients/auth|src/backend/integrations/auth" || false
+  echo "  Checking Auth Framework Isolation..."
+  ! search 'from "next-auth' src | excludes_vendor_locations "auth" || error_decoupling "Auth"
 
   # Enforce Flag Framework Isolation
-  ! grep -E -r "flagsmith" src | grep -E -v "src/clients/flags|src/backend/integrations/flags" || false
+  echo "  Checking Feature Flags Framework Isolation..."
+  ! search 'from "flagsmith' src | excludes_vendor_locations "flags" || error_decoupling "Feature Flags"
 
   # Enforce Lastfm Framework Isolation
-  ! grep -E -r "@toplast/lastfm" src | grep -E -v "src/backend/integrations/lastfm|src/tests/api/.*end2end.*" || false
+  echo "  Checking Lastfm Framework Isolation..."
+  ! search 'from "@toplast/lastfm' src | excludes_vendor_locations "lastfm" || error_decoupling "Last FM"
 
   # Enforce Locale Framework Isolation
-  ! grep -E -r "next-i18next" src | grep -E -v "src/clients/locale" || false
+  echo "  Checking Locale Framework Isolation..."
+  ! search 'from "next-i18next' src | excludes_vendor_locations "locale" || error_decoupling "Locale"
 
   # Enforce Persistance Framework Isolation
-  ! grep -E -r "@aws-sdk/client-s3" src | grep -E -v "src/backend/integrations/persistance" || false
+  echo "  Checking Persistance Framework Isolation..."
+  ! search 'from "@aws-sdk' src | excludes_vendor_locations "persistance" || error_decoupling "Persistance"
 
   # Enforce UI Framework Isolation
-  ! grep -E -r "@chakra-ui" src | grep -E -v "src/clients/ui\.framework|src/tests/fixtures/|src/pages/_document\.tsx|src/tests/_document.*\.test\.tsx" | grep -E -v "component\.ts|component\.test\.ts|integration\.test\.ts|style\.ts|style\.test\.ts" || false
+  echo "  Checking UI Framework Isolation..."
+  ! search 'from "@chakra-ui' src | excludes_vendor_locations "ui.framework" | excludes "${UI_FRAMEWORK_WHITELIST_REGEX}" | excludes "${COMPONENT_FILENAME_REGEX}" || error_decoupling "UI"
 
   # Enforce Web Framework Isolation
-  ! grep -E -r "next/" src | grep -E -v "next-i18next" | grep -E -v "src/clients/web.framework|src/tests/_app.page.components.test.tsx|src/tests/_document.page.components.test.tsx|_document.tsx|_app.tsx" || false
-
-
-
+  echo "  Checking Web Framework Isolation..."
+  ! search 'from "next"|^import .+ from "next/' src | excludes "${WEB_FRAMEWORK_WHITELIST_REGEX}" | excludes_vendor_locations "web.framework" || error_decoupling "WEB"
+  
   # Enforce Separation of Business Logic (No hook usage inside component level files.)
-  ! grep -E -r "= use" src/components  | grep -E "component\.ts" | grep -E -v useColour || false
+  echo "  Checking Hook Usage Patterns..."
+  ! search " = use" src  | excludes_vendor_locations "ui.framework" | includes "component\.ts" | excludes "useColour" || false
+
+  echo "File Name Conventions..."
+
+  # Enforce General Naming Convention (lowercase, . seperator)
+  echo "  Checking General Naming Conventions..."
+  ! find src -type f | excludes "^src/pages/api|^src/tests/api" | excludes "^src/(${PATH_NAME_REGEX})+${FILENAME_REGEX}|.DS_Store|__mocks__|_app|_document" || error_naming_convention
+  
+  # Enforce API Naming Convention (paths are lower case, with square brackets, endpoints are camel case with brackets)
+  echo "  Checking Pages Naming Conventions..."
+  ! find src/pages/api -type f | excludes "^src/pages/api/(${API_PATH_NAME_REGEX})+${API_ENDPOINT_NAME_REGEX}" || error_naming_convention
+
+  # Component File Naming Convention
+  echo "  Checking Component File Naming Conventions..."
+  ! find src/components -type f -regex ".*tsx$" | excludes "(${HOOK_FILENAME_REGEX}|${HOOK_MOCK_FILENAME_REGEX})" | excludes "${COMPONENT_FILENAME_REGEX}" || false
+
+  # Enforce Hook Naming Conventions
+  echo "  Checking Hook Naming Conventions..."
+  ! search "${HOOK_DEFINITION_REGEX}" {src/hooks,src/components} | excludes "${HOOK_FULL_PATH_REGEX}" || error_naming_convention
+
+  # Enforce Hook Naming Conventions
+  echo "  Checking Hook Mock Naming Conventions..."
+  ! find src -type f | includes "${HOOK_MOCK_LOCATOR_REGEX}" | excludes "${HOOK_MOCK_FULL_PATH_REGEX}" || error_naming_convention
+
+  echo "Type Definitions..."
+
+  # Enforce Hook Type Exports (Must export it's own type definition.)
+  echo "  Checking Hook Exports..."
+  readarray -t HOOK_FILES < <(search "${HOOK_DEFINITION_REGEX}" {src/hooks,src/components} | cut -d":" -f1)
+  for HOOK_FILE in "${HOOK_FILES[@]}"; do
+    ! search "^export type" "$HOOK_FILE" > /dev/null && echo "${HOOK_FILE}: missing hook type export"
+  done
+
+  # Enforce Type Definition Flow (No references to vendor types directly.)
+  echo "  Checking Type Imports..."
+  readarray -t IMPORT_FILES < <(search 'from "(@src/clients/.+|@src/backend/.+)' src | cut -d":" -f1 | excludes "^src/types")
+  for IMPORT_FILE in "${IMPORT_FILES[@]}"; do
+    ! tr -d '\n'  < "$IMPORT_FILE" | grep -Eo '(import type .*? from \"(@src/clients/.+|@src/backend/.+))' > /dev/null || (echo "${IMPORT_FILE}: should not be importing types directly from a vendor folder." && exit 1) || false
+  done
+
+  echo "*** Complete ***"
 
 }
+
 
 main "$@"
