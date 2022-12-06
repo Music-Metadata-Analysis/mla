@@ -6,7 +6,7 @@ import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.moc
 import NavConfig from "@src/config/navbar";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/auth");
+jest.mock("@src/hooks/auth.hook");
 
 jest.mock("@src/hooks/lastfm");
 

@@ -1,10 +1,12 @@
 import { render } from "@testing-library/react";
 import NavBarSessionControl from "../navbar.session.control.component";
 import NavBarSessionControlContainer from "../navbar.session.control.container";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import mockAuthHook, {
+  mockUserProfile,
+} from "@src/hooks/__mocks__/auth.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/auth");
+jest.mock("@src/hooks/auth.hook");
 
 jest.mock("@src/hooks/locale.hook");
 

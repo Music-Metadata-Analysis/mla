@@ -3,12 +3,12 @@ import dk from "deep-keys";
 import { useFlags, useFlagsmith } from "flagsmith/react";
 import useFlagSmithVendor from "../flagsmith";
 import { mockFlagsHook as mockHookValues } from "@src/clients/flags/__mocks__/vendor.mock";
-import useAuth from "@src/hooks/auth";
+import useAuth from "@src/hooks/auth.hook";
 import type { FlagVendorHookInterface } from "@src/types/clients/flags/vendor.types";
 
 jest.mock("flagsmith/react");
 
-jest.mock("@src/hooks/auth");
+jest.mock("@src/hooks/auth.hook");
 
 const MockUseAuth = jest.mocked(useAuth);
 const MockUseFlags = jest.mocked(useFlags);

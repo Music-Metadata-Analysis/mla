@@ -3,7 +3,9 @@ import UserNameForm from "../username.form.component";
 import UserNameFormContainer from "../username.form.container";
 import lastfmTranslations from "@locales/lastfm.json";
 import lastfmSettings from "@src/config/lastfm";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import mockAuthHook, {
+  mockUserProfile,
+} from "@src/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import mockFormHook from "@src/hooks/controllers/__mocks__/forms.controller.hook.mock";
@@ -11,7 +13,7 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
 
-jest.mock("@src/hooks/auth");
+jest.mock("@src/hooks/auth.hook");
 
 jest.mock("@src/hooks/controllers/forms.controller.hook");
 
