@@ -4,10 +4,10 @@ import LastFMIconContainer, {
   LastFMIconContainerProps,
 } from "../lastfm.icon.container";
 import mainTranslations from "@locales/main.json";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
+import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("../lastfm.icon.component", () =>
   require("@fixtures/react/child").createComponent("LastFMIcon")

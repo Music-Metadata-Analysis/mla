@@ -12,7 +12,7 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@chakra-ui/icons", () =>
   require("@fixtures/chakra/icons").createChakraIconMock(["CloseIcon"])

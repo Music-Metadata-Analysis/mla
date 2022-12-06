@@ -1,5 +1,5 @@
 import SpinnerModal from "./modal.spinner.component";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 
 export interface AuthenticationSpinnerModalContainerProps {
   onClose: () => void;

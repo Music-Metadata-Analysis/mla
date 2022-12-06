@@ -7,3 +7,5 @@ const useLocale = (ns: string): LocaleVendorHookInterface => {
 };
 
 export default useLocale;
+
+export type LocaleHookType = ReturnType<typeof useLocale>;

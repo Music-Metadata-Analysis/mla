@@ -5,7 +5,7 @@ import {
 import SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import MockCompleteReport1 from "@src/components/reports/lastfm/common/report.component/sunburst/translator/tests/states/state.data.set.1.json";
 import SunBurstStateToChartDataTranslator from "@src/components/reports/lastfm/common/report.component/sunburst/translator/translator.class";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import PlayCountByArtistState from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import type SunBurstBaseReport from "../sunburst.report.base.class";

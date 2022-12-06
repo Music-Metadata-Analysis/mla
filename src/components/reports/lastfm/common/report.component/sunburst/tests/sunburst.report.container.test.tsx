@@ -9,16 +9,16 @@ import { MockReportClass } from "@src/components/reports/lastfm/common/report.cl
 import Events from "@src/events/events";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockMetricsHook from "@src/hooks/__mocks__/metrics.mock";
 import mockSunBurstControllerHook from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
 jest.mock("@src/hooks/analytics");
 
-jest.mock("@src/hooks/locale", () => jest.fn());
+jest.mock("@src/hooks/locale.hook", () => jest.fn());
 
 jest.mock("@src/hooks/metrics");
 

@@ -7,7 +7,7 @@ import Dialogue, {
 import { createSimpleComponent } from "@fixtures/react/simple";
 import { mockUseRouter } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
 

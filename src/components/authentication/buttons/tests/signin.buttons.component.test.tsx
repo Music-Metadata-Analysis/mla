@@ -8,7 +8,7 @@ import SignInButtons from "../signin.buttons.component";
 import authenticationTranslations from "@locales/authentication.json";
 import AnalyticsButtonWrapper from "@src/components/analytics/analytics.button/analytics.button.container";
 import SpotifyLoginButton from "@src/components/button/button.spotify/button.spotify.component";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("react-social-login-buttons", () => ({

@@ -7,7 +7,7 @@ import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.moc
 import NavConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
+import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import NavBarControllerProvider from "@src/providers/controllers/navbar/navbar.provider";
 import type { JSONstringType } from "@src/types/json.types";
@@ -21,7 +21,7 @@ jest.mock("@src/hooks/lastfm", () =>
   jest.fn(() => ({ userProperties: getMockedUserProperties() }))
 );
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/router");
 

@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import FeedbackPopUp, { testIDs } from "../feedback.popup.component";
 import externalLinks from "@src/config/external";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/router");
 

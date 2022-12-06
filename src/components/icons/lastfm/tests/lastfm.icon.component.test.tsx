@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import LastFMIcon, { LastFMIconProps } from "../lastfm.icon.component";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 describe("LastFMIcon", () => {
   let currentProps: LastFMIconProps;
