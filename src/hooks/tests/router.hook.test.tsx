@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockHookValues from "../__mocks__/router.mock";
-import useRouter from "../router";
+import mockHookValues from "../__mocks__/router.hook.mock";
+import useRouter from "../router.hook";
 import webFrameworkVendor from "@src/clients/web.framework/vendor";
 
 jest.mock("@src/clients/web.framework/vendor");

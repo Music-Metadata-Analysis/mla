@@ -16,7 +16,7 @@ jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/controllers/images.controller.hook");
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 describe("Top20ArtistsContainer", () => {
   let currentProps: Top20ArtistsReportContainerProps;

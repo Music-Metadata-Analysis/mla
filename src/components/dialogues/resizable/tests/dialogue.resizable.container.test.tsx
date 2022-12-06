@@ -11,7 +11,7 @@ import mockUseWindowThreshold from "@src/hooks/ui/__mocks__/window.threshold.hoo
 import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("@src/hooks/ui/window.threshold.hook");
 

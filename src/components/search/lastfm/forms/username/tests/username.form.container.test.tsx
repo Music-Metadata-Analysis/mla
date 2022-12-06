@@ -7,7 +7,7 @@ import mockAuthHook, {
   mockUserProfile,
 } from "@src/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import mockFormHook from "@src/hooks/controllers/__mocks__/forms.controller.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
@@ -21,7 +21,7 @@ jest.mock("@src/hooks/controllers/navbar.controller.hook");
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("../username.form.component", () =>
   require("@fixtures/react/child").createComponent("UserNameForm", "default", {

@@ -5,7 +5,7 @@ import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import useAnalytics from "@src/hooks/analytics";
 import useAuth from "@src/hooks/auth.hook";
-import useRouter from "@src/hooks/router";
+import useRouter from "@src/hooks/router.hook";
 import useToggle from "@src/hooks/utility/toggle.hook";
 import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
 

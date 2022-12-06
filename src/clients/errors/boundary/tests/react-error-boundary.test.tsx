@@ -4,11 +4,11 @@ import {
   testIDs,
 } from "./react-error-boundary.test.harness";
 import ErrorHandlerContainer from "@src/components/errors/boundary/handler/error.handler.container";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock(
   "@src/components/errors/boundary/handler/error.handler.container",

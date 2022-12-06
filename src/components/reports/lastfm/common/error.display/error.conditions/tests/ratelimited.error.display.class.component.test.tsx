@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import RateLimitedErrorConditionalDisplay from "../ratelimited.error.display.class.component";
 import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import { MockReportClass } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.sunburst.report.class";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
