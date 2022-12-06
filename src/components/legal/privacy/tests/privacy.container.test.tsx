@@ -4,9 +4,12 @@ import HeaderComponent from "../inlays/privacy.header.component";
 import ToggleComponent from "../inlays/privacy.toggle.component";
 import PrivacyContainer from "../privacy.container";
 import DialogueContainer from "@src/components/dialogues/resizable/dialogue.resizable.container";
-import { checkTProp, MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import {
+  checkTProp,
+  MockUseLocale,
+} from "@src/hooks/__mocks__/locale.hook.mock";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/router");
 

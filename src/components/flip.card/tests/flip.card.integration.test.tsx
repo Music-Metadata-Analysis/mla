@@ -10,9 +10,9 @@ import FlipCardContainer, {
   FlipCardContainerProps,
 } from "../flip.card.container";
 import cardTranslations from "@locales/cards.json";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
+import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 describe("FlipCardContainer", () => {
   let currentProps: FlipCardContainerProps;

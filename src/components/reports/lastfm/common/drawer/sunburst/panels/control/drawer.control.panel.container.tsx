@@ -1,5 +1,5 @@
 import SunBurstDrawerControlPanel from "./drawer.control.panel.component";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 
 export interface SunBurstDrawerControlPanelContainerProps {

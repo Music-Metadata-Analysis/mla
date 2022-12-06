@@ -1,7 +1,7 @@
 import Report from "../top20.artists.report.class";
 import FlipCardDrawerContainer from "@src/components/reports/lastfm/common/drawer/flip.card/flip.card.report.drawer.container";
 import routes from "@src/config/routes";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
+import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import UserArtistDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.artist.flipcard.report.class";
 import type { LastFMArtistDataInterface } from "@src/types/integrations/lastfm/api.types";
 

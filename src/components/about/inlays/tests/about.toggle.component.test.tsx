@@ -2,7 +2,7 @@ import { Box, Container, ListItem, UnorderedList } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import Toggle from "../about.toggle.component";
 import dialogueSettings from "@src/config/dialogue";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 

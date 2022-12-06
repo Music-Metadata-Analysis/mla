@@ -13,7 +13,7 @@ import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
+import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import mockToggleHook from "@src/hooks/utility/__mocks__/toggle.hook.mock";
 
@@ -21,7 +21,7 @@ jest.mock("@src/hooks/analytics");
 
 jest.mock("@src/hooks/auth");
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/router");
 

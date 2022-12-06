@@ -4,7 +4,7 @@ import ErrorBoundaryContainer from "@src/components/errors/boundary/error.bounda
 import SearchContainer from "@src/components/search/lastfm/search.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
+import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import Page, {
   getServerSideProps,
 } from "@src/pages/search/lastfm/top20artists";
@@ -12,7 +12,7 @@ import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 import mockServerSideProps from "@src/utils/__mocks__/page.props.server.side.mock";
 import getPageProps from "@src/utils/page.props.server.side";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/utils/page.props.server.side");
 

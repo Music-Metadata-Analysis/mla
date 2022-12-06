@@ -1,5 +1,5 @@
 import ErrorDisplay from "./error.display.component";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 import type errors from "@locales/errors.json";
 
 export interface ErrorDisplayContainerProps {

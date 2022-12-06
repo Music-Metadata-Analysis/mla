@@ -1,5 +1,5 @@
 import LastFMIcon from "./lastfm.icon.component";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 
 export interface LastFMIconContainerProps {
   height?: number;

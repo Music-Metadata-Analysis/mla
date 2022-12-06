@@ -7,7 +7,7 @@ import useFlipCardController from "@src/components/reports/lastfm/common/report.
 import Events from "@src/events/events";
 import useAnalytics from "@src/hooks/analytics";
 import useImagesController from "@src/hooks/controllers/images.controller.hook";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 import useMetrics from "@src/hooks/metrics";
 import type FlipCardBaseReport from "@src/components/reports/lastfm/common/report.class/flip.card.report.base.class";
 import type FlipCardBaseReportState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";

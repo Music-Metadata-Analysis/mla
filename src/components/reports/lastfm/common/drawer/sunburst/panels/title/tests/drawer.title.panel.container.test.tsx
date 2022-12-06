@@ -4,12 +4,12 @@ import SunBurstDrawerTitlePanelContainer, {
   SunBurstDrawerTitlePanelContainerProps,
 } from "../drawer.title.panel.container";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
-import useLocale from "@src/hooks/locale";
+import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
+import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { d3Node } from "@src/types/reports/sunburst.types";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("../drawer.title.panel.component", () =>
   require("@fixtures/react/child").createComponent("SunBurstDrawerTitlePanel")

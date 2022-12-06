@@ -4,7 +4,7 @@ import {
   mockUrls,
 } from "../../tests/states/user.state.data.set";
 import lastfmTranslations from "@locales/lastfm.json";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import type UserFlipCardBaseReportState from "../user.state.base.flipcard.report.class";
 import type { LastFMImageDataInterface } from "@src/types/integrations/lastfm/api.types";
 import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";

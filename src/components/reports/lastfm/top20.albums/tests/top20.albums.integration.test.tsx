@@ -8,11 +8,11 @@ import translations from "@locales/lastfm.json";
 import { testIDs as drawerTestIDs } from "@src/components/reports/common/drawer/drawer.component";
 import { testIDs as lastFMDrawerIDs } from "@src/components/reports/lastfm/common/drawer/flip.card/flip.card.report.drawer.component";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
+import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockImageControllerHook from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/controllers/images.controller.hook");
 

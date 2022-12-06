@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Consent from "./consent.component";
 import { settings } from "@src/config/cookies";
 import useAnalytics from "@src/hooks/analytics";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 
 export default function ConsentContainer() {
   const analytics = useAnalytics();

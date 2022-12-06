@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import NavBarOptions from "../navbar.options.component";
 import navbarTranslations from "@locales/navbar.json";
 import NavLinkContainer from "@src/components/navbar/link/navbar.link.container";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 
 jest.mock("@src/components/navbar/link/navbar.link.container", () =>
   require("@fixtures/react/child").createComponent("NavBarLinkContainer")

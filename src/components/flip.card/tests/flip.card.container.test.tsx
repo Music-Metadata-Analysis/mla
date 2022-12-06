@@ -3,13 +3,13 @@ import FlipCard from "../flip.card.component";
 import FlipCardContainer, {
   FlipCardContainerProps,
 } from "../flip.card.container";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
-import useLocale from "@src/hooks/locale";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
+import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("../flip.card.component", () =>
   require("@fixtures/react/child").createComponent("FlipCard")
