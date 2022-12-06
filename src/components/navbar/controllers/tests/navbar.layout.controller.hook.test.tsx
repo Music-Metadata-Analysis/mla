@@ -9,7 +9,7 @@ jest.mock("@src/hooks/analytics");
 
 jest.mock("@src/hooks/controllers/navbar.controller.hook");
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("react", () => ({
   ...jest.requireActual("react"),

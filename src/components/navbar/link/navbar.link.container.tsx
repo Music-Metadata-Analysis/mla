@@ -1,5 +1,5 @@
 import NavLink from "./navbar.link.component";
-import useRouter from "@src/hooks/router";
+import useRouter from "@src/hooks/router.hook";
 import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 import type { MouseEvent } from "react";
 

@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import NavBarLink from "../navbar.link.component";
 import NavBarLinkContainer from "../navbar.link.container";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import type { MouseEvent } from "react";
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("../navbar.link.component", () =>
   require("@fixtures/react/child").createComponent(["NavBarLink"])

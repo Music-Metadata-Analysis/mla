@@ -3,7 +3,7 @@ import ClickInternalLink from "../click.link.internal.component";
 import ClickInternalLinkContainer from "../click.link.internal.container";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("../click.link.internal.component", () =>
   require("@fixtures/react/parent").createComponent("ClickInternalLink")

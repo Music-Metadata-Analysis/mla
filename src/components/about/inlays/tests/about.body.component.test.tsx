@@ -8,7 +8,7 @@ import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockUseRouter from "@src/hooks/__mocks__/router.mock";
+import mockUseRouter from "@src/hooks/__mocks__/router.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () =>

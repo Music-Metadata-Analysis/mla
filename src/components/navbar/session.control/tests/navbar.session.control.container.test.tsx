@@ -10,7 +10,7 @@ jest.mock("@src/hooks/auth.hook");
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("../navbar.session.control.component", () =>
   require("@fixtures/react/child").createComponent("NavBarSessionControl")

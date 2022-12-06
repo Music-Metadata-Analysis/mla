@@ -1,5 +1,5 @@
 import ClickInternalLink from "./click.link.internal.component";
-import useRouter from "@src/hooks/router";
+import useRouter from "@src/hooks/router.hook";
 import type { MouseEventHandler, PropsWithChildren } from "react";
 
 interface ClickLinkProps {

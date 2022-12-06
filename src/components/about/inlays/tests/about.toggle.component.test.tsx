@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import Toggle from "../about.toggle.component";
 import dialogueSettings from "@src/config/dialogue";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockUseRouter from "@src/hooks/__mocks__/router.mock";
+import mockUseRouter from "@src/hooks/__mocks__/router.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@chakra-ui/react", () =>

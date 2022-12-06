@@ -10,7 +10,7 @@ import mockAuthHook, {
   mockUserProfile,
 } from "@src/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import NavBarControllerProvider from "@src/providers/controllers/navbar/navbar.provider";
 import type { JSONstringType } from "@src/types/json.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
@@ -25,7 +25,7 @@ jest.mock("@src/hooks/lastfm", () =>
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("@src/clients/web.framework/vendor");
 

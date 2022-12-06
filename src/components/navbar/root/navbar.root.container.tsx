@@ -4,7 +4,7 @@ import useAnalytics from "@src/hooks/analytics";
 import useAuth from "@src/hooks/auth.hook";
 import useLastFM from "@src/hooks/lastfm";
 import useLocale from "@src/hooks/locale.hook";
-import useRouter from "@src/hooks/router";
+import useRouter from "@src/hooks/router.hook";
 import type { NavBarControllerHookType } from "../controllers/navbar.layout.controller.hook";
 
 interface NavBarRootContainerProps {
