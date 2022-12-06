@@ -9,7 +9,7 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/auth.hook");
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("@src/hooks/utility/toggle.hook");
 

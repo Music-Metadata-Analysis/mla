@@ -7,7 +7,7 @@ import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockAuthHook from "@src/hooks/__mocks__/auth.hook.mock";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
@@ -19,7 +19,7 @@ jest.mock("@src/hooks/lastfm");
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("../navbar.root.component", () =>
   require("@fixtures/react/child").createComponent(["NavBarRoot"])

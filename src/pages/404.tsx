@@ -4,7 +4,7 @@ import ErrorBoundaryContainer from "@src/components/errors/boundary/error.bounda
 import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import useRouter from "@src/hooks/router";
+import useRouter from "@src/hooks/router.hook";
 import pagePropsGenerator from "@src/utils/page.props.static";
 import { voidFn } from "@src/utils/voids";
 

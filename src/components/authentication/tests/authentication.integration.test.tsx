@@ -16,7 +16,7 @@ import mockAuthHook, {
   mockUserProfile,
 } from "@src/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import mockToggleHook from "@src/hooks/utility/__mocks__/toggle.hook.mock";
 
 jest.mock("@src/hooks/analytics");
@@ -25,7 +25,7 @@ jest.mock("@src/hooks/auth.hook");
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("@src/hooks/utility/toggle.hook");
 

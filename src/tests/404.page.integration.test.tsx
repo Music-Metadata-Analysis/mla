@@ -3,12 +3,12 @@ import translation from "@locales/errors.json";
 import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import routes from "@src/config/routes";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import Custom404 from "@src/pages/404";
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("@src/clients/web.framework/vendor");
 

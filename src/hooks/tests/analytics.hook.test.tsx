@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
 import mockHookValues from "../__mocks__/analytics.mock";
-import mockRouterHook from "../__mocks__/router.mock";
+import mockRouterHook from "../__mocks__/router.hook.mock";
 import useAnalytics from "../analytics";
 import { mockGoogleAnalytics } from "@src/clients/analytics/__mocks__/vendor.mock";
 import EventDefinition from "@src/events/event.class";
@@ -12,7 +12,7 @@ import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
 import type { AnalyticsContextInterface } from "@src/types/analytics.types";
 import type { MutableEnv } from "@src/types/process.types";
 
-jest.mock("@src/hooks/router");
+jest.mock("@src/hooks/router.hook");
 
 jest.mock("@src/clients/analytics/vendor");
 

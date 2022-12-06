@@ -14,7 +14,7 @@ import NavBarSpinner from "@src/components/navbar/spinner/navbar.spinner.compone
 import navConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.mock";
+import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import {

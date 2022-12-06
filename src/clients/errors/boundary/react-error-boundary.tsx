@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
 import createErrorHandler from "./react-error-boundary.utility";
-import useRouter from "@src/hooks/router";
+import useRouter from "@src/hooks/router.hook";
 import type EventDefinition from "@src/events/event.class";
 
 interface ErrorBoundaryContainerProps {
