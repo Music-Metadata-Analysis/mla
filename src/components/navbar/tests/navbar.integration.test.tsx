@@ -6,7 +6,9 @@ import navbarTranslations from "@locales/navbar.json";
 import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import NavConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
-import mockAuthHook, { mockUserProfile } from "@src/hooks/__mocks__/auth.mock";
+import mockAuthHook, {
+  mockUserProfile,
+} from "@src/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 import NavBarControllerProvider from "@src/providers/controllers/navbar/navbar.provider";
@@ -15,7 +17,7 @@ import type { UserStateInterface } from "@src/types/user/state.types";
 
 jest.mock("@src/hooks/analytics");
 
-jest.mock("@src/hooks/auth");
+jest.mock("@src/hooks/auth.hook");
 
 jest.mock("@src/hooks/lastfm", () =>
   jest.fn(() => ({ userProperties: getMockedUserProperties() }))

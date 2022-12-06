@@ -7,3 +7,5 @@ const useAuth = (): AuthVendorHookInterface => {
 };
 
 export default useAuth;
+
+export type AuthHookType = ReturnType<typeof useAuth>;
