@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import UserNameForm from "./username.form.component";
 import lastfmSettings from "@src/config/lastfm";
-import useAuth from "@src/hooks/auth";
+import useAuth from "@src/hooks/auth.hook";
 import useFormsController from "@src/hooks/controllers/forms.controller.hook";
 import useLocale from "@src/hooks/locale.hook";
 import useRouter from "@src/hooks/router";

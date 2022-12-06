@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockHookValues from "../__mocks__/auth.mock";
-import useAuth from "../auth";
+import mockHookValues from "../__mocks__/auth.hook.mock";
+import useAuth from "../auth.hook";
 import authVendor from "@src/clients/auth/vendor";
 
 jest.mock("@src/clients/auth/vendor");

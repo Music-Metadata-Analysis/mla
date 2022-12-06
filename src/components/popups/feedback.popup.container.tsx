@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import FeedbackPopUp from "./popups.components/feedback.popup.component";
 import settings from "@src/config/popups";
-import useAuth from "@src/hooks/auth";
+import useAuth from "@src/hooks/auth.hook";
 import usePopUpsController from "@src/hooks/controllers/popups.controller.hook";
 import useLocale from "@src/hooks/locale.hook";
 import useMetrics from "@src/hooks/metrics";
