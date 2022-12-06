@@ -3,7 +3,7 @@ import NavBar from "./navbar.root.component";
 import useAnalytics from "@src/hooks/analytics";
 import useAuth from "@src/hooks/auth";
 import useLastFM from "@src/hooks/lastfm";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 import useRouter from "@src/hooks/router";
 import type { NavBarControllerHookType } from "../controllers/navbar.layout.controller.hook";
 

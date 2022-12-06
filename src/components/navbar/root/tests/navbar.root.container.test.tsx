@@ -6,9 +6,9 @@ import NavConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockAuthHook from "@src/hooks/__mocks__/auth.mock";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/analytics");
@@ -17,7 +17,7 @@ jest.mock("@src/hooks/auth");
 
 jest.mock("@src/hooks/lastfm");
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/router");
 

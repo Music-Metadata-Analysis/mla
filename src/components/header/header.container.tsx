@@ -1,5 +1,5 @@
 import Header from "./header.component";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 
 export interface HeaderContainerProps {
   pageKey: string;

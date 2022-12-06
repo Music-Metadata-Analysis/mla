@@ -1,6 +1,6 @@
 import { useState } from "react";
 import FlipCard from "./flip.card.component";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 
 export interface FlipCardContainerProps {
   cardSize: number;

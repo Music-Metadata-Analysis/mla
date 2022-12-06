@@ -6,7 +6,7 @@ import DialogueContainer, {
 import { createSimpleComponent } from "@fixtures/react/simple";
 import { mockUseRouter } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import dialogueSettings from "@src/config/dialogue";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockUseWindowThreshold from "@src/hooks/ui/__mocks__/window.threshold.hook.mock";
 import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";

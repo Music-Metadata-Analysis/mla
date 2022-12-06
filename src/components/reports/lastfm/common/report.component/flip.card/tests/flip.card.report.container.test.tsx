@@ -9,10 +9,10 @@ import mockFlipCardController from "@src/components/reports/lastfm/common/report
 import Events from "@src/events/events";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
-import { _t, MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import { _t, MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockMetricsHook from "@src/hooks/__mocks__/metrics.mock";
 import mockImageController from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
 
@@ -24,7 +24,7 @@ jest.mock(
 
 jest.mock("@src/hooks/controllers/images.controller.hook");
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/metrics");
 

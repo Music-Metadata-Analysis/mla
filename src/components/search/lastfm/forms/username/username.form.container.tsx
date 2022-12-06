@@ -3,7 +3,7 @@ import UserNameForm from "./username.form.component";
 import lastfmSettings from "@src/config/lastfm";
 import useAuth from "@src/hooks/auth";
 import useFormsController from "@src/hooks/controllers/forms.controller.hook";
-import useLocale from "@src/hooks/locale";
+import useLocale from "@src/hooks/locale.hook";
 import useRouter from "@src/hooks/router";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 import type { FormikHelpers } from "formik";

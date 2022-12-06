@@ -6,7 +6,7 @@ import {
 import ErrorHandlerContainer from "@src/components/errors/boundary/handler/error.handler.container";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/router");
 

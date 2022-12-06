@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import Footer from "../about.footer.component";
 import Button from "@src/components/button/button.standard/button.standard.component";
 import dialogueSettings from "@src/config/dialogue";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 

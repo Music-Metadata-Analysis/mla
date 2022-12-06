@@ -9,10 +9,10 @@ import AboutContainer from "../about.container";
 import translations from "@locales/about.json";
 import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
 import routes from "@src/config/routes";
-import { _t } from "@src/hooks/__mocks__/locale.mock";
+import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.mock";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/router");
 

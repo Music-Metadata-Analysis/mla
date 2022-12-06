@@ -6,8 +6,8 @@ import SunBurstEntityNodeListContainer, {
 import SunBurstNodeButton from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.button/node.button.component";
 import SunBurstNodeDisplay from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.display/node.display.component";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
-import useLocale from "@src/hooks/locale";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
+import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { SunBurstDrawerNodeComponentProps } from "@src/types/clients/api/lastfm/sunburst.types";
 import type { d3Node } from "@src/types/reports/sunburst.types";
@@ -15,7 +15,7 @@ import type { FC } from "react";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("../node.list.component", () =>
   require("@fixtures/react/parent").createComponent("NodeListComponent")

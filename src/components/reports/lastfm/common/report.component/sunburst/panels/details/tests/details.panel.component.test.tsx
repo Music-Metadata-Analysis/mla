@@ -4,7 +4,7 @@ import SunBurstDetailsPanel, {
   SunBurstDetailsPanelProps,
   testIDs,
 } from "../details.panel.component";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");

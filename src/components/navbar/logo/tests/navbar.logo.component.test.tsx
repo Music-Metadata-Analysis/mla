@@ -4,7 +4,7 @@ import NavBarLogo from "../navbar.logo.component";
 import navbarTranslations from "@locales/navbar.json";
 import NavBarAvatar from "@src/components/navbar/avatar/navbar.avatar.component";
 import routes from "@src/config/routes";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 
 jest.mock("@src/components/navbar/avatar/navbar.avatar.component", () =>
   require("@fixtures/react/child").createComponent("NavBarAvatar")

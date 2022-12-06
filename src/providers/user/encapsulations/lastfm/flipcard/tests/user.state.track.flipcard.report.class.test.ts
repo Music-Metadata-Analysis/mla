@@ -1,6 +1,6 @@
 import { baseUserProperties } from "../../tests/states/user.state.data.set";
 import UserTrackState from "../user.state.track.flipcard.report.class";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import type {
   LastFMArtistDataInterface,
   LastFMTrackDataInterface,

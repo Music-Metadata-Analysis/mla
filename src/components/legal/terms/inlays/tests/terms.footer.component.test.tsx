@@ -4,7 +4,7 @@ import TermsOfServiceFooter from "../terms.footer.component";
 import Button from "@src/components/button/button.external.link/button.external.link.component";
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockUseRouter from "@src/hooks/__mocks__/router.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 

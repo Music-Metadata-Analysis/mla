@@ -4,11 +4,11 @@ import AuthenticationSignInModal from "../modal.signin.component";
 import AuthenticationSignInModalContainer, {
   AuthenticationSignInModalContainerProps,
 } from "../modal.signin.container";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.mock";
-import useLocale from "@src/hooks/locale";
+import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
+import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/locale");
+jest.mock("@src/hooks/locale.hook");
 
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
