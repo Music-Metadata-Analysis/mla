@@ -10,7 +10,7 @@ import Events from "@src/events/events";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockMetricsHook from "@src/hooks/__mocks__/metrics.mock";
+import mockMetricsHook from "@src/hooks/__mocks__/metrics.hook.mock";
 import mockSunBurstControllerHook from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
 import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
@@ -20,7 +20,7 @@ jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("@src/hooks/locale.hook", () => jest.fn());
 
-jest.mock("@src/hooks/metrics");
+jest.mock("@src/hooks/metrics.hook");
 
 jest.mock("@src/hooks/controllers/sunburst.controller.hook");
 

@@ -1,8 +1,8 @@
 import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockHookValues from "../__mocks__/metrics.mock";
-import useMetrics from "../metrics";
+import mockHookValues from "../__mocks__/metrics.hook.mock";
+import useMetrics from "../metrics.hook";
 import { InitialState } from "@src/providers/metrics/metrics.initial";
 import { MetricsContext } from "@src/providers/metrics/metrics.provider";
 import type { MetricsContextInterface } from "@src/types/metrics/context.types";

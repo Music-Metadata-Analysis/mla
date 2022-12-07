@@ -7,7 +7,7 @@ import mockAuthHook, {
   mockUserProfile,
 } from "@src/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockMetricsHook from "@src/hooks/__mocks__/metrics.mock";
+import mockMetricsHook from "@src/hooks/__mocks__/metrics.hook.mock";
 import mockPopUpsControllerHook from "@src/hooks/controllers/__mocks__/popups.controller.hook.mock";
 import usePopUpsGenerator from "@src/hooks/ui/popups.generator.hook";
 
@@ -17,7 +17,7 @@ jest.mock("@src/hooks/controllers/popups.controller.hook");
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/metrics");
+jest.mock("@src/hooks/metrics.hook");
 
 jest.mock("@src/hooks/ui/popups.generator.hook");
 
