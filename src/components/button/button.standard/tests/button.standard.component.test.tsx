@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import BaseButton from "../../button.base/button.base.component";
 import StyledButton from "../button.standard.component";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("../../button.base/button.base.component", () =>
   require("@fixtures/react/parent").createComponent("BaseButton")

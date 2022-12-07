@@ -11,7 +11,7 @@ import { testIDs as SpinnerModalTestIDs } from "../modals/spinner/modal.spinner.
 import authenticationTranslations from "@locales/authentication.json";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook, {
   mockUserProfile,
 } from "@src/hooks/__mocks__/auth.hook.mock";
@@ -19,7 +19,7 @@ import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import mockToggleHook from "@src/hooks/utility/__mocks__/toggle.hook.mock";
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("@src/hooks/auth.hook");
 

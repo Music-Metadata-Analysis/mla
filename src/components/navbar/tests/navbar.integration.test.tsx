@@ -5,7 +5,7 @@ import { testIDs as NavBarRootTestIDs } from "../root/navbar.root.component";
 import navbarTranslations from "@locales/navbar.json";
 import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import NavConfig from "@src/config/navbar";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook, {
   mockUserProfile,
 } from "@src/hooks/__mocks__/auth.hook.mock";
@@ -15,7 +15,7 @@ import NavBarControllerProvider from "@src/providers/controllers/navbar/navbar.p
 import type { JSONstringType } from "@src/types/json.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("@src/hooks/auth.hook");
 

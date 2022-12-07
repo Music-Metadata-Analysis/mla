@@ -1,5 +1,5 @@
 import AnalyticsInternalLinkWrapper from "./analytics.link.internal.component";
-import useAnalytics from "@src/hooks/analytics";
+import useAnalytics from "@src/hooks/analytics.hook";
 import type { MouseEventHandler } from "react";
 
 interface AnalyticsInternalLinkWrapperContainerProps {

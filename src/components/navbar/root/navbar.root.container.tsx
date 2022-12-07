@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import NavBar from "./navbar.root.component";
-import useAnalytics from "@src/hooks/analytics";
+import useAnalytics from "@src/hooks/analytics.hook";
 import useAuth from "@src/hooks/auth.hook";
 import useLastFM from "@src/hooks/lastfm";
 import useLocale from "@src/hooks/locale.hook";

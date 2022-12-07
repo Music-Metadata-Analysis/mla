@@ -5,7 +5,7 @@ import Condition from "@src/components/condition/condition.component";
 import LastFMErrorDisplayContainer from "@src/components/reports/lastfm/common/error.display/error.display.container";
 import useFlipCardController from "@src/components/reports/lastfm/common/report.component/flip.card/controllers/flip.card.controller.hook";
 import Events from "@src/events/events";
-import useAnalytics from "@src/hooks/analytics";
+import useAnalytics from "@src/hooks/analytics.hook";
 import useImagesController from "@src/hooks/controllers/images.controller.hook";
 import useLocale from "@src/hooks/locale.hook";
 import useMetrics from "@src/hooks/metrics";

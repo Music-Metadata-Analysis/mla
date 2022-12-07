@@ -3,14 +3,14 @@ import FlipCardDrawer from "../flip.card.report.drawer.component";
 import FlipCardDrawerContainer from "../flip.card.report.drawer.container";
 import mockFlipCardController from "@src/components/reports/lastfm/common/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import settings from "@src/config/flip.card";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import useLocale from "@src/hooks/locale.hook";
 import UserAlbumState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { LastFMFlipCardDrawerInterface } from "@src/types/clients/api/lastfm/drawer.component.types";
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("@src/hooks/locale.hook");
 
