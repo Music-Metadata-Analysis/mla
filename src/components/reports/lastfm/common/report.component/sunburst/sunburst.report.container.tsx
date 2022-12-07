@@ -4,7 +4,7 @@ import SunBurstReport from "./sunburst.report.component";
 import BillBoardProgressBar from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import LastFMErrorDisplayContainer from "@src/components/reports/lastfm/common/error.display/error.display.container";
 import Events from "@src/events/events";
-import useAnalytics from "@src/hooks/analytics";
+import useAnalytics from "@src/hooks/analytics.hook";
 import useSunBurstController from "@src/hooks/controllers/sunburst.controller.hook";
 import useLocale from "@src/hooks/locale.hook";
 import useMetrics from "@src/hooks/metrics";

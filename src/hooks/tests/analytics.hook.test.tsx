@@ -2,32 +2,30 @@ import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
-import mockHookValues from "../__mocks__/analytics.mock";
+import mockHookValues from "../__mocks__/analytics.hook.mock";
 import mockRouterHook from "../__mocks__/router.hook.mock";
-import useAnalytics from "../analytics";
+import useAnalytics from "../analytics.hook";
 import { mockGoogleAnalytics } from "@src/clients/analytics/__mocks__/vendor.mock";
 import EventDefinition from "@src/events/event.class";
 import Events from "@src/events/events";
 import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
 import type { AnalyticsContextInterface } from "@src/types/analytics.types";
 import type { MutableEnv } from "@src/types/process.types";
+import type { MouseEvent, ReactNode } from "react";
 
 jest.mock("@src/hooks/router.hook");
 
 jest.mock("@src/clients/analytics/vendor");
 
 interface MockAnalyticsContextWithChildren {
-  children?: React.ReactNode;
+  children?: ReactNode;
   mockContext: AnalyticsContextInterface;
 }
 
 describe("useAnalytics", () => {
-  let mockSetInitialized: jest.Mock;
   let originalEnvironment: typeof process.env;
   let received: ReturnType<typeof arrange>;
-  const mockMouseEvent = {
-    currentTarget: {},
-  } as React.MouseEvent<HTMLInputElement>;
+
   const mockButtonName = "MockButtonName";
   const mockButtonClickEvent = new EventDefinition({
     action: `CLICKED: ${mockButtonName}`,
@@ -47,8 +45,18 @@ describe("useAnalytics", () => {
     label: "INTERNAL_LINK",
   });
 
+  const mockMouseEvent = {
+    currentTarget: {},
+  } as MouseEvent<HTMLInputElement>;
+
+  const mockSetInitialized = jest.fn();
+
   beforeAll(() => {
     originalEnvironment = process.env;
+  });
+
+  afterAll(() => {
+    process.env = originalEnvironment;
   });
 
   beforeEach(() => {
@@ -56,11 +64,6 @@ describe("useAnalytics", () => {
     jest.spyOn(console, "group").mockImplementation(() => jest.fn());
     jest.spyOn(console, "groupEnd").mockImplementation(() => jest.fn());
     jest.spyOn(console, "log").mockImplementation(() => jest.fn());
-    mockSetInitialized = jest.fn();
-  });
-
-  afterAll(() => {
-    process.env = originalEnvironment;
   });
 
   const providerWrapper = ({

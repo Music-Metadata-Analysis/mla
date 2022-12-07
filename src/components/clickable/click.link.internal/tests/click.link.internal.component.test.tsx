@@ -1,10 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ClickInternalLink from "../click.link.internal.component";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Box"])

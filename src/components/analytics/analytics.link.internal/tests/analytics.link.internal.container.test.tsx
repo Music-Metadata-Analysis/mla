@@ -3,7 +3,7 @@ import AnalyticsInternalLinkWrapper from "../analytics.link.internal.component";
 import AnalyticsInternalLinkWrapperContainer from "../analytics.link.internal.container";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("../analytics.link.internal.component", () =>
   require("@fixtures/react/parent").createComponent(

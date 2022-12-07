@@ -4,11 +4,11 @@ import Consent from "../consent.component";
 import ConsentContainer from "../consent.container";
 import translations from "@locales/main.json";
 import { settings } from "@src/config/cookies";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("@src/hooks/locale.hook");
 
