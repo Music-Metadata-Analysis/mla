@@ -16,3 +16,5 @@ const useMetrics = () => {
 };
 
 export default useMetrics;
+
+export type MetricsHookType = ReturnType<typeof useMetrics>;
