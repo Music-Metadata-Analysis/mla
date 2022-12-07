@@ -8,7 +8,7 @@ import { MockReportClass } from "@src/components/reports/lastfm/common/report.cl
 import mockFlipCardController from "@src/components/reports/lastfm/common/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import Events from "@src/events/events";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
-import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
+import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import { _t, MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockMetricsHook from "@src/hooks/__mocks__/metrics.hook.mock";
 import mockImageController from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";

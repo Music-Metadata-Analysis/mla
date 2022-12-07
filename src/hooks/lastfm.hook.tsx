@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext } from "react";
 import useAnalytics from "./analytics.hook";
 import LastFMPlayCountByArtistDataClient from "@src/clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class";
 import LastFMTopAlbumsReport from "@src/clients/api/lastfm/reports/top20.albums.class";
@@ -17,7 +17,7 @@ import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 const useLastFM = () => {
   const analytics = useAnalytics();
-  const { userProperties, dispatch } = React.useContext(UserContext) as {
+  const { userProperties, dispatch } = useContext(UserContext) as {
     userProperties: LastFMUserStateBase;
     dispatch: userDispatchType;
   };
@@ -30,7 +30,7 @@ const useLastFM = () => {
     instance.retrieveReport({ userName });
   };
 
-  const createSunburstReport = <AggregateReportType>(
+  const createSunburstReport = <AggregateReportType,>(
     reportClass: SunBurstReportConstructor<AggregateReportType>,
     encapsulationClass: SunBurstEncapsulationConstructor<AggregateReportType>,
     userName: string
@@ -88,3 +88,5 @@ const useLastFM = () => {
 };
 
 export default useLastFM;
+
+export type LastFMHookType = ReturnType<typeof useLastFM>;

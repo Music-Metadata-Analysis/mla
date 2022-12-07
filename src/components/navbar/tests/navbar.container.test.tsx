@@ -8,7 +8,7 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/auth.hook");
 
-jest.mock("@src/hooks/lastfm");
+jest.mock("@src/hooks/lastfm.hook");
 
 jest.mock("../controllers/navbar.layout.controller.hook");
 

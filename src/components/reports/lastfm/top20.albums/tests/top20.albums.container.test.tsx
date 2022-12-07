@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import Top20AlbumsContainer from "../top20.albums.container";
 import Top20AlbumsReport from "../top20.albums.report.class";
 import FlipCardReportContainer from "@src/components/reports/lastfm/common/report.component/flip.card/flip.card.report.container";
-import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
+import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import ImagesControllerProvider from "@src/providers/controllers/images/images.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
