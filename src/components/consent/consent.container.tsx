@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import Consent from "./consent.component";
 import { settings } from "@src/config/cookies";
-import useAnalytics from "@src/hooks/analytics";
+import useAnalytics from "@src/hooks/analytics.hook";
 import useLocale from "@src/hooks/locale.hook";
 
 export default function ConsentContainer() {

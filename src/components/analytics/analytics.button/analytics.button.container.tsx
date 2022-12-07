@@ -1,5 +1,5 @@
 import AnalyticsButtonWrapper from "./analytics.button.component";
-import useAnalytics from "@src/hooks/analytics";
+import useAnalytics from "@src/hooks/analytics.hook";
 import type { MouseEventHandler } from "react";
 
 interface AnalyticsWrapperProps {

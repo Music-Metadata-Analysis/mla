@@ -4,7 +4,7 @@ import AnalyticsGenericWrapperContainer from "../analytics.generic.container";
 import Event from "@src/events/event.class";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("../analytics.generic.component", () =>
   require("@fixtures/react/parent").createComponent("AnalyticsGenericWrapper")

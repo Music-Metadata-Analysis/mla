@@ -3,7 +3,7 @@ import AnalyticsButtonWrapper from "../analytics.button.component";
 import AnalyticsButtonWrapperContainer from "../analytics.button.container";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("../analytics.button.component", () =>
   require("@fixtures/react/parent").createComponent("AnalyticsButtonWrapper")

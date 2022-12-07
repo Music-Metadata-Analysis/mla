@@ -7,7 +7,7 @@ import LastFMErrorDisplayContainer from "@src/components/reports/lastfm/common/e
 import { MockReportClass } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.last.fm.report.class";
 import mockFlipCardController from "@src/components/reports/lastfm/common/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import Events from "@src/events/events";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.mock";
 import { _t, MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockMetricsHook from "@src/hooks/__mocks__/metrics.mock";
@@ -16,7 +16,7 @@ import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock(
   "@src/components/reports/lastfm/common/report.component/flip.card/controllers/flip.card.controller.hook"

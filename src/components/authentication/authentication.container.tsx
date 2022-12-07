@@ -3,7 +3,7 @@ import SignInModalContainer from "./modals/signin/modal.signin.container";
 import SpinnerModalContainer from "./modals/spinner/modal.spinner.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import useAnalytics from "@src/hooks/analytics";
+import useAnalytics from "@src/hooks/analytics.hook";
 import useAuth from "@src/hooks/auth.hook";
 import useRouter from "@src/hooks/router.hook";
 import useToggle from "@src/hooks/utility/toggle.hook";

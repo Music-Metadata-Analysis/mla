@@ -4,7 +4,7 @@ import mockControllerHook from "../../controllers/__mocks__/navbar.layout.contro
 import NavBarMobileMenu, { testIDs } from "../navbar.mobile.menu.component";
 import NavBarOptions from "@src/components/navbar/options/navbar.options.component";
 import navConfig from "@src/config/navbar";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.mock";
+import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";

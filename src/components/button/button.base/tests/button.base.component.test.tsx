@@ -6,7 +6,7 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
-jest.mock("@src/hooks/analytics");
+jest.mock("@src/hooks/analytics.hook");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
