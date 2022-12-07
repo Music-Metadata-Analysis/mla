@@ -7,7 +7,7 @@ import Events from "@src/events/events";
 import useAnalytics from "@src/hooks/analytics.hook";
 import useSunBurstController from "@src/hooks/controllers/sunburst.controller.hook";
 import useLocale from "@src/hooks/locale.hook";
-import useMetrics from "@src/hooks/metrics";
+import useMetrics from "@src/hooks/metrics.hook";
 import type SunBurstBaseReport from "@src/components/reports/lastfm/common/report.class/sunburst.report.base.class";
 import type SunBurstBaseReportState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { LastFMSunBurstDrawerInterface } from "@src/types/clients/api/lastfm/drawer.component.types";
