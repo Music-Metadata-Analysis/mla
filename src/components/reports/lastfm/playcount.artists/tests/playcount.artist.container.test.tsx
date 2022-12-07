@@ -4,7 +4,7 @@ import PlayCountByArtistContainer, {
 } from "../playcount.artists.container";
 import PlayCountByArtistReport from "../playcount.artists.report.class";
 import SunBurstContainer from "@src/components/reports/lastfm/common/report.component/sunburst/sunburst.report.container";
-import mockUserHook from "@src/hooks/__mocks__/lastfm.mock";
+import mockUserHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import {
   getMockComponentProp,
   getMockComponentPropCount,

@@ -3,7 +3,7 @@ import ErrorBoundaryContainer from "@src/components/errors/boundary/error.bounda
 import settings from "@src/config/lastfm";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import useLastFM from "@src/hooks/lastfm";
+import useLastFM from "@src/hooks/lastfm.hook";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
 
 interface LastFMReportPage<T extends userHookAsLastFM> {

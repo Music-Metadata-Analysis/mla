@@ -2,8 +2,8 @@ import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
-import mockHookValues from "../__mocks__/lastfm.mock";
-import useLastFM from "../lastfm";
+import mockHookValues from "../__mocks__/lastfm.hook.mock";
+import useLastFM from "../lastfm.hook";
 import LastFMPlayCountByArtistDataClient from "@src/clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class";
 import LastFMTopAlbumsReport from "@src/clients/api/lastfm/reports/top20.albums.class";
 import LastFMTopArtistsReport from "@src/clients/api/lastfm/reports/top20.artists.class";
@@ -12,6 +12,7 @@ import PlayCountByArtistStateEncapsulation from "@src/providers/user/encapsulati
 import { InitialState } from "@src/providers/user/user.initial";
 import { UserContext } from "@src/providers/user/user.provider";
 import type { UserContextInterface } from "@src/types/user/context.types";
+import type { ReactNode } from "react";
 
 jest.mock("@src/hooks/router.hook");
 
@@ -30,14 +31,16 @@ jest.mock(
 );
 
 interface MockUserContextWithChildren {
-  children?: React.ReactNode;
+  children?: ReactNode;
   mockContext: UserContextInterface;
 }
 
 describe("useLastFM", () => {
-  const mockUserName = "user1234";
-  const mockDispatch = jest.fn();
   let received: ReturnType<typeof arrange>;
+
+  const mockUserName = "user1234";
+
+  const mockDispatch = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
