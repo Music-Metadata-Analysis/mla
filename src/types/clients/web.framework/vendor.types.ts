@@ -2,7 +2,9 @@ export type {
   VendorApiRequest,
   VendorApiResponse,
   VendorAppComponentProps,
+  VendorUtilities,
 } from "@src/clients/web.framework/vendor.types";
+import type { VendorUtilities } from "@src/clients/web.framework/vendor.types";
 import type { ReactNode } from "react";
 
 export interface VendorRouterHookInterface {
@@ -31,4 +33,8 @@ export interface WebFrameworkVendor {
   isBuildTime: () => boolean;
   isSSR: () => boolean;
   routerHook: () => VendorRouterHookInterface;
+}
+
+export interface WebFrameworkVendorSSR {
+  utilities: VendorUtilities;
 }
