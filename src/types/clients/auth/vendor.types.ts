@@ -1,4 +1,5 @@
 import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
+export type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
 import type { ReactElement, JSXElementConstructor, ReactNode } from "react";
 
 export interface AuthVendor {

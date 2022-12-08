@@ -1,6 +1,6 @@
 import { useColorMode } from "@chakra-ui/react";
 import { useMemo } from "react";
-import type { VendorColourType } from "@src/clients/ui.framework/vendor.types";
+import type { VendorColourType } from "@src/types/clients/ui.framework/vendor.types";
 
 const useChakraColour = () => {
   const { colorMode } = useColorMode();

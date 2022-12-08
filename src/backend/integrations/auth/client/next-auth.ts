@@ -1,13 +1,13 @@
 import { getToken } from "next-auth/jwt";
 import { normalizeNull } from "@src/utils/voids";
+import type { VendorApiRequest } from "@src/types/clients/web.framework/vendor.types";
 import type { AuthVendorClientInterface } from "@src/types/integrations/auth/vendor.types";
-import type { NextApiRequest } from "next";
 
 export default class NextAuthClient implements AuthVendorClientInterface {
-  protected request: NextApiRequest;
+  protected request: VendorApiRequest;
 
   constructor(request: unknown) {
-    this.request = request as NextApiRequest;
+    this.request = request as VendorApiRequest;
   }
 
   getSession = async () => {

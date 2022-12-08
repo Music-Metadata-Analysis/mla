@@ -1,7 +1,6 @@
 import { knownStatuses } from "@src/config/api";
 import requestSettings from "@src/config/requests";
 import * as status from "@src/config/status";
-import type LastFMProxy from "@src/backend/integrations/lastfm/proxy.class";
 import type { ProxyError } from "@src/errors/proxy.error.class";
 import type {
   LastFMEndpointRequest,
@@ -9,20 +8,18 @@ import type {
   QueryParamType,
   BodyType,
 } from "@src/types/api.endpoint.types";
+import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 import type { NextConnect } from "next-connect";
 
 export default abstract class LastFMEndpointBase {
-  timeOut = requestSettings.timeout;
-  proxy!: LastFMProxy;
-  route!: string;
   private connectionTimeout: NodeJS.Timeout | undefined;
+  timeOut = requestSettings.timeout;
+  proxy!: LastFMProxyInterface;
+  route!: string;
 
-  abstract getProxyResponse(params: QueryParamType | BodyType): Promise<
-    | {
-        [key: string]: unknown;
-      }
-    | unknown[]
-  >;
+  abstract getProxyResponse(
+    params: QueryParamType | BodyType
+  ): ReturnType<LastFMProxyInterface[keyof LastFMProxyInterface]>;
 
   abstract create(): NextConnect<LastFMEndpointRequest, LastFMEndpointResponse>;
 

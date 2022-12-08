@@ -4,11 +4,17 @@ import type {
   VendorConfigType,
   VendorProviderProps,
 } from "@src/clients/ui.framework/vendor.types";
-export type { VendorColourModeType } from "@src/clients/ui.framework/vendor.types";
+export type {
+  VendorColourType,
+  VendorColourHookType,
+  VendorColourModeType,
+  VendorProviderProps,
+  VendorStateType,
+} from "@src/clients/ui.framework/vendor.types";
 import type { PopUpComponentType } from "@src/types/controllers/popups/component.popups.types";
 import type { PopUpComponentNameType } from "@src/types/controllers/popups/popups.state.types";
 
-interface VendorColourModeHookInterface {
+export interface VendorColourModeHookInterface {
   colourMode: VendorColourModeType;
   toggle: () => void;
 }
