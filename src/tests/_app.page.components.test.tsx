@@ -14,8 +14,8 @@ import MLA, { getInitialProps } from "@src/pages/_app";
 import RootProvider from "@src/providers/root.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import { normalizeUndefined } from "@src/utils/voids";
-import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
-import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
+import type { VendorAuthStateType } from "@src/types/clients/auth/vendor.types";
+import type { VendorFlagStateType } from "@src/types/clients/flags/vendor.types";
 import type { AppContext, AppProps } from "next/app";
 import type { Router } from "next/router";
 

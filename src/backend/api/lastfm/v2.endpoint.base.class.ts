@@ -11,11 +11,10 @@ import type {
   LastFMEndpointResponse,
   PathParamType,
 } from "@src/types/api.endpoint.types";
+import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointBase {
   timeOut = requestSettings.timeout;
-  proxy!: LastFMProxy;
-  route!: string;
   maxAgeValue!: number;
   delay = 500;
   flag: string | null = null;
@@ -26,7 +25,11 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
     return [params, error];
   }
 
-  isProxyResponseValid(proxyResponse: { [key: string]: unknown } | unknown[]) {
+  isProxyResponseValid(
+    proxyResponse: Awaited<
+      ReturnType<LastFMProxyInterface[keyof LastFMProxyInterface]>
+    >
+  ) {
     if (proxyResponse) return true;
     return false;
   }
@@ -99,7 +102,9 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
   private validProxyResponse(
     req: LastFMEndpointRequest,
     res: LastFMEndpointResponse,
-    proxyResponse: { [key: string]: unknown } | unknown[]
+    proxyResponse: Awaited<
+      ReturnType<LastFMProxyInterface[keyof LastFMProxyInterface]>
+    >
   ) {
     req.proxyResponse = "Success!";
     res.setHeader("Cache-Control", ["public", `max-age=${this.maxAgeValue}`]);

@@ -27,9 +27,7 @@ class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV1 {
       });
     }
     await sleep(this.timeOut * 2);
-    return {
-      expired: "expired",
-    };
+    return [];
   }
 }
 
@@ -41,9 +39,7 @@ class ConcreteErrorClass extends LastFMApiEndpointFactoryV1 {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getProxyResponse(_: BodyType) {
     throw new ProxyError(this.mockError, this.errorCode);
-    return {
-      error: "error",
-    };
+    return [];
   }
 }
 

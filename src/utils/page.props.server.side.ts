@@ -1,5 +1,5 @@
 import localeVendorSSR from "@src/clients/locale/vendor.ssr";
-import type { LocaleVendorSSRReturnType } from "@src/clients/locale/vendor.types";
+import type { LocaleVendorSSRReturnType } from "@src/types/clients/locale/vendor.types";
 import type { GetServerSideProps } from "next";
 
 interface pagePropsGeneratorInterface {

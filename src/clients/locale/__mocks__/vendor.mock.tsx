@@ -1,8 +1,8 @@
-import type { VendorAppComponentProps } from "@src/clients/web.framework/vendor.types";
 import type {
   LocaleVendor,
   LocaleVendorHookInterface,
 } from "@src/types/clients/locale/vendor.types";
+import type { VendorAppComponentProps } from "@src/types/clients/web.framework/vendor.types";
 
 export const mockLocaleVendorHOCIdentifier = "mockLocaleVendorHOCIdentifier";
 

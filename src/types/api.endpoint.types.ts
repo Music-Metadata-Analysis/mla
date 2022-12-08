@@ -1,4 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type {
+  VendorApiRequest,
+  VendorApiResponse,
+} from "@src/types/clients/web.framework/vendor.types";
 import type {
   createRequest,
   createResponse,
@@ -6,21 +9,21 @@ import type {
   MockRequest,
 } from "node-mocks-http";
 
-export interface LastFMEndpointRequest extends NextApiRequest {
+export interface LastFMEndpointRequest extends VendorApiRequest {
   proxyResponse?: string;
   proxyTimeoutInstance?: NodeJS.Timeout;
 }
 
-export type LastFMEndpointResponse = NextApiResponse;
+export type LastFMEndpointResponse = VendorApiResponse;
 
 export type BodyType = { [key: string]: string };
 export type QueryParamType = { [key: string]: string[] | string };
 export type PathParamType = { [key: string]: string };
 
 export type MockAPIResponse = MockResponse<
-  NextApiResponse & ReturnType<typeof createResponse>
+  VendorApiResponse & ReturnType<typeof createResponse>
 >;
 
 export type MockAPIRequest = MockRequest<
-  NextApiRequest & ReturnType<typeof createRequest>
+  VendorApiRequest & ReturnType<typeof createRequest>
 >;

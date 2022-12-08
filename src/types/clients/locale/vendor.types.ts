@@ -1,3 +1,4 @@
+export type { LocaleVendorSSRReturnType } from "@src/clients/locale/vendor.types";
 import type { VendorAppComponentProps } from "@src/clients/web.framework/vendor.types";
 import type { ComponentClass, FunctionComponent } from "react";
 

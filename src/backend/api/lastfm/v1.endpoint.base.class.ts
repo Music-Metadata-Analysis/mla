@@ -14,8 +14,6 @@ import type {
 export default abstract class LastFMApiEndpointFactoryV1 extends LastFMEndpointBase {
   sunsetDate = new Date("Wed, 1 Jan 2023 00:00:00 GMT");
   timeOut = requestSettings.timeout;
-  proxy!: LastFMProxy;
-  route!: string;
 
   create() {
     const handler = nextConnect<LastFMEndpointRequest, LastFMEndpointResponse>({

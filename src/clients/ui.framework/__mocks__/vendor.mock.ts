@@ -1,4 +1,4 @@
-import type { VendorColourModeType } from "@src/clients/ui.framework/vendor.types";
+import type { VendorColourModeType } from "@src/types/clients/ui.framework/vendor.types";
 
 export const mockColourModeHook = {
   colourMode: "dark" as VendorColourModeType,

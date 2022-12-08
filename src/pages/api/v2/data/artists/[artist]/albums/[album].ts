@@ -4,14 +4,22 @@ import type {
   LastFMEndpointRequest,
   PathParamType,
 } from "@src/types/api.endpoint.types";
+import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 class ArtistTopAlbums extends LastFMApiEndpointFactoryV2 {
   route = apiRoutes.v2.data.artists.albumsGet;
   maxAgeValue = 3600 * 24;
 
-  isProxyResponseValid(proxyResponse: { [key: string]: unknown }) {
+  isProxyResponseValid(
+    proxyResponse: Awaited<
+      ReturnType<LastFMProxyInterface[keyof LastFMProxyInterface]>
+    >
+  ) {
     if (proxyResponse.hasOwnProperty("userplaycount")) {
-      if (typeof proxyResponse["userplaycount"] === "object") {
+      if (
+        typeof (proxyResponse as { userplaycount?: unknown }).userplaycount ===
+        "object"
+      ) {
         return false;
       }
     }
