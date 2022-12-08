@@ -1,8 +1,8 @@
+import webFrameworkVendorSSR from "@src/clients/web.framework/vendor.ssr";
 import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import TermsOfServiceContainer from "@src/components/legal/terms/terms.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import pagePropsGenerator from "@src/utils/page.props.server.side";
 import { voidFn } from "@src/utils/voids";
 
 export default function TermsOfServicePage() {
@@ -17,7 +17,8 @@ export default function TermsOfServicePage() {
   );
 }
 
-export const getServerSideProps = pagePropsGenerator({
-  pageKey: "terms",
-  translations: ["legal"],
-});
+export const getServerSideProps =
+  webFrameworkVendorSSR.utilities.serverSideProps({
+    pageKey: "terms",
+    translations: ["legal"],
+  });

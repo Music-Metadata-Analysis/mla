@@ -1,11 +1,11 @@
 import webFrameworkVendor from "@src/clients/web.framework/vendor";
+import webFrameworkVendorSSR from "@src/clients/web.framework/vendor.ssr";
 import Condition from "@src/components/condition/condition.component";
 import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import useRouter from "@src/hooks/router.hook";
-import pagePropsGenerator from "@src/utils/page.props.static";
 import { voidFn } from "@src/utils/voids";
 
 export default function Custom404() {
@@ -28,4 +28,6 @@ export default function Custom404() {
   );
 }
 
-export const getStaticProps = pagePropsGenerator({ pageKey: "default" });
+export const getStaticProps = webFrameworkVendorSSR.utilities.staticProps({
+  pageKey: "default",
+});
