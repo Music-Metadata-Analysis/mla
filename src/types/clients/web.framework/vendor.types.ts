@@ -1,3 +1,8 @@
+export type {
+  VendorApiRequest,
+  VendorApiResponse,
+  VendorAppComponentProps,
+} from "@src/clients/web.framework/vendor.types";
 import type { ReactNode } from "react";
 
 export interface VendorRouterHookInterface {

@@ -5,8 +5,11 @@ import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
 import nextAuthConfiguration from "@src/backend/integrations/auth/config/next-auth";
 import flagVendor from "@src/backend/integrations/flags/vendor";
+import type {
+  VendorApiRequest,
+  VendorApiResponse,
+} from "@src/types/clients/web.framework/vendor.types";
 import type { ProfilePersistanceClientConstructorType } from "@src/types/integrations/auth/vendor.types";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 export const getGroup = (identifier: unknown) => {
   const hashAsString = JSON.parse(
@@ -21,7 +24,7 @@ const createRoutes = (
   PersistanceClient: ProfilePersistanceClientConstructorType
 ) => {
   return async function NextAuthApiRoutes(req: unknown, res: unknown) {
-    return await NextAuth(req as NextApiRequest, res as NextApiResponse, {
+    return await NextAuth(req as VendorApiRequest, res as VendorApiResponse, {
       callbacks: {
         jwt: async ({ token }) => {
           if (token) {

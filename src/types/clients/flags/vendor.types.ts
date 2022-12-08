@@ -1,4 +1,5 @@
 import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
+export type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
 import type { ReactElement, JSXElementConstructor, ReactNode } from "react";
 
 export interface FlagVendor {

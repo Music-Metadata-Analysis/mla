@@ -1,4 +1,4 @@
-import type { VendorColourType } from "@src/clients/ui.framework/vendor.types";
+import type { VendorColourType } from "@src/types/clients/ui.framework/vendor.types";
 
 let colourIndex = 1;
 

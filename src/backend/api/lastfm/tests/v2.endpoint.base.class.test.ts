@@ -16,6 +16,7 @@ import type {
   MockAPIResponse,
 } from "@src/types/api.endpoint.types";
 import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
+import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV2 {
   route = "/api/v2/endpoint/:username";
@@ -31,9 +32,7 @@ class ConcreteTimeoutClass extends LastFMApiEndpointFactoryV2 {
       });
     }
     await sleep(this.timeOut * 2);
-    return {
-      expired: "expired",
-    };
+    return [];
   }
 }
 
@@ -47,9 +46,7 @@ class ConcreteErrorClass extends LastFMApiEndpointFactoryV2 {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getProxyResponse(_: QueryParamType) {
     throw new ProxyError(this.mockError, this.errorCode);
-    return {
-      error: "error",
-    };
+    return [];
   }
 }
 
@@ -59,7 +56,9 @@ class ConcreteProxyErrorClass extends LastFMApiEndpointFactoryV2 {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getProxyResponse(_: QueryParamType) {
-    return undefined as never as unknown[];
+    return undefined as unknown as ReturnType<
+      LastFMProxyInterface["getAlbumInfo"]
+    >;
   }
 }
 

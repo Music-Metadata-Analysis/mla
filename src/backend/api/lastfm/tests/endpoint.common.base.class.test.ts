@@ -34,7 +34,7 @@ class ConcreteClass extends LastFMEndpointBase {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getProxyResponse(param: BodyType) {
     if (param.error) throw new Error("Unknown Proxy Error");
-    return { ok: true };
+    return [];
   }
 }
 
@@ -170,7 +170,7 @@ describe("LastFMEndpointBase", () => {
 
             it("should return a 200", () => {
               expect(mockRes._getStatusCode()).toBe(200);
-              expect(mockRes._getJSONData()).toStrictEqual({ ok: true });
+              expect(mockRes._getJSONData()).toStrictEqual([]);
             });
           });
 
