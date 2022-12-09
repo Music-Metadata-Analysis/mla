@@ -9,7 +9,6 @@ class LastFMTrackInfo<
   LastFMTrackInfoInterface
 > {
   route = apiRoutes.v2.data.artists.tracksGet;
-  eventType = "TRACK INFO" as const;
 }
 
 export default LastFMTrackInfo;

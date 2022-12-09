@@ -9,7 +9,6 @@ class LastFMAlbumInfo<
   LastFMAlbumInfoInterface
 > {
   route = apiRoutes.v2.data.artists.albumsGet;
-  eventType = "ALBUM INFO" as const;
 }
 
 export default LastFMAlbumInfo;

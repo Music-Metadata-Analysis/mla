@@ -9,7 +9,6 @@ class UserArtistsAndProfile<
   LastFMTopArtistsReportResponseInterface
 > {
   route = apiRoutes.v2.reports.lastfm.top20artists;
-  eventType = "TOP20 ARTISTS" as const;
 }
 
 export default UserArtistsAndProfile;

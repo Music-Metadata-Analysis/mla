@@ -1,5 +1,4 @@
 import LastFMBaseClient from "@src/clients/api/lastfm/lastfm.api.client.base.class";
-import EventDefinition from "@src/events/event.class";
 import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { EventCreatorType } from "@src/types/analytics.types";
 import type { LastFMReportParamsInterface } from "@src/types/clients/api/lastfm/request.types";
@@ -43,7 +42,11 @@ abstract class LastFMBaseSunBurstDataPointClient<
 
   protected handleBegin(params: LastFMReportParamsInterface): void {
     if (this.isInitialParams(params)) {
-      super.handleBegin(params);
+      this.dispatch({
+        type: "StartFetch",
+        userName: params.userName,
+        integration: this.integration,
+      });
     } else {
       this.dispatch({
         type: "DataPointStartFetch",
@@ -104,13 +107,6 @@ abstract class LastFMBaseSunBurstDataPointClient<
           data: this.getDispatchState(),
           integration: this.integration,
         });
-        this.eventDispatch(
-          new EventDefinition({
-            category: "LAST.FM",
-            label: "RESPONSE",
-            action: `${this.eventType}: RECEIVED RESPONSE FROM LAST.FM.`,
-          })
-        );
       } else {
         this.dispatch({
           type: "DataPointSuccessFetch",

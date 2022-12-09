@@ -39,17 +39,6 @@ describe("LastFMBaseSunBurstDataClient", () => {
     removeEntity: jest.fn(),
   };
 
-  const requestEvent = new EventDefinition({
-    category: "LAST.FM",
-    label: "REQUEST",
-    action: `${reportType}: REQUEST WAS SENT TO LAST.FM.`,
-  });
-  const responseEvent = new EventDefinition({
-    category: "LAST.FM",
-    label: "RESPONSE",
-    action: `${reportType}: RECEIVED RESPONSE FROM LAST.FM.`,
-  });
-
   beforeEach(() => {
     jest.clearAllMocks();
     mockRequest = jest.spyOn(APIClient.prototype, "request");
@@ -134,18 +123,6 @@ describe("LastFMBaseSunBurstDataClient", () => {
               integration: integrationType,
             });
           });
-
-          it("should register events correctly", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
-            expect(mockEvent).toHaveBeenCalledWith(requestEvent);
-            expect(mockEvent).toHaveBeenCalledWith(
-              new EventDefinition({
-                category: "LAST.FM",
-                label: "RESPONSE",
-                action: `${reportType}: RECEIVED RESPONSE FROM LAST.FM.`,
-              })
-            );
-          });
         });
 
         describe("when called with non-initial params", () => {
@@ -177,9 +154,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
           });
 
-          it("should register events correctly", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(1));
-            expect(mockEvent).toHaveBeenCalledWith(responseEvent);
+          it("should NOT emit any analytics events", () => {
+            expect(mockEvent).toBeCalledTimes(0);
           });
         });
       });
@@ -222,9 +198,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
           });
 
-          it("should register events correctly", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(1));
-            expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+          it("should NOT emit any analytics events", () => {
+            expect(mockEvent).toBeCalledTimes(0);
           });
         });
 
@@ -255,8 +230,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
           });
 
-          it("should register events correctly", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(0));
+          it("should NOT emit any analytics events", () => {
+            expect(mockEvent).toBeCalledTimes(0);
           });
         });
       });
@@ -294,9 +269,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           expect(mockState.removeEntity).toBeCalledTimes(0);
         });
 
-        it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
-          expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+        it("should emit an analytics event for the error", () => {
+          expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new EventDefinition({
               category: "LAST.FM",
@@ -332,8 +306,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           );
         });
 
-        it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(0));
+        it("should NOT emit any analytics events", () => {
+          expect(mockEvent).toBeCalledTimes(0);
         });
       });
     });
@@ -366,9 +340,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
         });
 
-        it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
-          expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+        it("should emit an analytics event for an unauthorized request", () => {
+          expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new EventDefinition({
               category: "LAST.FM",
@@ -398,8 +371,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
         });
 
-        it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(1));
+        it("should emit an analytics event for an unauthorized request", () => {
+          expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new EventDefinition({
               category: "LAST.FM",
@@ -443,9 +416,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           expect(mockState.removeEntity).toBeCalledTimes(0);
         });
 
-        it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
-          expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+        it("should emit an analytics event for the unknown entity", () => {
+          expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new EventDefinition({
               category: "LAST.FM",
@@ -481,8 +453,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           );
         });
 
-        it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(0));
+        it("should NOT emit any analytics events", () => {
+          expect(mockEvent).toBeCalledTimes(0);
         });
       });
     });
@@ -514,9 +486,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
         });
 
-        it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
-          expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+        it("should emit and analytics event for being ratelimited", () => {
+          expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new EventDefinition({
               category: "LAST.FM",
@@ -546,8 +517,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
         });
 
-        it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(1));
+        it("should emit and analytics event for being ratelimited", () => {
+          expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new EventDefinition({
               category: "LAST.FM",
@@ -594,9 +565,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
           });
 
-          it("should NOT register events", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(1));
-            expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+          it("should NOT emit any analytics events", () => {
+            expect(mockEvent).toBeCalledTimes(0);
           });
         });
 
@@ -618,8 +588,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
           });
 
-          it("should NOT register events", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(0));
+          it("should NOT emit any analytics events", () => {
+            expect(mockEvent).toBeCalledTimes(0);
           });
         });
       });
@@ -652,9 +622,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
           });
 
-          it("should register a failure event", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
-            expect(mockEvent).toHaveBeenCalledWith(requestEvent);
+          it("should register an analytics event for the error", () => {
+            expect(mockEvent).toBeCalledTimes(1);
             expect(mockEvent).toHaveBeenCalledWith(
               new EventDefinition({
                 category: "LAST.FM",
@@ -685,8 +654,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
           });
 
-          it("should register a failure event", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(1));
+          it("should register an analytics event for the error", () => {
+            expect(mockEvent).toBeCalledTimes(1);
             expect(mockEvent).toHaveBeenCalledWith(
               new EventDefinition({
                 category: "LAST.FM",

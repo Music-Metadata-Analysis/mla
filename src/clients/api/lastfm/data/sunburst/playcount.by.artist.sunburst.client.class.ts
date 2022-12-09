@@ -10,6 +10,7 @@ class LastFMPlayCountByArtistDataClient extends LastFMSunburstDataClient<
 > {
   dataPointClasses = [AlbumInfo, ArtistAlbums, UserArtistsAndProfile];
   defaultRoute = apiRoutes.v2.reports.lastfm.top20artists;
+  eventType = "PLAYCOUNT BY ARTIST" as const;
 }
 
 export default LastFMPlayCountByArtistDataClient;
