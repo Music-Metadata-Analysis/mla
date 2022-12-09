@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import { testIDs as NavBarMobileMenuTestIDs } from "../mobile.menu/navbar.mobile.menu.component";
+import { testIDs as NavBarMobileMenuTestIDs } from "../mobile.menu/navbar.mobile.menu.identifiers";
 import NavBarContainer from "../navbar.container";
-import { testIDs as NavBarRootTestIDs } from "../root/navbar.root.component";
+import { testIDs as NavBarRootTestIDs } from "../root/navbar.root.identifiers";
 import navbarTranslations from "@locales/navbar.json";
 import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import NavConfig from "@src/config/navbar";

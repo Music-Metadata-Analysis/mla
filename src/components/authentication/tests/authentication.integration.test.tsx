@@ -6,8 +6,8 @@ import {
   within,
 } from "@testing-library/react";
 import AuthenticationContainer from "../authentication.container";
-import { testIDs as AuthModalTestIDs } from "../modals/signin/modal.signin.component";
-import { testIDs as SpinnerModalTestIDs } from "../modals/spinner/modal.spinner.component";
+import { testIDs as AuthModalTestIDs } from "../modals/signin/modal.signin.identifiers";
+import { testIDs as SpinnerModalTestIDs } from "../modals/spinner/modal.spinner.identifiers";
 import authenticationTranslations from "@locales/authentication.json";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";

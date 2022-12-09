@@ -1,14 +1,11 @@
 import * as d3 from "d3";
 import { Component } from "react";
+import { classes, ids, testIDs } from "./svg.identifiers";
 import RGB from "@src/utils/colours/rgb.class";
 import { valueToZero } from "@src/utils/numeric";
 import { alwaysString, truncate } from "@src/utils/strings";
 import type { SunBurstData, d3Node } from "@src/types/reports/sunburst.types";
 import type { RefObject } from "react";
-
-export const testIDs = {
-  SunBurstChartSVG: "SunBurstChartSVG",
-};
 
 export interface SunBurstChartSVGProps {
   containerSize: number;
@@ -88,7 +85,7 @@ export default class SunBurstChartSVG extends Component<SunBurstChartSVGProps> {
 
   private updateColours = (colourSet: SunBurstChartSVGProps["colourSet"]) => {
     this.graphic.g
-      .select<SVGTextElement>("#SunburstPercentageDisplay")
+      .select<SVGTextElement>(`#${classes.SunburstPercentageDisplay}`)
       .style("fill", colourSet.foreground);
     this.graphic.nodeLabels.style("fill", colourSet.foreground);
   };
@@ -101,12 +98,12 @@ export default class SunBurstChartSVG extends Component<SunBurstChartSVGProps> {
     this.setNodeLabels();
     if (p !== this.graphic.root) {
       this.graphic.g
-        .select<SVGTextElement>("#SunburstPercentageDisplay")
+        .select<SVGTextElement>(`#${classes.SunburstPercentageDisplay}`)
         .style("cursor", "pointer")
         .on("click", () => this.props.setSelectedNode(p.parent as d3Node));
     } else {
       this.graphic.g
-        .select<SVGTextElement>("#SunburstPercentageDisplay")
+        .select<SVGTextElement>(`#${classes.SunburstPercentageDisplay}`)
         .style("cursor", null)
         .on("click", null);
     }
@@ -251,7 +248,7 @@ export default class SunBurstChartSVG extends Component<SunBurstChartSVGProps> {
   private createPathClickInterface = () => {
     this.graphic.path
       .filter((d) => this.isArcVisible(d))
-      .attr("class", "ClickableNode")
+      .attr("class", classes.SunBurstClickableNode)
       .style("cursor", "pointer")
       .on("click", this.clickInterface);
   };
@@ -286,8 +283,8 @@ export default class SunBurstChartSVG extends Component<SunBurstChartSVGProps> {
 
   private setMainTitle = (d: d3Node) => {
     this.graphic.g
-      .select<SVGTextElement>("#SunburstPercentageDisplay")
-      .attr("class", "SunburstPercentageDisplay")
+      .select<SVGTextElement>(`#${classes.SunburstPercentageDisplay}`)
+      .attr("class", classes.SunburstPercentageDisplay)
       .style("fill", this.props.colourSet.foreground)
       .text(`${this.getPercentage(d.value)}%`);
   };
@@ -382,7 +379,7 @@ export default class SunBurstChartSVG extends Component<SunBurstChartSVGProps> {
     this.graphic.g
       .append("text")
       .datum(this.graphic.root)
-      .attr("id", "SunburstPercentageDisplay")
+      .attr("id", ids.SunburstPercentageDisplay)
       .attr("font-size", this.percentageFontSize)
       .attr("x", 0)
       .attr("dy", ".35em")
@@ -399,7 +396,7 @@ export default class SunBurstChartSVG extends Component<SunBurstChartSVGProps> {
       .data(this.graphic.root.descendants().slice(1))
       .join("text")
       .filter((d) => !this.isLeafNode(d))
-      .attr("class", "NodeLabel")
+      .attr("class", classes.SunBurstNodeLabel)
       .attr("dy", "0.35em")
       .style("fill", this.props.colourSet.foreground)
       .attr("fill-opacity", (d) => +this.isLabelVisible(d.current))
@@ -416,7 +413,7 @@ export default class SunBurstChartSVG extends Component<SunBurstChartSVGProps> {
       .selectAll<SVGTextElement, SVGTextElement>("text")
       .nodes()
       .forEach((el) => {
-        if (el && el.getAttribute("class") == "NodeLabel") {
+        if (el && el.getAttribute("class") == classes.SunBurstNodeLabel) {
           const width = el.getComputedTextLength();
           const charWidth = width / el.innerHTML.length;
           const maximumCharacters = Math.floor(this.maxLabelLength / charWidth);

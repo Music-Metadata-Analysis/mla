@@ -3,10 +3,8 @@ import { BoxWithRef, Flex, Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import Option from "../option/report.option.component";
-import ReportSelect, {
-  ReportSelectProps,
-  ids,
-} from "../select.report.component";
+import ReportSelect, { ReportSelectProps } from "../select.report.component";
+import { ids } from "../select.report.identifiers";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";

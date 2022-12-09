@@ -1,9 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import Dialogue, {
-  DialogueProps,
-  testIDs,
-} from "../dialogue.resizable.component";
+import Dialogue, { DialogueProps } from "../dialogue.resizable.component";
+import { testIDs } from "../dialogue.resizable.identifiers";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import { mockUseRouter } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";

@@ -14,10 +14,9 @@ import {
 } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import AuthenticationSignInComponent, {
-  testIDs,
   AuthenticationSignInModalProps,
-  ids,
 } from "../modal.signin.component";
+import { testIDs, ids } from "../modal.signin.identifiers";
 import SignInButtons from "@src/components/authentication/buttons/signin.buttons.component";
 import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";

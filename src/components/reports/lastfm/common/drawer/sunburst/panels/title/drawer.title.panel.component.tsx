@@ -1,9 +1,5 @@
 import { Text, Container } from "@chakra-ui/react";
-
-export const testIDs = {
-  LastFMSunBurstDrawerTitle: "LastFMSunBurstDrawerTitle",
-  LastFMSunBurstDrawerSubTitle: "LastFMSunBurstDrawerSubTitle",
-};
+import { testIDs } from "./drawer.title.panel.identifiers";
 
 export interface SunBurstDrawerTitlePanelProps {
   titleText: string;

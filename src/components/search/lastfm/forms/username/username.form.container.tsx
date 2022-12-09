@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import UserNameForm from "./username.form.component";
+import { ids, fields } from "./username.form.identifiers";
 import lastfmSettings from "@src/config/lastfm";
 import useAuth from "@src/hooks/auth.hook";
 import useFormsController from "@src/hooks/controllers/forms.controller.hook";
@@ -23,7 +24,7 @@ export default function UserNameFormContainer({
   useEffect(() => {
     if (authSession) {
       const element = document.querySelector(
-        '[id="username"]'
+        `[id="${ids.username}"]`
       ) as HTMLInputElement;
       element.focus();
     }
@@ -32,17 +33,20 @@ export default function UserNameFormContainer({
 
   const validateUserName = (value: string) => {
     if (!value) {
-      error.open("username", t("search.errors.username.required"));
-      return t("search.errors.username.required");
+      error.open(
+        fields.username,
+        t(`search.errors.${fields.username}.required`)
+      );
+      return t(`search.errors.${fields.username}.required`);
     }
     if (
       value.length > lastfmSettings.search.maxUserLength ||
       value.length < lastfmSettings.search.minUserLength
     ) {
-      error.open("username", t("search.errors.username.valid"));
-      return t("search.errors.username.valid");
+      error.open(fields.username, t(`search.errors.${fields.username}.valid`));
+      return t(`search.errors.${fields.username}.valid`);
     }
-    error.close("username");
+    error.close(fields.username);
     return undefined;
   };
 
@@ -56,7 +60,7 @@ export default function UserNameFormContainer({
       return;
     }
     const params = {
-      username: values.username,
+      [fields.username]: values.username,
     };
     const query = new URLSearchParams(params);
     router.push(`${route}?${query.toString()}`);

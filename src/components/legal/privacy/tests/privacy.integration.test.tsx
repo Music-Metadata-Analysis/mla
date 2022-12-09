@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import PrivacyContainer from "../privacy.container";
 import translations from "@locales/legal.json";
-import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
+import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.identifiers";
 import externalLinks from "@src/config/external";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";

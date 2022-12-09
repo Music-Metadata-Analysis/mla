@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import Cookies from "js-cookie";
-import { testIDs } from "../consent.component";
 import ConsentContainer from "../consent.container";
+import { testIDs } from "../consent.identifiers";
 import translations from "@locales/main.json";
 import { settings } from "@src/config/cookies";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";

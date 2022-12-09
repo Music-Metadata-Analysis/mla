@@ -10,12 +10,8 @@ import {
   ModalBody,
   Spinner,
 } from "@chakra-ui/react";
+import { testIDs } from "./modal.spinner.identifiers";
 import useColours from "@src/hooks/ui/colour.hook";
-
-export const testIDs = {
-  AuthenticationSpinnerModalTitle: "AuthenticationSpinnerModalTitle",
-  AuthenticationSpinnerModalSpinner: "AuthenticationSpinnerModalSpinner",
-};
 
 export interface AuthenticationSpinnerProps {
   onClose: () => void;

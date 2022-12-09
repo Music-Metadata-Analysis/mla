@@ -1,6 +1,7 @@
 import { Flex, Text, Box, Container } from "@chakra-ui/react";
 import { render, screen, within, fireEvent } from "@testing-library/react";
-import SunBurstNodeButton, { testIDs } from "../node.button.component";
+import SunBurstNodeButton from "../node.button.component";
+import { testIDs } from "../node.button.identifiers";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";

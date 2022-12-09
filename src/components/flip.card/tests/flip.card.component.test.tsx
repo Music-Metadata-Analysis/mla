@@ -1,7 +1,8 @@
 import { Box, Center, Img, Text } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import ReactCardFlip from "react-card-flip";
-import FlipCard, { FlipCardProps, testIDs } from "../flip.card.component";
+import FlipCard, { FlipCardProps } from "../flip.card.component";
+import { testIDs } from "../flip.card.identifiers";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";

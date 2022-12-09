@@ -1,6 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import UserNameForm from "../username.form.component";
+import { ids } from "../username.form.identifiers";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
@@ -70,7 +71,7 @@ describe("UserNameForm", () => {
       mockPlaceHolderText
     )) as HTMLInputElement;
 
-    expect(inputField.id).toBe("username");
+    expect(inputField.id).toBe(ids.username);
     expect(inputField.placeholder).toBe(mockPlaceHolderText);
   });
 

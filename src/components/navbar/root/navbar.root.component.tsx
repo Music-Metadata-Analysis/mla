@@ -1,5 +1,6 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Box, Flex, IconButton } from "@chakra-ui/react";
+import { testIDs } from "./navbar.root.identifiers";
 import NavBarColorModeContainer from "../colour.mode/navbar.colour.mode.container";
 import NavBarLogo from "../logo/navbar.logo.component";
 import NavBarMobileMenu from "../mobile.menu/navbar.mobile.menu.component";
@@ -10,12 +11,6 @@ import useColour from "@src/hooks/ui/colour.hook";
 import type { NavBarControllerHookType } from "../controllers/navbar.layout.controller.hook";
 import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
-
-export const testIDs = {
-  NavBarRoot: "NavBarRoot",
-  NavBarMenu: "NavBarMenu",
-  NavBarMobileMenuButton: "NavBarMobileMenuButton",
-};
 
 interface NavBarRootProps {
   analytics: { trackButtonClick: ButtonClickHandlerType };
