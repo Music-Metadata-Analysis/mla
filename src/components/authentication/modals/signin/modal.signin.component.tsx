@@ -11,6 +11,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
+import { testIDs, ids } from "./modal.signin.identifiers";
 import SignInButtons from "@src/components/authentication/buttons/signin.buttons.component";
 import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
@@ -19,17 +20,6 @@ import useColours from "@src/hooks/ui/colour.hook";
 import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { RefObject } from "react";
-
-export const testIDs = {
-  AuthenticationModalCloseButton: "AuthenticationCloseButton",
-  AuthenticationModalFooter: "AuthenticationModalFooter",
-  AuthenticationModalTitle: "AuthenticationModalTitle",
-  AuthenticationLoginButtons: "AuthenticationLoginButtons",
-};
-
-export const ids = {
-  SignInProvidersScrollArea: "SignInProvidersScrollArea",
-};
 
 export interface AuthenticationSignInModalProps {
   authenticationT: tFunctionType;

@@ -1,13 +1,8 @@
 import { Text } from "@chakra-ui/react";
 import CookieConsent from "react-cookie-consent";
+import { testIDs } from "./consent.identifiers";
 import { settings } from "@src/config/cookies";
 import useColours from "@src/hooks/ui/colour.hook";
-
-export const testIDs = {
-  consentDialogue: "consentDialogue",
-  consentMessageLine1: "consentMessageLine1",
-  consentMessageLine2: "consentMessageLine2",
-};
 
 export interface ConsentProps {
   acceptButtonText: string;

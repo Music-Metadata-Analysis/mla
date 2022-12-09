@@ -2,8 +2,8 @@ import { Flex, Box, Stat, StatLabel, StatHelpText } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import SunBurstDetailsPanel, {
   SunBurstDetailsPanelProps,
-  testIDs,
 } from "../details.panel.component";
+import { testIDs } from "../details.panel.identifiers";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 

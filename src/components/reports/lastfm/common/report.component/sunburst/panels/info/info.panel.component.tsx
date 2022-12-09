@@ -1,9 +1,6 @@
 import { Text, Box, Container } from "@chakra-ui/react";
+import { testIDs } from "./info.panel.identifiers";
 import useColour from "@src/hooks/ui/colour.hook";
-
-export const testIDs = {
-  SunBurstInfoPanelMessage: "SunBurstInfoPanelMessage",
-};
 
 export interface SunBurstInfoPanelProps {
   breakPoints: Array<number>;

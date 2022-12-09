@@ -1,7 +1,8 @@
 import { Box } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import mockControllerHook from "../../controllers/__mocks__/navbar.layout.controller.hook.mock";
-import NavBarMobileMenu, { testIDs } from "../navbar.mobile.menu.component";
+import NavBarMobileMenu from "../navbar.mobile.menu.component";
+import { testIDs } from "../navbar.mobile.menu.identifiers";
 import NavBarOptions from "@src/components/navbar/options/navbar.options.component";
 import navConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";

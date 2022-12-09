@@ -1,11 +1,8 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Switch } from "@chakra-ui/react";
+import { testIDs } from "./navbar.colour.mode.identifiers";
 import type { VendorColourModeType } from "@src/types/clients/ui.framework/vendor.types";
 import type { ChangeEvent } from "react";
-
-export const testIDs = {
-  ColorModeToggle: "ColorModeToggle",
-};
 
 interface NavBarColorModeToggleProps {
   colourMode: VendorColourModeType;

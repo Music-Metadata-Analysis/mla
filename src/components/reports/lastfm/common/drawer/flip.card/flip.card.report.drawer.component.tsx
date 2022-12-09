@@ -1,4 +1,5 @@
 import { Box, Divider, Flex, Img, Text } from "@chakra-ui/react";
+import { testIDs } from "./flip.card.report.drawer.identifiers";
 import StyledButtonLink from "@src/components/button/button.external.link/button.external.link.component";
 import ReportDrawer from "@src/components/reports/common/drawer/drawer.component";
 import settings from "@src/config/flip.card";
@@ -17,14 +18,6 @@ export interface FlipCardDrawerProps {
   value: string;
   t: tFunctionType;
 }
-
-export const testIDs = {
-  LastFMDrawer: "LastFMDrawer",
-  LastFMDrawerCloseButton: "LastFMDrawerCloseButton",
-  LastFMDrawerExternalLink: "LastFMDrawerExternalLink",
-  LastFMDrawerPlayCount: "LastFMDrawerPlayCount",
-  LastFMDrawerRank: "LastFMDrawerRank",
-};
 
 export default function FlipCardDrawer({
   artWorkAltTranslatedText,

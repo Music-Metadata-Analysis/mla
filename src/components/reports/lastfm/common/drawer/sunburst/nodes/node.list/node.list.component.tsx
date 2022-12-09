@@ -1,17 +1,9 @@
 import { Text, Flex } from "@chakra-ui/react";
+import { ids, testIDs } from "./node.list.identifiers";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type { SunBurstDrawerNodeComponentProps } from "@src/types/clients/api/lastfm/sunburst.types";
 import type { FC, RefObject } from "react";
-
-export const testIDs = {
-  SunBurstEntityNodeListTitle: "SunBurstEntityNodeListTitle",
-  SunBurstEntityNodeList: "SunBurstEntityNodeList",
-};
-
-export const ids = {
-  SunburstDrawerEntityListScrollArea: "SunburstDrawerEntityListScrollArea",
-};
 
 export interface SunBurstEntityNodeListProps {
   EntityComponent: FC<SunBurstDrawerNodeComponentProps>;

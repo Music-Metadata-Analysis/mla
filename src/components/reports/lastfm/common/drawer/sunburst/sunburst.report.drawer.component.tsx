@@ -2,6 +2,7 @@ import { Divider, Flex } from "@chakra-ui/react";
 import SunBurstNodeListContainer from "./nodes/node.list/node.list.container";
 import SunBurstDrawerControlContainer from "./panels/control/drawer.control.panel.container";
 import SunBurstDrawerTitleContainer from "./panels/title/drawer.title.panel.container";
+import { testIDs } from "./sunburst.report.drawer.identifiers";
 import ReportDrawer from "@src/components/reports/common/drawer/drawer.component";
 import useColour from "@src/hooks/ui/colour.hook";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
@@ -18,17 +19,6 @@ export interface LastFMSunBurstDrawerProps {
   selectParentNode: () => void;
   svgTransition: boolean;
 }
-
-export const testIDs = {
-  LastFMSunBurstDrawer: "LastFMSunBurstDrawer",
-  LastFMSunBurstDrawerBackButton: "LastFMSunBurstDrawerBackButton",
-  LastFMSunBurstDrawerEntityList: "LastFMSunBurstDrawerEntityList",
-  LastFMSunBurstDrawerListTitle: "LastFMSunBurstDrawerListTitle",
-  LastFMSunBurstDrawerPercentage: "LastFMSunBurstDrawerPercentage",
-  LastFMSunBurstDrawerSubTitle: "LastFMSunBurstDrawerSubTitle",
-  LastFMSunBurstDrawerTitle: "LastFMSunBurstDrawerTitle",
-  LastFMSunBurstDrawerValue: "LastFMSunBurstDrawerValue",
-};
 
 export default function LastFMSunBurstDrawer({
   alignment,

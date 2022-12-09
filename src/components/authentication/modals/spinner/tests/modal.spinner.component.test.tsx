@@ -11,9 +11,8 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import AuthenticationSpinnerModal, {
-  testIDs,
-} from "../modal.spinner.component";
+import AuthenticationSpinnerModal from "../modal.spinner.component";
+import { testIDs } from "../modal.spinner.identifiers";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 

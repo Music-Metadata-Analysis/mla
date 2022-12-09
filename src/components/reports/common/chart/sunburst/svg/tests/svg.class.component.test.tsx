@@ -8,10 +8,8 @@ import {
 import { RefObject, useState, Dispatch } from "react";
 import mockDataSet3 from "./data/sunburst.data.set.3.json";
 import mockDataSet4 from "./data/sunburst.data.set.4.json";
-import SunBurstChart, {
-  testIDs,
-  SunBurstChartSVGProps,
-} from "../svg.class.component";
+import SunBurstChart, { SunBurstChartSVGProps } from "../svg.class.component";
+import { testIDs } from "../svg.identifiers";
 import LastFMTranslations from "@locales/lastfm.json";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import { getMockProp } from "@src/tests/fixtures/mock.component.props";

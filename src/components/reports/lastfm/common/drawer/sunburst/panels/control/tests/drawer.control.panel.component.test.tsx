@@ -1,9 +1,9 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import SunBurstDrawerControlPanel, {
-  testIDs,
   SunBurstDrawerControlPanelProps,
 } from "../drawer.control.panel.component";
+import { testIDs } from "../drawer.control.panel.identifiers";
 import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";

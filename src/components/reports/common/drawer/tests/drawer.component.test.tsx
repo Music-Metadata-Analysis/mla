@@ -9,7 +9,8 @@ import {
   DrawerContentProps,
 } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import ReportDrawer, { ReportDrawerProps, testIDs } from "../drawer.component";
+import ReportDrawer, { ReportDrawerProps } from "../drawer.component";
+import { testIDs } from "../drawer.identifiers";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 

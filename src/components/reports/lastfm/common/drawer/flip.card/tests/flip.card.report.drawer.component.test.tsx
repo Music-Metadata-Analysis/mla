@@ -2,8 +2,8 @@ import { Box, Divider, Flex, Img, Text } from "@chakra-ui/react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import FlipCardDrawer, {
   FlipCardDrawerProps,
-  testIDs,
 } from "../flip.card.report.drawer.component";
+import { testIDs } from "../flip.card.report.drawer.identifiers";
 import lastfmTranslations from "@locales/lastfm.json";
 import StyledButtonLink from "@src/components/button/button.external.link/button.external.link.component";
 import ReportDrawer from "@src/components/reports/common/drawer/drawer.component";

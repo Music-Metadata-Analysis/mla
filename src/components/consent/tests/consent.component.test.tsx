@@ -1,7 +1,8 @@
 import { Text } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import CookieConsent from "react-cookie-consent";
-import Consent, { ConsentProps, testIDs } from "../consent.component";
+import Consent, { ConsentProps } from "../consent.component";
+import { testIDs } from "../consent.identifiers";
 import { settings } from "@src/config/cookies";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";

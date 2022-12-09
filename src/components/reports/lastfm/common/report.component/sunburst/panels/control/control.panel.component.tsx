@@ -1,15 +1,11 @@
 import { Flex, Box } from "@chakra-ui/react";
+import { testIDs } from "./control.panel.identifiers";
 import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
 import SunBurstDetailsPanel from "@src/components/reports/lastfm/common/report.component/sunburst/panels/details/details.panel.component";
 import useColour from "@src/hooks/ui/colour.hook";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { d3Node } from "@src/types/reports/sunburst.types";
-
-export const testIDs = {
-  SunBurstControlPanelBack: "SunBurstControlPanelBack",
-  SunBurstControlPanelSelect: "SunBurstControlPanelSelect",
-};
 
 export interface SunBurstControlPanelProps {
   setSelectedNode: (node: d3Node) => void;

@@ -1,10 +1,9 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import SunBurstEntityNodeList, {
-  testIDs,
-  ids,
   SunBurstEntityNodeListProps,
 } from "../node.list.component";
+import { ids, testIDs } from "../node.list.identifiers";
 import SunBurstNodeButton from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.button/node.button.component";
 import SunBurstNodeDisplay from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.display/node.display.component";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";

@@ -1,10 +1,7 @@
 import { Text, Box, Container } from "@chakra-ui/react";
+import { testIDs } from "./node.display.identifiers";
 import useColour from "@src/hooks/ui/colour.hook";
 import type { SunBurstDrawerNodeComponentProps } from "@src/types/clients/api/lastfm/sunburst.types";
-
-export const testIDs = {
-  NodeDisplayText: "NodeDisplayText",
-};
 
 export default function SunBurstNodeDisplay({
   node,

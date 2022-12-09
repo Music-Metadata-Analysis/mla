@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import FeedbackPopUp, { testIDs } from "../feedback.popup.component";
+import FeedbackPopUp from "../feedback.popup.component";
+import { testIDs } from "../feedback.popup.identifiers";
 import externalLinks from "@src/config/external";
 
 jest.mock("@src/hooks/locale.hook");

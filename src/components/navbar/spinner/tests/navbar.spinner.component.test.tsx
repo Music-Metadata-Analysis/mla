@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import Spinner, { testIDs } from "../navbar.spinner.component";
+import Spinner from "../navbar.spinner.component";
+import { testIDs } from "../navbar.spinner.identifiers";
 
 describe("NavBarSpinner", () => {
   const arrange = (condition: boolean) => {

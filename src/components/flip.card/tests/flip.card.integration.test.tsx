@@ -5,10 +5,10 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
-import { testIDs } from "../flip.card.component";
 import FlipCardContainer, {
   FlipCardContainerProps,
 } from "../flip.card.container";
+import { testIDs } from "../flip.card.identifiers";
 import cardTranslations from "@locales/cards.json";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 

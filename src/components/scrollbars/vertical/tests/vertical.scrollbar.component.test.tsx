@@ -1,9 +1,9 @@
 import { Box } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import VerticalScrollBar, {
-  testIDs,
   VerticalScrollBarProps,
 } from "../vertical.scrollbar.component";
+import { testIDs } from "../vertical.scrollbar.identifiers";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
