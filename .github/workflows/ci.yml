@@ -325,6 +325,56 @@ jobs:
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: smoke test failed for https://${PRODUCTION_NETLIFY_NAME}.netlify.app!"
 
+  smoke_tests_development:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Smoke Test Development -- Checkout Repository
+        uses: actions/checkout@v2.4.0
+
+      - name: Smoke Test Development -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      - name: Smoke Test Development -- Setup Environment
+        run: |
+          source .github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Smoke Test Development -- Install Node Modules
+        run: |
+          npm install
+
+      - name: Smoke Test Development -- Append CI Environment Content
+        run: |
+          echo "${CI_ENVIRONMENT_CONTENT}" > .env.local
+        env:
+          CI_ENVIRONMENT_CONTENT: ${{ secrets.CI_ENVIRONMENT_CONTENT }}
+
+      - name: Smoke Test Development -- Spawn Dev Server
+        run: |
+          npm run dev > development.server.log &
+
+      - name: Smoke Test Development -- Generate Cypress Environment
+        run: |
+          npm run smoke:env
+
+      - name: Smoke Test Development -- Run Cypress
+        run: |
+          npm run smoke:run
+
+      - name: Smoke Test Development -- Display Server Logs on Failure
+        if: failure()
+        run: |
+          cat development.server.log
+
+      - name: Smoke Test Development -- Report Job Status on Failure
+        if: failure()
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: smoke test failed for smoke test failed for the development environment!"
+
   smoke_tests_stage:
     needs: [deploy_stage]
 
@@ -408,6 +458,7 @@ jobs:
         lint,
         security_test,
         shellcheck_test,
+        smoke_tests_development,
         start_notification,
         type_validation,
         workflow_lint_test,
