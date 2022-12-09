@@ -2,8 +2,8 @@ import { Text, Box, Container } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import SunBurstTitlePanel, {
   SunBurstTitlePanelProps,
-  testIDs,
 } from "../title.panel.component";
+import { testIDs } from "../title.panel.identifiers";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 

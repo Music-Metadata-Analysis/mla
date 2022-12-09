@@ -8,10 +8,8 @@ import {
 import { RefObject, useState, Dispatch } from "react";
 import mockDataSet3 from "./data/sunburst.data.set.3.json";
 import mockDataSet4 from "./data/sunburst.data.set.4.json";
-import SunBurstChart, {
-  testIDs,
-  SunBurstChartSVGProps,
-} from "../svg.class.component";
+import SunBurstChart, { SunBurstChartSVGProps } from "../svg.class.component";
+import { classes, ids, testIDs } from "../svg.identifiers";
 import LastFMTranslations from "@locales/lastfm.json";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import { getMockProp } from "@src/tests/fixtures/mock.component.props";
@@ -151,9 +149,12 @@ describe("SunBurstChartSVG", () => {
   const checkChartTitle = ({ expected }: { expected: string }) => {
     it(`should display the correct percentage (${expected}) in the center area`, async () => {
       const elements = renderContainer.container.getElementsByClassName(
-        "SunburstPercentageDisplay"
+        classes.SunburstPercentageDisplay
       );
+
+      expect(elements.length).toBe(1);
       expect(elements[0].innerHTML).toBe(expected);
+      expect(elements[0]).toHaveAttribute("id", ids.SunburstPercentageDisplay);
     });
   };
 
@@ -215,7 +216,7 @@ describe("SunBurstChartSVG", () => {
         mockFinishTransition.mockClear();
 
         const element = renderContainer.container.getElementsByClassName(
-          "SunburstPercentageDisplay"
+          classes.SunburstPercentageDisplay
         )[0];
 
         fireEvent.click(element);
@@ -244,7 +245,7 @@ describe("SunBurstChartSVG", () => {
   }) => {
     it(`should render the title with the expected colour properties (${expected.foreground})`, () => {
       const element = renderContainer.container.getElementsByClassName(
-        "SunburstPercentageDisplay"
+        classes.SunburstPercentageDisplay
       )[0] as SVGTextElement;
 
       expect(element.style).toHaveProperty("fill", expected.foreground);
@@ -252,7 +253,7 @@ describe("SunBurstChartSVG", () => {
 
     it(`should render the node labels with the expected colour properties (${expected.foreground})`, () => {
       const elements = renderContainer.container.getElementsByClassName(
-        "NodeLabel"
+        classes.SunBurstNodeLabel
       ) as HTMLCollectionOf<SVGTextElement>;
 
       for (const element of elements) {
@@ -297,7 +298,7 @@ describe("SunBurstChartSVG", () => {
 
       const labels: Array<string> = [];
       const elements = renderContainer.container.getElementsByClassName(
-        "NodeLabel"
+        classes.SunBurstNodeLabel
       ) as HTMLCollectionOf<Element & { __data__: undefined | d3Node }>;
       for (const element of elements) {
         if (element.__data__) {

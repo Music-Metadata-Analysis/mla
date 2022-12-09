@@ -7,6 +7,7 @@ import {
   FormikProps,
   FormikHelpers,
 } from "formik";
+import { ids, fields } from "./username.form.identifiers";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
 import StyledInput from "@src/components/search/common/input/input.component";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
@@ -29,7 +30,7 @@ export default function UserNameForm({
 }: UserNameFormProps) {
   return (
     <Formik
-      initialValues={{ username: "" }}
+      initialValues={{ [fields.username]: "" }}
       onSubmit={handleSubmit}
       validateOnChange={true}
       validateOnBlur={false}
@@ -37,18 +38,20 @@ export default function UserNameForm({
       {({ isSubmitting }) => (
         <Form>
           <Flex flexDirection={"column"} justify={"center"}>
-            <Field name="username" validate={validateUserName}>
+            <Field name={fields.username} validate={validateUserName}>
               {({
                 field,
                 form,
               }: {
-                field: FieldInputProps<LastFMUserSearchInterface["username"]>;
+                field: FieldInputProps<
+                  LastFMUserSearchInterface[typeof fields.username]
+                >;
                 form: FormikProps<LastFMUserSearchInterface>;
               }) => (
                 <FormControl isInvalid={form.errors.username !== undefined}>
                   <StyledInput
                     {...field}
-                    id="username"
+                    id={ids.username}
                     placeholder={placeHolderText}
                     width={["150px", "300px", "400px", "500px"]}
                   />

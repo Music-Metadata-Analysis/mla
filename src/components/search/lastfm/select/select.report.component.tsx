@@ -1,5 +1,6 @@
 import { Box, Flex, Avatar } from "@chakra-ui/react";
 import Option from "./option/report.option.component";
+import { ids } from "./select.report.identifiers";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
@@ -12,10 +13,6 @@ export interface ReportSelectProps {
   scrollRef: MutableRefObject<HTMLDivElement | null>;
   titleText: string;
 }
-
-export const ids = {
-  LastFMReportSelectScrollArea: "LastFMReportSelectScrollArea",
-};
 
 export default function ReportSelect({
   reportOptionProps: reportProps,

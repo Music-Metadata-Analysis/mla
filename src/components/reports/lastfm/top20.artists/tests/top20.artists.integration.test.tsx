@@ -5,8 +5,8 @@ import Top20ArtistsContainer, {
 } from "../top20.artists.container";
 import cardTranslations from "@locales/cards.json";
 import translations from "@locales/lastfm.json";
-import { testIDs as drawerTestIDs } from "@src/components/reports/common/drawer/drawer.component";
-import { testIDs as lastFMDrawerIDs } from "@src/components/reports/lastfm/common/drawer/flip.card/flip.card.report.drawer.component";
+import { testIDs as drawerTestIDs } from "@src/components/reports/common/drawer/drawer.identifiers";
+import { testIDs as lastFMDrawerIDs } from "@src/components/reports/lastfm/common/drawer/flip.card/flip.card.report.drawer.identifiers";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockImageControllerHook from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";

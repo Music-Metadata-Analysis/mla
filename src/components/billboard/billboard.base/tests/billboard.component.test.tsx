@@ -1,6 +1,7 @@
 import { Box, Center, Container, Text } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import Billboard, { BillboardProps, testIDs } from "../billboard.component";
+import Billboard, { BillboardProps } from "../billboard.component";
+import { testIDs } from "../billboard.identifiers";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";

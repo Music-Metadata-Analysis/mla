@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import UserNameForm from "../username.form.component";
 import UserNameFormContainer from "../username.form.container";
+import { fields } from "../username.form.identifiers";
 import lastfmTranslations from "@locales/lastfm.json";
 import lastfmSettings from "@src/config/lastfm";
 import mockAuthHook, {
@@ -25,7 +26,7 @@ jest.mock("@src/hooks/router.hook");
 
 jest.mock("../username.form.component", () =>
   require("@fixtures/react/child").createComponent("UserNameForm", "default", {
-    id: "username",
+    id: require("../username.form.identifiers").ids.username,
   })
 );
 
@@ -79,15 +80,15 @@ describe("UserNameFormContainer", () => {
 
       it("should return the correct value", () => {
         expect(returnValue).toBe(
-          _t(lastfmTranslations.search.errors.username.required)
+          _t(lastfmTranslations.search.errors[fields.username].required)
         );
       });
 
       it("should generate an error", () => {
         expect(mockFormHook.error.open).toBeCalledTimes(1);
         expect(mockFormHook.error.open).toBeCalledWith(
-          "username",
-          _t(lastfmTranslations.search.errors.username.required)
+          fields.username,
+          _t(lastfmTranslations.search.errors[fields.username].required)
         );
       });
     });
@@ -102,15 +103,15 @@ describe("UserNameFormContainer", () => {
 
       it("should return the correct value", () => {
         expect(returnValue).toBe(
-          _t(lastfmTranslations.search.errors.username.valid)
+          _t(lastfmTranslations.search.errors[fields.username].valid)
         );
       });
 
       it("should generate an error", () => {
         expect(mockFormHook.error.open).toBeCalledTimes(1);
         expect(mockFormHook.error.open).toBeCalledWith(
-          "username",
-          _t(lastfmTranslations.search.errors.username.valid)
+          fields.username,
+          _t(lastfmTranslations.search.errors[fields.username].valid)
         );
       });
     });
@@ -128,7 +129,7 @@ describe("UserNameFormContainer", () => {
 
       it("should close existing errors", () => {
         expect(mockFormHook.error.close).toBeCalledTimes(1);
-        expect(mockFormHook.error.close).toBeCalledWith("username");
+        expect(mockFormHook.error.close).toBeCalledWith(fields.username);
       });
     });
   });

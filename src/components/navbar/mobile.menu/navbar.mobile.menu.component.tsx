@@ -1,13 +1,10 @@
 import { Box, Flex } from "@chakra-ui/react";
+import { testIDs } from "./navbar.mobile.menu.identifiers";
 import Condition from "@src/components/condition/condition.component";
 import NavBarOptions from "@src/components/navbar/options/navbar.options.component";
 import type { NavBarControllerHookType } from "../controllers/navbar.layout.controller.hook";
 import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
-
-export const testIDs = {
-  NavBarMobileMenu: "NavBarMobileMenu",
-};
 
 interface NavBarMobileMenuProps {
   analytics: { trackButtonClick: ButtonClickHandlerType };

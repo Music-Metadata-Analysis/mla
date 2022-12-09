@@ -1,6 +1,7 @@
 import { Flex, Spinner } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import BillBoardSpinner, { testIDs } from "../billboard.spinner.component";
+import BillBoardSpinner from "../billboard.spinner.component";
+import { testIDs } from "../billboard.spinner.identifiers";
 import BillBoardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import { settings } from "@src/config/billboard";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";

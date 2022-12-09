@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import AboutContainer from "../about.container";
 import translations from "@locales/about.json";
-import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.component";
+import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.identifiers";
 import routes from "@src/config/routes";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";

@@ -1,11 +1,7 @@
 import { Box } from "@chakra-ui/react";
+import { testIDs } from "./vertical.scrollbar.identifiers";
 import useColour from "@src/hooks/ui/colour.hook";
 import type { MouseEventHandler } from "react";
-
-export const testIDs = {
-  ScrollBarTrack: "ScrollBarTrack",
-  ScrollBarThumb: "ScrollBarThumb",
-};
 
 export interface VerticalScrollBarProps {
   ariaControls?: string;

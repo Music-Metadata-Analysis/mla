@@ -7,6 +7,7 @@ import {
   DrawerCloseButton,
   DrawerContent,
 } from "@chakra-ui/react";
+import { testIDs } from "./drawer.identifiers";
 import useColour from "@src/hooks/ui/colour.hook";
 import type { PropsWithChildren } from "react";
 
@@ -17,13 +18,6 @@ export interface ReportDrawerProps {
   placement: "bottom" | "left" | "right" | "top";
   alwaysOpen?: boolean;
 }
-
-export const testIDs = {
-  Drawer: "Drawer",
-  DrawerBody: "DrawerBody",
-  DrawerCloseButton: "DrawerCloseButton",
-  DrawerHeader: "DrawerHeader",
-};
 
 const ReportDrawer = ({
   children,

@@ -1,9 +1,9 @@
 import { Flex, Box } from "@chakra-ui/react";
 import { render, screen, within, fireEvent } from "@testing-library/react";
 import SunBurstControlPanel, {
-  testIDs,
   SunBurstControlPanelProps,
 } from "../control.panel.component";
+import { testIDs } from "../control.panel.identifiers";
 import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import SunBurstDetailsPanel from "@src/components/reports/lastfm/common/report.component/sunburst/panels/details/details.panel.component";

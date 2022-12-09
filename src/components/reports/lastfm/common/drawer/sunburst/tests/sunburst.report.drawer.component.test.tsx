@@ -1,9 +1,9 @@
 import { Divider, Flex } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import SunBurstReportDrawer, {
-  testIDs,
   LastFMSunBurstDrawerProps,
 } from "../sunburst.report.drawer.component";
+import { testIDs } from "../sunburst.report.drawer.identifiers";
 import ReportDrawer from "@src/components/reports/common/drawer/drawer.component";
 import SunBurstNodeListContainer from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.list/node.list.container";
 import SunBurstDrawerControlContainer from "@src/components/reports/lastfm/common/drawer/sunburst/panels/control/drawer.control.panel.container";

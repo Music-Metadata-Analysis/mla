@@ -8,14 +8,10 @@ import {
   StatHelpText,
   StatNumber,
 } from "@chakra-ui/react";
+import { testIDs } from "./billboard.progress.bar.identifiers";
 import BillBoardContainer from "../billboard.base/billboard.container";
 import useColour from "@src/hooks/ui/colour.hook";
 import { truncate } from "@src/utils/strings";
-
-export const testIDs = {
-  BillBoardProgressBar: "BillboardSpinner",
-  BillBoardProgressBarVisibilityControl: "BillboardSpinnerVisibilityControl",
-};
 
 export type BillBoardProgressBarDetails = {
   resource: string;

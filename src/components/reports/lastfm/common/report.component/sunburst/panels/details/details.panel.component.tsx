@@ -1,11 +1,6 @@
 import { Flex, Box, Stat, StatLabel, StatHelpText } from "@chakra-ui/react";
+import { testIDs } from "./details.panel.identifiers";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
-
-export const testIDs = {
-  SunBurstDetailsPanelName: "SunBurstDetailsPanelName",
-  SunBurstDetailsPanelParentName: "SunBurstDetailsPanelParentName",
-  SunBurstDetailsPanelValue: "SunBurstDetailsPanelValue",
-};
 
 export interface SunBurstDetailsPanelProps {
   breakPoints: Array<number>;

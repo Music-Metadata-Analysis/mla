@@ -5,9 +5,8 @@ import {
   StatNumber,
 } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import BillBoardProgressBar, {
-  testIDs,
-} from "../billboard.progress.bar.component";
+import BillBoardProgressBar from "../billboard.progress.bar.component";
+import { testIDs } from "../billboard.progress.bar.identifiers";
 import BillBoardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
