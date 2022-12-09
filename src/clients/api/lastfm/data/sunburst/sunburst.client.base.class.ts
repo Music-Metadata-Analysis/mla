@@ -1,5 +1,7 @@
+import EventDefinition from "@src/events/event.class";
 import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { EventCreatorType } from "@src/types/analytics.types";
+import type { IntegrationRequestType } from "@src/types/analytics.types";
 import type {
   LastFMReportInterface,
   LastFMReportParamsInterface,
@@ -12,6 +14,8 @@ abstract class LastFMSunburstDataClient<AggregateReportType>
 {
   protected dispatch: userDispatchType;
   protected eventDispatch: EventCreatorType;
+  abstract eventType: IntegrationRequestType;
+
   protected encapsulatedState: UserSunBurstReportBaseState<AggregateReportType>;
   protected abstract dataPointClasses: Array<
     SunBurstDataPointClientConstructor<AggregateReportType>
@@ -40,14 +44,10 @@ abstract class LastFMSunburstDataClient<AggregateReportType>
 
   retrieveReport(params: LastFMReportParamsInterface): void {
     const route = this.getRoute();
-    const dataPointInstances = this.dataPointClasses.map(
-      (dataPointClass) =>
-        new dataPointClass(
-          this.dispatch,
-          this.eventDispatch,
-          this.encapsulatedState
-        )
-    );
+    if (route === this.defaultRoute) {
+      this.emitInitialAnalyticsEvent();
+    }
+    const dataPointInstances = this.getDataPointInstances();
     const instance = dataPointInstances.find(
       (instance) => instance.getRoute() === route
     );
@@ -56,6 +56,27 @@ abstract class LastFMSunburstDataClient<AggregateReportType>
     } else {
       this.encapsulatedState.throwError();
     }
+  }
+
+  protected emitInitialAnalyticsEvent() {
+    this.eventDispatch(
+      new EventDefinition({
+        category: "LAST.FM",
+        label: "AGGREGATE REQUESTS",
+        action: `${this.eventType}: AGGREGATE REQUESTS BEING SENT TO LAST.FM.`,
+      })
+    );
+  }
+
+  protected getDataPointInstances() {
+    return this.dataPointClasses.map(
+      (dataPointClass) =>
+        new dataPointClass(
+          this.dispatch,
+          this.eventDispatch,
+          this.encapsulatedState
+        )
+    );
   }
 
   protected getParams(params: LastFMReportParamsInterface) {

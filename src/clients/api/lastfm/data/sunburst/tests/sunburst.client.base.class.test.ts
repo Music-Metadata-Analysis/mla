@@ -1,5 +1,6 @@
 import SunBurstDataClientBase from "../sunburst.client.base.class";
 import apiRoutes from "@src/config/apiRoutes";
+import EventDefinition from "@src/events/event.class";
 import InitialState from "@src/providers/user/user.initial";
 
 const mockDataPointClasses = [jest.fn(), jest.fn()];
@@ -7,6 +8,7 @@ const mockDataPointClasses = [jest.fn(), jest.fn()];
 class ConcreteSunBurstDataClientBase extends SunBurstDataClientBase<unknown> {
   dataPointClasses = mockDataPointClasses;
   defaultRoute = "/default/route";
+  eventType = "PLAYCOUNT BY ARTIST" as const;
 }
 
 describe("SunBurstDataClientBase", () => {
@@ -60,6 +62,17 @@ describe("SunBurstDataClientBase", () => {
         expect(mockDataPointRetrieveReport).toBeCalledTimes(1);
         expect(mockDataPointRetrieveReport).toBeCalledWith(mockParams);
       });
+
+      it("should emit an analytics report request event", async () => {
+        expect(mockEvent).toBeCalledTimes(1);
+        expect(mockEvent).toHaveBeenCalledWith(
+          new EventDefinition({
+            category: "LAST.FM",
+            label: "AGGREGATE REQUESTS",
+            action: `${instance.eventType}: AGGREGATE REQUESTS BEING SENT TO LAST.FM.`,
+          })
+        );
+      });
     });
 
     describe("when a valid operation is pending on the report", () => {
@@ -87,6 +100,10 @@ describe("SunBurstDataClientBase", () => {
           artist: "Uchu Corbini",
         });
       });
+
+      it("should NOT emit an analytics event", async () => {
+        expect(mockEvent).toBeCalledTimes(0);
+      });
     });
 
     describe("when a invalid operation is pending on the report", () => {
@@ -108,6 +125,10 @@ describe("SunBurstDataClientBase", () => {
       it("should call throwError as expected", () => {
         expect(mockState.throwError).toBeCalledTimes(1);
         expect(mockState.throwError).toBeCalledWith();
+      });
+
+      it("should NOT emit an analytics event", async () => {
+        expect(mockEvent).toBeCalledTimes(0);
       });
     });
   });

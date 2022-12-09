@@ -3,7 +3,7 @@ import type EventDefinition from "@src/events/event.class";
 export type EventDefinitionType = {
   category: "AUTH" | "LAST.FM" | "MAIN" | "TEST";
   label:
-    | "MODAL"
+    | "AGGREGATE REQUESTS"
     | "BUTTON"
     | "CONTACT"
     | "DATA: ALBUM"
@@ -16,6 +16,7 @@ export type EventDefinitionType = {
     | "INTERNAL_LINK"
     | "LOGIN"
     | "LOGOUT"
+    | "MODAL"
     | "REPORT"
     | "REQUEST"
     | "RESPONSE"

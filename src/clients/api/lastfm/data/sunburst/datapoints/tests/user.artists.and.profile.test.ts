@@ -30,9 +30,5 @@ describe("UserArtistsAndProfile", () => {
     it("should have the correct api route configured", () => {
       expect(instance.route).toBe(apiRoutes.v2.reports.lastfm.top20artists);
     });
-
-    it("should have the correct event type configured", () => {
-      expect(instance.eventType).toBe("TOP20 ARTISTS");
-    });
   });
 });

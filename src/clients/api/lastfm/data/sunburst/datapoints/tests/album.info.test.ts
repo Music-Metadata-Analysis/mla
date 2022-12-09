@@ -26,9 +26,5 @@ describe("LastFMAlbumInfo", () => {
     it("should have the correct api route configured", () => {
       expect(instance.route).toBe(apiRoutes.v2.data.artists.albumsGet);
     });
-
-    it("should have the correct event type configured", () => {
-      expect(instance.eventType).toBe("ALBUM INFO");
-    });
   });
 });

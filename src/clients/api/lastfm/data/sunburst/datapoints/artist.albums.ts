@@ -9,7 +9,6 @@ class LastFMArtistGetAlbums<
   LastFMArtistTopAlbumsInterface
 > {
   route = apiRoutes.v2.data.artists.albumsList;
-  eventType = "ARTIST GET ALBUMS" as const;
 }
 
 export default LastFMArtistGetAlbums;

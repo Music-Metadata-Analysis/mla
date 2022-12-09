@@ -29,6 +29,10 @@ describe("LastFMPlayCountByArtistDataClient", () => {
           UserArtistsAndProfile,
         ]);
       });
+
+      it("should have the correct event type configured", () => {
+        expect(instance.eventType).toBe("PLAYCOUNT BY ARTIST");
+      });
     });
   });
 });
