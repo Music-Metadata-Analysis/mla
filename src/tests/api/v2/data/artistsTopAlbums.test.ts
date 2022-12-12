@@ -1,5 +1,5 @@
-import LastFMApiEndpointFactoryV2 from "@src/backend/api/lastfm/v2.endpoint.base.class";
-import { mockLastFMProxyMethods } from "@src/backend/integrations/lastfm/__mocks__/proxy.class.mock";
+import LastFMApiEndpointFactoryV2 from "@src/backend/api/lastfm/endpoints/v2.endpoint.base.class";
+import { mockLastFMProxyMethods } from "@src/backend/api/lastfm/proxy/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import { STATUS_400_MESSAGE } from "@src/config/status";
 import handleProxy, {
@@ -7,32 +7,32 @@ import handleProxy, {
 } from "@src/pages/api/v2/data/artists/[artist]/albums/index";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type {
-  MockAPIRequest,
-  MockAPIResponse,
-  QueryParamType,
-} from "@src/types/api.endpoint.types";
+  MockAPIRequestType,
+  RequestQueryParamType,
+} from "@src/types/api/request.types";
+import type { MockAPIResponseType } from "@src/types/api/response.types";
 import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
 jest.mock("@src/backend/integrations/auth/vendor", () =>
   require("@fixtures/integrations/auth").authenticated()
 );
 
-jest.mock("@src/backend/api/lastfm/endpoint.common.logger");
+jest.mock("@src/backend/integrations/api.logger/vendor");
 
-jest.mock("@src/backend/integrations/lastfm/proxy.class");
+jest.mock("@src/backend/api/lastfm/proxy/proxy.class");
 
 const endpointUnderTest = apiRoutes.v2.data.artists.albumsList;
 
 type ArrangeArgs = {
-  query: QueryParamType;
+  query: RequestQueryParamType;
   method: HttpMethodType;
 };
 
 describe(endpointUnderTest, () => {
-  let mockReq: MockAPIRequest;
-  let mockRes: MockAPIResponse;
+  let mockReq: MockAPIRequestType;
+  let mockRes: MockAPIResponseType;
   const mockResponse = { mock: "response" };
-  let query: QueryParamType;
+  let query: RequestQueryParamType;
   let method: HttpMethodType;
 
   beforeEach(() => {
@@ -58,7 +58,7 @@ describe(endpointUnderTest, () => {
     });
 
     it("should have the correct maxAgeValue set", () => {
-      expect(endpointFactory.maxAgeValue).toBe(3600 * 24);
+      expect(endpointFactory.cacheMaxAgeValue).toBe(3600 * 24);
     });
 
     it("should have flag restrictions bypassed", () => {
@@ -90,7 +90,7 @@ describe(endpointUnderTest, () => {
           it("should set a Cache-Control header", () => {
             expect(mockRes._getHeaders()["cache-control"]).toStrictEqual([
               "public",
-              `max-age=${endpointFactory.maxAgeValue}`,
+              `max-age=${endpointFactory.cacheMaxAgeValue}`,
             ]);
           });
 

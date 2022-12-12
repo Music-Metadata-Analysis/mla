@@ -4,10 +4,8 @@ import artistHandler from "@src/pages/api/v2/reports/lastfm/top20artists/[userna
 import testResponses from "@src/tests/fixtures/lastfm/end2end/lastfm.topartists";
 import testAccounts from "@src/tests/fixtures/lastfm/end2end/lastfm.users";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
-import type {
-  MockAPIRequest,
-  MockAPIResponse,
-} from "@src/types/api.endpoint.types";
+import type { MockAPIRequestType } from "@src/types/api/request.types";
+import type { MockAPIResponseType } from "@src/types/api/response.types";
 import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
 jest.unmock("@toplast/lastfm");
@@ -16,7 +14,7 @@ jest.mock("@src/backend/integrations/auth/vendor", () =>
   require("@fixtures/integrations/auth").authenticated()
 );
 
-jest.mock("@src/backend/api/lastfm/endpoint.common.logger");
+jest.mock("@src/backend/integrations/api.logger/vendor");
 
 type ArrangeArgs = {
   username: string;
@@ -32,8 +30,8 @@ if (process.env[integrationEnvironmentVariable]) {
     let scenario: string;
     let testUser: string;
     let originalEnvironment: typeof process.env;
-    let mockReq: MockAPIRequest;
-    let mockRes: MockAPIResponse;
+    let mockReq: MockAPIRequestType;
+    let mockRes: MockAPIResponseType;
 
     beforeAll(() => {
       originalEnvironment = process.env;
