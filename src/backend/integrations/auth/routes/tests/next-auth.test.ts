@@ -8,10 +8,8 @@ import nextAuthConfiguration from "@src/backend/integrations/auth/config/next-au
 import { mockFlagGroup } from "@src/backend/integrations/flags/__mocks__/vendor.mock";
 import flagVendor from "@src/backend/integrations/flags/vendor";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
-import type {
-  MockAPIRequest,
-  MockAPIResponse,
-} from "@src/types/api.endpoint.types";
+import type { MockAPIRequestType } from "@src/types/api/request.types";
+import type { MockAPIResponseType } from "@src/types/api/response.types";
 
 jest.mock("next-auth");
 jest.mock("next-auth/providers/facebook");
@@ -22,8 +20,8 @@ jest.mock("next-auth/providers/spotify");
 jest.mock("@src/backend/integrations/flags/vendor");
 
 describe("NextAuthRoutes", () => {
-  let mockReq: MockAPIRequest;
-  let mockRes: MockAPIResponse;
+  let mockReq: MockAPIRequestType;
+  let mockRes: MockAPIResponseType;
   let mockValueIndex = 0;
 
   const MockProfilePersistanceClient = jest.fn(() => ({

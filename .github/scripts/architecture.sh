@@ -65,7 +65,11 @@ main() {
   echo "  Checking Analytics Framework Isolation..."
   ! search 'from "react-ga' src | excludes_vendor_locations "analytics" || error_decoupling "Analytics"
 
-  # Enforce Auth Framework Isolation
+  # Enforce API Handler Framework Isolation
+  echo "  Checking API Handler Framework Isolation..."
+  ! search 'from "next-connect"' src | excludes_vendor_locations "api.handler" || error_decoupling "API Handler"
+
+ # Enforce Auth Framework Isolation
   echo "  Checking Auth Framework Isolation..."
   ! search 'from "next-auth' src | excludes_vendor_locations "auth" || error_decoupling "Auth"
 
@@ -75,7 +79,7 @@ main() {
 
   # Enforce Lastfm Framework Isolation
   echo "  Checking Lastfm Framework Isolation..."
-  ! search 'from "@toplast/lastfm' src | excludes_vendor_locations "lastfm" || error_decoupling "Last FM"
+  #! search 'from "@toplast/lastfm' src | excludes_vendor_locations "lastfm" || error_decoupling "Last FM"
 
   # Enforce Locale Framework Isolation
   echo "  Checking Locale Framework Isolation..."

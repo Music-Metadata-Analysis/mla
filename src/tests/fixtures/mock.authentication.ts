@@ -1,14 +1,15 @@
 import { createMocks, RequestOptions, ResponseOptions } from "node-mocks-http";
-import type {
-  MockAPIRequest,
-  MockAPIResponse,
-} from "@src/types/api.endpoint.types";
+import type { MockAPIRequestType } from "@src/types/api/request.types";
+import type { MockAPIResponseType } from "@src/types/api/response.types";
 
 export const createAPIMocks = (
   reqOptions: RequestOptions,
   resOptions?: ResponseOptions
 ) => {
-  return createMocks<MockAPIRequest, MockAPIResponse>(reqOptions, resOptions);
+  return createMocks<MockAPIRequestType, MockAPIResponseType>(
+    reqOptions,
+    resOptions
+  );
 };
 
 export const mockSession = {
