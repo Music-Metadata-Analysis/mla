@@ -81,6 +81,10 @@ main() {
   echo "  Checking Lastfm Framework Isolation..."
   #! search 'from "@toplast/lastfm' src | excludes_vendor_locations "lastfm" || error_decoupling "Last FM"
 
+  # Enforce Lastfm Scraper Framework Isolation
+  echo "  Checking Lastfm Scraper Framework Isolation..."
+  ! search 'from "cheerio' src | excludes_vendor_locations "lastfm" || error_decoupling "Last FM Scraper"
+
   # Enforce Locale Framework Isolation
   echo "  Checking Locale Framework Isolation..."
   ! search 'from "next-i18next' src | excludes_vendor_locations "locale" || error_decoupling "Locale"

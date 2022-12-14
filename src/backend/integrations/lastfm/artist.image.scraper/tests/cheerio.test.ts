@@ -1,4 +1,4 @@
-import ArtistImageScraper from "../artist.image.scraper.class";
+import CheerioArtistImageScraper from "../cheerio";
 import lastFMConfig from "@src/config/lastfm";
 
 const mockValidExpectedHTML = `
@@ -30,25 +30,30 @@ const mockValidUnexpectedHTML = `
     </ul>
 `;
 
-const mockInvalidHTML = `Invalid HTML`;
+const mockInvalidHTML = "Invalid HTML";
 
-describe("ArtistImageScraper", () => {
-  let instance: ArtistImageScraper;
+describe("CheerioArtistImageScraper", () => {
+  let instance: CheerioArtistImageScraper;
+  let fetchSpy: jest.SpyInstance;
   let response: Promise<string>;
-  const mockResponse = jest.fn();
+
   let mockArtistName: string | undefined;
+
+  const mockResponse = jest.fn();
   const retries = 2;
 
   beforeAll(() => {
-    jest.spyOn(window, "fetch");
+    fetchSpy = jest.spyOn(window, "fetch");
+  });
+
+  afterAll(() => {
+    fetchSpy.mockRestore();
   });
 
   beforeEach(() => {
     jest.clearAllMocks();
     arrange();
   });
-
-  afterAll(() => jest.restoreAllMocks());
 
   const setupFetch = ({
     success,
@@ -57,23 +62,23 @@ describe("ArtistImageScraper", () => {
     success: boolean;
     status: number;
   }) => {
-    (window.fetch as jest.Mock).mockResolvedValue({
+    jest.mocked(window.fetch).mockResolvedValue({
       status,
       ok: success,
       text: mockResponse,
-    });
+    } as unknown as Response);
   };
 
   const arrange = () => {
-    instance = new ArtistImageScraper();
+    instance = new CheerioArtistImageScraper();
   };
 
   describe("when artistName is valid", () => {
-    let expectedCall: string;
+    let expectedURL: string;
 
     beforeEach(() => {
       mockArtistName = "God Is An Astronaut";
-      expectedCall =
+      expectedURL =
         lastFMConfig.prefixPath +
         "/" +
         encodeURIComponent(mockArtistName) +
@@ -90,14 +95,14 @@ describe("ArtistImageScraper", () => {
           mockResponse.mockImplementation(() => mockValidExpectedHTML);
         });
 
-        describe("getArtistImage", () => {
+        describe("scrape", () => {
           beforeEach(() => {
-            response = instance.getArtistImage(mockArtistName, retries);
+            response = instance.scrape(mockArtistName, retries);
           });
 
           it("should call fetch with the correct params", () => {
             expect(fetch).toBeCalledTimes(1);
-            expect(fetch).toBeCalledWith(expectedCall);
+            expect(fetch).toBeCalledWith(expectedURL);
           });
 
           it("should return a promise containing the expected content", async () => {
@@ -108,21 +113,21 @@ describe("ArtistImageScraper", () => {
         });
       });
 
-      describe("when the response does contains INVALID HTML", () => {
+      describe("when the response contains INVALID HTML", () => {
         beforeEach(() => {
           mockResponse.mockImplementation(() => mockInvalidHTML);
         });
 
-        describe("getArtistImage", () => {
+        describe("scrape", () => {
           beforeEach(() => {
-            response = instance.getArtistImage(mockArtistName, retries);
+            response = instance.scrape(mockArtistName, retries);
           });
 
           it("should call fetch recursively on each retry with the correct params", () => {
             expect(fetch).toBeCalledTimes(retries + 1);
-            expect(fetch).toHaveBeenNthCalledWith(1, expectedCall);
-            expect(fetch).toHaveBeenNthCalledWith(2, expectedCall);
-            expect(fetch).toHaveBeenNthCalledWith(3, expectedCall);
+            expect(fetch).toHaveBeenNthCalledWith(1, expectedURL);
+            expect(fetch).toHaveBeenNthCalledWith(2, expectedURL);
+            expect(fetch).toHaveBeenNthCalledWith(3, expectedURL);
           });
 
           it("should return a promise containing the expected content", async () => {
@@ -136,14 +141,14 @@ describe("ArtistImageScraper", () => {
           mockResponse.mockImplementation(() => mockValidUnexpectedHTML);
         });
 
-        describe("getArtistImage", () => {
+        describe("scrape", () => {
           beforeEach(() => {
-            response = instance.getArtistImage(mockArtistName, retries);
+            response = instance.scrape(mockArtistName, retries);
           });
 
           it("should call fetch recursively on each retry with the correct params", () => {
             expect(fetch).toBeCalledTimes(1);
-            expect(fetch).toBeCalledWith(expectedCall);
+            expect(fetch).toBeCalledWith(expectedURL);
           });
 
           it("should return a promise containing the expected content", async () => {
@@ -158,16 +163,16 @@ describe("ArtistImageScraper", () => {
         setupFetch({ success: false, status: 400 });
       });
 
-      describe("getArtistImage", () => {
+      describe("scrape", () => {
         beforeEach(() => {
-          response = instance.getArtistImage(mockArtistName, retries);
+          response = instance.scrape(mockArtistName, retries);
         });
 
         it("should call fetch recursively on each retry with the correct params", () => {
           expect(fetch).toBeCalledTimes(retries + 1);
-          expect(fetch).toHaveBeenNthCalledWith(1, expectedCall);
-          expect(fetch).toHaveBeenNthCalledWith(2, expectedCall);
-          expect(fetch).toHaveBeenNthCalledWith(3, expectedCall);
+          expect(fetch).toHaveBeenNthCalledWith(1, expectedURL);
+          expect(fetch).toHaveBeenNthCalledWith(2, expectedURL);
+          expect(fetch).toHaveBeenNthCalledWith(3, expectedURL);
         });
 
         it("should return a promise containing the expected content", async () => {
@@ -182,9 +187,13 @@ describe("ArtistImageScraper", () => {
       mockArtistName = undefined;
     });
 
-    describe("getArtistImage", () => {
+    describe("scrape", () => {
       beforeEach(() => {
-        response = instance.getArtistImage(mockArtistName, 2);
+        response = instance.scrape(mockArtistName, 2);
+      });
+
+      it("should NOT call fetch", () => {
+        expect(fetch).toBeCalledTimes(0);
       });
 
       it("should return a promise containing the expected content", async () => {
