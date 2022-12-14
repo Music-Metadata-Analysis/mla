@@ -1,13 +1,16 @@
 import * as cheerio from "cheerio";
 import lastFMConfig from "@src/config/lastfm";
+import type { VendorArtistImageScraperInterface } from "@src/types/integrations/lastfm/vendor.types";
 
-export default class ArtistImageScraper {
-  defaultArtistImageResponse = "";
-  invalidResponseMessage = "Invalid Response!";
-  invalidHTMLMessage = "Invalid HTML!";
-  targetCssClass = ".image-list-item";
+export default class CheerioArtistImageScraper
+  implements VendorArtistImageScraperInterface
+{
+  protected targetCssClass = ".image-list-item";
+  public defaultArtistImageResponse = "";
+  public invalidResponseMessage = "Invalid Response!";
+  public invalidHTMLMessage = "Invalid HTML!";
 
-  async getArtistImage(
+  public async scrape(
     artistName: string | undefined,
     retries: number
   ): Promise<string> {
@@ -21,17 +24,17 @@ export default class ArtistImageScraper {
           return response.text();
         })
         .then((html) => {
-          return Promise.resolve(this.parseLastFMImage(html));
+          return Promise.resolve(this.parseImageSource(html));
         })
         .catch(() => {
-          if (retries > 0) return this.getArtistImage(artistName, retries - 1);
+          if (retries > 0) return this.scrape(artistName, retries - 1);
           return this.defaultArtistImageResponse;
         });
     }
     return Promise.resolve(this.defaultArtistImageResponse);
   }
 
-  private getArtistURL(artistName: string) {
+  protected getArtistURL(artistName: string): string {
     return (
       lastFMConfig.prefixPath +
       "/" +
@@ -40,7 +43,7 @@ export default class ArtistImageScraper {
     );
   }
 
-  private parseLastFMImage(html: string) {
+  protected parseImageSource(html: string): string {
     try {
       const page = cheerio.load(html);
       const image = (page(this.targetCssClass)[0] as cheerio.NodeWithChildren)

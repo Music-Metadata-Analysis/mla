@@ -1,9 +1,10 @@
-import ArtistImageScraper from "./artist.image.scraper.class";
 import cacheVendor from "@src/backend/integrations/cache/vendor";
+import lastFMvendor from "@src/backend/integrations/lastfm/vendor";
+import type { VendorArtistImageScraperInterface } from "@src/types/integrations/lastfm/vendor.types";
 import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
 
 export default class ArtistImageCdnClient extends cacheVendor.VendorCdnBaseClient<string> {
-  protected scraper: ArtistImageScraper;
+  protected scraper: VendorArtistImageScraperInterface;
   protected cacheFolderName = "lastfm/artists";
   protected scraperRetries = 2;
 
@@ -12,14 +13,11 @@ export default class ArtistImageCdnClient extends cacheVendor.VendorCdnBaseClien
     cdnHostname: string
   ) {
     super(originServerClient, cdnHostname);
-    this.scraper = new ArtistImageScraper();
+    this.scraper = new lastFMvendor.ArtistImageScraper();
   }
 
   protected async createNewObject(objectName: string): Promise<string> {
-    const newEntry = await this.scraper.getArtistImage(
-      objectName,
-      this.scraperRetries
-    );
+    const newEntry = await this.scraper.scrape(objectName, this.scraperRetries);
     return newEntry;
   }
   protected deserializeObjectForJavascript(serializedObject: string): string {

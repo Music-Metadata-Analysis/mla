@@ -1,7 +1,8 @@
 import ArtistImageCdnClient from "../artist.image.cdn.client.class";
-import ArtistImageScraper from "../artist.image.scraper.class";
+import { mockArtistImageScraper } from "@src/backend/integrations/lastfm/__mocks__/vendor.mock";
+import lastFMvendor from "@src/backend/integrations/lastfm/vendor";
 
-jest.mock("../artist.image.scraper.class");
+jest.mock("@src/backend/integrations/lastfm/vendor");
 
 describe(ArtistImageCdnClient.name, () => {
   const expectedCdnFolderPath = "lastfm/artists";
@@ -46,8 +47,8 @@ describe(ArtistImageCdnClient.name, () => {
     beforeEach(() => arrange());
 
     it("should initialize the ArtistImageScraper", () => {
-      expect(ArtistImageScraper).toBeCalledTimes(1);
-      expect(ArtistImageScraper).toBeCalledWith();
+      expect(lastFMvendor.ArtistImageScraper).toBeCalledTimes(1);
+      expect(lastFMvendor.ArtistImageScraper).toBeCalledWith();
     });
 
     describe("logCacheHitRate", () => {
@@ -97,9 +98,7 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should NOT create a new object", () => {
-            expect(ArtistImageScraper.prototype.getArtistImage).toBeCalledTimes(
-              0
-            );
+            expect(mockArtistImageScraper.scrape).toBeCalledTimes(0);
           });
 
           it("should NOT use the originServerClient", () => {
@@ -148,9 +147,7 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should NOT create a new object", () => {
-            expect(ArtistImageScraper.prototype.getArtistImage).toBeCalledTimes(
-              0
-            );
+            expect(mockArtistImageScraper.scrape).toBeCalledTimes(0);
           });
 
           it("should NOT use the originServerClient", () => {
@@ -182,7 +179,7 @@ describe(ArtistImageCdnClient.name, () => {
           mockResponse.ok = false;
           mockResponse.text = () => Promise.resolve("Not Found.");
           jest
-            .mocked(ArtistImageScraper.prototype.getArtistImage)
+            .mocked(mockArtistImageScraper.scrape)
             .mockResolvedValueOnce(`${mockObjectName}>Created`);
 
           result = await instance.query(mockObjectName);
@@ -193,10 +190,8 @@ describe(ArtistImageCdnClient.name, () => {
         });
 
         it("should create a new object with the scraper", () => {
-          expect(ArtistImageScraper.prototype.getArtistImage).toBeCalledTimes(
-            1
-          );
-          expect(ArtistImageScraper.prototype.getArtistImage).toBeCalledWith(
+          expect(mockArtistImageScraper.scrape).toBeCalledTimes(1);
+          expect(mockArtistImageScraper.scrape).toBeCalledWith(
             mockObjectName,
             expectedScraperRetries
           );
