@@ -2,6 +2,16 @@ import LastFmAlbumClientAdapter from "./client/album.class";
 import LastFmArtistClientAdapter from "./client/artist.class";
 import LastFmTrackClientAdapter from "./client/track.class";
 import LastFmUserClientAdapter from "./client/user.class";
+import type {
+  LastFMTopAlbumsReportResponseInterface,
+  LastFMTopArtistsReportResponseInterface,
+  LastFMTopTracksReportResponseInterface,
+} from "@src/types/clients/api/lastfm/response.types";
+import type {
+  LastFMAlbumInfoInterface,
+  LastFMArtistTopAlbumsInterface,
+  LastFMTrackInfoInterface,
+} from "@src/types/integrations/lastfm/api.types";
 import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 class LastFMProxy implements LastFMProxyInterface {
@@ -17,25 +27,37 @@ class LastFMProxy implements LastFMProxyInterface {
     this.userClient = new LastFmUserClientAdapter(process.env.LAST_FM_KEY);
   }
 
-  async getAlbumInfo(artist: string, album: string, username: string) {
+  public async getAlbumInfo(
+    artist: string,
+    album: string,
+    username: string
+  ): Promise<LastFMAlbumInfoInterface> {
     const albumInfo = await this.albumClient.getInfo(artist, album, username);
     // data cleaning normalization
     return albumInfo;
   }
 
-  async getArtistTopAlbums(artist: string) {
+  public async getArtistTopAlbums(
+    artist: string
+  ): Promise<LastFMArtistTopAlbumsInterface[]> {
     const albums = await this.artistClient.getTopAlbums(artist);
     // data cleaning normalization
     return albums;
   }
 
-  async getTrackInfo(artist: string, track: string, username: string) {
+  public async getTrackInfo(
+    artist: string,
+    track: string,
+    username: string
+  ): Promise<LastFMTrackInfoInterface> {
     const trackInfo = await this.trackClient.getInfo(artist, track, username);
     // data cleaning normalization
     return trackInfo;
   }
 
-  async getUserTopAlbums(username: string) {
+  public async getUserTopAlbums(
+    username: string
+  ): Promise<LastFMTopAlbumsReportResponseInterface> {
     const [albums, profile] = await Promise.all([
       this.userClient.getTopAlbums(username),
       this.userClient.getUserProfile(username),
@@ -48,7 +70,9 @@ class LastFMProxy implements LastFMProxyInterface {
     };
   }
 
-  async getUserTopArtists(username: string) {
+  public async getUserTopArtists(
+    username: string
+  ): Promise<LastFMTopArtistsReportResponseInterface> {
     const [artists, profile] = await Promise.all([
       this.userClient.getTopArtists(username),
       this.userClient.getUserProfile(username),
@@ -60,7 +84,9 @@ class LastFMProxy implements LastFMProxyInterface {
     };
   }
 
-  async getUserTopTracks(username: string) {
+  public async getUserTopTracks(
+    username: string
+  ): Promise<LastFMTopTracksReportResponseInterface> {
     const [tracks, profile] = await Promise.all([
       this.userClient.getTopTracks(username),
       this.userClient.getUserProfile(username),

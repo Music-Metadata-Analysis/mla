@@ -3,7 +3,7 @@ import lastFMvendor from "@src/backend/integrations/lastfm/vendor";
 import type { VendorArtistImageScraperInterface } from "@src/types/integrations/lastfm/vendor.types";
 import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
 
-export default class ArtistImageCdnClient extends cacheVendor.VendorCdnBaseClient<string> {
+export default class ArtistImageCdnClient extends cacheVendor.CdnBaseClient<string> {
   protected scraper: VendorArtistImageScraperInterface;
   protected cacheFolderName = "lastfm/artists";
   protected scraperRetries = 2;

@@ -2,19 +2,19 @@ export interface PersistanceVendor {
   PersistanceClient: new (partitionName: string) => PersistanceVendorInterface;
 }
 
-export type PersistanceClientHeaders = {
+export type PersistanceVendorClientHeaders = {
   ContentType: string;
   CacheControl?: string;
 };
 
-export type PersistanceDataType =
+export type PersistanceVendorDataType =
   | string
   | Record<string | number | symbol, unknown>;
 
 export interface PersistanceVendorInterface {
   write(
     keyName: string,
-    data: PersistanceDataType,
-    headers: PersistanceClientHeaders
+    data: PersistanceVendorDataType,
+    headers: PersistanceVendorClientHeaders
   ): void;
 }

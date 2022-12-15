@@ -1,38 +1,13 @@
-import CacheControllerAbstractFactory from "../controller.abstract.factory.class";
-import CacheController from "../controller.class";
-import VendorCdnBaseClient from "@src/backend/integrations/cache/cdn/bases/vendor.cdn.base.client.class";
-import PersistanceVendorBaseClass from "@src/backend/integrations/persistance/client/bases/persistance.base.client.class";
+import ConcreteCacheControllerFactory, {
+  MockedPersistanceVendorBaseClass,
+  MockedVendorCdnBaseClient,
+} from "./implementations/concrete.cache.controller.factory.class";
+import CacheControllerAbstractFactory from "../cache.controller.abstract.factory.class";
+import CacheController from "@src/backend/cache/controller/cache.controller.class";
 
-jest.mock("../controller.class");
-
-jest.mock(
-  "@src/backend/integrations/persistance/client/bases/persistance.base.client.class"
-);
-
-jest.mock(
-  "@src/backend/integrations/cache/cdn/bases/vendor.cdn.base.client.class"
-);
-
-class ConcreteCacheControllerFactory extends CacheControllerAbstractFactory<string> {
-  OriginServerPersistanceClient = MockedPersistanceVendorBaseClass;
-  CdnClient = MockedVendorCdnBaseClient;
-  defaultResponse = "mockDefaultResponse";
-
-  getPartitionName(): string {
-    return "mockPartitionName";
-  }
-
-  getCdnHostname(): string {
-    return "mockCdnHostName";
-  }
-}
+jest.mock("@src/backend/cache/controller/cache.controller.class");
 
 const MockedCacheController = jest.mocked(CacheController);
-const MockedPersistanceVendorBaseClass =
-  PersistanceVendorBaseClass as jest.Mock<PersistanceVendorBaseClass>;
-const MockedVendorCdnBaseClient = VendorCdnBaseClient as jest.Mock<
-  VendorCdnBaseClient<string>
->;
 
 describe(CacheControllerAbstractFactory.name, () => {
   let instance: CacheControllerAbstractFactory<string>;

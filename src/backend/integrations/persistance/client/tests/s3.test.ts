@@ -1,6 +1,6 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import S3PersistenceClient from "../s3";
-import type { PersistanceClientHeaders } from "@src/types/integrations/persistance/vendor.types";
+import type { PersistanceVendorClientHeaders } from "@src/types/integrations/persistance/vendor.types";
 
 jest.mock("@aws-sdk/client-s3");
 
@@ -9,8 +9,9 @@ const MockedPutObjectCommand = jest.mocked(PutObjectCommand);
 
 describe(S3PersistenceClient.name, () => {
   let instance: S3PersistenceClient;
-  let mockHeaders: PersistanceClientHeaders;
+  let mockHeaders: PersistanceVendorClientHeaders;
   let originalEnvironment: typeof process.env;
+
   const mockKeyName = "mockKeyName";
   const mockStringData = "mockStringData";
   const mockObjectData = { mockKey: "mockValue" };
@@ -30,15 +31,13 @@ describe(S3PersistenceClient.name, () => {
     originalEnvironment = process.env;
   });
 
-  afterAll(() => jest.restoreAllMocks());
+  afterAll(() => {
+    process.env = originalEnvironment;
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
     setupEnv();
-  });
-
-  afterAll(() => {
-    process.env = originalEnvironment;
   });
 
   const setupEnv = () => {
