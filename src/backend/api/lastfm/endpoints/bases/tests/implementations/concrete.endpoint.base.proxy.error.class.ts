@@ -1,5 +1,5 @@
 import LastFMEndpointBase from "@src/backend/api/lastfm/endpoints/bases/endpoint.base.class";
-import { ProxyError } from "@src/errors/proxy.error.class";
+import { ProxyError } from "@src/backend/api/lastfm/proxy/error/proxy.error.class";
 import type { RequestPathParamType } from "@src/types/api/request.types";
 
 export default class ConcreteBaseProxyErrorClass extends LastFMEndpointBase {
