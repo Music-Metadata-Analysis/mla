@@ -72,11 +72,11 @@ main() {
   done
 
   # Enforce Type Definition Flow (No imports of fronted types to backend types definitions.)
-  #echo "  Checking Imports from the Frontend Component to the Backend Type Definitions..."
-  #! search 'from "@src/.+' src/types/integrations | 
-  #  excludes 'from "(@src/backend/.+|@src/types/.+)"' ||
-  #  (echo "Frontend Types cannot be imported into Backend Type definitions." && exit 1) || 
-  #  false
+  echo "  Checking Imports from the Frontend Component to the Backend Type Definitions..."
+  ! search 'from "@src/.+' src/types/integrations | 
+    excludes 'from "(@src/backend/.+|@src/types/.+)"' ||
+    (echo "Frontend Types cannot be imported into Backend Type definitions." && exit 1) || 
+    false
     
   echo "Framework Decoupling..."
 

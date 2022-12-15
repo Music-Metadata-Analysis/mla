@@ -1,5 +1,5 @@
+import type { ProxyError } from "@src/backend/api/lastfm/proxy/error/proxy.error.class";
 import type { ParameterizedVendorApiHandlerType } from "@src/backend/integrations/api.handler/vendor.types";
-import type { ProxyError } from "@src/errors/proxy.error.class";
 import type { ApiEndpointRequestType } from "@src/types/api/request.types";
 import type { ApiEndpointResponseType } from "@src/types/api/response.types";
 
