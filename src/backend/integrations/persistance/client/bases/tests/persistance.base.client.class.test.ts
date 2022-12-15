@@ -1,35 +1,27 @@
+import MockConcretePersistanceVendor, {
+  mockPersistanceClient,
+} from "./implementations/concrete.persistance.client.class";
 import PersistanceVendorBaseClass from "../persistance.base.client.class";
-import type {
-  PersistanceDataType,
-  PersistanceClientHeaders,
-} from "@src/types/integrations/persistance/vendor.types";
-
-class MockConcretePersistanceVendor extends PersistanceVendorBaseClass {
-  protected async writeImplementation(
-    keyName: string,
-    data: PersistanceDataType,
-    headers: PersistanceClientHeaders
-  ) {
-    mockPersistanceClient(keyName, data, headers);
-  }
-}
-
-const mockPersistanceClient = jest.fn();
 
 describe(PersistanceVendorBaseClass.name, () => {
+  let consoleErrorSpy: jest.SpyInstance;
   let instance: PersistanceVendorBaseClass;
+
   const mockPartition = "mockPartition";
   const mockKeyName = "mockKeyName";
   const mockStringData = "mockStringData";
   const mockError = new Error("MockError");
-  const mockConsoleError = jest.fn();
-  const originalConsoleError = console.error;
 
-  afterAll(() => (console.error = originalConsoleError));
+  beforeAll(() => {
+    consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => null);
+  });
+
+  afterAll(() => consoleErrorSpy.mockReset());
 
   beforeEach(() => {
     jest.clearAllMocks();
-    console.error = mockConsoleError;
   });
 
   const arrange = () =>
@@ -90,8 +82,8 @@ describe(PersistanceVendorBaseClass.name, () => {
         });
 
         it("should log the error as expected", async () => {
-          expect(mockConsoleError).toBeCalledTimes(1);
-          expect(mockConsoleError).toBeCalledWith(
+          expect(consoleErrorSpy).toBeCalledTimes(1);
+          expect(consoleErrorSpy).toBeCalledWith(
             `ERROR: could not save object '${mockKeyName}'.`
           );
         });

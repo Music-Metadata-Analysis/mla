@@ -1,7 +1,7 @@
 import persistanceVendor from "../../persistance/vendor";
 import type { VendorProfileType } from "../vendor.types";
 import type {
-  PersistanceDataType,
+  PersistanceVendorDataType,
   PersistanceVendorInterface,
 } from "@src/types/integrations/persistance/vendor.types";
 
@@ -16,9 +16,13 @@ class ProfilePersistanceClient {
 
   async persistProfile(profile?: VendorProfileType) {
     if (profile?.email) {
-      await this.client.write(profile.email, profile as PersistanceDataType, {
-        ContentType: "application/json",
-      });
+      await this.client.write(
+        profile.email,
+        profile as PersistanceVendorDataType,
+        {
+          ContentType: "application/json",
+        }
+      );
     }
   }
 }

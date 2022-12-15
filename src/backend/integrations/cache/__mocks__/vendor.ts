@@ -1,8 +1,10 @@
-import CloudFrontCdnBaseClass from "./cdn/cloudfront";
+import CdnAbstractBaseClient from "../cdn/bases/cdn.base.client.class";
 import type { CacheVendorInterface } from "@src/types/integrations/cache/vendor.types";
 
+jest.mock("../cdn/bases/cdn.base.client.class");
+
 const cacheVendor: CacheVendorInterface = {
-  CdnBaseClient: CloudFrontCdnBaseClass,
+  CdnBaseClient: CdnAbstractBaseClient,
 };
 
 export default cacheVendor;

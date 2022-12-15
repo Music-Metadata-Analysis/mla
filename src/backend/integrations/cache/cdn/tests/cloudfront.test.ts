@@ -1,44 +1,30 @@
+import ConcreteCloudFrontCdnClient, {
+  mockCdnFolderName,
+  mockObjectCreator,
+} from "./implementations/concrete.cloudfront.cdn.client.class";
 import CloudFrontCdnBaseClass from "../cloudfront";
 
-const mockObjectCreator = jest.fn((objectName: string) => {
-  return Promise.resolve(`${objectName}>Created`);
-});
-
-const mockCdnFolderName = "mock/folder";
-
-class ConcreteCloudFrontCdnClient extends CloudFrontCdnBaseClass<string> {
-  protected cacheFolderName = mockCdnFolderName;
-
-  protected createNewObject(objectName: string): Promise<string> {
-    return mockObjectCreator(objectName);
-  }
-  protected deserializeObjectForJavascript(serializedObject: string): string {
-    return `${serializedObject}>mockDeserializedObject`;
-  }
-  protected serializeObjectForStorage(deserializedObject: string): string {
-    return `${deserializedObject}>mockSerializedObject`;
-  }
-}
-
 describe(CloudFrontCdnBaseClass.name, () => {
+  let consoleLogSpy: jest.SpyInstance;
+  let fetchSpy: jest.SpyInstance;
+  let instance: CloudFrontCdnBaseClass<string>;
+  let mockResponse: Response & { ok: boolean; status: number };
+
   const mockObjectName = "mockObjectName<>";
   const mockCdnHostname = "mockCdnHostname";
+
   const mockPersistanceClient = { write: jest.fn() };
   const mockHeaders = { get: jest.fn() };
-  const originalConsoleLog = console.log;
-  const mockConsoleLog = jest.fn();
-  let instance: CloudFrontCdnBaseClass<string>;
-  let mockFetch: jest.SpyInstance;
-  let mockResponse: {
-    status: number;
-    headers: { get: () => string | undefined };
-    ok: boolean;
-    text: () => Promise<string>;
-  };
 
-  beforeAll(() => (mockFetch = jest.spyOn(window, "fetch")));
+  beforeAll(() => {
+    consoleLogSpy = jest.spyOn(console, "log").mockImplementation(() => null);
+    fetchSpy = jest.spyOn(window, "fetch");
+  });
 
-  afterAll(() => mockFetch.mockRestore());
+  afterAll(() => {
+    consoleLogSpy.mockRestore();
+    fetchSpy.mockRestore();
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -47,8 +33,8 @@ describe(CloudFrontCdnBaseClass.name, () => {
       headers: mockHeaders,
       ok: false,
       text: () => Promise.resolve("defaultValue"),
-    };
-    (window.fetch as jest.Mock).mockResolvedValue(mockResponse);
+    } as unknown as Response;
+    jest.mocked(window.fetch).mockResolvedValue(mockResponse);
   });
 
   const arrange = () =>
@@ -62,15 +48,11 @@ describe(CloudFrontCdnBaseClass.name, () => {
 
     describe("logCacheHitRate", () => {
       beforeEach(() => {
-        console.log = mockConsoleLog;
-
         instance.logCacheHitRate();
       });
 
-      afterEach(() => (console.log = originalConsoleLog));
-
       it("should NOT log when called without requests", () => {
-        expect(mockConsoleLog).toBeCalledTimes(0);
+        expect(consoleLogSpy).toBeCalledTimes(0);
       });
     });
 
@@ -94,8 +76,8 @@ describe(CloudFrontCdnBaseClass.name, () => {
           });
 
           it("should call fetch with the expected arguments", () => {
-            expect(mockFetch).toBeCalledTimes(1);
-            expect(mockFetch).toBeCalledWith(
+            expect(fetchSpy).toBeCalledTimes(1);
+            expect(fetchSpy).toBeCalledWith(
               `https://${mockCdnHostname}/${mockCdnFolderName}/${encodeURI(
                 mockObjectName
               )}`
@@ -116,16 +98,12 @@ describe(CloudFrontCdnBaseClass.name, () => {
 
           describe("logCacheHitRate", () => {
             beforeEach(() => {
-              console.log = mockConsoleLog;
-
               instance.logCacheHitRate();
             });
 
-            afterEach(() => (console.log = originalConsoleLog));
-
             it("should log the correct cache hit rate", () => {
-              expect(mockConsoleLog).toBeCalledTimes(1);
-              expect(mockConsoleLog).toBeCalledWith(
+              expect(consoleLogSpy).toBeCalledTimes(1);
+              expect(consoleLogSpy).toBeCalledWith(
                 "[CloudFront] hit rate: 100.00%"
               );
             });
@@ -143,8 +121,8 @@ describe(CloudFrontCdnBaseClass.name, () => {
           });
 
           it("should call fetch with the expected arguments", () => {
-            expect(mockFetch).toBeCalledTimes(1);
-            expect(mockFetch).toBeCalledWith(
+            expect(fetchSpy).toBeCalledTimes(1);
+            expect(fetchSpy).toBeCalledWith(
               `https://${mockCdnHostname}/${mockCdnFolderName}/${encodeURI(
                 mockObjectName
               )}`
@@ -165,16 +143,12 @@ describe(CloudFrontCdnBaseClass.name, () => {
 
           describe("logCacheHitRate", () => {
             beforeEach(() => {
-              console.log = mockConsoleLog;
-
               instance.logCacheHitRate();
             });
 
-            afterEach(() => (console.log = originalConsoleLog));
-
             it("should log the correct cache hit rate", () => {
-              expect(mockConsoleLog).toBeCalledTimes(1);
-              expect(mockConsoleLog).toBeCalledWith(
+              expect(consoleLogSpy).toBeCalledTimes(1);
+              expect(consoleLogSpy).toBeCalledWith(
                 "[CloudFront] hit rate: 0.00%"
               );
             });
@@ -218,16 +192,12 @@ describe(CloudFrontCdnBaseClass.name, () => {
 
         describe("logCacheHitRate", () => {
           beforeEach(() => {
-            console.log = mockConsoleLog;
-
             instance.logCacheHitRate();
           });
 
-          afterEach(() => (console.log = originalConsoleLog));
-
           it("should log the correct cache hit rate", () => {
-            expect(mockConsoleLog).toBeCalledTimes(1);
-            expect(mockConsoleLog).toBeCalledWith(
+            expect(consoleLogSpy).toBeCalledTimes(1);
+            expect(consoleLogSpy).toBeCalledWith(
               "[CloudFront] hit rate: 0.00%"
             );
           });

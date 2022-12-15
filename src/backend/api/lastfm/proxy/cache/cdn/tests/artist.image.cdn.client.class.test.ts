@@ -5,26 +5,25 @@ import lastFMvendor from "@src/backend/integrations/lastfm/vendor";
 jest.mock("@src/backend/integrations/lastfm/vendor");
 
 describe(ArtistImageCdnClient.name, () => {
+  let consoleLogSpy: jest.SpyInstance;
+  let fetchSpy: jest.SpyInstance;
+  let instance: ArtistImageCdnClient;
+  let mockResponse: Response & { ok: boolean; status: number };
+
   const expectedCdnFolderPath = "lastfm/artists";
   const expectedScraperRetries = 2;
+
   const mockObjectName = "<mockObjectName>";
   const mockCdnHostname = "mockCdnHostname";
   const mockPersistanceClient = { write: jest.fn() };
   const mockHeaders = { get: jest.fn() };
-  const originalConsoleLog = console.log;
-  const mockConsoleLog = jest.fn();
-  let instance: ArtistImageCdnClient;
-  let mockFetch: jest.SpyInstance;
-  let mockResponse: {
-    status: number;
-    headers: { get: () => string | undefined };
-    ok: boolean;
-    text: () => Promise<string>;
-  };
 
-  beforeAll(() => (mockFetch = jest.spyOn(window, "fetch")));
+  beforeAll(() => {
+    consoleLogSpy = jest.spyOn(console, "log").mockImplementation(() => null);
+    fetchSpy = jest.spyOn(window, "fetch");
+  });
 
-  afterAll(() => mockFetch.mockRestore());
+  afterAll(() => fetchSpy.mockRestore());
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -33,8 +32,8 @@ describe(ArtistImageCdnClient.name, () => {
       headers: mockHeaders,
       ok: false,
       text: () => Promise.resolve("defaultValue"),
-    };
-    (window.fetch as jest.Mock).mockResolvedValue(mockResponse);
+    } as unknown as Response;
+    fetchSpy.mockResolvedValue(mockResponse);
   });
 
   const arrange = () =>
@@ -53,15 +52,11 @@ describe(ArtistImageCdnClient.name, () => {
 
     describe("logCacheHitRate", () => {
       beforeEach(() => {
-        console.log = mockConsoleLog;
-
         instance.logCacheHitRate();
       });
 
-      afterEach(() => (console.log = originalConsoleLog));
-
-      it("should NOT log when called without requests", () => {
-        expect(mockConsoleLog).toBeCalledTimes(0);
+      it("should NOT log when called before any queries", () => {
+        expect(consoleLogSpy).toBeCalledTimes(0);
       });
     });
 
@@ -85,8 +80,8 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should call fetch with the expected arguments", () => {
-            expect(mockFetch).toBeCalledTimes(1);
-            expect(mockFetch).toBeCalledWith(
+            expect(fetchSpy).toBeCalledTimes(1);
+            expect(fetchSpy).toBeCalledWith(
               `https://${mockCdnHostname}/${expectedCdnFolderPath}/${encodeURI(
                 mockObjectName
               )}`
@@ -107,16 +102,12 @@ describe(ArtistImageCdnClient.name, () => {
 
           describe("logCacheHitRate", () => {
             beforeEach(() => {
-              console.log = mockConsoleLog;
-
               instance.logCacheHitRate();
             });
 
-            afterEach(() => (console.log = originalConsoleLog));
-
             it("should log the correct cache hit rate", () => {
-              expect(mockConsoleLog).toBeCalledTimes(1);
-              expect(mockConsoleLog).toBeCalledWith(
+              expect(consoleLogSpy).toBeCalledTimes(1);
+              expect(consoleLogSpy).toBeCalledWith(
                 "[CloudFront] hit rate: 100.00%"
               );
             });
@@ -134,8 +125,8 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should call fetch with the expected arguments", () => {
-            expect(mockFetch).toBeCalledTimes(1);
-            expect(mockFetch).toBeCalledWith(
+            expect(fetchSpy).toBeCalledTimes(1);
+            expect(fetchSpy).toBeCalledWith(
               `https://${mockCdnHostname}/${expectedCdnFolderPath}/${encodeURI(
                 mockObjectName
               )}`
@@ -156,16 +147,12 @@ describe(ArtistImageCdnClient.name, () => {
 
           describe("logCacheHitRate", () => {
             beforeEach(() => {
-              console.log = mockConsoleLog;
-
               instance.logCacheHitRate();
             });
 
-            afterEach(() => (console.log = originalConsoleLog));
-
             it("should log the correct cache hit rate", () => {
-              expect(mockConsoleLog).toBeCalledTimes(1);
-              expect(mockConsoleLog).toBeCalledWith(
+              expect(consoleLogSpy).toBeCalledTimes(1);
+              expect(consoleLogSpy).toBeCalledWith(
                 "[CloudFront] hit rate: 0.00%"
               );
             });
@@ -208,16 +195,12 @@ describe(ArtistImageCdnClient.name, () => {
 
         describe("logCacheHitRate", () => {
           beforeEach(() => {
-            console.log = mockConsoleLog;
-
             instance.logCacheHitRate();
           });
 
-          afterEach(() => (console.log = originalConsoleLog));
-
           it("should log the correct cache hit rate", () => {
-            expect(mockConsoleLog).toBeCalledTimes(1);
-            expect(mockConsoleLog).toBeCalledWith(
+            expect(consoleLogSpy).toBeCalledTimes(1);
+            expect(consoleLogSpy).toBeCalledWith(
               "[CloudFront] hit rate: 0.00%"
             );
           });

@@ -1,12 +1,10 @@
-import CacheController from "./controller.class";
-import type {
-  CacheFactoryInterface,
-  CdnVendorInterface,
-} from "@src/types/integrations/cache/vendor.types";
+import CacheController from "@src/backend/cache/controller/cache.controller.class";
+import type { CacheControllerFactoryInterface } from "@src/backend/types/cache/factory.types";
+import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
 import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
 
 export default abstract class CacheControllerAbstractFactory<ObjectType>
-  implements CacheFactoryInterface<ObjectType>
+  implements CacheControllerFactoryInterface<ObjectType>
 {
   protected abstract OriginServerPersistanceClient: new (
     partitionType: string
@@ -14,14 +12,14 @@ export default abstract class CacheControllerAbstractFactory<ObjectType>
   protected abstract CdnClient: new (
     originServerClient: PersistanceVendorInterface,
     cdnHostname: string
-  ) => CdnVendorInterface<ObjectType>;
+  ) => CacheVendorCdnInterface<ObjectType>;
   protected abstract defaultResponse: ObjectType;
 
-  abstract getPartitionName(): string;
+  protected abstract getPartitionName(): string;
 
-  abstract getCdnHostname(): string;
+  protected abstract getCdnHostname(): string;
 
-  create(): CacheController<ObjectType> {
+  public create(): CacheController<ObjectType> {
     const vendorPersistanceImplementation =
       new this.OriginServerPersistanceClient(this.getPartitionName());
     const vendorCdnImplementation = new this.CdnClient(

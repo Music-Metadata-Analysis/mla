@@ -1,11 +1,13 @@
-import CacheController from "../controller.class";
-import type VendorCdnBaseClient from "../../cdn/bases/vendor.cdn.base.client.class";
+import CacheController from "../cache.controller.class";
+import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
 
 describe(CacheController.name, () => {
   let instance: CacheController<string>;
+
   const mockObjectName = "mockObjectName";
   const mockDefaultResponse = "mockDefaultResponse";
   const mockCdnResponse = "mockCdnResponse";
+
   const mockCdnLogCacheHitRate = jest.fn();
   const mockCdnQuery = jest.fn();
   const mockCdnClient = jest.fn(
@@ -13,7 +15,7 @@ describe(CacheController.name, () => {
       ({
         logCacheHitRate: mockCdnLogCacheHitRate,
         query: mockCdnQuery,
-      } as unknown as VendorCdnBaseClient<string>)
+      } as unknown as CacheVendorCdnInterface<string>)
   );
 
   beforeEach(() => jest.clearAllMocks());

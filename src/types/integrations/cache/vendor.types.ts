@@ -1,28 +1,13 @@
-import type CacheControllerAbstractFactory from "@src/backend/integrations/cache/controller/controller.abstract.factory.class";
 import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
 
-export interface CacheFactoryInterface<ObjectType> {
-  create(): CacheControllerInterface<ObjectType>;
-  getPartitionName(): string;
-  getCdnHostname(): string;
-}
-
-export interface CacheControllerInterface<ObjectType> {
-  logCacheHitRate(): void;
-  query(keyName?: string): Promise<ObjectType>;
-}
-
-export interface CdnVendorInterface<ObjectType> {
+export interface CacheVendorCdnInterface<ObjectType> {
   logCacheHitRate(): void;
   query(keyName: string): Promise<ObjectType>;
 }
 
-export interface CacheVendor {
-  ControllerBaseFactory: abstract new <
-    T
-  >() => CacheControllerAbstractFactory<T>;
-  VendorCdnBaseClient: abstract new <T>(
+export interface CacheVendorInterface {
+  CdnBaseClient: abstract new <ObjectType>(
     originServerClient: PersistanceVendorInterface,
     cdnHostname: string
-  ) => CdnVendorInterface<T>;
+  ) => CacheVendorCdnInterface<ObjectType>;
 }

@@ -1,8 +1,8 @@
-import type { CdnVendorInterface } from "@src/types/integrations/cache/vendor.types";
+import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
 import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
 
-export default abstract class VendorCdnBaseClient<ObjectType>
-  implements CdnVendorInterface<ObjectType>
+export default abstract class CacheVendorCdnBaseClient<ObjectType>
+  implements CacheVendorCdnInterface<ObjectType>
 {
   protected cdnHostname: string;
   protected originServerClient: PersistanceVendorInterface;
@@ -19,19 +19,19 @@ export default abstract class VendorCdnBaseClient<ObjectType>
   }
 
   protected abstract createNewObject(objectName: string): Promise<ObjectType>;
-  protected abstract deserializeObjectForJavascript(
-    serializedObject: string
-  ): ObjectType;
   protected abstract isCachedResponse(response: Response): boolean;
-  protected abstract getKeyName(objectName: string): string;
+  protected abstract getOriginServerStorageLocation(objectName: string): string;
   protected abstract getOriginServerUrlFromObjectName(
     objectName: string
   ): string;
+  protected abstract deserializeObjectForJavascript(
+    serializedObject: string
+  ): ObjectType;
   protected abstract serializeObjectForStorage(
     deserializedObject: ObjectType
   ): string;
 
-  async query(objectName: string): Promise<ObjectType> {
+  public async query(objectName: string): Promise<ObjectType> {
     this.requestCount++;
     return fetch(this.getOriginServerUrlFromObjectName(objectName)).then(
       async (response) => {
@@ -43,22 +43,22 @@ export default abstract class VendorCdnBaseClient<ObjectType>
     );
   }
 
-  protected async populateCache(objectName: string) {
+  protected async populateCache(objectName: string): Promise<ObjectType> {
     const newEntry = await this.createNewObject(objectName);
     await this.originServerClient.write(
-      this.getKeyName(objectName),
+      this.getOriginServerStorageLocation(objectName),
       this.serializeObjectForStorage(newEntry),
       { ContentType: "text/plain" }
     );
     return newEntry;
   }
 
-  async getCachedResponse(response: Response): Promise<ObjectType> {
+  protected async getCachedResponse(response: Response): Promise<ObjectType> {
     if (this.isCachedResponse(response)) this.cacheHitCount++;
     return this.deserializeObjectForJavascript(await response.text());
   }
 
-  logCacheHitRate() {
+  public logCacheHitRate(): void {
     if (this.requestCount > 0) {
       const hitRate = (this.cacheHitCount / this.requestCount) * 100;
       console.log(`[${this.cacheTypeName}] hit rate: ${hitRate.toFixed(2)}%`);

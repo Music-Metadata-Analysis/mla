@@ -1,14 +1,12 @@
-import VendorCdnBaseClient from "./bases/vendor.cdn.base.client.class";
-import type { CdnVendorInterface } from "@src/types/integrations/cache/vendor.types";
+import CacheVendorCdnBaseClient from "./bases/cdn.base.client.class";
+import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
 import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
 
 export default abstract class CloudFrontCdnBaseClass<ObjectType>
-  extends VendorCdnBaseClient<ObjectType>
-  implements CdnVendorInterface<ObjectType>
+  extends CacheVendorCdnBaseClient<ObjectType>
+  implements CacheVendorCdnInterface<ObjectType>
 {
   protected abstract cacheFolderName: string;
-  protected requestCount = 0;
-  protected cacheHitCount = 0;
   protected cacheTypeName = "CloudFront";
 
   constructor(
@@ -24,6 +22,10 @@ export default abstract class CloudFrontCdnBaseClass<ObjectType>
     return cache_header.includes("Hit");
   }
 
+  protected getOriginServerStorageLocation(objectName: string): string {
+    return `${this.cacheFolderName}/${objectName}`;
+  }
+
   protected getOriginServerUrlFromObjectName(objectName: string): string {
     return (
       this.getCloudFrontPrefix() +
@@ -31,11 +33,7 @@ export default abstract class CloudFrontCdnBaseClass<ObjectType>
     );
   }
 
-  protected getCloudFrontPrefix() {
+  protected getCloudFrontPrefix(): string {
     return `https://${this.cdnHostname}/`;
-  }
-
-  protected getKeyName(objectName: string) {
-    return `${this.cacheFolderName}/${objectName}`;
   }
 }

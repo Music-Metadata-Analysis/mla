@@ -1,51 +1,28 @@
-import VendorCdnBaseClient from "../vendor.cdn.base.client.class";
+import ConcreteCdnClient, {
+  mockObjectCreator,
+} from "./implementations/concrete.cdn.client.class";
+import CacheVendorCdnBaseClient from "../cdn.base.client.class";
 
-const mockObjectCreator = jest.fn((objectName: string) => {
-  return Promise.resolve(`${objectName}>Created`);
-});
+describe(CacheVendorCdnBaseClient.name, () => {
+  let consoleLogSpy: jest.SpyInstance;
+  let fetchSpy: jest.SpyInstance;
+  let instance: CacheVendorCdnBaseClient<string>;
+  let mockResponse: Response & { ok: boolean; status: number };
 
-class ConcreteVendorCdnClient extends VendorCdnBaseClient<string> {
-  cacheTypeName = "mockCdnClient";
-
-  protected createNewObject(objectName: string): Promise<string> {
-    return mockObjectCreator(objectName);
-  }
-  protected deserializeObjectForJavascript(serializedObject: string): string {
-    return `${serializedObject}>mockDeserializedObject`;
-  }
-  protected isCachedResponse(response: Response): boolean {
-    return response.headers.get("mockHeader") == "Hit";
-  }
-  protected getKeyName(objectName: string): string {
-    return `${objectName}>transformed`;
-  }
-  protected getOriginServerUrlFromObjectName(objectName: string): string {
-    return `https://mockCacheServer/${objectName}`;
-  }
-  protected serializeObjectForStorage(deserializedObject: string): string {
-    return `${deserializedObject}>mockSerializedObject`;
-  }
-}
-
-describe(VendorCdnBaseClient.name, () => {
   const mockObjectName = "mockObjectName<>";
   const mockCdnHostname = "mockCdnHostname";
   const mockPersistanceClient = { write: jest.fn() };
   const mockHeaders = { get: jest.fn() };
-  const originalConsoleLog = console.log;
-  const mockConsoleLog = jest.fn();
-  let instance: VendorCdnBaseClient<string>;
-  let mockFetch: jest.SpyInstance;
-  let mockResponse: {
-    status: number;
-    headers: { get: () => string | undefined };
-    ok: boolean;
-    text: () => Promise<string>;
-  };
 
-  beforeAll(() => (mockFetch = jest.spyOn(window, "fetch")));
+  beforeAll(() => {
+    consoleLogSpy = jest.spyOn(console, "log").mockImplementation(() => null);
+    fetchSpy = jest.spyOn(window, "fetch");
+  });
 
-  afterAll(() => mockFetch.mockRestore());
+  afterAll(() => {
+    fetchSpy.mockRestore();
+    consoleLogSpy.mockRestore();
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -54,30 +31,23 @@ describe(VendorCdnBaseClient.name, () => {
       headers: mockHeaders,
       ok: false,
       text: () => Promise.resolve("defaultValue"),
-    };
-    jest.mocked(window.fetch as jest.Mock).mockResolvedValue(mockResponse);
+    } as unknown as Response;
+    jest.mocked(window.fetch).mockResolvedValue(mockResponse);
   });
 
   const arrange = () =>
-    (instance = new ConcreteVendorCdnClient(
-      mockPersistanceClient,
-      mockCdnHostname
-    ));
+    (instance = new ConcreteCdnClient(mockPersistanceClient, mockCdnHostname));
 
   describe("when initialized", () => {
     beforeEach(() => arrange());
 
     describe("logCacheHitRate", () => {
       beforeEach(() => {
-        console.log = mockConsoleLog;
-
         instance.logCacheHitRate();
       });
 
-      afterEach(() => (console.log = originalConsoleLog));
-
       it("should NOT log when called without requests", () => {
-        expect(mockConsoleLog).toBeCalledTimes(0);
+        expect(consoleLogSpy).toBeCalledTimes(0);
       });
     });
 
@@ -101,8 +71,8 @@ describe(VendorCdnBaseClient.name, () => {
           });
 
           it("should call fetch with the expected arguments", () => {
-            expect(mockFetch).toBeCalledTimes(1);
-            expect(mockFetch).toBeCalledWith(
+            expect(fetchSpy).toBeCalledTimes(1);
+            expect(fetchSpy).toBeCalledWith(
               `https://mockCacheServer/${mockObjectName}`
             );
           });
@@ -121,16 +91,12 @@ describe(VendorCdnBaseClient.name, () => {
 
           describe("logCacheHitRate", () => {
             beforeEach(() => {
-              console.log = mockConsoleLog;
-
               instance.logCacheHitRate();
             });
 
-            afterEach(() => (console.log = originalConsoleLog));
-
             it("should log the correct cache hit rate", () => {
-              expect(mockConsoleLog).toBeCalledTimes(1);
-              expect(mockConsoleLog).toBeCalledWith(
+              expect(consoleLogSpy).toBeCalledTimes(1);
+              expect(consoleLogSpy).toBeCalledWith(
                 "[mockCdnClient] hit rate: 100.00%"
               );
             });
@@ -148,8 +114,8 @@ describe(VendorCdnBaseClient.name, () => {
           });
 
           it("should call fetch with the expected arguments", () => {
-            expect(mockFetch).toBeCalledTimes(1);
-            expect(mockFetch).toBeCalledWith(
+            expect(fetchSpy).toBeCalledTimes(1);
+            expect(fetchSpy).toBeCalledWith(
               `https://mockCacheServer/${mockObjectName}`
             );
           });
@@ -168,16 +134,12 @@ describe(VendorCdnBaseClient.name, () => {
 
           describe("logCacheHitRate", () => {
             beforeEach(() => {
-              console.log = mockConsoleLog;
-
               instance.logCacheHitRate();
             });
 
-            afterEach(() => (console.log = originalConsoleLog));
-
             it("should log the correct cache hit rate", () => {
-              expect(mockConsoleLog).toBeCalledTimes(1);
-              expect(mockConsoleLog).toBeCalledWith(
+              expect(consoleLogSpy).toBeCalledTimes(1);
+              expect(consoleLogSpy).toBeCalledWith(
                 "[mockCdnClient] hit rate: 0.00%"
               );
             });
@@ -194,8 +156,8 @@ describe(VendorCdnBaseClient.name, () => {
         });
 
         it("should call fetch with the expected arguments", () => {
-          expect(mockFetch).toBeCalledTimes(1);
-          expect(mockFetch).toBeCalledWith(
+          expect(fetchSpy).toBeCalledTimes(1);
+          expect(fetchSpy).toBeCalledWith(
             `https://mockCacheServer/${mockObjectName}`
           );
         });
@@ -220,16 +182,12 @@ describe(VendorCdnBaseClient.name, () => {
 
         describe("logCacheHitRate", () => {
           beforeEach(() => {
-            console.log = mockConsoleLog;
-
             instance.logCacheHitRate();
           });
 
-          afterEach(() => (console.log = originalConsoleLog));
-
           it("should log the correct cache hit rate", () => {
-            expect(mockConsoleLog).toBeCalledTimes(1);
-            expect(mockConsoleLog).toBeCalledWith(
+            expect(consoleLogSpy).toBeCalledTimes(1);
+            expect(consoleLogSpy).toBeCalledWith(
               "[mockCdnClient] hit rate: 0.00%"
             );
           });

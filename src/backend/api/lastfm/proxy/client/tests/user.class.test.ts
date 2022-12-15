@@ -1,7 +1,7 @@
 import LastFMUserClientAdapter from "../user.class";
 import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
-import ArtistImageCacheFactory from "@src/backend/api/lastfm/proxy/cache/artist.image.cache.factory.class";
-import CacheController from "@src/backend/integrations/cache/controller/controller.class";
+import ArtistImageCacheFactory from "@src/backend/api/lastfm/proxy/cache/artist.image.cache.controller.factory.class";
+import CacheController from "@src/backend/cache/controller/cache.controller.class";
 import type { ProxyError } from "@src/errors/proxy.error.class";
 import type {
   LastFMAlbumDataInterface,
@@ -12,10 +12,10 @@ import type {
 import type { LastFMExternalClientError } from "@src/types/integrations/lastfm/client.types";
 
 jest.mock(
-  "@src/backend/api/lastfm/proxy/cache/artist.image.cache.factory.class"
+  "@src/backend/api/lastfm/proxy/cache/artist.image.cache.controller.factory.class"
 );
 
-jest.mock("@src/backend/integrations/cache/controller/controller.class");
+jest.mock("@src/backend/cache/controller/cache.controller.class");
 
 describe("LastFMUserClientAdapter", () => {
   let instance: LastFMUserClientAdapter;
