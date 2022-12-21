@@ -1,8 +1,8 @@
 import useFlagSmith from "./hooks/flagsmith";
 import FlagSmithProvider from "./providers/flagsmith";
-import type { FlagVendor } from "@src/types/clients/flags/vendor.types";
+import type { FlagVendorInterface } from "@src/types/clients/flags/vendor.types";
 
-const flagVendor: FlagVendor = {
+const flagVendor: FlagVendorInterface = {
   hook: useFlagSmith,
   Provider: FlagSmithProvider,
 };

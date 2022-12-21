@@ -1,7 +1,7 @@
 import { mockFlagVendorSSRClient } from "./vendor.ssr.mock";
-import type { FlagVendorSSR } from "@src/types/clients/flags/vendor.types";
+import type { FlagVendorSSRInterface } from "@src/types/clients/flags/vendor.types";
 
-const flagVendorSSR: FlagVendorSSR = {
+const flagVendorSSR: FlagVendorSSRInterface = {
   Client: jest.fn(() => mockFlagVendorSSRClient),
 };
 

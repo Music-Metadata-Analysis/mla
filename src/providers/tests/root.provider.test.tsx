@@ -10,7 +10,7 @@ import HeaderContainer from "@src/components/header/header.container";
 import AnalyticsProvider from "@src/providers/analytics/analytics.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { VendorAuthStateType } from "@src/types/clients/auth/vendor.types";
-import type { VendorFlagStateType } from "@src/types/clients/flags/vendor.types";
+import type { FlagVendorStateInterface } from "@src/types/clients/flags/vendor.types";
 
 jest.mock("@src/clients/auth/vendor");
 
@@ -71,7 +71,10 @@ describe("RootProvider", () => {
     jest.clearAllMocks();
   });
 
-  const arrange = async (flagState: VendorFlagStateType, pageKey?: string) => {
+  const arrange = async (
+    flagState: FlagVendorStateInterface,
+    pageKey?: string
+  ) => {
     const headerProps = pageKey ? { pageKey } : undefined;
     render(
       <RootProvider

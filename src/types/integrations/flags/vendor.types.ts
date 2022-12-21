@@ -6,7 +6,7 @@ export interface FlagVendorGroupInterface {
   getFromIdentifier: (identifier?: string | null) => string | null;
 }
 
-export interface FlagVendor {
+export interface FlagVendorInterface {
   Client: new (...args: unknown[]) => FlagVendorClientInterface;
   Group: new (...args: unknown[]) => FlagVendorGroupInterface;
 }

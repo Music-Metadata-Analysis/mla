@@ -218,7 +218,7 @@ main() {
       tr -d "}"             |
       sed '/^$/d'           |
       excludes "import"     |
-      excludes "[A-Z]{1}[a-zA-Z]+Vendor([a-zA-Z]+(Interface|Type))*" > /dev/null ||
+      excludes "[A-Z]{1}[a-zA-Z]+Vendor([a-zA-Z]+)*(Interface|Props|Type){1}" > /dev/null ||
       (echo "WARN: ${VENDOR_TYPE_FILE}: has improperly formatted types defined") || 
       false
   done

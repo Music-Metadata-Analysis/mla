@@ -1,7 +1,7 @@
 import { mockFlagClient, mockFlagGroup } from "./vendor.mock";
-import type { FlagVendor } from "@src/types/integrations/flags/vendor.types";
+import type { FlagVendorInterface } from "@src/types/integrations/flags/vendor.types";
 
-const flagVendor: FlagVendor = {
+const flagVendor: FlagVendorInterface = {
   Client: jest.fn(() => mockFlagClient),
   Group: jest.fn(() => mockFlagGroup),
 };
