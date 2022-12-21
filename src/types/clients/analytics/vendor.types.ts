@@ -1,10 +1,10 @@
 import type EventDefinition from "@src/events/event.class";
 
-export interface AnalyticsVendor {
-  GoogleAnalytics: new () => AnalyticsVendorInterface;
+export interface AnalyticsVendorInterface {
+  GoogleAnalytics: new () => AnalyticsVendorGoogleAnalyticsInterface;
 }
 
-export interface AnalyticsVendorInterface {
+export interface AnalyticsVendorGoogleAnalyticsInterface {
   event: (event: EventDefinition) => void;
   initialize: (analyticsID: string) => void;
   routeChange: (url: string) => void;
