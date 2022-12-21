@@ -1,7 +1,7 @@
 import { mockGoogleAnalytics } from "./vendor.mock";
-import type { AnalyticsVendor } from "@src/types/clients/analytics/vendor.types";
+import type { AnalyticsVendorInterface } from "@src/types/clients/analytics/vendor.types";
 
-const analyticsVendor: AnalyticsVendor = {
+const analyticsVendor: AnalyticsVendorInterface = {
   GoogleAnalytics: jest.fn(() => mockGoogleAnalytics),
 };
 
