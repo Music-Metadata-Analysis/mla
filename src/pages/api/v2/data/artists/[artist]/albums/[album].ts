@@ -2,7 +2,7 @@ import LastFMApiEndpointFactoryV2 from "@src/backend/api/lastfm/endpoints/v2.end
 import apiRoutes from "@src/config/apiRoutes";
 import type {
   ApiEndpointRequestType,
-  RequestPathParamType,
+  ApiRequestPathParamType,
 } from "@src/types/api/request.types";
 import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
@@ -28,13 +28,13 @@ class ArtistTopAlbums extends LastFMApiEndpointFactoryV2 {
 
   protected getParams(
     req: ApiEndpointRequestType
-  ): [RequestPathParamType, boolean] {
-    const params = req.query as RequestPathParamType;
+  ): [ApiRequestPathParamType, boolean] {
+    const params = req.query as ApiRequestPathParamType;
     const error = !params.artist || !params.album || !params.username;
     return [params, error];
   }
 
-  protected getProxyResponse = async (params: RequestPathParamType) => {
+  protected getProxyResponse = async (params: ApiRequestPathParamType) => {
     return await this.proxy.getAlbumInfo(
       params.artist,
       params.album,

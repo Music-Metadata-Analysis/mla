@@ -1,40 +1,39 @@
-export type {
-  VendorApiRequest,
-  VendorApiResponse,
-  VendorAppComponentProps,
-  VendorUtilities,
-} from "@src/clients/web.framework/vendor.types";
+import type { VendorAppComponentProps } from "@src/clients/web.framework/vendor.types";
 import type { VendorUtilities } from "@src/clients/web.framework/vendor.types";
 import type { ReactNode } from "react";
 
-export interface VendorRouterHookInterface {
+export type WebFrameworkVendorAppComponentProps = VendorAppComponentProps;
+
+export interface WebFrameworkVendorRouterHookInterface {
   back: () => void;
   path: string;
   push(url: string): void;
   reload(): void;
-  handlers: RouterHandlers;
+  handlers: WebFrameworkVendorRouterHandlersInterface;
 }
 
-export interface RouterHandlers {
+export interface WebFrameworkVendorRouterHandlersInterface {
   addRouteChangeHandler(cb: (url: string) => void): void;
   removeRouteChangeHandler(cb: (url: string) => void): void;
 }
 
-export interface VendorImageProps {
+export interface WebFrameworkVendorImageShimProps {
   alt: string;
   height: number;
   src: string;
   width: number;
 }
 
-export interface WebFrameworkVendor {
+export interface WebFrameworkVendorInterface {
   HeadShim: (props: { children: ReactNode }) => JSX.Element;
-  ImageShim: (props: VendorImageProps) => JSX.Element;
+  ImageShim: (props: WebFrameworkVendorImageShimProps) => JSX.Element;
   isBuildTime: () => boolean;
   isSSR: () => boolean;
-  routerHook: () => VendorRouterHookInterface;
+  routerHook: () => WebFrameworkVendorRouterHookInterface;
 }
 
-export interface WebFrameworkVendorSSR {
-  utilities: VendorUtilities;
+export type WebFrameworkVendorSSRUtilitiesInterface = VendorUtilities;
+
+export interface WebFrameworkVendorSSRInterface {
+  utilities: WebFrameworkVendorSSRUtilitiesInterface;
 }

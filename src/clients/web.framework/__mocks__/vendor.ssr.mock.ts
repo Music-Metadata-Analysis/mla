@@ -1,9 +1,9 @@
-import type { VendorUtilities } from "@src/types/clients/web.framework/vendor.types";
+import type { WebFrameworkVendorSSRUtilitiesInterface } from "@src/types/clients/web.framework/vendor.types";
 
 export const mockServerSideProps = "mockServerSideProps";
 export const mockStaticProps = "mockStaticProps";
 
-export const mockUtilities: VendorUtilities = {
+export const mockUtilities: WebFrameworkVendorSSRUtilitiesInterface = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   serverSideProps: jest.fn(() => mockServerSideProps) as any,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

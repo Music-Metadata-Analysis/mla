@@ -1,5 +1,5 @@
 import LastFMApiEndpointFactoryV2 from "@src/backend/api/lastfm/endpoints/v2.endpoint.base.class";
-import type { RequestQueryParamType } from "@src/types/api/request.types";
+import type { ApiRequestQueryParamType } from "@src/types/api/request.types";
 import type { LastFMArtistTopAlbumsInterface } from "@src/types/integrations/lastfm/api.types";
 
 export default class ConcreteV2EndpointProxyResponseErrorClass extends LastFMApiEndpointFactoryV2 {
@@ -10,7 +10,7 @@ export default class ConcreteV2EndpointProxyResponseErrorClass extends LastFMApi
 
   protected async getProxyResponse(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _: RequestQueryParamType
+    _: ApiRequestQueryParamType
   ): Promise<LastFMArtistTopAlbumsInterface[]> {
     return undefined as unknown as LastFMArtistTopAlbumsInterface[];
   }

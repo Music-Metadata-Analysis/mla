@@ -1,7 +1,7 @@
 import { mockUtilities } from "./vendor.ssr.mock";
-import type { WebFrameworkVendorSSR } from "@src/types/clients/web.framework/vendor.types";
+import type { WebFrameworkVendorSSRInterface } from "@src/types/clients/web.framework/vendor.types";
 
-const webFrameworkVendorSSR: WebFrameworkVendorSSR = {
+const webFrameworkVendorSSR: WebFrameworkVendorSSRInterface = {
   utilities: mockUtilities,
 };
 

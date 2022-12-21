@@ -4,7 +4,7 @@ import flagVendor from "@src/backend/integrations/flags/vendor";
 import * as status from "@src/config/status";
 import type {
   ApiEndpointRequestType,
-  RequestPathParamType,
+  ApiRequestPathParamType,
 } from "@src/types/api/request.types";
 import type { ApiEndpointResponseType } from "@src/types/api/response.types";
 import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
@@ -44,8 +44,8 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
 
   protected getParams(
     req: ApiEndpointRequestType
-  ): [RequestPathParamType, boolean] {
-    const params = req.query as RequestPathParamType;
+  ): [ApiRequestPathParamType, boolean] {
+    const params = req.query as ApiRequestPathParamType;
     const error = !params.username;
     return [params, error];
   }
@@ -72,7 +72,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
     req: ApiEndpointRequestType,
     res: ApiEndpointResponseType,
     next: () => void,
-    params: RequestPathParamType
+    params: ApiRequestPathParamType
   ): Promise<
     ReturnType<Awaited<LastFMProxyInterface[keyof LastFMProxyInterface]>>
   > {

@@ -1,4 +1,4 @@
-import type { VendorRouterHookInterface } from "@src/types/clients/web.framework/vendor.types";
+import type { WebFrameworkVendorRouterHookInterface } from "@src/types/clients/web.framework/vendor.types";
 
 export const mockHeadShim = jest.fn(({ children }: { children?: unknown }) => {
   return <>{children}</>;
@@ -18,9 +18,12 @@ export const mockUseRouter = {
   push: jest.fn(),
   reload: jest.fn(),
 } as Record<
-  keyof Omit<VendorRouterHookInterface, "path" | "handlers">,
+  keyof Omit<WebFrameworkVendorRouterHookInterface, "path" | "handlers">,
   jest.Mock
 > & {
   path: string;
-  handlers: Record<keyof VendorRouterHookInterface["handlers"], jest.Mock>;
+  handlers: Record<
+    keyof WebFrameworkVendorRouterHookInterface["handlers"],
+    jest.Mock
+  >;
 };
