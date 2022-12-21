@@ -2,13 +2,13 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import PersistentStateFactory from "@src/hooks/utility/local.storage/persisted.state.hook.factory.class";
 import type {
   AuthVendorHookInterface,
-  AuthServiceType,
+  AuthVendorServiceType,
 } from "@src/types/clients/auth/vendor.types";
 import type { Session } from "next-auth";
 
 const useNextAuth = (): AuthVendorHookInterface => {
   const [oauth, setOauth] = new PersistentStateFactory().create("oauth")<{
-    type: AuthServiceType | null;
+    type: AuthVendorServiceType | null;
   }>({
     type: null,
   });
@@ -27,11 +27,11 @@ const useNextAuth = (): AuthVendorHookInterface => {
       email: session?.user?.email ? session?.user?.email : undefined,
       image: session?.user?.image ? session?.user?.image : undefined,
       group: session?.group ? (session?.group as string) : undefined,
-      oauth: oauth.type as AuthServiceType,
+      oauth: oauth.type as AuthVendorServiceType,
     };
   };
 
-  const signInWithOauth = (oauthService: AuthServiceType) => {
+  const signInWithOauth = (oauthService: AuthVendorServiceType) => {
     setOauth({ type: oauthService });
     signIn(oauthService);
   };

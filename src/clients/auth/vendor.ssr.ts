@@ -1,7 +1,7 @@
 import NextAuthSSR from "./ssr/next-auth";
-import type { AuthVendorSSR } from "@src/types/clients/auth/vendor.types";
+import type { AuthVendorSSRInterface } from "@src/types/clients/auth/vendor.types";
 
-const authVendorSSR: AuthVendorSSR = {
+const authVendorSSR: AuthVendorSSRInterface = {
   Client: NextAuthSSR,
 };
 

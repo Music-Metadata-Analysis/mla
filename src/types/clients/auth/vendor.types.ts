@@ -1,43 +1,52 @@
-import type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
-export type { VendorAuthStateType } from "@src/clients/auth/vendor.types";
+import type { VendorStateType } from "@src/clients/auth/vendor.types";
 import type { ReactElement, JSXElementConstructor, ReactNode } from "react";
 
-export interface AuthVendor {
+export type AuthVendorStateType = VendorStateType;
+
+export interface AuthVendorInterface {
   hook: () => AuthVendorHookInterface;
   Provider: ({ session, children }: AuthVendorProviderProps) => JSX.Element;
 }
 
-export interface AuthVendorSSR {
-  Client: new () => AuthVendorSSRInterface;
+export interface AuthVendorSSRInterface {
+  Client: new () => AuthVendorSSRClientInterface;
 }
 
-export type AuthServiceType = "facebook" | "github" | "google" | "spotify";
-export type AuthSessionType = {
+export type AuthVendorServiceType =
+  | "facebook"
+  | "github"
+  | "google"
+  | "spotify";
+
+export type AuthVendorSessionType = {
   name?: string;
   email?: string;
   image?: string;
   group?: string;
-  oauth: AuthServiceType;
+  oauth: AuthVendorServiceType;
 } | null;
-export type AuthStatusType = "authenticated" | "unauthenticated" | "processing";
+export type AuthVendorStatusType =
+  | "authenticated"
+  | "unauthenticated"
+  | "processing";
 
 export interface AuthVendorHookInterface {
-  user: AuthSessionType;
-  status: AuthStatusType;
-  signIn: (provider: AuthServiceType) => void;
+  user: AuthVendorSessionType;
+  status: AuthVendorStatusType;
+  signIn: (provider: AuthVendorServiceType) => void;
   signOut: () => void;
 }
 
 export interface AuthVendorProviderProps {
-  session?: VendorAuthStateType;
+  session?: AuthVendorStateType;
   children: (
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>[]
   ) &
     ReactNode;
 }
-export interface AuthVendorSSRInterface {
+export interface AuthVendorSSRClientInterface {
   getSession: (
     ...args: unknown[]
-  ) => VendorAuthStateType | null | Promise<VendorAuthStateType | null>;
+  ) => AuthVendorStateType | null | Promise<AuthVendorStateType | null>;
 }
