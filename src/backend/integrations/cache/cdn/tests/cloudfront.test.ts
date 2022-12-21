@@ -13,7 +13,7 @@ describe(CloudFrontCdnBaseClass.name, () => {
   const mockObjectName = "mockObjectName<>";
   const mockCdnHostname = "mockCdnHostname";
 
-  const mockPersistanceClient = { write: jest.fn() };
+  const mockPersistenceClient = { write: jest.fn() };
   const mockHeaders = { get: jest.fn() };
 
   beforeAll(() => {
@@ -39,7 +39,7 @@ describe(CloudFrontCdnBaseClass.name, () => {
 
   const arrange = () =>
     (instance = new ConcreteCloudFrontCdnClient(
-      mockPersistanceClient,
+      mockPersistenceClient,
       mockCdnHostname
     ));
 
@@ -93,7 +93,7 @@ describe(CloudFrontCdnBaseClass.name, () => {
           });
 
           it("should NOT use the originServerClient", () => {
-            expect(mockPersistanceClient.write).toBeCalledTimes(0);
+            expect(mockPersistenceClient.write).toBeCalledTimes(0);
           });
 
           describe("logCacheHitRate", () => {
@@ -138,7 +138,7 @@ describe(CloudFrontCdnBaseClass.name, () => {
           });
 
           it("should NOT use the originServerClient", () => {
-            expect(mockPersistanceClient.write).toBeCalledTimes(0);
+            expect(mockPersistenceClient.write).toBeCalledTimes(0);
           });
 
           describe("logCacheHitRate", () => {
@@ -174,8 +174,8 @@ describe(CloudFrontCdnBaseClass.name, () => {
         });
 
         it("should use the originServerClient", () => {
-          expect(mockPersistanceClient.write).toBeCalledTimes(1);
-          expect(mockPersistanceClient.write).toBeCalledWith(
+          expect(mockPersistenceClient.write).toBeCalledTimes(1);
+          expect(mockPersistenceClient.write).toBeCalledWith(
             `${instance["cacheFolderName"]}/${mockObjectName}`,
             `${mockObjectName}>Created>mockSerializedObject`,
             { ContentType: "text/plain" }

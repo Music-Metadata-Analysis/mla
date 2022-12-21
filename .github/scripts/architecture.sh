@@ -122,11 +122,11 @@ main() {
     excludes_vendor_locations "locale" || 
     error_decoupling "Locale"
 
-  # Enforce Persistance Framework Isolation
-  echo "  Checking Persistance Framework Isolation..."
+  # Enforce Persistence Framework Isolation
+  echo "  Checking Persistence Framework Isolation..."
   ! search 'from "@aws-sdk' src | 
-    excludes_vendor_locations "persistance" || 
-    error_decoupling "Persistance"
+    excludes_vendor_locations "persistence" || 
+    error_decoupling "Persistence"
 
   # Enforce UI Framework Isolation
   echo "  Checking UI Framework Isolation..."

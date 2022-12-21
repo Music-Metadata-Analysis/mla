@@ -1,11 +1,11 @@
-import MockConcretePersistanceVendor, {
-  mockPersistanceClient,
-} from "./implementations/concrete.persistance.client.class";
-import PersistanceVendorBaseClass from "../persistance.base.client.class";
+import MockConcretePersistenceVendor, {
+  mockPersistenceClient,
+} from "./implementations/concrete.persistence.client.class";
+import PersistenceVendorBaseClass from "../persistence.base.client.class";
 
-describe(PersistanceVendorBaseClass.name, () => {
+describe(PersistenceVendorBaseClass.name, () => {
   let consoleErrorSpy: jest.SpyInstance;
-  let instance: PersistanceVendorBaseClass;
+  let instance: PersistenceVendorBaseClass;
 
   const mockPartition = "mockPartition";
   const mockKeyName = "mockKeyName";
@@ -25,7 +25,7 @@ describe(PersistanceVendorBaseClass.name, () => {
   });
 
   const arrange = () =>
-    (instance = new MockConcretePersistanceVendor(mockPartition));
+    (instance = new MockConcretePersistenceVendor(mockPartition));
 
   describe("when initialized with a concrete implementation", () => {
     beforeEach(() => arrange());
@@ -38,9 +38,9 @@ describe(PersistanceVendorBaseClass.name, () => {
           })
         );
 
-        it("should call the mockPersistanceClient client with the correct arguments", () => {
-          expect(mockPersistanceClient).toBeCalledTimes(1);
-          expect(mockPersistanceClient).toBeCalledWith(
+        it("should call the mockPersistenceClient client with the correct arguments", () => {
+          expect(mockPersistenceClient).toBeCalledTimes(1);
+          expect(mockPersistenceClient).toBeCalledWith(
             mockKeyName,
             mockStringData,
             {
@@ -54,7 +54,7 @@ describe(PersistanceVendorBaseClass.name, () => {
         let thrown: Error;
 
         beforeEach(async () => {
-          mockPersistanceClient.mockImplementationOnce(() => {
+          mockPersistenceClient.mockImplementationOnce(() => {
             throw mockError;
           });
           try {
@@ -66,9 +66,9 @@ describe(PersistanceVendorBaseClass.name, () => {
           }
         });
 
-        it("should call the mockPersistanceClient client with the correct arguments", () => {
-          expect(mockPersistanceClient).toBeCalledTimes(1);
-          expect(mockPersistanceClient).toBeCalledWith(
+        it("should call the mockPersistenceClient client with the correct arguments", () => {
+          expect(mockPersistenceClient).toBeCalledTimes(1);
+          expect(mockPersistenceClient).toBeCalledWith(
             mockKeyName,
             mockStringData,
             {

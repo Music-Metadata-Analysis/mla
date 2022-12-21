@@ -1,6 +1,6 @@
 import NextAuthClient from "../client/next-auth";
 import nextAuthConfiguration from "../config/next-auth";
-import ProfilePersistanceClient from "../profile/profile.persistance.client.class";
+import ProfilePersistenceClient from "../profile/profile.persistence.client.class";
 import createRoutes from "../routes/next-auth";
 import authVendor from "../vendor";
 
@@ -9,7 +9,7 @@ describe("authVendor", () => {
     expect(authVendor.config).toBe(nextAuthConfiguration);
     expect(authVendor.Client).toBe(NextAuthClient);
     expect(JSON.stringify(authVendor.ApiRoutes)).toStrictEqual(
-      JSON.stringify(createRoutes(ProfilePersistanceClient))
+      JSON.stringify(createRoutes(ProfilePersistenceClient))
     );
   });
 });

@@ -11,7 +11,7 @@ describe(CacheVendorCdnBaseClient.name, () => {
 
   const mockObjectName = "mockObjectName<>";
   const mockCdnHostname = "mockCdnHostname";
-  const mockPersistanceClient = { write: jest.fn() };
+  const mockPersistenceClient = { write: jest.fn() };
   const mockHeaders = { get: jest.fn() };
 
   beforeAll(() => {
@@ -36,7 +36,7 @@ describe(CacheVendorCdnBaseClient.name, () => {
   });
 
   const arrange = () =>
-    (instance = new ConcreteCdnClient(mockPersistanceClient, mockCdnHostname));
+    (instance = new ConcreteCdnClient(mockPersistenceClient, mockCdnHostname));
 
   describe("when initialized", () => {
     beforeEach(() => arrange());
@@ -86,7 +86,7 @@ describe(CacheVendorCdnBaseClient.name, () => {
           });
 
           it("should NOT use the originServerClient", () => {
-            expect(mockPersistanceClient.write).toBeCalledTimes(0);
+            expect(mockPersistenceClient.write).toBeCalledTimes(0);
           });
 
           describe("logCacheHitRate", () => {
@@ -129,7 +129,7 @@ describe(CacheVendorCdnBaseClient.name, () => {
           });
 
           it("should NOT use the originServerClient", () => {
-            expect(mockPersistanceClient.write).toBeCalledTimes(0);
+            expect(mockPersistenceClient.write).toBeCalledTimes(0);
           });
 
           describe("logCacheHitRate", () => {
@@ -172,8 +172,8 @@ describe(CacheVendorCdnBaseClient.name, () => {
         });
 
         it("should use the originServerClient", () => {
-          expect(mockPersistanceClient.write).toBeCalledTimes(1);
-          expect(mockPersistanceClient.write).toBeCalledWith(
+          expect(mockPersistenceClient.write).toBeCalledTimes(1);
+          expect(mockPersistenceClient.write).toBeCalledWith(
             `${mockObjectName}>transformed`,
             `${mockObjectName}>Created>mockSerializedObject`,
             { ContentType: "text/plain" }

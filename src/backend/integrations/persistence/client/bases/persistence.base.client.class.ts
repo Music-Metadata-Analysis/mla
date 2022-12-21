@@ -1,10 +1,10 @@
 import type {
-  PersistanceVendorDataType,
-  PersistanceVendorClientInterface,
-  PersistanceVendorClientHeadersInterface,
-} from "@src/types/integrations/persistance/vendor.types";
-export default abstract class PersistanceVendorBaseClass
-  implements PersistanceVendorClientInterface
+  PersistenceVendorDataType,
+  PersistenceVendorClientInterface,
+  PersistenceVendorClientHeadersInterface,
+} from "@src/types/integrations/persistence/vendor.types";
+export default abstract class PersistenceVendorBaseClass
+  implements PersistenceVendorClientInterface
 {
   protected partitionName: string;
 
@@ -14,8 +14,8 @@ export default abstract class PersistanceVendorBaseClass
 
   public async write(
     keyName: string,
-    data: PersistanceVendorDataType,
-    headers: PersistanceVendorClientHeadersInterface
+    data: PersistenceVendorDataType,
+    headers: PersistenceVendorClientHeadersInterface
   ): Promise<void> {
     try {
       await this.writeImplementation(keyName, data, headers);
@@ -26,15 +26,15 @@ export default abstract class PersistanceVendorBaseClass
 
   protected abstract writeImplementation(
     keyName: string,
-    data: PersistanceVendorDataType,
-    headers: PersistanceVendorClientHeadersInterface
+    data: PersistenceVendorDataType,
+    headers: PersistenceVendorClientHeadersInterface
   ): void;
 
   protected handleError(
     err: Error,
     keyName: string,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    data: PersistanceVendorDataType
+    data: PersistenceVendorDataType
   ): void {
     console.error(`ERROR: could not save object '${keyName}'.`);
     throw err;
