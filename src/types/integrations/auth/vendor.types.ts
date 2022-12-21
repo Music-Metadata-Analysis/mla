@@ -14,15 +14,15 @@ export interface AuthVendorClientInterface {
   getSession: () => AuthVendorSessionType | Promise<AuthVendorSessionType>;
 }
 
-export type ProfilePersistanceClientConstructorType = new (
+export type AuthVendorProfilePersistanceClientConstructorType = new (
   ...args: unknown[]
-) => ProfilePersistanceClientInterface;
+) => AuthVendorProfilePersistanceClientInterface;
 
-export interface ProfilePersistanceClientInterface {
+export interface AuthVendorProfilePersistanceClientInterface {
   persistProfile(profile?: VendorProfileType): void;
 }
 
-export interface AuthVendor {
+export interface AuthVendorInterface {
   config: VendorConfigType;
   Client: new (...args: unknown[]) => AuthVendorClientInterface;
   ApiRoutes: (...args: unknown[]) => unknown;

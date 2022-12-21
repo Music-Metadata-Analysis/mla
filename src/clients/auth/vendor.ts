@@ -1,8 +1,8 @@
 import useNextAuth from "./hooks/next-auth";
 import NextAuthProvider from "./providers/next-auth";
-import type { AuthVendor } from "@src/types/clients/auth/vendor.types";
+import type { AuthVendorInterface } from "@src/types/clients/auth/vendor.types";
 
-const authVendor: AuthVendor = {
+const authVendor: AuthVendorInterface = {
   hook: useNextAuth,
   Provider: NextAuthProvider,
 };

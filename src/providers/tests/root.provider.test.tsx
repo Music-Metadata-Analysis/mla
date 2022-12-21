@@ -9,7 +9,7 @@ import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
 import HeaderContainer from "@src/components/header/header.container";
 import AnalyticsProvider from "@src/providers/analytics/analytics.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import type { VendorAuthStateType } from "@src/types/clients/auth/vendor.types";
+import type { AuthVendorStateType } from "@src/types/clients/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/types/clients/flags/vendor.types";
 
 jest.mock("@src/clients/auth/vendor");
@@ -65,7 +65,7 @@ describe("RootProvider", () => {
   };
   const mockSession = {
     testSession: true,
-  } as unknown as VendorAuthStateType;
+  } as unknown as AuthVendorStateType;
 
   beforeEach(() => {
     jest.clearAllMocks();

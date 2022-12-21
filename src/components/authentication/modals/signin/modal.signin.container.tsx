@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import AuthenticationSignInModal from "../signin/modal.signin.component";
 import useLocale from "@src/hooks/locale.hook";
-import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
+import type { AuthVendorServiceType } from "@src/types/clients/auth/vendor.types";
 
 export interface AuthenticationSignInModalContainerProps {
-  handleSignIn: (provider: AuthServiceType) => void;
+  handleSignIn: (provider: AuthVendorServiceType) => void;
   isOpen: boolean;
   onClose: (overrideCloseBehavior?: boolean) => void;
 }

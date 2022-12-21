@@ -9,7 +9,7 @@ import type {
   VendorApiRequest,
   VendorApiResponse,
 } from "@src/types/clients/web.framework/vendor.types";
-import type { ProfilePersistanceClientConstructorType } from "@src/types/integrations/auth/vendor.types";
+import type { AuthVendorProfilePersistanceClientConstructorType } from "@src/types/integrations/auth/vendor.types";
 
 export const getGroup = (identifier: unknown) => {
   const hashAsString = JSON.parse(
@@ -21,7 +21,7 @@ export const getGroup = (identifier: unknown) => {
 };
 
 const createRoutes = (
-  PersistanceClient: ProfilePersistanceClientConstructorType
+  PersistanceClient: AuthVendorProfilePersistanceClientConstructorType
 ) => {
   return async function NextAuthApiRoutes(req: unknown, res: unknown) {
     return await NextAuth(req as VendorApiRequest, res as VendorApiResponse, {

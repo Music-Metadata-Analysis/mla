@@ -9,7 +9,7 @@ import {
   mockUserProfile,
 } from "@src/clients/auth/__mocks__/vendor.mock";
 import PersistentStateFactory from "@src/hooks/utility/local.storage/persisted.state.hook.factory.class";
-import type { AuthSessionType } from "@src/types/clients/auth/vendor.types";
+import type { AuthVendorSessionType } from "@src/types/clients/auth/vendor.types";
 
 jest.mock(
   "@src/hooks/utility/local.storage//persisted.state.hook.factory.class"
@@ -113,7 +113,7 @@ describe("useNextAuth", () => {
     });
   };
 
-  const checkHookProperties = (profile: AuthSessionType) => {
+  const checkHookProperties = (profile: AuthVendorSessionType) => {
     if (profile) checkHookFunctions();
 
     it("should contain all the same properties as the mock hook", () => {

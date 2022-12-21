@@ -5,11 +5,11 @@ import {
 } from "react-social-login-buttons";
 import AnalyticsButtonWrapper from "@src/components/analytics/analytics.button/analytics.button.container";
 import SpotifyLoginButton from "@src/components/button/button.spotify/button.spotify.component";
-import type { AuthServiceType } from "@src/types/clients/auth/vendor.types";
+import type { AuthVendorServiceType } from "@src/types/clients/auth/vendor.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 
 export interface AuthenticationProviderProps {
-  handleSignIn: (provider: AuthServiceType) => void;
+  handleSignIn: (provider: AuthVendorServiceType) => void;
   t: tFunctionType;
 }
 

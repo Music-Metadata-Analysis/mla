@@ -8,7 +8,7 @@ import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
 import HeaderContainer, {
   HeaderContainerProps,
 } from "@src/components/header/header.container";
-import type { VendorAuthStateType } from "@src/types/clients/auth/vendor.types";
+import type { AuthVendorStateType } from "@src/types/clients/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/types/clients/flags/vendor.types";
 import type { VendorStateType } from "@src/types/clients/ui.framework/vendor.types";
 
@@ -17,7 +17,7 @@ type RootProviderProps = {
   headerProps?: HeaderContainerProps;
   children: React.ReactChild | React.ReactChild[];
   flagState: FlagVendorStateInterface;
-  session?: VendorAuthStateType;
+  session?: AuthVendorStateType;
 };
 
 const RootProvider = ({
