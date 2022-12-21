@@ -1,8 +1,8 @@
 import FlagSmithClient from "./client/flagsmith";
 import FlagSmithGroup from "./group/flagsmith";
-import type { FlagVendor } from "@src/types/integrations/flags/vendor.types";
+import type { FlagVendorInterface } from "@src/types/integrations/flags/vendor.types";
 
-const flagVendor: FlagVendor = {
+const flagVendor: FlagVendorInterface = {
   Client: FlagSmithClient,
   Group: FlagSmithGroup,
 };

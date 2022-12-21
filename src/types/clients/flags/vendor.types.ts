@@ -1,14 +1,15 @@
-import type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
-export type { VendorFlagStateType } from "@src/clients/flags/vendor.types";
+import type { VendorStateInterface } from "@src/clients/flags/vendor.types";
 import type { ReactElement, JSXElementConstructor, ReactNode } from "react";
 
-export interface FlagVendor {
+export type FlagVendorStateInterface = VendorStateInterface;
+
+export interface FlagVendorInterface {
   hook: () => FlagVendorHookInterface;
   Provider: ({ children, state }: FlagVendorProviderProps) => JSX.Element;
 }
 
-export interface FlagVendorSSR {
-  Client: new () => FlagVendorSSRInterface;
+export interface FlagVendorSSRInterface {
+  Client: new () => FlagVendorSSRClientInterface;
 }
 
 export interface FlagVendorHookInterface {
@@ -21,10 +22,10 @@ export interface FlagVendorProviderProps {
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>[]
   ) &
     ReactNode;
-  state: VendorFlagStateType;
+  state: VendorStateInterface;
 }
-export interface FlagVendorSSRInterface {
+export interface FlagVendorSSRClientInterface {
   getState: (
     identity?: string | null
-  ) => VendorFlagStateType | Promise<VendorFlagStateType>;
+  ) => VendorStateInterface | Promise<VendorStateInterface>;
 }

@@ -9,14 +9,14 @@ import HeaderContainer, {
   HeaderContainerProps,
 } from "@src/components/header/header.container";
 import type { VendorAuthStateType } from "@src/types/clients/auth/vendor.types";
-import type { VendorFlagStateType } from "@src/types/clients/flags/vendor.types";
+import type { FlagVendorStateInterface } from "@src/types/clients/flags/vendor.types";
 import type { VendorStateType } from "@src/types/clients/ui.framework/vendor.types";
 
 type RootProviderProps = {
   cookies: VendorStateType;
   headerProps?: HeaderContainerProps;
   children: React.ReactChild | React.ReactChild[];
-  flagState: VendorFlagStateType;
+  flagState: FlagVendorStateInterface;
   session?: VendorAuthStateType;
 };
 

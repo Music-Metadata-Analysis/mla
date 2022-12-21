@@ -1,8 +1,8 @@
 import flagsmith from "flagsmith/isomorphic";
 import { normalizeNull, normalizeUndefined } from "@src/utils/voids";
-import type { FlagVendorSSRInterface } from "@src/types/clients/flags/vendor.types";
+import type { FlagVendorSSRClientInterface } from "@src/types/clients/flags/vendor.types";
 
-class FlagSmithSSR implements FlagVendorSSRInterface {
+class FlagSmithSSR implements FlagVendorSSRClientInterface {
   getState = async (identity?: string | null) => {
     await flagsmith.init({
       environmentID: process.env.NEXT_PUBLIC_FLAG_ENVIRONMENT,
