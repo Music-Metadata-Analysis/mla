@@ -1,4 +1,4 @@
-import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
+import type { PersistanceVendorClientInterface } from "@src/types/integrations/persistance/vendor.types";
 
 export interface CacheVendorCdnInterface<ObjectType> {
   logCacheHitRate(): void;
@@ -7,7 +7,7 @@ export interface CacheVendorCdnInterface<ObjectType> {
 
 export interface CacheVendorInterface {
   CdnBaseClient: abstract new <ObjectType>(
-    originServerClient: PersistanceVendorInterface,
+    originServerClient: PersistanceVendorClientInterface,
     cdnHostname: string
   ) => CacheVendorCdnInterface<ObjectType>;
 }

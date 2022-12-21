@@ -2,11 +2,11 @@ import persistanceVendor from "../../persistance/vendor";
 import type { VendorProfileType } from "../vendor.types";
 import type {
   PersistanceVendorDataType,
-  PersistanceVendorInterface,
+  PersistanceVendorClientInterface,
 } from "@src/types/integrations/persistance/vendor.types";
 
 class ProfilePersistanceClient {
-  protected client: PersistanceVendorInterface;
+  protected client: PersistanceVendorClientInterface;
 
   constructor(partitionName: unknown) {
     this.client = new persistanceVendor.PersistanceClient(

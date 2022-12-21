@@ -1,6 +1,6 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import S3PersistenceClient from "../s3";
-import type { PersistanceVendorClientHeaders } from "@src/types/integrations/persistance/vendor.types";
+import type { PersistanceVendorClientHeadersInterface } from "@src/types/integrations/persistance/vendor.types";
 
 jest.mock("@aws-sdk/client-s3");
 
@@ -9,7 +9,7 @@ const MockedPutObjectCommand = jest.mocked(PutObjectCommand);
 
 describe(S3PersistenceClient.name, () => {
   let instance: S3PersistenceClient;
-  let mockHeaders: PersistanceVendorClientHeaders;
+  let mockHeaders: PersistanceVendorClientHeadersInterface;
   let originalEnvironment: typeof process.env;
 
   const mockKeyName = "mockKeyName";
