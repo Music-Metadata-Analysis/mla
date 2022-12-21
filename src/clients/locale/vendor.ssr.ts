@@ -1,7 +1,7 @@
 import NextI18NextSSR from "./ssr/next-i18next";
-import type { LocaleVendorSSR } from "@src/types/clients/locale/vendor.types";
+import type { LocaleVendorSSRInterface } from "@src/types/clients/locale/vendor.types";
 
-const localeVendor: LocaleVendorSSR = {
+const localeVendor: LocaleVendorSSRInterface = {
   Client: NextI18NextSSR,
 };
 

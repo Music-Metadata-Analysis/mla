@@ -1,6 +1,6 @@
 import { mockLocaleVendorHook } from "@src/clients/locale/__mocks__/vendor.mock";
 import type { LocaleVendorHookInterface } from "@src/types/clients/locale/vendor.types";
-import type { translationStringType } from "@src/types/clients/locale/vendor.types";
+import type { tContentType } from "@src/types/clients/locale/vendor.types";
 
 const mockValues = mockLocaleVendorHook;
 
@@ -10,7 +10,7 @@ export const _t = (value: string) => `t(${value})`;
 
 export class MockUseLocale implements LocaleVendorHookInterface {
   namespace: string;
-  protected json: translationStringType;
+  protected json: tContentType;
 
   constructor(namespace: string) {
     this.namespace = namespace;
@@ -24,14 +24,14 @@ export class MockUseLocale implements LocaleVendorHookInterface {
 
   protected recursiveKeyLookup = (
     translationDotKey: string,
-    content: translationStringType
-  ): string | translationStringType => {
+    content: tContentType
+  ): string | tContentType => {
     const splitKeys = translationDotKey.split(".");
     if (splitKeys.length === 1) return content[translationDotKey];
     const firstKey = splitKeys.shift() as string;
     return this.recursiveKeyLookup(
       splitKeys.join("."),
-      content[firstKey] as translationStringType
+      content[firstKey] as tContentType
     );
   };
 }

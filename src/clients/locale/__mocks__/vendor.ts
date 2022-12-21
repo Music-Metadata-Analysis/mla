@@ -1,7 +1,7 @@
 import { mockLocaleVendorHOC, mockLocaleVendorHook } from "./vendor.mock";
-import type { LocaleVendor } from "@src/types/clients/locale/vendor.types";
+import type { LocaleVendorInterface } from "@src/types/clients/locale/vendor.types";
 
-const localeVendor: LocaleVendor = {
+const localeVendor: LocaleVendorInterface = {
   HOC: mockLocaleVendorHOC,
   hook: jest.fn(() => mockLocaleVendorHook),
 };

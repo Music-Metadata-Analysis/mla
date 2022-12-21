@@ -1,7 +1,7 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import type { LocaleVendorSSRInterface } from "@src/types/clients/locale/vendor.types";
+import type { LocaleVendorSSRClientInterface } from "@src/types/clients/locale/vendor.types";
 
-class NextI18NextSSR implements LocaleVendorSSRInterface {
+class NextI18NextSSR implements LocaleVendorSSRClientInterface {
   protected initialLocale: string;
   protected nameSpacesRequired: string[];
 

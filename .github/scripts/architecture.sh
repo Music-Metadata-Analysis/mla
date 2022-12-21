@@ -22,6 +22,8 @@ HOOK_FULL_PATH_REGEX="src/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REG
 HOOK_MOCK_LOCATOR_REGEX="src/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*__mocks__/.*"
 HOOK_MOCK_FULL_PATH_REGEX="src/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*__mocks__/(${CLASS_FILENAME_REGEX}|${CLASS_MOCK_FILENAME_REGEX}|${HOOK_FILENAME_REGEX}|${HOOK_MOCK_FILENAME_REGEX})"
 
+TYPE_DEFINITION_WHITELIST_REGEX="tContentType|tFunctionType"
+
 UI_FRAMEWORK_WHITELIST_REGEX="src/pages/_document\.tsx|src/tests/_document.*\.test\.tsx"
 WEB_FRAMEWORK_WHITELIST_REGEX="_app.tsx|_document.tsx|src/tests/_app.page.components.test.tsx|src/tests/_document.page.components.test.tsx"
 
@@ -208,17 +210,18 @@ main() {
   readarray -t VENDOR_TYPE_FILES < <(find src/types | grep "vendor.types.ts" | cut -d":" -f1)
   for VENDOR_TYPE_FILE in "${VENDOR_TYPE_FILES[@]}"; do
     ! tr -d '\n' < "$VENDOR_TYPE_FILE" | 
-      grep -Eo "((export|import )*type [A-Z]{1}[A-Za-z]+)|(export )*interface ([A-Z]{1}[A-Za-z]+) {|export type \{(.+?)\}" | 
-      sed 's/export//g'     | 
-      sed 's/interface//g'  | 
-      sed 's/type//g'       | 
-      tr , '\n'             | 
-      tr -d " "             |
-      tr -d "{"             | 
-      tr -d "}"             |
-      sed '/^$/d'           |
-      excludes "import"     |
-      excludes "[A-Z]{1}[a-zA-Z]+Vendor([a-zA-Z]+)*(Interface|Props|Type){1}" > /dev/null ||
+      grep -Eo "((export|import )*type [A-Za-z]+)|(export )*interface ([A-Z]{1}[A-Za-z]+) {|export type \{(.+?)\}" |
+      sed 's/export//g'                             | 
+      sed 's/interface//g'                          | 
+      sed 's/type//g'                               |
+      tr , '\n'                                     |
+      tr -d " "                                     |
+      tr -d "{"                                     | 
+      tr -d "}"                                     |
+      sed '/^$/d'                                   |
+      excludes "import"                             |
+      excludes "${TYPE_DEFINITION_WHITELIST_REGEX}" |
+      excludes "[A-Z]{1}[a-zA-Z]+Vendor([a-zA-Z]+)*(Interface|Props|Type){1}" ||
       (echo "WARN: ${VENDOR_TYPE_FILE}: has improperly formatted types defined") || 
       false
   done

@@ -1,8 +1,14 @@
-export type { LocaleVendorSSRReturnType } from "@src/clients/locale/vendor.types";
+import type { VendorSSRClientReturnType } from "@src/clients/locale/vendor.types";
 import type { VendorAppComponentProps } from "@src/clients/web.framework/vendor.types";
 import type { ComponentClass, FunctionComponent } from "react";
 
 export type tFunctionType = (key: string) => string;
+
+export type tContentType = {
+  [index: string]: string | tContentType;
+};
+
+export type LocaleVendorSSRReturnType = VendorSSRClientReturnType;
 
 export interface LocaleVendorHookInterface {
   t: tFunctionType;
@@ -14,19 +20,15 @@ export type LocaleVendorHOCType = (
     | FunctionComponent<VendorAppComponentProps>
 ) => ({ Component }: VendorAppComponentProps) => JSX.Element;
 
-export type translationStringType = {
-  [index: string]: string | translationStringType;
-};
-
-export interface LocaleVendor {
+export interface LocaleVendorInterface {
   hook: (ns: string | undefined) => LocaleVendorHookInterface;
   HOC: LocaleVendorHOCType;
 }
 
-export interface LocaleVendorSSRInterface {
+export interface LocaleVendorSSRClientInterface {
   getTranslations: () => unknown | Promise<unknown>;
 }
 
-export interface LocaleVendorSSR {
-  Client: new (...args: unknown[]) => LocaleVendorSSRInterface;
+export interface LocaleVendorSSRInterface {
+  Client: new (...args: unknown[]) => LocaleVendorSSRClientInterface;
 }

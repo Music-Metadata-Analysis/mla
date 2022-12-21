@@ -1,7 +1,7 @@
 import { mockLocaleVendorSSRClient } from "./vendor.ssr.mock";
-import type { LocaleVendorSSR } from "@src/types/clients/locale/vendor.types";
+import type { LocaleVendorSSRInterface } from "@src/types/clients/locale/vendor.types";
 
-const localeVendorSSR: LocaleVendorSSR = {
+const localeVendorSSR: LocaleVendorSSRInterface = {
   Client: jest.fn(() => mockLocaleVendorSSRClient),
 };
 
