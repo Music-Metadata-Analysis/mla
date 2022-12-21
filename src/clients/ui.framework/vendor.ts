@@ -4,9 +4,9 @@ import chakraConfiguration from "./config/chakra";
 import useChakraPopUp from "./create.popup.hook/chakra";
 import useChakraForm from "./form.hook/chakra";
 import ChakraProvider from "./provider/chakra/chakra";
-import type { UIFrameworkVendor } from "@src/types/clients/ui.framework/vendor.types";
+import type { UIFrameworkVendorInterface } from "@src/types/clients/ui.framework/vendor.types";
 
-const uiFrameworkVendor: UIFrameworkVendor = {
+const uiFrameworkVendor: UIFrameworkVendorInterface = {
   colourHook: useChakraColour,
   colourModeHook: useChakraColourMode,
   config: chakraConfiguration,

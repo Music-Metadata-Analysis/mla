@@ -1,13 +1,13 @@
 import { useColorMode } from "@chakra-ui/react";
 import { useMemo } from "react";
-import type { VendorColourType } from "@src/types/clients/ui.framework/vendor.types";
+import type { UIVendorColourType } from "@src/types/clients/ui.framework/vendor.types";
 
 const useChakraColour = () => {
   const { colorMode } = useColorMode();
 
   const chooseColour = (
-    colour1: VendorColourType,
-    colour2: VendorColourType
+    colour1: UIVendorColourType,
+    colour2: UIVendorColourType
   ) => {
     if (colorMode === "light") return colour1;
     return colour2;
@@ -79,7 +79,7 @@ const useChakraColour = () => {
     },
     transparent: "rgb(0,0,0,0)",
     utilities: {
-      colourToCSS: (colour: VendorColourType) => {
+      colourToCSS: (colour: UIVendorColourType) => {
         const value = `var(--chakra-colors-${String(colour).replace(
           ".",
           "-"

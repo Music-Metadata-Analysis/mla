@@ -1,4 +1,4 @@
-import type { VendorColourType } from "@src/types/clients/ui.framework/vendor.types";
+import type { UIVendorColourType } from "@src/types/clients/ui.framework/vendor.types";
 
 let colourIndex = 1;
 
@@ -74,7 +74,9 @@ const mockColourHook = {
   },
   transparent: mockColour(),
   utilities: {
-    colourToCSS: jest.fn((colour: VendorColourType) => `converted(${colour})`),
+    colourToCSS: jest.fn(
+      (colour: UIVendorColourType) => `converted(${colour})`
+    ),
   },
 };
 

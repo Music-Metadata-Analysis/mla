@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import NavBarColorModeToggle from "../navbar.colour.mode.component";
 import { testIDs } from "../navbar.colour.mode.identifiers";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import type { VendorColourModeType } from "@src/types/clients/ui.framework/vendor.types";
+import type { UIVendorColourModeType } from "@src/types/clients/ui.framework/vendor.types";
 
 jest.mock("@chakra-ui/icons", () =>
   require("@fixtures/chakra/icons").createChakraIconMock([
@@ -18,7 +18,7 @@ jest.mock("@chakra-ui/react", () =>
 );
 
 describe("NavBarColorModeToggle", () => {
-  let mockColourMode: VendorColourModeType;
+  let mockColourMode: UIVendorColourModeType;
 
   const mockHandleChange = jest.fn();
 
