@@ -2,12 +2,12 @@ import type {
   LocaleVendorInterface,
   LocaleVendorHookInterface,
 } from "@src/types/clients/locale/vendor.types";
-import type { VendorAppComponentProps } from "@src/types/clients/web.framework/vendor.types";
+import type { WebFrameworkVendorAppComponentProps } from "@src/types/clients/web.framework/vendor.types";
 
 export const mockLocaleVendorHOCIdentifier = "mockLocaleVendorHOCIdentifier";
 
 export const mockLocaleVendorHOC = jest.fn(
-  (Component: React.FC<VendorAppComponentProps>) =>
+  (Component: React.FC<WebFrameworkVendorAppComponentProps>) =>
     jest.fn((props) => {
       return (
         <div data-testid={"mockLocaleVendorHOCIdentifier"}>

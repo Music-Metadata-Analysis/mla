@@ -1,7 +1,7 @@
 import Image from "next/image";
-import type { VendorImageProps } from "@src/types/clients/web.framework/vendor.types";
+import type { WebFrameworkVendorImageShimProps } from "@src/types/clients/web.framework/vendor.types";
 
-const NextImageShim = (props: VendorImageProps) => {
+const NextImageShim = (props: WebFrameworkVendorImageShimProps) => {
   // eslint-disable-next-line jsx-a11y/alt-text
   return <Image {...props} />;
 };

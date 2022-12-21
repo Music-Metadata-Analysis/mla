@@ -9,12 +9,12 @@ import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
 import RootProvider from "@src/providers/root.provider";
 import { normalizeUndefined } from "@src/utils/voids";
-import type { VendorAppComponentProps } from "@src/types/clients/web.framework/vendor.types";
+import type { WebFrameworkVendorAppComponentProps } from "@src/types/clients/web.framework/vendor.types";
 
 function MLA({
   Component,
   pageProps: { cookies, flagState, session, headerProps, ...otherProps },
-}: VendorAppComponentProps) {
+}: WebFrameworkVendorAppComponentProps) {
   return (
     <RootProvider
       cookies={cookies}

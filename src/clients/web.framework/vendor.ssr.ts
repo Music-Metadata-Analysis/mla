@@ -1,7 +1,7 @@
 import nextUtilities from "./utils/next";
-import type { WebFrameworkVendorSSR } from "@src/types/clients/web.framework/vendor.types";
+import type { WebFrameworkVendorSSRInterface } from "@src/types/clients/web.framework/vendor.types";
 
-const webFrameworkVendor: WebFrameworkVendorSSR = {
+const webFrameworkVendor: WebFrameworkVendorSSRInterface = {
   utilities: nextUtilities,
 };
 

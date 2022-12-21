@@ -8,8 +8,8 @@ import type { ProxyError } from "@src/backend/api/lastfm/proxy/error/proxy.error
 import type { ApiEndPointFactoryInterface } from "@src/types/api/endpoint.types";
 import type {
   ApiEndpointRequestType,
-  RequestQueryParamType,
-  RequestBodyType,
+  ApiRequestQueryParamType,
+  ApiRequestBodyType,
 } from "@src/types/api/request.types";
 import type { ApiEndpointResponseType } from "@src/types/api/response.types";
 import type { ApiHandlerVendorHandlerType } from "@src/types/integrations/api.handler/vendor.types";
@@ -35,7 +35,7 @@ export default abstract class LastFMEndpointBase
   }
 
   protected abstract getProxyResponse(
-    params: RequestQueryParamType | RequestBodyType
+    params: ApiRequestQueryParamType | ApiRequestBodyType
   ): ReturnType<LastFMProxyInterface[keyof LastFMProxyInterface]>;
 
   protected abstract setUpHandler(): void;

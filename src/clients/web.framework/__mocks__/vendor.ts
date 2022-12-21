@@ -5,9 +5,9 @@ import {
   mockIsSSR,
   mockUseRouter,
 } from "./vendor.mock";
-import type { WebFrameworkVendor } from "@src/types/clients/web.framework/vendor.types";
+import type { WebFrameworkVendorInterface } from "@src/types/clients/web.framework/vendor.types";
 
-const webFrameworkVendor: WebFrameworkVendor = {
+const webFrameworkVendor: WebFrameworkVendorInterface = {
   HeadShim: mockHeadShim,
   ImageShim: mockImageShim,
   isBuildTime: mockIsBuildTime,

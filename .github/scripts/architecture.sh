@@ -140,7 +140,8 @@ main() {
   echo "  Checking Web Framework Isolation..."
   ! search 'from "next"|^import .+ from "next/' src | 
     excludes "${WEB_FRAMEWORK_WHITELIST_REGEX}" | 
-    excludes_vendor_locations "web.framework" || 
+    excludes_vendor_locations "web.framework" | 
+    excludes_vendor_locations "api.framework" || 
     error_decoupling "WEB"
   
   # Enforce Separation of Business Logic (No hook usage inside component level files.)

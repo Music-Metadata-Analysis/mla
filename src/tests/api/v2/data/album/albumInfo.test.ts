@@ -8,7 +8,7 @@ import handleProxy, {
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type {
   MockAPIRequestType,
-  RequestQueryParamType,
+  ApiRequestQueryParamType,
 } from "@src/types/api/request.types";
 import type { MockAPIResponseType } from "@src/types/api/response.types";
 import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
@@ -24,7 +24,7 @@ jest.mock("@src/backend/api/lastfm/proxy/proxy.class");
 const endpointUnderTest = apiRoutes.v2.data.artists.albumsGet;
 
 type ArrangeArgs = {
-  query: RequestQueryParamType;
+  query: ApiRequestQueryParamType;
   method: HttpMethodType;
 };
 
@@ -37,7 +37,7 @@ describe(endpointUnderTest, () => {
     mock: "response",
     userplaycount: { performing: "some query" },
   };
-  let query: RequestQueryParamType;
+  let query: ApiRequestQueryParamType;
   let method: HttpMethodType;
 
   beforeEach(() => {

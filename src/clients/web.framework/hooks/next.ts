@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import type { VendorRouterHookInterface } from "@src/types/clients/web.framework/vendor.types";
+import type { WebFrameworkVendorRouterHookInterface } from "@src/types/clients/web.framework/vendor.types";
 
 const useNextRouter = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ const useNextRouter = () => {
     path: router?.pathname || "",
     push,
     reload,
-  } as VendorRouterHookInterface;
+  } as WebFrameworkVendorRouterHookInterface;
 };
 
 export default useNextRouter;

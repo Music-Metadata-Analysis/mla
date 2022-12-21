@@ -1,7 +1,6 @@
 import { knownStatuses } from "@src/config/api";
 import type {
   ApiResponse,
-  FetchResponse,
   HttpMethodType,
   StatusMessageType,
 } from "@src/types/clients/api/api.client.types";
@@ -42,30 +41,30 @@ class APIClient {
     };
   }
 
-  protected handleKnownStatuses(response: FetchResponse): FetchResponse {
+  protected handleKnownStatuses(response: Response): Response {
     if (response.status in knownStatuses) {
       return {
         ok: true,
         headers: response.headers,
         status: response.status,
         json: () => Promise.resolve(knownStatuses[response.status]),
-      } as FetchResponse;
+      } as Response;
     }
     return response;
   }
 
   protected handleUnsuccessful(
-    response: FetchResponse,
+    response: Response,
     method: HttpMethodType,
     url: string
-  ): FetchResponse {
+  ): Response {
     if (!response.ok) {
       throw Error(`${method}: ${url}`);
     }
     return response;
   }
 
-  protected getHeaders(response: FetchResponse) {
+  protected getHeaders(response: Response) {
     const headers: Record<string, string> = {};
     for (const [key, value] of response.headers) {
       headers[key] = value;

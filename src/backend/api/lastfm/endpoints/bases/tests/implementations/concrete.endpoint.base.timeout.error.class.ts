@@ -1,5 +1,5 @@
 import LastFMEndpointBase from "@src/backend/api/lastfm/endpoints/bases/endpoint.base.class";
-import type { RequestPathParamType } from "@src/types/api/request.types";
+import type { ApiRequestPathParamType } from "@src/types/api/request.types";
 
 export default class ConcreteBaseEndpointTimeoutErrorClass extends LastFMEndpointBase {
   public route = "/api/v1/endpoint";
@@ -14,8 +14,10 @@ export default class ConcreteBaseEndpointTimeoutErrorClass extends LastFMEndpoin
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected async getProxyResponse(_: RequestPathParamType): Promise<never[]> {
+  protected async getProxyResponse(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: ApiRequestPathParamType
+  ): Promise<never[]> {
     function timeout(ms: number) {
       return new Promise((resolve) => {
         setTimeout(resolve, ms * 2);
