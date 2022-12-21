@@ -10,10 +10,10 @@ import HeaderContainer, {
 } from "@src/components/header/header.container";
 import type { AuthVendorStateType } from "@src/types/clients/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/types/clients/flags/vendor.types";
-import type { VendorStateType } from "@src/types/clients/ui.framework/vendor.types";
+import type { UIVendorStateType } from "@src/types/clients/ui.framework/vendor.types";
 
 type RootProviderProps = {
-  cookies: VendorStateType;
+  cookies: UIVendorStateType;
   headerProps?: HeaderContainerProps;
   children: React.ReactChild | React.ReactChild[];
   flagState: FlagVendorStateInterface;

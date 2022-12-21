@@ -1,9 +1,11 @@
 import { useToast, useColorMode } from "@chakra-ui/react";
 import { useContext, useEffect } from "react";
 import { PopUpsControllerContext } from "@src/providers/controllers/popups/popups.provider";
-import type { VendorCreatePopUpHookProps } from "@src/types/clients/ui.framework/vendor.types";
+import type { UIVendorCreatePopUpHookInterface } from "@src/types/clients/ui.framework/vendor.types";
 
-export default function useChakraPopUp(props: VendorCreatePopUpHookProps) {
+export default function useChakraPopUp(
+  props: UIVendorCreatePopUpHookInterface
+) {
   const { colorMode } = useColorMode();
   const popups = useContext(PopUpsControllerContext);
   const toast = useToast();

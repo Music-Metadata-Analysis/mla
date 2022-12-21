@@ -1,12 +1,12 @@
-import type { VendorColourModeType } from "@src/types/clients/ui.framework/vendor.types";
+import type { UIVendorColourModeType } from "@src/types/clients/ui.framework/vendor.types";
 
 export const mockColourModeHook = {
-  colourMode: "dark" as VendorColourModeType,
+  colourMode: "dark" as UIVendorColourModeType,
   toggle: jest.fn(),
 };
 
 export const mockConfig = {
-  initialColourMode: "dark" as VendorColourModeType,
+  initialColourMode: "dark" as UIVendorColourModeType,
   useSystemColourMode: false,
 };
 

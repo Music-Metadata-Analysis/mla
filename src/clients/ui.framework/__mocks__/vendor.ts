@@ -6,9 +6,9 @@ import {
   MockProvider,
   mockConfig,
 } from "./vendor.mock";
-import type { UIFrameworkVendor } from "@src/types/clients/ui.framework/vendor.types";
+import type { UIFrameworkVendorInterface } from "@src/types/clients/ui.framework/vendor.types";
 
-const uiFrameworkVendor: UIFrameworkVendor = {
+const uiFrameworkVendor: UIFrameworkVendorInterface = {
   colourHook: jest.fn(() => mockColourHook),
   colourModeHook: jest.fn(() => mockColourModeHook),
   config: mockConfig,

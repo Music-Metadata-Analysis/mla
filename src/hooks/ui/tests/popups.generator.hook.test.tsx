@@ -3,7 +3,7 @@ import mockHookValues from "../__mocks__/popups.generator.hook.mock";
 import usePopUpsGenerator from "../popups.generator.hook";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
-import type { VendorCreatePopUpHookProps } from "@src/types/clients/ui.framework/vendor.types";
+import type { UIVendorCreatePopUpHookInterface } from "@src/types/clients/ui.framework/vendor.types";
 
 jest.mock("@src/clients/ui.framework/vendor");
 
@@ -12,7 +12,7 @@ describe("usePopUpsGenerator", () => {
 
   const mockPopUpComponent = createSimpleComponent("MockPopUpComponent");
 
-  const mockProps: VendorCreatePopUpHookProps = {
+  const mockProps: UIVendorCreatePopUpHookInterface = {
     name: "FeedBack",
     message: "mockMessage",
     component: mockPopUpComponent,

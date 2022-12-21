@@ -2,15 +2,15 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import useChakraColour from "../chakra";
 import mockHookValues from "@src/clients/ui.framework/__mocks__/vendor.colour.hook.mock";
-import type { VendorColourType } from "@src/types/clients/ui.framework/vendor.types";
+import type { UIVendorColourType } from "@src/types/clients/ui.framework/vendor.types";
 
 type NestedObjectKey =
-  | VendorColourType
+  | UIVendorColourType
   | Record<
       string,
-      | VendorColourType
-      | Record<string, VendorColourType>
-      | ((colour: VendorColourType) => string)
+      | UIVendorColourType
+      | Record<string, UIVendorColourType>
+      | ((colour: UIVendorColourType) => string)
     >;
 
 describe("useChakraColour", () => {
@@ -144,7 +144,7 @@ describe("useChakraColour", () => {
       describe("colourToCSS", () => {
         let result: string;
 
-        const arrangeColourToCss = (color: VendorColourType) =>
+        const arrangeColourToCss = (color: UIVendorColourType) =>
           (result = received.result.current.utilities.colourToCSS(color));
 
         describe("when called on the chakra ui colour grey.100", () => {
