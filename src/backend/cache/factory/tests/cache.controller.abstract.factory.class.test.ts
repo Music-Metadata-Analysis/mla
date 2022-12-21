@@ -1,5 +1,5 @@
 import ConcreteCacheControllerFactory, {
-  MockedPersistanceVendorBaseClass,
+  MockedPersistenceVendorBaseClass,
   MockedVendorCdnBaseClient,
 } from "./implementations/concrete.cache.controller.factory.class";
 import CacheControllerAbstractFactory from "../cache.controller.abstract.factory.class";
@@ -24,9 +24,9 @@ describe(CacheControllerAbstractFactory.name, () => {
 
       beforeEach(() => (result = instance.create()));
 
-      it("should instantiate the OriginServerPersistanceClient as expected", () => {
-        expect(MockedPersistanceVendorBaseClass).toBeCalledTimes(1);
-        expect(MockedPersistanceVendorBaseClass).toBeCalledWith(
+      it("should instantiate the OriginServerPersistenceClient as expected", () => {
+        expect(MockedPersistenceVendorBaseClass).toBeCalledTimes(1);
+        expect(MockedPersistenceVendorBaseClass).toBeCalledWith(
           "mockPartitionName"
         );
       });
@@ -34,7 +34,7 @@ describe(CacheControllerAbstractFactory.name, () => {
       it("should instantiate the CdnClient as expected", () => {
         expect(MockedVendorCdnBaseClient).toBeCalledTimes(1);
         expect(MockedVendorCdnBaseClient).toBeCalledWith(
-          MockedPersistanceVendorBaseClass.mock.instances[0],
+          MockedPersistenceVendorBaseClass.mock.instances[0],
           "mockCdnHostName"
         );
       });

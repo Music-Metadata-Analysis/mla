@@ -15,7 +15,7 @@ describe(ArtistImageCdnClient.name, () => {
 
   const mockObjectName = "<mockObjectName>";
   const mockCdnHostname = "mockCdnHostname";
-  const mockPersistanceClient = { write: jest.fn() };
+  const mockPersistenceClient = { write: jest.fn() };
   const mockHeaders = { get: jest.fn() };
 
   beforeAll(() => {
@@ -38,7 +38,7 @@ describe(ArtistImageCdnClient.name, () => {
 
   const arrange = () =>
     (instance = new ArtistImageCdnClient(
-      mockPersistanceClient,
+      mockPersistenceClient,
       mockCdnHostname
     ));
 
@@ -97,7 +97,7 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should NOT use the originServerClient", () => {
-            expect(mockPersistanceClient.write).toBeCalledTimes(0);
+            expect(mockPersistenceClient.write).toBeCalledTimes(0);
           });
 
           describe("logCacheHitRate", () => {
@@ -142,7 +142,7 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should NOT use the originServerClient", () => {
-            expect(mockPersistanceClient.write).toBeCalledTimes(0);
+            expect(mockPersistenceClient.write).toBeCalledTimes(0);
           });
 
           describe("logCacheHitRate", () => {
@@ -185,8 +185,8 @@ describe(ArtistImageCdnClient.name, () => {
         });
 
         it("should use the originServerClient", () => {
-          expect(mockPersistanceClient.write).toBeCalledTimes(1);
-          expect(mockPersistanceClient.write).toBeCalledWith(
+          expect(mockPersistenceClient.write).toBeCalledTimes(1);
+          expect(mockPersistenceClient.write).toBeCalledWith(
             `${instance["cacheFolderName"]}/${mockObjectName}`,
             `${mockObjectName}>Created`,
             { ContentType: "text/plain" }

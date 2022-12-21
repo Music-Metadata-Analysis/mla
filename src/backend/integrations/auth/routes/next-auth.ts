@@ -9,7 +9,7 @@ import type {
   ApiFrameworkVendorApiRequestType,
   ApiFrameworkVendorApiResponseType,
 } from "@src/types/integrations/api.framework/vendor.types";
-import type { AuthVendorProfilePersistanceClientConstructorType } from "@src/types/integrations/auth/vendor.types";
+import type { AuthVendorProfilePersistenceClientConstructorType } from "@src/types/integrations/auth/vendor.types";
 
 export const getGroup = (identifier: unknown) => {
   const hashAsString = JSON.parse(
@@ -21,7 +21,7 @@ export const getGroup = (identifier: unknown) => {
 };
 
 const createRoutes = (
-  PersistanceClient: AuthVendorProfilePersistanceClientConstructorType
+  PersistenceClient: AuthVendorProfilePersistenceClientConstructorType
 ) => {
   return async function NextAuthApiRoutes(req: unknown, res: unknown) {
     return await NextAuth(
@@ -71,7 +71,7 @@ const createRoutes = (
         secret: process.env.AUTH_MASTER_SECRET_KEY,
         events: {
           async signIn(message) {
-            const client = new PersistanceClient(
+            const client = new PersistenceClient(
               process.env.AUTH_EMAILS_BUCKET_NAME
             );
             if (message.profile) {

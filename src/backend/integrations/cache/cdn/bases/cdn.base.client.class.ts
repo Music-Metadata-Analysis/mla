@@ -1,17 +1,17 @@
 import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
-import type { PersistanceVendorClientInterface } from "@src/types/integrations/persistance/vendor.types";
+import type { PersistenceVendorClientInterface } from "@src/types/integrations/persistence/vendor.types";
 
 export default abstract class CacheVendorCdnBaseClient<ObjectType>
   implements CacheVendorCdnInterface<ObjectType>
 {
   protected cdnHostname: string;
-  protected originServerClient: PersistanceVendorClientInterface;
+  protected originServerClient: PersistenceVendorClientInterface;
   protected cacheHitCount = 0;
   protected requestCount = 0;
   protected abstract cacheTypeName: string;
 
   constructor(
-    originServerClient: PersistanceVendorClientInterface,
+    originServerClient: PersistenceVendorClientInterface,
     cdnHostname: string
   ) {
     this.originServerClient = originServerClient;

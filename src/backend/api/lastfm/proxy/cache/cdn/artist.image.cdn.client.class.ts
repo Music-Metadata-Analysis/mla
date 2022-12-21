@@ -1,7 +1,7 @@
 import cacheVendor from "@src/backend/integrations/cache/vendor";
 import lastFMvendor from "@src/backend/integrations/lastfm/vendor";
 import type { VendorArtistImageScraperInterface } from "@src/types/integrations/lastfm/vendor.types";
-import type { PersistanceVendorClientInterface } from "@src/types/integrations/persistance/vendor.types";
+import type { PersistenceVendorClientInterface } from "@src/types/integrations/persistence/vendor.types";
 
 export default class ArtistImageCdnClient extends cacheVendor.CdnBaseClient<string> {
   protected scraper: VendorArtistImageScraperInterface;
@@ -9,7 +9,7 @@ export default class ArtistImageCdnClient extends cacheVendor.CdnBaseClient<stri
   protected scraperRetries = 2;
 
   constructor(
-    originServerClient: PersistanceVendorClientInterface,
+    originServerClient: PersistenceVendorClientInterface,
     cdnHostname: string
   ) {
     super(originServerClient, cdnHostname);

@@ -1,16 +1,16 @@
 import CacheController from "@src/backend/cache/controller/cache.controller.class";
 import type { CacheControllerFactoryInterface } from "@src/backend/types/cache/factory.types";
 import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
-import type { PersistanceVendorClientInterface } from "@src/types/integrations/persistance/vendor.types";
+import type { PersistenceVendorClientInterface } from "@src/types/integrations/persistence/vendor.types";
 
 export default abstract class CacheControllerAbstractFactory<ObjectType>
   implements CacheControllerFactoryInterface<ObjectType>
 {
-  protected abstract OriginServerPersistanceClient: new (
+  protected abstract OriginServerPersistenceClient: new (
     partitionType: string
-  ) => PersistanceVendorClientInterface;
+  ) => PersistenceVendorClientInterface;
   protected abstract CdnClient: new (
-    originServerClient: PersistanceVendorClientInterface,
+    originServerClient: PersistenceVendorClientInterface,
     cdnHostname: string
   ) => CacheVendorCdnInterface<ObjectType>;
   protected abstract defaultResponse: ObjectType;
@@ -20,10 +20,10 @@ export default abstract class CacheControllerAbstractFactory<ObjectType>
   protected abstract getCdnHostname(): string;
 
   public create(): CacheController<ObjectType> {
-    const vendorPersistanceImplementation =
-      new this.OriginServerPersistanceClient(this.getPartitionName());
+    const vendorPersistenceImplementation =
+      new this.OriginServerPersistenceClient(this.getPartitionName());
     const vendorCdnImplementation = new this.CdnClient(
-      vendorPersistanceImplementation,
+      vendorPersistenceImplementation,
       this.getCdnHostname()
     );
 

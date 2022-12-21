@@ -24,7 +24,7 @@ describe("NextAuthRoutes", () => {
   let mockRes: MockAPIResponseType;
   let mockValueIndex = 0;
 
-  const MockProfilePersistanceClient = jest.fn(() => ({
+  const MockProfilePersistenceClient = jest.fn(() => ({
     persistProfile: mockPersistProfile,
   }));
   const mockPersistProfile = jest.fn();
@@ -67,7 +67,7 @@ describe("NextAuthRoutes", () => {
       url: "/",
       method: "GET",
     }));
-    await createRoutes(MockProfilePersistanceClient)(mockReq, mockRes);
+    await createRoutes(MockProfilePersistenceClient)(mockReq, mockRes);
   };
 
   describe("getGroup", () => {
@@ -338,9 +338,9 @@ describe("NextAuthRoutes", () => {
             );
           });
 
-          it("should instantiate the ProfilePersistanceClient class correctly", () => {
-            expect(MockProfilePersistanceClient).toBeCalledTimes(1);
-            expect(MockProfilePersistanceClient).toBeCalledWith(
+          it("should instantiate the ProfilePersistenceClient class correctly", () => {
+            expect(MockProfilePersistenceClient).toBeCalledTimes(1);
+            expect(MockProfilePersistenceClient).toBeCalledWith(
               process.env.AUTH_EMAILS_BUCKET_NAME
             );
           });
@@ -373,9 +373,9 @@ describe("NextAuthRoutes", () => {
             expect(flagVendor.Group).toBeCalledTimes(0);
           });
 
-          it("should instantiate the ProfilePersistanceClient class correctly", () => {
-            expect(MockProfilePersistanceClient).toBeCalledTimes(1);
-            expect(MockProfilePersistanceClient).toBeCalledWith(
+          it("should instantiate the ProfilePersistenceClient class correctly", () => {
+            expect(MockProfilePersistenceClient).toBeCalledTimes(1);
+            expect(MockProfilePersistenceClient).toBeCalledWith(
               process.env.AUTH_EMAILS_BUCKET_NAME
             );
           });

@@ -14,11 +14,11 @@ export interface AuthVendorClientInterface {
   getSession: () => AuthVendorSessionType | Promise<AuthVendorSessionType>;
 }
 
-export type AuthVendorProfilePersistanceClientConstructorType = new (
+export type AuthVendorProfilePersistenceClientConstructorType = new (
   ...args: unknown[]
-) => AuthVendorProfilePersistanceClientInterface;
+) => AuthVendorProfilePersistenceClientInterface;
 
-export interface AuthVendorProfilePersistanceClientInterface {
+export interface AuthVendorProfilePersistenceClientInterface {
   persistProfile(profile?: VendorProfileType): void;
 }
 

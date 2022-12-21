@@ -1,14 +1,14 @@
 import ArtistImageCacheControllerFactory from "../artist.image.cache.controller.factory.class";
 import ArtistImageCdnClient from "../cdn/artist.image.cdn.client.class";
 import CacheController from "@src/backend/cache/controller/cache.controller.class";
-import { mockPersistanceClient } from "@src/backend/integrations/persistance/__mocks__/vendor.mock";
-import persistanceVendor from "@src/backend/integrations/persistance/vendor";
+import { mockPersistenceClient } from "@src/backend/integrations/persistence/__mocks__/vendor.mock";
+import persistenceVendor from "@src/backend/integrations/persistence/vendor";
 
 jest.mock("../cdn/artist.image.cdn.client.class");
 
 jest.mock("@src/backend/cache/controller/cache.controller.class");
 
-jest.mock("@src/backend/integrations/persistance/vendor");
+jest.mock("@src/backend/integrations/persistence/vendor");
 
 describe(ArtistImageCacheControllerFactory.name, () => {
   let instance: ArtistImageCacheControllerFactory;
@@ -42,9 +42,9 @@ describe(ArtistImageCacheControllerFactory.name, () => {
 
       beforeEach(() => (result = instance.create()));
 
-      it("should instantiate the PersistanceClient as expected", () => {
-        expect(persistanceVendor.PersistanceClient).toBeCalledTimes(1);
-        expect(persistanceVendor.PersistanceClient).toBeCalledWith(
+      it("should instantiate the PersistenceClient as expected", () => {
+        expect(persistenceVendor.PersistenceClient).toBeCalledTimes(1);
+        expect(persistenceVendor.PersistenceClient).toBeCalledWith(
           "MockValue1"
         );
       });
@@ -52,7 +52,7 @@ describe(ArtistImageCacheControllerFactory.name, () => {
       it("should instantiate the CdnClient as expected", () => {
         expect(ArtistImageCdnClient).toBeCalledTimes(1);
         expect(ArtistImageCdnClient).toBeCalledWith(
-          mockPersistanceClient,
+          mockPersistenceClient,
           "MockValue2"
         );
       });
