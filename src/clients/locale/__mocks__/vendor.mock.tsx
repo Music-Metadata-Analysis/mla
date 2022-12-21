@@ -1,5 +1,5 @@
 import type {
-  LocaleVendor,
+  LocaleVendorInterface,
   LocaleVendorHookInterface,
 } from "@src/types/clients/locale/vendor.types";
 import type { VendorAppComponentProps } from "@src/types/clients/web.framework/vendor.types";
@@ -15,7 +15,7 @@ export const mockLocaleVendorHOC = jest.fn(
         </div>
       );
     })
-) as LocaleVendor["HOC"];
+) as LocaleVendorInterface["HOC"];
 
 export const mockLocaleVendorHook: Record<
   keyof LocaleVendorHookInterface,
