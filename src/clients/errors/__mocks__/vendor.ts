@@ -1,7 +1,7 @@
 import { MockErrorBoundary } from "./vendor.mock";
-import type { ErrorVendor } from "@src/types/clients/errors/vendor.types";
+import type { ErrorVendorInterface } from "@src/types/clients/errors/vendor.types";
 
-const errorVendor: ErrorVendor = {
+const errorVendor: ErrorVendorInterface = {
   ErrorBoundary: MockErrorBoundary,
 };
 
