@@ -1,16 +1,16 @@
 import CacheController from "@src/backend/cache/controller/cache.controller.class";
 import type { CacheControllerFactoryInterface } from "@src/backend/types/cache/factory.types";
 import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
-import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
+import type { PersistanceVendorClientInterface } from "@src/types/integrations/persistance/vendor.types";
 
 export default abstract class CacheControllerAbstractFactory<ObjectType>
   implements CacheControllerFactoryInterface<ObjectType>
 {
   protected abstract OriginServerPersistanceClient: new (
     partitionType: string
-  ) => PersistanceVendorInterface;
+  ) => PersistanceVendorClientInterface;
   protected abstract CdnClient: new (
-    originServerClient: PersistanceVendorInterface,
+    originServerClient: PersistanceVendorClientInterface,
     cdnHostname: string
   ) => CacheVendorCdnInterface<ObjectType>;
   protected abstract defaultResponse: ObjectType;

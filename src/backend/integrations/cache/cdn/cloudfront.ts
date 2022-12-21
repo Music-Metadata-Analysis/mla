@@ -1,6 +1,6 @@
 import CacheVendorCdnBaseClient from "./bases/cdn.base.client.class";
 import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
-import type { PersistanceVendorInterface } from "@src/types/integrations/persistance/vendor.types";
+import type { PersistanceVendorClientInterface } from "@src/types/integrations/persistance/vendor.types";
 
 export default abstract class CloudFrontCdnBaseClass<ObjectType>
   extends CacheVendorCdnBaseClient<ObjectType>
@@ -10,7 +10,7 @@ export default abstract class CloudFrontCdnBaseClass<ObjectType>
   protected cacheTypeName = "CloudFront";
 
   constructor(
-    originServerClient: PersistanceVendorInterface,
+    originServerClient: PersistanceVendorClientInterface,
     cdnHostname: string
   ) {
     super(originServerClient, cdnHostname);

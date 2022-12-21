@@ -2,7 +2,7 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import VendorPersistenceBaseClass from "./bases/persistance.base.client.class";
 import type {
   PersistanceVendorDataType,
-  PersistanceVendorClientHeaders,
+  PersistanceVendorClientHeadersInterface,
 } from "@src/types/integrations/persistance/vendor.types";
 
 export default class S3PersistenceClient extends VendorPersistenceBaseClass {
@@ -24,7 +24,7 @@ export default class S3PersistenceClient extends VendorPersistenceBaseClass {
   protected async writeImplementation(
     keyName: string,
     data: PersistanceVendorDataType,
-    headers: PersistanceVendorClientHeaders
+    headers: PersistanceVendorClientHeadersInterface
   ): Promise<void> {
     const command = new PutObjectCommand({
       Body: this.normalizeData(data),

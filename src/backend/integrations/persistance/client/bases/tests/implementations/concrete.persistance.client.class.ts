@@ -1,14 +1,14 @@
 import PersistanceVendorBaseClass from "@src/backend/integrations/persistance/client/bases/persistance.base.client.class";
 import type {
   PersistanceVendorDataType,
-  PersistanceVendorClientHeaders,
+  PersistanceVendorClientHeadersInterface,
 } from "@src/types/integrations/persistance/vendor.types";
 
 export default class MockConcretePersistanceVendor extends PersistanceVendorBaseClass {
   protected async writeImplementation(
     keyName: string,
     data: PersistanceVendorDataType,
-    headers: PersistanceVendorClientHeaders
+    headers: PersistanceVendorClientHeadersInterface
   ): Promise<void> {
     mockPersistanceClient(keyName, data, headers);
   }

@@ -1,10 +1,10 @@
 import type {
   PersistanceVendorDataType,
-  PersistanceVendorInterface,
-  PersistanceVendorClientHeaders,
+  PersistanceVendorClientInterface,
+  PersistanceVendorClientHeadersInterface,
 } from "@src/types/integrations/persistance/vendor.types";
 export default abstract class PersistanceVendorBaseClass
-  implements PersistanceVendorInterface
+  implements PersistanceVendorClientInterface
 {
   protected partitionName: string;
 
@@ -15,7 +15,7 @@ export default abstract class PersistanceVendorBaseClass
   public async write(
     keyName: string,
     data: PersistanceVendorDataType,
-    headers: PersistanceVendorClientHeaders
+    headers: PersistanceVendorClientHeadersInterface
   ): Promise<void> {
     try {
       await this.writeImplementation(keyName, data, headers);
@@ -27,7 +27,7 @@ export default abstract class PersistanceVendorBaseClass
   protected abstract writeImplementation(
     keyName: string,
     data: PersistanceVendorDataType,
-    headers: PersistanceVendorClientHeaders
+    headers: PersistanceVendorClientHeadersInterface
   ): void;
 
   protected handleError(
