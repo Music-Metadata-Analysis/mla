@@ -3,15 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "cd ./node_modules//@toplast/lastfm && yarn add typescript@4.8.4 && yarn install && yarn run build",
+    "postinstall": "cd ./node_modules//@toplast/lastfm && yarn add -D typescript@4.8.4 && yarn install && yarn run build",
     "build": "next build",
     "clean": "eslint --fix ./src ./cypress; prettier --write \"./(src|cypress)/**/*.+(ts|tsx|js|jsx|json|yml|yaml|css|scss|md|vue)\"",
-    "compile": "tsc",
+    "compile": "npm --version && tsc --version && tsc",
     "coverage": "jest test --coverage --coverageDirectory=coverage --watchAll=false",
     "dev": "next dev",
     "lint": "eslint ./src ./cypress",
     "newkey": "jose newkey -s 256 -t oct -a HS512",
-    "preinstall": "npx npm-force-resolutions",
     "security": "audit-ci --config .audit-ci.json",
     "smoke:dev": "cypress open",
     "smoke:env": "ts-node cypress/utils/env.ts",
@@ -19,16 +18,26 @@
     "start": "next start",
     "test": "jest --watch"
   },
-  "resolutions": {
+  "overrides": {
+    "@chakra-ui/icons": {
+      "@chakra-ui/system": "<2.0.0",
+      "react": "^17.0.0"
+    },
     "axios": ">=0.21.2",
     "json-schema": " >=0.4.0",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "use-persisted-reducer": {
+      "react": "^17.0.0"
+    },
+    "eslint-plugin-unused-imports": {
+      "@typescript-eslint/eslint-plugin": "^5.0.0"
+    }
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.186.0",
     "@aws-sdk/signature-v4-crt": "^3.186.0",
     "@chakra-ui/clickable": "^1.2.6",
-    "@chakra-ui/icons": "^2.0.11",
+    "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.8.8",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.6.0",
@@ -100,8 +109,8 @@
     "webpack-dev-server": "^4.7.4"
   },
   "engines": {
-    "npm": "^6.0.0",
-    "node": "^14.0.0"
+    "npm": "^8.0.0",
+    "node": "^16.0.0"
   },
   "eslintConfig": {
     "extends": "react-app"
