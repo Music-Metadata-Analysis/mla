@@ -20,6 +20,7 @@ env:
   INTEGRATION_TEST_LAST_FM_KEY: ${{ secrets.INTEGRATION_TEST_LAST_FM_KEY }}
   NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
   NETLIFY_CLI: netlify-cli
+  NODE_VERSION: 16
 
 jobs:
   architecture:
@@ -31,7 +32,7 @@ jobs:
       - name: Architecture Enforcement -- Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Architecture Enforcement -- Setup Environment
         run: |
@@ -57,7 +58,7 @@ jobs:
       - name: Build -- Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Build -- Setup Environment
         run: |
@@ -97,7 +98,7 @@ jobs:
       - name: Deploy Production -- Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Deploy Production -- Setup Environment
         if: github.ref == 'refs/heads/production'
@@ -151,7 +152,7 @@ jobs:
       - name: Deploy Stage -- Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Deploy Stage -- Setup Environment
         if: github.ref == 'refs/heads/master'
@@ -195,7 +196,7 @@ jobs:
       - name: Lint -- Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Lint -- Setup Environment
         run: |
@@ -226,7 +227,7 @@ jobs:
       - name: Security Test -- Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Documentation Test -- Setup Environment
         run: |
@@ -284,7 +285,7 @@ jobs:
       - name: Smoke Test Production -- Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Smoke Test Production -- Setup Environment
         if: github.ref == 'refs/heads/production'
@@ -335,7 +336,7 @@ jobs:
       - name: Smoke Test Development -- Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Smoke Test Development -- Setup Environment
         run: |
@@ -387,7 +388,7 @@ jobs:
       - name: Smoke Test Stage -- Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Smoke Test Stage -- Setup Environment
         if: github.ref == 'refs/heads/master'
@@ -495,7 +496,7 @@ jobs:
       - name: Type Validation -- Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Type Validation -- Setup Environment
         run: |
