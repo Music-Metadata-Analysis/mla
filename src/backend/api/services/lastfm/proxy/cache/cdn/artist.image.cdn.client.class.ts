@@ -1,5 +1,5 @@
-import cacheVendor from "@src/backend/integrations/cache/vendor";
-import lastFMvendor from "@src/backend/integrations/lastfm/vendor";
+import cacheVendor from "@src/backend/api/integrations/cache/vendor";
+import lastFMvendor from "@src/backend/api/integrations/lastfm/vendor";
 import type { VendorArtistImageScraperInterface } from "@src/types/integrations/lastfm/vendor.types";
 import type { PersistenceVendorClientInterface } from "@src/types/integrations/persistence/vendor.types";
 

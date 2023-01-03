@@ -2,26 +2,26 @@ import { waitFor } from "@testing-library/react";
 import ConcreteV2EndpointProxyErrorClass from "./implementations/concrete.v2.proxy.error.class";
 import ConcreteV2EndpointProxyResponseErrorClass from "./implementations/concrete.v2.proxy.response.error.class";
 import ConcreteV2EndpointTimeoutErrorClass from "./implementations/concrete.v2.timeout.error.class";
-import { mockEndpointLogger } from "@src/backend/integrations/api.logger/__mocks__/vendor.mock";
-import { mockAuthClient } from "@src/backend/integrations/auth/__mocks__/vendor.mock";
-import authVendor from "@src/backend/integrations/auth/vendor";
-import { mockFlagClient } from "@src/backend/integrations/flags/__mocks__/vendor.mock";
-import flagVendor from "@src/backend/integrations/flags/vendor";
+import { mockEndpointLogger } from "@src/backend/api/integrations/api.logger/__mocks__/vendor.mock";
+import { mockAuthClient } from "@src/backend/api/integrations/auth/__mocks__/vendor.mock";
+import authVendor from "@src/backend/api/integrations/auth/vendor";
+import { mockFlagClient } from "@src/backend/api/integrations/flags/__mocks__/vendor.mock";
+import flagVendor from "@src/backend/api/integrations/flags/vendor";
 import * as status from "@src/config/status";
 import {
   createAPIMocks,
   mockSession,
 } from "@src/tests/fixtures/mock.authentication";
 import type LastFMApiEndpointFactoryV2 from "../v2.endpoint.base.class";
+import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
 import type { MockAPIRequestType } from "@src/types/api/request.types";
 import type { MockAPIResponseType } from "@src/types/api/response.types";
-import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
-jest.mock("@src/backend/integrations/auth/vendor");
+jest.mock("@src/backend/api/integrations/auth/vendor");
 
-jest.mock("@src/backend/integrations/flags/vendor");
+jest.mock("@src/backend/api/integrations/flags/vendor");
 
-jest.mock("@src/backend/integrations/api.logger/vendor");
+jest.mock("@src/backend/api/integrations/api.logger/vendor");
 
 describe("LastFMApiEndpointFactoryV2", () => {
   let clearTimeOutSpy: jest.SpyInstance;
@@ -31,7 +31,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
     flag: string | null;
   };
 
-  let method: HttpMethodType;
+  let method: APIClientHttpMethodType;
   let mockReq: MockAPIRequestType;
   let mockRes: MockAPIResponseType;
 

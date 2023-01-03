@@ -1,6 +1,6 @@
 import LastFMClientAdapterBase from "./bases/client.base.class";
 import ArtistImageCacheFactory from "../cache/artist.image.cache.controller.factory.class";
-import type { CacheControllerInterface } from "@src/backend/types/cache/controller.types";
+import type { CacheControllerInterface } from "@src/backend/api/types/cache/controller.types";
 import type {
   LastFMAlbumDataInterface,
   LastFMArtistDataInterface,

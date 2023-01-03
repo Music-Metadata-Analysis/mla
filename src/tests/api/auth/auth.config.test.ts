@@ -1,6 +1,6 @@
 import NextAuthApiRoutes from "@src/pages/api/auth/[...nextauth]";
 
-jest.mock("@src/backend/integrations/auth/vendor", () => ({
+jest.mock("@src/backend/api/integrations/auth/vendor", () => ({
   ApiRoutes: "MockRoutes",
 }));
 

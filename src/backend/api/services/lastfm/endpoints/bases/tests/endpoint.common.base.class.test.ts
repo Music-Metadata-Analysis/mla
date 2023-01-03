@@ -2,15 +2,15 @@ import { waitFor } from "@testing-library/react";
 import ConcreteBaseProxyErrorClass from "./implementations/concrete.endpoint.base.proxy.error.class";
 import ConcreteBaseProxySuccessClass from "./implementations/concrete.endpoint.base.proxy.success";
 import ConcreteBaseEndpointTimeoutErrorClass from "./implementations/concrete.endpoint.base.timeout.error.class";
-import { mockEndpointLogger } from "@src/backend/integrations/api.logger/__mocks__/vendor.mock";
+import { mockEndpointLogger } from "@src/backend/api/integrations/api.logger/__mocks__/vendor.mock";
 import * as status from "@src/config/status";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type LastFMEndpointBase from "../endpoint.base.class";
+import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
 import type { MockAPIRequestType } from "@src/types/api/request.types";
 import type { MockAPIResponseType } from "@src/types/api/response.types";
-import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
-jest.mock("@src/backend/integrations/api.logger/vendor");
+jest.mock("@src/backend/api/integrations/api.logger/vendor");
 
 describe("LastFMEndpointBase", () => {
   let clearTimeOut: jest.SpyInstance;
@@ -20,7 +20,7 @@ describe("LastFMEndpointBase", () => {
   let mockReq: MockAPIRequestType;
   let mockRes: MockAPIResponseType;
 
-  let method: HttpMethodType;
+  let method: APIClientHttpMethodType;
 
   beforeEach(() => {
     jest.clearAllMocks();

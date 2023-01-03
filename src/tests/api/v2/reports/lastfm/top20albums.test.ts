@@ -1,19 +1,19 @@
-import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.endpoint.base.class";
+import { LastFMApiEndpointFactory } from "@src/backend/api/exports";
 import { mockLastFMProxyMethods } from "@src/backend/api/services/lastfm/proxy/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import handleProxy, {
   endpointFactory,
 } from "@src/pages/api/v2/reports/lastfm/top20albums/[username]";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
+import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
 import type { MockAPIRequestType } from "@src/types/api/request.types";
 import type { MockAPIResponseType } from "@src/types/api/response.types";
-import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
-jest.mock("@src/backend/integrations/auth/vendor", () =>
-  require("@fixtures/integrations/auth").authenticated()
+jest.mock("@src/backend/api/integrations/auth/vendor", () =>
+  require("@fixtures/api/auth").authenticated()
 );
 
-jest.mock("@src/backend/integrations/api.logger/vendor");
+jest.mock("@src/backend/api/integrations/api.logger/vendor");
 
 jest.mock("@src/backend/api/services/lastfm/proxy/proxy.class");
 
@@ -21,7 +21,7 @@ const endpointUnderTest = apiRoutes.v2.reports.lastfm.top20albums;
 
 type RequestArgs = {
   username: string;
-  method: HttpMethodType;
+  method: APIClientHttpMethodType;
 };
 
 describe(endpointUnderTest, () => {
@@ -32,7 +32,7 @@ describe(endpointUnderTest, () => {
     image: [],
   };
   let username: string;
-  let method: HttpMethodType;
+  let method: APIClientHttpMethodType;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -48,8 +48,8 @@ describe(endpointUnderTest, () => {
   };
 
   describe("An instance of the endpoint factory class", () => {
-    it("should inherit from LastFMApiEndpointFactoryV2", () => {
-      expect(endpointFactory).toBeInstanceOf(LastFMApiEndpointFactoryV2);
+    it("should inherit from LastFMApiEndpointFactory", () => {
+      expect(endpointFactory).toBeInstanceOf(LastFMApiEndpointFactory);
     });
 
     it("should have the correct route set", () => {

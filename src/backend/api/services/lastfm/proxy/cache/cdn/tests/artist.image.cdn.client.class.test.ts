@@ -1,8 +1,8 @@
 import ArtistImageCdnClient from "../artist.image.cdn.client.class";
-import { mockArtistImageScraper } from "@src/backend/integrations/lastfm/__mocks__/vendor.mock";
-import lastFMvendor from "@src/backend/integrations/lastfm/vendor";
+import { mockArtistImageScraper } from "@src/backend/api/integrations/lastfm/__mocks__/vendor.mock";
+import lastFMvendor from "@src/backend/api/integrations/lastfm/vendor";
 
-jest.mock("@src/backend/integrations/lastfm/vendor");
+jest.mock("@src/backend/api/integrations/lastfm/vendor");
 
 describe(ArtistImageCdnClient.name, () => {
   let consoleLogSpy: jest.SpyInstance;

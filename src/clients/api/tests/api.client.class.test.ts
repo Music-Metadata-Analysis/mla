@@ -1,6 +1,6 @@
 import APIClient from "../api.client.class";
 import * as status from "@src/config/status";
-import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
+import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
 
 describe("APIClient", () => {
   const client = new APIClient();
@@ -190,7 +190,7 @@ describe("APIClient", () => {
   describe("post", () => {
     const postParams = {
       ...mockFetchParams,
-      method: "POST" as HttpMethodType,
+      method: "POST" as APIClientHttpMethodType,
       cache: "no-cache",
       body: JSON.stringify({ test: "post body" }),
     };

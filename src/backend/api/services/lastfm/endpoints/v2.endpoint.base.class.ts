@@ -1,6 +1,6 @@
 import LastFMEndpointBase from "./bases/endpoint.base.class";
-import authVendor from "@src/backend/integrations/auth/vendor";
-import flagVendor from "@src/backend/integrations/flags/vendor";
+import authVendor from "@src/backend/api/integrations/auth/vendor";
+import flagVendor from "@src/backend/api/integrations/flags/vendor";
 import * as status from "@src/config/status";
 import type {
   ApiEndpointRequestType,

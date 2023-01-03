@@ -146,10 +146,10 @@
       "<rootDir>/jest/setup/testing-library.js"
     ],
     "moduleNameMapper": {
+      "^@fixtures/api/auth$": "<rootDir>/src/backend/api/integrations/auth/__mocks__/vendor.mock.ts",
       "^@fixtures/api/lastfm/logger$": "<rootDir>/src/backend/api/lastfm/tests/endpoint.common.logger.mock.ts",
       "^@fixtures/chakra$": "<rootDir>/src/tests/fixtures/mock.chakra.react.factory.class.tsx",
       "^@fixtures/chakra/icons$": "<rootDir>/src/tests/fixtures/mock.chakra.icon.factory.class.tsx",
-      "^@fixtures/integrations/auth$": "<rootDir>/src/backend/integrations/auth/__mocks__/vendor.mock.ts",
       "^@fixtures/react/child$": "<rootDir>/src/tests/fixtures/mock.component.child.factory.class.tsx",
       "^@fixtures/react/parent$": "<rootDir>/src/tests/fixtures/mock.component.parent.factory.class.tsx",
       "^@fixtures/react/simple$": "<rootDir>/src/tests/fixtures/mock.component.simple.factory.class.tsx",

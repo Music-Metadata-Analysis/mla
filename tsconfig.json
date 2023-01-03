@@ -15,6 +15,9 @@
     "noEmit": true,
     "paths": {
       "@cypress/*": ["cypress/*"],
+      "@fixtures/api/auth": [
+        "src/backend/api/integrations/auth/__mocks__/vendor.mock.ts"
+      ],
       "@fixtures/api/lastfm/logger": [
         "src/backend/api/lastfm/tests/endpoint.common.logger.mock.ts"
       ],
@@ -23,9 +26,6 @@
       ],
       "@fixtures/chakra/icons": [
         "src/tests/fixtures/mock.chakra.icon.factory.class.tsx"
-      ],
-      "@fixtures/integrations/auth": [
-        "src/backend/integrations/auth/__mocks__/vendor.mock.ts"
       ],
       "@fixtures/react/child": [
         "src/tests/fixtures/mock.component.child.factory.class.tsx"

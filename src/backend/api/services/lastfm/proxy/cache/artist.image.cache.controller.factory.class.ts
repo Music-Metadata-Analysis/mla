@@ -1,6 +1,6 @@
 import ArtistImageCdnClient from "./cdn/artist.image.cdn.client.class";
-import CacheControllerAbstractFactory from "@src/backend/cache/factory/cache.controller.abstract.factory.class";
-import persistenceVendor from "@src/backend/integrations/persistence/vendor";
+import CacheControllerAbstractFactory from "@src/backend/api/cache/factory/cache.controller.abstract.factory.class";
+import persistenceVendor from "@src/backend/api/integrations/persistence/vendor";
 
 export default class ArtistImageCacheControllerFactory extends CacheControllerAbstractFactory<string> {
   protected OriginServerPersistenceClient = persistenceVendor.PersistenceClient;

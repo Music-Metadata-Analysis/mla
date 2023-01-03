@@ -1,7 +1,7 @@
 import type {
   VendorConfigType,
   VendorProfileType,
-} from "@src/backend/integrations/auth/vendor.types";
+} from "@src/backend/api/integrations/auth/vendor.types";
 
 export type AuthVendorSessionType = {
   email: string | null;

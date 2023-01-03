@@ -4,21 +4,21 @@ import trackHandler from "@src/pages/api/v2/reports/lastfm/top20tracks/[username
 import testResponses from "@src/tests/fixtures/lastfm/end2end/lastfm.toptracks";
 import testAccounts from "@src/tests/fixtures/lastfm/end2end/lastfm.users";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
+import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
 import type { MockAPIRequestType } from "@src/types/api/request.types";
 import type { MockAPIResponseType } from "@src/types/api/response.types";
-import type { HttpMethodType } from "@src/types/clients/api/api.client.types";
 
 jest.unmock("@toplast/lastfm");
 
-jest.mock("@src/backend/integrations/api.logger/vendor");
+jest.mock("@src/backend/api/integrations/api.logger/vendor");
 
-jest.mock("@src/backend/integrations/auth/vendor", () =>
-  require("@fixtures/integrations/auth").authenticated()
+jest.mock("@src/backend/api/integrations/auth/vendor", () =>
+  require("@fixtures/api/auth").authenticated()
 );
 
 type ArrangeArgs = {
   username: string;
-  method: HttpMethodType;
+  method: APIClientHttpMethodType;
 };
 
 const integrationEnvironmentVariable = "INTEGRATION_TEST_LAST_FM_KEY";

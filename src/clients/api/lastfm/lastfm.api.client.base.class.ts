@@ -1,10 +1,10 @@
 import HTTPClient from "../api.client.class";
 import EventDefinition from "@src/events/event.class";
+import type { APIClientResponse } from "@src/contracts/api/exports.types";
 import type {
   EventCreatorType,
   IntegrationRequestType,
 } from "@src/types/analytics.types";
-import type { ApiResponse } from "@src/types/clients/api/api.client.types";
 import type {
   LastFMReportInterface,
   LastFMReportParamsInterface,
@@ -18,7 +18,7 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
   protected eventDispatch: EventCreatorType;
   protected eventType = "BASE" as IntegrationRequestType;
   protected integration = "LAST.FM" as const;
-  protected response!: ApiResponse<ResponseType>;
+  protected response!: APIClientResponse<ResponseType>;
   protected abstract route: string;
   protected invalidRetryHeaderError =
     "TimeoutFetch, with invalid retry header.";

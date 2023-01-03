@@ -1,6 +1,6 @@
+import apiHandlerVendor from "@src/backend/api/integrations/api.handler/vendor";
+import apiLoggerVendor from "@src/backend/api/integrations/api.logger/vendor";
 import LastFMProxy from "@src/backend/api/services/lastfm/proxy/proxy.class";
-import apiHandlerVendor from "@src/backend/integrations/api.handler/vendor";
-import apiLoggerVendor from "@src/backend/integrations/api.logger/vendor";
 import { knownStatuses } from "@src/config/api";
 import requestSettings from "@src/config/requests";
 import * as status from "@src/config/status";

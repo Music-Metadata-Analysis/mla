@@ -1,19 +1,20 @@
 import { knownStatuses } from "@src/config/api";
 import type {
-  ApiResponse,
-  HttpMethodType,
-  StatusMessageType,
-} from "@src/types/clients/api/api.client.types";
+  APIClientInterface,
+  APIClientResponse,
+  APIClientHttpMethodType,
+  APIClientStatusMessageType,
+} from "@src/contracts/api/exports.types";
 
-class APIClient {
+class APIClient implements APIClientInterface {
   async request<RESPONSE>(
     url: string,
     params?: {
-      method?: HttpMethodType;
+      method?: APIClientHttpMethodType;
       cache?: RequestCache;
       body?: unknown;
     }
-  ): Promise<ApiResponse<RESPONSE>> {
+  ): Promise<APIClientResponse<RESPONSE>> {
     const method = params?.method ? params.method : "GET";
     const cache = params?.cache ? params.cache : "default";
     const body = params?.body ? JSON.stringify(params.body) : undefined;
@@ -33,7 +34,8 @@ class APIClient {
     fetchResponse = this.handleKnownStatuses(fetchResponse);
     fetchResponse = this.handleUnsuccessful(fetchResponse, method, url);
 
-    const json: RESPONSE | StatusMessageType = await fetchResponse.json();
+    const json: RESPONSE | APIClientStatusMessageType =
+      await fetchResponse.json();
     return {
       status: fetchResponse.status,
       headers: this.getHeaders(fetchResponse),
@@ -55,7 +57,7 @@ class APIClient {
 
   protected handleUnsuccessful(
     response: Response,
-    method: HttpMethodType,
+    method: APIClientHttpMethodType,
     url: string
   ): Response {
     if (!response.ok) {

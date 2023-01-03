@@ -1,14 +1,14 @@
 import ArtistImageCacheControllerFactory from "../artist.image.cache.controller.factory.class";
 import ArtistImageCdnClient from "../cdn/artist.image.cdn.client.class";
-import CacheController from "@src/backend/cache/controller/cache.controller.class";
-import { mockPersistenceClient } from "@src/backend/integrations/persistence/__mocks__/vendor.mock";
-import persistenceVendor from "@src/backend/integrations/persistence/vendor";
+import CacheController from "@src/backend/api/cache/controller/cache.controller.class";
+import { mockPersistenceClient } from "@src/backend/api/integrations/persistence/__mocks__/vendor.mock";
+import persistenceVendor from "@src/backend/api/integrations/persistence/vendor";
 
 jest.mock("../cdn/artist.image.cdn.client.class");
 
-jest.mock("@src/backend/cache/controller/cache.controller.class");
+jest.mock("@src/backend/api/cache/controller/cache.controller.class");
 
-jest.mock("@src/backend/integrations/persistence/vendor");
+jest.mock("@src/backend/api/integrations/persistence/vendor");
 
 describe(ArtistImageCacheControllerFactory.name, () => {
   let instance: ArtistImageCacheControllerFactory;

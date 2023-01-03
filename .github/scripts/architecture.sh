@@ -53,7 +53,7 @@ search() {
 }
 
 excludes_vendor_locations() {
-  excludes "src/clients/$1|src/backend/integrations/$1" 
+  excludes "src/clients/$1|src/backend/api/integrations/$1" 
 }
 
 
@@ -198,10 +198,10 @@ main() {
 
   # Enforce Type Definition Flow (No references to vendor types directly.)
   echo "  Checking Vendor Type Imports..."
-  readarray -t IMPORT_FILES < <(search 'from "(@src/clients/.+|@src/backend/integrations.+)' src | cut -d":" -f1 | excludes "^src/types|^src/backend/types")
+  readarray -t IMPORT_FILES < <(search 'from "(@src/clients/.+|@src/backend/api/integrations.+)' src | cut -d":" -f1 | excludes "^src/types|^src/backend/types")
   for IMPORT_FILE in "${IMPORT_FILES[@]}"; do
     ! tr -d '\n'  < "$IMPORT_FILE" | 
-      grep -Eo '(import type .*? from \"(@src/clients/.+|@src/backend/integrations.+))' > /dev/null || 
+      grep -Eo '(import type .*? from \"(@src/clients/.+|@src/backend/api/integrations.+))' > /dev/null || 
       (echo "${IMPORT_FILE}: should not be importing types directly from a vendor folder." && exit 1) || 
       false
   done
