@@ -1,10 +1,10 @@
-import LastFMProxy from "@src/backend/api/lastfm/proxy/proxy.class";
+import LastFMProxy from "@src/backend/api/services/lastfm/proxy/proxy.class";
 import apiHandlerVendor from "@src/backend/integrations/api.handler/vendor";
 import apiLoggerVendor from "@src/backend/integrations/api.logger/vendor";
 import { knownStatuses } from "@src/config/api";
 import requestSettings from "@src/config/requests";
 import * as status from "@src/config/status";
-import type { ProxyError } from "@src/backend/api/lastfm/proxy/error/proxy.error.class";
+import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
 import type { ApiEndPointFactoryInterface } from "@src/types/api/endpoint.types";
 import type {
   ApiEndpointRequestType,

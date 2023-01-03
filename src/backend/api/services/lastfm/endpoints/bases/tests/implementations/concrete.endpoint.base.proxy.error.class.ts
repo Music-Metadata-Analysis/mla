@@ -1,8 +1,8 @@
-import LastFMEndpointBase from "@src/backend/api/lastfm/endpoints/bases/endpoint.base.class";
+import LastFMEndpointBase from "@src/backend/api/services/lastfm/endpoints/bases/endpoint.base.class";
+import { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
 import type { ApiRequestPathParamType } from "@src/types/api/request.types";
-import type { LastFMArtistTopAlbumsInterface } from "@src/types/integrations/lastfm/api.types";
 
-export default class ConcreteBaseProxySuccessClass extends LastFMEndpointBase {
+export default class ConcreteBaseProxyErrorClass extends LastFMEndpointBase {
   public errorCode?: number;
   public mockError = "mockError";
 
@@ -14,14 +14,15 @@ export default class ConcreteBaseProxySuccessClass extends LastFMEndpointBase {
       this.setRequestTimeout(req, res, next);
       const response = await this.getProxyResponse({});
       res.status(200).json(response);
-      this.clearRequestTimeout(req);
       next();
     });
   }
+
   protected async getProxyResponse(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _: ApiRequestPathParamType
-  ): Promise<LastFMArtistTopAlbumsInterface[]> {
-    return Promise.resolve([]);
+  ): Promise<never[]> {
+    throw new ProxyError(this.mockError, this.errorCode);
+    return [];
   }
 }

@@ -1,5 +1,5 @@
-import LastFMApiEndpointFactoryV2 from "@src/backend/api/lastfm/endpoints/v2.endpoint.base.class";
-import { mockLastFMProxyMethods } from "@src/backend/api/lastfm/proxy/__mocks__/proxy.class.mock";
+import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.endpoint.base.class";
+import { mockLastFMProxyMethods } from "@src/backend/api/services/lastfm/proxy/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import { STATUS_400_MESSAGE, STATUS_503_MESSAGE } from "@src/config/status";
 import handleProxy, {
@@ -19,7 +19,7 @@ jest.mock("@src/backend/integrations/auth/vendor", () =>
 
 jest.mock("@src/backend/integrations/api.logger/vendor");
 
-jest.mock("@src/backend/api/lastfm/proxy/proxy.class");
+jest.mock("@src/backend/api/services/lastfm/proxy/proxy.class");
 
 const endpointUnderTest = apiRoutes.v2.data.artists.albumsGet;
 

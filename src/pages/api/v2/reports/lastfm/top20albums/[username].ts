@@ -1,4 +1,4 @@
-import LastFMApiEndpointFactoryV2 from "@src/backend/api/lastfm/endpoints/v2.endpoint.base.class";
+import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.endpoint.base.class";
 import apiRoutes from "@src/config/apiRoutes";
 import type { ApiRequestPathParamType } from "@src/types/api/request.types";
 

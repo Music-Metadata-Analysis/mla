@@ -1,4 +1,4 @@
-import LastFMEndpointBase from "@src/backend/api/lastfm/endpoints/bases/endpoint.base.class";
+import LastFMEndpointBase from "@src/backend/api/services/lastfm/endpoints/bases/endpoint.base.class";
 import type { ApiRequestPathParamType } from "@src/types/api/request.types";
 
 export default class ConcreteBaseEndpointTimeoutErrorClass extends LastFMEndpointBase {

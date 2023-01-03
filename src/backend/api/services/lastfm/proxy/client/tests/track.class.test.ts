@@ -1,6 +1,6 @@
 import LastFMTrackClientAdapter from "../track.class";
 import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
-import type { ProxyError } from "@src/backend/api/lastfm/proxy/error/proxy.error.class";
+import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
 import type { LastFMTrackInfoInterface } from "@src/types/integrations/lastfm/api.types";
 import type { LastFMExternalClientError } from "@src/types/integrations/lastfm/client.types";
 
