@@ -1,6 +1,6 @@
 import CacheVendorCdnBaseClient from "./bases/cdn.base.client.class";
-import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
-import type { PersistenceVendorClientInterface } from "@src/types/integrations/persistence/vendor.types";
+import type { CacheVendorCdnInterface } from "@src/backend/api/types/integrations/cache/vendor.types";
+import type { PersistenceVendorClientInterface } from "@src/backend/api/types/integrations/persistence/vendor.types";
 
 export default abstract class CloudFrontCdnBaseClass<ObjectType>
   extends CacheVendorCdnBaseClient<ObjectType>

@@ -1,5 +1,5 @@
 import CdnAbstractBaseClient from "../cdn/bases/cdn.base.client.class";
-import type { CacheVendorInterface } from "@src/types/integrations/cache/vendor.types";
+import type { CacheVendorInterface } from "@src/backend/api/types/integrations/cache/vendor.types";
 
 jest.mock("../cdn/bases/cdn.base.client.class");
 

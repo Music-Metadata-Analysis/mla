@@ -1,5 +1,5 @@
 import Flagsmith from "flagsmith-nodejs";
-import type { FlagVendorClientInterface } from "@src/types/integrations/flags/vendor.types";
+import type { FlagVendorClientInterface } from "@src/backend/api/types/integrations/flags/vendor.types";
 import type { Flags } from "flagsmith-nodejs";
 
 export default class FlagSmithClient implements FlagVendorClientInterface {

@@ -8,8 +8,8 @@ import nextAuthConfiguration from "@src/backend/api/integrations/auth/config/nex
 import { mockFlagGroup } from "@src/backend/api/integrations/flags/__mocks__/vendor.mock";
 import flagVendor from "@src/backend/api/integrations/flags/vendor";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
-import type { MockAPIRequestType } from "@src/types/api/request.types";
-import type { MockAPIResponseType } from "@src/types/api/response.types";
+import type { MockAPIRequestType } from "@src/backend/api/types/services/request.types";
+import type { MockAPIResponseType } from "@src/backend/api/types/services/response.types";
 
 jest.mock("next-auth");
 jest.mock("next-auth/providers/facebook");

@@ -1,5 +1,5 @@
 import LastFMEndpointBase from "@src/backend/api/services/lastfm/endpoints/bases/endpoint.base.class";
-import type { ApiRequestPathParamType } from "@src/types/api/request.types";
+import type { ApiRequestPathParamType } from "@src/backend/api/types/services/request.types";
 import type { LastFMArtistTopAlbumsInterface } from "@src/types/integrations/lastfm/api.types";
 
 export default class ConcreteBaseProxySuccessClass extends LastFMEndpointBase {

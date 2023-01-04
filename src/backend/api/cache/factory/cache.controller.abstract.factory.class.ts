@@ -1,7 +1,7 @@
 import CacheController from "@src/backend/api/cache/controller/cache.controller.class";
 import type { CacheControllerFactoryInterface } from "@src/backend/api/types/cache/factory.types";
-import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
-import type { PersistenceVendorClientInterface } from "@src/types/integrations/persistence/vendor.types";
+import type { CacheVendorCdnInterface } from "@src/backend/api/types/integrations/cache/vendor.types";
+import type { PersistenceVendorClientInterface } from "@src/backend/api/types/integrations/persistence/vendor.types";
 
 export default abstract class CacheControllerAbstractFactory<ObjectType>
   implements CacheControllerFactoryInterface<ObjectType>

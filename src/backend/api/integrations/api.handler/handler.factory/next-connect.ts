@@ -1,10 +1,10 @@
 import nextConnect from "next-connect";
-import type { ApiEndpointRequestType } from "@src/types/api/request.types";
-import type { ApiEndpointResponseType } from "@src/types/api/response.types";
 import type {
   ApiHandlerVendorFactoryInterface,
   ApiHandlerVendorFactoryConstructorInterface,
-} from "@src/types/integrations/api.handler/vendor.types";
+} from "@src/backend/api/types/integrations/api.handler/vendor.types";
+import type { ApiEndpointRequestType } from "@src/backend/api/types/services/request.types";
+import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
 import type { NextConnect } from "next-connect";
 
 class NextConnectHandlerFactory implements ApiHandlerVendorFactoryInterface {

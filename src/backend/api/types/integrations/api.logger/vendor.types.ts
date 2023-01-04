@@ -1,5 +1,5 @@
-import type { ApiEndpointRequestType } from "@src/types/api/request.types";
-import type { ApiEndpointResponseType } from "@src/types/api/response.types";
+import type { ApiEndpointRequestType } from "@src/backend/api/types/services/request.types";
+import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
 
 export interface ApiLoggerVendorEndpointLoggerInterface {
   log: ApiLoggerVendorEndpointLoggerType;

@@ -1,4 +1,4 @@
-import type { FlagVendorGroupInterface } from "@src/types/integrations/flags/vendor.types";
+import type { FlagVendorGroupInterface } from "@src/backend/api/types/integrations/flags/vendor.types";
 
 export default class FlagSmithGroup implements FlagVendorGroupInterface {
   protected groupHash: { [index: string]: string };

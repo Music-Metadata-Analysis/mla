@@ -3,7 +3,7 @@ import VendorPersistenceBaseClass from "./bases/persistence.base.client.class";
 import type {
   PersistenceVendorDataType,
   PersistenceVendorClientHeadersInterface,
-} from "@src/types/integrations/persistence/vendor.types";
+} from "@src/backend/api/types/integrations/persistence/vendor.types";
 
 export default class S3PersistenceClient extends VendorPersistenceBaseClass {
   protected awsRegion: string;

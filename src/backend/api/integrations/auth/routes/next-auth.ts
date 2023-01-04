@@ -8,8 +8,8 @@ import flagVendor from "@src/backend/api/integrations/flags/vendor";
 import type {
   ApiFrameworkVendorApiRequestType,
   ApiFrameworkVendorApiResponseType,
-} from "@src/types/integrations/api.framework/vendor.types";
-import type { AuthVendorProfilePersistenceClientConstructorType } from "@src/types/integrations/auth/vendor.types";
+} from "@src/backend/api/types/integrations/api.framework/vendor.types";
+import type { AuthVendorProfilePersistenceClientConstructorType } from "@src/backend/api/types/integrations/auth/vendor.types";
 
 export const getGroup = (identifier: unknown) => {
   const hashAsString = JSON.parse(

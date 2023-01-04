@@ -3,7 +3,7 @@ import type { VendorProfileType } from "../vendor.types";
 import type {
   PersistenceVendorDataType,
   PersistenceVendorClientInterface,
-} from "@src/types/integrations/persistence/vendor.types";
+} from "@src/backend/api/types/integrations/persistence/vendor.types";
 
 class ProfilePersistenceClient {
   protected client: PersistenceVendorClientInterface;

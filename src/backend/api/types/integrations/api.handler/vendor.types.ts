@@ -1,7 +1,7 @@
 import type { ParameterizedVendorApiHandlerType } from "@src/backend/api/integrations/api.handler/vendor.types";
 import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
-import type { ApiEndpointRequestType } from "@src/types/api/request.types";
-import type { ApiEndpointResponseType } from "@src/types/api/response.types";
+import type { ApiEndpointRequestType } from "@src/backend/api/types/services/request.types";
+import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
 
 export interface ApiHandlerVendorFactoryInterface {
   create: () => ApiHandlerVendorHandlerType;

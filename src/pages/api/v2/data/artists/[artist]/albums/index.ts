@@ -3,7 +3,7 @@ import apiRoutes from "@src/config/apiRoutes";
 import type {
   ApiEndpointRequestType,
   ApiRequestPathParamType,
-} from "@src/types/api/request.types";
+} from "@src/backend/api/types/services/request.types";
 
 class ArtistTopAlbums extends LastFMApiEndpointFactory {
   public readonly flag = null;

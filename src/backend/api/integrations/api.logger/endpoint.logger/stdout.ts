@@ -1,8 +1,8 @@
-import type { ApiEndpointRequestType } from "@src/types/api/request.types";
 import type {
   ApiLoggerVendorEndpointLoggerInterface,
   ApiLoggerVendorEndpointLoggerType,
-} from "@src/types/integrations/api.logger/vendor.types";
+} from "@src/backend/api/types/integrations/api.logger/vendor.types";
+import type { ApiEndpointRequestType } from "@src/backend/api/types/services/request.types";
 
 export default class StdOutLogger
   implements ApiLoggerVendorEndpointLoggerInterface

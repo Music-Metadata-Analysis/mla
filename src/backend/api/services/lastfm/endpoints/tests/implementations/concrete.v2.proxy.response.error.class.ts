@@ -1,5 +1,5 @@
 import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.endpoint.base.class";
-import type { ApiRequestQueryParamType } from "@src/types/api/request.types";
+import type { ApiRequestQueryParamType } from "@src/backend/api/types/services/request.types";
 import type { LastFMArtistTopAlbumsInterface } from "@src/types/integrations/lastfm/api.types";
 
 export default class ConcreteV2EndpointProxyResponseErrorClass extends LastFMApiEndpointFactoryV2 {

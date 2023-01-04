@@ -1,4 +1,4 @@
-import type { ApiFrameworkVendorApiRequestType } from "@src/types/integrations/api.framework/vendor.types";
+import type { ApiFrameworkVendorApiRequestType } from "@src/backend/api/types/integrations/api.framework/vendor.types";
 import type { createRequest, MockRequest } from "node-mocks-http";
 
 export interface ApiEndpointRequestType

@@ -1,7 +1,7 @@
 import type {
   FlagVendorClientInterface,
   FlagVendorGroupInterface,
-} from "@src/types/integrations/flags/vendor.types";
+} from "@src/backend/api/types/integrations/flags/vendor.types";
 
 export const mockFlagClient = {
   isEnabled: jest.fn(),

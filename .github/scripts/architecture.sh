@@ -65,7 +65,7 @@ main() {
 
   # Enforce Type Definition Flow (No imports of backend components from the frontend.)
   echo "  Checking Imports from the Backend Component..."
-  readarray -t IMPORT_FILES < <(search 'from "@src/backend/.+' src | cut -d":" -f1 | excludes "^src/backend|^src/pages/api|^src/tests/api|^src/types/integration")
+  readarray -t IMPORT_FILES < <(search 'from "@src/backend/.+' src | cut -d":" -f1 | excludes "^src/backend|^src/pages/api|^src/tests/api|^src/tests/fixtures|^src/types/integration")
   for IMPORT_FILE in "${IMPORT_FILES[@]}"; do
     ! tr -d '\n'  < "$IMPORT_FILE" | 
       grep -Eo 'from "@src/backend' > /dev/null || 
@@ -198,7 +198,7 @@ main() {
 
   # Enforce Type Definition Flow (No references to vendor types directly.)
   echo "  Checking Vendor Type Imports..."
-  readarray -t IMPORT_FILES < <(search 'from "(@src/clients/.+|@src/backend/api/integrations.+)' src | cut -d":" -f1 | excludes "^src/types|^src/backend/types")
+  readarray -t IMPORT_FILES < <(search 'from "(@src/clients/.+|@src/backend/api/integrations.+)' src | cut -d":" -f1 | excludes "^src/types|^src/backend/api/types")
   for IMPORT_FILE in "${IMPORT_FILES[@]}"; do
     ! tr -d '\n'  < "$IMPORT_FILE" | 
       grep -Eo '(import type .*? from \"(@src/clients/.+|@src/backend/api/integrations.+))' > /dev/null || 

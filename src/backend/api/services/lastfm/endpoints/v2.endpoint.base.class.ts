@@ -5,8 +5,8 @@ import * as status from "@src/config/status";
 import type {
   ApiEndpointRequestType,
   ApiRequestPathParamType,
-} from "@src/types/api/request.types";
-import type { ApiEndpointResponseType } from "@src/types/api/response.types";
+} from "@src/backend/api/types/services/request.types";
+import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
 import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointBase {

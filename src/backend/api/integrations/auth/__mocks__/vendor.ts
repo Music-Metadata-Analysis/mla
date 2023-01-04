@@ -1,5 +1,5 @@
 import { mockAuthClient, mockAuthConfig } from "./vendor.mock";
-import type { AuthVendorInterface } from "@src/types/integrations/auth/vendor.types";
+import type { AuthVendorInterface } from "@src/backend/api/types/integrations/auth/vendor.types";
 
 const authVendor: AuthVendorInterface = {
   config: mockAuthConfig,

@@ -6,12 +6,12 @@ import handleProxy, {
   endpointFactory,
 } from "@src/pages/api/v2/data/artists/[artist]/albums/[album]";
 import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
-import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
 import type {
   MockAPIRequestType,
   ApiRequestQueryParamType,
-} from "@src/types/api/request.types";
-import type { MockAPIResponseType } from "@src/types/api/response.types";
+} from "@src/backend/api/types/services/request.types";
+import type { MockAPIResponseType } from "@src/backend/api/types/services/response.types";
+import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
 
 jest.mock("@src/backend/api/integrations/auth/vendor", () =>
   require("@fixtures/api/auth").authenticated()

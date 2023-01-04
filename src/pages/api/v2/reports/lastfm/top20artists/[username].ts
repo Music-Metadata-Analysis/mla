@@ -1,6 +1,6 @@
 import { LastFMApiEndpointFactory } from "@src/backend/api/exports";
 import apiRoutes from "@src/config/apiRoutes";
-import type { ApiRequestPathParamType } from "@src/types/api/request.types";
+import type { ApiRequestPathParamType } from "@src/backend/api/types/services/request.types";
 
 class Top20ArtistsEndpointFactoryV2 extends LastFMApiEndpointFactory {
   public readonly flag = null;

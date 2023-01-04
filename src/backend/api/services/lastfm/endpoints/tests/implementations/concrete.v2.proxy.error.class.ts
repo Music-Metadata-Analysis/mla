@@ -1,6 +1,6 @@
 import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.endpoint.base.class";
 import { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
-import type { ApiRequestQueryParamType } from "@src/types/api/request.types";
+import type { ApiRequestQueryParamType } from "@src/backend/api/types/services/request.types";
 
 export default class ConcreteV2EndpointProxyErrorClass extends LastFMApiEndpointFactoryV2 {
   public cacheMaxAgeValue = 1000;

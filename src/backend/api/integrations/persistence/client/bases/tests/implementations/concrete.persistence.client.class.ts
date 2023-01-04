@@ -2,7 +2,7 @@ import PersistenceVendorBaseClass from "@src/backend/api/integrations/persistenc
 import type {
   PersistenceVendorDataType,
   PersistenceVendorClientHeadersInterface,
-} from "@src/types/integrations/persistence/vendor.types";
+} from "@src/backend/api/types/integrations/persistence/vendor.types";
 
 export default class MockConcretePersistenceVendor extends PersistenceVendorBaseClass {
   protected async writeImplementation(

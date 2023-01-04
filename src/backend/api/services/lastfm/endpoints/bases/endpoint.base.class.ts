@@ -5,15 +5,15 @@ import { knownStatuses } from "@src/config/api";
 import requestSettings from "@src/config/requests";
 import * as status from "@src/config/status";
 import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
-import type { ApiEndPointFactoryInterface } from "@src/types/api/endpoint.types";
+import type { ApiHandlerVendorHandlerType } from "@src/backend/api/types/integrations/api.handler/vendor.types";
+import type { ApiLoggerVendorEndpointLoggerInterface } from "@src/backend/api/types/integrations/api.logger/vendor.types";
+import type { ApiEndPointFactoryInterface } from "@src/backend/api/types/services/endpoint.types";
 import type {
   ApiEndpointRequestType,
   ApiRequestQueryParamType,
   ApiRequestBodyType,
-} from "@src/types/api/request.types";
-import type { ApiEndpointResponseType } from "@src/types/api/response.types";
-import type { ApiHandlerVendorHandlerType } from "@src/types/integrations/api.handler/vendor.types";
-import type { ApiLoggerVendorEndpointLoggerInterface } from "@src/types/integrations/api.logger/vendor.types";
+} from "@src/backend/api/types/services/request.types";
+import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
 import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 export default abstract class LastFMEndpointBase

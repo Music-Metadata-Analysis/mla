@@ -1,5 +1,5 @@
 import type { CacheControllerInterface } from "@src/backend/api/types/cache/controller.types";
-import type { CacheVendorCdnInterface } from "@src/types/integrations/cache/vendor.types";
+import type { CacheVendorCdnInterface } from "@src/backend/api/types/integrations/cache/vendor.types";
 
 export default class CacheController<ObjectType>
   implements CacheControllerInterface<ObjectType>

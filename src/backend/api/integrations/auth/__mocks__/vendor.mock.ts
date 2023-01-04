@@ -1,5 +1,5 @@
 import { mockSession } from "@src/tests/fixtures/mock.authentication";
-import type { AuthVendorClientInterface } from "@src/types/integrations/auth/vendor.types";
+import type { AuthVendorClientInterface } from "@src/backend/api/types/integrations/auth/vendor.types";
 
 const mockAuthClientBase = {
   getSession: jest.fn(),

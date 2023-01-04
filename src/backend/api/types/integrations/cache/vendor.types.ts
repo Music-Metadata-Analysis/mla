@@ -1,4 +1,4 @@
-import type { PersistenceVendorClientInterface } from "@src/types/integrations/persistence/vendor.types";
+import type { PersistenceVendorClientInterface } from "@src/backend/api/types/integrations/persistence/vendor.types";
 
 export interface CacheVendorCdnInterface<ObjectType> {
   logCacheHitRate(): void;
