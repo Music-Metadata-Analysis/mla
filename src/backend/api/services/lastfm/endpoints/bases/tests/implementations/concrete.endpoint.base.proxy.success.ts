@@ -1,5 +1,5 @@
 import LastFMEndpointBase from "@src/backend/api/services/lastfm/endpoints/bases/endpoint.base.class";
-import type { ApiRequestPathParamType } from "@src/backend/api/types/services/request.types";
+import type { ApiEndpointRequestPathParamType } from "@src/backend/api/types/services/request.types";
 import type { LastFMArtistTopAlbumsInterface } from "@src/types/integrations/lastfm/api.types";
 
 export default class ConcreteBaseProxySuccessClass extends LastFMEndpointBase {
@@ -20,7 +20,7 @@ export default class ConcreteBaseProxySuccessClass extends LastFMEndpointBase {
   }
   protected async getProxyResponse(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _: ApiRequestPathParamType
+    _: ApiEndpointRequestPathParamType
   ): Promise<LastFMArtistTopAlbumsInterface[]> {
     return Promise.resolve([]);
   }

@@ -1,11 +1,8 @@
-import NextAuthApiRoutes from "@src/pages/api/auth/[...nextauth]";
+import exports from "@fixtures/api/mock.api.exports";
+import AuthVendorRoutes from "@src/pages/api/auth/[...nextauth]";
 
-jest.mock("@src/backend/api/integrations/auth/vendor", () => ({
-  ApiRoutes: "MockRoutes",
-}));
-
-describe("NextAuthApiRoutes", () => {
+describe("AuthVendorRoutes", () => {
   it("should export the correct object", () => {
-    expect(NextAuthApiRoutes).toBe("MockRoutes");
+    expect(AuthVendorRoutes).toBe(exports.authVendor.ApiRoutes);
   });
 });

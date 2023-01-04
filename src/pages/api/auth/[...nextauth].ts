@@ -1,3 +1,3 @@
-import authVendor from "@src/backend/api/integrations/auth/vendor";
+import { authenticationIntegration } from "@src/backend/api/exports";
 
-export default authVendor.ApiRoutes;
+export default authenticationIntegration.ApiRoutes;

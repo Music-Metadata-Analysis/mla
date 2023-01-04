@@ -1,20 +1,18 @@
+import {} from "@fixtures/api/mock.api.auth";
+import {} from "@fixtures/api/mock.api.logger";
+import { createAPIMocks } from "@fixtures/api/mock.api.messages";
 import apiRoutes from "@src/config/apiRoutes";
 import * as status from "@src/config/status";
 import albumHandler from "@src/pages/api/v2/reports/lastfm/top20albums/[username]";
 import testResponses from "@src/tests/fixtures/lastfm/end2end/lastfm.topalbums";
 import testAccounts from "@src/tests/fixtures/lastfm/end2end/lastfm.users";
-import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
-import type { MockAPIRequestType } from "@src/backend/api/types/services/request.types";
-import type { MockAPIResponseType } from "@src/backend/api/types/services/response.types";
+import type {
+  MockAPIEndpointRequestType,
+  MockAPIEndpointResponseType,
+} from "@src/backend/api/exports/types/mocks";
 import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
 
 jest.unmock("@toplast/lastfm");
-
-jest.mock("@src/backend/api/integrations/auth/vendor", () =>
-  require("@fixtures/api/auth").authenticated()
-);
-
-jest.mock("@src/backend/api/integrations/api.logger/vendor");
 
 type ArrangeArgs = {
   username: string;
@@ -30,8 +28,8 @@ if (process.env[integrationEnvironmentVariable]) {
     let scenario: string;
     let testUser: string;
     let originalEnvironment: typeof process.env;
-    let mockReq: MockAPIRequestType;
-    let mockRes: MockAPIResponseType;
+    let mockReq: MockAPIEndpointRequestType;
+    let mockRes: MockAPIEndpointResponseType;
 
     beforeAll(() => {
       originalEnvironment = process.env;

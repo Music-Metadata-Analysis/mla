@@ -1,5 +1,5 @@
 import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.endpoint.base.class";
-import type { ApiRequestQueryParamType } from "@src/backend/api/types/services/request.types";
+import type { ApiEndpointRequestQueryParamType } from "@src/backend/api/types/services/request.types";
 
 export default class ConcreteV2EndpointTimeoutErrorClass extends LastFMApiEndpointFactoryV2 {
   public cacheMaxAgeValue = 1000;
@@ -10,7 +10,7 @@ export default class ConcreteV2EndpointTimeoutErrorClass extends LastFMApiEndpoi
 
   protected async getProxyResponse(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _: ApiRequestQueryParamType
+    _: ApiEndpointRequestQueryParamType
   ): Promise<never[]> {
     function sleep(ms: number) {
       return new Promise((resolve) => {

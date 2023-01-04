@@ -4,12 +4,12 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
 import createRoutes, { getGroup } from "../next-auth";
+import { createAPIMocks } from "@fixtures/api/mock.api.messages";
 import nextAuthConfiguration from "@src/backend/api/integrations/auth/config/next-auth";
 import { mockFlagGroup } from "@src/backend/api/integrations/flags/__mocks__/vendor.mock";
 import flagVendor from "@src/backend/api/integrations/flags/vendor";
-import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
-import type { MockAPIRequestType } from "@src/backend/api/types/services/request.types";
-import type { MockAPIResponseType } from "@src/backend/api/types/services/response.types";
+import type { MockAPIEndpointRequestType } from "@src/backend/api/types/services/mocks/request.types";
+import type { MockAPIEndpointResponseType } from "@src/backend/api/types/services/mocks/response.types";
 
 jest.mock("next-auth");
 jest.mock("next-auth/providers/facebook");
@@ -20,8 +20,8 @@ jest.mock("next-auth/providers/spotify");
 jest.mock("@src/backend/api/integrations/flags/vendor");
 
 describe("NextAuthRoutes", () => {
-  let mockReq: MockAPIRequestType;
-  let mockRes: MockAPIResponseType;
+  let mockReq: MockAPIEndpointRequestType;
+  let mockRes: MockAPIEndpointResponseType;
   let mockValueIndex = 0;
 
   const MockProfilePersistenceClient = jest.fn(() => ({

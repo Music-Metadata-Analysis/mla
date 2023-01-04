@@ -1,8 +1,8 @@
 import { getToken } from "next-auth/jwt";
 import NextAuthClient from "../next-auth";
-import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
+import { createAPIMocks } from "@fixtures/api/mock.api.messages";
 import type { AuthVendorSessionType } from "@src/backend/api/types/integrations/auth/vendor.types";
-import type { MockAPIRequestType } from "@src/backend/api/types/services/request.types";
+import type { MockAPIEndpointRequestType } from "@src/backend/api/types/services/mocks/request.types";
 import type { JWT } from "next-auth/jwt";
 
 jest.mock("@src/utils/voids");
@@ -13,7 +13,7 @@ const MockedGetToken = jest.mocked(getToken);
 
 describe(NextAuthClient.name, () => {
   let instance: NextAuthClient;
-  let mockRequest: MockAPIRequestType;
+  let mockRequest: MockAPIEndpointRequestType;
   let originalEnvironment: typeof process.env;
   const mockJWTSecret = "mockJWTSecret";
   const mockValidJWT = {

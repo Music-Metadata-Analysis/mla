@@ -1,4 +1,4 @@
-import { mockSession } from "@src/tests/fixtures/mock.authentication";
+import { mockSession } from "@src/backend/api/exports/tests/fixtures/mock.api.messages";
 import type { AuthVendorClientInterface } from "@src/backend/api/types/integrations/auth/vendor.types";
 
 const mockAuthClientBase = {

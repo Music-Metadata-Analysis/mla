@@ -1,21 +1,17 @@
+import {} from "@fixtures/api/mock.api.auth";
+import {} from "@fixtures/api/mock.api.logger";
+import { mockLastFMProxyMethods } from "@fixtures/api/mock.api.lastfm";
+import { createAPIMocks } from "@fixtures/api/mock.api.messages";
 import { LastFMApiEndpointFactory } from "@src/backend/api/exports";
-import { mockLastFMProxyMethods } from "@src/backend/api/services/lastfm/proxy/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import handleProxy, {
   endpointFactory,
 } from "@src/pages/api/v2/reports/lastfm/top20tracks/[username]";
-import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
-import type { MockAPIRequestType } from "@src/backend/api/types/services/request.types";
-import type { MockAPIResponseType } from "@src/backend/api/types/services/response.types";
+import type {
+  MockAPIEndpointRequestType,
+  MockAPIEndpointResponseType,
+} from "@src/backend/api/exports/types/mocks";
 import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
-
-jest.mock("@src/backend/api/integrations/auth/vendor", () =>
-  require("@fixtures/api/auth").authenticated()
-);
-
-jest.mock("@src/backend/api/integrations/api.logger/vendor");
-
-jest.mock("@src/backend/api/services/lastfm/proxy/proxy.class");
 
 const endpointUnderTest = apiRoutes.v2.reports.lastfm.top20tracks;
 
@@ -25,8 +21,8 @@ type ArrangeArgs = {
 };
 
 describe(endpointUnderTest, () => {
-  let mockReq: MockAPIRequestType;
-  let mockRes: MockAPIResponseType;
+  let mockReq: MockAPIEndpointRequestType;
+  let mockRes: MockAPIEndpointResponseType;
   const mockResponse = {
     tracks: [],
     image: [],

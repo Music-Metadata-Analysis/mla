@@ -121,6 +121,7 @@
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/src/**/implementations/concrete*.{js,jsx,ts,tsx}",
+      "!<rootDir>/src/backend/api/exports/tests/fixtures/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/src/tests/fixtures/**/*.{js,jsx,ts,tsx}"
     ],
     "coveragePathIgnorePatterns": [],
@@ -146,8 +147,7 @@
       "<rootDir>/jest/setup/testing-library.js"
     ],
     "moduleNameMapper": {
-      "^@fixtures/api/auth$": "<rootDir>/src/backend/api/integrations/auth/__mocks__/vendor.mock.ts",
-      "^@fixtures/api/lastfm/logger$": "<rootDir>/src/backend/api/lastfm/tests/endpoint.common.logger.mock.ts",
+      "^@fixtures/api/(.*)": "<rootDir>/src/backend/api/exports/tests/fixtures/$1",
       "^@fixtures/chakra$": "<rootDir>/src/tests/fixtures/mock.chakra.react.factory.class.tsx",
       "^@fixtures/chakra/icons$": "<rootDir>/src/tests/fixtures/mock.chakra.icon.factory.class.tsx",
       "^@fixtures/react/child$": "<rootDir>/src/tests/fixtures/mock.component.child.factory.class.tsx",

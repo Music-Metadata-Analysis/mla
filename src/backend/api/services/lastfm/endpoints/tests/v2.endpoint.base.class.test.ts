@@ -2,19 +2,19 @@ import { waitFor } from "@testing-library/react";
 import ConcreteV2EndpointProxyErrorClass from "./implementations/concrete.v2.proxy.error.class";
 import ConcreteV2EndpointProxyResponseErrorClass from "./implementations/concrete.v2.proxy.response.error.class";
 import ConcreteV2EndpointTimeoutErrorClass from "./implementations/concrete.v2.timeout.error.class";
+import {
+  createAPIMocks,
+  mockSession,
+} from "@src/backend/api/exports/tests/fixtures/mock.api.messages";
 import { mockEndpointLogger } from "@src/backend/api/integrations/api.logger/__mocks__/vendor.mock";
 import { mockAuthClient } from "@src/backend/api/integrations/auth/__mocks__/vendor.mock";
 import authVendor from "@src/backend/api/integrations/auth/vendor";
 import { mockFlagClient } from "@src/backend/api/integrations/flags/__mocks__/vendor.mock";
 import flagVendor from "@src/backend/api/integrations/flags/vendor";
 import * as status from "@src/config/status";
-import {
-  createAPIMocks,
-  mockSession,
-} from "@src/tests/fixtures/mock.authentication";
 import type LastFMApiEndpointFactoryV2 from "../v2.endpoint.base.class";
-import type { MockAPIRequestType } from "@src/backend/api/types/services/request.types";
-import type { MockAPIResponseType } from "@src/backend/api/types/services/response.types";
+import type { MockAPIEndpointRequestType } from "@src/backend/api/types/services/mocks/request.types";
+import type { MockAPIEndpointResponseType } from "@src/backend/api/types/services/mocks/response.types";
 import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
 
 jest.mock("@src/backend/api/integrations/auth/vendor");
@@ -32,8 +32,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
   };
 
   let method: APIClientHttpMethodType;
-  let mockReq: MockAPIRequestType;
-  let mockRes: MockAPIResponseType;
+  let mockReq: MockAPIEndpointRequestType;
+  let mockRes: MockAPIEndpointResponseType;
 
   let originalEnvironment: typeof process.env;
 

@@ -1,5 +1,5 @@
 import LastFMEndpointBase from "@src/backend/api/services/lastfm/endpoints/bases/endpoint.base.class";
-import type { ApiRequestPathParamType } from "@src/backend/api/types/services/request.types";
+import type { ApiEndpointRequestPathParamType } from "@src/backend/api/types/services/request.types";
 
 export default class ConcreteBaseEndpointTimeoutErrorClass extends LastFMEndpointBase {
   public route = "/api/v1/endpoint";
@@ -16,7 +16,7 @@ export default class ConcreteBaseEndpointTimeoutErrorClass extends LastFMEndpoin
 
   protected async getProxyResponse(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _: ApiRequestPathParamType
+    _: ApiEndpointRequestPathParamType
   ): Promise<never[]> {
     function timeout(ms: number) {
       return new Promise((resolve) => {

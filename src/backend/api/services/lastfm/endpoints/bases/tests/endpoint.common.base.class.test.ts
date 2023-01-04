@@ -2,12 +2,12 @@ import { waitFor } from "@testing-library/react";
 import ConcreteBaseProxyErrorClass from "./implementations/concrete.endpoint.base.proxy.error.class";
 import ConcreteBaseProxySuccessClass from "./implementations/concrete.endpoint.base.proxy.success";
 import ConcreteBaseEndpointTimeoutErrorClass from "./implementations/concrete.endpoint.base.timeout.error.class";
+import { createAPIMocks } from "@fixtures/api/mock.api.messages";
 import { mockEndpointLogger } from "@src/backend/api/integrations/api.logger/__mocks__/vendor.mock";
 import * as status from "@src/config/status";
-import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
 import type LastFMEndpointBase from "../endpoint.base.class";
-import type { MockAPIRequestType } from "@src/backend/api/types/services/request.types";
-import type { MockAPIResponseType } from "@src/backend/api/types/services/response.types";
+import type { MockAPIEndpointRequestType } from "@src/backend/api/types/services/mocks/request.types";
+import type { MockAPIEndpointResponseType } from "@src/backend/api/types/services/mocks/response.types";
 import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
 
 jest.mock("@src/backend/api/integrations/api.logger/vendor");
@@ -17,8 +17,8 @@ describe("LastFMEndpointBase", () => {
 
   let factoryInstance: LastFMEndpointBase & { errorCode?: number };
 
-  let mockReq: MockAPIRequestType;
-  let mockRes: MockAPIResponseType;
+  let mockReq: MockAPIEndpointRequestType;
+  let mockRes: MockAPIEndpointResponseType;
 
   let method: APIClientHttpMethodType;
 

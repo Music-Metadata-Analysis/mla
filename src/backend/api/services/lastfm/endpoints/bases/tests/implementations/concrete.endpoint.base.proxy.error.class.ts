@@ -1,6 +1,6 @@
 import LastFMEndpointBase from "@src/backend/api/services/lastfm/endpoints/bases/endpoint.base.class";
 import { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
-import type { ApiRequestPathParamType } from "@src/backend/api/types/services/request.types";
+import type { ApiEndpointRequestPathParamType } from "@src/backend/api/types/services/request.types";
 
 export default class ConcreteBaseProxyErrorClass extends LastFMEndpointBase {
   public errorCode?: number;
@@ -20,7 +20,7 @@ export default class ConcreteBaseProxyErrorClass extends LastFMEndpointBase {
 
   protected async getProxyResponse(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _: ApiRequestPathParamType
+    _: ApiEndpointRequestPathParamType
   ): Promise<never[]> {
     throw new ProxyError(this.mockError, this.errorCode);
     return [];

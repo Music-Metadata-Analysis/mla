@@ -63,15 +63,12 @@ main() {
 
   echo "Component Decoupling ..."
 
-  # Enforce Type Definition Flow (No imports of backend components from the frontend.)
-  echo "  Checking Imports from the Backend Component..."
-  readarray -t IMPORT_FILES < <(search 'from "@src/backend/.+' src | cut -d":" -f1 | excludes "^src/backend|^src/pages/api|^src/tests/api|^src/tests/fixtures|^src/types/integration")
-  for IMPORT_FILE in "${IMPORT_FILES[@]}"; do
-    ! tr -d '\n'  < "$IMPORT_FILE" | 
-      grep -Eo 'from "@src/backend' > /dev/null || 
-      (echo "${IMPORT_FILE}: should not be importing from the Backend component." && exit 1) || 
-      false
-  done
+  # Enforce API Component Isolation (No imports from API unless deliberately exported.)
+  echo "  Checking Imports from the API Component..."
+  ! search 'from "@src/backend/api/.+' src | 
+    excludes "^src/backend/api/" |
+    excludes 'from "@src/backend/api/exports' || 
+    (echo "API elements should not be imported unless deliberately exported." && false)
 
   # Enforce Type Definition Flow (No imports of fronted types to backend types definitions.)
   echo "  Checking Imports from the Frontend Component to the Backend Type Definitions..."
@@ -208,7 +205,7 @@ main() {
 
   # Enforce Vendor Type Exports (Must be named consistenly: [vendor type]Vendor[type name](Interface|Type))
   echo "  Checking Vendor Type Definitions..."
-  readarray -t VENDOR_TYPE_FILES < <(find src/types | grep "vendor.types.ts" | cut -d":" -f1)
+  readarray -t VENDOR_TYPE_FILES < <(find {src/types,src/backend/api/types} | grep "vendor.types.ts" | cut -d":" -f1)
   for VENDOR_TYPE_FILE in "${VENDOR_TYPE_FILES[@]}"; do
     ! tr -d '\n' < "$VENDOR_TYPE_FILE" | 
       grep -Eo "((export|import )*type [A-Za-z]+)|(export )*interface ([A-Z]{1}[A-Za-z]+) {|export type \{(.+?)\}" |

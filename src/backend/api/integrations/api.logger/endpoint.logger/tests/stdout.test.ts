@@ -1,8 +1,8 @@
 import StdOutLogger from "../stdout";
+import { createAPIMocks } from "@fixtures/api/mock.api.messages";
 import apiRoutes from "@src/config/apiRoutes";
-import { createAPIMocks } from "@src/tests/fixtures/mock.authentication";
-import type { MockAPIRequestType } from "@src/backend/api/types/services/request.types";
-import type { MockAPIResponseType } from "@src/backend/api/types/services/response.types";
+import type { MockAPIEndpointRequestType } from "@src/backend/api/types/services/mocks/request.types";
+import type { MockAPIEndpointResponseType } from "@src/backend/api/types/services/mocks/response.types";
 
 describe("StdOutLogger", () => {
   let consoleLogSpy: jest.SpyInstance;
@@ -22,8 +22,8 @@ describe("StdOutLogger", () => {
 
   let instance: StdOutLogger;
 
-  let mockReq: MockAPIRequestType;
-  let mockRes: MockAPIResponseType;
+  let mockReq: MockAPIEndpointRequestType;
+  let mockRes: MockAPIEndpointResponseType;
 
   const baseProps = {
     body: { test: "test body " },

@@ -10,8 +10,8 @@ import type { ApiLoggerVendorEndpointLoggerInterface } from "@src/backend/api/ty
 import type { ApiEndPointFactoryInterface } from "@src/backend/api/types/services/endpoint.types";
 import type {
   ApiEndpointRequestType,
-  ApiRequestQueryParamType,
-  ApiRequestBodyType,
+  ApiEndpointRequestQueryParamType,
+  ApiEndpointRequestBodyType,
 } from "@src/backend/api/types/services/request.types";
 import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
 import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
@@ -35,7 +35,7 @@ export default abstract class LastFMEndpointBase
   }
 
   protected abstract getProxyResponse(
-    params: ApiRequestQueryParamType | ApiRequestBodyType
+    params: ApiEndpointRequestQueryParamType | ApiEndpointRequestBodyType
   ): ReturnType<LastFMProxyInterface[keyof LastFMProxyInterface]>;
 
   protected abstract setUpHandler(): void;
