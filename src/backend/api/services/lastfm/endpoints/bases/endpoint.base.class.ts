@@ -8,13 +8,13 @@ import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/pr
 import type { ApiHandlerVendorHandlerType } from "@src/backend/api/types/integrations/api.handler/vendor.types";
 import type { ApiLoggerVendorEndpointLoggerInterface } from "@src/backend/api/types/integrations/api.logger/vendor.types";
 import type { ApiEndPointFactoryInterface } from "@src/backend/api/types/services/endpoint.types";
+import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
 import type {
   ApiEndpointRequestType,
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
 } from "@src/backend/api/types/services/request.types";
 import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
-import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 export default abstract class LastFMEndpointBase
   implements ApiEndPointFactoryInterface

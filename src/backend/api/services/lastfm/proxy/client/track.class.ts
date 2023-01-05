@@ -1,5 +1,5 @@
 import LastFMClientAdapterBase from "./bases/client.base.class";
-import type { LastFMTrackInfoInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMTrackInfoInterface } from "@src/contracts/api/exports/lastfm/datapoint.types";
 import type {
   LastFMExternalClientError,
   LastFMTrackClientInterface,

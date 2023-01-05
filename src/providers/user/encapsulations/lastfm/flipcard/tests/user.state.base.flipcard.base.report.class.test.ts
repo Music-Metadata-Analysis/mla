@@ -6,7 +6,7 @@ import {
 import lastfmTranslations from "@locales/lastfm.json";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import type UserFlipCardBaseReportState from "../user.state.base.flipcard.report.class";
-import type { LastFMImageDataInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMImageDataInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
 
 describe("UserFlipCardBaseReportState", () => {

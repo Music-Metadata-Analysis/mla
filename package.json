@@ -122,7 +122,8 @@
       "<rootDir>/src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/src/**/implementations/concrete*.{js,jsx,ts,tsx}",
       "!<rootDir>/src/backend/api/exports/tests/fixtures/**/*.{js,jsx,ts,tsx}",
-      "!<rootDir>/src/tests/fixtures/**/*.{js,jsx,ts,tsx}"
+      "!<rootDir>/src/tests/fixtures/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/src/**/tests/*.check.{ts,tsx}"
     ],
     "coveragePathIgnorePatterns": [],
     "coverageReporters": [

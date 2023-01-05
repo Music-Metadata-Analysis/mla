@@ -3,12 +3,12 @@ import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
 import CacheController from "@src/backend/api/cache/controller/cache.controller.class";
 import ArtistImageCacheFactory from "@src/backend/api/services/lastfm/proxy/cache/artist.image.cache.controller.factory.class";
 import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
+import type { LastFMUserProfileInterface } from "@src/contracts/api/exports/lastfm/element.types";
 import type {
-  LastFMAlbumDataInterface,
-  LastFMArtistDataInterface,
-  LastFMUserProfileInterface,
-  LastFMTrackDataInterface,
-} from "@src/types/integrations/lastfm/api.types";
+  LastFMUserAlbumInterface,
+  LastFMUserArtistInterface,
+  LastFMUserTrackInterface,
+} from "@src/contracts/api/exports/lastfm/report.types";
 import type { LastFMExternalClientError } from "@src/types/integrations/lastfm/client.types";
 
 jest.mock(
@@ -41,7 +41,7 @@ describe("LastFMUserClientAdapter", () => {
   };
 
   describe("getTopAlbums", () => {
-    let res: LastFMAlbumDataInterface[];
+    let res: LastFMUserAlbumInterface[];
     const mockTopAlbumsResponse = { topalbums: { album: "response" } };
 
     describe("when the request is successful", () => {
@@ -115,7 +115,7 @@ describe("LastFMUserClientAdapter", () => {
   });
 
   describe("getTopArtists", () => {
-    let res: LastFMArtistDataInterface[];
+    let res: LastFMUserArtistInterface[];
     let mockImageUrl: string;
     const mockTopArtistsResponseComplete = {
       topartists: {
@@ -333,7 +333,7 @@ describe("LastFMUserClientAdapter", () => {
   });
 
   describe("getTopTracks", () => {
-    let res: LastFMTrackDataInterface[];
+    let res: LastFMUserTrackInterface[];
     let mockImageUrl: string;
     const mockTopTracksResponseComplete = {
       toptracks: {

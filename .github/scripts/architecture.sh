@@ -65,18 +65,18 @@ main() {
 
   # Enforce API Component Isolation (No imports from API unless deliberately exported.)
   echo "  Checking Imports from the API Component..."
-  ! search 'from "@src/backend/api/.+' src | 
-    excludes "^src/backend/api/" |
-    excludes 'from "@src/backend/api/exports' || 
+  ! search 'from "@src/backend/api/.+' src        | 
+    excludes "^src/backend/api/"                  |
+    excludes 'from "@src/backend/api/exports'     || 
     (echo "API elements should not be imported unless deliberately exported." && false)
 
-  # Enforce Type Definition Flow (No imports of fronted types to backend types definitions.)
-  echo "  Checking Imports from the Frontend Component to the Backend Type Definitions..."
-  ! search 'from "@src/.+' src/types/integrations | 
-    excludes 'from "(@src/backend/.+|@src/types/.+)"' ||
-    (echo "Frontend Types cannot be imported into Backend Type definitions." && exit 1) || 
-    false
-    
+  # Enforce Contracts Component Isolation (No imports from Contracts unless deliberately exported.)
+  echo "  Checking Imports from the CONTRACTS Component..."
+  ! search 'from "@src/contracts/api/.+' src      | 
+    excludes "^src/contracts/api/"                |
+    excludes 'from "@src/contracts/api/exports'   || 
+    (echo "CONTRACTS elements should not be imported unless deliberately exported." && false)
+
   echo "Framework Decoupling..."
 
   # Enforce Analytics Framework Isolation

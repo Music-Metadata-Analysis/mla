@@ -2,17 +2,17 @@ import LastFmAlbumClientAdapter from "./client/album.class";
 import LastFmArtistClientAdapter from "./client/artist.class";
 import LastFmTrackClientAdapter from "./client/track.class";
 import LastFmUserClientAdapter from "./client/user.class";
-import type {
-  LastFMTopAlbumsReportResponseInterface,
-  LastFMTopArtistsReportResponseInterface,
-  LastFMTopTracksReportResponseInterface,
-} from "@src/types/clients/api/lastfm/response.types";
+import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
 import type {
   LastFMAlbumInfoInterface,
   LastFMArtistTopAlbumsInterface,
   LastFMTrackInfoInterface,
-} from "@src/types/integrations/lastfm/api.types";
-import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
+} from "@src/contracts/api/exports/lastfm/datapoint.types";
+import type {
+  LastFMTopAlbumsReportResponseInterface,
+  LastFMTopArtistsReportResponseInterface,
+  LastFMTopTracksReportResponseInterface,
+} from "@src/contracts/api/exports/lastfm/report.types";
 
 class LastFMProxy implements LastFMProxyInterface {
   protected albumClient: LastFmAlbumClientAdapter;

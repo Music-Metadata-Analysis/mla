@@ -2,7 +2,7 @@ import {} from "@fixtures/api/mock.api.auth";
 import {} from "@fixtures/api/mock.api.logger";
 import { mockLastFMProxyMethods } from "@fixtures/api/mock.api.lastfm";
 import { createAPIMocks } from "@fixtures/api/mock.api.messages";
-import { LastFMApiEndpointFactory } from "@src/backend/api/exports";
+import { LastFMApiEndpointFactory } from "@src/backend/api/exports/endpoints";
 import apiRoutes from "@src/config/apiRoutes";
 import handleProxy, {
   endpointFactory,
@@ -11,7 +11,7 @@ import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,
 } from "@src/backend/api/exports/types/mocks";
-import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
+import type { APIClientHttpMethodType } from "@src/contracts/api/exports/types/client";
 
 const endpointUnderTest = apiRoutes.v2.reports.lastfm.top20artists;
 

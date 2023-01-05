@@ -1,6 +1,6 @@
 import HTTPClient from "../api.client.class";
 import EventDefinition from "@src/events/event.class";
-import type { APIClientResponse } from "@src/contracts/api/exports.types";
+import type { APIClientResponse } from "@src/contracts/api/exports/types/client";
 import type {
   EventCreatorType,
   IntegrationRequestType,

@@ -1,7 +1,7 @@
 import UserFlipCardBaseReportState from "./user.state.base.flipcard.report.class";
 import Events from "@src/events/events";
+import type { LastFMUserArtistInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
-import type { LastFMArtistDataInterface } from "@src/types/integrations/lastfm/api.types";
 import type { LastFMUserStateTrackReport } from "@src/types/user/state.types";
 
 export default class UserTrackState extends UserFlipCardBaseReportState {
@@ -43,7 +43,7 @@ export default class UserTrackState extends UserFlipCardBaseReportState {
 
   getRelatedArtistName = (index: number) => {
     const apiObject = (
-      this.getDataSource()[index] as { artist: LastFMArtistDataInterface }
+      this.getDataSource()[index] as { artist: LastFMUserArtistInterface }
     )?.artist;
     return this.withDefault(apiObject?.name, this.defaultArtistName);
   };

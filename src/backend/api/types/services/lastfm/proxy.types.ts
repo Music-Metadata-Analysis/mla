@@ -2,12 +2,12 @@ import type {
   LastFMAlbumInfoInterface,
   LastFMArtistTopAlbumsInterface,
   LastFMTrackInfoInterface,
-} from "./api.types";
+} from "@src/contracts/api/exports/lastfm/datapoint.types";
 import type {
   LastFMTopAlbumsReportResponseInterface,
   LastFMTopArtistsReportResponseInterface,
   LastFMTopTracksReportResponseInterface,
-} from "@src/types/clients/api/lastfm/response.types";
+} from "@src/contracts/api/exports/lastfm/report.types";
 
 export interface LastFMProxyInterface {
   getAlbumInfo: (

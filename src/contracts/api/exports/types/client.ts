@@ -3,4 +3,4 @@ export type {
   APIClientResponse,
   APIClientHttpMethodType,
   APIClientStatusMessageType,
-} from "./types/client.types";
+} from "../../types/client.types";

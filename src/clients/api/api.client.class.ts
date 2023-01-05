@@ -4,7 +4,7 @@ import type {
   APIClientResponse,
   APIClientHttpMethodType,
   APIClientStatusMessageType,
-} from "@src/contracts/api/exports.types";
+} from "@src/contracts/api/exports/types/client";
 
 class APIClient implements APIClientInterface {
   async request<RESPONSE>(

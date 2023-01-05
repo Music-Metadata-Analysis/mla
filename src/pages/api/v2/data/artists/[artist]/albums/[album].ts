@@ -1,10 +1,10 @@
-import { LastFMApiEndpointFactory } from "@src/backend/api/exports";
+import { LastFMApiEndpointFactory } from "@src/backend/api/exports/endpoints";
 import apiRoutes from "@src/config/apiRoutes";
+import type { LastFMProxyInterface } from "@src/backend/api/exports/types/lastfm/proxy";
 import type {
   ApiEndpointRequestType,
   ApiEndpointRequestPathParamType,
 } from "@src/backend/api/exports/types/requests";
-import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 class ArtistTopAlbums extends LastFMApiEndpointFactory {
   public readonly flag = null;

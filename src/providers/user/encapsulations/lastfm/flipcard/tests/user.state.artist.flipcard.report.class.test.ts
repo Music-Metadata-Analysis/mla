@@ -1,7 +1,7 @@
 import { baseUserProperties } from "../../tests/states/user.state.data.set";
 import UserArtistState from "../user.state.artist.flipcard.report.class";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import type { LastFMArtistDataInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMUserArtistInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { LastFMUserStateArtistReport } from "@src/types/user/state.types";
 
 describe("UserArtistState", () => {
@@ -26,7 +26,7 @@ describe("UserArtistState", () => {
     beforeEach(() => arrange());
 
     describe("getDataSource", () => {
-      let data: LastFMArtistDataInterface[];
+      let data: LastFMUserArtistInterface[];
 
       beforeEach(() => {
         data = instance.getDataSource();

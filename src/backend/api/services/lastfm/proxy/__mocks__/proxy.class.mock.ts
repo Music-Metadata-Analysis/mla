@@ -1,4 +1,4 @@
-import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
+import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
 
 export const mockLastFMProxyMethods = {
   getAlbumInfo: jest.fn(),

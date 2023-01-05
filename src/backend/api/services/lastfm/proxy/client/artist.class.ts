@@ -1,5 +1,5 @@
 import LastFMClientAdapterBase from "./bases/client.base.class";
-import type { LastFMArtistTopAlbumsInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMArtistTopAlbumsInterface } from "@src/contracts/api/exports/lastfm/datapoint.types";
 import type {
   LastFMExternalClientError,
   LastFMArtistClientInterface,

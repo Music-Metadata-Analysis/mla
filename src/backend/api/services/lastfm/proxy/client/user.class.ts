@@ -2,12 +2,14 @@ import LastFMClientAdapterBase from "./bases/client.base.class";
 import ArtistImageCacheFactory from "../cache/artist.image.cache.controller.factory.class";
 import type { CacheControllerInterface } from "@src/backend/api/types/cache/controller.types";
 import type {
-  LastFMAlbumDataInterface,
-  LastFMArtistDataInterface,
   LastFMImageDataInterface,
-  LastFMTrackDataInterface,
   LastFMUserProfileInterface,
-} from "@src/types/integrations/lastfm/api.types";
+} from "@src/contracts/api/exports/lastfm/element.types";
+import type {
+  LastFMUserAlbumInterface,
+  LastFMUserArtistInterface,
+  LastFMUserTrackInterface,
+} from "@src/contracts/api/exports/lastfm/report.types";
 import type {
   LastFMUserClientInterface,
   LastFMExternalClientError,
@@ -27,7 +29,7 @@ class LastFmUserClientAdapter
     this.cache = cacheFactory.create();
   }
 
-  async getTopAlbums(username: string): Promise<LastFMAlbumDataInterface[]> {
+  async getTopAlbums(username: string): Promise<LastFMUserAlbumInterface[]> {
     try {
       const response = await this.externalClient.user.getTopAlbums({
         user: username,
@@ -35,13 +37,13 @@ class LastFmUserClientAdapter
         limit: this.reportCount,
         page: 1,
       });
-      return response.topalbums.album as LastFMAlbumDataInterface[];
+      return response.topalbums.album as LastFMUserAlbumInterface[];
     } catch (err) {
       throw this.createProxyCompatibleError(err as LastFMExternalClientError);
     }
   }
 
-  async getTopArtists(username: string): Promise<LastFMArtistDataInterface[]> {
+  async getTopArtists(username: string): Promise<LastFMUserArtistInterface[]> {
     try {
       const response = await this.externalClient.user.getTopArtists({
         user: username,
@@ -50,16 +52,16 @@ class LastFmUserClientAdapter
         page: 1,
       });
       await this.attachArtistArtwork(
-        response.topartists.artist as LastFMArtistDataInterface[]
+        response.topartists.artist as LastFMUserArtistInterface[]
       );
       this.cache.logCacheHitRate();
-      return response.topartists.artist as LastFMArtistDataInterface[];
+      return response.topartists.artist as LastFMUserArtistInterface[];
     } catch (err) {
       throw this.createProxyCompatibleError(err as LastFMExternalClientError);
     }
   }
 
-  protected async attachArtistArtwork(artists: LastFMAlbumDataInterface[]) {
+  protected async attachArtistArtwork(artists: LastFMUserAlbumInterface[]) {
     const cacheLookups: Promise<string>[] = [];
     artists.map((artist) => {
       cacheLookups.push(this.cache.query(artist.name));
@@ -77,7 +79,7 @@ class LastFmUserClientAdapter
     });
   }
 
-  async getTopTracks(username: string): Promise<LastFMTrackDataInterface[]> {
+  async getTopTracks(username: string): Promise<LastFMUserTrackInterface[]> {
     try {
       const response = await this.externalClient.user.getTopTracks({
         user: username,
@@ -86,16 +88,16 @@ class LastFmUserClientAdapter
         page: 1,
       });
       await this.attachTrackArtistArtwork(
-        response.toptracks.track as LastFMTrackDataInterface[]
+        response.toptracks.track as LastFMUserTrackInterface[]
       );
       this.cache.logCacheHitRate();
-      return response.toptracks.track as LastFMTrackDataInterface[];
+      return response.toptracks.track as LastFMUserTrackInterface[];
     } catch (err) {
       throw this.createProxyCompatibleError(err as LastFMExternalClientError);
     }
   }
 
-  protected async attachTrackArtistArtwork(tracks: LastFMTrackDataInterface[]) {
+  protected async attachTrackArtistArtwork(tracks: LastFMUserTrackInterface[]) {
     const cacheLookups: Promise<string>[] = [];
     tracks.map((track) => {
       cacheLookups.push(this.cache.query(track.artist?.name));

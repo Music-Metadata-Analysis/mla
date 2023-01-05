@@ -6,7 +6,7 @@ import { InitialState } from "@src/providers/user/user.initial";
 import MockAlbumGetInfo from "@src/tests/fixtures/lastfm/responses/album.getInfo.json";
 import MockArtistGetTopAlbums from "@src/tests/fixtures/lastfm/responses/artist.getTopAlbums.json";
 import MockUserGetTopArtists from "@src/tests/fixtures/lastfm/responses/user.getTopArtists.json";
-import type { LastFMImageDataInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMImageDataInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { LastFMUserStatePlayCountByArtistReport } from "@src/types/user/state.types";
 
 describe("UserPlaycountByArtistState", () => {

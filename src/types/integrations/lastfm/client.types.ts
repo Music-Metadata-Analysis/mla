@@ -1,18 +1,20 @@
 import type {
-  LastFMAlbumDataInterface,
-  LastFMTrackDataInterface,
-  LastFMArtistDataInterface,
-  LastFMUserProfileInterface,
   LastFMArtistTopAlbumsInterface,
   LastFMAlbumInfoInterface,
   LastFMTrackInfoInterface,
-} from "./api.types";
+} from "@src/contracts/api/exports/lastfm/datapoint.types";
+import type { LastFMUserProfileInterface } from "@src/contracts/api/exports/lastfm/element.types";
+import type {
+  LastFMUserAlbumInterface,
+  LastFMUserArtistInterface,
+  LastFMUserTrackInterface,
+} from "@src/contracts/api/exports/lastfm/report.types";
 
 export interface LastFMUserClientInterface {
   secret_key: string;
-  getTopAlbums: (username: string) => Promise<LastFMAlbumDataInterface[]>;
-  getTopArtists: (username: string) => Promise<LastFMArtistDataInterface[]>;
-  getTopTracks: (username: string) => Promise<LastFMTrackDataInterface[]>;
+  getTopAlbums: (username: string) => Promise<LastFMUserAlbumInterface[]>;
+  getTopArtists: (username: string) => Promise<LastFMUserArtistInterface[]>;
+  getTopTracks: (username: string) => Promise<LastFMUserTrackInterface[]>;
   getUserProfile: (username: string) => Promise<LastFMUserProfileInterface>;
 }
 

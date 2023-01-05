@@ -10,7 +10,7 @@ import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,
 } from "@src/backend/api/exports/types/mocks";
-import type { APIClientHttpMethodType } from "@src/contracts/api/exports.types";
+import type { APIClientHttpMethodType } from "@src/contracts/api/exports/types/client";
 
 jest.unmock("@toplast/lastfm");
 

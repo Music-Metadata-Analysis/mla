@@ -1,4 +1,4 @@
-import type { APIClientStatusMessageType } from "@src/contracts/api/exports.types";
+import type { APIClientStatusMessageType } from "@src/contracts/api/exports/types/client";
 
 export const STATUS_400_MESSAGE: APIClientStatusMessageType = {
   detail: "Invalid Request.",

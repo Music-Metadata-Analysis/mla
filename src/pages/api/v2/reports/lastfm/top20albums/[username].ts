@@ -1,4 +1,4 @@
-import { LastFMApiEndpointFactory } from "@src/backend/api/exports";
+import { LastFMApiEndpointFactory } from "@src/backend/api/exports/endpoints";
 import apiRoutes from "@src/config/apiRoutes";
 import type { ApiEndpointRequestPathParamType } from "@src/backend/api/exports/types/requests";
 

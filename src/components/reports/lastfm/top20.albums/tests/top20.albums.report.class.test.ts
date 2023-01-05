@@ -3,7 +3,7 @@ import FlipCardDrawerContainer from "@src/components/reports/lastfm/common/drawe
 import routes from "@src/config/routes";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import UserAlbumDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
-import type { LastFMAlbumDataInterface } from "@src/types/integrations/lastfm/api.types";
+import type { LastFMUserAlbumInterface } from "@src/types/clients/api/lastfm/response.types";
 
 describe("Top20AlbumsReport", () => {
   let report: Report;
@@ -65,7 +65,7 @@ describe("Top20AlbumsReport", () => {
   });
 
   describe("getReportData", () => {
-    let value: LastFMAlbumDataInterface[];
+    let value: LastFMUserAlbumInterface[];
 
     beforeEach(() => {
       value = report.getReportData(mockReportProperties);

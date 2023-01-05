@@ -2,12 +2,12 @@ import LastFMEndpointBase from "./bases/endpoint.base.class";
 import authVendor from "@src/backend/api/integrations/auth/vendor";
 import flagVendor from "@src/backend/api/integrations/flags/vendor";
 import * as status from "@src/config/status";
+import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
 import type {
   ApiEndpointRequestType,
   ApiEndpointRequestPathParamType,
 } from "@src/backend/api/types/services/request.types";
 import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
-import type { LastFMProxyInterface } from "@src/types/integrations/lastfm/proxy.types";
 
 export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointBase {
   protected readonly delay: number = 500;

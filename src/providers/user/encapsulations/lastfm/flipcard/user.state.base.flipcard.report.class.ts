@@ -1,7 +1,7 @@
 import UserBaseState from "../user.state.base.class";
 import type EventDefinition from "@src/events/event.class";
+import type { LastFMImageDataInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
-import type { LastFMImageDataInterface } from "@src/types/integrations/lastfm/api.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 export default abstract class UserFlipCardBaseReportState extends UserBaseState {

@@ -2,9 +2,9 @@ import { baseUserProperties } from "../../tests/states/user.state.data.set";
 import UserAlbumState from "../user.state.album.flipcard.report.class";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import type {
-  LastFMAlbumDataInterface,
-  LastFMArtistDataInterface,
-} from "@src/types/integrations/lastfm/api.types";
+  LastFMUserAlbumInterface,
+  LastFMUserArtistInterface,
+} from "@src/types/clients/api/lastfm/response.types";
 import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
 
 describe("UserAlbumState", () => {
@@ -29,7 +29,7 @@ describe("UserAlbumState", () => {
     beforeEach(() => arrange());
 
     describe("getDataSource", () => {
-      let data: LastFMAlbumDataInterface[];
+      let data: LastFMUserAlbumInterface[];
 
       beforeEach(() => {
         data = instance.getDataSource();
@@ -53,7 +53,7 @@ describe("UserAlbumState", () => {
           currentState.data.report.albums[0].name = mockAlbumName;
           (
             currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
+              .artist as LastFMUserArtistInterface
           ).name = mockArtistName;
           arrange();
         });
@@ -73,7 +73,7 @@ describe("UserAlbumState", () => {
           currentState.data.report.albums[0].name = undefined;
           (
             currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
+              .artist as LastFMUserArtistInterface
           ).name = undefined;
           arrange();
         });
@@ -98,7 +98,7 @@ describe("UserAlbumState", () => {
           currentState.data.report.albums[0].name = mockAlbumName;
           (
             currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
+              .artist as LastFMUserArtistInterface
           ).name = mockArtistName;
           arrange();
         });
@@ -115,7 +115,7 @@ describe("UserAlbumState", () => {
           currentState.data.report.albums[0].name = undefined;
           (
             currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
+              .artist as LastFMUserArtistInterface
           ).name = undefined;
           arrange();
         });
@@ -135,7 +135,7 @@ describe("UserAlbumState", () => {
         beforeEach(() => {
           (
             currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
+              .artist as LastFMUserArtistInterface
           ).name = mockArtistName;
           arrange();
         });
@@ -149,7 +149,7 @@ describe("UserAlbumState", () => {
         beforeEach(() => {
           (
             currentState.data.report.albums[0]
-              .artist as LastFMArtistDataInterface
+              .artist as LastFMUserArtistInterface
           ).name = undefined;
           arrange();
         });
