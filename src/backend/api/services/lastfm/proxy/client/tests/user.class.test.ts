@@ -3,13 +3,13 @@ import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
 import CacheController from "@src/backend/api/cache/controller/cache.controller.class";
 import ArtistImageCacheFactory from "@src/backend/api/services/lastfm/proxy/cache/artist.image.cache.controller.factory.class";
 import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
+import type { LastFMVendorClientError } from "@src/backend/api/types/integrations/lastfm/vendor.types";
 import type { LastFMUserProfileInterface } from "@src/contracts/api/exports/lastfm/element.types";
 import type {
   LastFMUserAlbumInterface,
   LastFMUserArtistInterface,
   LastFMUserTrackInterface,
 } from "@src/contracts/api/exports/lastfm/report.types";
-import type { LastFMExternalClientError } from "@src/types/integrations/lastfm/client.types";
 
 jest.mock(
   "@src/backend/api/services/lastfm/proxy/cache/artist.image.cache.controller.factory.class"
@@ -66,10 +66,10 @@ describe("LastFMUserClientAdapter", () => {
     });
 
     describe("when the request errors", () => {
-      let err: LastFMExternalClientError;
+      let err: LastFMVendorClientError;
 
       beforeEach(() => {
-        err = new Error("Test Error") as LastFMExternalClientError;
+        err = new Error("Test Error") as LastFMVendorClientError;
         mockVendorMethods.user.getTopAlbums.mockRejectedValueOnce(err);
       });
 
@@ -208,10 +208,10 @@ describe("LastFMUserClientAdapter", () => {
     });
 
     describe("when the request errors", () => {
-      let err: LastFMExternalClientError;
+      let err: LastFMVendorClientError;
 
       beforeEach(() => {
-        err = new Error("Test Error") as LastFMExternalClientError;
+        err = new Error("Test Error") as LastFMVendorClientError;
         mockVendorMethods.user.getTopArtists.mockRejectedValueOnce(err);
       });
 
@@ -284,10 +284,10 @@ describe("LastFMUserClientAdapter", () => {
     });
 
     describe("when the request errors", () => {
-      let err: LastFMExternalClientError;
+      let err: LastFMVendorClientError;
 
       beforeEach(() => {
-        err = new Error("Test Error") as LastFMExternalClientError;
+        err = new Error("Test Error") as LastFMVendorClientError;
         mockVendorMethods.user.getInfo.mockRejectedValueOnce(err);
       });
 
@@ -430,10 +430,10 @@ describe("LastFMUserClientAdapter", () => {
     });
 
     describe("when the request errors", () => {
-      let err: LastFMExternalClientError;
+      let err: LastFMVendorClientError;
 
       beforeEach(() => {
-        err = new Error("Test Error") as LastFMExternalClientError;
+        err = new Error("Test Error") as LastFMVendorClientError;
         mockVendorMethods.user.getTopTracks.mockRejectedValueOnce(err);
       });
 

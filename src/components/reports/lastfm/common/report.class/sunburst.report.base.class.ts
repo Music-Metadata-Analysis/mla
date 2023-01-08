@@ -1,13 +1,16 @@
-import LastFMReportAbstractBaseClass from "@src/components/reports/lastfm/common/report.class/bases/report.base.class";
+import LastFMReportQueryAbstractBaseClass from "@src/components/reports/lastfm/common/report.class/bases/report.base.class";
 import SunBurstStateToChartDataTranslator from "@src/components/reports/lastfm/common/report.component/sunburst/translator/translator.class";
 import type translations from "@locales/lastfm.json";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type { SunBurstReportInterface } from "@src/types/clients/api/lastfm/data.report.types";
-import type { LastFMSunBurstDrawerInterface } from "@src/types/clients/api/lastfm/drawer.component.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
-import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
-import type { d3Node, SunBurstData } from "@src/types/reports/sunburst.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
+import type {
+  d3Node,
+  SunBurstData,
+} from "@src/types/reports/generics/sunburst.types";
+import type { LastFMSunBurstDrawerInterface } from "@src/types/reports/lastfm/components/drawers/sunburst.types";
+import type { SunBurstReportStateQueryInterface } from "@src/types/reports/lastfm/states/queries/sunburst.types";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
 import type { FC } from "react";
 
@@ -18,13 +21,13 @@ type AggregateReportContent = {
 export default abstract class SunBurstBaseReport<
     ReportState extends UserState<unknown>
   >
-  extends LastFMReportAbstractBaseClass<
+  extends LastFMReportQueryAbstractBaseClass<
     ReportState,
     AggregateBaseReportResponseInterface<unknown[]>,
     LastFMSunBurstDrawerInterface
   >
   implements
-    SunBurstReportInterface<
+    SunBurstReportStateQueryInterface<
       ReportState,
       AggregateBaseReportResponseInterface<unknown[]>,
       LastFMSunBurstDrawerInterface

@@ -1,4 +1,4 @@
-import LastFMBaseClient from "../../lastfm.api.client.base.class";
+import LastFMReportBaseClient from "../../lastfm.api.client.base.class";
 import LastFMReport from "../top20.albums.class";
 import apiRoutes from "@src/config/apiRoutes";
 
@@ -17,7 +17,7 @@ describe("LastFMTopAlbumsReport", () => {
     });
 
     it("should be an instance of the LastFMBaseClient abstract base class", () => {
-      expect(instance).toBeInstanceOf(LastFMBaseClient);
+      expect(instance).toBeInstanceOf(LastFMReportBaseClient);
     });
 
     it("should have the correct api route configured", () => {

@@ -8,7 +8,7 @@ import * as status from "@src/config/status";
 import type LastFMEndpointBase from "../endpoint.base.class";
 import type { MockAPIEndpointRequestType } from "@src/backend/api/types/services/mocks/request.types";
 import type { MockAPIEndpointResponseType } from "@src/backend/api/types/services/mocks/response.types";
-import type { APIClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
 
 jest.mock("@src/backend/api/integrations/api.logger/vendor");
 
@@ -20,7 +20,7 @@ describe("LastFMEndpointBase", () => {
   let mockReq: MockAPIEndpointRequestType;
   let mockRes: MockAPIEndpointResponseType;
 
-  let method: APIClientHttpMethodType;
+  let method: HttpApiClientHttpMethodType;
 
   beforeEach(() => {
     jest.clearAllMocks();

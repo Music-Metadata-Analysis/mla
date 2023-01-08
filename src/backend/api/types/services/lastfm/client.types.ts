@@ -40,7 +40,3 @@ export interface LastFMTrackClientInterface {
     username: string
   ) => Promise<LastFMTrackInfoInterface>;
 }
-
-export interface LastFMExternalClientError extends Error {
-  statusCode: number;
-}

@@ -7,7 +7,7 @@ import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import useLocale from "@src/hooks/locale.hook";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import type { d3Node } from "@src/types/reports/sunburst.types";
+import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
 jest.mock("@src/hooks/locale.hook");
 

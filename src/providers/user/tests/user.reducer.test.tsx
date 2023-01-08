@@ -5,7 +5,7 @@ import {
 import UserReducerStateBase from "../states/user.reducer.states.base.class";
 import { InitialState } from "../user.initial";
 import { UserReducer } from "../user.reducer";
-import type { BaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { BaseReportResponseInterface } from "@src/types/reports/lastfm/states/generic.types";
 import type { UserActionType } from "@src/types/user/action.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 

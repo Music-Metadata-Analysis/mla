@@ -1,6 +1,6 @@
 import LastFMBaseSunBurstDataPointClient from "./sunburst.datapoint.client.base.class";
 import apiRoutes from "@src/config/apiRoutes";
-import type { LastFMTrackInfoInterface } from "@src/contracts/api/exports/lastfm/datapoint.types";
+import type { LastFMTrackInfoInterface } from "@src/types/clients/api/lastfm/response.types";
 
 class LastFMTrackInfo<
   EncapsulationType

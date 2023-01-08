@@ -10,13 +10,13 @@ import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,
 } from "@src/backend/api/exports/types/mocks";
-import type { APIClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
 
 jest.unmock("@toplast/lastfm");
 
 type ArrangeArgs = {
   username: string;
-  method: APIClientHttpMethodType;
+  method: HttpApiClientHttpMethodType;
 };
 
 const integrationEnvironmentVariable = "INTEGRATION_TEST_LAST_FM_KEY";

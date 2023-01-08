@@ -16,7 +16,7 @@ import mockSunBurstControllerHook from "@src/hooks/controllers/__mocks__/sunburs
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type { d3Node } from "@src/types/reports/sunburst.types";
+import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Box", "Flex"])

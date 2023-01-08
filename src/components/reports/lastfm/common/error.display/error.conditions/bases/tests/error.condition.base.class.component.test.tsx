@@ -3,9 +3,9 @@ import ErrorConditionBase from "../error.condition.base.class.component";
 import { MockReportClass } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.sunburst.report.class";
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
-import type { LastFMSunBurstDrawerInterface } from "@src/types/clients/api/lastfm/drawer.component.types";
-import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
-import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
+import type { LastFMSunBurstDrawerInterface } from "@src/types/reports/lastfm/components/drawers/sunburst.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 class ConcreteErrorBase extends ErrorConditionBase<

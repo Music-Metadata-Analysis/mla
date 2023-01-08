@@ -8,7 +8,7 @@ import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import useLocale from "@src/hooks/locale.hook";
 import UserAlbumState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import type { LastFMFlipCardDrawerInterface } from "@src/types/clients/api/lastfm/drawer.component.types";
+import type { LastFMFlipCardDrawerInterface } from "@src/types/reports/lastfm/components/drawers/flip.card.types";
 
 jest.mock("@src/hooks/analytics.hook");
 

@@ -1,23 +1,23 @@
-import LastFMReportAbstractBaseClass from "@src/components/reports/lastfm/common/report.class/bases/report.base.class";
+import LastFMReportQueryAbstractBaseClass from "@src/components/reports/lastfm/common/report.class/bases/report.base.class";
 import type translations from "@locales/lastfm.json";
 import type { ImagesControllerHookType } from "@src/hooks/controllers/images.controller.hook";
 import type FlipCardUserState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type { FlipCardReportInterface } from "@src/types/clients/api/lastfm/data.report.types";
-import type { LastFMFlipCardDrawerInterface } from "@src/types/clients/api/lastfm/drawer.component.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { LastFMFlipCardDrawerInterface } from "@src/types/reports/lastfm/components/drawers/flip.card.types";
+import type { FlipCardReportStateQueryInterface } from "@src/types/reports/lastfm/states/queries/flipcard.types";
 import type { FC } from "react";
 
 export default abstract class FlipCardAbstractBaseReport<
     ReportState extends FlipCardUserState,
     ReportDataType extends unknown[]
   >
-  extends LastFMReportAbstractBaseClass<
+  extends LastFMReportQueryAbstractBaseClass<
     ReportState,
     ReportDataType,
     LastFMFlipCardDrawerInterface<ReportState>
   >
   implements
-    FlipCardReportInterface<
+    FlipCardReportStateQueryInterface<
       ReportState,
       ReportDataType,
       LastFMFlipCardDrawerInterface<ReportState>

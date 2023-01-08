@@ -7,11 +7,15 @@ import useRouter from "@src/hooks/router.hook";
 import type ErrorBase from "./error.conditions/bases/error.base.class.component";
 import type { ErrorBaseProps } from "./error.conditions/bases/error.base.class.component";
 import type ReportStateBase from "@src/providers/user/encapsulations/lastfm/user.state.base.class";
-import type { LastFMReportInterface } from "@src/types/clients/api/lastfm/data.report.types";
+import type { LastFMReportStateQueryInterface } from "@src/types/reports/lastfm/states/queries/base.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 export type ErrorConditionProps<ReportType, DrawerProps> = {
-  report: LastFMReportInterface<ReportStateBase, ReportType, DrawerProps>;
+  report: LastFMReportStateQueryInterface<
+    ReportStateBase,
+    ReportType,
+    DrawerProps
+  >;
   userProperties: LastFMUserStateBase;
 };
 

@@ -1,5 +1,5 @@
-import type { SunBurstAggregateReportContent } from "@src/types/clients/api/lastfm/sunburst.types";
-import type { SunBurstData } from "@src/types/reports/sunburst.types";
+import type { SunBurstData } from "@src/types/reports/generics/sunburst.types";
+import type { SunBurstAggregateReportContent } from "@src/types/reports/lastfm/states/aggregates/sunburst.types";
 
 class SunBurstStateToChartDataTranslator {
   protected entityKeys: Array<SunBurstData["entity"]>;

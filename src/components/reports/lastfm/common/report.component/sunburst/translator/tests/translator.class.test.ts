@@ -8,8 +8,8 @@ import LastFMTranslations from "@locales/lastfm.json";
 import MockSunburstData4 from "@src/components/reports/common/chart/sunburst/svg/tests/data/sunburst.data.set.4.json";
 import MockSunburstData5 from "@src/components/reports/common/chart/sunburst/svg/tests/data/sunburst.data.set.5.json";
 import { MockReportClass } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.sunburst.report.class";
-import type { SunBurstAggregateReportContent } from "@src/types/clients/api/lastfm/sunburst.types";
-import type { SunBurstData } from "@src/types/reports/sunburst.types";
+import type { SunBurstData } from "@src/types/reports/generics/sunburst.types";
+import type { SunBurstAggregateReportContent } from "@src/types/reports/lastfm/states/aggregates/sunburst.types";
 
 describe("SunBurstStateToChartDataTranslator", () => {
   let instance: SunBurstStateToChartDataTranslator;

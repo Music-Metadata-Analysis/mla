@@ -11,7 +11,7 @@ import useLocale from "@src/hooks/locale.hook";
 import useMetrics from "@src/hooks/metrics.hook";
 import type FlipCardBaseReport from "@src/components/reports/lastfm/common/report.class/flip.card.report.base.class";
 import type FlipCardBaseReportState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type { LastFMFlipCardDrawerInterface } from "@src/types/clients/api/lastfm/drawer.component.types";
+import type { LastFMFlipCardDrawerInterface } from "@src/types/reports/lastfm/components/drawers/flip.card.types";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
 
 export interface FlipCardReportContainerProps<

@@ -1,6 +1,6 @@
 import { waitFor } from "@testing-library/react";
 import LastFMBaseSunBurstDataPointClient from "../sunburst.datapoint.client.base.class";
-import APIClient from "@src/clients/api/api.client.class";
+import HttpApiClient from "@src/clients/api/http/http.client.class";
 import EventDefinition from "@src/events/event.class";
 import InitialState from "@src/providers/user/user.initial";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
@@ -41,7 +41,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockRequest = jest.spyOn(APIClient.prototype, "request");
+    mockRequest = jest.spyOn(HttpApiClient.prototype, "request");
   });
 
   const arrange = () => {

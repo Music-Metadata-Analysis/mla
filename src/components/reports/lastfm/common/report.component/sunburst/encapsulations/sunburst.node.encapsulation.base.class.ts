@@ -3,7 +3,10 @@ import { singular } from "@src/utils/strings";
 import type EventDefinition from "@src/events/event.class";
 import type { SunBurstEntityTypes } from "@src/types/analytics.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
-import type { d3Node, SunBurstData } from "@src/types/reports/sunburst.types";
+import type {
+  d3Node,
+  SunBurstData,
+} from "@src/types/reports/generics/sunburst.types";
 
 type SunBurstNodeAbstractBaseConstructor = new (
   node: d3Node

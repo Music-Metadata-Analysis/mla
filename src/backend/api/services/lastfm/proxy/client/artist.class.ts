@@ -1,9 +1,7 @@
 import LastFMClientAdapterBase from "./bases/client.base.class";
+import type { LastFMVendorClientError } from "@src/backend/api/types/integrations/lastfm/vendor.types";
+import type { LastFMArtistClientInterface } from "@src/backend/api/types/services/lastfm/client.types";
 import type { LastFMArtistTopAlbumsInterface } from "@src/contracts/api/exports/lastfm/datapoint.types";
-import type {
-  LastFMExternalClientError,
-  LastFMArtistClientInterface,
-} from "@src/types/integrations/lastfm/client.types";
 
 class LastFmArtistClientAdapter
   extends LastFMClientAdapterBase
@@ -22,7 +20,7 @@ class LastFmArtistClientAdapter
       });
       return response.topalbums.album as LastFMArtistTopAlbumsInterface[];
     } catch (err) {
-      throw this.createProxyCompatibleError(err as LastFMExternalClientError);
+      throw this.createProxyCompatibleError(err as LastFMVendorClientError);
     }
   }
 }

@@ -1,9 +1,9 @@
 import * as cheerio from "cheerio";
 import lastFMConfig from "@src/config/lastfm";
-import type { VendorArtistImageScraperInterface } from "@src/backend/api/types/integrations/lastfm/vendor.types";
+import type { LastFMVendorArtistImageScraperInterface } from "@src/backend/api/types/integrations/lastfm/vendor.types";
 
 export default class CheerioArtistImageScraper
-  implements VendorArtistImageScraperInterface
+  implements LastFMVendorArtistImageScraperInterface
 {
   protected targetCssClass = ".image-list-item";
   public defaultArtistImageResponse = "";

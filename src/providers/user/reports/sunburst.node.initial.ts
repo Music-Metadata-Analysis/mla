@@ -1,5 +1,5 @@
 import RGBA from "@src/utils/colours/rgba.class";
-import type { d3Node } from "@src/types/reports/sunburst.types";
+import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
 const nullNode = {
   data: { name: "", entity: "unknown" },

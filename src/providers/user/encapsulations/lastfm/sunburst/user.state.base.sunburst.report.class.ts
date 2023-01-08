@@ -1,6 +1,6 @@
 import UserBaseState from "../user.state.base.class";
-import type { LastFMClientParamsInterface } from "@src/types/clients/api/lastfm/request.types";
-import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { LastFMReportClientParamsInterface } from "@src/types/clients/api/lastfm/report.client.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 abstract class UserSunBurstReportBaseState<ReportType> extends UserBaseState {
@@ -15,13 +15,13 @@ abstract class UserSunBurstReportBaseState<ReportType> extends UserBaseState {
 
   abstract updateWithResponse(
     response: unknown,
-    params: LastFMClientParamsInterface,
+    params: LastFMReportClientParamsInterface,
     url: string
   ): void;
 
-  abstract getNextStep(params: LastFMClientParamsInterface): void;
+  abstract getNextStep(params: LastFMReportClientParamsInterface): void;
 
-  abstract removeEntity(params: LastFMClientParamsInterface): void;
+  abstract removeEntity(params: LastFMReportClientParamsInterface): void;
 
   throwError() {
     throw new Error(this.errorMessage);

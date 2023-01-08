@@ -6,12 +6,12 @@ import LastFMTopArtistsReport from "@src/clients/api/lastfm/reports/top20.artist
 import LastFMTopTracksReport from "@src/clients/api/lastfm/reports/top20.tracks.class";
 import PlayCountByArtistStateEncapsulation from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import { UserContext } from "@src/providers/user/user.provider";
-import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
+import type { FlipCardReportStateQueryConstructor } from "@src/types/reports/lastfm/states/queries/flipcard.types";
 import type {
-  SunBurstReportConstructor,
-  SunBurstEncapsulationConstructor,
-} from "@src/types/clients/api/lastfm/sunburst.types";
-import type { Top20ReportConstructor } from "@src/types/clients/api/lastfm/top20.types";
+  SunBurstReportStateQueryConstructor,
+  SunBurstReportStateEncapsulationConstructor,
+} from "@src/types/reports/lastfm/states/queries/sunburst.types";
 import type { userDispatchType } from "@src/types/user/context.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
@@ -23,22 +23,22 @@ const useLastFM = () => {
   };
 
   const createTop20Report = (
-    reportClass: Top20ReportConstructor,
+    reportQueryClass: FlipCardReportStateQueryConstructor,
     userName: string
   ) => {
-    const instance = new reportClass(dispatch, analytics.event);
+    const instance = new reportQueryClass(dispatch, analytics.event);
     instance.retrieveReport({ userName });
   };
 
   const createSunburstReport = <AggregateReportType,>(
-    reportClass: SunBurstReportConstructor<AggregateReportType>,
-    encapsulationClass: SunBurstEncapsulationConstructor<AggregateReportType>,
+    reportQueryClass: SunBurstReportStateQueryConstructor<AggregateReportType>,
+    stateEncapsulationClass: SunBurstReportStateEncapsulationConstructor<AggregateReportType>,
     userName: string
   ) => {
-    const instance = new reportClass(
+    const instance = new reportQueryClass(
       dispatch,
       analytics.event,
-      new encapsulationClass(userProperties)
+      new stateEncapsulationClass(userProperties)
     );
     instance.retrieveReport({ userName });
   };

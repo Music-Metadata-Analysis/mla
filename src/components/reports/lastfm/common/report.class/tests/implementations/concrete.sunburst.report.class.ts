@@ -3,8 +3,8 @@ import { createSimpleComponent } from "@fixtures/react/simple";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import routes from "@src/config/routes";
 import PlayCountByArtistState from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
-import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
-import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
 
 export const mockImageUrl = "http://someurl";
 

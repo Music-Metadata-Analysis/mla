@@ -5,7 +5,7 @@ import SunBurstChartSVGContainer from "@src/components/reports/common/chart/sunb
 import settings from "@src/config/sunburst";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import type { d3Node } from "@src/types/reports/sunburst.types";
+import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

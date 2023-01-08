@@ -1,17 +1,17 @@
 import type translations from "@locales/lastfm.json";
 import type BaseReportState from "@src/providers/user/encapsulations/lastfm/user.state.base.class";
 import type { IntegrationRequestType } from "@src/types/analytics.types";
-import type { LastFMReportInterface } from "@src/types/clients/api/lastfm/data.report.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { LastFMReportStateQueryInterface } from "@src/types/reports/lastfm/states/queries/base.types";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
 import type { FC } from "react";
 
-export default abstract class LastFMReportAbstractBaseClass<
+export default abstract class LastFMReportQueryAbstractBaseClass<
   ReportState extends BaseReportState,
   CompletedReportDataType,
   DrawerComponentProps
 > implements
-    LastFMReportInterface<
+    LastFMReportStateQueryInterface<
       ReportState,
       CompletedReportDataType,
       DrawerComponentProps

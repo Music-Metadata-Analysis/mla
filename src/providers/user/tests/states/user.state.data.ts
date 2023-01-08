@@ -2,7 +2,7 @@ export const mockAlbumsReport = {
   albums: [],
   image: [
     {
-      size: "large",
+      size: "large" as const,
       "#text": "http://someurl.com",
     },
   ],

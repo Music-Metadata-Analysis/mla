@@ -5,9 +5,9 @@ import PlayCountByArtistReport from "../playcount.artists.report.class";
 import SunBurstBaseReport from "@src/components/reports/lastfm/common/report.class/sunburst.report.base.class";
 import routes from "@src/config/routes";
 import PlayCountByArtistState from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
-import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
-import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
-import type { d3Node } from "@src/types/reports/sunburst.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
+import type { d3Node } from "@src/types/reports/generics/sunburst.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 describe(PlayCountByArtistReport.name, () => {

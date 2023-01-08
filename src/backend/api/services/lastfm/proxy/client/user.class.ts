@@ -1,6 +1,8 @@
 import LastFMClientAdapterBase from "./bases/client.base.class";
 import ArtistImageCacheFactory from "../cache/artist.image.cache.controller.factory.class";
 import type { CacheControllerInterface } from "@src/backend/api/types/cache/controller.types";
+import type { LastFMVendorClientError } from "@src/backend/api/types/integrations/lastfm/vendor.types";
+import type { LastFMUserClientInterface } from "@src/backend/api/types/services/lastfm/client.types";
 import type {
   LastFMImageDataInterface,
   LastFMUserProfileInterface,
@@ -10,10 +12,6 @@ import type {
   LastFMUserArtistInterface,
   LastFMUserTrackInterface,
 } from "@src/contracts/api/exports/lastfm/report.types";
-import type {
-  LastFMUserClientInterface,
-  LastFMExternalClientError,
-} from "@src/types/integrations/lastfm/client.types";
 import type { Await } from "@src/types/promise.types";
 class LastFmUserClientAdapter
   extends LastFMClientAdapterBase
@@ -39,7 +37,7 @@ class LastFmUserClientAdapter
       });
       return response.topalbums.album as LastFMUserAlbumInterface[];
     } catch (err) {
-      throw this.createProxyCompatibleError(err as LastFMExternalClientError);
+      throw this.createProxyCompatibleError(err as LastFMVendorClientError);
     }
   }
 
@@ -57,7 +55,7 @@ class LastFmUserClientAdapter
       this.cache.logCacheHitRate();
       return response.topartists.artist as LastFMUserArtistInterface[];
     } catch (err) {
-      throw this.createProxyCompatibleError(err as LastFMExternalClientError);
+      throw this.createProxyCompatibleError(err as LastFMVendorClientError);
     }
   }
 
@@ -93,7 +91,7 @@ class LastFmUserClientAdapter
       this.cache.logCacheHitRate();
       return response.toptracks.track as LastFMUserTrackInterface[];
     } catch (err) {
-      throw this.createProxyCompatibleError(err as LastFMExternalClientError);
+      throw this.createProxyCompatibleError(err as LastFMVendorClientError);
     }
   }
 
@@ -125,7 +123,7 @@ class LastFmUserClientAdapter
         playcount: parseInt(response.user.playcount),
       };
     } catch (err) {
-      throw this.createProxyCompatibleError(err as LastFMExternalClientError);
+      throw this.createProxyCompatibleError(err as LastFMVendorClientError);
     }
   }
 }

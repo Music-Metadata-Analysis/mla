@@ -1,10 +1,10 @@
 import cacheVendor from "@src/backend/api/integrations/cache/vendor";
 import lastFMvendor from "@src/backend/api/integrations/lastfm/vendor";
-import type { VendorArtistImageScraperInterface } from "@src/backend/api/types/integrations/lastfm/vendor.types";
+import type { LastFMVendorArtistImageScraperInterface } from "@src/backend/api/types/integrations/lastfm/vendor.types";
 import type { PersistenceVendorClientInterface } from "@src/backend/api/types/integrations/persistence/vendor.types";
 
 export default class ArtistImageCdnClient extends cacheVendor.CdnBaseClient<string> {
-  protected scraper: VendorArtistImageScraperInterface;
+  protected scraper: LastFMVendorArtistImageScraperInterface;
   protected cacheFolderName = "lastfm/artists";
   protected scraperRetries = 2;
 

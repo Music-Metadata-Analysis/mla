@@ -5,8 +5,8 @@ import { MockReportClass } from "@src/components/reports/lastfm/common/report.cl
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
-import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 jest.mock("@src/components/errors/display/error.display.container", () =>

@@ -1,4 +1,4 @@
-export interface VendorArtistImageScraperInterface {
+export interface LastFMVendorArtistImageScraperInterface {
   defaultArtistImageResponse: string;
   invalidResponseMessage: string;
   invalidHTMLMessage: string;
@@ -8,6 +8,10 @@ export interface VendorArtistImageScraperInterface {
   ): Promise<string> | string;
 }
 
-export interface LastFMvendorInterface {
-  ArtistImageScraper: new () => VendorArtistImageScraperInterface;
+export interface LastFMVendorInterface {
+  ArtistImageScraper: new () => LastFMVendorArtistImageScraperInterface;
+}
+
+export interface LastFMVendorClientError extends Error {
+  statusCode: number;
 }

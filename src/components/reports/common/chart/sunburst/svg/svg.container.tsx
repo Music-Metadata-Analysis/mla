@@ -1,6 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import SunBurstChartSVG from "./svg.class.component";
-import type { SunBurstData, d3Node } from "@src/types/reports/sunburst.types";
+import type {
+  SunBurstData,
+  d3Node,
+} from "@src/types/reports/generics/sunburst.types";
 
 export interface SunBurstChartContainerSVGProps {
   colourSet: { foreground: string };

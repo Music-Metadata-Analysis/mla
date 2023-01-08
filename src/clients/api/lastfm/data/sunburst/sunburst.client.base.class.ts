@@ -3,14 +3,14 @@ import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations
 import type { EventCreatorType } from "@src/types/analytics.types";
 import type { IntegrationRequestType } from "@src/types/analytics.types";
 import type {
-  LastFMReportInterface,
-  LastFMReportParamsInterface,
-} from "@src/types/clients/api/lastfm/request.types";
-import type { SunBurstDataPointClientConstructor } from "@src/types/clients/api/lastfm/sunburst.types";
+  LastFMReportClientInterface,
+  LastFMReportClientParamsInterface,
+} from "@src/types/clients/api/lastfm/report.client.types";
+import type { SunBurstDataPointClientConstructor } from "@src/types/reports/lastfm/datapoints/sunburst.types";
 import type { userDispatchType } from "@src/types/user/context.types";
 
 abstract class LastFMSunburstDataClient<AggregateReportType>
-  implements LastFMReportInterface
+  implements LastFMReportClientInterface
 {
   protected dispatch: userDispatchType;
   protected eventDispatch: EventCreatorType;
@@ -42,7 +42,7 @@ abstract class LastFMSunburstDataClient<AggregateReportType>
     return route;
   }
 
-  retrieveReport(params: LastFMReportParamsInterface): void {
+  retrieveReport(params: LastFMReportClientParamsInterface): void {
     const route = this.getRoute();
     if (route === this.defaultRoute) {
       this.emitInitialAnalyticsEvent();
@@ -79,10 +79,10 @@ abstract class LastFMSunburstDataClient<AggregateReportType>
     );
   }
 
-  protected getParams(params: LastFMReportParamsInterface) {
+  protected getParams(params: LastFMReportClientParamsInterface) {
     if (this.encapsulatedState.getReportStatus()?.operation?.params) {
       return this.encapsulatedState.getReportStatus()?.operation
-        ?.params as LastFMReportParamsInterface;
+        ?.params as LastFMReportClientParamsInterface;
     }
     return params;
   }

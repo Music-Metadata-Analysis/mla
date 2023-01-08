@@ -1,6 +1,6 @@
-import type { VendorArtistImageScraperInterface } from "@src/backend/api/types/integrations/lastfm/vendor.types";
+import type { LastFMVendorArtistImageScraperInterface } from "@src/backend/api/types/integrations/lastfm/vendor.types";
 
-export const mockArtistImageScraper: VendorArtistImageScraperInterface = {
+export const mockArtistImageScraper: LastFMVendorArtistImageScraperInterface = {
   defaultArtistImageResponse: "",
   invalidResponseMessage: "mockInvalidResponseMessage",
   invalidHTMLMessage: "mockInvalidHTMLMessage",

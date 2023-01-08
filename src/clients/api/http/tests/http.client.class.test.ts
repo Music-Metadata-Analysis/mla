@@ -1,9 +1,9 @@
-import APIClient from "../api.client.class";
+import HttpApiClient from "../http.client.class";
 import * as status from "@src/config/status";
-import type { APIClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/types/clients/api/http.types";
 
-describe("APIClient", () => {
-  const client = new APIClient();
+describe("HttpApiClient", () => {
+  const client = new HttpApiClient();
   const remotesite = "https://remotesite.com/";
   type responseType = { success: boolean };
   const mockFetchParams = {
@@ -190,7 +190,7 @@ describe("APIClient", () => {
   describe("post", () => {
     const postParams = {
       ...mockFetchParams,
-      method: "POST" as APIClientHttpMethodType,
+      method: "POST" as HttpApiClientHttpMethodType,
       cache: "no-cache",
       body: JSON.stringify({ test: "post body" }),
     };

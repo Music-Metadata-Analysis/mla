@@ -1,12 +1,12 @@
 import { waitFor } from "@testing-library/react";
-import LastFMBaseClient from "../lastfm.api.client.base.class";
-import APIClient from "@src/clients/api/api.client.class";
+import LastFMReportBaseClient from "../lastfm.api.client.base.class";
+import HttpApiClient from "@src/clients/api/http/http.client.class";
 import EventDefinition from "@src/events/event.class";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
 
 class ConcreteLastFMBaseClient<
   ReportType
-> extends LastFMBaseClient<ReportType> {
+> extends LastFMReportBaseClient<ReportType> {
   route = "/api/v2/some/route/:username";
 }
 
@@ -32,7 +32,7 @@ describe("LastFMBaseClient", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockRequest = jest.spyOn(APIClient.prototype, "request");
+    mockRequest = jest.spyOn(HttpApiClient.prototype, "request");
   });
 
   const arrange = () => {

@@ -1,6 +1,6 @@
 import LastFm from "@toplast/lastfm";
 import { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
-import type { LastFMExternalClientError } from "@src/types/integrations/lastfm/client.types";
+import type { LastFMVendorClientError } from "@src/backend/api/types/integrations/lastfm/vendor.types";
 
 class LastFmClientAdapterBase {
   externalClient: LastFm;
@@ -11,7 +11,7 @@ class LastFmClientAdapterBase {
     this.externalClient = new LastFm(this.secret_key);
   }
 
-  createProxyCompatibleError(err: LastFMExternalClientError): ProxyError {
+  createProxyCompatibleError(err: LastFMVendorClientError): ProxyError {
     return new ProxyError(err.message, err.statusCode);
   }
 }

@@ -15,7 +15,7 @@ import * as status from "@src/config/status";
 import type LastFMApiEndpointFactoryV2 from "../v2.endpoint.base.class";
 import type { MockAPIEndpointRequestType } from "@src/backend/api/types/services/mocks/request.types";
 import type { MockAPIEndpointResponseType } from "@src/backend/api/types/services/mocks/response.types";
-import type { APIClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
 
 jest.mock("@src/backend/api/integrations/auth/vendor");
 
@@ -31,7 +31,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
     flag: string | null;
   };
 
-  let method: APIClientHttpMethodType;
+  let method: HttpApiClientHttpMethodType;
   let mockReq: MockAPIEndpointRequestType;
   let mockRes: MockAPIEndpointResponseType;
 

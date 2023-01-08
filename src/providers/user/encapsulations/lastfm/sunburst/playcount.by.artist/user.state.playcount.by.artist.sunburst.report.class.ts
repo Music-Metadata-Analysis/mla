@@ -8,12 +8,12 @@ import Transformation4 from "./transformations/transformation.4.class";
 import Transformation5 from "./transformations/transformation.5.class";
 import UserSunBurstReportBaseState from "../user.state.base.sunburst.report.class";
 import apiRoutes from "@src/config/apiRoutes";
-import type { LastFMClientParamsInterface } from "@src/types/clients/api/lastfm/request.types";
-import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
+import type { LastFMReportClientParamsInterface } from "@src/types/clients/api/lastfm/report.client.types";
 import type {
   AggregateBaseReportResponseInterface,
   AggregateReportOperationType,
-} from "@src/types/integrations/base.types";
+} from "@src/types/reports/generics/aggregate.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
 
 export default class PlayCountByArtistState extends UserSunBurstReportBaseState<
   PlayCountByArtistReportInterface[]
@@ -35,7 +35,7 @@ export default class PlayCountByArtistState extends UserSunBurstReportBaseState<
 
   updateWithResponse(
     response: unknown,
-    params: LastFMClientParamsInterface,
+    params: LastFMReportClientParamsInterface,
     url: keyof PlayCountByArtistState["transformations"]
   ) {
     if (!this.transformations.hasOwnProperty(url)) this.throwError();
@@ -48,13 +48,13 @@ export default class PlayCountByArtistState extends UserSunBurstReportBaseState<
     transformation.transform();
   }
 
-  removeEntity(params: LastFMClientParamsInterface): void {
+  removeEntity(params: LastFMReportClientParamsInterface): void {
     const transformation = new Transformation5(this, params, {});
     transformation.transform();
   }
 
   getNextStep(
-    params: LastFMClientParamsInterface
+    params: LastFMReportClientParamsInterface
   ): AggregateReportOperationType | undefined {
     for (const nextStep of this.sequence) {
       const operation = new nextStep(this, params).getStep();

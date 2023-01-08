@@ -1,8 +1,8 @@
 import UserSunBurstReportBaseState from "../user.state.base.sunburst.report.class";
 import { InitialState } from "@src/providers/user/user.initial";
-import type { LastFMClientParamsInterface } from "@src/types/clients/api/lastfm/request.types";
-import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
-import type { AggregateBaseReportResponseInterface } from "@src/types/integrations/base.types";
+import type { LastFMReportClientParamsInterface } from "@src/types/clients/api/lastfm/report.client.types";
+import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
 import type { LastFMUserStatePlayCountByArtistReport } from "@src/types/user/state.types";
 
 class ConcreteUserSunBurstReportBaseState extends UserSunBurstReportBaseState<
@@ -12,7 +12,7 @@ class ConcreteUserSunBurstReportBaseState extends UserSunBurstReportBaseState<
 
   updateWithResponse(
     response: unknown,
-    params: LastFMClientParamsInterface,
+    params: LastFMReportClientParamsInterface,
     url: string
   ) {
     mockUpdate(response, url, params);
@@ -25,11 +25,11 @@ class ConcreteUserSunBurstReportBaseState extends UserSunBurstReportBaseState<
     >;
   }
 
-  getNextStep(params: LastFMClientParamsInterface): void {
+  getNextStep(params: LastFMReportClientParamsInterface): void {
     mockNextStep(params);
   }
 
-  removeEntity(params: LastFMClientParamsInterface): void {
+  removeEntity(params: LastFMReportClientParamsInterface): void {
     mockRemove(params);
   }
 }

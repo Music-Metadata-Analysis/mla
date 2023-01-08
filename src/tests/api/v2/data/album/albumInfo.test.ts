@@ -13,13 +13,13 @@ import type {
   MockAPIEndpointResponseType,
 } from "@src/backend/api/exports/types/mocks";
 import type { ApiEndpointRequestQueryParamType } from "@src/backend/api/exports/types/requests";
-import type { APIClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
 
 const endpointUnderTest = apiRoutes.v2.data.artists.albumsGet;
 
 type ArrangeArgs = {
   query: ApiEndpointRequestQueryParamType;
-  method: APIClientHttpMethodType;
+  method: HttpApiClientHttpMethodType;
 };
 
 describe(endpointUnderTest, () => {
@@ -32,7 +32,7 @@ describe(endpointUnderTest, () => {
     userplaycount: { performing: "some query" },
   };
   let query: ApiEndpointRequestQueryParamType;
-  let method: APIClientHttpMethodType;
+  let method: HttpApiClientHttpMethodType;
 
   beforeEach(() => {
     jest.clearAllMocks();

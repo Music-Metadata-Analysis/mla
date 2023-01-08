@@ -1,12 +1,12 @@
-import LastFMBaseClient from "@src/clients/api/lastfm/lastfm.api.client.base.class";
+import LastFMReportBaseClient from "@src/clients/api/lastfm/lastfm.api.client.base.class";
 import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { EventCreatorType } from "@src/types/analytics.types";
-import type { LastFMReportParamsInterface } from "@src/types/clients/api/lastfm/request.types";
+import type { LastFMReportClientParamsInterface } from "@src/types/clients/api/lastfm/report.client.types";
 import type { userDispatchType } from "@src/types/user/context.types";
 abstract class LastFMBaseSunBurstDataPointClient<
   ReportType,
   ResponseType
-> extends LastFMBaseClient<ResponseType> {
+> extends LastFMReportBaseClient<ResponseType> {
   protected encapsulatedState: UserSunBurstReportBaseState<ReportType>;
 
   constructor(
@@ -26,7 +26,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
     return this.encapsulatedState.getDispatchState();
   }
 
-  protected updateReport(params: LastFMReportParamsInterface) {
+  protected updateReport(params: LastFMReportClientParamsInterface) {
     this.encapsulatedState.updateWithResponse(
       this.response.response,
       params,
@@ -34,13 +34,13 @@ abstract class LastFMBaseSunBurstDataPointClient<
     );
   }
 
-  protected isInitialParams(params: LastFMReportParamsInterface) {
+  protected isInitialParams(params: LastFMReportClientParamsInterface) {
     return (
       JSON.stringify(params) === JSON.stringify({ userName: params.userName })
     );
   }
 
-  protected handleBegin(params: LastFMReportParamsInterface): void {
+  protected handleBegin(params: LastFMReportClientParamsInterface): void {
     if (this.isInitialParams(params)) {
       this.dispatch({
         type: "StartFetch",
@@ -54,7 +54,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
     }
   }
 
-  protected handleFailure(params: LastFMReportParamsInterface) {
+  protected handleFailure(params: LastFMReportClientParamsInterface) {
     if (this.isInitialParams(params)) {
       super.handleFailure(params);
     } else {
@@ -67,7 +67,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
     }
   }
 
-  protected handleNotFound(params: LastFMReportParamsInterface): void {
+  protected handleNotFound(params: LastFMReportClientParamsInterface): void {
     if (this.response.status === 404) {
       if (this.isInitialParams(params)) {
         super.handleNotFound(params);
@@ -82,7 +82,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
     }
   }
 
-  protected handleTimeout(params: LastFMReportParamsInterface): void {
+  protected handleTimeout(params: LastFMReportClientParamsInterface): void {
     if (this.response.status === 503) {
       const backOff = parseInt(this.response?.headers["retry-after"]);
       if (!isNaN(backOff)) {
@@ -97,7 +97,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
     }
   }
 
-  protected handleSuccessful(params: LastFMReportParamsInterface): void {
+  protected handleSuccessful(params: LastFMReportClientParamsInterface): void {
     if (this.response.status === 200) {
       this.updateReport(params);
       if (this.isComplete()) {

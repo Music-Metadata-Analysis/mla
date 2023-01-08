@@ -1,7 +1,7 @@
 import CheerioArtistImageScraper from "./artist.image.scraper/cheerio";
-import type { LastFMvendorInterface } from "@src/backend/api/types/integrations/lastfm/vendor.types";
+import type { LastFMVendorInterface } from "@src/backend/api/types/integrations/lastfm/vendor.types";
 
-const lastFMvendor: LastFMvendorInterface = {
+const lastFMvendor: LastFMVendorInterface = {
   ArtistImageScraper: CheerioArtistImageScraper,
 };
 

@@ -1,24 +1,26 @@
-import HTTPClient from "../api.client.class";
+import HTTPClient from "../http/http.client.class";
 import EventDefinition from "@src/events/event.class";
-import type { APIClientResponse } from "@src/contracts/api/exports/types/client";
 import type {
   EventCreatorType,
   IntegrationRequestType,
 } from "@src/types/analytics.types";
+import type { HttpApiClientResponse } from "@src/types/clients/api/http.types";
 import type {
-  LastFMReportInterface,
-  LastFMReportParamsInterface,
-} from "@src/types/clients/api/lastfm/request.types";
-import type { BaseReportResponseInterface } from "@src/types/integrations/base.types";
+  LastFMReportClientInterface,
+  LastFMReportClientParamsInterface,
+} from "@src/types/clients/api/lastfm/report.client.types";
+import type { BaseReportResponseInterface } from "@src/types/reports/lastfm/states/generic.types";
 import type { userDispatchType } from "@src/types/user/context.types";
 
-abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
+abstract class LastFMReportBaseClient<ResponseType>
+  implements LastFMReportClientInterface
+{
   protected client: HTTPClient;
   protected dispatch: userDispatchType;
   protected eventDispatch: EventCreatorType;
   protected eventType = "BASE" as IntegrationRequestType;
   protected integration = "LAST.FM" as const;
-  protected response!: APIClientResponse<ResponseType>;
+  protected response!: HttpApiClientResponse<ResponseType>;
   protected abstract route: string;
   protected invalidRetryHeaderError =
     "TimeoutFetch, with invalid retry header.";
@@ -29,7 +31,7 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
     this.client = new HTTPClient();
   }
 
-  retrieveReport(params: LastFMReportParamsInterface): void {
+  retrieveReport(params: LastFMReportClientParamsInterface): void {
     this.handleBegin(params);
     this.request(params);
   }
@@ -38,7 +40,7 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
     return this.route;
   }
 
-  protected handleBegin(params: LastFMReportParamsInterface): void {
+  protected handleBegin(params: LastFMReportClientParamsInterface): void {
     this.eventDispatch(
       new EventDefinition({
         category: "LAST.FM",
@@ -53,7 +55,7 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
     });
   }
 
-  protected handleNotFound(params: LastFMReportParamsInterface): void {
+  protected handleNotFound(params: LastFMReportClientParamsInterface): void {
     if (this.response.status === 404) {
       this.dispatch({
         type: "NotFoundFetch",
@@ -70,7 +72,7 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
     }
   }
 
-  protected handleSuccessful(params: LastFMReportParamsInterface): void {
+  protected handleSuccessful(params: LastFMReportClientParamsInterface): void {
     if (this.response.status === 200) {
       this.dispatch({
         type: "SuccessFetch",
@@ -88,7 +90,7 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
     }
   }
 
-  protected handleRatelimited(params: LastFMReportParamsInterface): void {
+  protected handleRatelimited(params: LastFMReportClientParamsInterface): void {
     if (this.response.status === 429) {
       this.dispatch({
         type: "RatelimitedFetch",
@@ -105,7 +107,7 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
     }
   }
 
-  protected handleTimeout(params: LastFMReportParamsInterface): void {
+  protected handleTimeout(params: LastFMReportClientParamsInterface): void {
     if (this.response.status === 503) {
       const backOff = parseInt(this.response?.headers["retry-after"]);
       if (!isNaN(backOff)) {
@@ -122,7 +124,9 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
     }
   }
 
-  protected handleUnauthorized(params: LastFMReportParamsInterface): void {
+  protected handleUnauthorized(
+    params: LastFMReportClientParamsInterface
+  ): void {
     if (this.response.status === 401) {
       this.dispatch({
         type: "UnauthorizedFetch",
@@ -139,7 +143,7 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
     }
   }
 
-  protected handleFailure(params: LastFMReportParamsInterface): void {
+  protected handleFailure(params: LastFMReportClientParamsInterface): void {
     this.dispatch({
       type: "FailureFetch",
       userName: params.userName,
@@ -154,7 +158,7 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
     );
   }
 
-  protected attachParamsToUrl(params: LastFMReportParamsInterface) {
+  protected attachParamsToUrl(params: LastFMReportClientParamsInterface) {
     let customizedRoute = this.route;
     for (const [key, value] of Object.entries(params)) {
       customizedRoute = customizedRoute.replace(
@@ -171,7 +175,7 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
     return customizedRoute;
   }
 
-  protected request(params: LastFMReportParamsInterface): void {
+  protected request(params: LastFMReportClientParamsInterface): void {
     const url = this.attachParamsToUrl(params);
     this.client
       .request<ResponseType>(url)
@@ -206,4 +210,4 @@ abstract class LastFMBaseClient<ResponseType> implements LastFMReportInterface {
   }
 }
 
-export default LastFMBaseClient;
+export default LastFMReportBaseClient;

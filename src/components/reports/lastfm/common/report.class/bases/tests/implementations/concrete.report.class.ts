@@ -2,8 +2,8 @@ import AbstractReportClass from "../../report.base.class";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import routes from "@src/config/routes";
 import UserState from "@src/providers/user/encapsulations/lastfm/user.state.base.class";
-import type { LastFMReportInterface } from "@src/types/clients/api/lastfm/data.report.types";
 import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { LastFMReportStateQueryInterface } from "@src/types/reports/lastfm/states/queries/base.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 export class MockUserStateEncapsulation extends UserState {
@@ -23,7 +23,7 @@ export class MockBaseReportClass
     Record<string, never>
   >
   implements
-    LastFMReportInterface<
+    LastFMReportStateQueryInterface<
       UserState,
       UserState["userProperties"],
       Record<string, never>

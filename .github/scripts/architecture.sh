@@ -77,6 +77,18 @@ main() {
     excludes 'from "@src/contracts/api/exports'   || 
     (echo "CONTRACTS elements should not be imported unless deliberately exported." && false)
 
+  # Enforce WEB Component Isolation (No imports into WEB except from designated points.)
+  echo "  Checking Imports into the WEB Component..."
+  ! search 'from "(@src/contracts/.+|@src/backend/.+)' src      | 
+    excludes "^src/backend/"                                    |
+    excludes "^src/config/"                                     |
+    excludes "^src/contracts/"                                  |
+    excludes "^src/pages/"                                      |
+    excludes "^src/tests/api/"                                  |
+    excludes "^src/types/clients/api"                           |
+    excludes "^src/types/reports/"                              ||
+    (echo "WEB should not be importing directly from external components." && false)
+
   echo "Framework Decoupling..."
 
   # Enforce Analytics Framework Isolation

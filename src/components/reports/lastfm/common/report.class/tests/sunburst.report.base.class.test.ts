@@ -10,13 +10,16 @@ import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst
 import PlayCountByArtistState from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import type SunBurstBaseReport from "../sunburst.report.base.class";
 import type { BillBoardProgressBarDetails } from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
-import type { LastFMSunBurstDrawerInterface } from "@src/types/clients/api/lastfm/drawer.component.types";
-import type { PlayCountByArtistReportInterface } from "@src/types/clients/api/lastfm/response.types";
 import type {
   AggregateBaseReportResponseInterface,
   AggregateReportOperationType,
-} from "@src/types/integrations/base.types";
-import type { d3Node, SunBurstData } from "@src/types/reports/sunburst.types";
+} from "@src/types/reports/generics/aggregate.types";
+import type {
+  d3Node,
+  SunBurstData,
+} from "@src/types/reports/generics/sunburst.types";
+import type { LastFMSunBurstDrawerInterface } from "@src/types/reports/lastfm/components/drawers/sunburst.types";
+import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 import type { FC } from "react";
 

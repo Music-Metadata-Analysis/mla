@@ -2,7 +2,7 @@ import PlayCountByArtistNodeEncapsulation from "../playcount.artists.node.class"
 import sunburstTranslations from "@locales/sunburst.json";
 import SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import type { d3Node } from "@src/types/reports/sunburst.types";
+import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
 jest.mock("@src/utils/strings");
 

@@ -1,6 +1,6 @@
 export type {
-  APIClientInterface,
-  APIClientResponse,
-  APIClientHttpMethodType,
-  APIClientStatusMessageType,
-} from "../../types/client.types";
+  HttpApiClientInterface,
+  HttpApiClientResponse,
+  HttpApiClientHttpMethodType,
+  HttpApiClientStatusMessageType,
+} from "../../types/clients/http.client.types";

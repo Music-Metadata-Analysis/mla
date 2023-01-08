@@ -4,7 +4,7 @@ import settings from "@src/config/flip.card";
 import useAnalytics from "@src/hooks/analytics.hook";
 import useLocale from "@src/hooks/locale.hook";
 import type FlipCardReportStateBase from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type { LastFMFlipCardDrawerInterface } from "@src/types/clients/api/lastfm/drawer.component.types";
+import type { LastFMFlipCardDrawerInterface } from "@src/types/reports/lastfm/components/drawers/flip.card.types";
 
 export default function FlipCardDrawerContainer<
   ReportStateType extends FlipCardReportStateBase

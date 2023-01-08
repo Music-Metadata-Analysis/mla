@@ -11,13 +11,13 @@ import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,
 } from "@src/backend/api/exports/types/mocks";
-import type { APIClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
 
 const endpointUnderTest = apiRoutes.v2.reports.lastfm.top20artists;
 
 type ArrangeArgs = {
   username: string;
-  method: APIClientHttpMethodType;
+  method: HttpApiClientHttpMethodType;
 };
 
 describe(endpointUnderTest, () => {
@@ -28,7 +28,7 @@ describe(endpointUnderTest, () => {
     image: [],
   };
   let username: string;
-  let method: APIClientHttpMethodType;
+  let method: HttpApiClientHttpMethodType;
 
   beforeEach(() => {
     jest.clearAllMocks();

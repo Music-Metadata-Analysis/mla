@@ -3,7 +3,7 @@ import {
   MockDrawerComponent,
   MockUserStateEncapsulation,
 } from "./implementations/concrete.report.class";
-import LastFMReportAbstractBaseClass from "../report.base.class";
+import LastFMReportQueryAbstractBaseClass from "../report.base.class";
 import routes from "@src/config/routes";
 import mockLastFmHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import { InitialState } from "@src/providers/user/user.initial";
@@ -11,8 +11,8 @@ import type UserState from "@src/providers/user/encapsulations/lastfm/user.state
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
 import type { FC } from "react";
 
-describe(LastFMReportAbstractBaseClass.name, () => {
-  let instance: LastFMReportAbstractBaseClass<
+describe(LastFMReportQueryAbstractBaseClass.name, () => {
+  let instance: LastFMReportQueryAbstractBaseClass<
     UserState,
     UserState["userProperties"],
     Record<string, never>
