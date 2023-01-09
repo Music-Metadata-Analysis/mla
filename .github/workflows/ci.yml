@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Architecture Enforcement -- Checkout Repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Architecture Enforcement -- Setup Node
         uses: actions/setup-node@v3
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build -- Setup Environment
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Build -- Setup Node
         uses: actions/setup-node@v3
@@ -93,7 +93,7 @@ jobs:
     steps:
       - name: Deploy Production -- Checkout Repository
         if: github.ref == 'refs/heads/production'
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Deploy Production -- Setup Node
         uses: actions/setup-node@v3
@@ -147,7 +147,7 @@ jobs:
     steps:
       - name: Deploy Stage -- Checkout Repository
         if: github.ref == 'refs/heads/master'
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Deploy Stage -- Setup Node
         uses: actions/setup-node@v3
@@ -191,7 +191,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Lint -- Checkout Repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Lint -- Setup Node
         uses: actions/setup-node@v3
@@ -222,7 +222,7 @@ jobs:
 
     steps:
       - name: Security Test -- Checkout Repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Security Test -- Setup Node
         uses: actions/setup-node@v3
@@ -256,7 +256,7 @@ jobs:
 
     steps:
       - name: Shellcheck -- Checkout Repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Shellcheck -- Setup Environment
         run: |
@@ -280,7 +280,7 @@ jobs:
     steps:
       - name: Smoke Test Production -- Checkout Repository
         if: github.ref == 'refs/heads/production'
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Smoke Test Production -- Setup Node
         uses: actions/setup-node@v3
@@ -331,7 +331,7 @@ jobs:
 
     steps:
       - name: Smoke Test Development -- Checkout Repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Smoke Test Development -- Setup Node
         uses: actions/setup-node@v3
@@ -383,7 +383,7 @@ jobs:
     steps:
       - name: Smoke Test Stage -- Checkout Repository
         if: github.ref == 'refs/heads/master'
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Smoke Test Stage -- Setup Node
         uses: actions/setup-node@v3
@@ -434,7 +434,7 @@ jobs:
 
     steps:
       - name: Start -- Checkout Repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Start -- Setup Environment
         run: |
@@ -469,7 +469,7 @@ jobs:
 
     steps:
       - name: Success -- Checkout Repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Success -- Setup Environment
         run: |
@@ -491,7 +491,7 @@ jobs:
 
     steps:
       - name: Type Validation -- Checkout Repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Type Validation -- Setup Node
         uses: actions/setup-node@v3
@@ -526,12 +526,12 @@ jobs:
 
     steps:
       - name: Workflow Lint -- Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Workflow Lint -- Checkout Repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Workflow Lint -- Setup Environment
         run: |
