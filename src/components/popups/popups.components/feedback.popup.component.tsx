@@ -6,7 +6,7 @@ import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import externalLinks from "@src/config/external";
 import useColour from "@src/hooks/ui/colour.hook";
-import type { PopUpComponentProps } from "@src/types/controllers/popups/component.popups.types";
+import type { PopUpComponentProps } from "@src/vendors/types/integrations/ui.framework/popups/popups.component.types";
 
 export default function FeedbackDialogue({
   message,

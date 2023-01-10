@@ -1,7 +1,7 @@
-import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 
 const useColourMode = () => {
-  const colourModeHook = uiFrameworkVendor.colourModeHook();
+  const colourModeHook = uiFrameworkVendor.core.colourModeHook();
   return colourModeHook;
 };
 

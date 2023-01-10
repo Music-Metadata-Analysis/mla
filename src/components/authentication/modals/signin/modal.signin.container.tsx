@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import AuthenticationSignInModal from "../signin/modal.signin.component";
 import useLocale from "@src/hooks/locale.hook";
-import type { AuthVendorServiceType } from "@src/types/clients/auth/vendor.types";
+import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 
 export interface AuthenticationSignInModalContainerProps {
   handleSignIn: (provider: AuthVendorServiceType) => void;

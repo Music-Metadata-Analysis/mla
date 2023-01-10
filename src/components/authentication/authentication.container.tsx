@@ -7,7 +7,7 @@ import useAnalytics from "@src/hooks/analytics.hook";
 import useAuth from "@src/hooks/auth.hook";
 import useRouter from "@src/hooks/router.hook";
 import useToggle from "@src/hooks/utility/toggle.hook";
-import type { AuthVendorServiceType } from "@src/types/clients/auth/vendor.types";
+import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 
 export interface AuthenticationProps {
   onModalClose?: () => void;

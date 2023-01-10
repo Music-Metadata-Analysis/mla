@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import webFrameworkVendor from "@src/clients/web.framework/vendor";
+import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 
 export const Icon = styled(webFrameworkVendor.ImageShim)`
   border-radius: 50%;

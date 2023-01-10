@@ -1,9 +1,9 @@
 import { useEffect, useContext, useState } from "react";
 import useRouter from "./router.hook";
-import analyticsVendor from "@src/clients/analytics/vendor";
-import EventDefinition from "@src/events/event.class";
+import EventDefinition from "@src/contracts/events/event.class";
 import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
 import { isProduction, isTest } from "@src/utils/env";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import type {
   ButtonClickHandlerType,
   LinkClickHandlerType,

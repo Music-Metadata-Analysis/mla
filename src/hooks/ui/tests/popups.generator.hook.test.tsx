@@ -2,10 +2,11 @@ import { renderHook } from "@testing-library/react-hooks";
 import mockHookValues from "../__mocks__/popups.generator.hook.mock";
 import usePopUpsGenerator from "../popups.generator.hook";
 import { createSimpleComponent } from "@fixtures/react/simple";
-import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
-import type { UIVendorCreatePopUpHookInterface } from "@src/types/clients/ui.framework/vendor.types";
+import { mockPopUpCreatorHook } from "@src/vendors/integrations/ui.framework/__mocks__/vendor.mock";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
+import type { UIVendorCreatePopUpHookInterface } from "@src/vendors/types/integrations/ui.framework/vendor.types";
 
-jest.mock("@src/clients/ui.framework/vendor");
+jest.mock("@src/vendors/integrations/ui.framework/vendor");
 
 describe("usePopUpsGenerator", () => {
   let received: ReturnType<typeof arrange>;
@@ -31,17 +32,17 @@ describe("usePopUpsGenerator", () => {
       received = arrange();
     });
 
-    it("should return null", () => {
-      expect(received.result.current).toBeNull();
+    it("should contain all the same properties as the mock hook", () => {
+      expect(received.result.current).toBe(mockHookValues);
     });
 
     it("should call the underlying vendor hook when generating the popup", () => {
-      expect(uiFrameworkVendor.createPopUpHook).toBeCalledTimes(1);
-      expect(uiFrameworkVendor.createPopUpHook).toBeCalledWith(mockProps);
+      expect(uiFrameworkVendor.popups.creatorHook).toBeCalledTimes(1);
+      expect(uiFrameworkVendor.popups.creatorHook).toBeCalledWith(mockProps);
     });
 
     it("should return the vendor hook", () => {
-      expect(received.result.current).toBe(mockHookValues);
+      expect(received.result.current).toBe(mockPopUpCreatorHook);
     });
   });
 });

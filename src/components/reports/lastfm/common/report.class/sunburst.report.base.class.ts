@@ -3,7 +3,6 @@ import SunBurstStateToChartDataTranslator from "@src/components/reports/lastfm/c
 import type translations from "@locales/lastfm.json";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
 import type {
   d3Node,
@@ -12,6 +11,7 @@ import type {
 import type { LastFMSunBurstDrawerInterface } from "@src/types/reports/lastfm/components/drawers/sunburst.types";
 import type { SunBurstReportStateQueryInterface } from "@src/types/reports/lastfm/states/queries/sunburst.types";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { FC } from "react";
 
 type AggregateReportContent = {

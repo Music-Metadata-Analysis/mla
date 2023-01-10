@@ -27,6 +27,10 @@ TYPE_DEFINITION_WHITELIST_REGEX="tContentType|tFunctionType"
 UI_FRAMEWORK_WHITELIST_REGEX="src/pages/_document\.tsx|src/tests/_document.*\.test\.tsx"
 WEB_FRAMEWORK_WHITELIST_REGEX="_app.tsx|_document.tsx|src/tests/_app.page.components.test.tsx|src/tests/_document.page.components.test.tsx"
 
+allows() {
+  excludes "$1"
+}
+
 error_decoupling() {
   (echo "** $1 framework usage is not decoupled." && false)
 }
@@ -37,6 +41,10 @@ error_naming_convention() {
 
 error_type_imports() {
   (echo "** Type import violation." && false)
+}
+
+error_restricted() {
+  (echo "This component has a restricted set of dependencies." && false)
 }
 
 
@@ -53,9 +61,8 @@ search() {
 }
 
 excludes_vendor_locations() {
-  excludes "src/clients/$1|src/backend/api/integrations/$1" 
+  excludes "src/clients/$1|src/backend/api/integrations/$1|src/vendors/integrations/$1" 
 }
-
 
 main() {
 
@@ -64,11 +71,37 @@ main() {
   echo "Component Decoupling ..."
 
   # Enforce API Component Isolation (No imports from API unless deliberately exported.)
-  echo "  Checking Imports from the API Component..."
+  echo "  Checking Imports from the BACKEND/API Component..."
   ! search 'from "@src/backend/api/.+' src        | 
     excludes "^src/backend/api/"                  |
     excludes 'from "@src/backend/api/exports'     || 
     (echo "API elements should not be imported unless deliberately exported." && false)
+
+  echo "  Checking Imports into the BACKEND/API Component..."
+  ! search 'from "@src/.+' src/backend/api      | 
+    allows 'from "@src/backend/api/.+'          |
+    allows 'from "@src/__mocks__/.+'            |    
+    allows 'from "@src/contracts/.+'            |
+    allows 'from "@src/types/.+'                | # Generic Types Can Be Used
+    allows 'from "@src/utils/.+'                |
+    allows 'from "@src/__mocks__/.+'            |    
+    allows 'from "@src/config/.+'               ||
+    error_restricted
+
+  echo "  Checking Imports into the CONTRACTS Component..."
+  ! search 'from "@src/.+' src/contracts        | 
+    allows 'from "@src/contracts/.+'            ||
+    error_restricted
+
+  echo "  Checking Imports into the VENDORS Component..."
+  ! search 'from "@src/.+' src/vendors          | 
+    allows 'from "@src/vendors/.+'              |
+    allows 'from "@src/config/.+'               |
+    allows 'from "@src/contracts/.+'            |    
+    allows 'from "@src/hooks/.+'                |   # Add to UTILITIES component   
+    allows 'from "@src/tests/.+'                |   # Create a FIXTURES component
+    allows 'from "@src/utils/.+'                ||
+    error_restricted
 
   # Enforce Contracts Component Isolation (No imports from Contracts unless deliberately exported.)
   echo "  Checking Imports from the CONTRACTS Component..."
@@ -78,13 +111,14 @@ main() {
     (echo "CONTRACTS elements should not be imported unless deliberately exported." && false)
 
   # Enforce WEB Component Isolation (No imports into WEB except from designated points.)
-  echo "  Checking Imports into the WEB Component..."
-  ! search 'from "(@src/contracts/.+|@src/backend/.+)' src      | 
+  echo "  Checking Imports into the FRONTEND/WEB Component..."
+  ! search 'from "(@src/contracts/api.+|@src/backend/.+)' src      | 
     excludes "^src/backend/"                                    |
     excludes "^src/config/"                                     |
     excludes "^src/contracts/"                                  |
     excludes "^src/pages/"                                      |
     excludes "^src/tests/api/"                                  |
+    excludes "^src/tests/_app\..+"                              |
     excludes "^src/types/clients/api"                           |
     excludes "^src/types/reports/"                              ||
     (echo "WEB should not be importing directly from external components." && false)

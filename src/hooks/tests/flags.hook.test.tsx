@@ -2,9 +2,9 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/flags.hook.mock";
 import useFlags from "../flags.hook";
-import flagVendor from "@src/clients/flags/vendor";
+import { flagVendor } from "@src/vendors/integrations/flags/vendor";
 
-jest.mock("@src/clients/flags/vendor");
+jest.mock("@src/vendors/integrations/flags/vendor");
 
 describe("useFlags", () => {
   let received: ReturnType<typeof arrange>;

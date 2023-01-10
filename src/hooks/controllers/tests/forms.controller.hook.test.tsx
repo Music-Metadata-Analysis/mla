@@ -2,9 +2,9 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/forms.controller.hook.mock";
 import useFormsController from "../forms.controller.hook";
-import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 
-jest.mock("@src/clients/ui.framework/vendor");
+jest.mock("@src/vendors/integrations/ui.framework/vendor");
 
 describe("useFormsController", () => {
   let received: ReturnType<typeof arrange>;
@@ -31,8 +31,8 @@ describe("useFormsController", () => {
     });
 
     it("should call the underlying vendor hook during render", () => {
-      expect(uiFrameworkVendor.formHook).toBeCalledTimes(1);
-      expect(uiFrameworkVendor.formHook).toBeCalledWith();
+      expect(uiFrameworkVendor.core.formHook).toBeCalledTimes(1);
+      expect(uiFrameworkVendor.core.formHook).toBeCalledWith();
     });
 
     it("should return the vendor hook", () => {

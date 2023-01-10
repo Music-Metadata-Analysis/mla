@@ -1,6 +1,6 @@
 import SunBurstDataClientBase from "../sunburst.client.base.class";
 import apiRoutes from "@src/config/apiRoutes";
-import EventDefinition from "@src/events/event.class";
+import EventDefinition from "@src/contracts/events/event.class";
 import InitialState from "@src/providers/user/user.initial";
 
 const mockDataPointClasses = [jest.fn(), jest.fn()];

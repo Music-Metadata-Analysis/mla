@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import ControllerRootProvider from "../controllers.root.provider";
 import ImagesControllerProvider from "../images/images.provider";
 import NavBarControllerProvider from "../navbar/navbar.provider";
-import PopUpsControllerProvider from "../popups/popups.provider";
 import ScrollBarsControllerProvider from "../scrollbars/scrollbars.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
@@ -12,10 +11,6 @@ jest.mock("../images/images.provider", () =>
 
 jest.mock("../navbar/navbar.provider", () =>
   require("@fixtures/react/parent").createComponent("NavBarControllerProvider")
-);
-
-jest.mock("../popups/popups.provider", () =>
-  require("@fixtures/react/parent").createComponent("PopUpsControllerProvider")
 );
 
 jest.mock("../scrollbars/scrollbars.provider", () =>
@@ -50,11 +45,6 @@ describe("UserInterfaceRootProvider", () => {
     it("should call NavBarControllerProvider with the correct props", () => {
       expect(NavBarControllerProvider).toBeCalledTimes(1);
       checkMockCall(NavBarControllerProvider, {});
-    });
-
-    it("should call PopUpsControllerProvider with the correct props", () => {
-      expect(PopUpsControllerProvider).toBeCalledTimes(1);
-      checkMockCall(PopUpsControllerProvider, {});
     });
 
     it("should call ScrollBarsControllerProvider with the correct props", () => {

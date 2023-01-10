@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import AnalyticsGenericWrapper from "../analytics.generic.component";
 import AnalyticsGenericWrapperContainer from "../analytics.generic.container";
-import Event from "@src/events/event.class";
+import Event from "@src/contracts/events/event.class";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/analytics.hook");

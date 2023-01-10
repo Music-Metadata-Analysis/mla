@@ -1,8 +1,4 @@
 import { render } from "@testing-library/react";
-import {
-  mockServerSideProps,
-  mockUtilities,
-} from "@src/clients/web.framework/__mocks__/vendor.ssr.mock";
 import ReportPage from "@src/components/reports/lastfm/common/report.page/report.page";
 import Top20TracksReport from "@src/components/reports/lastfm/top20.tracks/top20.tracks.container";
 import routes from "@src/config/routes";
@@ -11,8 +7,12 @@ import Page, {
   getServerSideProps,
 } from "@src/pages/reports/lastfm/top20tracks";
 import mockCheckCall from "@src/tests/fixtures/mock.component.call";
+import {
+  mockServerSideProps,
+  mockUtilities,
+} from "@src/vendors/integrations/web.framework/__mocks__/vendor.ssr.mock";
 
-jest.mock("@src/clients/web.framework/vendor.ssr");
+jest.mock("@src/vendors/integrations/web.framework/vendor.ssr");
 
 jest.mock("@src/components/reports/lastfm/common/report.page/report.page", () =>
   require("@fixtures/react/parent").createComponent("ReportPage")

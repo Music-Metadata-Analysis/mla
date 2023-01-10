@@ -3,20 +3,21 @@ import ControllersRootProvider from "../controllers/controllers.root.provider";
 import MetricsProvider from "../metrics/metrics.provider";
 import RootProvider from "../root.provider";
 import UserProvider from "../user/user.provider";
-import authVendor from "@src/clients/auth/vendor";
-import flagVendor from "@src/clients/flags/vendor";
-import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
 import HeaderContainer from "@src/components/header/header.container";
+import { popUps } from "@src/config/popups";
 import AnalyticsProvider from "@src/providers/analytics/analytics.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import type { AuthVendorStateType } from "@src/types/clients/auth/vendor.types";
-import type { FlagVendorStateInterface } from "@src/types/clients/flags/vendor.types";
+import { mockAuthProvider } from "@src/vendors/integrations/auth/__mocks__/vendor.mock";
+import { flagVendor } from "@src/vendors/integrations/flags/vendor";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
+import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
+import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 
-jest.mock("@src/clients/auth/vendor");
+jest.mock("@src/vendors/integrations/auth/vendor");
 
-jest.mock("@src/clients/flags/vendor");
+jest.mock("@src/vendors/integrations/flags/vendor");
 
-jest.mock("@src/clients/ui.framework/vendor");
+jest.mock("@src/vendors/integrations/ui.framework/vendor");
 
 jest.mock("@src/components/header/header.container", () =>
   require("@fixtures/react/parent").createComponent("HeaderContainer")
@@ -46,6 +47,7 @@ const providers = {
   HeaderContainer: "HeaderContainer",
   MetricsProvider: "MetricsProvider",
   RootProvider: "RootProvider",
+  UserInterfacePopUpsProvider: "UserInterfacePopUpsProvider",
   UserInterfaceVendorProvider: "UserInterfaceVendorProvider",
   UserProvider: "UserProvider",
 };
@@ -123,8 +125,8 @@ describe("RootProvider", () => {
     });
 
     it("should initialize the AuthVendorProvider", async () => {
-      await waitFor(() => expect(authVendor.Provider).toBeCalledTimes(1));
-      checkMockCall(authVendor.Provider, { session: mockSession });
+      await waitFor(() => expect(mockAuthProvider).toBeCalledTimes(1));
+      checkMockCall(mockAuthProvider, { session: mockSession });
       expect(await screen.findByTestId(providers.AuthVendorProvider))
         .toBeTruthy;
     });
@@ -161,11 +163,20 @@ describe("RootProvider", () => {
       expect(await screen.findByTestId(providers.UserProvider)).toBeTruthy;
     });
 
+    it("should initialize the UserInterfacePopUpsProvider", async () => {
+      await waitFor(() =>
+        expect(uiFrameworkVendor.popups.Provider).toBeCalledTimes(1)
+      );
+      checkMockCall(uiFrameworkVendor.popups.Provider, { popUps: popUps });
+      expect(await screen.findByTestId(providers.UserInterfacePopUpsProvider))
+        .toBeTruthy;
+    });
+
     it("should initialize the UserInterfaceVendorProvider", async () => {
       await waitFor(() =>
-        expect(uiFrameworkVendor.Provider).toBeCalledTimes(1)
+        expect(uiFrameworkVendor.core.Provider).toBeCalledTimes(1)
       );
-      checkMockCall(uiFrameworkVendor.Provider, { cookies: mockCookies });
+      checkMockCall(uiFrameworkVendor.core.Provider, { cookies: mockCookies });
       expect(await screen.findByTestId(providers.UserInterfaceVendorProvider))
         .toBeTruthy;
     });

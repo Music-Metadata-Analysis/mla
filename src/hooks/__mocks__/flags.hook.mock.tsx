@@ -1,5 +1,5 @@
-import { mockFlagsHook } from "@src/clients/flags/__mocks__/vendor.mock";
-import type { FlagVendorHookInterface } from "@src/types/clients/flags/vendor.types";
+import { mockFlagsHook } from "@src/vendors/integrations/flags/__mocks__/vendor.mock";
+import type { FlagVendorHookInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 
 const mockValues: Record<keyof FlagVendorHookInterface, jest.Mock> =
   mockFlagsHook;

@@ -4,4 +4,6 @@ const settings = {
   },
 };
 
+export const popUps = ["FeedBack"];
+
 export default settings;

@@ -1,4 +1,4 @@
-import webFrameworkVendor from "@src/clients/web.framework/vendor";
+import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 import type { useState, useReducer } from "react";
 
 export default abstract class PersistentHookAbstractFactory<

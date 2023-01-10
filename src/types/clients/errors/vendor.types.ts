@@ -1,4 +1,4 @@
-import type EventDefinition from "@src/events/event.class";
+import type EventDefinition from "@src/contracts/events/event.class";
 
 interface ErrorVendorErrorBoundaryProps {
   children: JSX.Element | JSX.Element[];

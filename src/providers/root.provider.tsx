@@ -2,15 +2,16 @@ import AnalyticsProvider from "./analytics/analytics.provider";
 import ControllersProvider from "./controllers/controllers.root.provider";
 import MetricsProvider from "./metrics/metrics.provider";
 import UserProvider from "./user/user.provider";
-import authVendor from "@src/clients/auth/vendor";
-import flagVendor from "@src/clients/flags/vendor";
-import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
 import HeaderContainer, {
   HeaderContainerProps,
 } from "@src/components/header/header.container";
-import type { AuthVendorStateType } from "@src/types/clients/auth/vendor.types";
-import type { FlagVendorStateInterface } from "@src/types/clients/flags/vendor.types";
-import type { UIVendorStateType } from "@src/types/clients/ui.framework/vendor.types";
+import { popUps } from "@src/config/popups";
+import { authVendor } from "@src/vendors/integrations/auth/vendor";
+import { flagVendor } from "@src/vendors/integrations/flags/vendor";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
+import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
+import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
+import type { UIVendorStateType } from "@src/vendors/types/integrations/ui.framework/vendor.types";
 
 type RootProviderProps = {
   cookies: UIVendorStateType;
@@ -31,16 +32,18 @@ const RootProvider = ({
     <authVendor.Provider session={session}>
       <flagVendor.Provider state={flagState}>
         <AnalyticsProvider>
-          <uiFrameworkVendor.Provider cookies={cookies}>
-            <ControllersProvider>
-              <MetricsProvider>
-                <UserProvider>
-                  <HeaderContainer pageKey={headerProps.pageKey} />
-                  {children}
-                </UserProvider>
-              </MetricsProvider>
-            </ControllersProvider>
-          </uiFrameworkVendor.Provider>
+          <uiFrameworkVendor.core.Provider cookies={cookies}>
+            <uiFrameworkVendor.popups.Provider popUps={popUps}>
+              <ControllersProvider>
+                <MetricsProvider>
+                  <UserProvider>
+                    <HeaderContainer pageKey={headerProps.pageKey} />
+                    {children}
+                  </UserProvider>
+                </MetricsProvider>
+              </ControllersProvider>
+            </uiFrameworkVendor.popups.Provider>
+          </uiFrameworkVendor.core.Provider>
         </AnalyticsProvider>
       </flagVendor.Provider>
     </authVendor.Provider>

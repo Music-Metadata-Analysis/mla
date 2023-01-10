@@ -7,7 +7,7 @@ import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/clients/web.framework/vendor");
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 jest.mock("../header.component.tsx", () =>
   require("@fixtures/react/child").createComponent("Header")

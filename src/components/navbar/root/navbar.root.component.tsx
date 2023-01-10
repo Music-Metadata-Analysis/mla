@@ -10,7 +10,7 @@ import NavBarSpinner from "../spinner/navbar.spinner.component";
 import useColour from "@src/hooks/ui/colour.hook";
 import type { NavBarControllerHookType } from "../controllers/navbar.layout.controller.hook";
 import type { ButtonClickHandlerType } from "@src/types/analytics.types";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 interface NavBarRootProps {
   analytics: { trackButtonClick: ButtonClickHandlerType };

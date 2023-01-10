@@ -1,5 +1,5 @@
-import flagVendor from "@src/clients/flags/vendor";
-import type { FlagVendorHookInterface } from "@src/types/clients/flags/vendor.types";
+import { flagVendor } from "@src/vendors/integrations/flags/vendor";
+import type { FlagVendorHookInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 
 const useFlags = (): FlagVendorHookInterface => {
   const flagHook = flagVendor.hook();

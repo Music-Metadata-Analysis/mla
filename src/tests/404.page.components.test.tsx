@@ -1,21 +1,21 @@
 import { render } from "@testing-library/react";
-import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
-import {
-  mockStaticProps,
-  mockUtilities,
-} from "@src/clients/web.framework/__mocks__/vendor.ssr.mock";
 import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import Page, { getStaticProps } from "@src/pages/404";
 import mockCheckCall from "@src/tests/fixtures/mock.component.call";
+import { mockIsBuildTime } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
+import {
+  mockStaticProps,
+  mockUtilities,
+} from "@src/vendors/integrations/web.framework/__mocks__/vendor.ssr.mock";
 
 jest.mock("@src/hooks/router.hook");
 
-jest.mock("@src/clients/web.framework/vendor.ssr");
+jest.mock("@src/vendors/integrations/web.framework/vendor.ssr");
 
-jest.mock("@src/clients/web.framework/vendor");
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 jest.mock("@src/components/errors/boundary/error.boundary.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")

@@ -1,6 +1,6 @@
 import SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import { capitalize } from "@src/utils/strings";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 export default class PlayCountByArtistNodeEncapsulation extends SunBurstNodeAbstractBase {
   leafEntity = "tracks" as const;

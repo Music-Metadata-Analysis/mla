@@ -1,5 +1,5 @@
-import authVendor from "@src/clients/auth/vendor";
-import type { AuthVendorHookInterface } from "@src/types/clients/auth/vendor.types";
+import { authVendor } from "@src/vendors/integrations/auth/vendor";
+import type { AuthVendorHookInterface } from "@src/vendors/types/integrations/auth/vendor.types";
 
 const useAuth = (): AuthVendorHookInterface => {
   const authHook = authVendor.hook();

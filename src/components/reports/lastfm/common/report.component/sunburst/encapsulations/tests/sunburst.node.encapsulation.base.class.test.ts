@@ -3,7 +3,7 @@ import MockSunBurstNodeAbstractBase from "./implementations/concrete.sunburst.no
 import Events from "@src/events/events";
 import RGBA from "@src/utils/colours/rgba.class";
 import type SunBurstNodeAbstractBase from "../sunburst.node.encapsulation.base.class";
-import type EventDefinition from "@src/events/event.class";
+import type EventDefinition from "@src/contracts/events/event.class";
 import type {
   d3Node,
   SunBurstData,

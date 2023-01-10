@@ -2,9 +2,9 @@ import { useReducer } from "react";
 import createPersistedReducer from "use-persisted-reducer";
 import PersistentHookAbstractFactory from "../bases/persistent.hook.abstract.factory.class";
 import PersistentReducerFactory from "../persisted.reducer.hook.factory.class";
-import { mockIsSSR } from "@src/clients/web.framework/__mocks__/vendor.mock";
+import { mockIsSSR } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 
-jest.mock("@src/clients/web.framework/vendor");
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 jest.mock("use-persisted-reducer");
 

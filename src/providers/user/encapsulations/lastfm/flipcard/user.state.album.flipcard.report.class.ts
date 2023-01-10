@@ -1,8 +1,8 @@
 import UserFlipCardBaseReportState from "./user.state.base.flipcard.report.class";
 import Events from "@src/events/events";
 import type { LastFMUserArtistInterface } from "@src/types/clients/api/lastfm/response.types";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 export default class UserAlbumState extends UserFlipCardBaseReportState {
   userProperties: LastFMUserStateAlbumReport;

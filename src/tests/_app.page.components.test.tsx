@@ -1,11 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import App from "next/app";
 import { createSimpleComponent } from "@fixtures/react/simple";
-import { mockAuthVendorSSRClient } from "@src/clients/auth/__mocks__/vendor.ssr.mock";
-import authVendorSSR from "@src/clients/auth/vendor.ssr";
-import { mockFlagVendorSSRClient } from "@src/clients/flags/__mocks__/vendor.ssr.mock";
-import flagVendorSSR from "@src/clients/flags/vendor.ssr";
-import { mockLocaleVendorHOCIdentifier } from "@src/clients/locale/__mocks__/vendor.mock";
 import ConsentContainer from "@src/components/consent/consent.container";
 import NavBarContainer from "@src/components/navbar/navbar.container";
 import RootPopUpContainer from "@src/components/popups/root.popup.container";
@@ -14,17 +9,22 @@ import MLA, { getInitialProps, MLAProps } from "@src/pages/_app";
 import RootProvider from "@src/providers/root.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import { normalizeUndefined } from "@src/utils/voids";
-import type { AuthVendorStateType } from "@src/types/clients/auth/vendor.types";
-import type { FlagVendorStateInterface } from "@src/types/clients/flags/vendor.types";
-import type { WebFrameworkVendorAppComponentProps } from "@src/types/clients/web.framework/vendor.types";
+import { mockAuthVendorSSRClient } from "@src/vendors/integrations/auth/__mocks__/vendor.ssr.mock";
+import { authVendorSSR } from "@src/vendors/integrations/auth/vendor.ssr";
+import { mockFlagVendorSSRClient } from "@src/vendors/integrations/flags/__mocks__/vendor.ssr.mock";
+import { flagVendorSSR } from "@src/vendors/integrations/flags/vendor.ssr";
+import { mockLocaleVendorHOCIdentifier } from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
+import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
+import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
+import type { WebFrameworkVendorAppComponentProps } from "@src/vendors/types/integrations/web.framework/vendor.types";
 import type { AppContext } from "next/app";
 import type { Router } from "next/router";
 
-jest.mock("@src/clients/auth/vendor.ssr");
+jest.mock("@src/vendors/integrations/auth/vendor.ssr");
 
-jest.mock("@src/clients/flags/vendor.ssr");
+jest.mock("@src/vendors/integrations/flags/vendor.ssr");
 
-jest.mock("@src/clients/locale/vendor");
+jest.mock("@src/vendors/integrations/locale/vendor");
 
 jest.mock("@src/utils/voids");
 

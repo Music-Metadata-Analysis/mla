@@ -1,5 +1,5 @@
 import HTTPClient from "../http/http.client.class";
-import EventDefinition from "@src/events/event.class";
+import EventDefinition from "@src/contracts/events/event.class";
 import type {
   EventCreatorType,
   IntegrationRequestType,

@@ -1,5 +1,3 @@
-import { mockFormHook } from "@src/clients/ui.framework/__mocks__/vendor.mock";
+import { mockFormHook } from "@src/vendors/integrations/ui.framework/__mocks__/vendor.mock";
 
-const mockValues = mockFormHook;
-
-export default mockValues;
+export default mockFormHook;

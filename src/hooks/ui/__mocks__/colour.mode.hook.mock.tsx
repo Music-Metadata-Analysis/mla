@@ -1,4 +1,4 @@
-import { mockColourModeHook } from "@src/clients/ui.framework/__mocks__/vendor.mock";
+import { mockColourModeHook } from "@src/vendors/integrations/ui.framework/__mocks__/vendor.mock";
 
 const mockValues = mockColourModeHook;
 

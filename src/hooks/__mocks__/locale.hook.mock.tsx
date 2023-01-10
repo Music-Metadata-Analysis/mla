@@ -1,6 +1,8 @@
-import { mockLocaleVendorHook } from "@src/clients/locale/__mocks__/vendor.mock";
-import type { LocaleVendorHookInterface } from "@src/types/clients/locale/vendor.types";
-import type { tContentType } from "@src/types/clients/locale/vendor.types";
+import { mockLocaleVendorHook } from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
+import type {
+  LocaleVendorHookInterface,
+  tContentType,
+} from "@src/vendors/types/integrations/locale/vendor.types";
 
 const mockValues = mockLocaleVendorHook;
 

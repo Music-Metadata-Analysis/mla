@@ -1,6 +1,6 @@
 import NavBarLinkContainer from "../link/navbar.link.container";
 import type { ButtonClickHandlerType } from "@src/types/analytics.types";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 interface NavBarOptionsProps {
   closeMobileMenu: () => void;

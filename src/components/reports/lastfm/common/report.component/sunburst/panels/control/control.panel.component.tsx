@@ -4,8 +4,8 @@ import ButtonWithoutAnalytics from "@src/components/button/button.base/button.ba
 import SunBurstDetailsPanel from "@src/components/reports/lastfm/common/report.component/sunburst/panels/details/details.panel.component";
 import useColour from "@src/hooks/ui/colour.hook";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 export interface SunBurstControlPanelProps {
   setSelectedNode: (node: d3Node) => void;

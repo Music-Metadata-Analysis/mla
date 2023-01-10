@@ -1,18 +1,8 @@
-import { useContext } from "react";
-import { PopUpsControllerContext } from "@src/providers/controllers/popups/popups.provider";
-import type { PopUpComponentNameType } from "@src/types/controllers/popups/popups.state.types";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 
 const usePopUpsController = () => {
-  const popups = useContext(PopUpsControllerContext);
-
-  const showPopUp = (popup: PopUpComponentNameType) => {
-    popups.dispatch({ type: "ShowPopUp", name: popup });
-  };
-
-  return {
-    open: (popup: PopUpComponentNameType) => showPopUp(popup),
-    status: (popup: PopUpComponentNameType) => popups.state[popup].status,
-  };
+  const popUpsControllerHook = uiFrameworkVendor.popups.controllerHook();
+  return popUpsControllerHook;
 };
 
 export default usePopUpsController;

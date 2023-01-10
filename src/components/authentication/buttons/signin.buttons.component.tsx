@@ -5,8 +5,8 @@ import {
 } from "react-social-login-buttons";
 import AnalyticsButtonWrapper from "@src/components/analytics/analytics.button/analytics.button.container";
 import SpotifyLoginButton from "@src/components/button/button.spotify/button.spotify.component";
-import type { AuthVendorServiceType } from "@src/types/clients/auth/vendor.types";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 export interface AuthenticationProviderProps {
   handleSignIn: (provider: AuthVendorServiceType) => void;

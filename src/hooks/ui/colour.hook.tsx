@@ -1,8 +1,8 @@
-import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
-import type { UIVendorColourHookType } from "@src/types/clients/ui.framework/vendor.types";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
+import type { UIVendorColourHookType } from "@src/vendors/types/integrations/ui.framework/vendor.types";
 
 const useColour = (): UIVendorColourHookType => {
-  const colourHook = uiFrameworkVendor.colourHook();
+  const colourHook = uiFrameworkVendor.core.colourHook();
   return colourHook;
 };
 

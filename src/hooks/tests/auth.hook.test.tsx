@@ -2,9 +2,9 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/auth.hook.mock";
 import useAuth from "../auth.hook";
-import authVendor from "@src/clients/auth/vendor";
+import { authVendor } from "@src/vendors/integrations/auth/vendor";
 
-jest.mock("@src/clients/auth/vendor");
+jest.mock("@src/vendors/integrations/auth/vendor");
 
 describe("useAuth", () => {
   let received: ReturnType<typeof arrange>;

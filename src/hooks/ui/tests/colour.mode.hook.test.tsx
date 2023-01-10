@@ -2,9 +2,9 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/colour.mode.hook.mock";
 import useColourMode from "../colour.mode.hook";
-import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 
-jest.mock("@src/clients/ui.framework/vendor");
+jest.mock("@src/vendors/integrations/ui.framework/vendor");
 
 describe("useColourMode", () => {
   let received: ReturnType<typeof arrange>;
@@ -31,8 +31,8 @@ describe("useColourMode", () => {
     });
 
     it("should call the underlying vendor hook during render", () => {
-      expect(uiFrameworkVendor.colourModeHook).toBeCalledTimes(1);
-      expect(uiFrameworkVendor.colourModeHook).toBeCalledWith();
+      expect(uiFrameworkVendor.core.colourModeHook).toBeCalledTimes(1);
+      expect(uiFrameworkVendor.core.colourModeHook).toBeCalledWith();
     });
 
     it("should return the vendor hook", () => {

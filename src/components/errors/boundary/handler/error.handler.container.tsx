@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import useAnalytics from "@src/hooks/analytics.hook";
-import type EventDefinition from "@src/events/event.class";
+import type EventDefinition from "@src/contracts/events/event.class";
 
 export interface ErrorHandlerContainerProps {
   eventDefinition: EventDefinition;

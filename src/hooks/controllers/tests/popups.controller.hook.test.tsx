@@ -2,9 +2,13 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/popups.controller.hook.mock";
 import usePopUpsController from "../popups.controller.hook";
-import { PopUpsControllerContext } from "@src/providers/controllers/popups/popups.provider";
-import type { PopUpsControllerContextInterface } from "@src/types/controllers/popups/popups.context.types";
+import { mockPopUpControllerHook } from "@src/vendors/integrations/ui.framework/__mocks__/vendor.mock";
+import { PopUpsControllerContext } from "@src/vendors/integrations/ui.framework/popups/provider/popups.provider";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
+import type { PopUpsControllerContextInterface } from "@src/vendors/types/integrations/ui.framework/popups/popups.context.types";
 import type { ReactNode } from "react";
+
+jest.mock("@src/vendors/integrations/ui.framework/vendor");
 
 interface MockInterfaceContextWithChildren {
   children?: ReactNode;
@@ -58,30 +62,17 @@ describe("usePopUpsController", () => {
     });
 
     it("should contain the correct functions", () => {
-      expect(received.result.current.open).toBeInstanceOf(Function);
-      expect(received.result.current.status).toBeInstanceOf(Function);
+      expect(typeof received.result.current.open).toBe("function");
+      expect(typeof received.result.current.status).toBe("function");
     });
 
-    describe("when open is called on a pop-up", () => {
-      beforeEach(() => received.result.current.open(mockPopup));
-
-      it("should set the state to open", () => {
-        expect(mockPopUpDispatch).toBeCalledTimes(1);
-        expect(mockPopUpDispatch).toBeCalledWith({
-          name: "FeedBack",
-          type: "ShowPopUp",
-        });
-      });
+    it("should call the underlying vendor hook when generating the popup", () => {
+      expect(uiFrameworkVendor.popups.controllerHook).toBeCalledTimes(1);
+      expect(uiFrameworkVendor.popups.controllerHook).toBeCalledWith();
     });
 
-    describe("when status is called on a pop-up", () => {
-      let result: boolean | null;
-
-      beforeEach(() => (result = received.result.current.status(mockPopup)));
-
-      it("should return the state value", () => {
-        expect(result).toBe(false);
-      });
+    it("should return the vendor hook", () => {
+      expect(received.result.current).toBe(mockPopUpControllerHook);
     });
   });
 });

@@ -2,8 +2,8 @@ import Dialogue from "./dialogue.resizable.component";
 import dialogueSettings from "@src/config/dialogue";
 import useRouter from "@src/hooks/router.hook";
 import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 export interface DialogueContainerProps {
   BodyComponent?: DialogueInlayComponentType;

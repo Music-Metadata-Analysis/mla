@@ -3,7 +3,7 @@ import NavBarAvatar from "../avatar/navbar.avatar.component";
 import NavBarLinkContainer from "../link/navbar.link.container";
 import routes from "@src/config/routes";
 import type { ButtonClickHandlerType } from "@src/types/analytics.types";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 interface NavBarLogoProps {
   closeMobileMenu: () => void;

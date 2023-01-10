@@ -4,7 +4,6 @@ import type SunBurstBaseNodeEncapsulation from "@src/components/reports/lastfm/c
 import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type ReportBaseState from "@src/providers/user/encapsulations/lastfm/user.state.base.class";
 import type { EventCreatorType } from "@src/types/analytics.types";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type {
   d3Node,
   SunBurstData,
@@ -12,6 +11,7 @@ import type {
 import type { LastFMReportStateQueryInterface } from "@src/types/reports/lastfm/states/queries/base.types";
 import type { userDispatchType } from "@src/types/user/context.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 export type SunBurstReportStateQueryConstructor<AggregateReportType> = new (
   dispatch: userDispatchType,

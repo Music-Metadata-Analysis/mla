@@ -1,6 +1,6 @@
 import { ColorModeScript } from "@chakra-ui/react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 
 class BaseDocument extends Document {
   render() {
@@ -9,7 +9,7 @@ class BaseDocument extends Document {
         <Head />
         <body>
           <ColorModeScript
-            initialColorMode={uiFrameworkVendor.config.initialColourMode}
+            initialColorMode={uiFrameworkVendor.core.config.initialColourMode}
           />
           <Main />
           <NextScript />

@@ -1,4 +1,4 @@
-import EventDefinition from "./event.class";
+import EventDefinition from "@src/contracts/events/event.class";
 import type {
   IntegrationRequestType,
   SunBurstEntityTypes,

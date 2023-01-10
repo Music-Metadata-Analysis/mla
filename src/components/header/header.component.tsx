@@ -1,5 +1,5 @@
-import webFrameworkVendor from "@src/clients/web.framework/vendor";
 import settings from "@src/config/head";
+import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 
 export interface HeaderProps {
   titleText: string;

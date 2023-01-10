@@ -4,7 +4,7 @@ import StyledButtonLink from "@src/components/button/button.external.link/button
 import ReportDrawer from "@src/components/reports/common/drawer/drawer.component";
 import settings from "@src/config/flip.card";
 import useColour from "@src/hooks/ui/colour.hook";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 export interface FlipCardDrawerProps {
   artWorkAltTranslatedText: string;

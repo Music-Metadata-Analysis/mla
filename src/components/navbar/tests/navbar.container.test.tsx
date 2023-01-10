@@ -2,9 +2,9 @@ import { render } from "@testing-library/react";
 import mockNavBarLayoutControllerHook from "../controllers/__mocks__/navbar.layout.controller.hook.mock";
 import NavBarContainer from "../navbar.container";
 import NavBarRootContainer from "../root/navbar.root.container";
-import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import NavConfig from "@src/config/navbar";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import { mockIsBuildTime } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 
 jest.mock("@src/hooks/auth.hook");
 
@@ -12,7 +12,7 @@ jest.mock("@src/hooks/lastfm.hook");
 
 jest.mock("../controllers/navbar.layout.controller.hook");
 
-jest.mock("@src/clients/web.framework/vendor");
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 jest.mock("../root/navbar.root.container", () =>
   require("@fixtures/react/child").createComponent(["NavBarRootContainer"])

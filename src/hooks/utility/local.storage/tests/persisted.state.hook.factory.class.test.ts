@@ -2,9 +2,9 @@ import { useState } from "react";
 import PersistentHookAbstractFactory from "../bases/persistent.hook.abstract.factory.class";
 import PersistentStateFactory from "../persisted.state.hook.factory.class";
 import createPersistedState from "../state/state.hook.factory";
-import { mockIsSSR } from "@src/clients/web.framework/__mocks__/vendor.mock";
+import { mockIsSSR } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 
-jest.mock("@src/clients/web.framework/vendor");
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 jest.mock("../state/state.hook.factory");
 

@@ -2,8 +2,8 @@ import type translations from "@locales/lastfm.json";
 import type { ImagesControllerHookType } from "@src/hooks/controllers/images.controller.hook";
 import type ReportBaseState from "@src/providers/user/encapsulations/lastfm/user.state.base.class";
 import type { IntegrationRequestType } from "@src/types/analytics.types";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { FC } from "react";
 
 export interface LastFMReportStateQueryInterface<

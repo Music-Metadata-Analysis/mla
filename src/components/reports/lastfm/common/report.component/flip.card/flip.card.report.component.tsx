@@ -5,7 +5,7 @@ import settings from "@src/config/flip.card";
 import type { FlipCardControllerHookType } from "./controllers/flip.card.controller.hook";
 import type FlipCardBaseReport from "@src/components/reports/lastfm/common/report.class/flip.card.report.base.class";
 import type UserState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 export interface FlipCardReportProps<
   UserStateType extends UserState,

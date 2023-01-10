@@ -1,5 +1,5 @@
 import ErrorHandlerContainer from "@src/components/errors/boundary/handler/error.handler.container";
-import type EventDefinition from "@src/events/event.class";
+import type EventDefinition from "@src/contracts/events/event.class";
 
 export interface CreateErrorHandlerProps {
   eventDefinition: EventDefinition;

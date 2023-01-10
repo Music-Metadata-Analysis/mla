@@ -1,5 +1,5 @@
-import localeVendor from "@src/clients/locale/vendor";
-import type { LocaleVendorHookInterface } from "@src/types/clients/locale/vendor.types";
+import { localeVendor } from "@src/vendors/integrations/locale/vendor";
+import type { LocaleVendorHookInterface } from "@src/vendors/types/integrations/locale/vendor.types";
 
 const useLocale = (ns: string): LocaleVendorHookInterface => {
   const localeVendorHook = localeVendor.hook(ns);

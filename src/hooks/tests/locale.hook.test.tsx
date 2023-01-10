@@ -2,9 +2,9 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/locale.hook.mock";
 import useLocale from "../locale.hook";
-import localeVendor from "@src/clients/locale/vendor";
+import { localeVendor } from "@src/vendors/integrations/locale/vendor";
 
-jest.mock("@src/clients/locale/vendor");
+jest.mock("@src/vendors/integrations/locale/vendor");
 
 describe("useLocale", () => {
   let received: ReturnType<typeof arrange>;

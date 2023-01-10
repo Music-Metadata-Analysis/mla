@@ -1,10 +1,10 @@
 import { waitFor, render } from "@testing-library/react";
 import Header, { HeaderProps } from "../header.component";
-import { mockHeadShim } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import settings from "@src/config/head";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import { mockHeadShim } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 
-jest.mock("@src/clients/web.framework/vendor");
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 describe("Header", () => {
   const currentProps: HeaderProps = {

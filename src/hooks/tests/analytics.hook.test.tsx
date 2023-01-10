@@ -5,17 +5,17 @@ import React from "react";
 import mockHookValues from "../__mocks__/analytics.hook.mock";
 import mockRouterHook from "../__mocks__/router.hook.mock";
 import useAnalytics from "../analytics.hook";
-import { mockGoogleAnalytics } from "@src/clients/analytics/__mocks__/vendor.mock";
-import EventDefinition from "@src/events/event.class";
+import EventDefinition from "@src/contracts/events/event.class";
 import Events from "@src/events/events";
 import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
+import { mockGoogleAnalytics } from "@src/vendors/integrations/analytics/__mocks__/vendor.mock";
 import type { AnalyticsContextInterface } from "@src/types/analytics.types";
 import type { MutableEnv } from "@src/types/process.types";
 import type { MouseEvent, ReactNode } from "react";
 
 jest.mock("@src/hooks/router.hook");
 
-jest.mock("@src/clients/analytics/vendor");
+jest.mock("@src/vendors/integrations/analytics/vendor");
 
 interface MockAnalyticsContextWithChildren {
   children?: ReactNode;

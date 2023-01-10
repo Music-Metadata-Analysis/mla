@@ -1,4 +1,4 @@
-import EventDefinition from "@src/events/event.class";
+import EventDefinition from "@src/contracts/events/event.class";
 import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { EventCreatorType } from "@src/types/analytics.types";
 import type { IntegrationRequestType } from "@src/types/analytics.types";

@@ -10,7 +10,7 @@ import type { SunBurstLayoutControllerHookType } from "./controllers/sunburst.re
 import type SunBurstBaseReport from "@src/components/reports/lastfm/common/report.class/sunburst.report.base.class";
 import type { SunBurstControllerHookType } from "@src/hooks/controllers/sunburst.controller.hook";
 import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type { tFunctionType } from "@src/types/clients/locale/vendor.types";
+import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 export interface SunBurstReportProps<T extends UserState<unknown>> {
   encapsulatedReportState: T;

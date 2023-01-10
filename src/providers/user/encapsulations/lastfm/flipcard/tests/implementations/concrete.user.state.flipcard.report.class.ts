@@ -1,5 +1,5 @@
 import UserFlipCardBaseReportState from "../../user.state.base.flipcard.report.class";
-import EventDefinition from "@src/events/event.class";
+import EventDefinition from "@src/contracts/events/event.class";
 
 export default class ConcreteBaseReportState extends UserFlipCardBaseReportState {
   getDataSource = () => this.userProperties.data.report.albums as unknown[];

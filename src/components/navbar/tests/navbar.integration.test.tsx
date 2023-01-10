@@ -3,7 +3,6 @@ import { testIDs as NavBarMobileMenuTestIDs } from "../mobile.menu/navbar.mobile
 import NavBarContainer from "../navbar.container";
 import { testIDs as NavBarRootTestIDs } from "../root/navbar.root.identifiers";
 import navbarTranslations from "@locales/navbar.json";
-import { mockIsBuildTime } from "@src/clients/web.framework/__mocks__/vendor.mock";
 import NavConfig from "@src/config/navbar";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook, {
@@ -12,6 +11,7 @@ import mockAuthHook, {
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import NavBarControllerProvider from "@src/providers/controllers/navbar/navbar.provider";
+import { mockIsBuildTime } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import type { JSONstringType } from "@src/types/json.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 
@@ -27,7 +27,7 @@ jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/router.hook");
 
-jest.mock("@src/clients/web.framework/vendor");
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 jest.mock(
   "@src/components/scrollbars/vertical/vertical.scrollbar.container",

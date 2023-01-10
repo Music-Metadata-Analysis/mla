@@ -1,5 +1,5 @@
-import webFrameworkVendor from "@src/clients/web.framework/vendor";
-import type { WebFrameworkVendorRouterHookInterface } from "@src/types/clients/web.framework/vendor.types";
+import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
+import type { WebFrameworkVendorRouterHookInterface } from "@src/vendors/types/integrations/web.framework/vendor.types";
 
 const useRouter = (): WebFrameworkVendorRouterHookInterface => {
   const routerHook = webFrameworkVendor.routerHook();

@@ -1,29 +1,6 @@
-import type EventDefinition from "@src/events/event.class";
+import type EventDefinition from "@src/contracts/events/event.class";
 
-export type EventDefinitionType = {
-  category: "AUTH" | "LAST.FM" | "MAIN" | "TEST";
-  label:
-    | "AGGREGATE REQUESTS"
-    | "BUTTON"
-    | "CONTACT"
-    | "DATA: ALBUM"
-    | "DATA: ARTIST"
-    | "DATA: ROOT"
-    | "DATA: TRACK"
-    | "DATA: UNKNOWN"
-    | "ERROR"
-    | "EXTERNAL_LINK"
-    | "INTERNAL_LINK"
-    | "LOGIN"
-    | "LOGOUT"
-    | "MODAL"
-    | "REPORT"
-    | "REQUEST"
-    | "RESPONSE"
-    | "TEST";
-  action: string;
-  value?: number;
-};
+export type { EventDefinitionType } from "@src/contracts/events/types/event.types";
 
 export type EventCreatorType = (eventArgs: EventDefinition) => void;
 

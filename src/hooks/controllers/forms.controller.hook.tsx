@@ -1,7 +1,7 @@
-import uiFrameworkVendor from "@src/clients/ui.framework/vendor";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 
 const useFormsController = () => {
-  const formHook = uiFrameworkVendor.formHook();
+  const formHook = uiFrameworkVendor.core.formHook();
   return formHook;
 };
 

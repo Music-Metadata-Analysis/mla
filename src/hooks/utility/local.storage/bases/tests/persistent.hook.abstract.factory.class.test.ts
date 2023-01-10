@@ -1,5 +1,5 @@
 import PersistentHookAbstractFactory from "../persistent.hook.abstract.factory.class";
-import { mockIsSSR } from "@src/clients/web.framework/__mocks__/vendor.mock";
+import { mockIsSSR } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 
 class ConcreteFactory extends PersistentHookAbstractFactory<jest.Mock> {
   primitiveHook = jest.fn(() => mockPrimitiveHookValue);
@@ -10,7 +10,7 @@ const mockPrimitiveHookValue = "mockPrimitiveHook";
 const mockHookFactory = jest.fn(() => jest.fn(() => mockCreatedHookValue));
 const mockCreatedHookValue = "mockCreatedHook";
 
-jest.mock("@src/clients/web.framework/vendor");
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 describe(PersistentHookAbstractFactory.name, () => {
   let instance: PersistentHookAbstractFactory<jest.Mock>;

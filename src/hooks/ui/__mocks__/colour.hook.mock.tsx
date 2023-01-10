@@ -1,4 +1,4 @@
-import mockVendorColourHook from "@src/clients/ui.framework/__mocks__/vendor.colour.hook.mock";
+import mockVendorColourHook from "@src/vendors/integrations/ui.framework/__mocks__/vendor.colour.hook.mock";
 
 const mockValues = mockVendorColourHook;
 

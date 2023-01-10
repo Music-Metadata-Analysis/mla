@@ -1,4 +1,4 @@
-import EventDefinition from "@src/events/event.class";
+import EventDefinition from "@src/contracts/events/event.class";
 import type { EventDefinitionType } from "@src/types/analytics.types";
 
 describe("Event Definition", () => {
