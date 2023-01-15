@@ -1,4 +1,4 @@
-import { voidFn } from "@src/utils/voids";
+import { voidFn } from "@src/utilities/generics/voids";
 import type { ImagesControllerContextInterface } from "@src/types/controllers/images/images.context.types";
 import type { ImagesControllerStateInterface } from "@src/types/controllers/images/images.state.types";
 

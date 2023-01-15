@@ -5,7 +5,7 @@ import NavBarContainer from "@src/components/navbar/navbar.container";
 import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
 import RootProvider from "@src/providers/root.provider";
-import { normalizeUndefined } from "@src/utils/voids";
+import { normalizeUndefined } from "@src/utilities/generics/voids";
 import { authVendorSSR } from "@src/vendors/integrations/auth/vendor.ssr";
 import { flagVendorSSR } from "@src/vendors/integrations/flags/vendor.ssr";
 import { localeVendor } from "@src/vendors/integrations/locale/vendor";

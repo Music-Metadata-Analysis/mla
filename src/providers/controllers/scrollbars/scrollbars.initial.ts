@@ -1,4 +1,4 @@
-import { voidFn } from "@src/utils/voids";
+import { voidFn } from "@src/utilities/generics/voids";
 import type { ScrollBarsControllerContextInterface } from "@src/types/controllers/scrollbars/scrollbars.context.types";
 import type { ScrollBarsControllerStateInterface } from "@src/types/controllers/scrollbars/scrollbars.state.types";
 

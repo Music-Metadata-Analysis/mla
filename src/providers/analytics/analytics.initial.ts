@@ -1,4 +1,4 @@
-import { voidFn } from "@src/utils/voids";
+import { voidFn } from "@src/utilities/generics/voids";
 import type { AnalyticsContextInterface } from "@src/types/analytics.types";
 
 const InitialValues = <AnalyticsContextInterface>{

@@ -81,11 +81,9 @@ main() {
   ! search 'from "@src/.+' src/backend/api      | 
     allows 'from "@src/backend/api/.+'          |
     allows 'from "@src/__mocks__/.+'            |    
+    allows 'from "@src/config/.+'               |
     allows 'from "@src/contracts/.+'            |
-    allows 'from "@src/types/.+'                | # Generic Types Can Be Used
-    allows 'from "@src/utils/.+'                |
-    allows 'from "@src/__mocks__/.+'            |    
-    allows 'from "@src/config/.+'               ||
+    allows 'from "@src/utilities/.+'           ||
     error_restricted
 
   echo "  Checking Imports into the CONTRACTS Component..."
@@ -93,14 +91,20 @@ main() {
     allows 'from "@src/contracts/.+'            ||
     error_restricted
 
+  echo "  Checking Imports into the UTILITIES Component..."
+  ! search 'from "@src/.+' src/utilities        | 
+    allows 'from "@src/tests/.+'                |   # Create a FIXTURES component
+    allows 'from "@src/utilities/.+'           ||
+    error_restricted
+
   echo "  Checking Imports into the VENDORS Component..."
   ! search 'from "@src/.+' src/vendors          | 
     allows 'from "@src/vendors/.+'              |
     allows 'from "@src/config/.+'               |
     allows 'from "@src/contracts/.+'            |    
-    allows 'from "@src/hooks/.+'                |   # Add to UTILITIES component   
     allows 'from "@src/tests/.+'                |   # Create a FIXTURES component
-    allows 'from "@src/utils/.+'                ||
+    allows 'from "@src/fixtures/.+'             | 
+    allows 'from "@src/utilities/.+'           ||
     error_restricted
 
   # Enforce Contracts Component Isolation (No imports from Contracts unless deliberately exported.)

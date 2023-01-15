@@ -1,5 +1,5 @@
 import ReactGA from "react-ga";
-import { isProduction } from "@src/utils/env";
+import { isProduction } from "@src/utilities/generics/env";
 import type EventDefinition from "@src/contracts/events/event.class";
 import type { AnalyticsVendorGoogleAnalyticsInterface } from "@src/vendors/types/integrations/analytics/vendor.types";
 

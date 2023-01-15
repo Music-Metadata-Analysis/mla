@@ -1,6 +1,6 @@
 import flagsmith from "flagsmith/isomorphic";
 import { FlagsmithProvider } from "flagsmith/react";
-import { normalizeUndefined } from "@src/utils/voids";
+import { normalizeUndefined } from "@src/utilities/generics/voids";
 import type { FlagVendorProviderProps } from "@src/vendors/types/integrations/flags/vendor.types";
 
 const FlagProvider = ({

@@ -2,22 +2,28 @@ import { render } from "@testing-library/react";
 import { InitialState } from "../metrics.initial";
 import MetricsProvider, { MetricsContext } from "../metrics.provider";
 import settings from "@src/config/metrics";
-import PersistentReducerFactory from "@src/hooks/utility/local.storage/persisted.reducer.hook.factory.class";
+import PersistentReducerFactory from "@src/utilities/react/hooks/local.storage/persisted.reducer.hook.factory.class";
+import { mockIsSSR } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import type { MetricsContextInterface } from "@src/types/metrics/context.types";
 
 jest.mock(
-  "@src/hooks/utility/local.storage/persisted.reducer.hook.factory.class"
+  "@src/utilities/react/hooks/local.storage/persisted.reducer.hook.factory.class"
 );
+
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 describe("MetricsProvider", () => {
   const received: Partial<MetricsContextInterface> = {};
 
   const mockReducerProperties = [{ ...InitialState }, jest.fn()];
 
+  const mockIsSSRValue = "mockIsSSR" as unknown as boolean;
+
   const mockReducer = jest.fn(() => mockReducerProperties) as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockIsSSR.mockReturnValue(mockIsSSRValue);
   });
 
   const arrange = () => {
@@ -51,7 +57,8 @@ describe("MetricsProvider", () => {
     it("should create a persisted reducer with the expected local storage key", () => {
       expect(PersistentReducerFactory.prototype.create).toBeCalledTimes(1);
       expect(PersistentReducerFactory.prototype.create).toBeCalledWith(
-        settings.localStorageKey
+        settings.localStorageKey,
+        mockIsSSRValue
       );
     });
 

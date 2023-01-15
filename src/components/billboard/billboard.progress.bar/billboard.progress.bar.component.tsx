@@ -11,7 +11,7 @@ import {
 import { testIDs } from "./billboard.progress.bar.identifiers";
 import BillBoardContainer from "../billboard.base/billboard.container";
 import useColour from "@src/hooks/ui/colour.hook";
-import { truncate } from "@src/utils/strings";
+import { truncate } from "@src/utilities/generics/strings";
 
 export type BillBoardProgressBarDetails = {
   resource: string;

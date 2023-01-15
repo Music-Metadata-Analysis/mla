@@ -4,7 +4,7 @@ import SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/repo
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
-jest.mock("@src/utils/strings");
+jest.mock("@src/utilities/generics/strings");
 
 describe(PlayCountByArtistNodeEncapsulation.name, () => {
   let instance: PlayCountByArtistNodeEncapsulation;

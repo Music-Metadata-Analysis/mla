@@ -1,5 +1,8 @@
 import flagsmith from "flagsmith/isomorphic";
-import { normalizeNull, normalizeUndefined } from "@src/utils/voids";
+import {
+  normalizeNull,
+  normalizeUndefined,
+} from "@src/utilities/generics/voids";
 import type { FlagVendorSSRClientInterface } from "@src/vendors/types/integrations/flags/vendor.ssr.types";
 
 class FlagSmithSSR implements FlagVendorSSRClientInterface {

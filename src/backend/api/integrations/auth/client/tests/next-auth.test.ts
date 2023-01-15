@@ -5,7 +5,7 @@ import type { AuthVendorSessionType } from "@src/backend/api/types/integrations/
 import type { MockAPIEndpointRequestType } from "@src/backend/api/types/services/mocks/request.types";
 import type { JWT } from "next-auth/jwt";
 
-jest.mock("@src/utils/voids");
+jest.mock("@src/utilities/generics/voids");
 
 jest.mock("next-auth/jwt");
 

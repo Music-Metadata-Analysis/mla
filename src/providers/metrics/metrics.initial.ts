@@ -1,4 +1,4 @@
-import { voidFn } from "@src/utils/voids";
+import { voidFn } from "@src/utilities/generics/voids";
 import type { MetricsContextInterface } from "@src/types/metrics/context.types";
 import type { MetricsStateType } from "@src/types/metrics/state.types";
 

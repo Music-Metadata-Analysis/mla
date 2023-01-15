@@ -1,4 +1,4 @@
-import { voidFn } from "@src/utils/voids";
+import { voidFn } from "@src/utilities/generics/voids";
 import type { PopUpsControllerActionType } from "@src/vendors/types/integrations/ui.framework/popups/popups.action.types";
 import type { PopUpsControllerStateInterface } from "@src/vendors/types/integrations/ui.framework/popups/popups.state.types";
 import type { Dispatch } from "react";

@@ -8,7 +8,7 @@ import NavConfig from "@src/config/navbar";
 import MLA, { getInitialProps, MLAProps } from "@src/pages/_app";
 import RootProvider from "@src/providers/root.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import { normalizeUndefined } from "@src/utils/voids";
+import { normalizeUndefined } from "@src/utilities/generics/voids";
 import { mockAuthVendorSSRClient } from "@src/vendors/integrations/auth/__mocks__/vendor.ssr.mock";
 import { authVendorSSR } from "@src/vendors/integrations/auth/vendor.ssr";
 import { mockFlagVendorSSRClient } from "@src/vendors/integrations/flags/__mocks__/vendor.ssr.mock";
@@ -26,7 +26,7 @@ jest.mock("@src/vendors/integrations/flags/vendor.ssr");
 
 jest.mock("@src/vendors/integrations/locale/vendor");
 
-jest.mock("@src/utils/voids");
+jest.mock("@src/utilities/generics/voids");
 
 jest.mock("next/app");
 

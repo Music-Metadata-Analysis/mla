@@ -1,6 +1,6 @@
 import PopUpsControllerReducerStates from "./popups.reducer.states.class";
-import reducerLoggingMiddleware from "@src/utils/reducer.logger";
-import withMiddleware from "@src/utils/reducer.middleware";
+import reducerLoggingMiddleware from "@src/utilities/react/state/reducers/reducer.logger";
+import withMiddleware from "@src/utilities/react/state/reducers/reducer.middleware";
 import type { PopUpsControllerActionType } from "@src/vendors/types/integrations/ui.framework/popups/popups.action.types";
 import type { PopUpsControllerStateInterface } from "@src/vendors/types/integrations/ui.framework/popups/popups.state.types";
 

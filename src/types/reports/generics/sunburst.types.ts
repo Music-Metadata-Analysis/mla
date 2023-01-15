@@ -1,4 +1,4 @@
-import type RGBA from "@src/utils/colours/rgba.class";
+import type RGBA from "@src/utilities/colours/rgba.class";
 
 export interface SunBurstData {
   name: string;

@@ -1,6 +1,6 @@
 import UserReducerStates from "./metrics.reducer.states.class";
-import reducerLoggingMiddleware from "@src/utils/reducer.logger";
-import withMiddleware from "@src/utils/reducer.middleware";
+import reducerLoggingMiddleware from "@src/utilities/react/state/reducers/reducer.logger";
+import withMiddleware from "@src/utilities/react/state/reducers/reducer.middleware";
 import type { MetricsActionType } from "@src/types/metrics/action.types";
 import type { MetricsStateType } from "@src/types/metrics/state.types";
 

@@ -1,4 +1,4 @@
-import type { ToggleHookType } from "@src/hooks/utility/toggle.hook";
+import type { ToggleHookType } from "@src/utilities/react/hooks/toggle.hook";
 
 export interface NavBarControllerContextInterface {
   hamburger: ToggleHookType;

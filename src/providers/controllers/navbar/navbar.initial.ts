@@ -1,4 +1,4 @@
-import { voidFn } from "@src/utils/voids";
+import { voidFn } from "@src/utilities/generics/voids";
 import type { NavBarControllerContextInterface } from "@src/types/controllers/navbar/navbar.types";
 
 const InitialValues = <NavBarControllerContextInterface>{

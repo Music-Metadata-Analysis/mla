@@ -4,16 +4,19 @@ import dk from "deep-keys";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import useNextAuth from "../next-auth";
-import PersistentStateFactory from "@src/hooks/utility/local.storage/persisted.state.hook.factory.class";
+import PersistentStateFactory from "@src/utilities/react/hooks/local.storage/persisted.state.hook.factory.class";
 import {
   mockAuthHook,
   mockUserProfile,
 } from "@src/vendors/integrations/auth/__mocks__/vendor.mock";
+import { mockIsSSR } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import type { AuthVendorSessionType } from "@src/vendors/types/integrations/auth/vendor.types";
 
 jest.mock(
-  "@src/hooks/utility/local.storage/persisted.state.hook.factory.class"
+  "@src/utilities/react/hooks/local.storage/persisted.state.hook.factory.class"
 );
+
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 jest.mock("next-auth/react", () => ({
   useSession: jest.fn(),
@@ -26,6 +29,8 @@ const MockedUseSession = useSession as jest.Mock;
 describe("useNextAuth", () => {
   let received: ReturnType<typeof arrange>;
   let existingLocalStorageValue: { type: string | null };
+
+  const mockIsSSRValue = "mockIsSSR" as unknown as boolean;
 
   const useMockLocalStorageHook = jest.fn(() =>
     useState<{ type: string | null }>(existingLocalStorageValue)
@@ -47,6 +52,7 @@ describe("useNextAuth", () => {
     jest
       .mocked(PersistentStateFactory.prototype.create)
       .mockReturnValue(useMockLocalStorageHook);
+    mockIsSSR.mockReturnValue(mockIsSSRValue);
   });
 
   const arrange = () => {
@@ -61,7 +67,10 @@ describe("useNextAuth", () => {
 
     it("should initialize the local storage hook with the correct partition name", () => {
       expect(PersistentStateFactory.prototype.create).toBeCalledTimes(1);
-      expect(PersistentStateFactory.prototype.create).toBeCalledWith("oauth");
+      expect(PersistentStateFactory.prototype.create).toBeCalledWith(
+        "oauth",
+        mockIsSSRValue
+      );
     });
 
     it("should initialize the state with the expected value", () => {

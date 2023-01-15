@@ -1,7 +1,7 @@
 import flagsmith from "flagsmith/isomorphic";
 import FlagSmithSSR from "../flagsmith";
 
-jest.mock("@src/utils/voids");
+jest.mock("@src/utilities/generics/voids");
 
 jest.mock("flagsmith/isomorphic");
 

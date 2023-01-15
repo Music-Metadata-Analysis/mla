@@ -1,4 +1,4 @@
-import RGBA from "@src/utils/colours/rgba.class";
+import RGBA from "@src/utilities/colours/rgba.class";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
 const nullNode = {

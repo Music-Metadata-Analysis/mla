@@ -1,6 +1,6 @@
 import getReducerStates from "./states/user.reducer.states";
-import reducerLoggingMiddleware from "@src/utils/reducer.logger";
-import withMiddleware from "@src/utils/reducer.middleware";
+import reducerLoggingMiddleware from "@src/utilities/react/state/reducers/reducer.logger";
+import withMiddleware from "@src/utilities/react/state/reducers/reducer.middleware";
 import type { UserActionType } from "@src/types/user/action.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 

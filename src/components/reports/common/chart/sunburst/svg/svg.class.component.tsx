@@ -1,9 +1,9 @@
 import * as d3 from "d3";
 import { Component } from "react";
 import { classes, ids, testIDs } from "./svg.identifiers";
-import RGB from "@src/utils/colours/rgb.class";
-import { valueToZero } from "@src/utils/numeric";
-import { alwaysString, truncate } from "@src/utils/strings";
+import RGB from "@src/utilities/colours/rgb.class";
+import { valueToZero } from "@src/utilities/generics/numeric";
+import { alwaysString, truncate } from "@src/utilities/generics/strings";
 import type {
   SunBurstData,
   d3Node,

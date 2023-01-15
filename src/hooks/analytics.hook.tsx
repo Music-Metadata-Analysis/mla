@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import useRouter from "./router.hook";
 import EventDefinition from "@src/contracts/events/event.class";
 import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
-import { isProduction, isTest } from "@src/utils/env";
+import { isProduction, isTest } from "@src/utilities/generics/env";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import type {
   ButtonClickHandlerType,

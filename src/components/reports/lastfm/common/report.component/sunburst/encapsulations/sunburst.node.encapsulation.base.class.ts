@@ -1,5 +1,5 @@
 import Events from "@src/events/events";
-import { singular } from "@src/utils/strings";
+import { singular } from "@src/utilities/generics/strings";
 import type EventDefinition from "@src/contracts/events/event.class";
 import type { SunBurstEntityTypes } from "@src/types/analytics.types";
 import type {

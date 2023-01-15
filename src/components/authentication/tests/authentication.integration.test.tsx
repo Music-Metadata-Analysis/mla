@@ -17,7 +17,7 @@ import mockAuthHook, {
 } from "@src/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
-import mockToggleHook from "@src/hooks/utility/__mocks__/toggle.hook.mock";
+import mockToggleHook from "@src/utilities/react/hooks/__mocks__/toggle.hook.mock";
 
 jest.mock("@src/hooks/analytics.hook");
 
@@ -27,7 +27,7 @@ jest.mock("@src/hooks/locale.hook");
 
 jest.mock("@src/hooks/router.hook");
 
-jest.mock("@src/hooks/utility/toggle.hook");
+jest.mock("@src/utilities/react/hooks/toggle.hook");
 
 jest.mock(
   "@src/components/scrollbars/vertical/vertical.scrollbar.container",

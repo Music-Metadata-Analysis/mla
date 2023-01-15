@@ -1,5 +1,5 @@
 import { getToken } from "next-auth/jwt";
-import { normalizeNull } from "@src/utils/voids";
+import { normalizeNull } from "@src/utilities/generics/voids";
 import type { ApiFrameworkVendorApiRequestType } from "@src/backend/api/types/integrations/api.framework/vendor.types";
 import type { AuthVendorClientInterface } from "@src/backend/api/types/integrations/auth/vendor.types";
 

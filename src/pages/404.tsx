@@ -4,7 +4,7 @@ import ErrorDisplayContainer from "@src/components/errors/display/error.display.
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import useRouter from "@src/hooks/router.hook";
-import { voidFn } from "@src/utils/voids";
+import { voidFn } from "@src/utilities/generics/voids";
 import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 import { webFrameworkVendorSSR } from "@src/vendors/integrations/web.framework/vendor.ssr";
 

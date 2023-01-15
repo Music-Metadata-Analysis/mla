@@ -12,7 +12,7 @@ import type {
   LastFMUserArtistInterface,
   LastFMUserTrackInterface,
 } from "@src/contracts/api/exports/lastfm/report.types";
-import type { Await } from "@src/types/promise.types";
+
 class LastFmUserClientAdapter
   extends LastFMClientAdapterBase
   implements LastFMUserClientInterface
@@ -67,7 +67,7 @@ class LastFmUserClientAdapter
 
     await Promise.all(cacheLookups).then((urls) => {
       artists.map((artist) => {
-        const artistImage = urls.shift() as Await<string>;
+        const artistImage = urls.shift() as Awaited<string>;
         if (artist.name && artist.image) {
           artist.image.map((image) => {
             image["#text"] = artistImage;
@@ -103,7 +103,7 @@ class LastFmUserClientAdapter
 
     await Promise.all(cacheLookups).then((urls) => {
       tracks.map((track) => {
-        const artistImage = urls.shift() as Await<string>;
+        const artistImage = urls.shift() as Awaited<string>;
         if (track.name && track.image) {
           track.image.map((image) => {
             image["#text"] = artistImage;

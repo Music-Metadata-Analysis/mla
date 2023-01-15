@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useToggle from "@src/hooks/utility/toggle.hook";
+import useToggle from "@src/utilities/react/hooks/toggle.hook";
 
 export interface UseWindowThresholdInterface {
   axis: "innerHeight" | "innerWidth";

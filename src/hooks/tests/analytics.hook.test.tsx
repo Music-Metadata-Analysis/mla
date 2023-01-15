@@ -10,7 +10,7 @@ import Events from "@src/events/events";
 import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
 import { mockGoogleAnalytics } from "@src/vendors/integrations/analytics/__mocks__/vendor.mock";
 import type { AnalyticsContextInterface } from "@src/types/analytics.types";
-import type { MutableEnv } from "@src/types/process.types";
+import type { MutableEnv } from "@src/utilities/types/process.types";
 import type { MouseEvent, ReactNode } from "react";
 
 jest.mock("@src/hooks/router.hook");

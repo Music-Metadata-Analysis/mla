@@ -10,12 +10,12 @@ import { testIDs } from "../billboard.progress.bar.identifiers";
 import BillBoardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import { truncate } from "@src/utils/strings";
+import { truncate } from "@src/utilities/generics/strings";
 import type { BillBoardProgressBarDetails } from "../billboard.progress.bar.component";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
-jest.mock("@src/utils/strings");
+jest.mock("@src/utilities/generics/strings");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock([

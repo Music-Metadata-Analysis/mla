@@ -4,7 +4,7 @@ import { FlagsmithProvider, FlagsmithContextType } from "flagsmith/react";
 import FlagProvider from "../flagsmith";
 import checkMockCalls from "@src/tests/fixtures/mock.component.call";
 
-jest.mock("@src/utils/voids");
+jest.mock("@src/utilities/generics/voids");
 
 jest.mock("flagsmith/isomorphic");
 

@@ -6,7 +6,7 @@ import Events from "@src/events/events";
 import useAnalytics from "@src/hooks/analytics.hook";
 import useAuth from "@src/hooks/auth.hook";
 import useRouter from "@src/hooks/router.hook";
-import useToggle from "@src/hooks/utility/toggle.hook";
+import useToggle from "@src/utilities/react/hooks/toggle.hook";
 import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 
 export interface AuthenticationProps {

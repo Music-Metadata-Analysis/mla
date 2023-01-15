@@ -1,7 +1,7 @@
 import ReactGA from "react-ga";
 import VendorReactGA from "../react.ga.class";
 import EventDefinition from "@src/contracts/events/event.class";
-import { isProduction } from "@src/utils/env";
+import { isProduction } from "@src/utilities/generics/env";
 
 jest.mock("react-ga", () => ({
   event: jest.fn(),
@@ -10,7 +10,7 @@ jest.mock("react-ga", () => ({
   set: jest.fn(),
 }));
 
-jest.mock("@src/utils/env");
+jest.mock("@src/utilities/generics/env");
 
 const MockedIsProduction = jest.mocked(isProduction);
 

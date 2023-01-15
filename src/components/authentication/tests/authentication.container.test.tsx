@@ -4,14 +4,14 @@ import ModalSignInComponent from "../modals/signin/modal.signin.container";
 import mockAuthHook, {
   mockUserProfile,
 } from "@src/hooks/__mocks__/auth.hook.mock";
-import mockToggleHook from "@src/hooks/utility/__mocks__/toggle.hook.mock";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import mockToggleHook from "@src/utilities/react/hooks/__mocks__/toggle.hook.mock";
 
 jest.mock("@src/hooks/auth.hook");
 
 jest.mock("@src/hooks/router.hook");
 
-jest.mock("@src/hooks/utility/toggle.hook");
+jest.mock("@src/utilities/react/hooks/toggle.hook");
 
 jest.mock("../modals/signin/modal.signin.container", () =>
   require("@fixtures/react/child").createComponent(
