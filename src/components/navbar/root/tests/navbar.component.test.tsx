@@ -13,15 +13,15 @@ import NavBarOptions from "@src/components/navbar/options/navbar.options.compone
 import NavBarSessionControlContainer from "@src/components/navbar/session.control/navbar.session.control.container";
 import NavBarSpinner from "@src/components/navbar/spinner/navbar.spinner.component";
 import navConfig from "@src/config/navbar";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import {
+  getMockComponentProp,
+  getMockComponentPropCount,
+} from "@src/fixtures/mocks/mock.component.props";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
-import {
-  getMockComponentProp,
-  getMockComponentPropCount,
-} from "@src/tests/fixtures/mock.component.props";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

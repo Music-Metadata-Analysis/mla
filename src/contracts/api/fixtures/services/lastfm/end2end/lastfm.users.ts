@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 interface TestData {
   [key: string]: string;
 }

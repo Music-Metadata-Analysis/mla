@@ -3,9 +3,9 @@ import FlipCard from "../flip.card.component";
 import FlipCardContainer, {
   FlipCardContainerProps,
 } from "../flip.card.container";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import useLocale from "@src/hooks/locale.hook";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

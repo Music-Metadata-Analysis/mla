@@ -4,8 +4,8 @@ import CookieConsent from "react-cookie-consent";
 import Consent, { ConsentProps } from "../consent.component";
 import { testIDs } from "../consent.identifiers";
 import { settings } from "@src/config/cookies";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

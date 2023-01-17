@@ -15,9 +15,9 @@ import {
 } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.last.fm.report.class";
 import mockFlipCardController from "@src/components/reports/lastfm/common/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import settings from "@src/config/flip.card";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockImageController from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
 
 jest.mock("@chakra-ui/react", () =>

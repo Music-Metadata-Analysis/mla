@@ -4,8 +4,8 @@ import BillBoardSpinner from "../billboard.spinner.component";
 import { testIDs } from "../billboard.spinner.identifiers";
 import BillBoardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import { settings } from "@src/config/billboard";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

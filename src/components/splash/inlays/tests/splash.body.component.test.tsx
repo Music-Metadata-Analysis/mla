@@ -7,9 +7,9 @@ import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.contai
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import dialogueSettings from "@src/config/dialogue";
 import lastFMConfig from "@src/config/lastfm";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockUseRouter from "@src/hooks/__mocks__/router.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/locale.hook");
 

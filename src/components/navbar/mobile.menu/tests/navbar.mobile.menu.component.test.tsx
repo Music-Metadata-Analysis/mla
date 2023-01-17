@@ -5,10 +5,10 @@ import NavBarMobileMenu from "../navbar.mobile.menu.component";
 import { testIDs } from "../navbar.mobile.menu.identifiers";
 import NavBarOptions from "@src/components/navbar/options/navbar.options.component";
 import navConfig from "@src/config/navbar";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/components/navbar/options/navbar.options.component", () =>
   require("@fixtures/react/parent").createComponent("NavBarOptions")

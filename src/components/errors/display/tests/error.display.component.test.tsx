@@ -4,8 +4,8 @@ import { render, screen } from "@testing-library/react";
 import ErrorDisplay, { ErrorDisplayProps } from "../error.display.component";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockUseColour from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

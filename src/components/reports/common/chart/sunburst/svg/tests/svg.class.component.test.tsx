@@ -11,8 +11,8 @@ import mockDataSet4 from "./data/sunburst.data.set.4.json";
 import SunBurstChart, { SunBurstChartSVGProps } from "../svg.class.component";
 import { classes, ids, testIDs } from "../svg.identifiers";
 import LastFMTranslations from "@locales/lastfm.json";
+import { getMockProp } from "@src/fixtures/mocks/mock.component.props";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
-import { getMockProp } from "@src/tests/fixtures/mock.component.props";
 import type {
   SunBurstData,
   d3Node,

@@ -4,9 +4,9 @@ import ErrorBoundaryContainer from "@src/components/errors/boundary/error.bounda
 import SearchContainer from "@src/components/search/lastfm/search.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import Page, { getServerSideProps } from "@src/pages/search/lastfm/top20albums";
-import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 import {
   mockServerSideProps,
   mockUtilities,
@@ -50,7 +50,7 @@ describe("SearchTopAlbums", () => {
 
     it("should render the ErrorBoundary component with the correct props", () => {
       expect(ErrorBoundaryContainer).toBeCalledTimes(1);
-      mockCheckCall(
+      checkMockCall(
         ErrorBoundaryContainer,
         {
           route: routes.home,
@@ -63,7 +63,7 @@ describe("SearchTopAlbums", () => {
 
     it("should render the SearchContainer component with the correct props", () => {
       expect(SearchContainer).toBeCalledTimes(1);
-      mockCheckCall(
+      checkMockCall(
         SearchContainer,
         {
           route: routes.reports.lastfm.top20albums,

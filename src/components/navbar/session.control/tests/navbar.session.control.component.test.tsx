@@ -3,8 +3,8 @@ import { render } from "@testing-library/react";
 import NavBarSessionControl from "../navbar.session.control.component";
 import AnalyticsButtonWrapperContainer from "@src/components/analytics/analytics.button/analytics.button.container";
 import Authentication from "@src/components/authentication/authentication.container";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/auth.hook");
 

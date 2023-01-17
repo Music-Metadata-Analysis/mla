@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
 import ChakraMainBackGround from "../background.component";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockVendorColourHook from "@src/vendors/integrations/ui.framework/__mocks__/vendor.colour.hook.mock";
 
 jest.mock("@src/vendors/integrations/ui.framework/vendor");

@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
 import DimOnHover from "../hover.dim.style";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Box"])

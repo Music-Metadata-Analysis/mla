@@ -3,7 +3,7 @@ import ControllerRootProvider from "../controllers.root.provider";
 import ImagesControllerProvider from "../images/images.provider";
 import NavBarControllerProvider from "../navbar/navbar.provider";
 import ScrollBarsControllerProvider from "../scrollbars/scrollbars.provider";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("../images/images.provider", () =>
   require("@fixtures/react/parent").createComponent("ImagesControllerProvider")

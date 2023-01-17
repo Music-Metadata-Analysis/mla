@@ -9,7 +9,7 @@ import BillboardContainer from "@src/components/billboard/billboard.base/billboa
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import settings from "@src/config/navbar";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Avatar", "Flex"], ["Box"])

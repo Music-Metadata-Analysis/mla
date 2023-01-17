@@ -90,10 +90,15 @@ main() {
   ! search 'from "@src/.+' src/contracts        | 
     allows 'from "@src/contracts/.+'            ||
     error_restricted
+  
+  echo "  Checking Imports into the FIXTURES Component..."
+  ! search 'from "@src/.+' src/fixtures         | 
+    allows 'from "@src/fixtures/.+'             ||
+    error_restricted
 
   echo "  Checking Imports into the UTILITIES Component..."
   ! search 'from "@src/.+' src/utilities        | 
-    allows 'from "@src/tests/.+'                |   # Create a FIXTURES component
+    allows 'from "@src/fixtures/.+'             |
     allows 'from "@src/utilities/.+'           ||
     error_restricted
 
@@ -102,7 +107,6 @@ main() {
     allows 'from "@src/vendors/.+'              |
     allows 'from "@src/config/.+'               |
     allows 'from "@src/contracts/.+'            |    
-    allows 'from "@src/tests/.+'                |   # Create a FIXTURES component
     allows 'from "@src/fixtures/.+'             | 
     allows 'from "@src/utilities/.+'           ||
     error_restricted
@@ -111,12 +115,13 @@ main() {
   echo "  Checking Imports from the CONTRACTS Component..."
   ! search 'from "@src/contracts/api/.+' src      | 
     excludes "^src/contracts/api/"                |
-    excludes 'from "@src/contracts/api/exports'   || 
+    excludes 'from "@src/contracts/api'           || 
     (echo "CONTRACTS elements should not be imported unless deliberately exported." && false)
 
   # Enforce WEB Component Isolation (No imports into WEB except from designated points.)
   echo "  Checking Imports into the FRONTEND/WEB Component..."
-  ! search 'from "(@src/contracts/api.+|@src/backend/.+)' src      | 
+  ! search 'from "(@src/contracts/api.+|@src/backend/.+)' src   | 
+    excludes 'from "@src/contracts/api/fixtures'                | 
     excludes "^src/backend/"                                    |
     excludes "^src/config/"                                     |
     excludes "^src/contracts/"                                  |

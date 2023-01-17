@@ -3,7 +3,7 @@ import { useRef } from "react";
 import LastFMSunBurstDrawer from "../sunburst.report.drawer.component";
 import LastFMSunBurstDrawerContainer from "../sunburst.report.drawer.container";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 import type { LastFMSunBurstDrawerInterface } from "@src/types/reports/lastfm/components/drawers/sunburst.types";
 import type { RefObject } from "react";

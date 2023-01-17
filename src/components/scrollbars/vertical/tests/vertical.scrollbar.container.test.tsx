@@ -7,7 +7,7 @@ import VerticalScrollBar from "../vertical.scrollbar.component";
 import VerticalScrollBarContainer, {
   VerticalScrollBarContainerProps,
 } from "../vertical.scrollbar.container";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("../controllers/vertical.scrollbar.events.controller.hook");
 

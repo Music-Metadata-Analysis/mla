@@ -2,10 +2,10 @@ import MockStage2Report from "./fixtures/user.state.playcount.by.artist.sunburst
 import MockStage3Report from "./fixtures/user.state.playcount.by.artist.sunburst.stage.3.json";
 import PlayCountByArtistState from "../user.state.playcount.by.artist.sunburst.report.class";
 import apiRoutes from "@src/config/apiRoutes";
+import { response as MockUserGetTopArtists } from "@src/contracts/api/fixtures/services/lastfm/reports/tops/top.artists";
+import { response as MockAlbumGetInfo } from "@src/contracts/api/fixtures/services/lastfm/responses/album.get.info";
+import { response as MockArtistGetTopAlbums } from "@src/contracts/api/fixtures/services/lastfm/responses/artist.get.topalbums";
 import { InitialState } from "@src/providers/user/user.initial";
-import MockAlbumGetInfo from "@src/tests/fixtures/lastfm/responses/album.getInfo.json";
-import MockArtistGetTopAlbums from "@src/tests/fixtures/lastfm/responses/artist.getTopAlbums.json";
-import MockUserGetTopArtists from "@src/tests/fixtures/lastfm/responses/user.getTopArtists.json";
 import type { LastFMImageDataInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { LastFMUserStatePlayCountByArtistReport } from "@src/types/user/state.types";
 

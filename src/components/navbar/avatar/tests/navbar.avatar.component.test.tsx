@@ -1,8 +1,8 @@
 import { Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import NavBarAvatar from "../navbar.avatar.component";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import AnalyticsButtonWrapper from "../analytics.button.component";
 import AnalyticsButtonWrapperContainer from "../analytics.button.container";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("@src/hooks/analytics.hook");
 

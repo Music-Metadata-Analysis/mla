@@ -6,7 +6,7 @@ import SunBurstDrawerControlPanel, {
 import { testIDs } from "../drawer.control.panel.identifiers";
 import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
 jest.mock("@src/components/button/button.base/button.base.component", () =>

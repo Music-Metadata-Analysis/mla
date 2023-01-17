@@ -3,9 +3,9 @@ import {} from "@fixtures/api/mock.api.logger";
 import { createAPIMocks } from "@fixtures/api/mock.api.messages";
 import apiRoutes from "@src/config/apiRoutes";
 import * as status from "@src/config/status";
+import testResponses from "@src/contracts/api/fixtures/services/lastfm/end2end/lastfm.toptracks";
+import testAccounts from "@src/contracts/api/fixtures/services/lastfm/end2end/lastfm.users";
 import trackHandler from "@src/pages/api/v2/reports/lastfm/top20tracks/[username]";
-import testResponses from "@src/tests/fixtures/lastfm/end2end/lastfm.toptracks";
-import testAccounts from "@src/tests/fixtures/lastfm/end2end/lastfm.users";
 import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,

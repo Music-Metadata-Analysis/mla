@@ -11,8 +11,8 @@ import {
 import { render, screen, within } from "@testing-library/react";
 import ReportDrawer, { ReportDrawerProps } from "../drawer.component";
 import { testIDs } from "../drawer.identifiers";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

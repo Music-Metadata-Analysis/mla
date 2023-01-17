@@ -3,9 +3,9 @@ import { render, screen, within } from "@testing-library/react";
 import ReactCardFlip from "react-card-flip";
 import FlipCard, { FlipCardProps } from "../flip.card.component";
 import { testIDs } from "../flip.card.identifiers";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

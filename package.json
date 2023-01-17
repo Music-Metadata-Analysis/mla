@@ -123,7 +123,7 @@
       "!<rootDir>/src/**/implementations/concrete*.{js,jsx,ts,tsx}",
       "!<rootDir>/src/backend/api/exports/tests/fixtures/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/src/tests/fixtures/**/*.{js,jsx,ts,tsx}",
-      "!<rootDir>/src/**/tests/*.check.{ts,tsx}"
+      "!<rootDir>/src/**/tests/**/*.types\\.check.{ts,tsx}"
     ],
     "coveragePathIgnorePatterns": [],
     "coverageReporters": [
@@ -149,11 +149,11 @@
     ],
     "moduleNameMapper": {
       "^@fixtures/api/(.*)": "<rootDir>/src/backend/api/exports/tests/fixtures/$1",
-      "^@fixtures/chakra$": "<rootDir>/src/tests/fixtures/mock.chakra.react.factory.class.tsx",
-      "^@fixtures/chakra/icons$": "<rootDir>/src/tests/fixtures/mock.chakra.icon.factory.class.tsx",
-      "^@fixtures/react/child$": "<rootDir>/src/tests/fixtures/mock.component.child.factory.class.tsx",
-      "^@fixtures/react/parent$": "<rootDir>/src/tests/fixtures/mock.component.parent.factory.class.tsx",
-      "^@fixtures/react/simple$": "<rootDir>/src/tests/fixtures/mock.component.simple.factory.class.tsx",
+      "^@fixtures/chakra$": "<rootDir>/src/fixtures/mocks/mock.chakra.react.factory.class.tsx",
+      "^@fixtures/chakra/icons$": "<rootDir>/src/fixtures/mocks/mock.chakra.icon.factory.class.tsx",
+      "^@fixtures/react/child$": "<rootDir>/src/fixtures/mocks/mock.component.child.factory.class.tsx",
+      "^@fixtures/react/parent$": "<rootDir>/src/fixtures/mocks/mock.component.parent.factory.class.tsx",
+      "^@fixtures/react/simple$": "<rootDir>/src/fixtures/mocks/mock.component.simple.factory.class.tsx",
       "^@locales/(.*)": "<rootDir>/public/locales/en/$1",
       "^@src/(.*)": "<rootDir>/src/$1",
       ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",

@@ -2,8 +2,8 @@ import { ColorModeScript } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import { Html, Head, Main, NextScript } from "next/document";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import BaseDocument from "@src/pages/_document";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 import type { Component } from "react";
 

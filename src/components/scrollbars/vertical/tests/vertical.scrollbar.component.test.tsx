@@ -4,8 +4,8 @@ import VerticalScrollBar, {
   VerticalScrollBarProps,
 } from "../vertical.scrollbar.component";
 import { testIDs } from "../vertical.scrollbar.identifiers";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

@@ -4,8 +4,8 @@ import ErrorDisplayContainer, {
   ErrorDisplayContainerProps,
 } from "../error.display.container";
 import translations from "@locales/errors.json";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/locale.hook");
 

@@ -3,10 +3,10 @@ import Billboard from "../billboard.component";
 import BillboardContainer from "../billboard.container";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import { settings } from "@src/config/billboard";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockNavBarControllerHook from "@src/hooks/controllers/__mocks__/navbar.controller.hook.mock";
 import mockUseWindowThresholdHook from "@src/hooks/ui/__mocks__/window.threshold.hook.mock";
 import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/controllers/navbar.controller.hook");
 

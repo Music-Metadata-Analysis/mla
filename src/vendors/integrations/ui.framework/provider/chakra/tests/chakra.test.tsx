@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import ChakraProvider from "../chakra";
 import ChakraMainBackGround from "../chakra.background/background.component";
 import ChakraConfigurationProvider from "../chakra.provider/chakra.configuration.provider.component";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("../chakra.background/background.component", () =>
   require("@fixtures/react/parent").createComponent("ChakraMainBackGround")

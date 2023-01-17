@@ -3,8 +3,8 @@ import AboutContainer from "@src/components/about/about.container";
 import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Page, { getServerSideProps } from "@src/pages/about";
-import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 import {
   mockServerSideProps,
   mockUtilities,
@@ -46,7 +46,7 @@ describe("About", () => {
 
     it("should call the ErrorBoundary component correctly", () => {
       expect(ErrorBoundaryContainer).toBeCalledTimes(1);
-      mockCheckCall(
+      checkMockCall(
         ErrorBoundaryContainer,
         {
           route: routes.home,
@@ -59,7 +59,7 @@ describe("About", () => {
 
     it("should call the Splash component", () => {
       expect(AboutContainer).toBeCalledTimes(1);
-      mockCheckCall(AboutContainer, {});
+      checkMockCall(AboutContainer, {});
     });
   });
 });

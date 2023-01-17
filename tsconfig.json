@@ -17,19 +17,19 @@
       "@cypress/*": ["cypress/*"],
       "@fixtures/api/*": ["src/backend/api/exports/tests/fixtures/*"],
       "@fixtures/chakra": [
-        "src/tests/fixtures/mock.chakra.react.factory.class.tsx"
+        "src/fixtures/mocks/mock.chakra.react.factory.class.tsx"
       ],
       "@fixtures/chakra/icons": [
-        "src/tests/fixtures/mock.chakra.icon.factory.class.tsx"
+        "src/fixtures/mocks/mock.chakra.icon.factory.class.tsx"
       ],
       "@fixtures/react/child": [
-        "src/tests/fixtures/mock.component.child.factory.class.tsx"
+        "src/fixtures/mocks/mock.component.child.factory.class.tsx"
       ],
       "@fixtures/react/parent": [
-        "src/tests/fixtures/mock.component.parent.factory.class.tsx"
+        "src/fixtures/mocks/mock.component.parent.factory.class.tsx"
       ],
       "@fixtures/react/simple": [
-        "src/tests/fixtures/mock.component.simple.factory.class.tsx"
+        "src/fixtures/mocks/mock.component.simple.factory.class.tsx"
       ],
       "@locales/*": ["public/locales/en/*"],
       "@public/*": ["public/*"],

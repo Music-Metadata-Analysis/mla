@@ -2,8 +2,8 @@ import { render } from "@testing-library/react";
 import SVSIcon from "../svs.icon.component";
 import SVSIconContainer, { SVSIconContainerProps } from "../svs.icon.container";
 import mainTranslations from "@locales/main.json";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/locale.hook");
 

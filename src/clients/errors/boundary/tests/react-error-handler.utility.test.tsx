@@ -5,7 +5,7 @@ import createErrorHandler, {
 } from "../react-error-boundary.utility";
 import ErrorHandlerContainer from "@src/components/errors/boundary/handler/error.handler.container";
 import Events from "@src/events/events";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock(
   "@src/components/errors/boundary/handler/error.handler.container",

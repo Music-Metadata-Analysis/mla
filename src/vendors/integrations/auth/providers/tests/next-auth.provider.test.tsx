@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { SessionProvider } from "next-auth/react";
 import NextAuthProvider from "../next-auth";
-import checkMockCalls from "@src/tests/fixtures/mock.component.call";
+import checkMockCalls from "@src/fixtures/mocks/mock.component.call";
 import type { Session } from "next-auth";
 
 jest.mock("next-auth/react", () =>

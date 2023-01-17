@@ -3,8 +3,8 @@ import ErrorBoundaryContainer from "@src/components/errors/boundary/error.bounda
 import PrivacyContainer from "@src/components/legal/privacy/privacy.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Page, { getServerSideProps } from "@src/pages/legal/privacy";
-import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 import {
   mockServerSideProps,
   mockUtilities,
@@ -46,7 +46,7 @@ describe("Privacy", () => {
 
     it("should call the ErrorBoundary component correctly", () => {
       expect(ErrorBoundaryContainer).toBeCalledTimes(1);
-      mockCheckCall(
+      checkMockCall(
         ErrorBoundaryContainer,
         {
           route: routes.home,
@@ -59,7 +59,7 @@ describe("Privacy", () => {
 
     it("should call the Privacy component", () => {
       expect(PrivacyContainer).toBeCalledTimes(1);
-      mockCheckCall(PrivacyContainer, {});
+      checkMockCall(PrivacyContainer, {});
     });
   });
 });

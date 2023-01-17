@@ -8,7 +8,7 @@ import SunBurstNodeButton from "@src/components/reports/lastfm/common/drawer/sun
 import SunBurstNodeDisplay from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.display/node.display.component";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
 jest.mock("@chakra-ui/react", () =>

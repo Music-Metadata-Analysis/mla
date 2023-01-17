@@ -4,8 +4,8 @@ import Dialogue, { DialogueProps } from "../dialogue.resizable.component";
 import { testIDs } from "../dialogue.resizable.identifiers";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import { mockUseRouter } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
 

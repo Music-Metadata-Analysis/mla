@@ -2,11 +2,11 @@ import { render } from "@testing-library/react";
 import ReportPage from "@src/components/reports/lastfm/common/report.page/report.page";
 import PlayCountByArtistReport from "@src/components/reports/lastfm/playcount.artists/playcount.artists.container";
 import routes from "@src/config/routes";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import FourOhFour from "@src/pages/404";
 import Page, {
   getServerSideProps,
 } from "@src/pages/reports/lastfm/playCountByArtist";
-import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 import {
   mockServerSideProps,
   mockUtilities,
@@ -56,7 +56,7 @@ describe(routes.reports.lastfm.playCountByArtist, () => {
 
     it("should call the ReportPage correctly", () => {
       expect(ReportPage).toBeCalledTimes(1);
-      mockCheckCall(
+      checkMockCall(
         ReportPage,
         {
           ReportContainer: PlayCountByArtistReport,

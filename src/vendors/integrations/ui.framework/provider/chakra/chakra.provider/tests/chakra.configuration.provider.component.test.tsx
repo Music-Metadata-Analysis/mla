@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import ChakraConfigurationProvider from "../chakra.configuration.provider.component";
 import createColourModeManager from "../utilities/chakra.colour.mode.manager.utility";
 import createChakraTheme from "../utilities/chakra.theme.utility";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("@chakra-ui/react", () => {
   const { createComponent } = require("@fixtures/react/parent");

@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react";
 import Header from "../header.component";
 import HeaderContainer from "../header.container";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import useLocale from "@src/hooks/locale.hook";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/locale.hook");
 

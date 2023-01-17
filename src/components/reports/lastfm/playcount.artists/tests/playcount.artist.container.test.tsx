@@ -4,11 +4,11 @@ import PlayCountByArtistContainer, {
 } from "../playcount.artists.container";
 import PlayCountByArtistReport from "../playcount.artists.report.class";
 import SunBurstContainer from "@src/components/reports/lastfm/common/report.component/sunburst/sunburst.report.container";
-import mockUserHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import {
   getMockComponentProp,
   getMockComponentPropCount,
-} from "@src/tests/fixtures/mock.component.props";
+} from "@src/fixtures/mocks/mock.component.props";
+import mockUserHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
 jest.mock(

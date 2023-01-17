@@ -3,13 +3,13 @@ import mockControllerHook from "../../controllers/__mocks__/navbar.layout.contro
 import NavBarRoot from "../navbar.root.component";
 import NavBarRootContainer from "../navbar.root.container";
 import NavConfig from "@src/config/navbar";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook from "@src/hooks/__mocks__/auth.hook.mock";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import useLocale from "@src/hooks/locale.hook";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/analytics.hook");
 

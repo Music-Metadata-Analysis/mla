@@ -3,8 +3,8 @@ import Page from "../report.page";
 import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
-import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/lastfm.hook");
 
@@ -53,7 +53,7 @@ describe("ReportPage", () => {
 
       it("should call the ErrorBoundary correctly", () => {
         expect(ErrorBoundaryContainer).toBeCalledTimes(1);
-        mockCheckCall(
+        checkMockCall(
           ErrorBoundaryContainer,
           {
             route: routes.home,
@@ -66,7 +66,7 @@ describe("ReportPage", () => {
 
       it("should call the MockReportContainer correctly", () => {
         expect(MockReportContainer).toBeCalledTimes(1);
-        mockCheckCall(
+        checkMockCall(
           MockReportContainer,
           {
             userName: testUser,
@@ -86,7 +86,7 @@ describe("ReportPage", () => {
 
       it("should call the MockNoUserPage correctly", async () => {
         expect(MockNoUserPage).toBeCalledTimes(1);
-        mockCheckCall(MockNoUserPage, {});
+        checkMockCall(MockNoUserPage, {});
       });
     });
   });

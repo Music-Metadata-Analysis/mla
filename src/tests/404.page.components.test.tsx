@@ -3,8 +3,8 @@ import ErrorBoundaryContainer from "@src/components/errors/boundary/error.bounda
 import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Page, { getStaticProps } from "@src/pages/404";
-import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 import { mockIsBuildTime } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import {
   mockStaticProps,
@@ -68,7 +68,7 @@ describe("404", () => {
 
     it("should call the ErrorBoundary correctly", () => {
       expect(ErrorBoundaryContainer).toBeCalledTimes(1);
-      mockCheckCall(
+      checkMockCall(
         ErrorBoundaryContainer,
         {
           route: routes.home,
@@ -81,7 +81,7 @@ describe("404", () => {
 
     it("should call the ErrorDisplay correctly", () => {
       expect(ErrorDisplayContainer).toBeCalledTimes(1);
-      mockCheckCall(ErrorDisplayContainer, { errorKey: "404" }, 0, [
+      checkMockCall(ErrorDisplayContainer, { errorKey: "404" }, 0, [
         "handleClick",
       ]);
     });

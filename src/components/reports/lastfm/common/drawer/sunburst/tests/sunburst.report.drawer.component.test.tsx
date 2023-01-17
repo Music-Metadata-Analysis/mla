@@ -9,8 +9,8 @@ import SunBurstNodeListContainer from "@src/components/reports/lastfm/common/dra
 import SunBurstDrawerControlContainer from "@src/components/reports/lastfm/common/drawer/sunburst/panels/control/drawer.control.panel.container";
 import SunBurstDrawerTitleContainer from "@src/components/reports/lastfm/common/drawer/sunburst/panels/title/drawer.title.panel.container";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
 jest.mock("@src/hooks/ui/colour.hook");

@@ -12,9 +12,9 @@ import SunBurstChart from "@src/components/reports/common/chart/sunburst/chart.c
 import { MockReportClass } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.sunburst.report.class";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import settings from "@src/config/sunburst";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockSunBurstControllerHook from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 

@@ -3,7 +3,7 @@ import mockNavBarLayoutControllerHook from "../controllers/__mocks__/navbar.layo
 import NavBarContainer from "../navbar.container";
 import NavBarRootContainer from "../root/navbar.root.container";
 import NavConfig from "@src/config/navbar";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { mockIsBuildTime } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 
 jest.mock("@src/hooks/auth.hook");

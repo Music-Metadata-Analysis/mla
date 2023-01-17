@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import ClickInternalLink from "../click.link.internal.component";
 import ClickInternalLinkContainer from "../click.link.internal.container";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("@src/hooks/router.hook");
 

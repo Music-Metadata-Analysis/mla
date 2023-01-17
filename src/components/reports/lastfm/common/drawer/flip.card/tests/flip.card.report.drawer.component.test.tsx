@@ -9,9 +9,9 @@ import StyledButtonLink from "@src/components/button/button.external.link/button
 import ReportDrawer from "@src/components/reports/common/drawer/drawer.component";
 import mockFlipCardController from "@src/components/reports/lastfm/common/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import settings from "@src/config/flip.card";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

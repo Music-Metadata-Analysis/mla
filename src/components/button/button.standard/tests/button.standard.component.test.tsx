@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import BaseButton from "../../button.base/button.base.component";
 import StyledButton from "../button.standard.component";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/analytics.hook");
 

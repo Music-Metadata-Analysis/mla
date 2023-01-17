@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import AuthenticationSignInModalContainer from "../authentication.container";
 import ModalSignInComponent from "../modals/signin/modal.signin.container";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockAuthHook, {
   mockUserProfile,
 } from "@src/hooks/__mocks__/auth.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import mockToggleHook from "@src/utilities/react/hooks/__mocks__/toggle.hook.mock";
 
 jest.mock("@src/hooks/auth.hook");

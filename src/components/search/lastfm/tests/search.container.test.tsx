@@ -2,8 +2,8 @@ import { render } from "@testing-library/react";
 import Search from "../search.component";
 import SearchContainer from "../search.container";
 import navbarSettings from "@src/config/navbar";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import useNavBarThresholdToggle from "@src/hooks/controllers/navbar.threshold.toggle.hook";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/controllers/navbar.threshold.toggle.hook");
 

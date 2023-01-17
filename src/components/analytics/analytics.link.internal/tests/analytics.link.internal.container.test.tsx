@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import AnalyticsInternalLinkWrapper from "../analytics.link.internal.component";
 import AnalyticsInternalLinkWrapperContainer from "../analytics.link.internal.container";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("@src/hooks/analytics.hook");
 

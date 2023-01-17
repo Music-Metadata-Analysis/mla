@@ -4,8 +4,8 @@ import SunBurstTitlePanel, {
   SunBurstTitlePanelProps,
 } from "../title.panel.component";
 import { testIDs } from "../title.panel.identifiers";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/ui/colour.hook");
 

@@ -32,7 +32,7 @@ const checkMockCall = (
   functions: string[] = ["onClick"],
   styled = false,
   instances: instancePair[] = []
-) => {
+): void => {
   let call = { ...jest.mocked(component).mock.calls[index][0] };
   if ("children" in call) delete call.children;
   if (styled && call.className) delete call.className;

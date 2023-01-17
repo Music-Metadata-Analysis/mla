@@ -1,7 +1,7 @@
 import { waitFor, render } from "@testing-library/react";
 import Header, { HeaderProps } from "../header.component";
 import settings from "@src/config/head";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { mockHeadShim } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 
 jest.mock("@src/vendors/integrations/web.framework/vendor");

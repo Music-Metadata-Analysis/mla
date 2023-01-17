@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import ReportOption from "../report.option.component";
 import { testIDs } from "../report.option.identifiers";
 import Button from "@src/components/button/button.standard/button.standard.component";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Flex"])

@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import Image from "next/image";
 import NextImageShim from "../next";
 import LastFM from "@public/images/lastfm.png";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
 jest.mock("next/image", () =>
   require("@fixtures/react/child").createComponent("NextImage")

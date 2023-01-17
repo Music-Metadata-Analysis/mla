@@ -3,8 +3,8 @@ import ErrorBoundaryContainer from "@src/components/errors/boundary/error.bounda
 import SelectContainer from "@src/components/search/lastfm/select/select.report.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Page, { getServerSideProps } from "@src/pages/search/lastfm/index";
-import mockCheckCall from "@src/tests/fixtures/mock.component.call";
 import {
   mockServerSideProps,
   mockUtilities,
@@ -50,7 +50,7 @@ describe("SearchSelectionPage", () => {
 
     it("should render the ErrorBoundary with the correct props", () => {
       expect(ErrorBoundaryContainer).toBeCalledTimes(1);
-      mockCheckCall(
+      checkMockCall(
         ErrorBoundaryContainer,
         {
           route: routes.home,
@@ -63,7 +63,7 @@ describe("SearchSelectionPage", () => {
 
     it("should render the SelectContainer with the correct props", () => {
       expect(SelectContainer).toBeCalledTimes(1);
-      mockCheckCall(SelectContainer, {}, 0);
+      checkMockCall(SelectContainer, {}, 0);
     });
   });
 });

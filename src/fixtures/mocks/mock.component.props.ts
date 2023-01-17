@@ -9,7 +9,7 @@ export const getMockComponentProp = ({
   component: React.FC<AnyProps> | React.ComponentClass<AnyProps, AnyProps>;
   propName: string;
   call?: number;
-}) => {
+}): AnyProps => {
   return jest.mocked(component).mock.calls[call][0][propName];
 };
 
@@ -19,16 +19,16 @@ export const getMockComponentPropCount = ({
 }: {
   component: React.FC<AnyProps> | React.ComponentClass<AnyProps, AnyProps>;
   call?: number;
-}) => {
+}): number => {
   return Object.keys(jest.mocked(component).mock.calls[call][0]).length;
 };
 
 export const getMockProp = ({
   mock,
   propName,
-  call = 0,
+  call,
 }: {
   mock: jest.Mock<unknown>;
   propName: string;
-  call?: number;
-}) => mock.mock.calls[call][0][propName];
+  call: number;
+}): AnyProps => mock.mock.calls[call][0][propName];

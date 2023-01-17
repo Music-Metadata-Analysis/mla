@@ -4,8 +4,8 @@ import ErrorHandlerContainer, {
 } from "../error.handler.container";
 import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import Events from "@src/events/events";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
-import checkMockCall from "@src/tests/fixtures/mock.component.call";
 
 jest.mock("@src/hooks/analytics.hook");
 
