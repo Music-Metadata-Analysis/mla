@@ -1,7 +1,7 @@
 import LastFMEndpointBase from "./bases/endpoint.base.class";
-import authVendor from "@src/backend/api/integrations/auth/vendor";
-import flagVendor from "@src/backend/api/integrations/flags/vendor";
 import * as status from "@src/config/status";
+import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
+import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
 import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
 import type {
   ApiEndpointRequestType,
@@ -17,7 +17,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
   protected setUpHandler(): void {
     this.handler.get(this.route, async (req, res, next) => {
       await this.waitToAvoidRateLimiting();
-      const authClient = new authVendor.Client(req);
+      const authClient = new authVendorBackend.Client(req);
       const token = await authClient.getSession();
       const [params, paramErrors] = this.getParams(req);
       if (!token) {
@@ -53,7 +53,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointB
   protected async isEnabled(): Promise<boolean> {
     if (!this.flag) return true;
 
-    const client = new flagVendor.Client(
+    const client = new flagVendorBackend.Client(
       process.env.NEXT_PUBLIC_FLAG_ENVIRONMENT
     );
 

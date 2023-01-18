@@ -1,5 +1,5 @@
 import CacheController from "../cache.controller.class";
-import type { CacheVendorCdnInterface } from "@src/backend/api/types/integrations/cache/vendor.types";
+import type { CacheVendorCdnInterface } from "@src/vendors/types/integrations/cache/vendor.backend.types";
 
 describe(CacheController.name, () => {
   let instance: CacheController<string>;

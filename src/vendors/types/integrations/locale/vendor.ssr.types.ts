@@ -1,4 +1,4 @@
-import type { VendorSSRClientReturnType } from "@src/vendors/integrations/locale/vendor.types";
+import type { VendorSSRClientReturnType } from "@src/vendors/integrations/locale/_types/vendor.specific.types";
 
 export type LocaleVendorSSRReturnType = VendorSSRClientReturnType;
 

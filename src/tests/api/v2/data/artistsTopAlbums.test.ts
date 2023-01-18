@@ -1,19 +1,25 @@
-import {} from "@fixtures/api/mock.api.auth";
-import {} from "@fixtures/api/mock.api.logger";
-import { mockLastFMProxyMethods } from "@fixtures/api/mock.api.lastfm";
-import { createAPIMocks } from "@fixtures/api/mock.api.messages";
-import { LastFMApiEndpointFactory } from "@src/backend/api/exports/endpoints";
+import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.endpoint.base.class";
+import { mockLastFMProxyMethods } from "@src/backend/api/services/lastfm/proxy/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import { STATUS_400_MESSAGE } from "@src/config/status";
 import handleProxy, {
   endpointFactory,
 } from "@src/pages/api/v2/data/artists/[artist]/albums/index";
+import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
+import type { ApiEndpointRequestQueryParamType } from "@src/backend/api/types/services/request.types";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
 import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,
-} from "@src/backend/api/exports/types/mocks";
-import type { ApiEndpointRequestQueryParamType } from "@src/backend/api/exports/types/requests";
-import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+} from "@src/vendors/types/integrations/api.framework/vendor.fixture.types";
+
+jest.mock("@src/backend/api/services/lastfm/proxy/proxy.class");
+
+jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
+
+jest.mock("@src/vendors/integrations/auth/vendor.backend", () =>
+  require("@src/vendors/integrations/auth/__mocks__/vendor.backend.mock").authenticated()
+);
 
 const endpointUnderTest = apiRoutes.v2.data.artists.albumsList;
 
@@ -43,8 +49,8 @@ describe(endpointUnderTest, () => {
   };
 
   describe("An instance of the endpoint factory class", () => {
-    it("should inherit from LastFMApiEndpointFactory", () => {
-      expect(endpointFactory).toBeInstanceOf(LastFMApiEndpointFactory);
+    it("should inherit from LastFMApiEndpointFactoryV2", () => {
+      expect(endpointFactory).toBeInstanceOf(LastFMApiEndpointFactoryV2);
     });
 
     it("should have the correct route set", () => {

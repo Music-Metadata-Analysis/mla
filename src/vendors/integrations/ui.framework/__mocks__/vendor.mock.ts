@@ -1,6 +1,6 @@
 import { createComponent } from "@fixtures/react/parent";
-import mockValues from "@src/vendors/integrations/ui.framework/popups/controller/__mocks__/popups.controller.hook.mock";
-import type PopUpsControllerProvider from "@src/vendors/integrations/ui.framework/popups/provider/popups.provider";
+import mockValues from "@src/vendors/integrations/ui.framework/web/popups/controller/__mocks__/popups.controller.hook.mock";
+import type PopUpsControllerProvider from "@src/vendors/integrations/ui.framework/web/popups/provider/popups.provider";
 import type {
   UIVendorProviderComponentProps,
   UIVendorColourModeType,

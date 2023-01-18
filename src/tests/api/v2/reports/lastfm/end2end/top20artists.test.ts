@@ -1,18 +1,22 @@
-import {} from "@fixtures/api/mock.api.auth";
-import {} from "@fixtures/api/mock.api.logger";
-import { createAPIMocks } from "@fixtures/api/mock.api.messages";
 import apiRoutes from "@src/config/apiRoutes";
 import * as status from "@src/config/status";
 import testResponses from "@src/contracts/api/fixtures/services/lastfm/end2end/lastfm.topartists";
 import testAccounts from "@src/contracts/api/fixtures/services/lastfm/end2end/lastfm.users";
 import artistHandler from "@src/pages/api/v2/reports/lastfm/top20artists/[username]";
+import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
 import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,
-} from "@src/backend/api/exports/types/mocks";
-import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+} from "@src/vendors/types/integrations/api.framework/vendor.fixture.types";
 
 jest.unmock("@toplast/lastfm");
+
+jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
+
+jest.mock("@src/vendors/integrations/auth/vendor.backend", () =>
+  require("@src/vendors/integrations/auth/__mocks__/vendor.backend.mock").authenticated()
+);
 
 type ArrangeArgs = {
   username: string;

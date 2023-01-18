@@ -1,9 +1,9 @@
-import isNextBuildTime from "../build/next";
-import NextHeaderComponent from "../head/next";
-import useNextRouter from "../hooks/next";
-import NextImageShim from "../image/next";
-import isNextSSR from "../ssr/next";
 import { webFrameworkVendor } from "../vendor";
+import isNextBuildTime from "../web/build/next";
+import NextHeaderComponent from "../web/head/next";
+import useNextRouter from "../web/hooks/next";
+import NextImageShim from "../web/image/next";
+import isNextSSR from "../web/ssr/next";
 
 describe("webFrameworkVendor", () => {
   it("should be configured with the correct properties", () => {

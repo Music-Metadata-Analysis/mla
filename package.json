@@ -148,7 +148,6 @@
       "<rootDir>/jest/setup/testing-library.js"
     ],
     "moduleNameMapper": {
-      "^@fixtures/api/(.*)": "<rootDir>/src/backend/api/exports/tests/fixtures/$1",
       "^@fixtures/chakra$": "<rootDir>/src/fixtures/mocks/mock.chakra.react.factory.class.tsx",
       "^@fixtures/chakra/icons$": "<rootDir>/src/fixtures/mocks/mock.chakra.icon.factory.class.tsx",
       "^@fixtures/react/child$": "<rootDir>/src/fixtures/mocks/mock.component.child.factory.class.tsx",

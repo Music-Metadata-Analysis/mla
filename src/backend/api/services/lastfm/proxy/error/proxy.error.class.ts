@@ -1,4 +1,6 @@
-export class ProxyError extends Error {
+import type { RemoteServiceError } from "@src/contracts/api/types/error.types";
+
+export class ProxyError extends Error implements RemoteServiceError {
   public clientStatusCode: number | undefined;
 
   constructor(message: string, clientStatusCode?: number) {

@@ -1,9 +1,10 @@
 import ArtistImageCdnClient from "./cdn/artist.image.cdn.client.class";
 import CacheControllerAbstractFactory from "@src/backend/api/cache/factory/cache.controller.abstract.factory.class";
-import persistenceVendor from "@src/backend/api/integrations/persistence/vendor";
+import { persistenceVendorBackend } from "@src/vendors/integrations/persistence/vendor.backend";
 
 export default class ArtistImageCacheControllerFactory extends CacheControllerAbstractFactory<string> {
-  protected OriginServerPersistenceClient = persistenceVendor.PersistenceClient;
+  protected OriginServerPersistenceClient =
+    persistenceVendorBackend.PersistenceClient;
   protected CdnClient = ArtistImageCdnClient;
   protected defaultResponse = "";
 

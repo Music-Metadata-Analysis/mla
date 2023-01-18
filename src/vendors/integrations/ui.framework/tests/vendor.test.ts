@@ -1,14 +1,14 @@
-import useChakraColour from "../colour.hook/chakra";
-import useChakraColourMode from "../colour.mode.hook/chakra";
-import chakraConfiguration from "../config/chakra";
-import useChakraPopUp from "../create.popup.hook/chakra";
-import useChakraForm from "../form.hook/chakra";
-import usePopUpsController from "../popups/controller/popups.controller.hook";
-import PopUpsControllerProvider from "../popups/provider/popups.provider";
-import ChakraProvider from "../provider/chakra/chakra";
 import { uiFrameworkVendor } from "../vendor";
+import useChakraColour from "../web/colour.hook/chakra";
+import useChakraColourMode from "../web/colour.mode.hook/chakra";
+import chakraConfiguration from "../web/config/chakra";
+import useChakraPopUp from "../web/create.popup.hook/chakra";
+import useChakraForm from "../web/form.hook/chakra";
+import usePopUpsController from "../web/popups/controller/popups.controller.hook";
+import PopUpsControllerProvider from "../web/popups/provider/popups.provider";
+import ChakraProvider from "../web/provider/chakra/chakra";
 
-jest.mock("../provider/chakra/chakra", () =>
+jest.mock("../web/provider/chakra/chakra", () =>
   require("@fixtures/react/parent").createComponent("ChakraProvider")
 );
 
@@ -24,6 +24,6 @@ describe("uiFrameworkVendor", () => {
     expect(uiFrameworkVendor.popups.controllerHook).toBe(usePopUpsController);
 
     expect(Object.keys(uiFrameworkVendor.core).length).toBe(5);
-    expect(Object.keys(uiFrameworkVendor.popups).length).toBe(3);
+    expect(Object.keys(uiFrameworkVendor.popups).length).toBe(4);
   });
 });

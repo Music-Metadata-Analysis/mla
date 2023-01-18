@@ -1,12 +1,10 @@
-import apiHandlerVendor from "@src/backend/api/integrations/api.handler/vendor";
-import apiLoggerVendor from "@src/backend/api/integrations/api.logger/vendor";
 import LastFMProxy from "@src/backend/api/services/lastfm/proxy/proxy.class";
 import { knownStatuses } from "@src/config/api";
 import requestSettings from "@src/config/requests";
 import * as status from "@src/config/status";
+import { apiHandlerVendorBackend } from "@src/vendors/integrations/api.handler/vendor.backend";
+import { apiLoggerVendorBackend } from "@src/vendors/integrations/api.logger/vendor.backend";
 import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
-import type { ApiHandlerVendorHandlerType } from "@src/backend/api/types/integrations/api.handler/vendor.types";
-import type { ApiLoggerVendorEndpointLoggerInterface } from "@src/backend/api/types/integrations/api.logger/vendor.types";
 import type { ApiEndPointFactoryInterface } from "@src/backend/api/types/services/endpoint.types";
 import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
 import type {
@@ -15,6 +13,8 @@ import type {
   ApiEndpointRequestBodyType,
 } from "@src/backend/api/types/services/request.types";
 import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
+import type { ApiHandlerVendorHandlerType } from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
+import type { ApiLoggerVendorEndpointLoggerInterface } from "@src/vendors/types/integrations/api.logger/vendor.backend.types";
 
 export default abstract class LastFMEndpointBase
   implements ApiEndPointFactoryInterface
@@ -26,12 +26,12 @@ export default abstract class LastFMEndpointBase
   public abstract readonly route: string;
 
   constructor() {
-    this.handler = new apiHandlerVendor.HandlerFactory({
+    this.handler = new apiHandlerVendorBackend.HandlerFactory({
       errorHandler: this.errorHandler,
       fallBackHandler: this.fallBackHandler,
     }).create();
     this.proxy = new LastFMProxy();
-    this._endpointLogger = new apiLoggerVendor.endpointLogger();
+    this._endpointLogger = new apiLoggerVendorBackend.endpointLogger();
   }
 
   protected abstract getProxyResponse(

@@ -1,4 +1,4 @@
-import type { VendorAppComponentProps } from "@src/vendors/integrations/web.framework/vendor.types";
+import type { VendorAppComponentProps } from "@src/vendors/integrations/web.framework/_types/vendor.specific.types";
 import type { ReactNode } from "react";
 
 export type WebFrameworkVendorAppComponentProps<T> = VendorAppComponentProps<T>;

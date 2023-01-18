@@ -1,9 +1,9 @@
-import cacheVendor from "@src/backend/api/integrations/cache/vendor";
-import lastFMvendor from "@src/backend/api/integrations/lastfm/vendor";
-import type { LastFMVendorArtistImageScraperInterface } from "@src/backend/api/types/integrations/lastfm/vendor.types";
-import type { PersistenceVendorClientInterface } from "@src/backend/api/types/integrations/persistence/vendor.types";
+import { cacheVendorBackend } from "@src/vendors/integrations/cache/vendor.backend";
+import { lastFMVendorBackend } from "@src/vendors/integrations/lastfm/vendor.backend";
+import type { LastFMVendorArtistImageScraperInterface } from "@src/vendors/types/integrations/lastfm/vendor.backend.types";
+import type { PersistenceVendorClientInterface } from "@src/vendors/types/integrations/persistence/vendor.backend.types";
 
-export default class ArtistImageCdnClient extends cacheVendor.CdnBaseClient<string> {
+export default class ArtistImageCdnClient extends cacheVendorBackend.CdnBaseClient<string> {
   protected scraper: LastFMVendorArtistImageScraperInterface;
   protected cacheFolderName = "lastfm/artists";
   protected scraperRetries = 2;
@@ -13,7 +13,7 @@ export default class ArtistImageCdnClient extends cacheVendor.CdnBaseClient<stri
     cdnHostname: string
   ) {
     super(originServerClient, cdnHostname);
-    this.scraper = new lastFMvendor.ArtistImageScraper();
+    this.scraper = new lastFMVendorBackend.ArtistImageScraper();
   }
 
   protected async createNewObject(objectName: string): Promise<string> {

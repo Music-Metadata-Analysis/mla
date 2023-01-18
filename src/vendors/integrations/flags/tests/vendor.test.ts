@@ -1,6 +1,6 @@
-import useFlagSmith from "../hooks/flagsmith";
-import FlagSmithProvider from "../providers/flagsmith";
 import { flagVendor } from "../vendor";
+import useFlagSmith from "../web/hooks/flagsmith";
+import FlagSmithProvider from "../web/providers/flagsmith";
 
 describe("flagVendor", () => {
   it("should be configured with the correct properties", () => {

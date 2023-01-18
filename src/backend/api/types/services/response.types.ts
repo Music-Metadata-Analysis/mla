@@ -1,3 +1,1 @@
-import type { ApiFrameworkVendorApiResponseType } from "@src/backend/api/types/integrations/api.framework/vendor.types";
-
-export type ApiEndpointResponseType = ApiFrameworkVendorApiResponseType;
+export type { ApiFrameworkVendorApiResponseType as ApiEndpointResponseType } from "@src/vendors/types/integrations/api.framework/vendor.backend.types";

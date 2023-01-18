@@ -1,4 +1,4 @@
-import type { VendorUtilities } from "@src/vendors/integrations/web.framework/vendor.types";
+import type { VendorUtilities } from "@src/vendors/integrations/web.framework/_types/vendor.specific.types";
 
 export type WebFrameworkVendorSSRUtilitiesInterface = VendorUtilities;
 

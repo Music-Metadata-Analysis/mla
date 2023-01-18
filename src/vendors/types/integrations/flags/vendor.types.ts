@@ -1,4 +1,4 @@
-import type { VendorStateInterface } from "@src/vendors/integrations/flags/vendor.types";
+import type { VendorStateInterface } from "@src/vendors/integrations/flags/_types/vendor.specific.types";
 import type { ReactElement, JSXElementConstructor, ReactNode } from "react";
 
 export type FlagVendorStateInterface = VendorStateInterface;

@@ -16,6 +16,7 @@ export type AuthVendorSessionType = {
   group?: string;
   oauth: AuthVendorServiceType;
 } | null;
+
 export type AuthVendorStatusType =
   | "authenticated"
   | "unauthenticated"

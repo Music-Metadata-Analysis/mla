@@ -10,6 +10,7 @@ class MetricsReducerStates {
   ): MetricsStateType {
     if (action.type === "SearchMetric") {
       if (!state[action.type]) state[action.type] = 0;
+      //if (!(String(action.type) in state)) state[action.type] = 0;
       return {
         ...state,
         [action.type]: state[action.type] + 1,

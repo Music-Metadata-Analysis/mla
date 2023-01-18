@@ -1,4 +1,4 @@
-import type { VendorStateInterface } from "@src/vendors/integrations/flags/vendor.types";
+import type { VendorStateInterface } from "@src/vendors/integrations/flags/_types/vendor.specific.types";
 
 export type FlagVendorStateInterface = VendorStateInterface;
 

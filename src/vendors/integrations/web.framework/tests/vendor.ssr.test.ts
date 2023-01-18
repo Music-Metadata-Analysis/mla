@@ -1,4 +1,4 @@
-import nextUtilities from "../utils/next";
+import nextUtilities from "../ssr/utils/next";
 import { webFrameworkVendorSSR } from "../vendor.ssr";
 
 describe("webFrameworkVendorSSR", () => {

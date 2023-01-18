@@ -2,15 +2,17 @@ import { waitFor } from "@testing-library/react";
 import ConcreteBaseProxyErrorClass from "./implementations/concrete.endpoint.base.proxy.error.class";
 import ConcreteBaseProxySuccessClass from "./implementations/concrete.endpoint.base.proxy.success";
 import ConcreteBaseEndpointTimeoutErrorClass from "./implementations/concrete.endpoint.base.timeout.error.class";
-import { createAPIMocks } from "@fixtures/api/mock.api.messages";
-import { mockEndpointLogger } from "@src/backend/api/integrations/api.logger/__mocks__/vendor.mock";
 import * as status from "@src/config/status";
+import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
+import { mockEndpointLogger } from "@src/vendors/integrations/api.logger/__mocks__/vendor.backend.mock";
 import type LastFMEndpointBase from "../endpoint.base.class";
-import type { MockAPIEndpointRequestType } from "@src/backend/api/types/services/mocks/request.types";
-import type { MockAPIEndpointResponseType } from "@src/backend/api/types/services/mocks/response.types";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type {
+  MockAPIEndpointRequestType,
+  MockAPIEndpointResponseType,
+} from "@src/vendors/types/integrations/api.framework/vendor.fixture.types";
 
-jest.mock("@src/backend/api/integrations/api.logger/vendor");
+jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
 
 describe("LastFMEndpointBase", () => {
   let clearTimeOut: jest.SpyInstance;

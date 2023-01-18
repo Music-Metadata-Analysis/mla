@@ -8,6 +8,7 @@ import {
   mockPopUpControllerHook,
   MockPopUpsProvider,
 } from "./vendor.mock";
+import { PopUpsControllerContext } from "../web/popups/provider/popups.provider";
 import type { UIFrameworkVendorInterface } from "@src/vendors/types/integrations/ui.framework/vendor.types";
 
 export const uiFrameworkVendor: UIFrameworkVendorInterface = {
@@ -21,6 +22,7 @@ export const uiFrameworkVendor: UIFrameworkVendorInterface = {
   popups: {
     controllerHook: jest.fn(() => mockPopUpControllerHook),
     creatorHook: jest.fn(() => mockPopUpCreatorHook),
+    Context: PopUpsControllerContext, // not a mocked value
     Provider: MockPopUpsProvider,
   },
 };

@@ -1,8 +1,8 @@
 import LastFMTrackClientAdapter from "../track.class";
 import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
 import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
-import type { LastFMVendorClientError } from "@src/backend/api/types/integrations/lastfm/vendor.types";
 import type { LastFMTrackInfoInterface } from "@src/contracts/api/exports/lastfm/datapoint.types";
+import type { LastFMVendorClientError } from "@src/vendors/types/integrations/lastfm/vendor.backend.types";
 
 describe("LastFMArtistClientAdapter", () => {
   const secretKey = "123VerySecret";

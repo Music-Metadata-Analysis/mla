@@ -70,20 +70,14 @@ main() {
 
   echo "Component Decoupling ..."
 
-  # Enforce API Component Isolation (No imports from API unless deliberately exported.)
-  echo "  Checking Imports from the BACKEND/API Component..."
-  ! search 'from "@src/backend/api/.+' src        | 
-    excludes "^src/backend/api/"                  |
-    excludes 'from "@src/backend/api/exports'     || 
-    (echo "API elements should not be imported unless deliberately exported." && false)
-
   echo "  Checking Imports into the BACKEND/API Component..."
   ! search 'from "@src/.+' src/backend/api      | 
     allows 'from "@src/backend/api/.+'          |
     allows 'from "@src/__mocks__/.+'            |    
     allows 'from "@src/config/.+'               |
     allows 'from "@src/contracts/.+'            |
-    allows 'from "@src/utilities/.+'           ||
+    allows 'from "@src/utilities/.+'            |
+    allows 'from "@src/vendors/.+'              ||
     error_restricted
 
   echo "  Checking Imports into the CONTRACTS Component..."
@@ -122,6 +116,7 @@ main() {
   echo "  Checking Imports into the FRONTEND/WEB Component..."
   ! search 'from "(@src/contracts/api.+|@src/backend/.+)' src   | 
     excludes 'from "@src/contracts/api/fixtures'                | 
+    excludes 'from "@src/contracts/api/types'                   | 
     excludes "^src/backend/"                                    |
     excludes "^src/config/"                                     |
     excludes "^src/contracts/"                                  |

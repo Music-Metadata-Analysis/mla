@@ -3,13 +3,13 @@ import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
 import CacheController from "@src/backend/api/cache/controller/cache.controller.class";
 import ArtistImageCacheFactory from "@src/backend/api/services/lastfm/proxy/cache/artist.image.cache.controller.factory.class";
 import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
-import type { LastFMVendorClientError } from "@src/backend/api/types/integrations/lastfm/vendor.types";
 import type { LastFMUserProfileInterface } from "@src/contracts/api/exports/lastfm/element.types";
 import type {
   LastFMUserAlbumInterface,
   LastFMUserArtistInterface,
   LastFMUserTrackInterface,
 } from "@src/contracts/api/exports/lastfm/report.types";
+import type { LastFMVendorClientError } from "@src/vendors/types/integrations/lastfm/vendor.backend.types";
 
 jest.mock(
   "@src/backend/api/services/lastfm/proxy/cache/artist.image.cache.controller.factory.class"

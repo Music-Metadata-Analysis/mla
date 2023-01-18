@@ -1,6 +1,6 @@
-import useNextAuth from "../hooks/next-auth";
-import NextAuthProvider from "../providers/next-auth";
 import { authVendor } from "../vendor";
+import useNextAuth from "../web/hooks/next-auth";
+import NextAuthProvider from "../web/providers/next-auth";
 
 describe("authVendor", () => {
   it("should be configured with the correct properties", () => {

@@ -3,7 +3,6 @@ import dk from "deep-keys";
 import mockHookValues from "../__mocks__/popups.controller.hook.mock";
 import usePopUpsController from "../popups.controller.hook";
 import { mockPopUpControllerHook } from "@src/vendors/integrations/ui.framework/__mocks__/vendor.mock";
-import { PopUpsControllerContext } from "@src/vendors/integrations/ui.framework/popups/provider/popups.provider";
 import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 import type { PopUpsControllerContextInterface } from "@src/vendors/types/integrations/ui.framework/popups/popups.context.types";
 import type { ReactNode } from "react";
@@ -32,9 +31,9 @@ describe("usePopUpsController", () => {
     mockPopupContext,
   }: MockInterfaceContextWithChildren) => {
     return (
-      <PopUpsControllerContext.Provider value={mockPopupContext}>
+      <uiFrameworkVendor.popups.Context.Provider value={mockPopupContext}>
         {children}
-      </PopUpsControllerContext.Provider>
+      </uiFrameworkVendor.popups.Context.Provider>
     );
   };
 

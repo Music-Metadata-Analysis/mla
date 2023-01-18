@@ -2,26 +2,28 @@ import { waitFor } from "@testing-library/react";
 import ConcreteV2EndpointProxyErrorClass from "./implementations/concrete.v2.proxy.error.class";
 import ConcreteV2EndpointProxyResponseErrorClass from "./implementations/concrete.v2.proxy.response.error.class";
 import ConcreteV2EndpointTimeoutErrorClass from "./implementations/concrete.v2.timeout.error.class";
+import * as status from "@src/config/status";
 import {
   createAPIMocks,
   mockSession,
-} from "@src/backend/api/exports/tests/fixtures/mock.api.messages";
-import { mockEndpointLogger } from "@src/backend/api/integrations/api.logger/__mocks__/vendor.mock";
-import { mockAuthClient } from "@src/backend/api/integrations/auth/__mocks__/vendor.mock";
-import authVendor from "@src/backend/api/integrations/auth/vendor";
-import { mockFlagClient } from "@src/backend/api/integrations/flags/__mocks__/vendor.mock";
-import flagVendor from "@src/backend/api/integrations/flags/vendor";
-import * as status from "@src/config/status";
+} from "@src/vendors/integrations/api.framework/fixtures";
+import { mockEndpointLogger } from "@src/vendors/integrations/api.logger/__mocks__/vendor.backend.mock";
+import { mockAuthClient } from "@src/vendors/integrations/auth/__mocks__/vendor.backend.mock";
+import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
+import { mockFlagClient } from "@src/vendors/integrations/flags/__mocks__/vendor.backend.mock";
+import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
 import type LastFMApiEndpointFactoryV2 from "../v2.endpoint.base.class";
-import type { MockAPIEndpointRequestType } from "@src/backend/api/types/services/mocks/request.types";
-import type { MockAPIEndpointResponseType } from "@src/backend/api/types/services/mocks/response.types";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type {
+  MockAPIEndpointRequestType,
+  MockAPIEndpointResponseType,
+} from "@src/vendors/types/integrations/api.framework/vendor.fixture.types";
 
-jest.mock("@src/backend/api/integrations/auth/vendor");
+jest.mock("@src/vendors/integrations/auth/vendor.backend");
 
-jest.mock("@src/backend/api/integrations/flags/vendor");
+jest.mock("@src/vendors/integrations/flags/vendor.backend");
 
-jest.mock("@src/backend/api/integrations/api.logger/vendor");
+jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
 
 describe("LastFMApiEndpointFactoryV2", () => {
   let clearTimeOutSpy: jest.SpyInstance;
@@ -72,8 +74,8 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
   const checkJWT = () => {
     it("should instantiate the authentication client as expected", () => {
-      expect(authVendor.Client).toBeCalledTimes(1);
-      expect(authVendor.Client).toBeCalledWith(mockReq);
+      expect(authVendorBackend.Client).toBeCalledTimes(1);
+      expect(authVendorBackend.Client).toBeCalledWith(mockReq);
     });
 
     it("should call the getSession method with the correct props", () => {
@@ -84,7 +86,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
   const checkNoJWT = () => {
     it("should NOT instantiate the authentication client", () => {
-      expect(authVendor.Client).toBeCalledTimes(0);
+      expect(authVendorBackend.Client).toBeCalledTimes(0);
     });
   };
 
@@ -94,18 +96,18 @@ describe("LastFMApiEndpointFactoryV2", () => {
     expectedCalls: number;
   }) => {
     it(`should check the flag's status`, () => {
-      expect(flagVendor.Client).toBeCalledTimes(expectedCalls);
+      expect(flagVendorBackend.Client).toBeCalledTimes(expectedCalls);
       expect(mockFlagClient.isEnabled).toBeCalledTimes(expectedCalls);
     });
 
     it("should instantiate Flagsmith with the correct environment", () => {
-      expect(flagVendor.Client).toBeCalledWith(mockFlagEnvironment);
+      expect(flagVendorBackend.Client).toBeCalledWith(mockFlagEnvironment);
     });
   };
 
   const checkNoFeatureFlagLookup = () => {
     it("should NOT check the flag's status", () => {
-      expect(flagVendor.Client).toBeCalledTimes(0);
+      expect(flagVendorBackend.Client).toBeCalledTimes(0);
       expect(mockFlagClient.isEnabled).toBeCalledTimes(0);
     });
   };

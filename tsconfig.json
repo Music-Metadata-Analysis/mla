@@ -15,7 +15,6 @@
     "noEmit": true,
     "paths": {
       "@cypress/*": ["cypress/*"],
-      "@fixtures/api/*": ["src/backend/api/exports/tests/fixtures/*"],
       "@fixtures/chakra": [
         "src/fixtures/mocks/mock.chakra.react.factory.class.tsx"
       ],

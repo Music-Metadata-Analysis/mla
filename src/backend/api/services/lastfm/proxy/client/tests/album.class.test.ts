@@ -1,8 +1,8 @@
 import LastFMAlbumClientAdapter from "../album.class";
 import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
 import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
-import type { LastFMVendorClientError } from "@src/backend/api/types/integrations/lastfm/vendor.types";
 import type { LastFMAlbumInfoInterface } from "@src/contracts/api/exports/lastfm/datapoint.types";
+import type { LastFMVendorClientError } from "@src/vendors/types/integrations/lastfm/vendor.backend.types";
 
 describe("LastFMAlbumClientAdapter", () => {
   let secretKey: "123VerySecret";

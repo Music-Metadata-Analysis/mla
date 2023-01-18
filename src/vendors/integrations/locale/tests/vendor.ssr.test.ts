@@ -1,4 +1,4 @@
-import NextI18NextSSR from "../ssr/next-i18next";
+import NextI18NextSSR from "../ssr/client/next-i18next";
 import { localeVendorSSR } from "../vendor.ssr";
 
 describe("localeVendorSSR", () => {

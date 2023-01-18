@@ -1,7 +1,5 @@
 import type { PopUpComponentType } from "./popups/popups.component.types";
 import type { PopUpComponentNameType } from "./popups/popups.state.types";
-import type usePopUpsController from "@src/vendors/integrations/ui.framework/popups/controller/popups.controller.hook";
-import type PopUpsControllerProvider from "@src/vendors/integrations/ui.framework/popups/provider/popups.provider";
 import type {
   VendorColourHookType,
   VendorColourModeType,
@@ -9,7 +7,10 @@ import type {
   VendorConfigType,
   VendorProviderProps,
   VendorStateType,
-} from "@src/vendors/integrations/ui.framework/vendor.types";
+} from "@src/vendors/integrations/ui.framework/_types/vendor.service.types";
+import type usePopUpsController from "@src/vendors/integrations/ui.framework/web/popups/controller/popups.controller.hook";
+import type PopUpsControllerProvider from "@src/vendors/integrations/ui.framework/web/popups/provider/popups.provider";
+import type { PopUpsControllerContext } from "@src/vendors/integrations/ui.framework/web/popups/provider/popups.provider";
 
 export type UIVendorColourType = VendorColourType;
 
@@ -50,6 +51,7 @@ export interface UIFrameworkVendorInterface {
   popups: {
     controllerHook: typeof usePopUpsController;
     creatorHook: (props: UIVendorCreatePopUpHookInterface) => null;
+    Context: typeof PopUpsControllerContext;
     Provider: typeof PopUpsControllerProvider;
   };
 }

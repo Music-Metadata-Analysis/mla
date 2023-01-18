@@ -1,8 +1,8 @@
 import ArtistImageCdnClient from "../artist.image.cdn.client.class";
-import { mockArtistImageScraper } from "@src/backend/api/integrations/lastfm/__mocks__/vendor.mock";
-import lastFMvendor from "@src/backend/api/integrations/lastfm/vendor";
+import { mockArtistImageScraper } from "@src/vendors/integrations/lastfm/__mocks__/vendor.backend.mock";
+import { lastFMVendorBackend } from "@src/vendors/integrations/lastfm/vendor.backend";
 
-jest.mock("@src/backend/api/integrations/lastfm/vendor");
+jest.mock("@src/vendors/integrations/lastfm/vendor.backend");
 
 describe(ArtistImageCdnClient.name, () => {
   let consoleLogSpy: jest.SpyInstance;
@@ -46,8 +46,8 @@ describe(ArtistImageCdnClient.name, () => {
     beforeEach(() => arrange());
 
     it("should initialize the ArtistImageScraper", () => {
-      expect(lastFMvendor.ArtistImageScraper).toBeCalledTimes(1);
-      expect(lastFMvendor.ArtistImageScraper).toBeCalledWith();
+      expect(lastFMVendorBackend.ArtistImageScraper).toBeCalledTimes(1);
+      expect(lastFMVendorBackend.ArtistImageScraper).toBeCalledWith();
     });
 
     describe("logCacheHitRate", () => {

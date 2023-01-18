@@ -1,13 +1,14 @@
 import CacheControllerAbstractFactory from "@src/backend/api/cache/factory/cache.controller.abstract.factory.class";
-import CdnAbstractBaseClient from "@src/backend/api/integrations/cache/cdn/bases/cdn.base.client.class";
-import PersistenceVendorBaseClass from "@src/backend/api/integrations/persistence/client/bases/persistence.base.client.class";
+//TODO: use the vendor object itself to fix this
+import CdnAbstractBaseClient from "@src/vendors/integrations/cache/backend/cdn/bases/cdn.base.client.class";
+import PersistenceVendorBaseClass from "@src/vendors/integrations/persistence/backend/client/bases/persistence.base.client.class";
 
 jest.mock(
-  "@src/backend/api/integrations/cache/cdn/bases/cdn.base.client.class"
+  "@src/vendors/integrations/cache/backend/cdn/bases/cdn.base.client.class"
 );
 
 jest.mock(
-  "@src/backend/api/integrations/persistence/client/bases/persistence.base.client.class"
+  "@src/vendors/integrations/persistence/backend/client/bases/persistence.base.client.class"
 );
 
 export const MockedPersistenceVendorBaseClass =
