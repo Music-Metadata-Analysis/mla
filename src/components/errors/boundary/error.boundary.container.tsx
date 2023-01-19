@@ -1,5 +1,28 @@
-import errorVendor from "@src/clients/errors/vendor";
+import ErrorHandlerFactory from "@src/components/errors/boundary/handler/factory/error.handler.factory.class";
+import { errorVendor } from "@src/vendors/integrations/errors/vendor";
+import type { AnalyticsEventDefinitionInterface } from "@src/types/analytics.types";
 
-const ErrorBoundaryContainer = errorVendor.ErrorBoundary;
+export interface ErrorBoundaryContainerProps {
+  children: JSX.Element | JSX.Element[];
+  eventDefinition: AnalyticsEventDefinitionInterface;
+  route: string;
+  stateReset: () => void;
+}
 
-export default ErrorBoundaryContainer;
+export default function ErrorBoundaryContainer({
+  children,
+  eventDefinition,
+  route,
+  stateReset,
+}: ErrorBoundaryContainerProps) {
+  return (
+    <errorVendor.ErrorBoundary
+      eventDefinition={eventDefinition}
+      errorHandlerFactory={new ErrorHandlerFactory().create}
+      route={route}
+      stateReset={stateReset}
+    >
+      {children}
+    </errorVendor.ErrorBoundary>
+  );
+}

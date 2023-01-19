@@ -1,20 +1,14 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import {
   ErrorBoundaryTestHarness,
+  mockErrorHandlerFactory,
+  mockAnalyticsEvent,
+  MockErrorHandlerComponent,
   testIDs,
 } from "./react-error-boundary.test.harness";
-import ErrorHandlerContainer from "@src/components/errors/boundary/handler/error.handler.container";
-import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
+import { mockUseRouter } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 
-jest.mock("@src/hooks/locale.hook");
-
-jest.mock("@src/hooks/router.hook");
-
-jest.mock(
-  "@src/components/errors/boundary/handler/error.handler.container",
-  () =>
-    require("@fixtures/react/child").createComponent("ErrorHandlerContainer")
-);
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 describe("ErrorBoundary", () => {
   const mockRoute = "/";
@@ -59,7 +53,7 @@ describe("ErrorBoundary", () => {
       expect(consoleErrorSpy).toBeCalledTimes(0);
     });
 
-    describe("when the button is clicked", () => {
+    describe("when the create error button is clicked", () => {
       beforeEach(async () => {
         const link = await screen.findByTestId(testIDs.ErrorTrigger);
         fireEvent.click(link);
@@ -69,8 +63,15 @@ describe("ErrorBoundary", () => {
         expect(screen.queryByTestId(testIDs.ComponentWithOutError)).toBeNull();
       });
 
+      it("should call the ErrorHandler factory as expected", () => {
+        expect(mockErrorHandlerFactory).toBeCalledTimes(1);
+        expect(mockErrorHandlerFactory).toBeCalledWith(mockAnalyticsEvent);
+      });
+
       it("should render the error handler component", async () => {
-        expect(await screen.findByTestId("ErrorHandlerContainer")).toBeTruthy();
+        expect(
+          await screen.findByTestId("MockErrorHandlerComponent")
+        ).toBeTruthy();
       });
 
       it("should report an error to the console", () => {
@@ -81,13 +82,13 @@ describe("ErrorBoundary", () => {
         );
       });
 
-      describe("when the error is reset", () => {
-        let clickHandler: () => void;
+      describe("when the resetErrorBoundary prop is called", () => {
+        let resetErrorBoundary: () => void;
 
         beforeEach(() => {
-          clickHandler = (ErrorHandlerContainer as jest.Mock).mock.calls[0][0]
-            .handleClick;
-          clickHandler();
+          resetErrorBoundary = (MockErrorHandlerComponent as jest.Mock).mock
+            .calls[0][0].resetErrorBoundary;
+          resetErrorBoundary();
         });
 
         it("should call the state reset function", () => {
@@ -96,8 +97,8 @@ describe("ErrorBoundary", () => {
         });
 
         it("should route to the configured destination", () => {
-          expect(mockRouterHook.push).toBeCalledTimes(1);
-          expect(mockRouterHook.push).toBeCalledWith(mockRoute);
+          expect(mockUseRouter.push).toBeCalledTimes(1);
+          expect(mockUseRouter.push).toBeCalledWith(mockRoute);
         });
       });
     });

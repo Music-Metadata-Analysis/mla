@@ -1,4 +1,4 @@
-export type EventDefinitionType = {
+export interface AnalyticsEventDefinitionInterface {
   category: "AUTH" | "LAST.FM" | "MAIN" | "TEST";
   label:
     | "AGGREGATE REQUESTS"
@@ -21,4 +21,11 @@ export type EventDefinitionType = {
     | "TEST";
   action: string;
   value?: number;
-};
+}
+
+export type AnalyticsEventDefinitionConstructorType = new ({
+  category,
+  label,
+  action,
+  value,
+}: AnalyticsEventDefinitionInterface) => AnalyticsEventDefinitionInterface;

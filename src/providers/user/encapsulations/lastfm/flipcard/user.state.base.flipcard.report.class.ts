@@ -1,5 +1,5 @@
 import UserBaseState from "../user.state.base.class";
-import type EventDefinition from "@src/contracts/events/event.class";
+import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type { LastFMImageDataInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
@@ -23,7 +23,7 @@ export default abstract class UserFlipCardBaseReportState extends UserBaseState 
 
   abstract getDrawerTitle(index: number): string;
 
-  abstract getDrawerEvent(index: number): EventDefinition;
+  abstract getDrawerEvent(index: number): AnalyticsEventDefinitionInterface;
 
   abstract getExternalLink(index: number): string;
 

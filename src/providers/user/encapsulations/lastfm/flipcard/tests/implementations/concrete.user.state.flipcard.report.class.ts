@@ -1,5 +1,5 @@
 import UserFlipCardBaseReportState from "../../user.state.base.flipcard.report.class";
-import EventDefinition from "@src/contracts/events/event.class";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 
 export default class ConcreteBaseReportState extends UserFlipCardBaseReportState {
   getDataSource = () => this.userProperties.data.report.albums as unknown[];
@@ -18,7 +18,7 @@ export default class ConcreteBaseReportState extends UserFlipCardBaseReportState
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getDrawerEvent = (index: number) =>
-    new EventDefinition({
+    new analyticsVendor.EventDefinition({
       category: "LAST.FM",
       label: "TEST",
       action: "TEST",

@@ -1,7 +1,7 @@
 import SunBurstDataClientBase from "../sunburst.client.base.class";
 import apiRoutes from "@src/config/apiRoutes";
-import EventDefinition from "@src/contracts/events/event.class";
 import InitialState from "@src/providers/user/user.initial";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 
 const mockDataPointClasses = [jest.fn(), jest.fn()];
 
@@ -66,7 +66,7 @@ describe("SunBurstDataClientBase", () => {
       it("should emit an analytics report request event", async () => {
         expect(mockEvent).toBeCalledTimes(1);
         expect(mockEvent).toHaveBeenCalledWith(
-          new EventDefinition({
+          new analyticsVendor.EventDefinition({
             category: "LAST.FM",
             label: "AGGREGATE REQUESTS",
             action: `${instance.eventType}: AGGREGATE REQUESTS BEING SENT TO LAST.FM.`,

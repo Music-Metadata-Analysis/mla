@@ -1,13 +1,12 @@
-import EventDefinition from "@src/contracts/events/event.class";
-import type { EventDefinitionType } from "@src/types/analytics.types";
+import EventDefinition from "../event.class";
 
 describe("Event Definition", () => {
   let event: EventDefinition;
   const definition = {
-    category: "TEST",
-    label: "TEST",
-    action: "Test Action",
-  } as EventDefinitionType;
+    category: "TEST" as const,
+    label: "TEST" as const,
+    action: "Test Action" as const,
+  };
 
   beforeEach(() => {
     event = new EventDefinition(definition);

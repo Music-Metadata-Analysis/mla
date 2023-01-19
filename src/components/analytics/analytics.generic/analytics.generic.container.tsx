@@ -1,10 +1,10 @@
 import AnalyticsGenericWrapper from "./analytics.generic.component";
 import useAnalytics from "@src/hooks/analytics.hook";
-import type EventDefinition from "@src/contracts/events/event.class";
+import type { AnalyticsEventDefinitionInterface } from "@src/types/analytics.types";
 import type { MouseEventHandler } from "react";
 
 interface AnalyticsGenericWrapperProps {
-  eventDefinition: EventDefinition;
+  eventDefinition: AnalyticsEventDefinitionInterface;
   children: React.ReactNode;
 }
 

@@ -1,6 +1,8 @@
-import type EventDefinition from "@src/contracts/events/event.class";
+import type { AnalyticsEventDefinitionConstructorType } from "@src/contracts/analytics/types/event.types";
+import type EventDefinition from "@src/vendors/integrations/analytics/web/event/event.class";
 
 export interface AnalyticsVendorInterface {
+  EventDefinition: AnalyticsEventDefinitionConstructorType;
   GoogleAnalytics: new () => AnalyticsVendorGoogleAnalyticsInterface;
 }
 

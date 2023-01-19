@@ -14,6 +14,8 @@ CLASS_MOCK_FILENAME_REGEX="(${FILENAME_REGEX}+\.class\.mock\.ts)"
 
 COMPONENT_FILENAME_REGEX="src/components/${PATH_NAME_REGEX}+${FILENAME_REGEX}+\.(component|container|integration\.test|page|style)"
 
+COMPONENT_FACTORY_FILENAME_REGEX="src/components/${PATH_NAME_REGEX}+${FILENAME_REGEX}+\.factory\.class"
+
 HOOK_DEFINITION_REGEX="const use[A-Z]+|function use[A-Z]+"
 HOOK_FILENAME_REGEX="(${FILENAME_REGEX}+\.hook\.(test\.)*tsx)"
 HOOK_FACTORY_REGEX="(${FILENAME_REGEX}+\.hook\.factory\.(test\.)*tsx)"
@@ -104,13 +106,6 @@ main() {
     allows 'from "@src/fixtures/.+'             | 
     allows 'from "@src/utilities/.+'           ||
     error_restricted
-
-  # Enforce Contracts Component Isolation (No imports from Contracts unless deliberately exported.)
-  echo "  Checking Imports from the CONTRACTS Component..."
-  ! search 'from "@src/contracts/api/.+' src      | 
-    excludes "^src/contracts/api/"                |
-    excludes 'from "@src/contracts/api'           || 
-    (echo "CONTRACTS elements should not be imported unless deliberately exported." && false)
 
   # Enforce WEB Component Isolation (No imports into WEB except from designated points.)
   echo "  Checking Imports into the FRONTEND/WEB Component..."
@@ -216,9 +211,10 @@ main() {
 
   # Component File Naming Convention
   echo "  Checking Component File Naming Conventions..."
-  ! find src/components -type f -regex ".*tsx$" | 
+  ! find src/components -type f -regex ".*tsx$"                     | 
+    excludes "${COMPONENT_FACTORY_FILENAME_REGEX}"                  |
     excludes "(${HOOK_FILENAME_REGEX}|${HOOK_MOCK_FILENAME_REGEX})" | 
-    excludes "${COMPONENT_FILENAME_REGEX}" || 
+    excludes "${COMPONENT_FILENAME_REGEX}"                          || 
     false
 
   # Enforce Hook Naming Conventions

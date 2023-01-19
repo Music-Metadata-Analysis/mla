@@ -3,7 +3,7 @@ import MockSunBurstNodeAbstractBase from "./implementations/concrete.sunburst.no
 import Events from "@src/events/events";
 import RGBA from "@src/utilities/colours/rgba.class";
 import type SunBurstNodeAbstractBase from "../sunburst.node.encapsulation.base.class";
-import type EventDefinition from "@src/contracts/events/event.class";
+import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type {
   d3Node,
   SunBurstData,
@@ -33,7 +33,7 @@ describe("SunBurstNodeAbstractBase", () => {
 
   const testDrawerEvent = ({ expected }: { expected: Array<string> }) => {
     describe("getDrawerEvent", () => {
-      let result: EventDefinition;
+      let result: AnalyticsEventDefinitionInterface;
 
       beforeEach(() => (result = instance.getDrawerEvent()));
 

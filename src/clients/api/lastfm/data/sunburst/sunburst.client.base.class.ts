@@ -1,4 +1,4 @@
-import EventDefinition from "@src/contracts/events/event.class";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { EventCreatorType } from "@src/types/analytics.types";
 import type { IntegrationRequestType } from "@src/types/analytics.types";
@@ -60,7 +60,7 @@ abstract class LastFMSunburstDataClient<AggregateReportType>
 
   protected emitInitialAnalyticsEvent() {
     this.eventDispatch(
-      new EventDefinition({
+      new analyticsVendor.EventDefinition({
         category: "LAST.FM",
         label: "AGGREGATE REQUESTS",
         action: `${this.eventType}: AGGREGATE REQUESTS BEING SENT TO LAST.FM.`,

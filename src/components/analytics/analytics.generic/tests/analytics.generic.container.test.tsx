@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import AnalyticsGenericWrapper from "../analytics.generic.component";
 import AnalyticsGenericWrapperContainer from "../analytics.generic.container";
-import Event from "@src/contracts/events/event.class";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 
 jest.mock("@src/hooks/analytics.hook");
 
@@ -12,7 +12,7 @@ jest.mock("../analytics.generic.component", () =>
 
 describe("AnalyticsGenericWrapperContainer", () => {
   const buttonText = "Click Me";
-  const mockEvent = new Event({
+  const mockEvent = new analyticsVendor.EventDefinition({
     category: "TEST",
     label: "TEST",
     action: "Test Event",

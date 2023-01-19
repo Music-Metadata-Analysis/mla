@@ -1,6 +1,6 @@
 import ReactGA from "react-ga";
 import { isProduction } from "@src/utilities/generics/env";
-import type EventDefinition from "@src/contracts/events/event.class";
+import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type { AnalyticsVendorGoogleAnalyticsInterface } from "@src/vendors/types/integrations/analytics/vendor.types";
 
 class VendorReactGA implements AnalyticsVendorGoogleAnalyticsInterface {
@@ -10,7 +10,7 @@ class VendorReactGA implements AnalyticsVendorGoogleAnalyticsInterface {
     this.vendor = ReactGA;
   }
 
-  event(event: EventDefinition): void {
+  event(event: AnalyticsEventDefinitionInterface): void {
     this.vendor.event(event);
   }
 

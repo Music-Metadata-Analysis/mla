@@ -1,8 +1,12 @@
-import EventDefinition from "@src/contracts/events/event.class";
 import Events from "@src/events/events";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
+import type { AnalyticsEventDefinitionInterface } from "@src/types/analytics.types";
 
 describe("Dynamic Events", () => {
-  const checkEvent = (event1: EventDefinition, event2: EventDefinition) => {
+  const checkEvent = (
+    event1: AnalyticsEventDefinitionInterface,
+    event2: AnalyticsEventDefinitionInterface
+  ) => {
     expect(JSON.stringify(event1)).toBe(JSON.stringify(event2));
   };
 
@@ -10,7 +14,7 @@ describe("Dynamic Events", () => {
     describe("HandleLogin", () => {
       it("should generate the expected result", () => {
         const provider = "Test Provider";
-        const expected = new EventDefinition({
+        const expected = new analyticsVendor.EventDefinition({
           category: "AUTH",
           label: "LOGIN",
           action: `LOGIN FLOW STARTED USING PROVIDER: ${provider}.`,
@@ -24,7 +28,7 @@ describe("Dynamic Events", () => {
     describe("ReportPresented", () => {
       it("should generate the expected result", () => {
         const title = "BASE";
-        const expected = new EventDefinition({
+        const expected = new analyticsVendor.EventDefinition({
           category: "LAST.FM",
           label: "REPORT",
           action: `REPORT PRESENTED TO USER: ${title}.`,
@@ -37,7 +41,7 @@ describe("Dynamic Events", () => {
       it("should generate the expected result", () => {
         const artistName = "Test Artist";
         const albumName = "Test Album";
-        const expected = new EventDefinition({
+        const expected = new analyticsVendor.EventDefinition({
           category: "LAST.FM",
           label: "DATA: ALBUM",
           action: `VIEWED ALBUM DETAILS: ${artistName}:${albumName}.`,
@@ -49,7 +53,7 @@ describe("Dynamic Events", () => {
     describe("ArtistViewed", () => {
       it("should generate the expected result", () => {
         const artistName = "Test Artist";
-        const expected = new EventDefinition({
+        const expected = new analyticsVendor.EventDefinition({
           category: "LAST.FM",
           label: "DATA: ARTIST",
           action: `VIEWED ARTIST DETAILS: ${artistName}.`,
@@ -62,7 +66,7 @@ describe("Dynamic Events", () => {
       it("should generate the expected result", () => {
         const artistName = "Test Artist";
         const trackName = "Test Track";
-        const expected = new EventDefinition({
+        const expected = new analyticsVendor.EventDefinition({
           category: "LAST.FM",
           label: "DATA: TRACK",
           action: `VIEWED TRACK DETAILS: ${artistName}:${trackName}.`,
@@ -75,7 +79,7 @@ describe("Dynamic Events", () => {
       it("should generate the expected result", () => {
         const entityName = "Test Track";
         const entityType = "UNKNOWN";
-        const expected = new EventDefinition({
+        const expected = new analyticsVendor.EventDefinition({
           category: "LAST.FM",
           label: `DATA: ${entityType}`,
           action: `VIEWED ${entityType} DETAILS: ${entityName}.`,

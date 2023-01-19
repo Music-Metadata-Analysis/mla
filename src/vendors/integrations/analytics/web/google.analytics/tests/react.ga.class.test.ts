@@ -1,7 +1,7 @@
 import ReactGA from "react-ga";
 import VendorReactGA from "../react.ga.class";
-import EventDefinition from "@src/contracts/events/event.class";
 import { isProduction } from "@src/utilities/generics/env";
+import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 
 jest.mock("react-ga", () => ({
   event: jest.fn(),
@@ -16,11 +16,11 @@ const MockedIsProduction = jest.mocked(isProduction);
 
 describe(VendorReactGA.name, () => {
   let instance: VendorReactGA;
-  const mockEvent = new EventDefinition({
+  const mockEvent = {
     category: "TEST",
     label: "TEST",
     action: "Just a test analytics action.",
-  });
+  } as AnalyticsEventDefinitionInterface;
   const mockAnalyticsID = "mockAnalyticsID";
   const mockUrl = "/mockUrl";
 

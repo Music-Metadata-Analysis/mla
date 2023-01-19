@@ -1,6 +1,6 @@
 import Events from "@src/events/events";
 import { singular } from "@src/utilities/generics/strings";
-import type EventDefinition from "@src/contracts/events/event.class";
+import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type { SunBurstEntityTypes } from "@src/types/analytics.types";
 import type {
   d3Node,
@@ -46,7 +46,7 @@ abstract class SunBurstNodeAbstractBase {
     return "unknown";
   };
 
-  getDrawerEvent(): EventDefinition {
+  getDrawerEvent(): AnalyticsEventDefinitionInterface {
     const entity = singular(
       this.getNodeEntity()
     ).toUpperCase() as SunBurstEntityTypes;

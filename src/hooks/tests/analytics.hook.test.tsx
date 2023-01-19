@@ -5,10 +5,12 @@ import React from "react";
 import mockHookValues from "../__mocks__/analytics.hook.mock";
 import mockRouterHook from "../__mocks__/router.hook.mock";
 import useAnalytics from "../analytics.hook";
-import EventDefinition from "@src/contracts/events/event.class";
 import Events from "@src/events/events";
 import { AnalyticsContext } from "@src/providers/analytics/analytics.provider";
-import { mockGoogleAnalytics } from "@src/vendors/integrations/analytics/__mocks__/vendor.mock";
+import {
+  mockGoogleAnalytics,
+  MockEventDefinition,
+} from "@src/vendors/integrations/analytics/__mocks__/vendor.mock";
 import type { AnalyticsContextInterface } from "@src/types/analytics.types";
 import type { MutableEnv } from "@src/utilities/types/process.types";
 import type { MouseEvent, ReactNode } from "react";
@@ -27,19 +29,19 @@ describe("useAnalytics", () => {
   let received: ReturnType<typeof arrange>;
 
   const mockButtonName = "MockButtonName";
-  const mockButtonClickEvent = new EventDefinition({
+  const mockButtonClickEvent = new MockEventDefinition({
     action: `CLICKED: ${mockButtonName}`,
     category: "MAIN",
     label: "BUTTON",
   });
   const mockExternalLink = "http://somewebsite.com";
-  const mockExternalLinkClickEvent = new EventDefinition({
+  const mockExternalLinkClickEvent = new MockEventDefinition({
     action: `VISITED: ${mockExternalLink}`,
     category: "MAIN",
     label: "EXTERNAL_LINK",
   });
   const mockInternalLink = "http://somewebsite.com";
-  const mockInternalLinkClickEvent = new EventDefinition({
+  const mockInternalLinkClickEvent = new MockEventDefinition({
     action: `VISITED: ${mockInternalLink}`,
     category: "MAIN",
     label: "INTERNAL_LINK",

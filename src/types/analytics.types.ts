@@ -1,8 +1,10 @@
-import type EventDefinition from "@src/contracts/events/event.class";
+import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 
-export type { EventDefinitionType } from "@src/contracts/events/types/event.types";
+export type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 
-export type EventCreatorType = (eventArgs: EventDefinition) => void;
+export type EventCreatorType = (
+  eventArgs: AnalyticsEventDefinitionInterface
+) => void;
 
 export type ButtonClickHandlerType = (
   e: React.BaseSyntheticEvent,

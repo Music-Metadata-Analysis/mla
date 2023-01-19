@@ -1,7 +1,7 @@
 import { waitFor } from "@testing-library/react";
 import LastFMReportBaseClient from "../lastfm.api.client.base.class";
 import HttpApiClient from "@src/clients/api/http/http.client.class";
-import EventDefinition from "@src/contracts/events/event.class";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
 
 class ConcreteLastFMBaseClient<
@@ -24,7 +24,7 @@ describe("LastFMBaseClient", () => {
   const mockDispatch = jest.fn();
   const mockEvent = jest.fn();
 
-  const requestEvent = new EventDefinition({
+  const requestEvent = new analyticsVendor.EventDefinition({
     category: "LAST.FM",
     label: "REQUEST",
     action: `${reportType}: REQUEST WAS SENT TO LAST.FM.`,
@@ -133,7 +133,7 @@ describe("LastFMBaseClient", () => {
           await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
           expect(mockEvent).toHaveBeenCalledWith(requestEvent);
           expect(mockEvent).toHaveBeenCalledWith(
-            new EventDefinition({
+            new analyticsVendor.EventDefinition({
               category: "LAST.FM",
               label: "RESPONSE",
               action: `${reportType}: RECEIVED RESPONSE FROM LAST.FM.`,
@@ -170,7 +170,7 @@ describe("LastFMBaseClient", () => {
           await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
           expect(mockEvent).toHaveBeenCalledWith(requestEvent);
           expect(mockEvent).toHaveBeenCalledWith(
-            new EventDefinition({
+            new analyticsVendor.EventDefinition({
               category: "LAST.FM",
               label: "RESPONSE",
               action: `${reportType}: RECEIVED RESPONSE FROM LAST.FM.`,
@@ -208,7 +208,7 @@ describe("LastFMBaseClient", () => {
         await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
-          new EventDefinition({
+          new analyticsVendor.EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
             action: `${reportType}: ERROR DURING REQUEST.`,
@@ -245,7 +245,7 @@ describe("LastFMBaseClient", () => {
         await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
-          new EventDefinition({
+          new analyticsVendor.EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
             action: `${reportType}: AN UNAUTHORIZED REQUEST WAS MADE.`,
@@ -280,7 +280,7 @@ describe("LastFMBaseClient", () => {
         await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
-          new EventDefinition({
+          new analyticsVendor.EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
             action: `${reportType}: REQUEST WAS MADE FOR AN UNKNOWN ENTITY.`,
@@ -317,7 +317,7 @@ describe("LastFMBaseClient", () => {
         await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
         expect(mockEvent).toHaveBeenCalledWith(requestEvent);
         expect(mockEvent).toHaveBeenCalledWith(
-          new EventDefinition({
+          new analyticsVendor.EventDefinition({
             category: "LAST.FM",
             label: "ERROR",
             action: `${reportType}: REQUEST WAS RATELIMITED BY LAST.FM.`,
@@ -392,7 +392,7 @@ describe("LastFMBaseClient", () => {
           await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
           expect(mockEvent).toHaveBeenCalledWith(requestEvent);
           expect(mockEvent).toHaveBeenCalledWith(
-            new EventDefinition({
+            new analyticsVendor.EventDefinition({
               category: "LAST.FM",
               label: "ERROR",
               action: `${reportType}: ERROR DURING REQUEST.`,
