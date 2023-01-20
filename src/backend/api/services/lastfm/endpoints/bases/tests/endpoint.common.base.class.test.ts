@@ -6,7 +6,7 @@ import * as status from "@src/config/status";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
 import { mockEndpointLogger } from "@src/vendors/integrations/api.logger/__mocks__/vendor.backend.mock";
 import type LastFMEndpointBase from "../endpoint.base.class";
-import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,

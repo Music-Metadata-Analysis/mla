@@ -5,7 +5,7 @@ import handleProxy, {
   endpointFactory,
 } from "@src/pages/api/v2/reports/lastfm/top20artists/[username]";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
-import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,

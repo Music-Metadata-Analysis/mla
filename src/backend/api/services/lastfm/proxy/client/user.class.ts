@@ -2,15 +2,11 @@ import LastFMClientAdapterBase from "./bases/client.base.class";
 import ArtistImageCacheFactory from "../cache/artist.image.cache.controller.factory.class";
 import type { CacheControllerInterface } from "@src/backend/api/types/cache/controller.types";
 import type { LastFMUserClientInterface } from "@src/backend/api/types/services/lastfm/client.types";
-import type {
-  LastFMImageDataInterface,
-  LastFMUserProfileInterface,
-} from "@src/contracts/api/exports/lastfm/element.types";
-import type {
-  LastFMUserAlbumInterface,
-  LastFMUserArtistInterface,
-  LastFMUserTrackInterface,
-} from "@src/contracts/api/exports/lastfm/report.types";
+import type { LastFMImageDataInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/image.data.types";
+import type { LastFMUserProfileInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/user.profile.types";
+import type { LastFMUserAlbumInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
+import type { LastFMUserArtistInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.artists.types";
+import type { LastFMUserTrackInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.tracks.types";
 import type { LastFMVendorClientError } from "@src/vendors/types/integrations/lastfm/vendor.backend.types";
 
 class LastFmUserClientAdapter

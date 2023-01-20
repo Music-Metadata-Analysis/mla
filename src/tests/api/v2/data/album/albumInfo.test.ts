@@ -7,7 +7,7 @@ import handleProxy, {
 } from "@src/pages/api/v2/data/artists/[artist]/albums/[album]";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
 import type { ApiEndpointRequestQueryParamType } from "@src/backend/api/types/services/request.types";
-import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,

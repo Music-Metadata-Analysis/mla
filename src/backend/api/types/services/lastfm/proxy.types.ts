@@ -1,13 +1,9 @@
-import type {
-  LastFMAlbumInfoInterface,
-  LastFMArtistTopAlbumsInterface,
-  LastFMTrackInfoInterface,
-} from "@src/contracts/api/exports/lastfm/datapoint.types";
-import type {
-  LastFMTopAlbumsReportResponseInterface,
-  LastFMTopArtistsReportResponseInterface,
-  LastFMTopTracksReportResponseInterface,
-} from "@src/contracts/api/exports/lastfm/report.types";
+import type { LastFMAlbumInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/album.info.types";
+import type { LastFMArtistTopAlbumsInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/artist.topalbums.types";
+import type { LastFMTrackInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/track.info.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
+import type { LastFMTopArtistsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.artists.types";
+import type { LastFMTopTracksReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.tracks.types";
 
 export interface LastFMProxyInterface {
   getAlbumInfo: (

@@ -1,6 +1,6 @@
 import LastFMClientAdapterBase from "./bases/client.base.class";
 import type { LastFMTrackClientInterface } from "@src/backend/api/types/services/lastfm/client.types";
-import type { LastFMTrackInfoInterface } from "@src/contracts/api/exports/lastfm/datapoint.types";
+import type { LastFMTrackInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/track.info.types";
 import type { LastFMVendorClientError } from "@src/vendors/types/integrations/lastfm/vendor.backend.types";
 
 class LastFmTrackClientAdapter

@@ -1,7 +1,7 @@
 import LastFMArtistClientAdapter from "../artist.class";
 import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
 import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
-import type { LastFMArtistTopAlbumsInterface } from "@src/contracts/api/exports/lastfm/datapoint.types";
+import type { LastFMArtistTopAlbumsInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/artist.topalbums.types";
 import type { LastFMVendorClientError } from "@src/vendors/types/integrations/lastfm/vendor.backend.types";
 
 describe("LastFMArtistClientAdapter", () => {

@@ -13,7 +13,7 @@ import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend
 import { mockFlagClient } from "@src/vendors/integrations/flags/__mocks__/vendor.backend.mock";
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
 import type LastFMApiEndpointFactoryV2 from "../v2.endpoint.base.class";
-import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,

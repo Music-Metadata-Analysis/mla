@@ -1,14 +1,10 @@
-import type {
-  LastFMArtistTopAlbumsInterface,
-  LastFMAlbumInfoInterface,
-  LastFMTrackInfoInterface,
-} from "@src/contracts/api/exports/lastfm/datapoint.types";
-import type { LastFMUserProfileInterface } from "@src/contracts/api/exports/lastfm/element.types";
-import type {
-  LastFMUserAlbumInterface,
-  LastFMUserArtistInterface,
-  LastFMUserTrackInterface,
-} from "@src/contracts/api/exports/lastfm/report.types";
+import type { LastFMAlbumInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/album.info.types";
+import type { LastFMArtistTopAlbumsInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/artist.topalbums.types";
+import type { LastFMTrackInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/track.info.types";
+import type { LastFMUserProfileInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/user.profile.types";
+import type { LastFMUserAlbumInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
+import type { LastFMUserArtistInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.artists.types";
+import type { LastFMUserTrackInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.tracks.types";
 
 export interface LastFMUserClientInterface {
   secret_key: string;

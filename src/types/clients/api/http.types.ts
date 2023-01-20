@@ -3,4 +3,4 @@ export type {
   HttpApiClientResponse,
   HttpApiClientHttpMethodType,
   HttpApiClientStatusMessageType,
-} from "@src/contracts/api/exports/types/client";
+} from "@src/contracts/api/types/clients/http.client.types";

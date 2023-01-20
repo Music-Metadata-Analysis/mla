@@ -1,4 +1,4 @@
-import type { LastFMUserProfileInterface } from "@src/contracts/api/exports/lastfm/element.types";
+import type { LastFMUserProfileInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/user.profile.types";
 import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
 
 export interface LastFMPlayCountByArtistResponseInterface

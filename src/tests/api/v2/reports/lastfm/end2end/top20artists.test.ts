@@ -4,7 +4,7 @@ import testResponses from "@src/contracts/api/fixtures/services/lastfm/end2end/l
 import testAccounts from "@src/contracts/api/fixtures/services/lastfm/end2end/lastfm.users";
 import artistHandler from "@src/pages/api/v2/reports/lastfm/top20artists/[username]";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
-import type { HttpApiClientHttpMethodType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,

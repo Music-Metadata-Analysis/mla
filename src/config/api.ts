@@ -1,5 +1,5 @@
 import * as status from "@src/config/status";
-import type { HttpApiClientStatusMessageType } from "@src/contracts/api/exports/types/client";
+import type { HttpApiClientStatusMessageType } from "@src/contracts/api/types/clients/http.client.types";
 
 export const knownStatuses: {
   [index: number]: HttpApiClientStatusMessageType;
