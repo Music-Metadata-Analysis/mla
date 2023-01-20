@@ -1,6 +1,6 @@
 import Search from "./search.component";
 import navbarSettings from "@src/config/navbar";
-import useNavBarThresholdToggle from "@src/hooks/controllers/navbar.threshold.toggle.hook";
+import useNavBarThresholdToggle from "@src/web/navigation/navbar/state/controllers/navbar.threshold.toggle.hook";
 
 interface SearchContainerProps {
   route: string;

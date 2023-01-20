@@ -5,7 +5,7 @@ import { ids } from "../username.form.identifiers";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 
-jest.mock("@src/hooks/router.hook");
+jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Flex"])

@@ -21,7 +21,7 @@ jest.mock("@src/hooks/flags.hook");
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/router.hook");
+jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
 jest.mock("@src/hooks/ui/window.threshold.hook");
 

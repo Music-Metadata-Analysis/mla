@@ -1,6 +1,6 @@
 import ImagesControllerProvider from "./images/images.provider";
-import NavBarControllerProvider from "./navbar/navbar.provider";
 import ScrollBarsControllerProvider from "./scrollbars/scrollbars.provider";
+import NavBarControllerProvider from "@src/web/navigation/navbar/state/providers/navbar.provider";
 
 const ControllersRootProvider = ({ children }: { children: JSX.Element }) => {
   return (

@@ -1,12 +1,14 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import useSunBurstController from "../sunburst.controller.hook";
-import mockNavBarControllerHook from "@src/hooks/controllers/__mocks__/navbar.controller.hook.mock";
 import mockHookValues from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
+import mockNavBarControllerHook from "@src/web/navigation/navbar/state/controllers/__mocks__/navbar.controller.hook.mock";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
-jest.mock("@src/hooks/controllers/navbar.controller.hook");
+jest.mock(
+  "@src/web/navigation/navbar/state/controllers/navbar.controller.hook"
+);
 
 describe("useSunBurstController", () => {
   let received: ReturnType<typeof arrange>;

@@ -1,11 +1,11 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import ClickInternalLinkContainer from "../click.link.internal.container";
 import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
+import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@src/hooks/analytics.hook");
 
-jest.mock("@src/hooks/router.hook");
+jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
 describe("ClickInternalLink", () => {
   const linkText = "Link";

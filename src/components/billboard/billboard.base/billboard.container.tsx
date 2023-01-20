@@ -1,7 +1,7 @@
 import BillBoard from "./billboard.component";
 import { settings } from "@src/config/billboard";
-import useNavBarController from "@src/hooks/controllers/navbar.controller.hook";
 import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
+import useNavBarController from "@src/web/navigation/navbar/state/controllers/navbar.controller.hook";
 
 interface BillboardContainerProps {
   children: JSX.Element | JSX.Element[];

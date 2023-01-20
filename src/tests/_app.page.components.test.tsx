@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import App from "next/app";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import ConsentContainer from "@src/components/consent/consent.container";
-import NavBarContainer from "@src/components/navbar/navbar.container";
 import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -14,6 +13,7 @@ import { authVendorSSR } from "@src/vendors/integrations/auth/vendor.ssr";
 import { mockFlagVendorSSRClient } from "@src/vendors/integrations/flags/__mocks__/vendor.ssr.mock";
 import { flagVendorSSR } from "@src/vendors/integrations/flags/vendor.ssr";
 import { mockLocaleVendorHOCIdentifier } from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
+import NavBarContainer from "@src/web/navigation/navbar/components/navbar.container";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 import type { WebFrameworkVendorAppComponentProps } from "@src/vendors/types/integrations/web.framework/vendor.types";
@@ -34,7 +34,7 @@ jest.mock("../../src/providers/root.provider", () =>
   require("@fixtures/react/parent").createComponent("RootProvider")
 );
 
-jest.mock("@src/components/navbar/navbar.container", () =>
+jest.mock("@src/web/navigation/navbar/components/navbar.container", () =>
   require("@fixtures/react/child").createComponent("NavBarContainer")
 );
 

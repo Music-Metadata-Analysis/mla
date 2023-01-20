@@ -3,9 +3,11 @@ import Search from "../search.component";
 import SearchContainer from "../search.container";
 import navbarSettings from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import useNavBarThresholdToggle from "@src/hooks/controllers/navbar.threshold.toggle.hook";
+import useNavBarThresholdToggle from "@src/web/navigation/navbar/state/controllers/navbar.threshold.toggle.hook";
 
-jest.mock("@src/hooks/controllers/navbar.threshold.toggle.hook");
+jest.mock(
+  "@src/web/navigation/navbar/state/controllers/navbar.threshold.toggle.hook"
+);
 
 jest.mock("../search.component", () =>
   require("@fixtures/react/child").createComponent("Search")

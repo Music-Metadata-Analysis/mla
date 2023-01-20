@@ -14,7 +14,7 @@ import { UserContext } from "@src/providers/user/user.provider";
 import type { UserContextInterface } from "@src/types/user/context.types";
 import type { ReactNode } from "react";
 
-jest.mock("@src/hooks/router.hook");
+jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
 jest.mock("@src/clients/api/lastfm/reports/top20.albums.class");
 

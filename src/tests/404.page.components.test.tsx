@@ -11,7 +11,7 @@ import {
   mockUtilities,
 } from "@src/vendors/integrations/web.framework/__mocks__/vendor.ssr.mock";
 
-jest.mock("@src/hooks/router.hook");
+jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
 jest.mock("@src/vendors/integrations/web.framework/vendor.ssr");
 

@@ -9,7 +9,7 @@ import dialogueSettings from "@src/config/dialogue";
 import lastFMConfig from "@src/config/lastfm";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockUseRouter from "@src/hooks/__mocks__/router.hook.mock";
+import mockUseRouter from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@src/hooks/locale.hook");
 

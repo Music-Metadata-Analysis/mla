@@ -4,11 +4,11 @@ import translations from "@locales/legal.json";
 import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.identifiers";
 import externalLinks from "@src/config/external";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
+import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/router.hook");
+jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
 describe("TermsOfService", () => {
   beforeEach(() => {

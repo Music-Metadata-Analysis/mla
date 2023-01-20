@@ -3,10 +3,10 @@ import ErrorBoundaryContainer from "@src/components/errors/boundary/error.bounda
 import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import routes from "@src/config/routes";
 import Events from "@src/events/events";
-import useRouter from "@src/hooks/router.hook";
 import { voidFn } from "@src/utilities/generics/voids";
 import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 import { webFrameworkVendorSSR } from "@src/vendors/integrations/web.framework/vendor.ssr";
+import useRouter from "@src/web/navigation/routing/hooks/router.hook";
 
 export default function Custom404() {
   const router = useRouter();

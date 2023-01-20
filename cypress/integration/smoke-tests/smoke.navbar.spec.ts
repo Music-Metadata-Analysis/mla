@@ -1,8 +1,8 @@
 import { setup } from "@cypress/fixtures/spec/setup.spec";
 import navbar from "@locales/navbar.json";
-import { testIDs as navBarMobileMenuIDs } from "@src/components/navbar/mobile.menu/navbar.mobile.menu.identifiers";
-import { testIDs as navBarTestIds } from "@src/components/navbar/root/navbar.root.identifiers";
 import routes from "@src/config/routes";
+import { testIDs as navBarMobileMenuIDs } from "@src/web/navigation/navbar/components/mobile.menu/navbar.mobile.menu.identifiers";
+import { testIDs as navBarTestIds } from "@src/web/navigation/navbar/components/root/navbar.root.identifiers";
 
 const breakPointThreshold = 480;
 

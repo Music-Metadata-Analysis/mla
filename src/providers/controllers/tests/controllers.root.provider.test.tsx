@@ -1,15 +1,15 @@
 import { render, screen } from "@testing-library/react";
 import ControllerRootProvider from "../controllers.root.provider";
 import ImagesControllerProvider from "../images/images.provider";
-import NavBarControllerProvider from "../navbar/navbar.provider";
 import ScrollBarsControllerProvider from "../scrollbars/scrollbars.provider";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import NavBarControllerProvider from "@src/web/navigation/navbar/state/providers/navbar.provider";
 
 jest.mock("../images/images.provider", () =>
   require("@fixtures/react/parent").createComponent("ImagesControllerProvider")
 );
 
-jest.mock("../navbar/navbar.provider", () =>
+jest.mock("@src/web/navigation/navbar/state/providers/navbar.provider", () =>
   require("@fixtures/react/parent").createComponent("NavBarControllerProvider")
 );
 

@@ -3,7 +3,7 @@ import FetchFailureConditionalDisplay from "./error.conditions/failure.error.dis
 import NoListensErrorConditionalDisplay from "./error.conditions/nolistens.error.display.class.component";
 import NotFoundErrorConditionalDisplay from "./error.conditions/notfound.error.display.class.component";
 import RateLimitedErrorConditionalDisplay from "./error.conditions/ratelimited.error.display.class.component";
-import useRouter from "@src/hooks/router.hook";
+import useRouter from "@src/web/navigation/routing/hooks/router.hook";
 import type ErrorBase from "./error.conditions/bases/error.base.class.component";
 import type { ErrorBaseProps } from "./error.conditions/bases/error.base.class.component";
 import type ReportStateBase from "@src/providers/user/encapsulations/lastfm/user.state.base.class";

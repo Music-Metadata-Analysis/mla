@@ -3,11 +3,11 @@ import ErrorBase from "../error.conditions/bases/error.base.class.component";
 import LastFMErrorDisplayContainer from "../error.display.container";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import { MockReportClass } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.sunburst.report.class";
-import mockRouterHook from "@src/hooks/__mocks__/router.hook.mock";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
+import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
-jest.mock("@src/hooks/router.hook");
+jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
 jest.mock("@src/components/authentication/authentication.container", () =>
   require("@fixtures/react/child").createComponent("AuthenticationComponent")

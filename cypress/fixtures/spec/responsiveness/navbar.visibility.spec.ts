@@ -1,5 +1,5 @@
-import { testIDs as navBarIDs } from "@src/components/navbar/root/navbar.root.identifiers";
 import navBarSettings from "@src/config/navbar";
+import { testIDs as navBarIDs } from "@src/web/navigation/navbar/components/root/navbar.root.identifiers";
 
 export default function checkNavBarInputToggle({
   timeout,

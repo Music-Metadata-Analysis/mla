@@ -9,7 +9,7 @@ import mockToggleHook from "@src/utilities/react/hooks/__mocks__/toggle.hook.moc
 
 jest.mock("@src/hooks/auth.hook");
 
-jest.mock("@src/hooks/router.hook");
+jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
 jest.mock("@src/utilities/react/hooks/toggle.hook");
 

@@ -5,7 +5,7 @@ import lastfmSettings from "@src/config/lastfm";
 import useAuth from "@src/hooks/auth.hook";
 import useFormsController from "@src/hooks/controllers/forms.controller.hook";
 import useLocale from "@src/hooks/locale.hook";
-import useRouter from "@src/hooks/router.hook";
+import useRouter from "@src/web/navigation/routing/hooks/router.hook";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
 

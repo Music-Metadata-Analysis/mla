@@ -5,8 +5,8 @@ import routes from "@src/config/routes";
 import Events from "@src/events/events";
 import useAnalytics from "@src/hooks/analytics.hook";
 import useAuth from "@src/hooks/auth.hook";
-import useRouter from "@src/hooks/router.hook";
 import useToggle from "@src/utilities/react/hooks/toggle.hook";
+import useRouter from "@src/web/navigation/routing/hooks/router.hook";
 import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 
 export interface AuthenticationProps {

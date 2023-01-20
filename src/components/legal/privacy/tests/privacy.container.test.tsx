@@ -11,7 +11,7 @@ import {
 
 jest.mock("@src/hooks/locale.hook");
 
-jest.mock("@src/hooks/router.hook");
+jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
 jest.mock(
   "@src/components/dialogues/resizable/dialogue.resizable.container",
