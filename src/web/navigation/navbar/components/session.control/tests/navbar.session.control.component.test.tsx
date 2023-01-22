@@ -1,10 +1,10 @@
 import { Box, Button } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import NavBarSessionControl from "../navbar.session.control.component";
-import AnalyticsButtonWrapperContainer from "@src/components/analytics/analytics.button/analytics.button.container";
 import Authentication from "@src/components/authentication/authentication.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
+import AnalyticsButtonWrapperContainer from "@src/web/analytics/collection/components/analytics.button/analytics.button.container";
 
 jest.mock("@src/hooks/auth.hook");
 
@@ -20,7 +20,7 @@ jest.mock("@chakra-ui/react", () => {
 });
 
 jest.mock(
-  "@src/components/analytics/analytics.button/analytics.button.container",
+  "@src/web/analytics/collection/components/analytics.button/analytics.button.container",
   () =>
     require("@fixtures/react/parent").createComponent(
       "AnalyticsButtonWrapperContainer"

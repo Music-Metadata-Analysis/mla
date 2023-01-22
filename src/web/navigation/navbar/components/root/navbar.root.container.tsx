@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import NavBar from "./navbar.root.component";
-import useAnalytics from "@src/hooks/analytics.hook";
 import useAuth from "@src/hooks/auth.hook";
 import useLastFM from "@src/hooks/lastfm.hook";
 import useLocale from "@src/hooks/locale.hook";
+import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
 import type { NavBarControllerHookType } from "@src/web/navigation/navbar/state/controllers/navbar.layout.controller.hook";
 

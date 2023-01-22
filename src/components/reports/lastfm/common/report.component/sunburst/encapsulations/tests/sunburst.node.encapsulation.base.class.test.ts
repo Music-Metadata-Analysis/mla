@@ -1,7 +1,7 @@
 import MockSunBurstData from "./data/sunburst.node.data.set.json";
 import MockSunBurstNodeAbstractBase from "./implementations/concrete.sunburst.node.encapsulation.class";
-import Events from "@src/events/events";
 import RGBA from "@src/utilities/colours/rgba.class";
+import Events from "@src/web/analytics/collection/events/definitions";
 import type SunBurstNodeAbstractBase from "../sunburst.node.encapsulation.base.class";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type {
@@ -13,7 +13,7 @@ type d3NodeWithChildren = d3Node & { children: Array<d3NodeWithChildren> };
 
 jest.mock("@src/utilities/generics/strings");
 
-jest.mock("@src/events/events", () => ({
+jest.mock("@src/web/analytics/collection/events/definitions", () => ({
   LastFM: { SunBurstNodeSelected: jest.fn(() => "MockEvent!") },
 }));
 

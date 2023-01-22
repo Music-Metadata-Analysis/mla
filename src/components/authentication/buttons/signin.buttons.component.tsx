@@ -3,8 +3,8 @@ import {
   GithubLoginButton,
   GoogleLoginButton,
 } from "react-social-login-buttons";
-import AnalyticsButtonWrapper from "@src/components/analytics/analytics.button/analytics.button.container";
 import SpotifyLoginButton from "@src/components/button/button.spotify/button.spotify.component";
+import AnalyticsButtonWrapper from "@src/web/analytics/collection/components/analytics.button/analytics.button.container";
 import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 

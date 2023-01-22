@@ -11,9 +11,9 @@ import {
   getMockComponentProp,
   getMockComponentPropCount,
 } from "@src/fixtures/mocks/mock.component.props";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
+import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import NavBarColourModeContainer from "@src/web/navigation/navbar/components/colour.mode/navbar.colour.mode.container";
 import NavBarLogo from "@src/web/navigation/navbar/components/logo/navbar.logo.component";
 import NavBarMobileMenu from "@src/web/navigation/navbar/components/mobile.menu/navbar.mobile.menu.component";

@@ -2,9 +2,9 @@ import { render } from "@testing-library/react";
 import Page from "../report.page";
 import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import routes from "@src/config/routes";
-import Events from "@src/events/events";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
+import Events from "@src/web/analytics/collection/events/definitions";
 
 jest.mock("@src/hooks/lastfm.hook");
 

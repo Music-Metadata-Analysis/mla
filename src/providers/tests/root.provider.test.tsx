@@ -6,10 +6,10 @@ import UserProvider from "../user/user.provider";
 import HeaderContainer from "@src/components/header/header.container";
 import { popUps } from "@src/config/popups";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import AnalyticsProvider from "@src/providers/analytics/analytics.provider";
 import { mockAuthProvider } from "@src/vendors/integrations/auth/__mocks__/vendor.mock";
 import { flagVendor } from "@src/vendors/integrations/flags/vendor";
 import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
+import AnalyticsProvider from "@src/web/analytics/collection/state/providers/analytics.provider";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 
@@ -23,8 +23,9 @@ jest.mock("@src/components/header/header.container", () =>
   require("@fixtures/react/parent").createComponent("HeaderContainer")
 );
 
-jest.mock("@src/providers/analytics/analytics.provider", () =>
-  require("@fixtures/react/parent").createComponent("AnalyticsProvider")
+jest.mock(
+  "@src/web/analytics/collection/state/providers/analytics.provider",
+  () => require("@fixtures/react/parent").createComponent("AnalyticsProvider")
 );
 
 jest.mock("@src/providers/controllers/controllers.root.provider.tsx", () =>

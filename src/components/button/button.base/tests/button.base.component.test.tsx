@@ -6,7 +6,7 @@ import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
-jest.mock("@src/hooks/analytics.hook");
+jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");

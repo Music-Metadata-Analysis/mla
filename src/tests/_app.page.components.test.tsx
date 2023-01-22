@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import App from "next/app";
 import { createSimpleComponent } from "@fixtures/react/simple";
-import ConsentContainer from "@src/components/consent/consent.container";
 import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -13,6 +12,7 @@ import { authVendorSSR } from "@src/vendors/integrations/auth/vendor.ssr";
 import { mockFlagVendorSSRClient } from "@src/vendors/integrations/flags/__mocks__/vendor.ssr.mock";
 import { flagVendorSSR } from "@src/vendors/integrations/flags/vendor.ssr";
 import { mockLocaleVendorHOCIdentifier } from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
+import ConsentContainer from "@src/web/analytics/consent/components/consent.container";
 import NavBarContainer from "@src/web/navigation/navbar/components/navbar.container";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
@@ -42,7 +42,7 @@ jest.mock("@src/components/popups/root.popup.container", () =>
   require("@fixtures/react/child").createComponent("RootPopUpContainer")
 );
 
-jest.mock("@src/components/consent/consent.container", () =>
+jest.mock("@src/web/analytics/consent/components/consent.container", () =>
   require("@fixtures/react/child").createComponent("ConsentContainer")
 );
 

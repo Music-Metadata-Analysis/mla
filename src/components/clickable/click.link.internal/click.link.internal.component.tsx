@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import AnalyticsButtonWrapperContainer from "@src/components/analytics/analytics.link.internal/analytics.link.internal.container";
+import AnalyticsButtonWrapperContainer from "@src/web/analytics/collection/components/analytics.link.internal/analytics.link.internal.container";
 import type { MouseEventHandler, PropsWithChildren } from "react";
 
 interface ClickLinkProps {

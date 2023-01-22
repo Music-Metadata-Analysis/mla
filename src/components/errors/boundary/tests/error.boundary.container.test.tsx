@@ -4,9 +4,9 @@ import ErrorBoundaryContainer, {
 } from "../error.boundary.container";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import ErrorHandlerFactory from "@src/components/errors/boundary/handler/factory/error.handler.factory.class";
-import Events from "@src/events/events";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockErrorBoundary } from "@src/vendors/integrations/errors/__mocks__/vendor.mock";
+import Events from "@src/web/analytics/collection/events/definitions";
 
 jest.mock(
   "@src/components/errors/boundary/handler/factory/error.handler.factory.class"

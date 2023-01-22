@@ -1,6 +1,6 @@
 import App, { AppContext } from "next/app";
 import "../styles/globals.css";
-import ConsentContainer from "@src/components/consent/consent.container";
+import ConsentContainer from "@src/web/analytics/consent/components/consent.container";
 import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
 import RootProvider from "@src/providers/root.provider";

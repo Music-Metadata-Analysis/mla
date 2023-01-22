@@ -3,11 +3,11 @@ import ErrorHandlerContainer, {
   ErrorHandlerContainerProps,
 } from "../error.handler.container";
 import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
-import Events from "@src/events/events";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
+import Events from "@src/web/analytics/collection/events/definitions";
+import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 
-jest.mock("@src/hooks/analytics.hook");
+jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 jest.mock("@src/components/errors/display/error.display.container", () =>
   require("@fixtures/react/child").createComponent("ErrorDisplayContainer")

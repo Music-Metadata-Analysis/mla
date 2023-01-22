@@ -2,13 +2,13 @@ import { render } from "@testing-library/react";
 import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import PrivacyContainer from "@src/components/legal/privacy/privacy.container";
 import routes from "@src/config/routes";
-import Events from "@src/events/events";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Page, { getServerSideProps } from "@src/pages/legal/privacy";
 import {
   mockServerSideProps,
   mockUtilities,
 } from "@src/vendors/integrations/web.framework/__mocks__/vendor.ssr.mock";
+import Events from "@src/web/analytics/collection/events/definitions";
 
 jest.mock("@src/vendors/integrations/web.framework/vendor.ssr");
 

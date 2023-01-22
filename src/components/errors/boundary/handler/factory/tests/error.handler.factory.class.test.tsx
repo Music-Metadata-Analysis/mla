@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import ErrorHandlerFactory from "../error.handler.factory.class";
 import ErrorHandlerContainer from "@src/components/errors/boundary/handler/error.handler.container";
-import Events from "@src/events/events";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import Events from "@src/web/analytics/collection/events/definitions";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type { ErrorVendorFallBackRenderProps } from "@src/vendors/types/integrations/errors/vendor.types";
 

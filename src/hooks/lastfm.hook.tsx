@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import useAnalytics from "./analytics.hook";
+import useAnalytics from "../web/analytics/collection/state/hooks/analytics.hook";
 import LastFMPlayCountByArtistDataClient from "@src/clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class";
 import LastFMTopAlbumsReport from "@src/clients/api/lastfm/reports/top20.albums.class";
 import LastFMTopArtistsReport from "@src/clients/api/lastfm/reports/top20.artists.class";

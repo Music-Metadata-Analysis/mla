@@ -5,7 +5,7 @@ import mockHookValues from "../__mocks__/navbar.layout.controller.hook.mock";
 import useNavBarLayoutController from "../navbar.layout.controller.hook";
 import type mockToggleHookValues from "@src/utilities/react/hooks/__mocks__/toggle.hook.mock";
 
-jest.mock("@src/hooks/analytics.hook");
+jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 jest.mock(
   "@src/web/navigation/navbar/state/controllers/navbar.controller.hook"

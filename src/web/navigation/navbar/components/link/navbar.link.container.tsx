@@ -1,6 +1,6 @@
 import NavLink from "./navbar.link.component";
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
-import type { ButtonClickHandlerType } from "@src/types/analytics.types";
+import type { ButtonClickHandlerType } from "@src/web/analytics/collection/types/components/handler.types";
 import type { MouseEvent } from "react";
 
 interface NavLinkContainerProps {

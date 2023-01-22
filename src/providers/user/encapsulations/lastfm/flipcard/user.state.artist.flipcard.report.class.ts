@@ -1,5 +1,5 @@
 import UserFlipCardBaseReportState from "./user.state.base.flipcard.report.class";
-import Events from "@src/events/events";
+import Events from "@src/web/analytics/collection/events/definitions";
 import type { LastFMUserStateArtistReport } from "@src/types/user/state.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 

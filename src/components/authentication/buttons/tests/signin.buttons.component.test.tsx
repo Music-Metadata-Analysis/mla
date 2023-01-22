@@ -6,10 +6,10 @@ import {
 } from "react-social-login-buttons";
 import SignInButtons from "../signin.buttons.component";
 import authenticationTranslations from "@locales/authentication.json";
-import AnalyticsButtonWrapper from "@src/components/analytics/analytics.button/analytics.button.container";
 import SpotifyLoginButton from "@src/components/button/button.spotify/button.spotify.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
+import AnalyticsButtonWrapper from "@src/web/analytics/collection/components/analytics.button/analytics.button.container";
 
 jest.mock("react-social-login-buttons", () => ({
   FacebookLoginButton: jest.fn(() => "FacebookLoginButton"),
@@ -23,7 +23,7 @@ jest.mock(
 );
 
 jest.mock(
-  "@src/components/analytics/analytics.button/analytics.button.container",
+  "@src/web/analytics/collection/components/analytics.button/analytics.button.container",
   () =>
     require("@fixtures/react/parent").createComponent("AnalyticsButtonWrapper")
 );

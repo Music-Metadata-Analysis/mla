@@ -4,11 +4,11 @@ import BillBoardSpinner from "@src/components/billboard/billboard.spinner/billbo
 import Condition from "@src/components/condition/condition.component";
 import LastFMErrorDisplayContainer from "@src/components/reports/lastfm/common/error.display/error.display.container";
 import useFlipCardController from "@src/components/reports/lastfm/common/report.component/flip.card/controllers/flip.card.controller.hook";
-import Events from "@src/events/events";
-import useAnalytics from "@src/hooks/analytics.hook";
 import useImagesController from "@src/hooks/controllers/images.controller.hook";
 import useLocale from "@src/hooks/locale.hook";
 import useMetrics from "@src/hooks/metrics.hook";
+import Events from "@src/web/analytics/collection/events/definitions";
+import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
 import type FlipCardBaseReport from "@src/components/reports/lastfm/common/report.class/flip.card.report.base.class";
 import type FlipCardBaseReportState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
 import type { LastFMFlipCardDrawerInterface } from "@src/types/reports/lastfm/components/drawers/flip.card.types";

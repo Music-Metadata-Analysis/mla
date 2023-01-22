@@ -1,5 +1,5 @@
 import BaseButton from "../button.base/button.base.component";
-import AnalyticsButtonWrapper from "@src/components/analytics/analytics.button/analytics.button.container";
+import AnalyticsButtonWrapper from "@src/web/analytics/collection/components/analytics.button/analytics.button.container";
 import type { ButtonProps } from "@chakra-ui/react";
 import type { PropsWithChildren } from "react";
 

@@ -8,8 +8,8 @@ import NavBarOptions from "../options/navbar.options.component";
 import NavBarSessionControlContainer from "../session.control/navbar.session.control.container";
 import NavBarSpinner from "../spinner/navbar.spinner.component";
 import useColour from "@src/hooks/ui/colour.hook";
-import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
+import type { ButtonClickHandlerType } from "@src/web/analytics/collection/types/components/handler.types";
 import type { NavBarControllerHookType } from "@src/web/navigation/navbar/state/controllers/navbar.layout.controller.hook";
 
 interface NavBarRootProps {

@@ -1,6 +1,6 @@
 import NavBarColourModeToggle from "./navbar.colour.mode.component";
 import useColourMode from "@src/hooks/ui/colour.mode.hook";
-import type { ButtonClickHandlerType } from "@src/types/analytics.types";
+import type { ButtonClickHandlerType } from "@src/web/analytics/collection/types/components/handler.types";
 import type { ChangeEvent } from "react";
 
 interface NavBarColourModeToggleProps {

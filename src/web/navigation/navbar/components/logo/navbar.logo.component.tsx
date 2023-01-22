@@ -2,8 +2,8 @@ import { Flex, Spacer } from "@chakra-ui/react";
 import NavBarAvatar from "../avatar/navbar.avatar.component";
 import NavBarLinkContainer from "../link/navbar.link.container";
 import routes from "@src/config/routes";
-import type { ButtonClickHandlerType } from "@src/types/analytics.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
+import type { ButtonClickHandlerType } from "@src/web/analytics/collection/types/components/handler.types";
 
 interface NavBarLogoProps {
   closeMobileMenu: () => void;

@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import ClickExternalLink from "../click.link.external.component";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 
-jest.mock("@src/hooks/analytics.hook");
+jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 describe("ButtonLink", () => {
   const linkText = "Link";

@@ -135,6 +135,14 @@ main() {
     excludes_vendor_locations "analytics"                                                                           || 
     error_decoupling "Analytics"
 
+  ! search 'from "js-cookie' src                                                                                    |
+    excludes '^src/web/analytics/consent'                                                                           ||
+    error_decoupling "Analytics"
+
+  ! search 'from "react-cookie-consent' src                                                                         |
+    excludes '^src/web/analytics/consent'                                                                           ||
+    error_decoupling "Analytics"
+
   # Enforce API Handler Framework Isolation
   echo "  Checking API Handler Framework Isolation..."
   ! search 'from "next-connect"' src                                                                                | 

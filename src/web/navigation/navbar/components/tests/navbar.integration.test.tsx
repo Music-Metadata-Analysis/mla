@@ -4,18 +4,18 @@ import NavBarContainer from "../navbar.container";
 import { testIDs as NavBarRootTestIDs } from "../root/navbar.root.identifiers";
 import navbarTranslations from "@locales/navbar.json";
 import NavConfig from "@src/config/navbar";
-import mockAnalyticsHook from "@src/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook, {
   mockUserProfile,
 } from "@src/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import { mockIsBuildTime } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
+import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import NavBarControllerProvider from "@src/web/navigation/navbar/state/providers/navbar.provider";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 import type { JSONstringType } from "@src/types/json.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
 
-jest.mock("@src/hooks/analytics.hook");
+jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 jest.mock("@src/hooks/auth.hook");
 

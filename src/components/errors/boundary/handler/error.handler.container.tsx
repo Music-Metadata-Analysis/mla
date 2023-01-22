@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
-import useAnalytics from "@src/hooks/analytics.hook";
+import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 
 export interface ErrorHandlerContainerProps {

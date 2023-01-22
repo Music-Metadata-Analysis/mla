@@ -1,9 +1,5 @@
 import HTTPClient from "../http/http.client.class";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
-import type {
-  EventCreatorType,
-  IntegrationRequestType,
-} from "@src/types/analytics.types";
 import type { HttpApiClientResponse } from "@src/types/clients/api/http.types";
 import type {
   LastFMReportClientInterface,
@@ -11,6 +7,8 @@ import type {
 } from "@src/types/clients/api/lastfm/report.client.types";
 import type { BaseReportResponseInterface } from "@src/types/reports/lastfm/states/generic.types";
 import type { userDispatchType } from "@src/types/user/context.types";
+import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
+import type { IntegrationRequestType } from "@src/web/analytics/collection/types/analytics.types";
 
 abstract class LastFMReportBaseClient<ResponseType>
   implements LastFMReportClientInterface

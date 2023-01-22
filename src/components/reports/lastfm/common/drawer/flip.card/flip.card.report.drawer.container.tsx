@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import FlipCardDrawer from "./flip.card.report.drawer.component";
 import settings from "@src/config/flip.card";
-import useAnalytics from "@src/hooks/analytics.hook";
 import useLocale from "@src/hooks/locale.hook";
+import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
 import type FlipCardReportStateBase from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
 import type { LastFMFlipCardDrawerInterface } from "@src/types/reports/lastfm/components/drawers/flip.card.types";
 

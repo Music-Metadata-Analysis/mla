@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import SignInModalContainer from "./modals/signin/modal.signin.container";
 import SpinnerModalContainer from "./modals/spinner/modal.spinner.container";
 import routes from "@src/config/routes";
-import Events from "@src/events/events";
-import useAnalytics from "@src/hooks/analytics.hook";
 import useAuth from "@src/hooks/auth.hook";
 import useToggle from "@src/utilities/react/hooks/toggle.hook";
+import Events from "@src/web/analytics/collection/events/definitions";
+import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
 import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 
