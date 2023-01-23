@@ -1,6 +1,6 @@
 import { useState } from "react";
 import FlipCard from "./flip.card.component";
-import useLocale from "@src/hooks/locale.hook";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 
 export interface FlipCardContainerProps {
   cardSize: number;
@@ -25,7 +25,7 @@ export default function FlipCardContainer({
   noArtWorkText,
   onLoad,
 }: FlipCardContainerProps) {
-  const { t } = useLocale("cards");
+  const { t } = useTranslation("cards");
   const [hasLoadError, setLoadError] = useState(false);
 
   const imageFrontActiveSrc = hasLoadError ? imageFrontFallBack : imageFrontSrc;

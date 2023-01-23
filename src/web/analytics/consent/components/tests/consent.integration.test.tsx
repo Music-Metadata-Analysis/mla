@@ -4,14 +4,14 @@ import ConsentContainer from "../consent.container";
 import { testIDs } from "../consent.identifiers";
 import translations from "@locales/main.json";
 import { settings } from "@src/config/cookies";
-import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 jest.mock("@src/hooks/ui/colour.hook");
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 describe("Consent", () => {
   beforeEach(() => jest.clearAllMocks());

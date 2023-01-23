@@ -8,17 +8,22 @@ import LastFMErrorDisplayContainer from "@src/components/reports/lastfm/common/e
 import { MockReportClass } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.sunburst.report.class";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockMetricsHook from "@src/hooks/__mocks__/metrics.hook.mock";
 import mockSunBurstControllerHook from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
-import useLocale from "@src/hooks/locale.hook";
 import Events from "@src/web/analytics/collection/events/definitions";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import {
+  MockUseTranslation,
+  _t,
+} from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
-jest.mock("@src/hooks/locale.hook", () => jest.fn());
+jest.mock("@src/web/locale/translation/hooks/translation.hook", () =>
+  jest.fn()
+);
 
 jest.mock("@src/hooks/metrics.hook");
 
@@ -49,8 +54,8 @@ describe("SunBurstReportContainer", () => {
 
   const mockReport = new MockReportClass();
   const mockUsername = "mockUsername";
-  const mockLastFmT = new MockUseLocale("lastfm").t;
-  const mockSunBurstT = new MockUseLocale("sunburst").t;
+  const mockLastFmT = new MockUseTranslation("lastfm").t;
+  const mockSunBurstT = new MockUseTranslation("sunburst").t;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -76,7 +81,7 @@ describe("SunBurstReportContainer", () => {
     );
 
     jest
-      .mocked(useLocale)
+      .mocked(useTranslation)
       .mockReturnValueOnce({ t: mockLastFmT })
       .mockReturnValueOnce({ t: mockSunBurstT });
   };

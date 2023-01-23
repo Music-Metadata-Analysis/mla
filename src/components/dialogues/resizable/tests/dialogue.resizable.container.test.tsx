@@ -6,10 +6,10 @@ import DialogueContainer, {
 import { createSimpleComponent } from "@fixtures/react/simple";
 import dialogueSettings from "@src/config/dialogue";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockUseWindowThreshold from "@src/hooks/ui/__mocks__/window.threshold.hook.mock";
 import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
 import { mockUseRouter } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
@@ -24,7 +24,7 @@ describe("DialogueContainer", () => {
 
   const originalWindowInnerHeight = window.innerHeight;
 
-  const mockT = new MockUseLocale("splash").t;
+  const mockT = new MockUseTranslation("splash").t;
   const mockBody = createSimpleComponent("Body");
   const mockFooter = createSimpleComponent("Footer");
   const mockHeader = createSimpleComponent("Header");

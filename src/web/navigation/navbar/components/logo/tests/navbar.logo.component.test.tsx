@@ -3,7 +3,10 @@ import NavBarLinkContainer from "../../link/navbar.link.container";
 import NavBarLogo from "../navbar.logo.component";
 import navbarTranslations from "@locales/navbar.json";
 import routes from "@src/config/routes";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
+import {
+  MockUseTranslation,
+  _t,
+} from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import NavBarAvatar from "@src/web/navigation/navbar/components/avatar/navbar.avatar.component";
 
 jest.mock(
@@ -25,7 +28,7 @@ describe("NavBarLogo", () => {
     image: "https://mock/profile/url",
   };
 
-  const mockNavBarT = new MockUseLocale("navbar").t;
+  const mockNavBarT = new MockUseTranslation("navbar").t;
   const mockCloseMobileMenu = jest.fn();
   const mockTracker = jest.fn();
 

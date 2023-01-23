@@ -5,10 +5,10 @@ import SunBurstDrawerControlPanelContainer, {
 } from "../drawer.control.panel.container";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("../drawer.control.panel.component", () =>
   require("@fixtures/react/child").createComponent("SunBurstDrawerControlPanel")
@@ -18,7 +18,7 @@ describe("SunBurstDrawerControlPanelContainer", () => {
   let currentProps: SunBurstDrawerControlPanelContainerProps;
 
   const mockSelectParentNode = jest.fn();
-  const mockLastFMt = new MockUseLocale("lastfm").t;
+  const mockLastFMt = new MockUseTranslation("lastfm").t;
 
   const baseProps = {
     node: new MockSunBurstNodeAbstractBase({} as d3Node),

@@ -4,15 +4,15 @@ import FlipCardDrawerContainer from "../flip.card.report.drawer.container";
 import mockFlipCardController from "@src/components/reports/lastfm/common/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import settings from "@src/config/flip.card";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import useLocale from "@src/hooks/locale.hook";
 import UserAlbumState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import type { LastFMFlipCardDrawerInterface } from "@src/types/reports/lastfm/components/drawers/flip.card.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock(
   "@src/components/button/button.external.link/button.external.link.component",
@@ -61,7 +61,7 @@ describe("FlipCardDrawerContainer", () => {
     userName: null,
   };
 
-  const mockT = new MockUseLocale("lastfm").t;
+  const mockT = new MockUseTranslation("lastfm").t;
 
   const baseProps: LastFMFlipCardDrawerInterface<UserAlbumState> = {
     artWorkAltTranslatedText: "artWorkAltTranslatedText",
@@ -78,7 +78,7 @@ describe("FlipCardDrawerContainer", () => {
   });
 
   const resetProps = () => {
-    jest.mocked(useLocale).mockReturnValueOnce({ t: mockT });
+    jest.mocked(useTranslation).mockReturnValueOnce({ t: mockT });
     currentProps = { ...baseProps };
   };
 

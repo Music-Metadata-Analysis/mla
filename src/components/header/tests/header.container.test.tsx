@@ -2,10 +2,10 @@ import { render } from "@testing-library/react";
 import Header from "../header.component";
 import HeaderContainer from "../header.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import useLocale from "@src/hooks/locale.hook";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/vendors/integrations/web.framework/vendor");
 
@@ -16,11 +16,11 @@ jest.mock("../header.component.tsx", () =>
 describe("HeaderContainer", () => {
   const testTranslationKey = "default";
 
-  const mockMainT = new MockUseLocale("main").t;
+  const mockMainT = new MockUseTranslation("main").t;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.mocked(useLocale).mockReturnValueOnce({ t: mockMainT });
+    jest.mocked(useTranslation).mockReturnValueOnce({ t: mockMainT });
   });
 
   const arrange = () => {

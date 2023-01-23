@@ -1,5 +1,5 @@
 import SpinnerModal from "./modal.spinner.component";
-import useLocale from "@src/hooks/locale.hook";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 
 export interface AuthenticationSpinnerModalContainerProps {
   onClose: () => void;
@@ -8,7 +8,7 @@ export interface AuthenticationSpinnerModalContainerProps {
 export default function AuthenticationSpinnerModalContainer({
   onClose,
 }: AuthenticationSpinnerModalContainerProps) {
-  const { t } = useLocale("authentication");
+  const { t } = useTranslation("authentication");
 
   return <SpinnerModal onClose={onClose} titleText={t("spinnerTitle")} />;
 }

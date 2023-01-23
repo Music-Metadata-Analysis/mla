@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import FlipCardDrawer from "./flip.card.report.drawer.component";
 import settings from "@src/config/flip.card";
-import useLocale from "@src/hooks/locale.hook";
 import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import type FlipCardReportStateBase from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
 import type { LastFMFlipCardDrawerInterface } from "@src/types/reports/lastfm/components/drawers/flip.card.types";
 
@@ -17,7 +17,7 @@ export default function FlipCardDrawerContainer<
   reportStateInstance,
 }: LastFMFlipCardDrawerInterface<ReportStateType>) {
   const analytics = useAnalytics();
-  const { t } = useLocale("lastfm");
+  const { t } = useTranslation("lastfm");
 
   useEffect(() => {
     if (objectIndex === null) return;

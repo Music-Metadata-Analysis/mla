@@ -5,8 +5,8 @@ import { testIDs } from "../dialogue.resizable.identifiers";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import { mockUseRouter } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
 
 jest.mock("@chakra-ui/react", () =>
@@ -20,7 +20,7 @@ jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
 describe("Dialogue", () => {
   let currentProps: DialogueProps;
 
-  const mockT = new MockUseLocale("splash").t;
+  const mockT = new MockUseTranslation("splash").t;
   const mockBody = createSimpleComponent(testIDs.DialogueBodyComponent);
   const mockFooter = createSimpleComponent(testIDs.DialogueFooterComponent);
   const mockHeader = createSimpleComponent(testIDs.DialogueHeaderComponent);

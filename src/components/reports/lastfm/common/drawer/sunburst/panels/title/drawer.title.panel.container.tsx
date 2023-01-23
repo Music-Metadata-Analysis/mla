@@ -1,5 +1,5 @@
 import SunBurstDrawerTitlePanel from "./drawer.title.panel.component";
-import useLocale from "@src/hooks/locale.hook";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 
 export interface SunBurstDrawerTitlePanelContainerProps {
@@ -9,7 +9,7 @@ export interface SunBurstDrawerTitlePanelContainerProps {
 export default function SunBurstDrawerTitlePanelContainer({
   node,
 }: SunBurstDrawerTitlePanelContainerProps) {
-  const { t: sunBurstT } = useLocale("sunburst");
+  const { t: sunBurstT } = useTranslation("sunburst");
 
   const title = node.getDrawerTitle();
   const subTitle = node.getDrawerSubTitle(sunBurstT);

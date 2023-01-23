@@ -3,12 +3,12 @@ import SelectContainer from "../select.report.container";
 import translations from "@locales/lastfm.json";
 import config from "@src/config/lastfm";
 import mockUseFlags from "@src/hooks/__mocks__/flags.hook.mock";
-import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
+import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@src/hooks/flags.hook");
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 

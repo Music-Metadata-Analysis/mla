@@ -8,7 +8,7 @@ import mockAuthHook, {
 
 jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 

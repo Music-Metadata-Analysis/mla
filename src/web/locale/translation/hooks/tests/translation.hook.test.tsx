@@ -1,12 +1,12 @@
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
-import mockHookValues from "../__mocks__/locale.hook.mock";
-import useLocale from "../locale.hook";
+import mockHookValues from "../__mocks__/translation.hook.mock";
+import useTranslation from "../translation.hook";
 import { localeVendor } from "@src/vendors/integrations/locale/vendor";
 
 jest.mock("@src/vendors/integrations/locale/vendor");
 
-describe("useLocale", () => {
+describe("useTranslation", () => {
   let received: ReturnType<typeof arrange>;
 
   const mockNS = "mockNS";
@@ -16,7 +16,7 @@ describe("useLocale", () => {
   });
 
   const arrange = () => {
-    return renderHook(() => useLocale(mockNS));
+    return renderHook(() => useTranslation(mockNS));
   };
 
   describe("when rendered", () => {

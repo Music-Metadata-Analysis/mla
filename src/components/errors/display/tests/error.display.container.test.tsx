@@ -5,9 +5,9 @@ import ErrorDisplayContainer, {
 } from "../error.display.container";
 import translations from "@locales/errors.json";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
+import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("../error.display.component", () =>
   require("@fixtures/react/parent").createComponent("ErrorDisplay")

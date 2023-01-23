@@ -6,10 +6,10 @@ import PrivacyContainer from "../privacy.container";
 import DialogueContainer from "@src/components/dialogues/resizable/dialogue.resizable.container";
 import {
   checkTProp,
-  MockUseLocale,
-} from "@src/hooks/__mocks__/locale.hook.mock";
+  MockUseTranslation,
+} from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
@@ -19,7 +19,7 @@ jest.mock(
 );
 
 describe("PrivacyContainer", () => {
-  const mockT = new MockUseLocale("legal").t;
+  const mockT = new MockUseTranslation("legal").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

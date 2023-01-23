@@ -1,5 +1,5 @@
 import ErrorDisplay from "./error.display.component";
-import useLocale from "@src/hooks/locale.hook";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import type errors from "@locales/errors.json";
 
 export interface ErrorDisplayContainerProps {
@@ -13,7 +13,7 @@ const ErrorDisplayContainer = ({
   errorKey,
   handleClick,
 }: ErrorDisplayContainerProps) => {
-  const { t } = useLocale("errors");
+  const { t } = useTranslation("errors");
 
   const messageText = () => {
     if (error) return error.message;

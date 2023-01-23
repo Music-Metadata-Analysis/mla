@@ -3,7 +3,7 @@ import FeedbackPopUp from "../feedback.popup.component";
 import { testIDs } from "../feedback.popup.identifiers";
 import externalLinks from "@src/config/external";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 

@@ -1,12 +1,12 @@
 import Header from "./header.component";
-import useLocale from "@src/hooks/locale.hook";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 
 export interface HeaderContainerProps {
   pageKey: string;
 }
 
 const HeaderContainer = ({ pageKey }: HeaderContainerProps) => {
-  const { t: mainT } = useLocale("main");
+  const { t: mainT } = useTranslation("main");
 
   return (
     <Header

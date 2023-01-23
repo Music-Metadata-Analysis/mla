@@ -7,15 +7,15 @@ import SunBurstNodeButton from "@src/components/reports/lastfm/common/drawer/sun
 import SunBurstNodeDisplay from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.display/node.display.component";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import useLocale from "@src/hooks/locale.hook";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 import type { SunBurstDrawerNodeComponentProps } from "@src/types/reports/lastfm/components/drawers/sunburst.types";
 import type { FC } from "react";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("../node.list.component", () =>
   require("@fixtures/react/parent").createComponent("NodeListComponent")
@@ -26,9 +26,9 @@ describe("SunBurstEntityNodeListContainer", () => {
 
   const mockScrolLRef = { current: null, value: "mock" };
 
-  const mockLastFMt = new MockUseLocale("lastfm").t;
+  const mockLastFMt = new MockUseTranslation("lastfm").t;
   const mockSelectNode = jest.fn();
-  const mockSunBurstT = new MockUseLocale("sunburst").t;
+  const mockSunBurstT = new MockUseTranslation("sunburst").t;
 
   const baseProps = {
     node: new MockSunBurstNodeAbstractBase({} as d3Node),
@@ -98,7 +98,7 @@ describe("SunBurstEntityNodeListContainer", () => {
 
   const resetProps = () => {
     jest
-      .mocked(useLocale)
+      .mocked(useTranslation)
       .mockReturnValueOnce({ t: mockLastFMt })
       .mockReturnValueOnce({ t: mockSunBurstT });
 

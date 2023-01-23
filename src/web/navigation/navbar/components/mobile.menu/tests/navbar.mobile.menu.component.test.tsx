@@ -4,8 +4,8 @@ import NavBarMobileMenu from "../navbar.mobile.menu.component";
 import { testIDs } from "../navbar.mobile.menu.identifiers";
 import navConfig from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import NavBarOptions from "@src/web/navigation/navbar/components/options/navbar.options.component";
 import mockControllerHook from "@src/web/navigation/navbar/state/controllers/__mocks__/navbar.layout.controller.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
@@ -27,7 +27,7 @@ describe("NavBarMobileMenu", () => {
     NavBarOptions: "NavBarOptions",
   };
 
-  const mockNavBarT = new MockUseLocale("navbar").t;
+  const mockNavBarT = new MockUseTranslation("navbar").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

@@ -4,12 +4,12 @@ import FlipCardContainer, {
   FlipCardContainerProps,
 } from "../flip.card.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import useLocale from "@src/hooks/locale.hook";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("../flip.card.component", () =>
   require("@fixtures/react/child").createComponent("FlipCard")
@@ -20,7 +20,7 @@ describe("FlipCardContainer", () => {
 
   const mockFlipCard = jest.fn();
   const mockOnLoad = jest.fn();
-  const mockT = new MockUseLocale("cards").t;
+  const mockT = new MockUseTranslation("cards").t;
 
   const baseProps: FlipCardContainerProps = {
     cardSize: 50,
@@ -46,7 +46,7 @@ describe("FlipCardContainer", () => {
   const resetProps = () => {
     currentProps = { ...baseProps };
 
-    jest.mocked(useLocale).mockReturnValueOnce({ t: mockT });
+    jest.mocked(useTranslation).mockReturnValueOnce({ t: mockT });
   };
 
   const checkFlipCardProps = ({

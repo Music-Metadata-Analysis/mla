@@ -6,10 +6,10 @@ import SplashContainer from "../splash.container";
 import DialogueContainer from "@src/components/dialogues/resizable/dialogue.resizable.container";
 import {
   checkTProp,
-  MockUseLocale,
-} from "@src/hooks/__mocks__/locale.hook.mock";
+  MockUseTranslation,
+} from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock(
   "@src/components/dialogues/resizable/dialogue.resizable.container",
@@ -17,7 +17,7 @@ jest.mock(
 );
 
 describe("SplashContainer", () => {
-  const mockT = new MockUseLocale("splash").t;
+  const mockT = new MockUseTranslation("splash").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

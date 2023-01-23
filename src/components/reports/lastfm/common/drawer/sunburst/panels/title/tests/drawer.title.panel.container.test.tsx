@@ -5,11 +5,11 @@ import SunBurstDrawerTitlePanelContainer, {
 } from "../drawer.title.panel.container";
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
-import useLocale from "@src/hooks/locale.hook";
+import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("../drawer.title.panel.component", () =>
   require("@fixtures/react/child").createComponent("SunBurstDrawerTitlePanel")
@@ -31,7 +31,7 @@ describe("SunBurstDrawerTitlePanelContainer", () => {
     (currentProps.node = new MockSunBurstNodeAbstractBase(data as d3Node));
 
   const resetProps = () => {
-    jest.mocked(useLocale).mockReturnValueOnce({ t: _t });
+    jest.mocked(useTranslation).mockReturnValueOnce({ t: _t });
     currentProps = { ...baseProps };
   };
 

@@ -8,10 +8,10 @@ import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import dialogueSettings from "@src/config/dialogue";
 import lastFMConfig from "@src/config/lastfm";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import mockUseRouter from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock([
@@ -41,7 +41,7 @@ jest.mock("@src/components/highlight/highlight.component", () =>
 );
 
 describe("SplashBody", () => {
-  const mockT = new MockUseLocale("splash").t;
+  const mockT = new MockUseTranslation("splash").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

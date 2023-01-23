@@ -16,8 +16,11 @@ import {
 import mockFlipCardController from "@src/components/reports/lastfm/common/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import settings from "@src/config/flip.card";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockImageController from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";
+import {
+  MockUseTranslation,
+  _t,
+} from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
 
 jest.mock("@chakra-ui/react", () =>
@@ -56,7 +59,7 @@ describe("FlipCardReport", () => {
     },
   };
 
-  const mockT = new MockUseLocale("lastfm").t;
+  const mockT = new MockUseTranslation("lastfm").t;
 
   const mockReportStateData = [
     {
@@ -99,7 +102,7 @@ describe("FlipCardReport", () => {
     flipCardController: mockFlipCardController,
     reportStateInstance: new MockUserStateEncapsulation(
       mockReportState,
-      new MockUseLocale("lastfm").t
+      new MockUseTranslation("lastfm").t
     ),
     report: new MockReportClass(),
     t: mockT,

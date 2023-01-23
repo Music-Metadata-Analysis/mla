@@ -21,9 +21,9 @@ import ClickLinkInternalContainer from "@src/components/clickable/click.link.int
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import routes from "@src/config/routes";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import SignInButtons from "@src/web/authentication/sign.in/components/buttons/signin.buttons.component";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
@@ -69,7 +69,7 @@ describe("AuthenticationModal", () => {
   const mockHandleSignIn = jest.fn();
   const mockOnClose = jest.fn();
   const mockRef = { current: null, value: "mocked" };
-  const mockT = new MockUseLocale("authentication").t;
+  const mockT = new MockUseTranslation("authentication").t;
 
   const baseProps: AuthenticationSignInModalProps = {
     authenticationT: mockT,

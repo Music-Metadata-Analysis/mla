@@ -5,7 +5,7 @@ import SunBurstDetailsPanel, {
 } from "../details.panel.component";
 import { testIDs } from "../details.panel.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
@@ -22,7 +22,7 @@ jest.mock("@chakra-ui/react", () =>
 describe("SunBurstDetailsPanel", () => {
   let currentProps: SunBurstDetailsPanelProps;
 
-  const mockT = new MockUseLocale("lastfm").t;
+  const mockT = new MockUseTranslation("lastfm").t;
 
   const baseProps = {
     breakPoints: [100, 200, 300],

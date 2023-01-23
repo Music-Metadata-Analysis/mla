@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import AuthenticationSignInModal from "./modal.signin.component";
-import useLocale from "@src/hooks/locale.hook";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 
 export interface AuthenticationSignInModalContainerProps {
@@ -14,7 +14,7 @@ export default function AuthenticationSignInModalContainer({
   isOpen,
   onClose,
 }: AuthenticationSignInModalContainerProps) {
-  const { t } = useLocale("authentication");
+  const { t } = useTranslation("authentication");
   const scrollRef = useRef<HTMLDivElement>(null);
 
   return (

@@ -3,9 +3,9 @@ import SVSIcon from "../svs.icon.component";
 import SVSIconContainer, { SVSIconContainerProps } from "../svs.icon.container";
 import mainTranslations from "@locales/main.json";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
+import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("../svs.icon.component", () =>
   require("@fixtures/react/child").createComponent("SVSIcon")

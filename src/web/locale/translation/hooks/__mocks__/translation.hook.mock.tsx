@@ -6,11 +6,11 @@ import type {
 
 const mockValues = mockLocaleVendorHook;
 
-export const mockLocales: Record<string, MockUseLocale> = {};
+export const mockTranslations: Record<string, MockUseTranslation> = {};
 
 export const _t = (value: string) => `t(${value})`;
 
-export class MockUseLocale implements LocaleVendorHookInterface {
+export class MockUseTranslation implements LocaleVendorHookInterface {
   namespace: string;
   protected json: tContentType;
 
@@ -52,7 +52,7 @@ export const checkTProp = (params: {
 
   it(`should call ${params.name} with a translation function for the namespace: ${params.namespace}`, () => {
     const tProp = jest.mocked(params.component).mock.calls[arg][call][propName];
-    expect(tProp).toBe(mockLocales[params.namespace].t);
+    expect(tProp).toBe(mockTranslations[params.namespace].t);
   });
 };
 

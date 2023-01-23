@@ -4,7 +4,10 @@ import {
   mockUrls,
 } from "../../tests/states/user.state.data.set";
 import lastfmTranslations from "@locales/lastfm.json";
-import { MockUseLocale, _t } from "@src/hooks/__mocks__/locale.hook.mock";
+import {
+  MockUseTranslation,
+  _t,
+} from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import type UserFlipCardBaseReportState from "../user.state.base.flipcard.report.class";
 import type { LastFMImageDataInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
@@ -12,7 +15,7 @@ import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
 describe("UserFlipCardBaseReportState", () => {
   let currentState: LastFMUserStateAlbumReport;
   let instance: UserFlipCardBaseReportState;
-  const mockT = new MockUseLocale("lastfm").t;
+  const mockT = new MockUseTranslation("lastfm").t;
   let index: number;
   let size: LastFMImageDataInterface["size"];
 

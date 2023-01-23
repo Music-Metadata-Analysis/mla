@@ -1,5 +1,5 @@
 import LastFMIcon from "./lastfm.icon.component";
-import useLocale from "@src/hooks/locale.hook";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 
 export interface LastFMIconContainerProps {
   height?: number;
@@ -10,7 +10,7 @@ const LastFMIconContainer = ({
   width = 50,
   height = 50,
 }: LastFMIconContainerProps) => {
-  const { t } = useLocale("main");
+  const { t } = useTranslation("main");
 
   return (
     <LastFMIcon altText={t("altText.lastfm")} width={width} height={height} />

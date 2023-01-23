@@ -1,6 +1,6 @@
 import { baseUserProperties } from "../../tests/states/user.state.data.set";
 import UserTrackState from "../user.state.track.flipcard.report.class";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import type {
   LastFMUserArtistInterface,
   LastFMUserTrackInterface,
@@ -10,7 +10,7 @@ import type { LastFMUserStateTrackReport } from "@src/types/user/state.types";
 describe("UserTrackState", () => {
   let currentState: LastFMUserStateTrackReport;
   let instance: UserTrackState;
-  const mockT = new MockUseLocale("lastfm").t;
+  const mockT = new MockUseTranslation("lastfm").t;
   let index: number;
 
   const resetState = () => {

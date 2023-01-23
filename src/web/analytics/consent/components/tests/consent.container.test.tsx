@@ -5,12 +5,12 @@ import ConsentContainer from "../consent.container";
 import translations from "@locales/main.json";
 import { settings } from "@src/config/cookies";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("../consent.component", () =>
   require("@fixtures/react/child").createComponent("Consent")

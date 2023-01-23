@@ -4,15 +4,15 @@ import lastfmTranslations from "@locales/lastfm.json";
 import mainTranslations from "@locales/main.json";
 import settings from "@src/config/lastfm";
 import routes from "@src/config/routes";
-import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockAuthHook, {
   mockUserProfile,
 } from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
+import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 

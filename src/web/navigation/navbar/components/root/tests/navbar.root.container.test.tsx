@@ -4,10 +4,10 @@ import NavBarRootContainer from "../navbar.root.container";
 import NavConfig from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import useLocale from "@src/hooks/locale.hook";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import mockControllerHook from "@src/web/navigation/navbar/state/controllers/__mocks__/navbar.layout.controller.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
@@ -17,7 +17,7 @@ jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
 jest.mock("@src/hooks/lastfm.hook");
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
@@ -26,11 +26,11 @@ jest.mock("../navbar.root.component", () =>
 );
 
 describe("NavBarRootContainer", () => {
-  const mockNavBarT = new MockUseLocale("navbar").t;
+  const mockNavBarT = new MockUseTranslation("navbar").t;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.mocked(useLocale).mockReturnValueOnce({ t: mockNavBarT });
+    jest.mocked(useTranslation).mockReturnValueOnce({ t: mockNavBarT });
   });
 
   const arrange = () => {

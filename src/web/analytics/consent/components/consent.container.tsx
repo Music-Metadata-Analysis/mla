@@ -2,12 +2,12 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import Consent from "./consent.component";
 import { settings } from "@src/config/cookies";
-import useLocale from "@src/hooks/locale.hook";
 import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 
 export default function ConsentContainer() {
   const analytics = useAnalytics();
-  const { t } = useLocale("main");
+  const { t } = useTranslation("main");
 
   const onAccept = () => {
     analytics.setup();

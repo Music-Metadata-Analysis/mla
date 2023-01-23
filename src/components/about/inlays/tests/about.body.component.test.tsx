@@ -8,7 +8,7 @@ import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import mockUseRouter from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@chakra-ui/react", () =>
@@ -35,7 +35,7 @@ jest.mock("@src/components/icons/svs/svs.icon.container", () =>
 );
 
 describe("AboutBody", () => {
-  const mockT = new MockUseLocale("about").t;
+  const mockT = new MockUseTranslation("about").t;
 
   beforeEach(() => {
     jest.clearAllMocks();

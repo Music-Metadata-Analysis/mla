@@ -8,8 +8,8 @@ import ButtonWithoutAnalytics from "@src/components/button/button.base/button.ba
 import MockSunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import SunBurstDetailsPanel from "@src/components/reports/lastfm/common/report.component/sunburst/panels/details/details.panel.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import type { d3Node } from "@src/types/reports/generics/sunburst.types";
 
 jest.mock("@src/hooks/ui/colour.hook");
@@ -54,7 +54,7 @@ describe("SunBurstControlPanel", () => {
 
   const mockOpenDrawer = jest.fn();
   const mockSetSelectedNode = jest.fn();
-  const mockT = new MockUseLocale("lastfm").t;
+  const mockT = new MockUseTranslation("lastfm").t;
 
   const baseProps = {
     isOpen: true,

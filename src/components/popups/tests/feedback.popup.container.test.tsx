@@ -3,19 +3,19 @@ import FeedbackPopUpContainer from "../feedback.popup.container";
 import FeedbackPopUp from "../popups.components/feedback.popup.component";
 import translations from "@locales/main.json";
 import settings from "@src/config/popups";
-import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockMetricsHook from "@src/hooks/__mocks__/metrics.hook.mock";
 import mockPopUpsControllerHook from "@src/hooks/controllers/__mocks__/popups.controller.hook.mock";
 import usePopUpsGenerator from "@src/hooks/ui/popups.generator.hook";
 import mockAuthHook, {
   mockUserProfile,
 } from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
+import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 
 jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
 jest.mock("@src/hooks/controllers/popups.controller.hook");
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/hooks/metrics.hook");
 

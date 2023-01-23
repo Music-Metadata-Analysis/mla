@@ -5,10 +5,10 @@ import AuthenticationSignInModalContainer, {
   AuthenticationSignInModalContainerProps,
 } from "../modal.signin.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
-import useLocale from "@src/hooks/locale.hook";
+import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
@@ -25,7 +25,7 @@ describe("AuthenticationSignInModalContainer", () => {
   const mockOnClose = jest.fn();
   const mockRef = { current: null, value: "mocked" };
   const mockHandleSignIn = jest.fn();
-  const mockT = new MockUseLocale("authentication").t;
+  const mockT = new MockUseTranslation("authentication").t;
 
   const baseProps = {
     isOpen: false,
@@ -43,7 +43,7 @@ describe("AuthenticationSignInModalContainer", () => {
   };
 
   const resetProps = () => {
-    jest.mocked(useLocale).mockReturnValueOnce({ t: mockT });
+    jest.mocked(useTranslation).mockReturnValueOnce({ t: mockT });
     jest.mocked(useRef).mockReturnValueOnce(mockRef);
     currentProps = { ...baseProps };
   };

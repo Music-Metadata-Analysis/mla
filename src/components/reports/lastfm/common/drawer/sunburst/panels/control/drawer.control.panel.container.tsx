@@ -1,5 +1,5 @@
 import SunBurstDrawerControlPanel from "./drawer.control.panel.component";
-import useLocale from "@src/hooks/locale.hook";
+import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import type SunBurstNodeAbstractBase from "@src/components/reports/lastfm/common/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 
 export interface SunBurstDrawerControlPanelContainerProps {
@@ -11,7 +11,7 @@ export default function SunBurstDrawerControlContainerPanel({
   node,
   selectParentNode,
 }: SunBurstDrawerControlPanelContainerProps) {
-  const { t: lastFMt } = useLocale("lastfm");
+  const { t: lastFMt } = useTranslation("lastfm");
 
   return (
     <SunBurstDrawerControlPanel

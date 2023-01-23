@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import SVSIcon, { SVSIconProps } from "../svs.icon.component";
 
-jest.mock("@src/hooks/locale.hook");
+jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 describe("SVSIcon", () => {
   let currentProps: SVSIconProps;
