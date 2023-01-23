@@ -3,19 +3,21 @@ import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import UserNameFormContainer from "../forms/username/username.form.container";
 import Search from "../search.component";
-import Authentication from "@src/components/authentication/authentication.container";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import Authentication from "@src/web/authentication/sign.in/components/authentication.container";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Avatar", "Box", "Flex"])
 );
 
-jest.mock("@src/components/authentication/authentication.container", () =>
-  require("@fixtures/react/child").createComponent(
-    "MockedAuthenticationComponent"
-  )
+jest.mock(
+  "@src/web/authentication/sign.in/components/authentication.container",
+  () =>
+    require("@fixtures/react/child").createComponent(
+      "MockedAuthenticationComponent"
+    )
 );
 
 jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>

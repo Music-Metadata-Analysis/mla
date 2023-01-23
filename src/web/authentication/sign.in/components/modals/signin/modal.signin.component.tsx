@@ -12,11 +12,11 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { testIDs, ids } from "./modal.signin.identifiers";
-import SignInButtons from "@src/components/authentication/buttons/signin.buttons.component";
 import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import routes from "@src/config/routes";
 import useColours from "@src/hooks/ui/colour.hook";
+import SignInButtons from "@src/web/authentication/sign.in/components/buttons/signin.buttons.component";
 import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { RefObject } from "react";

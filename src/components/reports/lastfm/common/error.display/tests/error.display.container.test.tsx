@@ -9,8 +9,10 @@ import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
-jest.mock("@src/components/authentication/authentication.container", () =>
-  require("@fixtures/react/child").createComponent("AuthenticationComponent")
+jest.mock(
+  "@src/web/authentication/sign.in/components/authentication.container",
+  () =>
+    require("@fixtures/react/child").createComponent("AuthenticationComponent")
 );
 
 jest.mock("../error.conditions/bases/error.base.class.component");

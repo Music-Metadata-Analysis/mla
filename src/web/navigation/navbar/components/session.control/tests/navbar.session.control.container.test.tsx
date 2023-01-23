@@ -4,9 +4,9 @@ import NavBarSessionControlContainer from "../navbar.session.control.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockAuthHook, {
   mockUserProfile,
-} from "@src/hooks/__mocks__/auth.hook.mock";
+} from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
 
-jest.mock("@src/hooks/auth.hook");
+jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
 jest.mock("@src/hooks/locale.hook");
 

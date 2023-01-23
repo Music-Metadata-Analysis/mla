@@ -5,16 +5,16 @@ import { fields } from "../username.form.identifiers";
 import lastfmTranslations from "@locales/lastfm.json";
 import lastfmSettings from "@src/config/lastfm";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockAuthHook, {
-  mockUserProfile,
-} from "@src/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockFormHook from "@src/hooks/controllers/__mocks__/forms.controller.hook.mock";
+import mockAuthHook, {
+  mockUserProfile,
+} from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 import type { FormikHelpers } from "formik";
 
-jest.mock("@src/hooks/auth.hook");
+jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
 jest.mock("@src/hooks/controllers/forms.controller.hook");
 

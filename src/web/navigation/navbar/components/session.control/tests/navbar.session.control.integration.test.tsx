@@ -3,15 +3,15 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import NavBarSessionControlContainer from "../navbar.session.control.container";
 import authenticationTranslocations from "@locales/authentication.json";
-import { testIDs as modalIDs } from "@src/components/authentication/modals/signin/modal.signin.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockAuthHook, {
   mockUserProfile,
-} from "@src/hooks/__mocks__/auth.hook.mock";
-import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
+} from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
+import { testIDs as modalIDs } from "@src/web/authentication/sign.in/components/modals/signin/modal.signin.identifiers";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
-jest.mock("@src/hooks/auth.hook");
+jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
 jest.mock("@src/hooks/locale.hook");
 

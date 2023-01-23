@@ -1,8 +1,8 @@
 import { Box, Flex, Avatar } from "@chakra-ui/react";
 import UserNameFormContainer from "./forms/username/username.form.container";
-import Authentication from "@src/components/authentication/authentication.container";
 import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
+import Authentication from "@src/web/authentication/sign.in/components/authentication.container";
 
 interface SearchProps {
   route: string;

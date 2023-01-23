@@ -1,13 +1,15 @@
 import { render, screen } from "@testing-library/react";
 import AuthenticationErrorConditionalDisplay from "../authentication.error.display.class.component";
-import Authentication from "@src/components/authentication/authentication.container";
 import { MockReportClass } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.sunburst.report.class";
 import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
+import Authentication from "@src/web/authentication/sign.in/components/authentication.container";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
-jest.mock("@src/components/authentication/authentication.container", () =>
-  require("@fixtures/react/parent").createComponent("AuthenticationContainer")
+jest.mock(
+  "@src/web/authentication/sign.in/components/authentication.container",
+  () =>
+    require("@fixtures/react/parent").createComponent("AuthenticationContainer")
 );
 
 describe("AuthenticationErrorConditionalDisplay", () => {

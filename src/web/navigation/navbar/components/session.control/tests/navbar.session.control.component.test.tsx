@@ -1,12 +1,12 @@
 import { Box, Button } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import NavBarSessionControl from "../navbar.session.control.component";
-import Authentication from "@src/components/authentication/authentication.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import AnalyticsButtonWrapperContainer from "@src/web/analytics/collection/components/analytics.button/analytics.button.container";
+import Authentication from "@src/web/authentication/sign.in/components/authentication.container";
 
-jest.mock("@src/hooks/auth.hook");
+jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
 jest.mock("@src/hooks/ui/colour.hook");
 
@@ -27,10 +27,12 @@ jest.mock(
     )
 );
 
-jest.mock("@src/components/authentication/authentication.container", () =>
-  require("@fixtures/react/child").createComponent(
-    "MockAuthenticationContainer"
-  )
+jest.mock(
+  "@src/web/authentication/sign.in/components/authentication.container",
+  () =>
+    require("@fixtures/react/child").createComponent(
+      "MockAuthenticationContainer"
+    )
 );
 
 const mockUseDisclosure = jest.fn();

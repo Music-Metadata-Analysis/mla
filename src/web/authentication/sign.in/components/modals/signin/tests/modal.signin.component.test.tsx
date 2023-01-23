@@ -17,13 +17,13 @@ import AuthenticationSignInComponent, {
   AuthenticationSignInModalProps,
 } from "../modal.signin.component";
 import { testIDs, ids } from "../modal.signin.identifiers";
-import SignInButtons from "@src/components/authentication/buttons/signin.buttons.component";
 import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import routes from "@src/config/routes";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
+import SignInButtons from "@src/web/authentication/sign.in/components/buttons/signin.buttons.component";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
@@ -46,7 +46,7 @@ jest.mock("@chakra-ui/react", () =>
 );
 
 jest.mock(
-  "@src/components/authentication/buttons/signin.buttons.component",
+  "@src/web/authentication/sign.in/components/buttons/signin.buttons.component",
   () => require("@fixtures/react/child").createComponent("SignInButtons")
 );
 

@@ -10,18 +10,18 @@ import { testIDs as AuthModalTestIDs } from "../modals/signin/modal.signin.ident
 import { testIDs as SpinnerModalTestIDs } from "../modals/spinner/modal.spinner.identifiers";
 import authenticationTranslations from "@locales/authentication.json";
 import routes from "@src/config/routes";
-import mockAuthHook, {
-  mockUserProfile,
-} from "@src/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/hooks/__mocks__/locale.hook.mock";
 import mockToggleHook from "@src/utilities/react/hooks/__mocks__/toggle.hook.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAuthHook, {
+  mockUserProfile,
+} from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
-jest.mock("@src/hooks/auth.hook");
+jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
 jest.mock("@src/hooks/locale.hook");
 

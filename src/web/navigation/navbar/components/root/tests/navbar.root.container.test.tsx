@@ -3,17 +3,17 @@ import NavBarRoot from "../navbar.root.component";
 import NavBarRootContainer from "../navbar.root.container";
 import NavConfig from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockAuthHook from "@src/hooks/__mocks__/auth.hook.mock";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import { MockUseLocale } from "@src/hooks/__mocks__/locale.hook.mock";
 import useLocale from "@src/hooks/locale.hook";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAuthHook from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
 import mockControllerHook from "@src/web/navigation/navbar/state/controllers/__mocks__/navbar.layout.controller.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
-jest.mock("@src/hooks/auth.hook");
+jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
 jest.mock("@src/hooks/lastfm.hook");
 
