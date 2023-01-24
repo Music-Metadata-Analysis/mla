@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react";
-import AboutContainer from "@src/components/about/about.container";
 import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import routes from "@src/config/routes";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -9,6 +8,7 @@ import {
   mockUtilities,
 } from "@src/vendors/integrations/web.framework/__mocks__/vendor.ssr.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
+import AboutContainer from "@src/web/static/about/components/about.container";
 
 jest.mock("@src/vendors/integrations/web.framework/vendor.ssr");
 
@@ -16,7 +16,7 @@ jest.mock("@src/components/errors/boundary/error.boundary.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
-jest.mock("@src/components/about/about.container", () =>
+jest.mock("@src/web/static/about/components/about.container", () =>
   require("@fixtures/react/parent").createComponent("AboutContainer")
 );
 
