@@ -5,7 +5,6 @@ import ReportSelect, { ReportSelectProps } from "../select.report.component";
 import ReportSelectContainer from "../select.report.container";
 import translations from "@locales/lastfm.json";
 import config from "@src/config/lastfm";
-import mockUseFlags from "@src/hooks/__mocks__/flags.hook.mock";
 import mockUseWindowThreshold from "@src/hooks/ui/__mocks__/window.threshold.hook.mock";
 import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
 import { mockUseRouter } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
@@ -13,6 +12,7 @@ import {
   MockUseTranslation,
   _t,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import mockUseFlags from "@src/web/runtime/feature.flags/hooks/__mocks__/flags.hook.mock";
 import type { MutableRefObject } from "react";
 
 jest.mock("react", () => ({
@@ -20,7 +20,7 @@ jest.mock("react", () => ({
   useRef: jest.fn(),
 }));
 
-jest.mock("@src/hooks/flags.hook");
+jest.mock("@src/web/runtime/feature.flags/hooks/flags.hook");
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
