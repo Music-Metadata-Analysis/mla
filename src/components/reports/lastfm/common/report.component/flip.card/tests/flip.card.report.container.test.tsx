@@ -8,7 +8,6 @@ import { MockReportClass } from "@src/components/reports/lastfm/common/report.cl
 import mockFlipCardController from "@src/components/reports/lastfm/common/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
-import mockMetricsHook from "@src/hooks/__mocks__/metrics.hook.mock";
 import mockImageController from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
@@ -17,6 +16,7 @@ import {
   MockUseTranslation,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
+import mockMetricsHook from "@src/web/metrics/collection/state/hooks/__mocks__/metrics.hook.mock";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
@@ -29,7 +29,7 @@ jest.mock("@src/hooks/controllers/images.controller.hook");
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
-jest.mock("@src/hooks/metrics.hook");
+jest.mock("@src/web/metrics/collection/state/hooks/metrics.hook");
 
 jest.mock(
   "@src/components/reports/lastfm/common/error.display/error.display.container",

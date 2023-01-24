@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { MetricsContext } from "@src/providers/metrics/metrics.provider";
-import type { MetricsActionType } from "@src/types/metrics/action.types";
+import { MetricsContext } from "@src/web/metrics/collection/state/providers/metrics.provider";
+import type { MetricsActionType } from "@src/web/metrics/collection/types/state/action.types";
 
 const useMetrics = () => {
   const { metrics, dispatch } = useContext(MetricsContext);

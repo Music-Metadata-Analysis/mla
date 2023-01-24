@@ -4,7 +4,7 @@ import MetricsProvider, { MetricsContext } from "../metrics.provider";
 import settings from "@src/config/metrics";
 import PersistentReducerFactory from "@src/utilities/react/hooks/local.storage/persisted.reducer.hook.factory.class";
 import { mockIsSSR } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
-import type { MetricsContextInterface } from "@src/types/metrics/context.types";
+import type { MetricsContextInterface } from "@src/web/metrics/collection/types/state/provider.types";
 
 jest.mock(
   "@src/utilities/react/hooks/local.storage/persisted.reducer.hook.factory.class"

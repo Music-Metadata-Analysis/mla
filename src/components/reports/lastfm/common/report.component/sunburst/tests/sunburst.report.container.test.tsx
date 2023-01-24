@@ -8,7 +8,6 @@ import LastFMErrorDisplayContainer from "@src/components/reports/lastfm/common/e
 import { MockReportClass } from "@src/components/reports/lastfm/common/report.class/tests/implementations/concrete.sunburst.report.class";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
-import mockMetricsHook from "@src/hooks/__mocks__/metrics.hook.mock";
 import mockSunBurstControllerHook from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
@@ -17,6 +16,7 @@ import {
   _t,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
+import mockMetricsHook from "@src/web/metrics/collection/state/hooks/__mocks__/metrics.hook.mock";
 import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
@@ -25,7 +25,7 @@ jest.mock("@src/web/locale/translation/hooks/translation.hook", () =>
   jest.fn()
 );
 
-jest.mock("@src/hooks/metrics.hook");
+jest.mock("@src/web/metrics/collection/state/hooks/metrics.hook");
 
 jest.mock("@src/hooks/controllers/sunburst.controller.hook");
 

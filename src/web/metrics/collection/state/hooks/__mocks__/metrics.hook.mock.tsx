@@ -1,4 +1,4 @@
-import { InitialState } from "@src/providers/metrics/metrics.initial";
+import { InitialState } from "@src/web/metrics/collection/state/providers/metrics.initial";
 
 const mockValues = {
   metrics: { ...InitialState },

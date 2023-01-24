@@ -3,9 +3,9 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/metrics.hook.mock";
 import useMetrics from "../metrics.hook";
-import { InitialState } from "@src/providers/metrics/metrics.initial";
-import { MetricsContext } from "@src/providers/metrics/metrics.provider";
-import type { MetricsContextInterface } from "@src/types/metrics/context.types";
+import { InitialState } from "@src/web/metrics/collection/state/providers/metrics.initial";
+import { MetricsContext } from "@src/web/metrics/collection/state/providers/metrics.provider";
+import type { MetricsContextInterface } from "@src/web/metrics/collection/types/state/provider.types";
 import type { ReactNode } from "react";
 
 interface MockUserContextWithChildren {

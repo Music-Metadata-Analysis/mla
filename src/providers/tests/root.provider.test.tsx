@@ -1,6 +1,5 @@
 import { waitFor, screen, render } from "@testing-library/react";
 import ControllersRootProvider from "../controllers/controllers.root.provider";
-import MetricsProvider from "../metrics/metrics.provider";
 import RootProvider from "../root.provider";
 import UserProvider from "../user/user.provider";
 import HeaderContainer from "@src/components/header/header.container";
@@ -10,6 +9,7 @@ import { mockAuthProvider } from "@src/vendors/integrations/auth/__mocks__/vendo
 import { flagVendor } from "@src/vendors/integrations/flags/vendor";
 import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 import AnalyticsProvider from "@src/web/analytics/collection/state/providers/analytics.provider";
+import MetricsProvider from "@src/web/metrics/collection/state/providers/metrics.provider";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 
@@ -32,7 +32,7 @@ jest.mock("@src/providers/controllers/controllers.root.provider.tsx", () =>
   require("@fixtures/react/parent").createComponent("ControllersRootProvider")
 );
 
-jest.mock("@src/providers/metrics/metrics.provider", () =>
+jest.mock("@src/web/metrics/collection/state/providers/metrics.provider", () =>
   require("@fixtures/react/parent").createComponent("MetricsProvider")
 );
 

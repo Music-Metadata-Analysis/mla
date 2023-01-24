@@ -1,7 +1,7 @@
 import { InitialState } from "../metrics.initial";
 import { MetricsReducer } from "../metrics.reducer";
-import type { MetricsActionType } from "@src/types/metrics/action.types";
-import type { MetricsStateType } from "@src/types/metrics/state.types";
+import type { MetricsActionType } from "@src/web/metrics/collection/types/state/action.types";
+import type { MetricsStateType } from "@src/web/metrics/collection/types/state/state.types";
 
 jest.mock("../metrics.reducer.states.class", () => jest.fn(() => mockStates));
 
