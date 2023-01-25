@@ -2,7 +2,7 @@ import FlipCardDrawerContainer from "@src/components/reports/lastfm/common/drawe
 import FlipCardBaseReport from "@src/components/reports/lastfm/common/report.class/flip.card.report.base.class";
 import routes from "@src/config/routes";
 import UserTrackDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.track.flipcard.report.class";
-import type { LastFMTopTracksReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
+import type { LastFMTopTracksReportResponseInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
 
 export default class Top20TracksReport extends FlipCardBaseReport<
   UserTrackDataState,

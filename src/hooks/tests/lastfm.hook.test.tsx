@@ -4,26 +4,26 @@ import dk from "deep-keys";
 import React from "react";
 import mockHookValues from "../__mocks__/lastfm.hook.mock";
 import useLastFM from "../lastfm.hook";
-import LastFMPlayCountByArtistDataClient from "@src/clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class";
-import LastFMTopAlbumsReport from "@src/clients/api/lastfm/reports/top20.albums.class";
-import LastFMTopArtistsReport from "@src/clients/api/lastfm/reports/top20.artists.class";
-import LastFMTopTracksReport from "@src/clients/api/lastfm/reports/top20.tracks.class";
 import PlayCountByArtistStateEncapsulation from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import { InitialState } from "@src/providers/user/user.initial";
 import { UserContext } from "@src/providers/user/user.provider";
+import LastFMPlayCountByArtistDataClient from "@src/web/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class";
+import LastFMTopAlbumsReport from "@src/web/api/lastfm/reports/top20.albums.class";
+import LastFMTopArtistsReport from "@src/web/api/lastfm/reports/top20.artists.class";
+import LastFMTopTracksReport from "@src/web/api/lastfm/reports/top20.tracks.class";
 import type { UserContextInterface } from "@src/types/user/context.types";
 import type { ReactNode } from "react";
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
-jest.mock("@src/clients/api/lastfm/reports/top20.albums.class");
+jest.mock("@src/web/api/lastfm/reports/top20.albums.class");
 
-jest.mock("@src/clients/api/lastfm/reports/top20.artists.class");
+jest.mock("@src/web/api/lastfm/reports/top20.artists.class");
 
-jest.mock("@src/clients/api/lastfm/reports/top20.tracks.class");
+jest.mock("@src/web/api/lastfm/reports/top20.tracks.class");
 
 jest.mock(
-  "@src/clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class"
+  "@src/web/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class"
 );
 
 jest.mock(

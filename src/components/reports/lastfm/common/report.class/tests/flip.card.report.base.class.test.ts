@@ -5,7 +5,7 @@ import {
 import FlipCardBaseReport from "../flip.card.report.base.class";
 import mockImageController from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";
 import { InitialState } from "@src/providers/user/user.initial";
-import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
 
 describe(FlipCardBaseReport.name, () => {
   let instance: FlipCardBaseReport<

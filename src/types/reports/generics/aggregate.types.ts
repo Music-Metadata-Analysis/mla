@@ -1,4 +1,4 @@
-import type { LastFMReportClientParamsInterface } from "@src/types/clients/api/lastfm/report.client.types";
+import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm/report.client.types";
 
 export interface AggregateBaseReportResponseInterface<ReportContentType> {
   status: {

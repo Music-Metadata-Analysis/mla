@@ -1,21 +1,17 @@
-import UserArtistsAndProfile from "../user.artists.and.profile";
-import LastFMReportBaseClient from "@src/clients/api/lastfm/lastfm.api.client.base.class";
+import LastFMTrackInfo from "../track.info";
 import apiRoutes from "@src/config/apiRoutes";
+import LastFMReportBaseClient from "@src/web/api/lastfm/lastfm.api.client.base.class";
 import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 
-describe("UserArtistsAndProfile", () => {
+describe("LastFMTrackInfo", () => {
   const mockDispatch = jest.fn();
   const mockEvent = jest.fn();
   const mockEncapsulation =
     jest.fn() as unknown as UserSunBurstReportBaseState<unknown>;
-  let instance: UserArtistsAndProfile<unknown>;
+  let instance: LastFMTrackInfo<unknown>;
 
   const arrange = () => {
-    return new UserArtistsAndProfile(
-      mockDispatch,
-      mockEvent,
-      mockEncapsulation
-    );
+    return new LastFMTrackInfo(mockDispatch, mockEvent, mockEncapsulation);
   };
 
   describe("when a request returns not found", () => {
@@ -28,7 +24,7 @@ describe("UserArtistsAndProfile", () => {
     });
 
     it("should have the correct api route configured", () => {
-      expect(instance.route).toBe(apiRoutes.v2.reports.lastfm.top20artists);
+      expect(instance.route).toBe(apiRoutes.v2.data.artists.tracksGet);
     });
   });
 });

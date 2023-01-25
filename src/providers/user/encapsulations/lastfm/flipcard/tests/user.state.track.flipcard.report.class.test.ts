@@ -1,11 +1,11 @@
 import { baseUserProperties } from "../../tests/states/user.state.data.set";
 import UserTrackState from "../user.state.track.flipcard.report.class";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import type { LastFMUserStateTrackReport } from "@src/types/user/state.types";
 import type {
   LastFMUserArtistInterface,
   LastFMUserTrackInterface,
-} from "@src/types/clients/api/lastfm/response.types";
-import type { LastFMUserStateTrackReport } from "@src/types/user/state.types";
+} from "@src/web/api/lastfm/types/lastfm/response.types";
 
 describe("UserTrackState", () => {
   let currentState: LastFMUserStateTrackReport;

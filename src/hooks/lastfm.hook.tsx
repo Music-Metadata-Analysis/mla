@@ -1,17 +1,14 @@
 import { useContext } from "react";
 import useAnalytics from "../web/analytics/collection/state/hooks/analytics.hook";
-import LastFMPlayCountByArtistDataClient from "@src/clients/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class";
-import LastFMTopAlbumsReport from "@src/clients/api/lastfm/reports/top20.albums.class";
-import LastFMTopArtistsReport from "@src/clients/api/lastfm/reports/top20.artists.class";
-import LastFMTopTracksReport from "@src/clients/api/lastfm/reports/top20.tracks.class";
 import PlayCountByArtistStateEncapsulation from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import { UserContext } from "@src/providers/user/user.provider";
+import LastFMPlayCountByArtistDataClient from "@src/web/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class";
+import LastFMTopAlbumsReport from "@src/web/api/lastfm/reports/top20.albums.class";
+import LastFMTopArtistsReport from "@src/web/api/lastfm/reports/top20.artists.class";
+import LastFMTopTracksReport from "@src/web/api/lastfm/reports/top20.tracks.class";
 import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
 import type { FlipCardReportStateQueryConstructor } from "@src/types/reports/lastfm/states/queries/flipcard.types";
-import type {
-  SunBurstReportStateQueryConstructor,
-  SunBurstReportStateEncapsulationConstructor,
-} from "@src/types/reports/lastfm/states/queries/sunburst.types";
+import type * as sunburstTypes from "@src/types/reports/lastfm/states/queries/sunburst.types";
 import type { userDispatchType } from "@src/types/user/context.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
@@ -31,8 +28,8 @@ const useLastFM = () => {
   };
 
   const createSunburstReport = <AggregateReportType,>(
-    reportQueryClass: SunBurstReportStateQueryConstructor<AggregateReportType>,
-    stateEncapsulationClass: SunBurstReportStateEncapsulationConstructor<AggregateReportType>,
+    reportQueryClass: sunburstTypes.SunBurstReportStateQueryConstructor<AggregateReportType>,
+    stateEncapsulationClass: sunburstTypes.SunBurstReportStateEncapsulationConstructor<AggregateReportType>,
     userName: string
   ) => {
     const instance = new reportQueryClass(

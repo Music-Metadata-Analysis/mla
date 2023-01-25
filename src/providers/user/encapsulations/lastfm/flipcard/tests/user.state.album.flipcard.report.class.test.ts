@@ -1,11 +1,11 @@
 import { baseUserProperties } from "../../tests/states/user.state.data.set";
 import UserAlbumState from "../user.state.album.flipcard.report.class";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
 import type {
   LastFMUserAlbumInterface,
   LastFMUserArtistInterface,
-} from "@src/types/clients/api/lastfm/response.types";
-import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
+} from "@src/web/api/lastfm/types/lastfm/response.types";
 
 describe("UserAlbumState", () => {
   let currentState: LastFMUserStateAlbumReport;

@@ -1,6 +1,6 @@
 import LastFMBaseSunBurstDataPointClient from "./sunburst.datapoint.client.base.class";
 import apiRoutes from "@src/config/apiRoutes";
-import type { LastFMArtistTopAlbumsInterface } from "@src/types/clients/api/lastfm/response.types";
+import type { LastFMArtistTopAlbumsInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
 
 class LastFMArtistGetAlbums<
   EncapsulationType

@@ -2,7 +2,7 @@ import FlipCardBaseReport from "../../flip.card.report.base.class";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import routes from "@src/config/routes";
 import UserAlbumState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
-import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
 
 export const mockImageUrl = "http://someurl";
 

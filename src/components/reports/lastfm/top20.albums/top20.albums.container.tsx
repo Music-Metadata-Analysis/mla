@@ -1,8 +1,8 @@
 import Top20AlbumsReport from "./top20.albums.report.class";
 import FlipCardReportContainer from "@src/components/reports/lastfm/common/report.component/flip.card/flip.card.report.container";
 import type UserAlbumDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
-import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
 
 export interface Top20AlbumsReportContainerProps {
   userName: string;

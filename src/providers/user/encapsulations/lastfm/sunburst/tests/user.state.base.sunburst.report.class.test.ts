@@ -1,9 +1,9 @@
 import UserSunBurstReportBaseState from "../user.state.base.sunburst.report.class";
 import { InitialState } from "@src/providers/user/user.initial";
-import type { LastFMReportClientParamsInterface } from "@src/types/clients/api/lastfm/report.client.types";
 import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
 import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
 import type { LastFMUserStatePlayCountByArtistReport } from "@src/types/user/state.types";
+import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm/report.client.types";
 
 class ConcreteUserSunBurstReportBaseState extends UserSunBurstReportBaseState<
   PlayCountByArtistReportInterface[]

@@ -1,6 +1,6 @@
 import type PlayCountByArtistState from "../user.state.playcount.by.artist.sunburst.report.class";
-import type { LastFMReportClientParamsInterface } from "@src/types/clients/api/lastfm/report.client.types";
 import type { TransformationInterface } from "@src/types/reports/generics/aggregate.types";
+import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm/report.client.types";
 
 abstract class PlayCountByArtistTransformationBase<ResponseType>
   implements TransformationInterface

@@ -3,7 +3,7 @@ import FlipCardDrawerContainer from "@src/components/reports/lastfm/common/drawe
 import routes from "@src/config/routes";
 import UserArtistDataState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.artist.flipcard.report.class";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
-import type { LastFMUserArtistInterface } from "@src/types/clients/api/lastfm/response.types";
+import type { LastFMUserArtistInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
 
 describe("Top20ArtistsReport", () => {
   let report: Report;

@@ -1,7 +1,7 @@
 import { baseUserProperties, mockUrls } from "./states/user.state.data.set";
 import UserBaseState from "../user.state.base.class";
-import type { LastFMImageDataInterface } from "@src/types/clients/api/lastfm/response.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
+import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
 
 describe("UserBaseState", () => {
   let currentState: LastFMUserStateBase;

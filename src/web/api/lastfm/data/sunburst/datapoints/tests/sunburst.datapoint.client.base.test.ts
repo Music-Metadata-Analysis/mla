@@ -1,9 +1,9 @@
 import { waitFor } from "@testing-library/react";
 import LastFMBaseSunBurstDataPointClient from "../sunburst.datapoint.client.base.class";
-import HttpApiClient from "@src/clients/api/http/http.client.class";
 import InitialState from "@src/providers/user/user.initial";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
-import type { LastFMTopAlbumsReportResponseInterface } from "@src/types/clients/api/lastfm/response.types";
+import HttpApiClient from "@src/web/api/transport/http.client.class";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
 
 class ConcreteLastFMBaseSunBurstDataClient<
   ReportType
