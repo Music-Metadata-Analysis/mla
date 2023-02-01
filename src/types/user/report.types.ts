@@ -1,3 +1,3 @@
-import type { BaseReportResponseInterface } from "@src/types/reports/lastfm/states/generic.types";
+import type { LastFMBaseReportInterface } from "@src/web/reports/lastfm/generics/types/state/base.report.types";
 
-export type UserReportType = BaseReportResponseInterface;
+export type UserReportType = LastFMBaseReportInterface;

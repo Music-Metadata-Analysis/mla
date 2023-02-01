@@ -5,13 +5,13 @@ import { authenticate } from "@cypress/fixtures/spec/auth.spec";
 import { setup } from "@cypress/fixtures/spec/setup.spec";
 import LastFmTranslations from "@locales/lastfm.json";
 import SunBurstTranslations from "@locales/sunburst.json";
-import { classes as SunBurstSVGclasses } from "@src/components/reports/common/chart/sunburst/svg/svg.identifiers";
-import { testIDs as SunBurstDrawerButtonIDs } from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.button/node.button.identifiers";
-import { testIDs as SunBurstDrawerListIDs } from "@src/components/reports/lastfm/common/drawer/sunburst/nodes/node.list/node.list.identifiers";
-import { testIDs as SunBurstControlIDs } from "@src/components/reports/lastfm/common/report.component/sunburst/panels/control/control.panel.identifiers";
-import { testIDs as SunBurstTitleIDs } from "@src/components/reports/lastfm/common/report.component/sunburst/panels/title/title.panel.identifiers";
 import { fields } from "@src/components/search/lastfm/forms/username/username.form.identifiers";
 import routes from "@src/config/routes";
+import { classes as SunBurstSVGclasses } from "@src/web/reports/generics/components/charts/sunburst/svg/svg.identifiers";
+import { testIDs as SunBurstDrawerButtonIDs } from "@src/web/reports/lastfm/generics/components/drawer/sunburst/nodes/node.button/node.button.identifiers";
+import { testIDs as SunBurstDrawerListIDs } from "@src/web/reports/lastfm/generics/components/drawer/sunburst/nodes/node.list/node.list.identifiers";
+import { testIDs as SunBurstControlIDs } from "@src/web/reports/lastfm/generics/components/report.component/sunburst/panels/control/control.panel.identifiers";
+import { testIDs as SunBurstTitleIDs } from "@src/web/reports/lastfm/generics/components/report.component/sunburst/panels/title/title.panel.identifiers";
 
 describe("Count By Artist SunBurst Report", async () => {
   const authorizationCookieName = getAuthorizationCookieName();

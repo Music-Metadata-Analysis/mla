@@ -1,11 +1,11 @@
 import requestSettings from "@src/config/requests";
 import { voidFn } from "@src/utilities/generics/voids";
-import type { AggregateBaseReportResponseInterface } from "@src/types/reports/generics/aggregate.types";
 import type { UserContextInterface } from "@src/types/user/context.types";
 import type { UserStateInterface } from "@src/types/user/state.types";
+import type { GenericAggregateBaseReportResponseInterface } from "@src/web/reports/generics/types/state/aggregate.report.types";
 
 const InitialAggregateReportState = <
-  AggregateBaseReportResponseInterface<unknown>
+  GenericAggregateBaseReportResponseInterface<unknown, unknown>
 >{
   status: {
     complete: false,

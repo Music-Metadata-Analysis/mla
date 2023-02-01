@@ -2,7 +2,7 @@ import UserBaseState from "../user.state.base.class";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
-import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
+import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/response.types";
 
 export default abstract class UserFlipCardBaseReportState extends UserBaseState {
   defaultAlbumName: string;

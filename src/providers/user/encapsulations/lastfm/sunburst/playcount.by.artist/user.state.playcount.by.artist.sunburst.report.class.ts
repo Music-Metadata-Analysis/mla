@@ -8,12 +8,12 @@ import Transformation4 from "./transformations/transformation.4.class";
 import Transformation5 from "./transformations/transformation.5.class";
 import UserSunBurstReportBaseState from "../user.state.base.sunburst.report.class";
 import apiRoutes from "@src/config/apiRoutes";
+import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/report.client.types";
 import type {
-  AggregateBaseReportResponseInterface,
-  AggregateReportOperationType,
-} from "@src/types/reports/generics/aggregate.types";
-import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
-import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm/report.client.types";
+  LastFMAggregateReportResponseInterface,
+  LastFMAggregateReportOperationType,
+} from "@src/web/reports/lastfm/generics/types/state/aggregate.report.types";
+import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.artists/types/state/aggregate.report.types";
 
 export default class PlayCountByArtistState extends UserSunBurstReportBaseState<
   PlayCountByArtistReportInterface[]
@@ -29,7 +29,7 @@ export default class PlayCountByArtistState extends UserSunBurstReportBaseState<
 
   getReport = () =>
     this.userProperties.data.report
-      .playCountByArtist as AggregateBaseReportResponseInterface<
+      .playCountByArtist as LastFMAggregateReportResponseInterface<
       PlayCountByArtistReportInterface[]
     >;
 
@@ -55,7 +55,7 @@ export default class PlayCountByArtistState extends UserSunBurstReportBaseState<
 
   getNextStep(
     params: LastFMReportClientParamsInterface
-  ): AggregateReportOperationType | undefined {
+  ): LastFMAggregateReportOperationType | undefined {
     for (const nextStep of this.sequence) {
       const operation = new nextStep(this, params).getStep();
       if (operation) return operation;

@@ -6,11 +6,11 @@ import LastFMPlayCountByArtistDataClient from "@src/web/api/lastfm/data/sunburst
 import LastFMTopAlbumsReport from "@src/web/api/lastfm/reports/top20.albums.class";
 import LastFMTopArtistsReport from "@src/web/api/lastfm/reports/top20.artists.class";
 import LastFMTopTracksReport from "@src/web/api/lastfm/reports/top20.tracks.class";
-import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
-import type { FlipCardReportStateQueryConstructor } from "@src/types/reports/lastfm/states/queries/flipcard.types";
-import type * as sunburstTypes from "@src/types/reports/lastfm/states/queries/sunburst.types";
 import type { userDispatchType } from "@src/types/user/context.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
+import type { FlipCardReportStateQueryConstructor } from "@src/web/reports/lastfm/generics/types/state/queries/flip.card.types";
+import type * as sunburstTypes from "@src/web/reports/lastfm/generics/types/state/queries/sunburst.types";
+import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.artists/types/state/aggregate.report.types";
 
 const useLastFM = () => {
   const analytics = useAnalytics();

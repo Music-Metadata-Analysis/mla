@@ -7,7 +7,7 @@ import { response as MockAlbumGetInfo } from "@src/contracts/api/fixtures/servic
 import { response as MockArtistGetTopAlbums } from "@src/contracts/api/fixtures/services/lastfm/responses/artist.get.topalbums";
 import { InitialState } from "@src/providers/user/user.initial";
 import type { LastFMUserStatePlayCountByArtistReport } from "@src/types/user/state.types";
-import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
+import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/response.types";
 
 describe("UserPlaycountByArtistState", () => {
   let instance: PlayCountByArtistState;

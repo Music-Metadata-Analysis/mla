@@ -1,14 +1,14 @@
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import HTTPClient from "@src/web/api/transport/http.client.class";
-import type { BaseReportResponseInterface } from "@src/types/reports/lastfm/states/generic.types";
 import type { userDispatchType } from "@src/types/user/context.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
 import type { IntegrationRequestType } from "@src/web/analytics/collection/types/analytics.types";
 import type {
   LastFMReportClientInterface,
   LastFMReportClientParamsInterface,
-} from "@src/web/api/lastfm/types/lastfm/report.client.types";
+} from "@src/web/api/lastfm/types/report.client.types";
 import type { HttpApiClientResponse } from "@src/web/api/transport/types/http.types";
+import type { LastFMBaseReportInterface } from "@src/web/reports/lastfm/generics/types/state/base.report.types";
 
 abstract class LastFMReportBaseClient<ResponseType>
   implements LastFMReportClientInterface
@@ -75,7 +75,7 @@ abstract class LastFMReportBaseClient<ResponseType>
       this.dispatch({
         type: "SuccessFetch",
         userName: params.userName,
-        data: this.response.response as unknown as BaseReportResponseInterface,
+        data: this.response.response as unknown as LastFMBaseReportInterface,
         integration: this.integration,
       });
       this.eventDispatch(

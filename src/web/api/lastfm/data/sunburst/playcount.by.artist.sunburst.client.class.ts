@@ -3,8 +3,7 @@ import ArtistAlbums from "./datapoints/artist.albums";
 import UserArtistsAndProfile from "./datapoints/user.artists.and.profile";
 import LastFMSunburstDataClient from "./sunburst.client.base.class";
 import apiRoutes from "@src/config/apiRoutes";
-import type { PlayCountByArtistReportInterface } from "@src/types/reports/lastfm/states/aggregates/playcount.by.artist.types";
-
+import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.artists/types/state/aggregate.report.types";
 class LastFMPlayCountByArtistDataClient extends LastFMSunburstDataClient<
   PlayCountByArtistReportInterface[]
 > {

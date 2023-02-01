@@ -4,7 +4,7 @@ import useSunBurstController from "../sunburst.controller.hook";
 import mockHookValues from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
 import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import mockNavBarControllerHook from "@src/web/navigation/navbar/state/controllers/__mocks__/navbar.controller.hook.mock";
-import type { d3Node } from "@src/types/reports/generics/sunburst.types";
+import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
 
 jest.mock(
   "@src/web/navigation/navbar/state/controllers/navbar.controller.hook"

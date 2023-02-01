@@ -1,5 +1,5 @@
 import type { UserReportType } from "./report.types";
-import type { IntegrationTypes } from "@src/types/reports/generics/integration.types";
+import type { DataSourceTypes } from "@src/web/reports/generics/types/source.types";
 
 export type UserActionType =
   | {
@@ -23,43 +23,43 @@ export type UserActionType =
   | {
       type: "FailureFetch";
       userName: string;
-      integration: IntegrationTypes;
+      integration: DataSourceTypes;
     }
   | {
       type: "NotFoundFetch";
       userName: string;
-      integration: IntegrationTypes;
+      integration: DataSourceTypes;
     }
   | {
       type: "RatelimitedFetch";
       userName: string;
-      integration: IntegrationTypes;
+      integration: DataSourceTypes;
     }
   | {
       type: "ReadyFetch";
       userName: string;
       data: UserReportType;
-      integration: IntegrationTypes;
+      integration: DataSourceTypes;
     }
   | { type: "ResetState" }
   | {
       type: "StartFetch";
       userName: string;
-      integration: IntegrationTypes;
+      integration: DataSourceTypes;
     }
   | {
       type: "SuccessFetch";
       userName: string;
       data: UserReportType;
-      integration: IntegrationTypes;
+      integration: DataSourceTypes;
     }
   | {
       type: "TimeoutFetch";
       userName: string;
-      integration: IntegrationTypes;
+      integration: DataSourceTypes;
     }
   | {
       type: "UnauthorizedFetch";
       userName: string;
-      integration: IntegrationTypes;
+      integration: DataSourceTypes;
     };

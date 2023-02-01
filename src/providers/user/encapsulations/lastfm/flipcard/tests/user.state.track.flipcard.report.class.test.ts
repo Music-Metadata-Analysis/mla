@@ -5,7 +5,7 @@ import type { LastFMUserStateTrackReport } from "@src/types/user/state.types";
 import type {
   LastFMUserArtistInterface,
   LastFMUserTrackInterface,
-} from "@src/web/api/lastfm/types/lastfm/response.types";
+} from "@src/web/api/lastfm/types/response.types";
 
 describe("UserTrackState", () => {
   let currentState: LastFMUserStateTrackReport;

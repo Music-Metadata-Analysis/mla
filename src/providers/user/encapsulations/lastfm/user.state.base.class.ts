@@ -1,5 +1,5 @@
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
-import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
+import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/response.types";
 
 export default class UserBaseState {
   userProperties: LastFMUserStateBase;

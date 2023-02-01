@@ -10,7 +10,7 @@ import {
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import type UserFlipCardBaseReportState from "../user.state.base.flipcard.report.class";
 import type { LastFMUserStateAlbumReport } from "@src/types/user/state.types";
-import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
+import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/response.types";
 
 describe("UserFlipCardBaseReportState", () => {
   let currentState: LastFMUserStateAlbumReport;

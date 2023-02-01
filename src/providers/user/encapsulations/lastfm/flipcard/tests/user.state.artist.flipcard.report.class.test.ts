@@ -2,7 +2,7 @@ import { baseUserProperties } from "../../tests/states/user.state.data.set";
 import UserArtistState from "../user.state.artist.flipcard.report.class";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import type { LastFMUserStateArtistReport } from "@src/types/user/state.types";
-import type { LastFMUserArtistInterface } from "@src/web/api/lastfm/types/lastfm/response.types";
+import type { LastFMUserArtistInterface } from "@src/web/api/lastfm/types/response.types";
 
 describe("UserArtistState", () => {
   let currentState: LastFMUserStateArtistReport;

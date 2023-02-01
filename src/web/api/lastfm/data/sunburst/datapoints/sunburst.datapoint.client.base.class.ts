@@ -2,7 +2,7 @@ import LastFMReportBaseClient from "@src/web/api/lastfm/lastfm.api.client.base.c
 import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { userDispatchType } from "@src/types/user/context.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
-import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm/report.client.types";
+import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/report.client.types";
 abstract class LastFMBaseSunBurstDataPointClient<
   ReportType,
   ResponseType
