@@ -5,11 +5,11 @@ import Top20ArtistsContainer, {
 } from "../top20.artists.container";
 import cardTranslations from "@locales/cards.json";
 import translations from "@locales/lastfm.json";
-import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import mockImageControllerHook from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import { testIDs as drawerTestIDs } from "@src/web/reports/generics/components/drawer/drawer.identifiers";
 import { testIDs as lastFMDrawerIDs } from "@src/web/reports/lastfm/generics/components/drawer/flip.card/flip.card.report.drawer.identifiers";
+import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
 import type { userHookAsLastFMTop20ArtistReport } from "@src/types/user/hook.types";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");

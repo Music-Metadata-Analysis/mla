@@ -8,7 +8,7 @@ import mockNavBarLayoutControllerHook from "@src/web/navigation/navbar/state/con
 
 jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
-jest.mock("@src/hooks/lastfm.hook");
+jest.mock("@src/web/reports/lastfm/generics/state/hooks/lastfm.hook");
 
 jest.mock(
   "@src/web/navigation/navbar/state/controllers/navbar.layout.controller.hook"

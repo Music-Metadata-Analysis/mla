@@ -3,9 +3,9 @@ import settings from "@src/config/flip.card";
 import FlipCardContainer from "@src/web/reports/generics/components/charts/flip.card/flip.card.container";
 import ReportTitleContainer from "@src/web/reports/generics/components/report.title/report.title.container";
 import type { FlipCardControllerHookType } from "./controllers/flip.card.controller.hook";
-import type UserState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
-import type FlipCardBaseReport from "@src/web/reports/lastfm/generics/components/report.class/flip.card.report.base.class";
+import type UserState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
+import type FlipCardBaseReport from "@src/web/reports/lastfm/generics/state/queries/flip.card.query.base.class";
 
 export interface FlipCardReportProps<
   UserStateType extends UserState,

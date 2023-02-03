@@ -1,7 +1,7 @@
 import UserArtistsAndProfile from "../user.artists.and.profile";
 import apiRoutes from "@src/config/apiRoutes";
 import LastFMReportBaseClient from "@src/web/api/lastfm/lastfm.api.client.base.class";
-import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type UserSunBurstReportBaseState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 
 describe("UserArtistsAndProfile", () => {
   const mockDispatch = jest.fn();

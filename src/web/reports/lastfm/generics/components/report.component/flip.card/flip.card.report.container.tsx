@@ -9,9 +9,9 @@ import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import useMetrics from "@src/web/metrics/collection/state/hooks/metrics.hook";
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
 import useFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/flip.card.controller.hook";
-import type FlipCardBaseReportState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
-import type FlipCardBaseReport from "@src/web/reports/lastfm/generics/components/report.class/flip.card.report.base.class";
+import type FlipCardBaseReportState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
+import type FlipCardBaseReport from "@src/web/reports/lastfm/generics/state/queries/flip.card.query.base.class";
 import type { LastFMFlipCardDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/flip.card.types";
 
 export interface FlipCardReportContainerProps<

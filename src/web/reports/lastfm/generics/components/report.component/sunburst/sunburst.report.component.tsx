@@ -8,9 +8,9 @@ import settings from "@src/config/sunburst";
 import SunBurstChart from "@src/web/reports/generics/components/charts/sunburst/sunburst.component";
 import type { SunBurstLayoutControllerHookType } from "./controllers/sunburst.report.layout.controller.hook";
 import type { SunBurstControllerHookType } from "@src/hooks/controllers/sunburst.controller.hook";
-import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
-import type SunBurstBaseReport from "@src/web/reports/lastfm/generics/components/report.class/sunburst.report.base.class";
+import type UserState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type SunBurstBaseReport from "@src/web/reports/lastfm/generics/state/queries/sunburst.query.base.class";
 
 export interface SunBurstReportProps<T extends UserState<unknown>> {
   encapsulatedReportState: T;

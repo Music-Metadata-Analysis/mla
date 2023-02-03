@@ -3,10 +3,10 @@ import Page from "../report.page";
 import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import routes from "@src/config/routes";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
+import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
 
-jest.mock("@src/hooks/lastfm.hook");
+jest.mock("@src/web/reports/lastfm/generics/state/hooks/lastfm.hook");
 
 jest.mock("@src/components/errors/boundary/error.boundary.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")

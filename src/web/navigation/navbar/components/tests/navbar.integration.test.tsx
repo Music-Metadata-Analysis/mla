@@ -19,7 +19,7 @@ jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
-jest.mock("@src/hooks/lastfm.hook", () =>
+jest.mock("@src/web/reports/lastfm/generics/state/hooks/lastfm.hook", () =>
   jest.fn(() => ({ userProperties: getMockedUserProperties() }))
 );
 

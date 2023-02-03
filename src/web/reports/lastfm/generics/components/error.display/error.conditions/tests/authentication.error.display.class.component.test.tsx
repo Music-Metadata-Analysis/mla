@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import AuthenticationErrorConditionalDisplay from "../authentication.error.display.class.component";
-import MockStage2Report from "@src/providers/user/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
 import Authentication from "@src/web/authentication/sign.in/components/authentication.container";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/components/report.class/tests/implementations/concrete.sunburst.report.class";
+import MockStage2Report from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
+import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 
 jest.mock(

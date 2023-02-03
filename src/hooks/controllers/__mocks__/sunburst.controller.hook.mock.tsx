@@ -1,4 +1,4 @@
-import nullNode from "@src/providers/user/reports/sunburst.node.initial";
+import nullNode from "@src/web/reports/generics/state/charts/sunburst/null.node";
 
 const mockValues = {
   drawer: {

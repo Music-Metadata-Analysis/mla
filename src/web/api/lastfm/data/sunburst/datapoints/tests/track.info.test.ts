@@ -1,7 +1,7 @@
 import LastFMTrackInfo from "../track.info";
 import apiRoutes from "@src/config/apiRoutes";
 import LastFMReportBaseClient from "@src/web/api/lastfm/lastfm.api.client.base.class";
-import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type UserSunBurstReportBaseState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 
 describe("LastFMTrackInfo", () => {
   const mockDispatch = jest.fn();

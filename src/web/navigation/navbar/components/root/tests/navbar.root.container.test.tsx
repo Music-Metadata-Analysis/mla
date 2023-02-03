@@ -3,19 +3,19 @@ import NavBarRoot from "../navbar.root.component";
 import NavBarRootContainer from "../navbar.root.container";
 import NavConfig from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import mockControllerHook from "@src/web/navigation/navbar/state/controllers/__mocks__/navbar.layout.controller.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
+import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
-jest.mock("@src/hooks/lastfm.hook");
+jest.mock("@src/web/reports/lastfm/generics/state/hooks/lastfm.hook");
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 

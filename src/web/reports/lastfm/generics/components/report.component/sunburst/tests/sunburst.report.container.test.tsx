@@ -5,7 +5,6 @@ import SunBurstReportContainer from "../sunburst.report.container";
 import lastfm from "@locales/lastfm.json";
 import BillBoardProgressBar from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import mockSunBurstControllerHook from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
@@ -16,7 +15,8 @@ import {
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import mockMetricsHook from "@src/web/metrics/collection/state/hooks/__mocks__/metrics.hook.mock";
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/components/report.class/tests/implementations/concrete.sunburst.report.class";
+import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
+import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
 import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");

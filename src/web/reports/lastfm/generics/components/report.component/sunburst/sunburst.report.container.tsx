@@ -8,9 +8,9 @@ import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.ho
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import useMetrics from "@src/web/metrics/collection/state/hooks/metrics.hook";
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
-import type SunBurstBaseReportState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
-import type SunBurstBaseReport from "@src/web/reports/lastfm/generics/components/report.class/sunburst.report.base.class";
+import type SunBurstBaseReportState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type SunBurstBaseReport from "@src/web/reports/lastfm/generics/state/queries/sunburst.query.base.class";
 import type { LastFMSunBurstDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/sunburst.types";
 import type { LastFMAggregateReportResponseInterface } from "@src/web/reports/lastfm/generics/types/state/aggregate.report.types";
 

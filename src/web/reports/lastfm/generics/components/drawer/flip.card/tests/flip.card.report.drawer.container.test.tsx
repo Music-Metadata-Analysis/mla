@@ -3,10 +3,10 @@ import FlipCardDrawer from "../flip.card.report.drawer.component";
 import FlipCardDrawerContainer from "../flip.card.report.drawer.container";
 import settings from "@src/config/flip.card";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import UserAlbumState from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
+import UserAlbumState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 import mockFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import type { LastFMFlipCardDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/flip.card.types";
 

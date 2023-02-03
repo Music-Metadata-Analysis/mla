@@ -12,7 +12,7 @@ import SunBurstChart, { SunBurstChartSVGProps } from "../svg.class.component";
 import { classes, ids, testIDs } from "../svg.identifiers";
 import LastFMTranslations from "@locales/lastfm.json";
 import { getMockProp } from "@src/fixtures/mocks/mock.component.props";
-import nullNode from "@src/providers/user/reports/sunburst.node.initial";
+import nullNode from "@src/web/reports/generics/state/charts/sunburst/null.node";
 import type {
   SunBurstData,
   d3Node,

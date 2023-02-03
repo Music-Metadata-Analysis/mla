@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import NavBar from "./navbar.root.component";
-import useLastFM from "@src/hooks/lastfm.hook";
 import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
 import useAuth from "@src/web/authentication/session/hooks/auth.hook";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
+import useLastFM from "@src/web/reports/lastfm/generics/state/hooks/lastfm.hook";
 import type { NavBarControllerHookType } from "@src/web/navigation/navbar/state/controllers/navbar.layout.controller.hook";
 
 interface NavBarRootContainerProps {

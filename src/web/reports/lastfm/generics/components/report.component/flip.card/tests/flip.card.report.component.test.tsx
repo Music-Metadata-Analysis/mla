@@ -13,14 +13,14 @@ import {
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import FlipCardContainer from "@src/web/reports/generics/components/charts/flip.card/flip.card.container";
 import ReportTitleContainer from "@src/web/reports/generics/components/report.title/report.title.container";
+import mockFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import {
   mockImageUrl,
   mockGetReportArtWork,
   MockDrawerComponent,
   MockReportClass,
   MockUserStateEncapsulation,
-} from "@src/web/reports/lastfm/generics/components/report.class/tests/implementations/concrete.last.fm.report.class";
-import mockFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
+} from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.last.fm.query.class";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/response.types";
 
 jest.mock("@chakra-ui/react", () =>

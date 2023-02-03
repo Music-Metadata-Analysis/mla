@@ -1,7 +1,6 @@
 import { waitFor, screen, render } from "@testing-library/react";
 import ControllersRootProvider from "../controllers/controllers.root.provider";
 import RootProvider from "../root.provider";
-import UserProvider from "../user/user.provider";
 import HeaderContainer from "@src/components/header/header.container";
 import { popUps } from "@src/config/popups";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -10,6 +9,7 @@ import { flagVendor } from "@src/vendors/integrations/flags/vendor";
 import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 import AnalyticsProvider from "@src/web/analytics/collection/state/providers/analytics.provider";
 import MetricsProvider from "@src/web/metrics/collection/state/providers/metrics.provider";
+import ReportProvider from "@src/web/reports/generics/state/providers/report.provider";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 
@@ -36,8 +36,8 @@ jest.mock("@src/web/metrics/collection/state/providers/metrics.provider", () =>
   require("@fixtures/react/parent").createComponent("MetricsProvider")
 );
 
-jest.mock("@src/providers/user/user.provider", () =>
-  require("@fixtures/react/parent").createComponent("UserProvider")
+jest.mock("@src/web/reports/generics/state/providers/report.provider", () =>
+  require("@fixtures/react/parent").createComponent("ReportProvider")
 );
 
 const providers = {
@@ -47,10 +47,10 @@ const providers = {
   FlagVendorProvider: "FlagVendorProvider",
   HeaderContainer: "HeaderContainer",
   MetricsProvider: "MetricsProvider",
+  ReportProvider: "ReportProvider",
   RootProvider: "RootProvider",
   UserInterfacePopUpsProvider: "UserInterfacePopUpsProvider",
   UserInterfaceVendorProvider: "UserInterfaceVendorProvider",
-  UserProvider: "UserProvider",
 };
 
 describe("RootProvider", () => {
@@ -159,9 +159,9 @@ describe("RootProvider", () => {
       expect(await screen.findByTestId(providers.MetricsProvider)).toBeTruthy;
     });
 
-    it("should initialize the UserProvider", async () => {
-      await waitFor(() => expect(UserProvider).toBeCalledTimes(1));
-      expect(await screen.findByTestId(providers.UserProvider)).toBeTruthy;
+    it("should initialize the ReportProvider", async () => {
+      await waitFor(() => expect(ReportProvider).toBeCalledTimes(1));
+      expect(await screen.findByTestId(providers.ReportProvider)).toBeTruthy;
     });
 
     it("should initialize the UserInterfacePopUpsProvider", async () => {

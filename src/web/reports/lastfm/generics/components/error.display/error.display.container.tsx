@@ -6,8 +6,8 @@ import RateLimitedErrorConditionalDisplay from "./error.conditions/ratelimited.e
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
 import type ErrorBase from "./error.conditions/bases/error.base.class.component";
 import type { ErrorBaseProps } from "./error.conditions/bases/error.base.class.component";
-import type ReportStateBase from "@src/providers/user/encapsulations/lastfm/user.state.base.class";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
+import type ReportStateBase from "@src/web/reports/generics/state/providers/encapsulations/lastfm/user.state.base.class";
 import type { LastFMReportStateQueryInterface } from "@src/web/reports/lastfm/generics/types/state/queries/base.types";
 
 export type ErrorConditionProps<ReportType, DrawerProps> = {

@@ -11,11 +11,11 @@ import SunBurstReport, {
 import settings from "@src/config/sunburst";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockSunBurstControllerHook from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
-import nullNode from "@src/providers/user/reports/sunburst.node.initial";
 import SunBurstChart from "@src/web/reports/generics/components/charts/sunburst/sunburst.component";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/components/report.class/tests/implementations/concrete.sunburst.report.class";
+import nullNode from "@src/web/reports/generics/state/charts/sunburst/null.node";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
-import type UserState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import type UserState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
 
 jest.mock("@chakra-ui/react", () =>

@@ -5,7 +5,7 @@ import type {
   LastFMUserStateTrackReport,
   LastFMUserStatePlayCountByArtistReport,
 } from "./state.types";
-import type { LastFMHookType } from "@src/hooks/lastfm.hook";
+import type { LastFMHookType } from "@src/web/reports/lastfm/generics/state/hooks/lastfm.hook";
 
 export interface userHookAsLastFM extends LastFMHookType {
   userProperties: LastFMUserStateBase;

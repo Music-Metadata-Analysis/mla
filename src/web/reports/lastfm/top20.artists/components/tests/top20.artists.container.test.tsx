@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import Top20ArtistsContainer from "../top20.artists.container";
-import Top20ArtistsReport from "../top20.artists.report.class";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import ImagesControllerProvider from "@src/providers/controllers/images/images.provider";
 import FlipCardReportContainer from "@src/web/reports/lastfm/generics/components/report.component/flip.card/flip.card.report.container";
+import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
+import Top20ArtistsReport from "@src/web/reports/lastfm/top20.artists/state/queries/top20.artists.query.class";
 import type { userHookAsLastFMTop20ArtistReport } from "@src/types/user/hook.types";
 
 jest.mock(

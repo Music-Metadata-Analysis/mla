@@ -1,11 +1,11 @@
 import type { BillBoardProgressBarDetails } from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
-import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type ReportBaseState from "@src/providers/user/encapsulations/lastfm/user.state.base.class";
 import type { userDispatchType } from "@src/types/user/context.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
 import type LastFMSunburstDataClient from "@src/web/api/lastfm/data/sunburst/sunburst.client.base.class";
+import type UserSunBurstReportBaseState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import type ReportBaseState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/user.state.base.class";
 import type {
   d3Node,
   SunBurstData,

@@ -7,7 +7,7 @@ import SunBurstStateToChartDataTranslator from "../translator.class";
 import LastFMTranslations from "@locales/lastfm.json";
 import MockSunburstData4 from "@src/web/reports/generics/components/charts/sunburst/svg/tests/data/sunburst.data.set.4.json";
 import MockSunburstData5 from "@src/web/reports/generics/components/charts/sunburst/svg/tests/data/sunburst.data.set.5.json";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/components/report.class/tests/implementations/concrete.sunburst.report.class";
+import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
 import type { SunBurstData } from "@src/web/reports/generics/types/charts/sunburst.types";
 import type { LastFMAggregateReportContentType } from "@src/web/reports/lastfm/generics/types/state/aggregate.report.types";
 

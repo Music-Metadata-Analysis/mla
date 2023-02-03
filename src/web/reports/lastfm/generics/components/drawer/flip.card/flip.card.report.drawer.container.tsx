@@ -3,7 +3,7 @@ import FlipCardDrawer from "./flip.card.report.drawer.component";
 import settings from "@src/config/flip.card";
 import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
-import type FlipCardReportStateBase from "@src/providers/user/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
+import type FlipCardReportStateBase from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
 import type { LastFMFlipCardDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/flip.card.types";
 
 export default function FlipCardDrawerContainer<

@@ -1,5 +1,4 @@
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
-import type UserSunBurstReportBaseState from "@src/providers/user/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type { userDispatchType } from "@src/types/user/context.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
 import type { IntegrationRequestType } from "@src/web/analytics/collection/types/analytics.types";
@@ -8,6 +7,7 @@ import type {
   LastFMReportClientInterface,
   LastFMReportClientParamsInterface,
 } from "@src/web/api/lastfm/types/report.client.types";
+import type UserSunBurstReportBaseState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 
 abstract class LastFMSunburstDataClient<AggregateReportType>
   implements LastFMReportClientInterface

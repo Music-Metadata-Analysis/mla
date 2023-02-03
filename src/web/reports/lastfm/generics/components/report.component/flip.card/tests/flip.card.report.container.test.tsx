@@ -4,7 +4,6 @@ import FlipCardReportContainer from "../flip.card.report.container";
 import lastfm from "@locales/lastfm.json";
 import BillBoardSpinner from "@src/components/billboard/billboard.spinner/billboard.spinner.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockLastFMHook from "@src/hooks/__mocks__/lastfm.hook.mock";
 import mockImageController from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
@@ -15,8 +14,9 @@ import {
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import mockMetricsHook from "@src/web/metrics/collection/state/hooks/__mocks__/metrics.hook.mock";
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/components/report.class/tests/implementations/concrete.last.fm.report.class";
 import mockFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
+import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
+import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.last.fm.query.class";
 import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");

@@ -1,7 +1,7 @@
 import SunBurstDataClientBase from "../sunburst.client.base.class";
 import apiRoutes from "@src/config/apiRoutes";
-import InitialState from "@src/providers/user/user.initial";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
+import InitialState from "@src/web/reports/generics/state/providers/report.initial";
 
 const mockDataPointClasses = [jest.fn(), jest.fn()];
 
