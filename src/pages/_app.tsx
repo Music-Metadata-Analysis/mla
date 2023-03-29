@@ -9,12 +9,23 @@ import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
 import RootProvider from "@src/providers/root.provider";
 import { normalizeUndefined } from "@src/utils/voids";
+import type { HeaderContainerProps } from "@src/components/header/header.container";
+import type { AuthVendorStateType } from "@src/types/clients/auth/vendor.types";
+import type { FlagVendorStateInterface } from "@src/types/clients/flags/vendor.types";
+import type { UIVendorStateType } from "@src/types/clients/ui.framework/vendor.types";
 import type { WebFrameworkVendorAppComponentProps } from "@src/types/clients/web.framework/vendor.types";
+
+export interface MLAProps {
+  cookies: UIVendorStateType;
+  flagState: FlagVendorStateInterface;
+  headerProps: HeaderContainerProps;
+  session: AuthVendorStateType;
+}
 
 function MLA({
   Component,
   pageProps: { cookies, flagState, session, headerProps, ...otherProps },
-}: WebFrameworkVendorAppComponentProps) {
+}: WebFrameworkVendorAppComponentProps<MLAProps>) {
   return (
     <RootProvider
       cookies={cookies}
@@ -50,4 +61,4 @@ export const getInitialProps = async (appCtx: AppContext) => {
 
 MLA.getInitialProps = getInitialProps;
 
-export default localeVendor.HOC(MLA);
+export default localeVendor.HOC<MLAProps>(MLA);

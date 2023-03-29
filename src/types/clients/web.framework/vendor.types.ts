@@ -2,7 +2,7 @@ import type { VendorAppComponentProps } from "@src/clients/web.framework/vendor.
 import type { VendorUtilities } from "@src/clients/web.framework/vendor.types";
 import type { ReactNode } from "react";
 
-export type WebFrameworkVendorAppComponentProps = VendorAppComponentProps;
+export type WebFrameworkVendorAppComponentProps<T> = VendorAppComponentProps<T>;
 
 export interface WebFrameworkVendorRouterHookInterface {
   back: () => void;

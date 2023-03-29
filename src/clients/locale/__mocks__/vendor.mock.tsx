@@ -7,7 +7,7 @@ import type { WebFrameworkVendorAppComponentProps } from "@src/types/clients/web
 export const mockLocaleVendorHOCIdentifier = "mockLocaleVendorHOCIdentifier";
 
 export const mockLocaleVendorHOC = jest.fn(
-  (Component: React.FC<WebFrameworkVendorAppComponentProps>) =>
+  (Component: React.FC<WebFrameworkVendorAppComponentProps<any>>) =>
     jest.fn((props) => {
       return (
         <div data-testid={"mockLocaleVendorHOCIdentifier"}>

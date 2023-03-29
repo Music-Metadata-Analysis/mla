@@ -38,7 +38,7 @@ const createRoutes = (
           },
           session: async ({ session, token }) => {
             if (session && token) {
-              session.group = token.group;
+              session.group = String(token.group);
             }
             return session;
           },

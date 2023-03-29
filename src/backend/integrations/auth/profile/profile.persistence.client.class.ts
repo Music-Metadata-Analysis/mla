@@ -18,7 +18,7 @@ class ProfilePersistenceClient {
     if (profile?.email) {
       await this.client.write(
         profile.email,
-        profile as PersistenceVendorDataType,
+        profile as unknown as PersistenceVendorDataType,
         {
           ContentType: "application/json",
         }

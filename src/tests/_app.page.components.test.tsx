@@ -10,13 +10,14 @@ import ConsentContainer from "@src/components/consent/consent.container";
 import NavBarContainer from "@src/components/navbar/navbar.container";
 import RootPopUpContainer from "@src/components/popups/root.popup.container";
 import NavConfig from "@src/config/navbar";
-import MLA, { getInitialProps } from "@src/pages/_app";
+import MLA, { getInitialProps, MLAProps } from "@src/pages/_app";
 import RootProvider from "@src/providers/root.provider";
 import checkMockCall from "@src/tests/fixtures/mock.component.call";
 import { normalizeUndefined } from "@src/utils/voids";
 import type { AuthVendorStateType } from "@src/types/clients/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/types/clients/flags/vendor.types";
-import type { AppContext, AppProps } from "next/app";
+import type { WebFrameworkVendorAppComponentProps } from "@src/types/clients/web.framework/vendor.types";
+import type { AppContext } from "next/app";
 import type { Router } from "next/router";
 
 jest.mock("@src/clients/auth/vendor.ssr");
@@ -46,7 +47,7 @@ jest.mock("@src/components/consent/consent.container", () =>
 );
 
 describe("MLA", () => {
-  let currentProps: AppProps;
+  let currentProps: WebFrameworkVendorAppComponentProps<MLAProps>;
   const MockAppChildComponent = createSimpleComponent("MockAppChildComponent");
 
   beforeEach(() => {
@@ -59,10 +60,16 @@ describe("MLA", () => {
       Component: MockAppChildComponent,
       pageProps: {
         cookies: "mockCookies",
-        flagState: "mockFlagState",
-        session: "mockSession",
-        headerProps: "mockHeaderProps",
-        mockExtraProp: "mockExtraProp",
+        flagState: {
+          identity: "mockIdentity",
+          serverState: {
+            api: "mockAPI",
+            environmentID: "mockEnvironmentID",
+            traits: {},
+          },
+        },
+        session: { expires: "mockExpiry" },
+        headerProps: { pageKey: "mockPageKey" },
       },
       router: {} as Router,
     };
@@ -90,9 +97,7 @@ describe("MLA", () => {
 
   it("should render the passed Component with the correct props", () => {
     expect(currentProps.Component).toBeCalledTimes(1);
-    checkMockCall(currentProps.Component, {
-      mockExtraProp: currentProps.pageProps.mockExtraProp,
-    });
+    checkMockCall(currentProps.Component, {});
   });
 
   it("should render the RootPopUpContainer component with the correct props", () => {

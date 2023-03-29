@@ -14,11 +14,11 @@ export interface LocaleVendorHookInterface {
   t: tFunctionType;
 }
 
-export type LocaleVendorHOCType = (
+export type LocaleVendorHOCType = <AppProps>(
   WrappedComponent:
-    | ComponentClass<VendorAppComponentProps>
-    | FunctionComponent<VendorAppComponentProps>
-) => ({ Component }: VendorAppComponentProps) => JSX.Element;
+    | ComponentClass<VendorAppComponentProps<AppProps>>
+    | FunctionComponent<VendorAppComponentProps<AppProps>>
+) => ({ Component }: VendorAppComponentProps<AppProps>) => JSX.Element;
 
 export interface LocaleVendorInterface {
   hook: (ns: string | undefined) => LocaleVendorHookInterface;
