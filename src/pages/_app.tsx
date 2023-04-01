@@ -61,4 +61,4 @@ export const getInitialProps = async (appCtx: AppContext) => {
 
 MLA.getInitialProps = getInitialProps;
 
-export default localeVendor.HOC<MLAProps>(MLA);
+export default localeVendor.HOC(MLA);

@@ -1,6 +1,7 @@
-import type { VendorSSRClientReturnType } from "@src/clients/locale/vendor.types";
-import type { VendorAppComponentProps } from "@src/clients/web.framework/vendor.types";
-import type { ComponentClass, FunctionComponent } from "react";
+import type {
+  VendorSSRClientReturnType,
+  VendorHOCType,
+} from "@src/clients/locale/vendor.types";
 
 export type tFunctionType = (key: string) => string;
 
@@ -14,11 +15,7 @@ export interface LocaleVendorHookInterface {
   t: tFunctionType;
 }
 
-export type LocaleVendorHOCType = <AppProps>(
-  WrappedComponent:
-    | ComponentClass<VendorAppComponentProps<AppProps>>
-    | FunctionComponent<VendorAppComponentProps<AppProps>>
-) => ({ Component }: VendorAppComponentProps<AppProps>) => JSX.Element;
+export type LocaleVendorHOCType = VendorHOCType;
 
 export interface LocaleVendorInterface {
   hook: (ns: string | undefined) => LocaleVendorHookInterface;
