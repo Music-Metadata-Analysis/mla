@@ -98,7 +98,7 @@
     "jest": "^27.5.1",
     "jest-specific-snapshot": "^5.0.0",
     "next-router-mock": "^0.6.5",
-    "node-jose-tools": "^1.6.28",
+    "node-jose-tools": "^2.0.2",
     "node-mocks-http": "^1.11.0",
     "npm-force-resolutions": "^0.0.10",
     "prettier": "^2.6.1",
