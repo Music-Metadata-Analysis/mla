@@ -32,6 +32,7 @@ jobs:
       - name: Architecture Enforcement -- Setup Node
         uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Architecture Enforcement -- Setup Environment
@@ -58,6 +59,7 @@ jobs:
       - name: Build -- Setup Node
         uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Build -- Setup Environment
@@ -96,8 +98,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy Production -- Setup Node
+        if: github.ref == 'refs/heads/production'
         uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Deploy Production -- Setup Environment
@@ -150,8 +154,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy Stage -- Setup Node
+        if: github.ref == 'refs/heads/master'
         uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Deploy Stage -- Setup Environment
@@ -196,6 +202,7 @@ jobs:
       - name: Lint -- Setup Node
         uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Lint -- Setup Environment
@@ -227,6 +234,7 @@ jobs:
       - name: Security Test -- Setup Node
         uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Documentation Test -- Setup Environment
@@ -283,8 +291,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Smoke Test Production -- Setup Node
+        if: github.ref == 'refs/heads/production'
         uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Smoke Test Production -- Setup Environment
@@ -336,6 +346,7 @@ jobs:
       - name: Smoke Test Development -- Setup Node
         uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Smoke Test Development -- Setup Environment
@@ -386,8 +397,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Smoke Test Stage -- Setup Node
+        if: github.ref == 'refs/heads/master'
         uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Smoke Test Stage -- Setup Environment
@@ -496,6 +509,7 @@ jobs:
       - name: Type Validation -- Setup Node
         uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Type Validation -- Setup Environment
