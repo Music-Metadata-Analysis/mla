@@ -58,5 +58,6 @@
   ],
   "cSpell.ignoreRegExpList": ["node_modules"],
   "importSorter.generalConfiguration.exclude": ["node_modules"],
-  "json.schemas": []
+  "json.schemas": [],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
