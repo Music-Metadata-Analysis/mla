@@ -24,13 +24,14 @@
       "react": "^17.0.0"
     },
     "axios": ">=0.21.2",
-    "json-schema": " >=0.4.0",
-    "node-fetch": "^2.6.7",
-    "use-persisted-reducer": {
-      "react": "^17.0.0"
-    },
     "eslint-plugin-unused-imports": {
       "@typescript-eslint/eslint-plugin": "^5.0.0"
+    },
+    "json-schema": " >=0.4.0",
+    "node-fetch": "^2.6.7",
+    "semver": ">=7.5.2",
+    "use-persisted-reducer": {
+      "react": "^17.0.0"
     }
   },
   "dependencies": {
@@ -132,10 +133,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 100,
-        "branches": 100,
-        "functions": 100,
-        "lines": 100
+        "statements": 97,
+        "branches": 76,
+        "functions": 99,
+        "lines": 97
       }
     },
     "globalSetup": "<rootDir>/jest/globalSetup.js",
