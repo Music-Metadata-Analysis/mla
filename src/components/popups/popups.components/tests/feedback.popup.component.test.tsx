@@ -4,12 +4,12 @@ import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import FeedbackPopUp from "../feedback.popup.component";
 import { testIDs } from "../feedback.popup.identifiers";
-import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
 import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import externalRoutes from "@src/config/external";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
+import ClickLink from "@src/web/navigation/links/components/click.link.external/click.link.external.component";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
@@ -29,7 +29,7 @@ jest.mock("@chakra-ui/react", () =>
 );
 
 jest.mock(
-  "@src/components/clickable/click.link.external/click.link.external.component",
+  "@src/web/navigation/links/components/click.link.external/click.link.external.component",
   () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 

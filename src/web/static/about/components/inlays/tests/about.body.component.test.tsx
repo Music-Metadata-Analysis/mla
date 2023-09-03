@@ -2,13 +2,13 @@ import { Avatar, Box, Center, Flex, Text } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import Body from "../about.body.component";
-import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
 import SVSIconContainer from "@src/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import ClickLink from "@src/web/navigation/links/components/click.link.external/click.link.external.component";
 import mockUseRouter from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@chakra-ui/react", () =>
@@ -22,7 +22,7 @@ jest.mock("@chakra-ui/react", () =>
 );
 
 jest.mock(
-  "@src/components/clickable/click.link.external/click.link.external.component",
+  "@src/web/navigation/links/components/click.link.external/click.link.external.component",
   () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 

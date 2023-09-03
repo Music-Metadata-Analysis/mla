@@ -2,13 +2,13 @@ import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import SplashBody from "../splash.body.component";
-import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import dialogueSettings from "@src/config/dialogue";
 import lastFMConfig from "@src/config/lastfm";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import ClickLink from "@src/web/navigation/links/components/click.link.external/click.link.external.component";
 import mockUseRouter from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
@@ -28,7 +28,7 @@ jest.mock(
 );
 
 jest.mock(
-  "@src/components/clickable/click.link.external/click.link.external.component",
+  "@src/web/navigation/links/components/click.link.external/click.link.external.component",
   () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 

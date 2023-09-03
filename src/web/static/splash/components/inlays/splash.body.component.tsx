@@ -1,9 +1,9 @@
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
-import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import dialogueSettings from "@src/config/dialogue";
 import lastFMConfig from "@src/config/lastfm";
+import ClickLink from "@src/web/navigation/links/components/click.link.external/click.link.external.component";
 import type { DialogueInlayComponentInterface } from "@src/types/components/dialogue.types";
 
 export default function PrivacyText({ t }: DialogueInlayComponentInterface) {

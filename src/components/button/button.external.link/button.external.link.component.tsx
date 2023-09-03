@@ -1,5 +1,5 @@
 import BaseButton from "../button.base/button.base.component";
-import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
+import ClickLink from "@src/web/navigation/links/components/click.link.external/click.link.external.component";
 import type { ButtonProps } from "@chakra-ui/react";
 import type { PropsWithChildren } from "react";
 

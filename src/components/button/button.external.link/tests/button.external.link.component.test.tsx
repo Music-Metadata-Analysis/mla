@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import BaseButton from "../../button.base/button.base.component";
 import StyledButtonLink from "../button.external.link.component";
-import ClickLink from "@src/components/clickable/click.link.external/click.link.external.component";
+import ClickLink from "@src/web/navigation/links/components/click.link.external/click.link.external.component";
 
 jest.mock(
-  "@src/components/clickable/click.link.external/click.link.external.component",
+  "@src/web/navigation/links/components/click.link.external/click.link.external.component",
   () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 

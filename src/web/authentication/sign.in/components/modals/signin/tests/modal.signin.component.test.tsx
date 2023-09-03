@@ -17,13 +17,13 @@ import AuthenticationSignInComponent, {
   AuthenticationSignInModalProps,
 } from "../modal.signin.component";
 import { testIDs, ids } from "../modal.signin.identifiers";
-import ClickLinkInternalContainer from "@src/components/clickable/click.link.internal/click.link.internal.container";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import routes from "@src/config/routes";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import SignInButtons from "@src/web/authentication/sign.in/components/buttons/signin.buttons.component";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import ClickLinkInternalContainer from "@src/web/navigation/links/components/click.link.internal/click.link.internal.container";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
@@ -59,7 +59,7 @@ jest.mock(
 );
 
 jest.mock(
-  "@src/components/clickable/click.link.internal/click.link.internal.container",
+  "@src/web/navigation/links/components/click.link.internal/click.link.internal.container",
   () => require("@fixtures/react/parent").createComponent("ClickLink")
 );
 
