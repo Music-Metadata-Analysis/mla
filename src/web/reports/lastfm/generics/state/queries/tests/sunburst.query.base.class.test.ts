@@ -9,7 +9,6 @@ import SunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/component
 import MockCompleteReport1 from "@src/web/reports/lastfm/generics/components/report.component/sunburst/translator/tests/states/state.data.set.1.json";
 import SunBurstStateToChartDataTranslator from "@src/web/reports/lastfm/generics/components/report.component/sunburst/translator/translator.class";
 import type SunBurstBaseReport from "../sunburst.query.base.class";
-import type { BillBoardProgressBarDetails } from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 import type {
   d3Node,
@@ -21,6 +20,7 @@ import type {
   LastFMAggregateReportOperationType,
 } from "@src/web/reports/lastfm/generics/types/state/aggregate.report.types";
 import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.artists/types/state/aggregate.report.types";
+import type { BillBoardProgressBarDetails } from "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import type { FC } from "react";
 
 jest.mock(

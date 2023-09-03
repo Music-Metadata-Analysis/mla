@@ -3,7 +3,6 @@ import mockSunBurstLayoutControllerHook from "../controllers/__mocks__/sunburst.
 import SunBurstReport from "../sunburst.report.component";
 import SunBurstReportContainer from "../sunburst.report.container";
 import lastfm from "@locales/lastfm.json";
-import BillBoardProgressBar from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockSunBurstControllerHook from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
@@ -17,6 +16,7 @@ import mockMetricsHook from "@src/web/metrics/collection/state/hooks/__mocks__/m
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
 import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
 import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import BillBoardProgressBar from "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
@@ -32,7 +32,7 @@ jest.mock("@src/hooks/controllers/sunburst.controller.hook");
 jest.mock("../controllers/sunburst.report.layout.controller.hook");
 
 jest.mock(
-  "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component",
+  "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component",
   () =>
     require("@fixtures/react/parent").createComponent("BillBoardProgressBar")
 );

@@ -1,8 +1,8 @@
 import { WarningTwoIcon } from "@chakra-ui/icons";
 import { Container, Flex } from "@chakra-ui/react";
-import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import StyledButton from "@src/components/button/button.standard/button.standard.component";
 import useColour from "@src/hooks/ui/colour.hook";
+import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
 
 export interface ErrorDisplayProps {
   buttonText: string;

@@ -3,18 +3,19 @@ import { render, screen, within } from "@testing-library/react";
 import Dialogue, { DialogueProps } from "../dialogue.resizable.component";
 import { testIDs } from "../dialogue.resizable.identifiers";
 import { createSimpleComponent } from "@fixtures/react/simple";
-import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { mockUseRouter } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
 import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Box", "Flex"])
 );
 
-jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
-  require("@fixtures/react/parent").createComponent("BillboardContainer")
+jest.mock(
+  "@src/web/ui/generics/components/billboard/billboard.base/billboard.container",
+  () => require("@fixtures/react/parent").createComponent("BillboardContainer")
 );
 
 describe("Dialogue", () => {

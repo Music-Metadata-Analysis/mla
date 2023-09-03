@@ -7,10 +7,10 @@ import {
 import { render, screen } from "@testing-library/react";
 import BillBoardProgressBar from "../billboard.progress.bar.component";
 import { testIDs } from "../billboard.progress.bar.identifiers";
-import BillBoardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import { truncate } from "@src/utilities/generics/strings";
+import BillBoardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
 import type { BillBoardProgressBarDetails } from "../billboard.progress.bar.component";
 
 jest.mock("@src/hooks/ui/colour.hook");
@@ -26,8 +26,9 @@ jest.mock("@chakra-ui/react", () =>
   ])
 );
 
-jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
-  require("@fixtures/react/parent").createComponent("BillboardContainer")
+jest.mock(
+  "@src/web/ui/generics/components/billboard/billboard.base/billboard.container",
+  () => require("@fixtures/react/parent").createComponent("BillboardContainer")
 );
 
 describe("BillBoardProgressBar", () => {

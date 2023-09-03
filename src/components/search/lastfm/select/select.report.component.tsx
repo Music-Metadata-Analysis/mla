@@ -1,10 +1,10 @@
 import { Box, Flex, Avatar } from "@chakra-ui/react";
 import Option from "./option/report.option.component";
 import { ids } from "./select.report.identifiers";
-import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import settings from "@src/config/navbar";
+import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
 import type { ReportOptionProps } from "./option/report.option.component";
 import type { MutableRefObject } from "react";
 

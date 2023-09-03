@@ -3,10 +3,10 @@ import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import UserNameFormContainer from "../forms/username/username.form.container";
 import Search from "../search.component";
-import BillboardContainer from "@src/components/billboard/billboard.base/billboard.container";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Authentication from "@src/web/authentication/sign.in/components/authentication.container";
+import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Avatar", "Box", "Flex"])
@@ -20,8 +20,9 @@ jest.mock(
     )
 );
 
-jest.mock("@src/components/billboard/billboard.base/billboard.container", () =>
-  require("@fixtures/react/parent").createComponent("BillBoardContainer")
+jest.mock(
+  "@src/web/ui/generics/components/billboard/billboard.base/billboard.container",
+  () => require("@fixtures/react/parent").createComponent("BillBoardContainer")
 );
 
 jest.mock("../forms/username/username.form.container.tsx", () =>

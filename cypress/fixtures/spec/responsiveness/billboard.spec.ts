@@ -1,4 +1,4 @@
-import { testIDs as billboardIDs } from "@src/components/billboard/billboard.base/billboard.identifiers";
+import { testIDs as billboardIDs } from "@src/web/ui/generics/components/billboard/billboard.base/billboard.identifiers";
 
 export default function checkBillboardTitle({
   timeout,

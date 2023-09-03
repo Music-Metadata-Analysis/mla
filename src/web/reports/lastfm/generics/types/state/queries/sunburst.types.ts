@@ -1,4 +1,3 @@
-import type { BillBoardProgressBarDetails } from "@src/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import type { userDispatchType } from "@src/types/user/context.types";
 import type { LastFMUserStateBase } from "@src/types/user/state.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
@@ -12,6 +11,7 @@ import type {
 } from "@src/web/reports/generics/types/charts/sunburst.types";
 import type SunBurstBaseNodeEncapsulation from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type { LastFMReportStateQueryInterface } from "@src/web/reports/lastfm/generics/types/state/queries/base.types";
+import type { BillBoardProgressBarDetails } from "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 
 export type SunBurstReportStateQueryConstructor<AggregateReportType> = new (
   dispatch: userDispatchType,

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import FlipCardReport from "./flip.card.report.component";
-import BillBoardSpinner from "@src/components/billboard/billboard.spinner/billboard.spinner.component";
 import Condition from "@src/components/condition/condition.component";
 import useImagesController from "@src/hooks/controllers/images.controller.hook";
 import Events from "@src/web/analytics/collection/events/definitions";
@@ -9,6 +8,7 @@ import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import useMetrics from "@src/web/metrics/collection/state/hooks/metrics.hook";
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
 import useFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/flip.card.controller.hook";
+import BillBoardSpinner from "@src/web/ui/generics/components/billboard/billboard.spinner/billboard.spinner.component";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
 import type FlipCardBaseReportState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
 import type FlipCardBaseReport from "@src/web/reports/lastfm/generics/state/queries/flip.card.query.base.class";
