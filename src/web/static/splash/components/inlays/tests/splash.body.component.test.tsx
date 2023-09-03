@@ -36,7 +36,7 @@ jest.mock("@src/components/styles/hover.dim/hover.dim.style", () =>
   require("@fixtures/react/parent").createComponent("DimOnHover")
 );
 
-jest.mock("@src/components/highlight/highlight.component", () =>
+jest.mock("@src/web/ui/generics/components/highlight/highlight.component", () =>
   require("@fixtures/react/parent").createComponent("Highlight")
 );
 

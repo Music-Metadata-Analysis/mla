@@ -1,11 +1,11 @@
 import { Container, ListItem, UnorderedList } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import SplashToggle from "../splash.toggle.component";
-import Highlight from "@src/components/highlight/highlight.component";
 import dialogueSettings from "@src/config/dialogue";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import mockUseRouter from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
+import Highlight from "@src/web/ui/generics/components/highlight/highlight.component";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock([
@@ -14,7 +14,7 @@ jest.mock("@chakra-ui/react", () =>
     "UnorderedList",
   ])
 );
-jest.mock("@src/components/highlight/highlight.component", () =>
+jest.mock("@src/web/ui/generics/components/highlight/highlight.component", () =>
   require("@fixtures/react/parent").createComponent("Highlight")
 );
 

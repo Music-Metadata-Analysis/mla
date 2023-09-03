@@ -1,6 +1,6 @@
 import { Container, UnorderedList, ListItem } from "@chakra-ui/react";
-import Highlight from "@src/components/highlight/highlight.component";
 import dialogueSettings from "@src/config/dialogue";
+import Highlight from "@src/web/ui/generics/components/highlight/highlight.component";
 import type { DialogueInlayComponentInterface } from "@src/web/ui/generics/types/components/dialogue.types";
 
 export default function PrivacyToggle({ t }: DialogueInlayComponentInterface) {
