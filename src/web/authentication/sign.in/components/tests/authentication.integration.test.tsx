@@ -30,7 +30,7 @@ jest.mock("@src/web/navigation/routing/hooks/router.hook");
 jest.mock("@src/utilities/react/hooks/toggle.hook");
 
 jest.mock(
-  "@src/components/scrollbars/vertical/vertical.scrollbar.container",
+  "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container",
   () =>
     require("@fixtures/react/child").createComponent(
       "VerticalScrollBarContainer"

@@ -6,10 +6,10 @@ import Option from "../option/report.option.component";
 import ReportSelect, { ReportSelectProps } from "../select.report.component";
 import { ids } from "../select.report.identifiers";
 import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
-import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import settings from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
+import VerticalScrollBarContainer from "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Avatar", "Flex"], ["Box"])
@@ -25,7 +25,7 @@ jest.mock("../option/report.option.component", () =>
 );
 
 jest.mock(
-  "@src/components/scrollbars/vertical/vertical.scrollbar.container",
+  "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container",
   () =>
     require("@fixtures/react/parent").createComponent(
       "VerticalScrollBarContainer"

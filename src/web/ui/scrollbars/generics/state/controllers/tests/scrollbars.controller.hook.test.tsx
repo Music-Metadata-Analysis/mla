@@ -1,9 +1,9 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import useScrollBarsController from "../scrollbars.controller.hook";
-import mockHookValues from "@src/hooks/controllers/__mocks__/scrollbars.controller.hook.mock";
-import { ScrollBarsControllerContext } from "@src/providers/controllers/scrollbars/scrollbars.provider";
-import type { ScrollBarsControllerContextInterface } from "@src/types/controllers/scrollbars/scrollbars.context.types";
+import mockHookValues from "@src/web/ui/scrollbars/generics/state/controllers/__mocks__/scrollbars.controller.hook.mock";
+import { ScrollBarsControllerContext } from "@src/web/ui/scrollbars/generics/state/providers/scrollbars.provider";
+import type { ScrollBarsControllerContextInterface } from "@src/web/ui/scrollbars/generics/types/state/provider.types";
 import type { ReactNode } from "react";
 
 interface MockInterfaceContextWithChildren {

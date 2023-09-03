@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import ControllerRootProvider from "../controllers.root.provider";
 import ImagesControllerProvider from "../images/images.provider";
-import ScrollBarsControllerProvider from "../scrollbars/scrollbars.provider";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import NavBarControllerProvider from "@src/web/navigation/navbar/state/providers/navbar.provider";
+import ScrollBarsControllerProvider from "@src/web/ui/scrollbars/generics/state/providers/scrollbars.provider";
 
 jest.mock("../images/images.provider", () =>
   require("@fixtures/react/parent").createComponent("ImagesControllerProvider")
@@ -13,10 +13,12 @@ jest.mock("@src/web/navigation/navbar/state/providers/navbar.provider", () =>
   require("@fixtures/react/parent").createComponent("NavBarControllerProvider")
 );
 
-jest.mock("../scrollbars/scrollbars.provider", () =>
-  require("@fixtures/react/parent").createComponent(
-    "ScrollBarsControllerProvider"
-  )
+jest.mock(
+  "@src/web/ui/scrollbars/generics/state/providers/scrollbars.provider",
+  () =>
+    require("@fixtures/react/parent").createComponent(
+      "ScrollBarsControllerProvider"
+    )
 );
 
 describe("UserInterfaceRootProvider", () => {

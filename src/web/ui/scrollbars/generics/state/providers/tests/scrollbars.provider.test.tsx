@@ -3,7 +3,7 @@ import { InitialState } from "../scrollbars.initial";
 import ScrollBarsControllerProvider, {
   ScrollBarsControllerContext,
 } from "../scrollbars.provider";
-import type { ScrollBarsControllerContextInterface } from "@src/types/controllers/scrollbars/scrollbars.context.types";
+import type { ScrollBarsControllerContextInterface } from "@src/web/ui/scrollbars/generics/types/state/provider.types";
 
 describe("ScrollBarsControllerProvider", () => {
   const received: Partial<ScrollBarsControllerContextInterface> = {};

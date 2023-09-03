@@ -1,6 +1,6 @@
-import useVerticalScrollBarEventsController from "./controllers/vertical.scrollbar.events.controller.hook";
-import useVerticalScrollBarLayoutController from "./controllers/vertical.scrollbar.layout.controller.hook";
 import VerticalScrollBar from "./vertical.scrollbar.component";
+import useVerticalScrollBarEventsController from "@src/web/ui/scrollbars/vertical/state/controllers/vertical.scrollbar.events.controller.hook";
+import useVerticalScrollBarLayoutController from "@src/web/ui/scrollbars/vertical/state/controllers/vertical.scrollbar.layout.controller.hook";
 import type { RefObject } from "react";
 
 export interface VerticalScrollBarContainerProps {

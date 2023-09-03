@@ -1,6 +1,6 @@
 import { voidFn } from "@src/utilities/generics/voids";
-import type { ScrollBarsControllerContextInterface } from "@src/types/controllers/scrollbars/scrollbars.context.types";
-import type { ScrollBarsControllerStateInterface } from "@src/types/controllers/scrollbars/scrollbars.state.types";
+import type { ScrollBarsControllerContextInterface } from "@src/web/ui/scrollbars/generics/types/state/provider.types";
+import type { ScrollBarsControllerStateInterface } from "@src/web/ui/scrollbars/generics/types/state/provider.types";
 
 export const InitialState = <ScrollBarsControllerStateInterface>{
   setStack: voidFn,

@@ -5,11 +5,13 @@ import mockHookValues from "../__mocks__/vertical.scrollbar.events.controller.ho
 import mockVerticalScrollBarEventHandlers, {
   activeScrollBarSetter,
 } from "../__mocks__/vertical.scrollbar.events.controller.utility.class.mock";
-import useVerticalScrollBarEventsController from "../vertical.scrollbar.events.controller.hook";
-import mockUseScrollBars from "@src/hooks/controllers/__mocks__/scrollbars.controller.hook.mock";
+import mockUseScrollBars from "@src/web/ui/scrollbars/generics/state/controllers/__mocks__/scrollbars.controller.hook.mock";
+import useVerticalScrollBarEventsController from "@src/web/ui/scrollbars/vertical/state/controllers/vertical.scrollbar.events.controller.hook";
 import type { RefObject, MouseEvent as ReactMouseEvent } from "react";
 
-jest.mock("@src/hooks/controllers/scrollbars.controller.hook");
+jest.mock(
+  "@src/web/ui/scrollbars/generics/state/controllers/scrollbars.controller.hook"
+);
 
 jest.mock("../vertical.scrollbar.events.controller.utility.class");
 

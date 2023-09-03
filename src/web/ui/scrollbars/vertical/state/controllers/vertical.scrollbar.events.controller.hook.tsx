@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import VerticalScrollBarEventHandlers from "./vertical.scrollbar.events.controller.utility.class";
-import useScrollBarsController from "@src/hooks/controllers/scrollbars.controller.hook";
+import useScrollBarsController from "@src/web/ui/scrollbars/generics/state/controllers/scrollbars.controller.hook";
 import type { RefObject } from "react";
 
 export interface useVerticalScrollBarEventsControllerProps {

@@ -4,11 +4,11 @@ import SunBurstEntityNodeList, {
   SunBurstEntityNodeListProps,
 } from "../node.list.component";
 import { ids, testIDs } from "../node.list.identifiers";
-import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import SunBurstNodeButton from "@src/web/reports/lastfm/generics/components/drawer/sunburst/nodes/node.button/node.button.component";
 import SunBurstNodeDisplay from "@src/web/reports/lastfm/generics/components/drawer/sunburst/nodes/node.display/node.display.component";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
+import VerticalScrollBarContainer from "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container";
 import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
 
 jest.mock("@chakra-ui/react", () =>
@@ -16,7 +16,7 @@ jest.mock("@chakra-ui/react", () =>
 );
 
 jest.mock(
-  "@src/components/scrollbars/vertical/vertical.scrollbar.container",
+  "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container",
   () =>
     require("@fixtures/react/parent").createComponent(
       "VerticalScrollBarContainer"

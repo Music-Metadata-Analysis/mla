@@ -1,5 +1,5 @@
 import { useContext, useCallback } from "react";
-import { ScrollBarsControllerContext } from "../../providers/controllers/scrollbars/scrollbars.provider";
+import { ScrollBarsControllerContext } from "@src/web/ui/scrollbars/generics/state/providers/scrollbars.provider";
 
 const useScrollBarsController = () => {
   const scrollbars = useContext(ScrollBarsControllerContext);

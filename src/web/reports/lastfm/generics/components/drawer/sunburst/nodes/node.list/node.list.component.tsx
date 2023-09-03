@@ -1,6 +1,6 @@
 import { Text, Flex } from "@chakra-ui/react";
 import { ids, testIDs } from "./node.list.identifiers";
-import VerticalScrollBarContainer from "@src/components/scrollbars/vertical/vertical.scrollbar.container";
+import VerticalScrollBarContainer from "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container";
 import type SunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type { SunBurstDrawerNodeComponentProps } from "@src/web/reports/lastfm/generics/types/components/drawer/sunburst.types";
 import type { FC, RefObject } from "react";
