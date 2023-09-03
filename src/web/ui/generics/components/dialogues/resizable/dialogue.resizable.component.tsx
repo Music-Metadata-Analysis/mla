@@ -2,9 +2,9 @@ import { Box, Flex } from "@chakra-ui/react";
 import { testIDs } from "./dialogue.resizable.identifiers";
 import Condition from "@src/components/condition/condition.component";
 import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
-import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { RouterHookType } from "@src/web/navigation/routing/hooks/router.hook";
+import type { DialogueInlayComponentType } from "@src/web/ui/generics/types/components/dialogue.types";
 
 export interface DialogueProps {
   BodyComponent?: DialogueInlayComponentType;

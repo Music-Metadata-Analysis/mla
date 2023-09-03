@@ -3,18 +3,18 @@ import FooterComponent from "../inlays/privacy.footer.component";
 import HeaderComponent from "../inlays/privacy.header.component";
 import ToggleComponent from "../inlays/privacy.toggle.component";
 import PrivacyContainer from "../privacy.container";
-import DialogueContainer from "@src/components/dialogues/resizable/dialogue.resizable.container";
 import {
   checkTProp,
   MockUseTranslation,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import DialogueContainer from "@src/web/ui/generics/components/dialogues/resizable/dialogue.resizable.container";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
 jest.mock(
-  "@src/components/dialogues/resizable/dialogue.resizable.container",
+  "@src/web/ui/generics/components/dialogues/resizable/dialogue.resizable.container",
   () => require("@fixtures/react/child").createComponent("DialogueContainer")
 );
 

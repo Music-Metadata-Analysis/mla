@@ -7,7 +7,7 @@ import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { mockUseRouter } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
-import type { DialogueInlayComponentType } from "@src/types/components/dialogue.types";
+import type { DialogueInlayComponentType } from "@src/web/ui/generics/types/components/dialogue.types";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Box", "Flex"])

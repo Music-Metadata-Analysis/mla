@@ -1,4 +1,4 @@
-import { testIDs as dialogueIDs } from "@src/components/dialogues/resizable/dialogue.resizable.identifiers";
+import { testIDs as dialogueIDs } from "@src/web/ui/generics/components/dialogues/resizable/dialogue.resizable.identifiers";
 
 export default function checkDialogueToggle({
   timeout,

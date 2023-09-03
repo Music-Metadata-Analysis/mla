@@ -7,10 +7,10 @@ import {
 } from "@testing-library/react";
 import SplashContainer from "../splash.container";
 import translations from "@locales/splash.json";
-import { testIDs } from "@src/components/dialogues/resizable/dialogue.resizable.identifiers";
 import routes from "@src/config/routes";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
+import { testIDs } from "@src/web/ui/generics/components/dialogues/resizable/dialogue.resizable.identifiers";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 

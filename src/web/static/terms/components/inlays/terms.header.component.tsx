@@ -1,6 +1,6 @@
 import { Container } from "@chakra-ui/react";
 import dialogueSettings from "@src/config/dialogue";
-import type { DialogueInlayComponentInterface } from "@src/types/components/dialogue.types";
+import type { DialogueInlayComponentInterface } from "@src/web/ui/generics/types/components/dialogue.types";
 
 export default function TermsOfServiceHeader({
   t,

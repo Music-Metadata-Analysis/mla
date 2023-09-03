@@ -3,16 +3,16 @@ import BodyComponent from "../inlays/splash.body.component";
 import FooterComponent from "../inlays/splash.footer.component";
 import ToggleComponent from "../inlays/splash.toggle.component";
 import SplashContainer from "../splash.container";
-import DialogueContainer from "@src/components/dialogues/resizable/dialogue.resizable.container";
 import {
   checkTProp,
   MockUseTranslation,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import DialogueContainer from "@src/web/ui/generics/components/dialogues/resizable/dialogue.resizable.container";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock(
-  "@src/components/dialogues/resizable/dialogue.resizable.container",
+  "@src/web/ui/generics/components/dialogues/resizable/dialogue.resizable.container",
   () => require("@fixtures/react/child").createComponent("DialogueContainer")
 );
 
