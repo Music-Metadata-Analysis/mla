@@ -5,10 +5,10 @@ import { renderToString } from "react-dom/server";
 import Option from "../option/report.option.component";
 import ReportSelect, { ReportSelectProps } from "../select.report.component";
 import { ids } from "../select.report.identifiers";
-import LastFMIconContainer from "@src/components/icons/lastfm/lastfm.icon.container";
 import settings from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
+import LastFMIconContainer from "@src/web/ui/generics/components/icons/lastfm/lastfm.icon.container";
 import VerticalScrollBarContainer from "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container";
 
 jest.mock("@chakra-ui/react", () =>
@@ -32,8 +32,9 @@ jest.mock(
     )
 );
 
-jest.mock("@src/components/icons/lastfm/lastfm.icon.container", () =>
-  require("@fixtures/react/child").createComponent("LastFMIconContainer")
+jest.mock(
+  "@src/web/ui/generics/components/icons/lastfm/lastfm.icon.container",
+  () => require("@fixtures/react/child").createComponent("LastFMIconContainer")
 );
 
 describe("SearchSelection", () => {
