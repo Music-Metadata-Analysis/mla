@@ -1,5 +1,5 @@
-import FeedbackPopUpContainer from "./feedback.popup.container";
-import Condition from "../condition/condition.component";
+import FeedbackPopUpContainer from "./feedback/feedback.popup.container";
+import Condition from "@src/components/condition/condition.component";
 import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 
 export default function RootPopUpContainer() {

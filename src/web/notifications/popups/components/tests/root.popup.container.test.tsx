@@ -1,12 +1,14 @@
 import { render } from "@testing-library/react";
-import FeedbackPopUpContainer from "../feedback.popup.container";
 import RootPopUpContainer from "../root.popup.container";
 import { mockIsSSR } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
+import FeedbackPopUpContainer from "@src/web/notifications/popups/components/feedback/feedback.popup.container";
 
 jest.mock("@src/vendors/integrations/web.framework/vendor");
 
-jest.mock("../feedback.popup.container", () =>
-  require("@fixtures/react/child").createComponent("FeedbackPopUpContainer")
+jest.mock(
+  "@src/web/notifications/popups/components/feedback/feedback.popup.container",
+  () =>
+    require("@fixtures/react/child").createComponent("FeedbackPopUpContainer")
 );
 
 describe("RootPopupContainer", () => {
