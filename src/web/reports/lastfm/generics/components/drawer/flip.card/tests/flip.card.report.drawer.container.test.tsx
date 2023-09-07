@@ -15,7 +15,7 @@ jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock(
-  "@src/components/button/button.external.link/button.external.link.component",
+  "@src/web/ui/generics/components/buttons/button.external.link/button.external.link.component",
   () => require("@fixtures/react/parent").createComponent("StyledButtonLink")
 );
 

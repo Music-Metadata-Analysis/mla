@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { testIDs } from "./drawer.control.panel.identifiers";
-import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
+import ButtonWithoutAnalytics from "@src/web/ui/generics/components/buttons/button.base/button.base.component";
 import type SunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 
 export interface SunBurstDrawerControlPanelProps {

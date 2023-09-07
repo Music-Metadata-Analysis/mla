@@ -2,8 +2,8 @@ import { Flex } from "@chakra-ui/react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import UserNameForm from "../username.form.component";
 import { ids } from "../username.form.identifiers";
-import StyledButton from "@src/components/button/button.standard/button.standard.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import StyledButton from "@src/web/ui/generics/components/buttons/button.standard/button.standard.component";
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
@@ -12,12 +12,12 @@ jest.mock("@chakra-ui/react", () =>
 );
 
 jest.mock(
-  "@src/components/button/button.standard/button.standard.component",
+  "@src/web/ui/generics/components/buttons/button.standard/button.standard.component",
   () =>
     jest.fn((props) =>
       jest
         .requireActual(
-          "@src/components/button/button.standard/button.standard.component"
+          "@src/web/ui/generics/components/buttons/button.standard/button.standard.component"
         )
         .default(props)
     )

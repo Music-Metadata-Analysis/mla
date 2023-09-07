@@ -1,8 +1,8 @@
 import { Flex, Box } from "@chakra-ui/react";
 import { testIDs } from "./control.panel.identifiers";
-import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
 import useColour from "@src/hooks/ui/colour.hook";
 import SunBurstDetailsPanel from "@src/web/reports/lastfm/generics/components/report.component/sunburst/panels/details/details.panel.component";
+import ButtonWithoutAnalytics from "@src/web/ui/generics/components/buttons/button.base/button.base.component";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
 import type SunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";

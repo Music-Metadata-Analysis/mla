@@ -1,10 +1,6 @@
-import {
-  FacebookLoginButton,
-  GithubLoginButton,
-  GoogleLoginButton,
-} from "react-social-login-buttons";
-import SpotifyLoginButton from "@src/components/button/button.spotify/button.spotify.component";
+import { authButtonVendor } from "@src/vendors/integrations/auth.buttons/vendor";
 import AnalyticsButtonWrapper from "@src/web/analytics/collection/components/analytics.button/analytics.button.container";
+import SpotifyIconContainer from "@src/web/ui/generics/components/icons/spotify/spotify.icon.container";
 import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
@@ -22,35 +18,32 @@ export default function SignInButtons({
   return (
     <>
       <AnalyticsButtonWrapper buttonName={"Facebook Login"}>
-        <FacebookLoginButton
-          style={{ width: buttonWidth }}
-          align={"center"}
-          onClick={() => handleSignIn("facebook")}
+        <authButtonVendor.FacebookAuthButton
+          callBack={handleSignIn}
           text={t("buttons.facebook")}
+          width={buttonWidth}
         />
       </AnalyticsButtonWrapper>
       <AnalyticsButtonWrapper buttonName={"Github Login"}>
-        <GithubLoginButton
-          style={{ width: buttonWidth }}
-          align={"center"}
-          onClick={() => handleSignIn("github")}
+        <authButtonVendor.GithubAuthButton
+          callBack={handleSignIn}
           text={t("buttons.github")}
+          width={buttonWidth}
         />
       </AnalyticsButtonWrapper>
       <AnalyticsButtonWrapper buttonName={"Google Login"}>
-        <GoogleLoginButton
-          style={{ width: buttonWidth }}
-          align={"center"}
-          onClick={() => handleSignIn("google")}
+        <authButtonVendor.GoogleAuthButton
+          callBack={handleSignIn}
           text={t("buttons.google")}
+          width={buttonWidth}
         />
       </AnalyticsButtonWrapper>
       <AnalyticsButtonWrapper buttonName={"Spotify Login"}>
-        <SpotifyLoginButton
-          style={{ width: buttonWidth }}
-          align={"center"}
-          onClick={() => handleSignIn("spotify")}
+        <authButtonVendor.SpotifyAuthButton
+          callBack={handleSignIn}
+          iconComponent={SpotifyIconContainer}
           text={t("buttons.spotify")}
+          width={buttonWidth}
         />
       </AnalyticsButtonWrapper>
     </>

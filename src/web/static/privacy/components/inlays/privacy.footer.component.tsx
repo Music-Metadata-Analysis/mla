@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
-import Button from "@src/components/button/button.external.link/button.external.link.component";
 import dialogueSettings from "@src/config/dialogue";
 import externalLinks from "@src/config/external";
+import Button from "@src/web/ui/generics/components/buttons/button.external.link/button.external.link.component";
 import type { DialogueInlayComponentInterface } from "@src/web/ui/generics/types/components/dialogue.types";
 
 export default function PrivacyFooter({ t }: DialogueInlayComponentInterface) {

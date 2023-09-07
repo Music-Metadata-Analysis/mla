@@ -1,18 +1,18 @@
 import { Flex } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import Footer from "../about.footer.component";
-import Button from "@src/components/button/button.standard/button.standard.component";
 import dialogueSettings from "@src/config/dialogue";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import mockUseRouter from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
+import Button from "@src/web/ui/generics/components/buttons/button.standard/button.standard.component";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Flex"])
 );
 
 jest.mock(
-  "@src/components/button/button.standard/button.standard.component",
+  "@src/web/ui/generics/components/buttons/button.standard/button.standard.component",
   () => require("@fixtures/react/parent").createComponent("Button")
 );
 

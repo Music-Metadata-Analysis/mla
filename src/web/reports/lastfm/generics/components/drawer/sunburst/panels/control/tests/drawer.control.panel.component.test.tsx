@@ -4,13 +4,15 @@ import SunBurstDrawerControlPanel, {
   SunBurstDrawerControlPanelProps,
 } from "../drawer.control.panel.component";
 import { testIDs } from "../drawer.control.panel.identifiers";
-import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
+import ButtonWithoutAnalytics from "@src/web/ui/generics/components/buttons/button.base/button.base.component";
 import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
 
-jest.mock("@src/components/button/button.base/button.base.component", () =>
-  require("@fixtures/react/parent").createComponent("ButtonWithoutAnalytics")
+jest.mock(
+  "@src/web/ui/generics/components/buttons/button.base/button.base.component",
+  () =>
+    require("@fixtures/react/parent").createComponent("ButtonWithoutAnalytics")
 );
 
 jest.mock("@chakra-ui/react", () =>

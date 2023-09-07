@@ -2,10 +2,10 @@ import { WarningTwoIcon } from "@chakra-ui/icons";
 import { Container, Flex } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
 import ErrorDisplay, { ErrorDisplayProps } from "../error.display.component";
-import StyledButton from "@src/components/button/button.standard/button.standard.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockUseColour from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
+import StyledButton from "@src/web/ui/generics/components/buttons/button.standard/button.standard.component";
 
 jest.mock("@src/hooks/ui/colour.hook");
 
@@ -23,7 +23,7 @@ jest.mock(
 );
 
 jest.mock(
-  "@src/components/button/button.standard/button.standard.component",
+  "@src/web/ui/generics/components/buttons/button.standard/button.standard.component",
   () => require("@fixtures/react/parent").createComponent("StyledButton")
 );
 

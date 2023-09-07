@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import ReportIndicator from "./indicator/report.indicator.component";
 import { testIDs } from "./report.option.identifiers";
-import Button from "@src/components/button/button.standard/button.standard.component";
+import Button from "@src/web/ui/generics/components/buttons/button.standard/button.standard.component";
 
 export interface ReportOptionProps {
   analyticsName: string;

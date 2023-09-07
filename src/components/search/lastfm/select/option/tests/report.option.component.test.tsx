@@ -2,15 +2,15 @@ import { Flex } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
 import ReportOption from "../report.option.component";
 import { testIDs } from "../report.option.identifiers";
-import Button from "@src/components/button/button.standard/button.standard.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import Button from "@src/web/ui/generics/components/buttons/button.standard/button.standard.component";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Flex"])
 );
 
 jest.mock(
-  "@src/components/button/button.standard/button.standard.component",
+  "@src/web/ui/generics/components/buttons/button.standard/button.standard.component",
   () => require("@fixtures/react/parent").createComponent("Button")
 );
 

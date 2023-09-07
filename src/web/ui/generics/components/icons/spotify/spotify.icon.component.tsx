@@ -1,17 +1,9 @@
-import { createButton, createSvgIcon } from "react-social-login-buttons";
+export interface SpotifyIconComponentProps {
+  height?: number;
+  width?: number;
+}
 
-const config = {
-  activeStyle: { background: "#1f1f1f" },
-  icon: createSvgIcon(Icon),
-  style: { background: "#0a0a0a", color: "white" },
-  text: "Log in with Spotify",
-};
-
-const SpotifyButton = createButton(config);
-
-export default SpotifyButton;
-
-export function Icon({ width = "26px", height = "26px" }) {
+export default function Icon({ width, height }: SpotifyIconComponentProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,8 +11,8 @@ export function Icon({ width = "26px", height = "26px" }) {
       aria-labelledby="title"
       aria-describedby="desc"
       role="img"
-      width={width}
-      height={height}
+      width={`${width}px`}
+      height={`${height}px`}
     >
       <title>Spotify Login Icon</title>
       <desc>A color styled icon from Orion Icon Library.</desc>

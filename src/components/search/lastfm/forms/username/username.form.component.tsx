@@ -8,8 +8,8 @@ import {
   FormikHelpers,
 } from "formik";
 import { ids, fields } from "./username.form.identifiers";
-import StyledButton from "@src/components/button/button.standard/button.standard.component";
 import StyledInput from "@src/components/search/common/input/input.component";
+import StyledButton from "@src/web/ui/generics/components/buttons/button.standard/button.standard.component";
 import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
 
 interface UserNameFormProps {

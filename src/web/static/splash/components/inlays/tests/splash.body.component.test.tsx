@@ -23,7 +23,7 @@ jest.mock("@chakra-ui/react", () =>
 );
 
 jest.mock(
-  "@src/components/button/button.standard/button.standard.component",
+  "@src/web/ui/generics/components/buttons/button.standard/button.standard.component",
   () => require("@fixtures/react/parent").createComponent("Button")
 );
 

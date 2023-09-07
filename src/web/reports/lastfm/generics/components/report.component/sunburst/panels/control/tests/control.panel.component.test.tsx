@@ -4,12 +4,12 @@ import SunBurstControlPanel, {
   SunBurstControlPanelProps,
 } from "../control.panel.component";
 import { testIDs } from "../control.panel.identifiers";
-import ButtonWithoutAnalytics from "@src/components/button/button.base/button.base.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import SunBurstDetailsPanel from "@src/web/reports/lastfm/generics/components/report.component/sunburst/panels/details/details.panel.component";
+import ButtonWithoutAnalytics from "@src/web/ui/generics/components/buttons/button.base/button.base.component";
 import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
 
 jest.mock("@src/hooks/ui/colour.hook");
@@ -25,8 +25,10 @@ jest.mock(
     require("@fixtures/react/parent").createComponent("SunBurstDetailsPanel")
 );
 
-jest.mock("@src/components/button/button.base/button.base.component", () =>
-  require("@fixtures/react/parent").createComponent("ButtonWithoutAnalytics")
+jest.mock(
+  "@src/web/ui/generics/components/buttons/button.base/button.base.component",
+  () =>
+    require("@fixtures/react/parent").createComponent("ButtonWithoutAnalytics")
 );
 
 type MockD3Node = Omit<Partial<d3Node>, "parent"> & {

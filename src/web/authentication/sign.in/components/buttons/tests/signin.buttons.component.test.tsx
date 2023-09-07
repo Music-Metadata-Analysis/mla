@@ -1,29 +1,21 @@
 import { render } from "@testing-library/react";
-import {
-  FacebookLoginButton,
-  GithubLoginButton,
-  GoogleLoginButton,
-} from "react-social-login-buttons";
 import SignInButtons from "../signin.buttons.component";
 import authenticationTranslations from "@locales/authentication.json";
-import SpotifyLoginButton from "@src/components/button/button.spotify/button.spotify.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import {
+  mockFacebookAuthButton,
+  mockGithubAuthButton,
+  mockGoogleAuthButton,
+  mockSpotifyAuthButton,
+} from "@src/vendors/integrations/auth.buttons/__mocks__/vendor.mock";
 import AnalyticsButtonWrapper from "@src/web/analytics/collection/components/analytics.button/analytics.button.container";
 import {
   MockUseTranslation,
   _t,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import SpotifyIconContainer from "@src/web/ui/generics/components/icons/spotify/spotify.icon.container";
 
-jest.mock("react-social-login-buttons", () => ({
-  FacebookLoginButton: jest.fn(() => "FacebookLoginButton"),
-  GithubLoginButton: jest.fn(() => "GithubLoginButton"),
-  GoogleLoginButton: jest.fn(() => "GoogleLoginButton"),
-}));
-
-jest.mock(
-  "@src/components/button/button.spotify/button.spotify.component",
-  () => jest.fn(() => "SpotifyLoginButton")
-);
+jest.mock("@src/vendors/integrations/auth.buttons/vendor");
 
 jest.mock(
   "@src/web/analytics/collection/components/analytics.button/analytics.button.container",
@@ -78,59 +70,56 @@ describe("AuthenticationComponent", () => {
     );
   });
 
-  it("should call the FacebookLoginButton component correctly", () => {
-    expect(FacebookLoginButton).toBeCalledTimes(1);
+  it("should call the FacebookAuthButton component correctly", () => {
+    expect(mockFacebookAuthButton).toBeCalledTimes(1);
     checkMockCall(
-      FacebookLoginButton,
+      mockFacebookAuthButton,
       {
-        style: { width: buttonWidth },
-        align: "center",
+        width: buttonWidth,
         text: _t(authenticationTranslations.buttons.facebook),
       },
       0,
-      ["onClick"]
+      ["onClick", "callBack"]
     );
   });
 
-  it("should call the GithubLoginButton component correctly", () => {
-    expect(GithubLoginButton).toBeCalledTimes(1);
+  it("should call the GithubAuthButton component correctly", () => {
+    expect(mockGithubAuthButton).toBeCalledTimes(1);
     checkMockCall(
-      GithubLoginButton,
+      mockGithubAuthButton,
       {
-        style: { width: buttonWidth },
-        align: "center",
+        width: buttonWidth,
         text: _t(authenticationTranslations.buttons.github),
       },
       0,
-      ["onClick"]
+      ["onClick", "callBack"]
     );
   });
 
-  it("should call the GoogleLoginButton component correctly", () => {
-    expect(GoogleLoginButton).toBeCalledTimes(1);
+  it("should call the GoogleAuthButton component correctly", () => {
+    expect(mockGoogleAuthButton).toBeCalledTimes(1);
     checkMockCall(
-      GoogleLoginButton,
+      mockGoogleAuthButton,
       {
-        style: { width: buttonWidth },
-        align: "center",
+        width: buttonWidth,
         text: _t(authenticationTranslations.buttons.google),
       },
       0,
-      ["onClick"]
+      ["onClick", "callBack"]
     );
   });
 
-  it("should call the SpotifyLoginButton component correctly", () => {
-    expect(SpotifyLoginButton).toBeCalledTimes(1);
+  it("should call the SpotifyAuthButton component correctly", () => {
+    expect(mockSpotifyAuthButton).toBeCalledTimes(1);
     checkMockCall(
-      SpotifyLoginButton,
+      mockSpotifyAuthButton,
       {
-        style: { width: buttonWidth },
-        align: "center",
+        iconComponent: SpotifyIconContainer,
+        width: buttonWidth,
         text: _t(authenticationTranslations.buttons.spotify),
       },
       0,
-      ["onClick"]
+      ["onClick", "callBack"]
     );
   });
 });
