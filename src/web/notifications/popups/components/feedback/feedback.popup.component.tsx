@@ -1,11 +1,11 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import { testIDs } from "./feedback.popup.identifiers";
-import DimOnHover from "@src/components/styles/hover.dim/hover.dim.style";
 import externalLinks from "@src/config/external";
 import useColour from "@src/hooks/ui/colour.hook";
 import ClickLink from "@src/web/navigation/links/components/click.link.external/click.link.external.component";
 import SVSIconContainer from "@src/web/ui/generics/components/icons/svs/svs.icon.container";
+import DimOnHover from "@src/web/ui/generics/components/styles/hover.dim/hover.dim.style";
 import type { PopUpComponentProps } from "@src/vendors/types/integrations/ui.framework/popups/popups.component.types";
 
 export default function FeedbackDialogue({
