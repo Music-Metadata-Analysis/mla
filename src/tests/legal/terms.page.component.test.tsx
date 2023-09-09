@@ -8,7 +8,7 @@ import {
   mockUtilities,
 } from "@src/vendors/integrations/web.framework/__mocks__/vendor.ssr.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
-import TermsOfServiceContainer from "@src/web/static/terms/components/terms.container";
+import TermsOfServiceContainer from "@src/web/content/terms/components/terms.container";
 
 jest.mock("@src/vendors/integrations/web.framework/vendor.ssr");
 
@@ -16,7 +16,7 @@ jest.mock("@src/components/errors/boundary/error.boundary.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
-jest.mock("@src/web/static/terms/components/terms.container", () =>
+jest.mock("@src/web/content/terms/components/terms.container", () =>
   require("@fixtures/react/parent").createComponent("TermsOfServiceContainer")
 );
 

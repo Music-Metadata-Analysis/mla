@@ -3,7 +3,7 @@ import routes from "@src/config/routes";
 import { voidFn } from "@src/utilities/generics/voids";
 import { webFrameworkVendorSSR } from "@src/vendors/integrations/web.framework/vendor.ssr";
 import Events from "@src/web/analytics/collection/events/definitions";
-import AboutContainer from "@src/web/static/about/components/about.container";
+import AboutContainer from "@src/web/content/about/components/about.container";
 
 export default function AboutPage() {
   return (

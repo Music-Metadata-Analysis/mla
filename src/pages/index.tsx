@@ -3,7 +3,7 @@ import routes from "@src/config/routes";
 import { voidFn } from "@src/utilities/generics/voids";
 import { webFrameworkVendorSSR } from "@src/vendors/integrations/web.framework/vendor.ssr";
 import Events from "@src/web/analytics/collection/events/definitions";
-import SplashContainer from "@src/web/static/splash/components/splash.container";
+import SplashContainer from "@src/web/content/splash/components/splash.container";
 
 export default function SplashPage() {
   return (
