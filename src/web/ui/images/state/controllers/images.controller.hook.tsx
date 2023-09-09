@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ImagesControllerContext } from "@src/providers/controllers/images/images.provider";
+import { ImagesControllerContext } from "@src/web/ui/images/state/providers/images.provider";
 
 const useImagesController = () => {
   const images = useContext(ImagesControllerContext);

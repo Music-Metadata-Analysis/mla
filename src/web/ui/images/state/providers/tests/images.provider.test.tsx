@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import ImagesControllerProvider, {
   ImagesControllerContext,
 } from "../images.provider";
-import type { ImagesControllerContextInterface } from "@src/types/controllers/images/images.context.types";
+import type { ImagesControllerContextInterface } from "@src/web/ui/images/types/state/provider.types";
 
 describe("ImagesControllerProvider", () => {
   const received: Partial<ImagesControllerContextInterface> = {};

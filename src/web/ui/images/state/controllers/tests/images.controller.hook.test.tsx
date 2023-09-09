@@ -2,8 +2,8 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/images.controller.hook.mock";
 import useImagesController from "../images.controller.hook";
-import { ImagesControllerContext } from "@src/providers/controllers/images/images.provider";
-import type { ImagesControllerContextInterface } from "@src/types/controllers/images/images.context.types";
+import { ImagesControllerContext } from "@src/web/ui/images/state/providers/images.provider";
+import type { ImagesControllerContextInterface } from "@src/web/ui/images/types/state/provider.types";
 import type { ReactNode } from "react";
 
 interface MockInterfaceContextWithChildren {

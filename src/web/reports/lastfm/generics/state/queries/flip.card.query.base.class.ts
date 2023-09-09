@@ -1,10 +1,10 @@
 import LastFMReportQueryAbstractBaseClass from "@src/web/reports/lastfm/generics/state/queries/bases/query.base.class";
 import type translations from "@locales/lastfm.json";
-import type { ImagesControllerHookType } from "@src/hooks/controllers/images.controller.hook";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type FlipCardUserState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
 import type { LastFMFlipCardDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/flip.card.types";
 import type { FlipCardReportStateQueryInterface } from "@src/web/reports/lastfm/generics/types/state/queries/flip.card.types";
+import type { ImagesControllerHookType } from "@src/web/ui/images/state/controllers/images.controller.hook";
 import type { FC } from "react";
 
 export default abstract class FlipCardAbstractBaseReport<

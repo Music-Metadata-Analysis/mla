@@ -1,4 +1,4 @@
-import { InitialState } from "@src/providers/controllers/images/images.initial";
+import { InitialState } from "@src/web/ui/images/state/providers/images.initial";
 
 const mockValues = {
   count: InitialState.loadedCount,

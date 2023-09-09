@@ -3,8 +3,8 @@ import {
   MockUserStateEncapsulation,
 } from "./implementations/concrete.last.fm.query.class";
 import FlipCardBaseReport from "../flip.card.query.base.class";
-import mockImageController from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";
 import { InitialState } from "@src/web/reports/generics/state/providers/report.initial";
+import mockImageController from "@src/web/ui/images/state/controllers/__mocks__/images.controller.hook.mock";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/response.types";
 
 describe(FlipCardBaseReport.name, () => {

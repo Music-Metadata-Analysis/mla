@@ -6,7 +6,6 @@ import FlipCardReport, {
 import lastfmTranslations from "@locales/lastfm.json";
 import settings from "@src/config/flip.card";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockImageController from "@src/hooks/controllers/__mocks__/images.controller.hook.mock";
 import {
   MockUseTranslation,
   _t,
@@ -21,6 +20,7 @@ import {
   MockReportClass,
   MockUserStateEncapsulation,
 } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.last.fm.query.class";
+import mockImageController from "@src/web/ui/images/state/controllers/__mocks__/images.controller.hook.mock";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/response.types";
 
 jest.mock("@chakra-ui/react", () =>
