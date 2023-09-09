@@ -3,11 +3,11 @@ import { Container, Flex } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
 import ErrorDisplay, { ErrorDisplayProps } from "../error.display.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockUseColour from "@src/hooks/ui/__mocks__/colour.hook.mock";
+import mockUseColour from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
 import StyledButton from "@src/web/ui/generics/components/buttons/button.standard/button.standard.component";
 
-jest.mock("@src/hooks/ui/colour.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 
 jest.mock("@chakra-ui/icons", () =>
   require("@fixtures/chakra/icons").createChakraIconMock(["WarningTwoIcon"])

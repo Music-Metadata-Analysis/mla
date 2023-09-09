@@ -2,7 +2,7 @@ import { Spinner, Flex } from "@chakra-ui/react";
 import { testIDs } from "./billboard.spinner.identifiers";
 import BillBoardContainer from "../billboard.base/billboard.container";
 import { settings } from "@src/config/billboard";
-import useColour from "@src/hooks/ui/colour.hook";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 
 interface BillBoardSpinnerProps {
   titleText: string;

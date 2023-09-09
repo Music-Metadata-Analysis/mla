@@ -2,10 +2,10 @@ import { render } from "@testing-library/react";
 import NavBarColorModeToggle from "../navbar.colour.mode.component";
 import NavBarColourModeContainer from "../navbar.colour.mode.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockUseColourMode from "@src/hooks/ui/__mocks__/colour.mode.hook.mock";
+import mockUseColourMode from "@src/web/ui/colours/state/hooks/__mocks__/colour.mode.hook.mock";
 import type { ChangeEvent } from "react";
 
-jest.mock("@src/hooks/ui/colour.mode.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.mode.hook");
 
 jest.mock("../navbar.colour.mode.component", () =>
   require("@fixtures/react/child").createComponent(["NavBarToggle"])

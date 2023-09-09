@@ -11,7 +11,6 @@ import {
   getMockComponentProp,
   getMockComponentPropCount,
 } from "@src/fixtures/mocks/mock.component.props";
-import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import NavBarColourModeContainer from "@src/web/navigation/navbar/components/colour.mode/navbar.colour.mode.container";
@@ -22,8 +21,9 @@ import NavBarSessionControlContainer from "@src/web/navigation/navbar/components
 import NavBarSpinner from "@src/web/navigation/navbar/components/spinner/navbar.spinner.component";
 import mockNavBarLayoutControllerHook from "@src/web/navigation/navbar/state/controllers/__mocks__/navbar.layout.controller.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
+import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 
-jest.mock("@src/hooks/ui/colour.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 
 jest.mock(
   "@src/web/navigation/navbar/components/colour.mode/navbar.colour.mode.container",

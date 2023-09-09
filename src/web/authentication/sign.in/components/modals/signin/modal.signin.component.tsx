@@ -13,9 +13,9 @@ import {
 } from "@chakra-ui/react";
 import { testIDs, ids } from "./modal.signin.identifiers";
 import routes from "@src/config/routes";
-import useColours from "@src/hooks/ui/colour.hook";
 import SignInButtons from "@src/web/authentication/sign.in/components/buttons/signin.buttons.component";
 import ClickLinkInternalContainer from "@src/web/navigation/links/components/click.link.internal/click.link.internal.container";
+import useColours from "@src/web/ui/colours/state/hooks/colour.hook";
 import VerticalScrollBarContainer from "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container";
 import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";

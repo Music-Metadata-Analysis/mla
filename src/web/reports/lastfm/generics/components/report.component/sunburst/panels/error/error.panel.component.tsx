@@ -1,7 +1,7 @@
 import { Box, Center, Container } from "@chakra-ui/react";
 import { testIDs } from "./error.panel.identifiers";
 import settings from "@src/config/sunburst";
-import useColour from "@src/hooks/ui/colour.hook";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 
 export interface SunBurstErrorPanelProps {
   breakPoints: Array<number>;

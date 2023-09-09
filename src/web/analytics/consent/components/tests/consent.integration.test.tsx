@@ -9,7 +9,7 @@ import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
-jest.mock("@src/hooks/ui/colour.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 

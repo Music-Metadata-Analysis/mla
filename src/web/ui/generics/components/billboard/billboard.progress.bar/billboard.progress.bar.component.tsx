@@ -10,8 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { testIDs } from "./billboard.progress.bar.identifiers";
 import BillBoardContainer from "../billboard.base/billboard.container";
-import useColour from "@src/hooks/ui/colour.hook";
 import { truncate } from "@src/utilities/generics/strings";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 
 export type BillBoardProgressBarDetails = {
   resource: string;

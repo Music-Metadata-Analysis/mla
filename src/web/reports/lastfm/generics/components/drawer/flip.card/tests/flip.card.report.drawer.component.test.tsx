@@ -7,16 +7,16 @@ import { testIDs } from "../flip.card.report.drawer.identifiers";
 import lastfmTranslations from "@locales/lastfm.json";
 import settings from "@src/config/flip.card";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import {
   MockUseTranslation,
   _t,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import ReportDrawer from "@src/web/reports/generics/components/drawer/drawer.component";
 import mockFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
+import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 import StyledButtonLink from "@src/web/ui/generics/components/buttons/button.external.link/button.external.link.component";
 
-jest.mock("@src/hooks/ui/colour.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock([

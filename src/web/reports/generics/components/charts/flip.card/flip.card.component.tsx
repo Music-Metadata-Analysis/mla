@@ -1,7 +1,7 @@
 import { Box, Img, Center, Text } from "@chakra-ui/react";
 import ReactCardFlip from "react-card-flip";
 import { testIDs } from "./flip.card.identifiers";
-import useColour from "@src/hooks/ui/colour.hook";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 
 export interface FlipCardProps {

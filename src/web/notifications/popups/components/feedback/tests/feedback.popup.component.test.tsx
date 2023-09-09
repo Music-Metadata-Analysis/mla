@@ -6,12 +6,12 @@ import FeedbackPopUp from "../feedback.popup.component";
 import { testIDs } from "../feedback.popup.identifiers";
 import externalRoutes from "@src/config/external";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import ClickLink from "@src/web/navigation/links/components/click.link.external/click.link.external.component";
+import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 import SVSIconContainer from "@src/web/ui/generics/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/web/ui/generics/components/styles/hover.dim/hover.dim.style";
 
-jest.mock("@src/hooks/ui/colour.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 

@@ -1,5 +1,5 @@
 import { Avatar } from "@chakra-ui/react";
-import useColour from "@src/hooks/ui/colour.hook";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 
 export interface NavBarAvatarProps {
   user: {

@@ -4,10 +4,10 @@ import ReactCardFlip from "react-card-flip";
 import FlipCard, { FlipCardProps } from "../flip.card.component";
 import { testIDs } from "../flip.card.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 
-jest.mock("@src/hooks/ui/colour.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 

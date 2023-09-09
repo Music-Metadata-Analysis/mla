@@ -4,10 +4,10 @@ import BillBoardSpinner from "../billboard.spinner.component";
 import { testIDs } from "../billboard.spinner.identifiers";
 import { settings } from "@src/config/billboard";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
+import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 import BillBoardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
 
-jest.mock("@src/hooks/ui/colour.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Flex", "Spinner"])

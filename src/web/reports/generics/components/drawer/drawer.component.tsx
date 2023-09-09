@@ -8,7 +8,7 @@ import {
   DrawerContent,
 } from "@chakra-ui/react";
 import { testIDs } from "./drawer.identifiers";
-import useColour from "@src/hooks/ui/colour.hook";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 import type { PropsWithChildren } from "react";
 
 export interface ReportDrawerProps {

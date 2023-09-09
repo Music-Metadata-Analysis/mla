@@ -1,8 +1,8 @@
 import { Box, Divider, Flex, Img, Text } from "@chakra-ui/react";
 import { testIDs } from "./flip.card.report.drawer.identifiers";
 import settings from "@src/config/flip.card";
-import useColour from "@src/hooks/ui/colour.hook";
 import ReportDrawer from "@src/web/reports/generics/components/drawer/drawer.component";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 import StyledButtonLink from "@src/web/ui/generics/components/buttons/button.external.link/button.external.link.component";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 

@@ -1,6 +1,6 @@
 import { Text, Box, Container } from "@chakra-ui/react";
 import { testIDs } from "./title.panel.identifiers";
-import useColour from "@src/hooks/ui/colour.hook";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 
 export interface SunBurstTitlePanelProps {
   breakPoints: Array<number>;

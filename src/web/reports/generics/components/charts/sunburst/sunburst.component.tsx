@@ -1,7 +1,7 @@
 import { Box, Center } from "@chakra-ui/react";
 import settings from "@src/config/sunburst";
-import useColour from "@src/hooks/ui/colour.hook";
 import SunBurstChartSVGContainer from "@src/web/reports/generics/components/charts/sunburst/svg/svg.container";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 import type {
   d3Node,
   SunBurstData,

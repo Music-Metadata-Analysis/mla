@@ -1,5 +1,5 @@
 import { StyledButton } from "./navbar.link.style";
-import useColour from "@src/hooks/ui/colour.hook";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 import type { MouseEvent } from "react";
 
 interface NavLinkProps {

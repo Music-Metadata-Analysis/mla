@@ -5,15 +5,15 @@ import SunBurstReportDrawer, {
 } from "../sunburst.report.drawer.component";
 import { testIDs } from "../sunburst.report.drawer.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
 import ReportDrawer from "@src/web/reports/generics/components/drawer/drawer.component";
 import SunBurstNodeListContainer from "@src/web/reports/lastfm/generics/components/drawer/sunburst/nodes/node.list/node.list.container";
 import SunBurstDrawerControlContainer from "@src/web/reports/lastfm/generics/components/drawer/sunburst/panels/control/drawer.control.panel.container";
 import SunBurstDrawerTitleContainer from "@src/web/reports/lastfm/generics/components/drawer/sunburst/panels/title/drawer.title.panel.container";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
+import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
 
-jest.mock("@src/hooks/ui/colour.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Divider", "Flex"])

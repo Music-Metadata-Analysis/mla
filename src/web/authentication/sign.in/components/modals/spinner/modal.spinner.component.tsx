@@ -11,7 +11,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { testIDs } from "./modal.spinner.identifiers";
-import useColours from "@src/hooks/ui/colour.hook";
+import useColours from "@src/web/ui/colours/state/hooks/colour.hook";
 
 export interface AuthenticationSpinnerProps {
   onClose: () => void;

@@ -2,9 +2,9 @@ import { Button } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import BaseButton from "../button.base.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
+import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 
-jest.mock("@src/hooks/ui/colour.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 

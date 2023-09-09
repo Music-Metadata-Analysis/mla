@@ -1,7 +1,7 @@
 import { Text, Container, Center, Box } from "@chakra-ui/react";
 import { testIDs } from "./billboard.identifiers";
 import Condition from "@src/components/condition/condition.component";
-import useColour from "@src/hooks/ui/colour.hook";
+import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
 
 export interface BillboardProps {
   children: JSX.Element | JSX.Element[];

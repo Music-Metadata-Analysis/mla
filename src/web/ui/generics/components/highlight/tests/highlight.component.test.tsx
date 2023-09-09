@@ -2,14 +2,14 @@ import { Box } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
 import Highlight from "../highlight.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockColourHook from "@src/hooks/ui/__mocks__/colour.hook.mock";
+import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 
 jest.mock("@chakra-ui/react", () => {
   const { createChakraMock } = require("@fixtures/chakra");
   return createChakraMock(["Box"]);
 });
 
-jest.mock("@src/hooks/ui/colour.hook");
+jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 
 describe("Highlight", () => {
   const mockChildComponent = "MockChildComponent";
