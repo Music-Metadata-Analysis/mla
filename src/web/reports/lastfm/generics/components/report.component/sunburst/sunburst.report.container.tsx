@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import useSunBurstLayoutController from "./controllers/sunburst.report.layout.controller.hook";
 import SunBurstReport from "./sunburst.report.component";
-import useSunBurstController from "@src/hooks/controllers/sunburst.controller.hook";
 import Events from "@src/web/analytics/collection/events/definitions";
 import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import useMetrics from "@src/web/metrics/collection/state/hooks/metrics.hook";
+import useSunBurstController from "@src/web/reports/generics/state/controllers/sunburst/sunburst.controller.hook";
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
 import BillBoardProgressBar from "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";

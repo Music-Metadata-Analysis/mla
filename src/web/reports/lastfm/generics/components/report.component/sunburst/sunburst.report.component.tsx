@@ -7,8 +7,8 @@ import Condition from "@src/components/condition/condition.component";
 import settings from "@src/config/sunburst";
 import SunBurstChart from "@src/web/reports/generics/components/charts/sunburst/sunburst.component";
 import type { SunBurstLayoutControllerHookType } from "./controllers/sunburst.report.layout.controller.hook";
-import type { SunBurstControllerHookType } from "@src/hooks/controllers/sunburst.controller.hook";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
+import type { SunBurstControllerHookType } from "@src/web/reports/generics/state/controllers/sunburst/sunburst.controller.hook";
 import type UserState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
 import type SunBurstBaseReport from "@src/web/reports/lastfm/generics/state/queries/sunburst.query.base.class";
 

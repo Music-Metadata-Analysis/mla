@@ -1,9 +1,9 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import useSunBurstController from "../sunburst.controller.hook";
-import mockHookValues from "@src/hooks/controllers/__mocks__/sunburst.controller.hook.mock";
 import mockNavBarControllerHook from "@src/web/navigation/navbar/state/controllers/__mocks__/navbar.controller.hook.mock";
 import nullNode from "@src/web/reports/generics/state/charts/sunburst/null.node";
+import mockHookValues from "@src/web/reports/generics/state/controllers/sunburst/__mocks__/sunburst.controller.hook.mock";
 import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
 
 jest.mock(
