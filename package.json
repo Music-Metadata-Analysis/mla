@@ -150,16 +150,16 @@
       "<rootDir>/jest/setup/testing-library.js"
     ],
     "moduleNameMapper": {
+      ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
+      ".+\\.(png|jpg|ttf|woff|woff2)$": "<rootDir>/jest/modules/images.js",   
       "^@fixtures/chakra$": "<rootDir>/src/fixtures/mocks/mock.chakra.react.factory.class.tsx",
       "^@fixtures/chakra/icons$": "<rootDir>/src/fixtures/mocks/mock.chakra.icon.factory.class.tsx",
       "^@fixtures/react/child$": "<rootDir>/src/fixtures/mocks/mock.component.child.factory.class.tsx",
       "^@fixtures/react/parent$": "<rootDir>/src/fixtures/mocks/mock.component.parent.factory.class.tsx",
       "^@fixtures/react/simple$": "<rootDir>/src/fixtures/mocks/mock.component.simple.factory.class.tsx",
-      "^@locales/(.*)": "<rootDir>/public/locales/en/$1",
+      "^@locales/(.*)": "<rootDir>/public/locales/en/$1",         
       "^@src/(.*)": "<rootDir>/src/$1",
-      ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-      ".+\\.(png|jpg|ttf|woff|woff2)$": "<rootDir>/jest/modules/images.js",
-      "d3": "<rootDir>/node_modules/d3/dist/d3.min.js"
+      "d3": "<rootDir>/node_modules/d3/dist/d3.min.js"      
     },
     "roots": [
       "./src"

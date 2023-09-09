@@ -1,5 +1,5 @@
+import "@src/web/ui/css/root.css";
 import App, { AppContext } from "next/app";
-import "../styles/globals.css";
 import NavConfig from "@src/config/navbar";
 import RootProvider from "@src/providers/root.provider";
 import { normalizeUndefined } from "@src/utilities/generics/voids";
