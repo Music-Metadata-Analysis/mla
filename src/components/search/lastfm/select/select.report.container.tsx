@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import ReportSelect from "./select.report.component";
 import config from "@src/config/lastfm";
-import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
 import useFlags from "@src/web/runtime/feature.flags/hooks/flags.hook";
+import useWindowThreshold from "@src/web/ui/window/state/hooks/window.threshold.hook";
 
 export default function ReportSelectContainer() {
   const flags = useFlags();

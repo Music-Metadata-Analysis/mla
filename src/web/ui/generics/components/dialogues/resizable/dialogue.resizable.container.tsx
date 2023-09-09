@@ -1,7 +1,7 @@
 import Dialogue from "./dialogue.resizable.component";
 import dialogueSettings from "@src/config/dialogue";
-import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
+import useWindowThreshold from "@src/web/ui/window/state/hooks/window.threshold.hook";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { DialogueInlayComponentType } from "@src/web/ui/generics/types/components/dialogue.types";
 

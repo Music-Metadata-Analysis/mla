@@ -6,14 +6,14 @@ import DialogueContainer, {
 import { createSimpleComponent } from "@fixtures/react/simple";
 import dialogueSettings from "@src/config/dialogue";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockUseWindowThreshold from "@src/hooks/ui/__mocks__/window.threshold.hook.mock";
-import useWindowThreshold from "@src/hooks/ui/window.threshold.hook";
 import { mockUseRouter } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import mockUseWindowThreshold from "@src/web/ui/window/state/hooks/__mocks__/window.threshold.hook.mock";
+import useWindowThreshold from "@src/web/ui/window/state/hooks/window.threshold.hook";
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
-jest.mock("@src/hooks/ui/window.threshold.hook");
+jest.mock("@src/web/ui/window/state/hooks/window.threshold.hook");
 
 jest.mock("../dialogue.resizable.component", () =>
   require("@fixtures/react/child").createComponent("Dialogue")

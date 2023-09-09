@@ -1,5 +1,5 @@
-import useWindowThresholdCallback from "@src/hooks/ui/window.threshold.callback.hook";
 import useNavBar from "@src/web/navigation/navbar/state/controllers/navbar.controller.hook";
+import useWindowThresholdCallback from "@src/web/ui/window/state/hooks/window.threshold.callback.hook";
 
 export interface UseNavBarThresholdToggleInterface {
   threshold: number;
