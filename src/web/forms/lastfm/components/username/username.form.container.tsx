@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import UserNameForm from "./username.form.component";
 import { ids, fields } from "./username.form.identifiers";
 import lastfmSettings from "@src/config/lastfm";
-import useFormsController from "@src/hooks/controllers/forms.controller.hook";
 import useAuth from "@src/web/authentication/session/hooks/auth.hook";
+import useFormsController from "@src/web/forms/generics/state/controllers/forms.controller.hook";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
-import type { LastFMUserSearchInterface } from "@src/types/search/lastfm/search";
+import type { LastFMUserSearchInterface } from "@src/web/forms/lastfm/types/username.form.types";
 import type { FormikHelpers } from "formik";
 
 interface UserNameFormContainerProps {

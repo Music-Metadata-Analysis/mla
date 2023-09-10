@@ -4,9 +4,9 @@ import { flipCardReports } from "@cypress/fixtures/reports";
 import { authenticate } from "@cypress/fixtures/spec/auth.spec";
 import { setup } from "@cypress/fixtures/spec/setup.spec";
 import translations from "@locales/main.json";
-import { fields } from "@src/components/search/lastfm/forms/username/username.form.identifiers";
 import metrics from "@src/config/metrics";
 import routes from "@src/config/routes";
+import { fields } from "@src/web/forms/lastfm/components/username/username.form.identifiers";
 import { testIDs as feedBackTestIDs } from "@src/web/notifications/popups/components/feedback/feedback.popup.identifiers";
 
 describe("Feedback Dialogue", () => {

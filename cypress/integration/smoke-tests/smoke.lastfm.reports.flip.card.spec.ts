@@ -3,8 +3,8 @@ import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { flipCardReports } from "@cypress/fixtures/reports";
 import { authenticate } from "@cypress/fixtures/spec/auth.spec";
 import { setup } from "@cypress/fixtures/spec/setup.spec";
-import { fields } from "@src/components/search/lastfm/forms/username/username.form.identifiers";
 import routes from "@src/config/routes";
+import { fields } from "@src/web/forms/lastfm/components/username/username.form.identifiers";
 
 describe("Flip Card Reports", () => {
   const authorizationCookieName = getAuthorizationCookieName();

@@ -5,8 +5,8 @@ import { authenticate } from "@cypress/fixtures/spec/auth.spec";
 import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.spec";
 import checkNavBarInputToggle from "@cypress/fixtures/spec/responsiveness/navbar.visibility.spec";
 import { setup } from "@cypress/fixtures/spec/setup.spec";
-import { fields } from "@src/components/search/lastfm/forms/username/username.form.identifiers";
 import routes from "@src/config/routes";
+import { fields } from "@src/web/forms/lastfm/components/username/username.form.identifiers";
 
 describe("LastFM Search Dialogues (Enabled)", () => {
   const authorizationCookieName = getAuthorizationCookieName();
