@@ -1,6 +1,4 @@
 import { render } from "@testing-library/react";
-import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
-import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
 import routes from "@src/config/routes";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Page, { getStaticProps } from "@src/pages/404";
@@ -10,6 +8,8 @@ import {
   mockUtilities,
 } from "@src/vendors/integrations/web.framework/__mocks__/vendor.ssr.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
+import ErrorBoundaryContainer from "@src/web/ui/errors/components/boundary/error.boundary.container";
+import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.display.container";
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
@@ -17,11 +17,12 @@ jest.mock("@src/vendors/integrations/web.framework/vendor.ssr");
 
 jest.mock("@src/vendors/integrations/web.framework/vendor");
 
-jest.mock("@src/components/errors/boundary/error.boundary.container", () =>
-  require("@fixtures/react/parent").createComponent("ErrorBoundary")
+jest.mock(
+  "@src/web/ui/errors/components/boundary/error.boundary.container",
+  () => require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
-jest.mock("@src/components/errors/display/error.display.container", () =>
+jest.mock("@src/web/ui/errors/components/display/error.display.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorDisplayContainer")
 );
 

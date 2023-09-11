@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react";
-import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import routes from "@src/config/routes";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Page, { getServerSideProps } from "@src/pages/legal/privacy";
@@ -9,11 +8,13 @@ import {
 } from "@src/vendors/integrations/web.framework/__mocks__/vendor.ssr.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
 import PrivacyContainer from "@src/web/content/privacy/components/privacy.container";
+import ErrorBoundaryContainer from "@src/web/ui/errors/components/boundary/error.boundary.container";
 
 jest.mock("@src/vendors/integrations/web.framework/vendor.ssr");
 
-jest.mock("@src/components/errors/boundary/error.boundary.container", () =>
-  require("@fixtures/react/parent").createComponent("ErrorBoundary")
+jest.mock(
+  "@src/web/ui/errors/components/boundary/error.boundary.container",
+  () => require("@fixtures/react/parent").createComponent("ErrorBoundary")
 );
 
 jest.mock("@src/web/content/privacy/components/privacy.container", () =>

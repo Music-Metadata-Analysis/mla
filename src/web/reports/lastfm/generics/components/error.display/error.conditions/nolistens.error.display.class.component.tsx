@@ -1,5 +1,5 @@
 import ErrorBase from "./bases/error.base.class.component";
-import ErrorDisplayContainer from "@src/components/errors/display/error.display.container";
+import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.display.container";
 
 class NoListensErrorConditionalDisplay<
   ReportType,

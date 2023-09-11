@@ -1,13 +1,13 @@
 import { render } from "@testing-library/react";
 import ErrorHandlerFactory from "../error.handler.factory.class";
-import ErrorHandlerContainer from "@src/components/errors/boundary/handler/error.handler.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Events from "@src/web/analytics/collection/events/definitions";
+import ErrorHandlerContainer from "@src/web/ui/errors/components/boundary/handler/error.handler.container";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type { ErrorVendorFallBackRenderProps } from "@src/vendors/types/integrations/errors/vendor.types";
 
 jest.mock(
-  "@src/components/errors/boundary/handler/error.handler.container",
+  "@src/web/ui/errors/components/boundary/handler/error.handler.container",
   () =>
     require("@fixtures/react/child").createComponent("ErrorHandlerContainer")
 );

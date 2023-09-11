@@ -1,9 +1,9 @@
 import { useState, useEffect, FC } from "react";
-import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import settings from "@src/config/lastfm";
 import routes from "@src/config/routes";
 import Events from "@src/web/analytics/collection/events/definitions";
 import useLastFM from "@src/web/reports/lastfm/generics/state/hooks/lastfm.hook";
+import ErrorBoundaryContainer from "@src/web/ui/errors/components/boundary/error.boundary.container";
 import type { userHookAsLastFM } from "@src/types/user/hook.types";
 
 interface LastFMReportPage<T extends userHookAsLastFM> {

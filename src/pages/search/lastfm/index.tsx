@@ -1,9 +1,9 @@
-import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import SelectContainer from "@src/components/search/lastfm/select/select.report.container";
 import routes from "@src/config/routes";
 import { voidFn } from "@src/utilities/generics/voids";
 import { webFrameworkVendorSSR } from "@src/vendors/integrations/web.framework/vendor.ssr";
 import Events from "@src/web/analytics/collection/events/definitions";
+import ErrorBoundaryContainer from "@src/web/ui/errors/components/boundary/error.boundary.container";
 
 export default function SplashPage() {
   return (

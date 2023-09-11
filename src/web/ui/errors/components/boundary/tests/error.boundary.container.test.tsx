@@ -3,13 +3,13 @@ import ErrorBoundaryContainer, {
   ErrorBoundaryContainerProps,
 } from "../error.boundary.container";
 import { createSimpleComponent } from "@fixtures/react/simple";
-import ErrorHandlerFactory from "@src/components/errors/boundary/handler/factory/error.handler.factory.class";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockErrorBoundary } from "@src/vendors/integrations/errors/__mocks__/vendor.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
+import ErrorHandlerFactory from "@src/web/ui/errors/components/boundary/handler/factory/error.handler.factory.class";
 
 jest.mock(
-  "@src/components/errors/boundary/handler/factory/error.handler.factory.class"
+  "@src/web/ui/errors/components/boundary/handler/factory/error.handler.factory.class"
 );
 
 jest.mock("@src/vendors/integrations/errors/vendor");

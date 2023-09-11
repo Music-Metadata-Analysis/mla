@@ -1,4 +1,4 @@
-import ErrorHandlerContainer from "@src/components/errors/boundary/handler/error.handler.container";
+import ErrorHandlerContainer from "@src/web/ui/errors/components/boundary/handler/error.handler.container";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type { ErrorVendorFallBackRenderProps } from "@src/vendors/types/integrations/errors/vendor.types";
 

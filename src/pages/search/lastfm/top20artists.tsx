@@ -1,10 +1,10 @@
-import ErrorBoundaryContainer from "@src/components/errors/boundary/error.boundary.container";
 import SearchContainer from "@src/components/search/lastfm/search.container";
 import routes from "@src/config/routes";
 import { voidFn } from "@src/utilities/generics/voids";
 import { webFrameworkVendorSSR } from "@src/vendors/integrations/web.framework/vendor.ssr";
 import Events from "@src/web/analytics/collection/events/definitions";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
+import ErrorBoundaryContainer from "@src/web/ui/errors/components/boundary/error.boundary.container";
 
 export default function SearchLastFMTop20Artists() {
   const { t } = useTranslation("lastfm");

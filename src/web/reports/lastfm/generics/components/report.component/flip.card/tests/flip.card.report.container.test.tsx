@@ -42,7 +42,7 @@ jest.mock(
   () => require("@fixtures/react/parent").createComponent("BillBoardSpinner")
 );
 
-jest.mock("@src/components/errors/display/error.display.component", () =>
+jest.mock("@src/web/ui/errors/components/display/error.display.component", () =>
   require("@fixtures/react/parent").createComponent("ErrorDisplay")
 );
 
