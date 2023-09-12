@@ -1,13 +1,13 @@
 import { waitFor, screen, render } from "@testing-library/react";
 import ControllersRootProvider from "../controllers/controllers.root.provider";
 import RootProvider from "../root.provider";
-import HeaderContainer from "@src/components/header/header.container";
 import { popUps } from "@src/config/popups";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { mockAuthProvider } from "@src/vendors/integrations/auth/__mocks__/vendor.mock";
 import { flagVendor } from "@src/vendors/integrations/flags/vendor";
 import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 import AnalyticsProvider from "@src/web/analytics/collection/state/providers/analytics.provider";
+import HeaderContainer from "@src/web/content/header/components/header.container";
 import MetricsProvider from "@src/web/metrics/collection/state/providers/metrics.provider";
 import ReportProvider from "@src/web/reports/generics/state/providers/report.provider";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
@@ -19,7 +19,7 @@ jest.mock("@src/vendors/integrations/flags/vendor");
 
 jest.mock("@src/vendors/integrations/ui.framework/vendor");
 
-jest.mock("@src/components/header/header.container", () =>
+jest.mock("@src/web/content/header/components/header.container", () =>
   require("@fixtures/react/parent").createComponent("HeaderContainer")
 );
 

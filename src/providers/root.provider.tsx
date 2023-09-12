@@ -1,12 +1,12 @@
 import ControllersProvider from "./controllers/controllers.root.provider";
-import HeaderContainer, {
-  HeaderContainerProps,
-} from "@src/components/header/header.container";
 import { popUps } from "@src/config/popups";
 import { authVendor } from "@src/vendors/integrations/auth/vendor";
 import { flagVendor } from "@src/vendors/integrations/flags/vendor";
 import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 import AnalyticsProvider from "@src/web/analytics/collection/state/providers/analytics.provider";
+import HeaderContainer, {
+  HeaderContainerProps,
+} from "@src/web/content/header/components/header.container";
 import MetricsProvider from "@src/web/metrics/collection/state/providers/metrics.provider";
 import UserProvider from "@src/web/reports/generics/state/providers/report.provider";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";

@@ -9,11 +9,11 @@ import { localeVendor } from "@src/vendors/integrations/locale/vendor";
 import ConsentContainer from "@src/web/analytics/consent/components/consent.container";
 import NavBarContainer from "@src/web/navigation/navbar/components/navbar.container";
 import RootPopUpContainer from "@src/web/notifications/popups/components/root.popup.container";
-import type { HeaderContainerProps } from "@src/components/header/header.container";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 import type { UIVendorStateType } from "@src/vendors/types/integrations/ui.framework/vendor.types";
 import type { WebFrameworkVendorAppComponentProps } from "@src/vendors/types/integrations/web.framework/vendor.types";
+import type { HeaderContainerProps } from "@src/web/content/header/components/header.container";
 
 export interface MLAProps {
   cookies: UIVendorStateType;
