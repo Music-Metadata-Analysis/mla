@@ -1,7 +1,7 @@
 import NavBarRootContainer from "./root/navbar.root.container";
-import Condition from "@src/components/condition/condition.component";
 import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 import useNavBarLayoutController from "@src/web/navigation/navbar/state/controllers/navbar.layout.controller.hook";
+import Condition from "@src/web/ui/generics/components/condition/condition.component";
 
 interface NavBarProps {
   config: { [index: string]: string };

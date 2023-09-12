@@ -1,6 +1,6 @@
 import { Spinner } from "@chakra-ui/react";
 import { testIDs } from "./navbar.spinner.identifiers";
-import Condition from "@src/components/condition/condition.component";
+import Condition from "@src/web/ui/generics/components/condition/condition.component";
 
 interface SpinnerProps {
   whileTrue: boolean;

@@ -1,4 +1,3 @@
-import Condition from "@src/components/condition/condition.component";
 import routes from "@src/config/routes";
 import { voidFn } from "@src/utilities/generics/voids";
 import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
@@ -7,6 +6,7 @@ import Events from "@src/web/analytics/collection/events/definitions";
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
 import ErrorBoundaryContainer from "@src/web/ui/errors/components/boundary/error.boundary.container";
 import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.display.container";
+import Condition from "@src/web/ui/generics/components/condition/condition.component";
 
 export default function Custom404() {
   const router = useRouter();

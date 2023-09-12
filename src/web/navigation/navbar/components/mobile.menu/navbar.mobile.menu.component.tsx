@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { testIDs } from "./navbar.mobile.menu.identifiers";
-import Condition from "@src/components/condition/condition.component";
 import NavBarOptions from "@src/web/navigation/navbar/components/options/navbar.options.component";
+import Condition from "@src/web/ui/generics/components/condition/condition.component";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { ButtonClickHandlerType } from "@src/web/analytics/collection/types/components/handler.types";
 import type { NavBarControllerHookType } from "@src/web/navigation/navbar/state/controllers/navbar.layout.controller.hook";

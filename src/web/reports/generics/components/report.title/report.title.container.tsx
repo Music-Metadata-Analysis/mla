@@ -1,5 +1,5 @@
 import ReportTitle from "./report.title.component";
-import Condition from "@src/components/condition/condition.component";
+import Condition from "@src/web/ui/generics/components/condition/condition.component";
 
 interface ReportTitleContainerProps {
   title: string;
