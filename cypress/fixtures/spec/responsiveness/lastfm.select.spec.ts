@@ -1,7 +1,7 @@
 import main from "@locales/main.json";
-import { ids } from "@src/components/search/lastfm/select/select.report.identifiers";
 import config from "@src/config/lastfm";
 import routes from "@src/config/routes";
+import { ids } from "@src/web/navigation/lastfm/select.report/components/select.report.identifiers";
 
 const checkSelectIndicatorToggle = ({
   reportConfig,
