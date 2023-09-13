@@ -1,4 +1,4 @@
-import ControllersProvider from "./controllers/controllers.root.provider";
+import ControllersProvider from "./controllers.provider";
 import { popUps } from "@src/config/popups";
 import { authVendor } from "@src/vendors/integrations/auth/vendor";
 import { flagVendor } from "@src/vendors/integrations/flags/vendor";

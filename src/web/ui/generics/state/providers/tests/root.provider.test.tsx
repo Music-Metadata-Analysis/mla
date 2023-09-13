@@ -1,5 +1,5 @@
 import { waitFor, screen, render } from "@testing-library/react";
-import ControllersRootProvider from "../controllers/controllers.root.provider";
+import ControllersRootProvider from "../controllers.provider";
 import RootProvider from "../root.provider";
 import { popUps } from "@src/config/popups";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -28,7 +28,7 @@ jest.mock(
   () => require("@fixtures/react/parent").createComponent("AnalyticsProvider")
 );
 
-jest.mock("@src/providers/controllers/controllers.root.provider.tsx", () =>
+jest.mock("../controllers.provider", () =>
   require("@fixtures/react/parent").createComponent("ControllersRootProvider")
 );
 

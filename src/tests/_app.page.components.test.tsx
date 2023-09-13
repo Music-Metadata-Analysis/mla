@@ -4,7 +4,6 @@ import { createSimpleComponent } from "@fixtures/react/simple";
 import NavConfig from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import MLA, { getInitialProps, MLAProps } from "@src/pages/_app";
-import RootProvider from "@src/providers/root.provider";
 import { normalizeUndefined } from "@src/utilities/generics/voids";
 import { mockAuthVendorSSRClient } from "@src/vendors/integrations/auth/__mocks__/vendor.ssr.mock";
 import { authVendorSSR } from "@src/vendors/integrations/auth/vendor.ssr";
@@ -14,6 +13,7 @@ import { mockLocaleVendorHOCIdentifier } from "@src/vendors/integrations/locale/
 import ConsentContainer from "@src/web/analytics/consent/components/consent.container";
 import NavBarContainer from "@src/web/navigation/navbar/components/navbar.container";
 import RootPopUpContainer from "@src/web/notifications/popups/components/root.popup.container";
+import RootProvider from "@src/web/ui/generics/state/providers/root.provider";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 import type { WebFrameworkVendorAppComponentProps } from "@src/vendors/types/integrations/web.framework/vendor.types";
@@ -30,7 +30,7 @@ jest.mock("@src/utilities/generics/voids");
 
 jest.mock("next/app");
 
-jest.mock("@src/providers/root.provider", () =>
+jest.mock("@src/web/ui/generics/state/providers/root.provider", () =>
   require("@fixtures/react/parent").createComponent("RootProvider")
 );
 

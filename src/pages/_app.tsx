@@ -1,7 +1,6 @@
 import "@src/web/ui/css/root.css";
 import App, { AppContext } from "next/app";
 import NavConfig from "@src/config/navbar";
-import RootProvider from "@src/providers/root.provider";
 import { normalizeUndefined } from "@src/utilities/generics/voids";
 import { authVendorSSR } from "@src/vendors/integrations/auth/vendor.ssr";
 import { flagVendorSSR } from "@src/vendors/integrations/flags/vendor.ssr";
@@ -9,6 +8,7 @@ import { localeVendor } from "@src/vendors/integrations/locale/vendor";
 import ConsentContainer from "@src/web/analytics/consent/components/consent.container";
 import NavBarContainer from "@src/web/navigation/navbar/components/navbar.container";
 import RootPopUpContainer from "@src/web/notifications/popups/components/root.popup.container";
+import RootProvider from "@src/web/ui/generics/state/providers/root.provider";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 import type { UIVendorStateType } from "@src/vendors/types/integrations/ui.framework/vendor.types";

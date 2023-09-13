@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ControllerRootProvider from "../controllers.root.provider";
+import ControllerRootProvider from "../controllers.provider";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import NavBarControllerProvider from "@src/web/navigation/navbar/state/providers/navbar.provider";
 import ImagesControllerProvider from "@src/web/ui/images/state/providers/images.provider";
