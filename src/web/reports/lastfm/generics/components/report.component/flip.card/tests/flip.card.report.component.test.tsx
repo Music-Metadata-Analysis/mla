@@ -17,11 +17,11 @@ import {
   mockImageUrl,
   mockGetReportArtWork,
   MockDrawerComponent,
-  MockReportClass,
-  MockUserStateEncapsulation,
+  MockQueryClass,
+  MockReportStateEncapsulation,
 } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.last.fm.query.class";
 import mockImageController from "@src/web/ui/images/state/controllers/__mocks__/images.controller.hook.mock";
-import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/response.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Flex"])
@@ -39,7 +39,7 @@ jest.mock(
 
 describe("FlipCardReport", () => {
   let currentProps: FlipCardReportProps<
-    MockUserStateEncapsulation,
+    MockReportStateEncapsulation,
     LastFMTopAlbumsReportResponseInterface["albums"]
   >;
 
@@ -96,16 +96,16 @@ describe("FlipCardReport", () => {
   ];
 
   const mockInitialProps: FlipCardReportProps<
-    MockUserStateEncapsulation,
+    MockReportStateEncapsulation,
     LastFMTopAlbumsReportResponseInterface["albums"]
   > = {
     imageIsLoaded: mockImageController.load,
     flipCardController: mockFlipCardController,
-    reportStateInstance: new MockUserStateEncapsulation(
+    reportStateInstance: new MockReportStateEncapsulation(
       mockReportState,
       new MockUseTranslation("lastfm").t
     ),
-    report: new MockReportClass(),
+    query: new MockQueryClass(),
     t: mockT,
   };
 
@@ -116,7 +116,7 @@ describe("FlipCardReport", () => {
 
   const resetProps = () => {
     currentProps = { ...mockInitialProps };
-    currentProps.reportStateInstance.userProperties.data.report.albums =
+    currentProps.reportStateInstance.reportProperties.data.report.albums =
       mockReportStateData;
   };
 
@@ -173,7 +173,7 @@ describe("FlipCardReport", () => {
         MockDrawerComponent,
         {
           artWorkAltTranslatedText: mockT(
-            currentProps.report.getDrawerArtWorkAltTextTranslationKey()
+            currentProps.query.getDrawerArtWorkAltTextTranslationKey()
           ),
           fallbackImage: "/images/static.gif",
           isOpen: currentProps.flipCardController.drawer.state,
@@ -194,13 +194,13 @@ describe("FlipCardReport", () => {
         title: _t(
           (
             lastfmTranslations[
-              currentProps.report.getReportTranslationKey()
+              currentProps.query.getReportTranslationKey()
             ] as {
               title: string;
             }
           ).title
         ),
-        userName: currentProps.reportStateInstance.userProperties.userName,
+        userName: currentProps.reportStateInstance.reportProperties.userName,
       });
     });
   };
@@ -209,11 +209,11 @@ describe("FlipCardReport", () => {
     describe("for each report data element passed in the ReportStateInstance", () => {
       it("should call the getReportArtwork method", () => {
         expect(mockGetReportArtWork).toBeCalledTimes(
-          currentProps.reportStateInstance.userProperties.data.report.albums
+          currentProps.reportStateInstance.reportProperties.data.report.albums
             .length
         );
 
-        currentProps.reportStateInstance.userProperties.data.report.albums.forEach(
+        currentProps.reportStateInstance.reportProperties.data.report.albums.forEach(
           (_, elementIndex) => {
             expect(mockGetReportArtWork).toBeCalledWith(elementIndex, "large");
           }
@@ -222,11 +222,11 @@ describe("FlipCardReport", () => {
 
       it("should render a FlipCard component", () => {
         expect(FlipCardContainer).toBeCalledTimes(
-          currentProps.reportStateInstance.userProperties.data.report.albums
+          currentProps.reportStateInstance.reportProperties.data.report.albums
             .length
         );
 
-        currentProps.reportStateInstance.userProperties.data.report.albums.forEach(
+        currentProps.reportStateInstance.reportProperties.data.report.albums.forEach(
           (_, elementIndex) => {
             checkMockCall(
               FlipCardContainer,
@@ -242,7 +242,7 @@ describe("FlipCardReport", () => {
                 noArtWorkText: _t(
                   (
                     lastfmTranslations[
-                      currentProps.report.getReportTranslationKey()
+                      currentProps.query.getReportTranslationKey()
                     ] as {
                       noArtWork: string;
                     }
@@ -259,7 +259,7 @@ describe("FlipCardReport", () => {
 
   describe("when the report is ready to view", () => {
     beforeEach(() => {
-      currentProps.reportStateInstance.userProperties.ready = true;
+      currentProps.reportStateInstance.reportProperties.ready = true;
 
       arrange();
     });
@@ -277,7 +277,7 @@ describe("FlipCardReport", () => {
 
   describe("when the report is NOT ready to view", () => {
     beforeEach(() => {
-      currentProps.reportStateInstance.userProperties.ready = false;
+      currentProps.reportStateInstance.reportProperties.ready = false;
 
       arrange();
     });

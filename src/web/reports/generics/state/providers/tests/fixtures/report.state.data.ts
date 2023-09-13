@@ -26,7 +26,7 @@ export const mockInitialReportData = {
   playcount: 0,
 };
 
-export const mockUserStateWithError = {
+export const mockReportStateWithError = {
   userName: "somebody",
   inProgress: false,
   ratelimited: true,

@@ -3,9 +3,9 @@ import ErrorBase from "../error.conditions/bases/error.base.class.component";
 import LastFMErrorDisplayContainer from "../error.display.container";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
-import MockStage2Report from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
-import type { LastFMUserStateBase } from "@src/types/user/state.types";
+import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import MockStage2Report from "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/tests/fixtures/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
+import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
@@ -18,9 +18,9 @@ jest.mock(
 jest.mock("../error.conditions/bases/error.base.class.component");
 
 describe("LastFMErrorDisplayContainer", () => {
-  let mockUserProperties: LastFMUserStateBase;
+  let mockReportProperties: LastFMReportStateBase;
 
-  const mockReport = new MockReportClass();
+  const mockQuery = new MockQueryClass();
   const MockChild = createSimpleComponent("MockChild");
   const MockError = createSimpleComponent("MockError");
 
@@ -29,12 +29,12 @@ describe("LastFMErrorDisplayContainer", () => {
   });
 
   const arrange = () => {
-    mockUserProperties = JSON.parse(JSON.stringify(MockStage2Report));
+    mockReportProperties = JSON.parse(JSON.stringify(MockStage2Report));
 
     render(
       <LastFMErrorDisplayContainer
-        userProperties={mockUserProperties}
-        report={mockReport}
+        reportProperties={mockReportProperties}
+        query={mockQuery}
       >
         <MockChild />
       </LastFMErrorDisplayContainer>
@@ -59,9 +59,9 @@ describe("LastFMErrorDisplayContainer", () => {
 
       (mockedComponent as jest.Mock).mock.calls.forEach((call) => {
         expect(call[0]).toStrictEqual({
-          report: mockReport,
+          query: mockQuery,
           router: mockRouterHook,
-          userProperties: mockUserProperties,
+          reportProperties: mockReportProperties,
         });
       });
     });

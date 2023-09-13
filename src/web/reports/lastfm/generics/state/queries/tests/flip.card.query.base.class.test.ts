@@ -1,28 +1,28 @@
 import {
-  MockReportClass,
-  MockUserStateEncapsulation,
+  MockQueryClass,
+  MockReportStateEncapsulation,
 } from "./implementations/concrete.last.fm.query.class";
-import FlipCardBaseReport from "../flip.card.query.base.class";
+import FlipCardAbstractBaseQuery from "../flip.card.query.base.class";
 import { InitialState } from "@src/web/reports/generics/state/providers/report.initial";
 import mockImageController from "@src/web/ui/images/state/controllers/__mocks__/images.controller.hook.mock";
-import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/response.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 
-describe(FlipCardBaseReport.name, () => {
-  let instance: FlipCardBaseReport<
-    MockUserStateEncapsulation,
+describe(FlipCardAbstractBaseQuery.name, () => {
+  let instance: FlipCardAbstractBaseQuery<
+    MockReportStateEncapsulation,
     LastFMTopAlbumsReportResponseInterface["albums"]
   >;
 
-  let mockUserState: MockUserStateEncapsulation["userProperties"];
+  let mockReportState: MockReportStateEncapsulation["reportProperties"];
 
   beforeEach(() => {
     jest.clearAllMocks();
 
-    mockUserState = JSON.parse(JSON.stringify(InitialState));
-    mockUserState.data.report.albums = [];
+    mockReportState = JSON.parse(JSON.stringify(InitialState));
+    mockReportState.data.report.albums = [];
   });
 
-  const arrange = () => (instance = new MockReportClass());
+  const arrange = () => (instance = new MockQueryClass());
 
   describe("when initialized with a concrete implementation", () => {
     beforeEach(() => arrange());
@@ -46,9 +46,12 @@ describe(FlipCardBaseReport.name, () => {
         beforeEach(() => {
           const controller = { ...mockImageController };
           controller.count = 4;
-          mockUserState.data.report.albums = [{ name: "one" }, { name: "two" }];
+          mockReportState.data.report.albums = [
+            { name: "one" },
+            { name: "two" },
+          ];
 
-          result = instance.queryIsImagesLoaded(mockUserState, controller);
+          result = instance.queryIsImagesLoaded(mockReportState, controller);
         });
 
         it("should return true", () => {
@@ -60,9 +63,12 @@ describe(FlipCardBaseReport.name, () => {
         beforeEach(() => {
           const controller = { ...mockImageController };
           controller.count = 0;
-          mockUserState.data.report.albums = [{ name: "one" }, { name: "two" }];
+          mockReportState.data.report.albums = [
+            { name: "one" },
+            { name: "two" },
+          ];
 
-          result = instance.queryIsImagesLoaded(mockUserState, controller);
+          result = instance.queryIsImagesLoaded(mockReportState, controller);
         });
 
         it("should return false", () => {
@@ -75,19 +81,19 @@ describe(FlipCardBaseReport.name, () => {
       let result: boolean;
 
       describe("when the report is ready", () => {
-        beforeEach(() => (mockUserState.ready = true));
+        beforeEach(() => (mockReportState.ready = true));
 
         describe("when the report has a username", () => {
-          beforeEach(() => (mockUserState.userName = "mockUser"));
+          beforeEach(() => (mockReportState.userName = "mockUser"));
 
           describe("when the report has user data", () => {
             beforeEach(() => {
-              mockUserState.data.report.albums = [
+              mockReportState.data.report.albums = [
                 { name: "one" },
                 { name: "two" },
               ];
 
-              result = instance.queryUserHasNoData(mockUserState);
+              result = instance.queryUserHasNoData(mockReportState);
             });
 
             it("should return false", () => {
@@ -97,9 +103,9 @@ describe(FlipCardBaseReport.name, () => {
 
           describe("when the report has NO user data", () => {
             beforeEach(() => {
-              mockUserState.data.report.albums = [];
+              mockReportState.data.report.albums = [];
 
-              result = instance.queryUserHasNoData(mockUserState);
+              result = instance.queryUserHasNoData(mockReportState);
             });
 
             it("should return true", () => {
@@ -109,16 +115,16 @@ describe(FlipCardBaseReport.name, () => {
         });
 
         describe("when the report does NOT have a username", () => {
-          beforeEach(() => (mockUserState.userName = null));
+          beforeEach(() => (mockReportState.userName = null));
 
           describe("when the report has user data", () => {
             beforeEach(() => {
-              mockUserState.data.report.albums = [
+              mockReportState.data.report.albums = [
                 { name: "one" },
                 { name: "two" },
               ];
 
-              result = instance.queryUserHasNoData(mockUserState);
+              result = instance.queryUserHasNoData(mockReportState);
             });
 
             it("should return false", () => {
@@ -128,9 +134,9 @@ describe(FlipCardBaseReport.name, () => {
 
           describe("when the report has NO user data", () => {
             beforeEach(() => {
-              mockUserState.data.report.albums = [];
+              mockReportState.data.report.albums = [];
 
-              result = instance.queryUserHasNoData(mockUserState);
+              result = instance.queryUserHasNoData(mockReportState);
             });
 
             it("should return false", () => {
@@ -141,19 +147,19 @@ describe(FlipCardBaseReport.name, () => {
       });
 
       describe("when the report is NOT ready", () => {
-        beforeEach(() => (mockUserState.ready = false));
+        beforeEach(() => (mockReportState.ready = false));
 
         describe("when the report has a username", () => {
-          beforeEach(() => (mockUserState.userName = "mockUser"));
+          beforeEach(() => (mockReportState.userName = "mockUser"));
 
           describe("when the report has user data", () => {
             beforeEach(() => {
-              mockUserState.data.report.albums = [
+              mockReportState.data.report.albums = [
                 { name: "one" },
                 { name: "two" },
               ];
 
-              result = instance.queryUserHasNoData(mockUserState);
+              result = instance.queryUserHasNoData(mockReportState);
             });
 
             it("should return false", () => {
@@ -163,9 +169,9 @@ describe(FlipCardBaseReport.name, () => {
 
           describe("when the report has NO user data", () => {
             beforeEach(() => {
-              mockUserState.data.report.albums = [];
+              mockReportState.data.report.albums = [];
 
-              result = instance.queryUserHasNoData(mockUserState);
+              result = instance.queryUserHasNoData(mockReportState);
             });
 
             it("should return false", () => {
@@ -175,16 +181,16 @@ describe(FlipCardBaseReport.name, () => {
         });
 
         describe("when the report does NOT have a username", () => {
-          beforeEach(() => (mockUserState.userName = null));
+          beforeEach(() => (mockReportState.userName = null));
 
           describe("when the report has user data", () => {
             beforeEach(() => {
-              mockUserState.data.report.albums = [
+              mockReportState.data.report.albums = [
                 { name: "one" },
                 { name: "two" },
               ];
 
-              result = instance.queryUserHasNoData(mockUserState);
+              result = instance.queryUserHasNoData(mockReportState);
             });
 
             it("should return false", () => {
@@ -194,9 +200,9 @@ describe(FlipCardBaseReport.name, () => {
 
           describe("when the report has NO user data", () => {
             beforeEach(() => {
-              mockUserState.data.report.albums = [];
+              mockReportState.data.report.albums = [];
 
-              result = instance.queryUserHasNoData(mockUserState);
+              result = instance.queryUserHasNoData(mockReportState);
             });
 
             it("should return false", () => {

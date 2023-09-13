@@ -1,10 +1,13 @@
-import getReducerStates from "./states/user.reducer.states";
+import getReducerStates from "./states/report.reducer.states";
 import reducerLoggingMiddleware from "@src/utilities/react/state/reducers/reducer.logger";
 import withMiddleware from "@src/utilities/react/state/reducers/reducer.middleware";
-import type { UserActionType } from "@src/types/user/action.types";
-import type { UserStateInterface } from "@src/types/user/state.types";
+import type { ReportActionType } from "@src/web/reports/generics/types/state/providers/report.action.types";
+import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 
-const userReducer = (state: UserStateInterface, action: UserActionType) => {
+const reportReducer = (
+  state: ReportStateInterface,
+  action: ReportActionType
+) => {
   let newState = state;
   getReducerStates().forEach((reducerStateClass) => {
     const reducerState = new reducerStateClass(newState, action);
@@ -14,7 +17,7 @@ const userReducer = (state: UserStateInterface, action: UserActionType) => {
 };
 
 const middlewares = [reducerLoggingMiddleware];
-export const UserReducer = withMiddleware<UserStateInterface, UserActionType>(
-  userReducer,
-  middlewares
-);
+export const ReportReducer = withMiddleware<
+  ReportStateInterface,
+  ReportActionType
+>(reportReducer, middlewares);

@@ -1,10 +1,10 @@
-import ReducerStateBaseClass from "../user.reducer.states.base.class";
-import type { UserStateInterface } from "@src/types/user/state.types";
+import ReportReducerStateBaseClass from "../report.reducer.states.base.class";
+import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 
-class ReducerDataPointTimeoutFetch extends ReducerStateBaseClass<"DataPointTimeoutFetch"> {
+class ReducerDataPointTimeoutFetch extends ReportReducerStateBaseClass<"DataPointTimeoutFetch"> {
   type = "DataPointTimeoutFetch" as const;
 
-  generateState(): UserStateInterface {
+  generateState(): ReportStateInterface {
     return {
       data: {
         integration: this.state.data.integration,

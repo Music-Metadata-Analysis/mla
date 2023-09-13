@@ -1,18 +1,18 @@
 import type translations from "@locales/lastfm.json";
-import type { userHookAsLastFM } from "@src/types/user/hook.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { IntegrationRequestType } from "@src/web/analytics/collection/types/analytics.types";
-import type BaseReportState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/user.state.base.class";
+import type LastFMReportBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/bases/lastfm.report.encapsulation.base.class";
+import type { reportHookAsLastFM } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 import type { LastFMReportStateQueryInterface } from "@src/web/reports/lastfm/generics/types/state/queries/base.types";
 import type { FC } from "react";
 
 export default abstract class LastFMReportQueryAbstractBaseClass<
-  ReportState extends BaseReportState,
+  ReportStateEncapsulation extends LastFMReportBaseStateEncapsulation,
   CompletedReportDataType,
   DrawerComponentProps
 > implements
     LastFMReportStateQueryInterface<
-      ReportState,
+      ReportStateEncapsulation,
       CompletedReportDataType,
       DrawerComponentProps
     >
@@ -21,10 +21,12 @@ export default abstract class LastFMReportQueryAbstractBaseClass<
   protected abstract drawerComponent: FC<DrawerComponentProps>;
   protected abstract encapsulationClass:
     | (new (
-        reportProperties: ReportState["userProperties"],
+        reportProperties: ReportStateEncapsulation["reportProperties"],
         t: tFunctionType
-      ) => ReportState)
-    | (new (reportProperties: ReportState["userProperties"]) => ReportState);
+      ) => ReportStateEncapsulation)
+    | (new (
+        reportProperties: ReportStateEncapsulation["reportProperties"]
+      ) => ReportStateEncapsulation);
   protected abstract hookMethod:
     | "playCountByArtist"
     | "top20albums"
@@ -43,18 +45,18 @@ export default abstract class LastFMReportQueryAbstractBaseClass<
   }
 
   getEncapsulatedReportState(
-    reportProperties: ReportState["userProperties"],
+    reportProperties: ReportStateEncapsulation["reportProperties"],
     t?: tFunctionType
   ) {
     if (t) {
       return new (this.encapsulationClass as new (
-        reportProperties: ReportState["userProperties"],
+        reportProperties: ReportStateEncapsulation["reportProperties"],
         t: tFunctionType
-      ) => ReportState)(reportProperties, t);
+      ) => ReportStateEncapsulation)(reportProperties, t);
     } else {
       return new (this.encapsulationClass as new (
-        reportProperties: ReportState["userProperties"]
-      ) => ReportState)(reportProperties);
+        reportProperties: ReportStateEncapsulation["reportProperties"]
+      ) => ReportStateEncapsulation)(reportProperties);
     }
   }
 
@@ -70,7 +72,9 @@ export default abstract class LastFMReportQueryAbstractBaseClass<
     return this.translationKey;
   }
 
-  queryIsDataReady(reportProperties: ReportState["userProperties"]) {
+  queryIsDataReady(
+    reportProperties: ReportStateEncapsulation["reportProperties"]
+  ) {
     if (reportProperties.inProgress) return false;
     if (reportProperties.ready) return false;
     if (reportProperties.error) return false;
@@ -78,14 +82,14 @@ export default abstract class LastFMReportQueryAbstractBaseClass<
   }
 
   abstract queryUserHasNoData(
-    reportProperties: ReportState["userProperties"]
+    reportProperties: ReportStateEncapsulation["reportProperties"]
   ): boolean;
 
   abstract getReportData(
-    reportProperties: ReportState["userProperties"]
+    reportProperties: ReportStateEncapsulation["reportProperties"]
   ): CompletedReportDataType;
 
-  startDataFetch(user: userHookAsLastFM, userName: string) {
+  startDataFetch(user: reportHookAsLastFM, userName: string) {
     user[this.hookMethod](userName);
   }
 }

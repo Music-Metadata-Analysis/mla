@@ -1,15 +1,14 @@
 import {
-  MockReportClass,
+  MockQueryClass,
   MockDrawerComponent,
 } from "./implementations/concrete.sunburst.query.class";
+import SunBurstBaseQuery from "../sunburst.query.base.class";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
-import MockStage2Report from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
-import PlayCountByArtistState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
 import SunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import MockCompleteReport1 from "@src/web/reports/lastfm/generics/components/report.component/sunburst/translator/tests/states/state.data.set.1.json";
 import SunBurstStateToChartDataTranslator from "@src/web/reports/lastfm/generics/components/report.component/sunburst/translator/translator.class";
-import type SunBurstBaseReport from "../sunburst.query.base.class";
-import type { LastFMUserStateBase } from "@src/types/user/state.types";
+import ConcreteLastFMReportSunBurstStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/tests/implementations/concrete.lastfm.report.encapsulation.sunburst.class";
+import MockStage2Report from "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/tests/fixtures/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
 import type {
   d3Node,
   SunBurstData,
@@ -18,8 +17,9 @@ import type { LastFMSunBurstDrawerInterface } from "@src/web/reports/lastfm/gene
 import type {
   LastFMAggregateReportResponseInterface,
   LastFMAggregateReportOperationType,
-} from "@src/web/reports/lastfm/generics/types/state/aggregate.report.types";
-import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.artists/types/state/aggregate.report.types";
+} from "@src/web/reports/lastfm/generics/types/state/lastfm.aggregate.report.types";
+import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
+import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.by.artist/types/state/aggregate.report.types";
 import type { BillBoardProgressBarDetails } from "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import type { FC } from "react";
 
@@ -27,9 +27,9 @@ jest.mock(
   "@src/web/reports/lastfm/generics/components/report.component/sunburst/translator/translator.class"
 );
 
-describe("SunBurstBaseReport", () => {
-  let instance: SunBurstBaseReport<PlayCountByArtistState>;
-  let mockUserState: LastFMUserStateBase;
+describe(SunBurstBaseQuery.name, () => {
+  let instance: SunBurstBaseQuery<ConcreteLastFMReportSunBurstStateEncapsulation>;
+  let mockReportState: LastFMReportStateBase;
 
   const mockT = new MockUseTranslation("sunburst").t;
   const mockTranslatedRemainderKey = "mockTranslatedRemainderKey";
@@ -37,18 +37,18 @@ describe("SunBurstBaseReport", () => {
   describe("When instantiated with a concrete implementation", () => {
     beforeEach(() => {
       jest.clearAllMocks();
-      instance = new MockReportClass();
-      mockUserState = JSON.parse(JSON.stringify(MockStage2Report));
+      instance = new MockQueryClass();
+      mockReportState = JSON.parse(JSON.stringify(MockStage2Report));
     });
 
-    const getUserState = () =>
-      mockUserState.data.report
+    const getReportState = () =>
+      mockReportState.data.report
         .playCountByArtist as LastFMAggregateReportResponseInterface<
         PlayCountByArtistReportInterface[]
       >;
 
-    const getUserStateOperation = () =>
-      getUserState().status.operation as LastFMAggregateReportOperationType;
+    const getReportStateOperation = () =>
+      getReportState().status.operation as LastFMAggregateReportOperationType;
 
     describe("getDrawerComponent", () => {
       let received: FC<LastFMSunBurstDrawerInterface>;
@@ -77,19 +77,21 @@ describe("SunBurstBaseReport", () => {
       });
     });
 
-    describe("getEncapsulatedUserState", () => {
-      let received: PlayCountByArtistState;
+    describe("getEncapsulatedReportState", () => {
+      let received: ConcreteLastFMReportSunBurstStateEncapsulation;
 
       beforeEach(
-        () => (received = instance.getEncapsulatedReportState(mockUserState))
+        () => (received = instance.getEncapsulatedReportState(mockReportState))
       );
 
       it("should be an instance of PlayCountByArtistState", () => {
-        expect(received).toBeInstanceOf(PlayCountByArtistState);
+        expect(received).toBeInstanceOf(
+          ConcreteLastFMReportSunBurstStateEncapsulation
+        );
       });
 
-      it("should contain the expected userProperties ", () => {
-        expect(received.userProperties).toStrictEqual(mockUserState);
+      it("should contain the expected reportProperties ", () => {
+        expect(received.reportProperties).toStrictEqual(mockReportState);
       });
     });
 
@@ -128,10 +130,10 @@ describe("SunBurstBaseReport", () => {
 
       describe("with total steps as 0", () => {
         beforeEach(() => {
-          getUserState().status.complete = false;
-          getUserState().status.steps_total = 0;
-          getUserState().status.steps_complete = 0;
-          received = instance.getProgressPercentage(mockUserState);
+          getReportState().status.complete = false;
+          getReportState().status.steps_total = 0;
+          getReportState().status.steps_complete = 0;
+          received = instance.getProgressPercentage(mockReportState);
         });
 
         it("should equal 0", () => {
@@ -141,10 +143,10 @@ describe("SunBurstBaseReport", () => {
 
       describe("with total steps as 50, and completed as 25", () => {
         beforeEach(() => {
-          getUserState().status.complete = false;
-          getUserState().status.steps_total = 50;
-          getUserState().status.steps_complete = 25;
-          received = instance.getProgressPercentage(mockUserState);
+          getReportState().status.complete = false;
+          getReportState().status.steps_total = 50;
+          getReportState().status.steps_complete = 25;
+          received = instance.getProgressPercentage(mockReportState);
         });
 
         it("should equal 50", () => {
@@ -154,8 +156,8 @@ describe("SunBurstBaseReport", () => {
 
       describe("with the report marked as complete", () => {
         beforeEach(() => {
-          getUserState().status.complete = true;
-          received = instance.getProgressPercentage(mockUserState);
+          getReportState().status.complete = true;
+          received = instance.getProgressPercentage(mockReportState);
         });
 
         it("should equal 100", () => {
@@ -169,8 +171,8 @@ describe("SunBurstBaseReport", () => {
 
       describe("with no operational details attached", () => {
         beforeEach(() => {
-          delete getUserState().status.operation;
-          received = instance.getProgressDetails(mockUserState, mockT);
+          delete getReportState().status.operation;
+          received = instance.getProgressDetails(mockReportState, mockT);
         });
 
         it("should return the expected details", () => {
@@ -181,16 +183,16 @@ describe("SunBurstBaseReport", () => {
 
       describe("with valid operational details attached to the user state", () => {
         beforeEach(() => {
-          getUserState().status.complete = false;
-          getUserStateOperation().type = "Top Artists";
-          getUserStateOperation().resource = "The Cure";
-          received = instance.getProgressDetails(mockUserState, mockT);
+          getReportState().status.complete = false;
+          getReportStateOperation().type = "Top Artists";
+          getReportStateOperation().resource = "The Cure";
+          received = instance.getProgressDetails(mockReportState, mockT);
         });
 
         it("should return the expected details", () => {
-          expect(received.resource).toBe(getUserStateOperation().resource);
+          expect(received.resource).toBe(getReportStateOperation().resource);
           expect(received.type).toBe(
-            mockT(`detailTypes.${getUserStateOperation().type}`)
+            mockT(`detailTypes.${getReportStateOperation().type}`)
           );
         });
       });
@@ -211,7 +213,7 @@ describe("SunBurstBaseReport", () => {
         beforeEach(() => {
           mockConvert.mockReturnValueOnce({ mock: "return_value" });
           result = instance.getSunBurstData(
-            MockCompleteReport1 as LastFMUserStateBase,
+            MockCompleteReport1 as LastFMReportStateBase,
             "Top Artists",
             mockTranslatedRemainderKey
           );
@@ -234,7 +236,7 @@ describe("SunBurstBaseReport", () => {
               name: "Top Artists",
               value: MockCompleteReport1.data.report.playcount,
             },
-            instance.getReportData(MockCompleteReport1 as LastFMUserStateBase)
+            instance.getReportData(MockCompleteReport1 as LastFMReportStateBase)
               .content,
             instance.getEntityTopLevel()
           );
@@ -251,23 +253,23 @@ describe("SunBurstBaseReport", () => {
 
       describe("when an api request is NOT in progress", () => {
         beforeEach(() => {
-          mockUserState.inProgress = false;
+          mockReportState.inProgress = false;
         });
 
         describe("when the report is complete", () => {
           beforeEach(() => {
-            getUserState().status.complete = true;
+            getReportState().status.complete = true;
           });
 
           describe("when the report is not ready", () => {
             beforeEach(() => {
-              mockUserState.ready = false;
+              mockReportState.ready = false;
             });
 
             describe("when the report has an error", () => {
               beforeEach(() => {
-                mockUserState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -277,8 +279,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report has NO error", () => {
               beforeEach(() => {
-                mockUserState.error = null;
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -289,13 +291,13 @@ describe("SunBurstBaseReport", () => {
 
           describe("when the report is ready", () => {
             beforeEach(() => {
-              mockUserState.ready = true;
+              mockReportState.ready = true;
             });
 
             describe("when the report has an error", () => {
               beforeEach(() => {
-                mockUserState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -305,8 +307,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report has NO error", () => {
               beforeEach(() => {
-                mockUserState.error = null;
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return true", () => {
@@ -318,18 +320,18 @@ describe("SunBurstBaseReport", () => {
 
         describe("when the report is NOT complete", () => {
           beforeEach(() => {
-            getUserState().status.complete = false;
+            getReportState().status.complete = false;
           });
 
           describe("when the report is not ready", () => {
             beforeEach(() => {
-              mockUserState.ready = false;
+              mockReportState.ready = false;
             });
 
             describe("when the report has an error", () => {
               beforeEach(() => {
-                mockUserState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -339,8 +341,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report has NO error", () => {
               beforeEach(() => {
-                mockUserState.error = null;
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -351,13 +353,13 @@ describe("SunBurstBaseReport", () => {
 
           describe("when the report is ready", () => {
             beforeEach(() => {
-              mockUserState.ready = true;
+              mockReportState.ready = true;
             });
 
             describe("when the report has an error", () => {
               beforeEach(() => {
-                mockUserState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -367,8 +369,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report has NO error", () => {
               beforeEach(() => {
-                mockUserState.error = null;
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return true", () => {
@@ -381,23 +383,23 @@ describe("SunBurstBaseReport", () => {
 
       describe("when an api request is in progress", () => {
         beforeEach(() => {
-          mockUserState.inProgress = true;
+          mockReportState.inProgress = true;
         });
 
         describe("when the report is complete", () => {
           beforeEach(() => {
-            getUserState().status.complete = true;
+            getReportState().status.complete = true;
           });
 
           describe("when the report is not ready", () => {
             beforeEach(() => {
-              mockUserState.ready = false;
+              mockReportState.ready = false;
             });
 
             describe("when the report has an error", () => {
               beforeEach(() => {
-                mockUserState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -407,8 +409,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report has NO error", () => {
               beforeEach(() => {
-                mockUserState.error = null;
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -419,13 +421,13 @@ describe("SunBurstBaseReport", () => {
 
           describe("when the report is ready", () => {
             beforeEach(() => {
-              mockUserState.ready = true;
+              mockReportState.ready = true;
             });
 
             describe("when the report has an error", () => {
               beforeEach(() => {
-                mockUserState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -435,8 +437,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report has NO error", () => {
               beforeEach(() => {
-                mockUserState.error = null;
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return true", () => {
@@ -448,18 +450,18 @@ describe("SunBurstBaseReport", () => {
 
         describe("when the report is NOT complete", () => {
           beforeEach(() => {
-            getUserState().status.complete = false;
+            getReportState().status.complete = false;
           });
 
           describe("when the report is not ready", () => {
             beforeEach(() => {
-              mockUserState.ready = false;
+              mockReportState.ready = false;
             });
 
             describe("when the report has an error", () => {
               beforeEach(() => {
-                mockUserState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -469,8 +471,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report has NO error", () => {
               beforeEach(() => {
-                mockUserState.error = null;
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -481,13 +483,13 @@ describe("SunBurstBaseReport", () => {
 
           describe("when the report is ready", () => {
             beforeEach(() => {
-              mockUserState.ready = true;
+              mockReportState.ready = true;
             });
 
             describe("when the report has an error", () => {
               beforeEach(() => {
-                mockUserState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return false", () => {
@@ -497,8 +499,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report has NO error", () => {
               beforeEach(() => {
-                mockUserState.error = null;
-                received = instance.queryIsDataReady(mockUserState);
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
               });
 
               it("should return true", () => {
@@ -516,18 +518,18 @@ describe("SunBurstBaseReport", () => {
       const truthTable = (mutablePath: boolean) => {
         describe("when the report is in progress", () => {
           beforeEach(() => {
-            mockUserState.inProgress = true;
+            mockReportState.inProgress = true;
           });
 
           describe("when the report is ready", () => {
             beforeEach(() => {
-              mockUserState.ready = true;
+              mockReportState.ready = true;
             });
 
             describe("when the report is complete", () => {
               beforeEach(() => {
-                getUserState().status.complete = true;
-                received = instance.queryIsResumable(mockUserState);
+                getReportState().status.complete = true;
+                received = instance.queryIsResumable(mockReportState);
               });
 
               it("should return false", () => {
@@ -537,8 +539,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report is NOT complete", () => {
               beforeEach(() => {
-                getUserState().status.complete = false;
-                received = instance.queryIsResumable(mockUserState);
+                getReportState().status.complete = false;
+                received = instance.queryIsResumable(mockReportState);
               });
 
               it("should return false", () => {
@@ -549,13 +551,13 @@ describe("SunBurstBaseReport", () => {
 
           describe("when the report is NOT ready", () => {
             beforeEach(() => {
-              mockUserState.ready = false;
+              mockReportState.ready = false;
             });
 
             describe("when the report is complete", () => {
               beforeEach(() => {
-                getUserState().status.complete = true;
-                received = instance.queryIsResumable(mockUserState);
+                getReportState().status.complete = true;
+                received = instance.queryIsResumable(mockReportState);
               });
 
               it("should return false", () => {
@@ -565,8 +567,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report is NOT complete", () => {
               beforeEach(() => {
-                getUserState().status.complete = false;
-                received = instance.queryIsResumable(mockUserState);
+                getReportState().status.complete = false;
+                received = instance.queryIsResumable(mockReportState);
               });
 
               it("should return false", () => {
@@ -578,18 +580,18 @@ describe("SunBurstBaseReport", () => {
 
         describe("when the report is NOT in progress", () => {
           beforeEach(() => {
-            mockUserState.inProgress = false;
+            mockReportState.inProgress = false;
           });
 
           describe("when the report is ready", () => {
             beforeEach(() => {
-              mockUserState.ready = true;
+              mockReportState.ready = true;
             });
 
             describe("when the report is complete", () => {
               beforeEach(() => {
-                getUserState().status.complete = true;
-                received = instance.queryIsResumable(mockUserState);
+                getReportState().status.complete = true;
+                received = instance.queryIsResumable(mockReportState);
               });
 
               it("should return false", () => {
@@ -599,8 +601,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report is NOT complete", () => {
               beforeEach(() => {
-                getUserState().status.complete = false;
-                received = instance.queryIsResumable(mockUserState);
+                getReportState().status.complete = false;
+                received = instance.queryIsResumable(mockReportState);
               });
 
               it("should return false", () => {
@@ -611,13 +613,13 @@ describe("SunBurstBaseReport", () => {
 
           describe("when the report is NOT ready", () => {
             beforeEach(() => {
-              mockUserState.ready = false;
+              mockReportState.ready = false;
             });
 
             describe("when the report is complete", () => {
               beforeEach(() => {
-                getUserState().status.complete = true;
-                received = instance.queryIsResumable(mockUserState);
+                getReportState().status.complete = true;
+                received = instance.queryIsResumable(mockReportState);
               });
 
               it("should return false", () => {
@@ -627,8 +629,8 @@ describe("SunBurstBaseReport", () => {
 
             describe("when the report is NOT complete", () => {
               beforeEach(() => {
-                getUserState().status.complete = false;
-                received = instance.queryIsResumable(mockUserState);
+                getReportState().status.complete = false;
+                received = instance.queryIsResumable(mockReportState);
               });
 
               it(`should return ${mutablePath}`, () => {
@@ -641,7 +643,7 @@ describe("SunBurstBaseReport", () => {
 
       describe("when there is NO error", () => {
         beforeEach(() => {
-          mockUserState.error = null;
+          mockReportState.error = null;
         });
 
         truthTable(true);
@@ -649,7 +651,7 @@ describe("SunBurstBaseReport", () => {
 
       describe("when there is an TimeoutFetch error", () => {
         beforeEach(() => {
-          mockUserState.error = "TimeoutFetch";
+          mockReportState.error = "TimeoutFetch";
         });
 
         truthTable(true);
@@ -657,7 +659,7 @@ describe("SunBurstBaseReport", () => {
 
       describe("when there is an DataPoint error", () => {
         beforeEach(() => {
-          mockUserState.error = "DataPointFailureFetch";
+          mockReportState.error = "DataPointFailureFetch";
         });
 
         truthTable(true);
@@ -665,7 +667,7 @@ describe("SunBurstBaseReport", () => {
 
       describe("when there some other error", () => {
         beforeEach(() => {
-          mockUserState.error = "NotFoundFetch";
+          mockReportState.error = "NotFoundFetch";
         });
 
         truthTable(false);
@@ -677,14 +679,14 @@ describe("SunBurstBaseReport", () => {
 
       const truthTable = (mutableParam1: boolean, mutableParam2: boolean) => {
         describe("when there is a username", () => {
-          beforeEach(() => (mockUserState.userName = "niall-byrne"));
+          beforeEach(() => (mockReportState.userName = "niall-byrne"));
 
           describe("when there is content", () => {
             beforeEach(() => {
-              getUserState().content = [
+              getReportState().content = [
                 { name: "The Cure", playcount: 0, albums: [], fetched: false },
               ];
-              received = instance.queryUserHasNoData(mockUserState);
+              received = instance.queryUserHasNoData(mockReportState);
             });
 
             it(`should return ${!mutableParam1}`, () => {
@@ -694,8 +696,8 @@ describe("SunBurstBaseReport", () => {
 
           describe("when there is NOT content", () => {
             beforeEach(() => {
-              getUserState().content = [];
-              received = instance.queryUserHasNoData(mockUserState);
+              getReportState().content = [];
+              received = instance.queryUserHasNoData(mockReportState);
             });
 
             it(`should return ${!mutableParam2}`, () => {
@@ -705,14 +707,14 @@ describe("SunBurstBaseReport", () => {
         });
 
         describe("when there is NOT a username", () => {
-          beforeEach(() => (mockUserState.userName = null));
+          beforeEach(() => (mockReportState.userName = null));
 
           describe("when there is content", () => {
             beforeEach(() => {
-              getUserState().content = [
+              getReportState().content = [
                 { name: "The Cure", playcount: 0, albums: [], fetched: false },
               ];
-              received = instance.queryUserHasNoData(mockUserState);
+              received = instance.queryUserHasNoData(mockReportState);
             });
 
             it("should return false", () => {
@@ -722,8 +724,8 @@ describe("SunBurstBaseReport", () => {
 
           describe("when there is NOT content", () => {
             beforeEach(() => {
-              getUserState().content = [];
-              received = instance.queryUserHasNoData(mockUserState);
+              getReportState().content = [];
+              received = instance.queryUserHasNoData(mockReportState);
             });
 
             it("should return false", () => {
@@ -734,13 +736,13 @@ describe("SunBurstBaseReport", () => {
       };
 
       describe("when the report is ready", () => {
-        beforeEach(() => (mockUserState.ready = true));
+        beforeEach(() => (mockReportState.ready = true));
 
         truthTable(true, false);
       });
 
       describe("when the report is NOT ready", () => {
-        beforeEach(() => (mockUserState.ready = false));
+        beforeEach(() => (mockReportState.ready = false));
 
         truthTable(true, true);
       });
@@ -749,11 +751,11 @@ describe("SunBurstBaseReport", () => {
     describe("getReportData", () => {
       let received: LastFMAggregateReportResponseInterface<unknown[]>;
 
-      beforeEach(() => (received = instance.getReportData(mockUserState)));
+      beforeEach(() => (received = instance.getReportData(mockReportState)));
 
-      it("should contain the expected userProperties ", () => {
+      it("should contain the expected reportProperties ", () => {
         expect(received).toStrictEqual(
-          mockUserState.data.report.playCountByArtist
+          mockReportState.data.report.playCountByArtist
         );
       });
     });

@@ -2,31 +2,31 @@ import { render, screen } from "@testing-library/react";
 import RateLimitedErrorConditionalDisplay from "../ratelimited.error.display.class.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
-import MockStage2Report from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import MockStage2Report from "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/tests/fixtures/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
 import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.display.container";
-import type { LastFMUserStateBase } from "@src/types/user/state.types";
+import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 jest.mock("@src/web/ui/errors/components/display/error.display.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorDisplayContainer")
 );
 
 describe("RateLimitedErrorConditionalDisplay", () => {
-  let mockUserProperties: LastFMUserStateBase;
-  let mockReport: MockReportClass;
+  let mockReportProperties: LastFMReportStateBase;
+  let mockQuery: MockQueryClass;
   const errorType = "RatelimitedFetch";
 
   beforeEach(() => {
-    mockUserProperties = JSON.parse(JSON.stringify(MockStage2Report));
-    mockReport = new MockReportClass();
+    mockReportProperties = JSON.parse(JSON.stringify(MockStage2Report));
+    mockQuery = new MockQueryClass();
   });
 
   const arrange = () => {
     render(
       <RateLimitedErrorConditionalDisplay
         router={mockRouterHook}
-        report={mockReport}
-        userProperties={mockUserProperties}
+        query={mockQuery}
+        reportProperties={mockReportProperties}
       />
     );
   };
@@ -47,8 +47,8 @@ describe("RateLimitedErrorConditionalDisplay", () => {
     });
   };
 
-  describe("when userProperties prop has a matching error", () => {
-    beforeEach(() => (mockUserProperties.error = errorType));
+  describe("when reportProperties prop has a matching error", () => {
+    beforeEach(() => (mockReportProperties.error = errorType));
 
     describe("when instantiated with a concrete implementation", () => {
       beforeEach(() => arrange());
@@ -70,8 +70,8 @@ describe("RateLimitedErrorConditionalDisplay", () => {
     });
   });
 
-  describe("when userProperties prop has a non matching error", () => {
-    beforeEach(() => (mockUserProperties.error = "DataPointFailureFetch"));
+  describe("when reportProperties prop has a non matching error", () => {
+    beforeEach(() => (mockReportProperties.error = "DataPointFailureFetch"));
 
     describe("when instantiated with a concrete implementation", () => {
       beforeEach(() => arrange());

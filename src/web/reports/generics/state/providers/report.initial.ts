@@ -1,8 +1,8 @@
 import requestSettings from "@src/config/requests";
 import { voidFn } from "@src/utilities/generics/voids";
-import type { UserContextInterface } from "@src/types/user/context.types";
-import type { UserStateInterface } from "@src/types/user/state.types";
 import type { GenericAggregateBaseReportResponseInterface } from "@src/web/reports/generics/types/state/aggregate.report.types";
+import type { ReportContextInterface } from "@src/web/reports/generics/types/state/providers/report.context.types";
+import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 
 const InitialAggregateReportState = <
   GenericAggregateBaseReportResponseInterface<unknown, unknown>
@@ -16,7 +16,7 @@ const InitialAggregateReportState = <
   content: [],
 };
 
-export const InitialState = <UserStateInterface>{
+export const InitialState = <ReportStateInterface>{
   data: {
     integration: null,
     report: {
@@ -36,8 +36,8 @@ export const InitialState = <UserStateInterface>{
   userName: null,
 };
 
-const InitialContext = <UserContextInterface>{
-  userProperties: InitialState,
+const InitialContext = <ReportContextInterface>{
+  reportProperties: InitialState,
   dispatch: voidFn,
 };
 

@@ -1,7 +1,7 @@
 import { InitialState } from "@src/web/reports/generics/state/providers/report.initial";
 
 const mockValues = {
-  userProperties: { ...InitialState },
+  reportProperties: { ...InitialState },
   clear: jest.fn(),
   top20albums: jest.fn(),
   top20artists: jest.fn(),

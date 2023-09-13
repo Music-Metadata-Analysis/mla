@@ -2,37 +2,37 @@ import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
-import LastFMPlayCountByArtistDataClient from "@src/web/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class";
-import LastFMTopAlbumsReport from "@src/web/api/lastfm/reports/top20.albums.class";
-import LastFMTopArtistsReport from "@src/web/api/lastfm/reports/top20.artists.class";
-import LastFMTopTracksReport from "@src/web/api/lastfm/reports/top20.tracks.class";
-import PlayCountByArtistStateEncapsulation from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class";
+import LastFMTopAlbumsReport from "@src/web/api/lastfm/clients/flipcard/top20.albums.class";
+import LastFMTopArtistsReport from "@src/web/api/lastfm/clients/flipcard/top20.artists.class";
+import LastFMTopTracksReport from "@src/web/api/lastfm/clients/flipcard/top20.tracks.class";
+import LastFMPlayCountByArtistDataClient from "@src/web/api/lastfm/clients/sunburst/lastfm.playcount.by.artist.sunburst.client.class";
 import { InitialState } from "@src/web/reports/generics/state/providers/report.initial";
-import { UserContext } from "@src/web/reports/generics/state/providers/report.provider";
+import { ReportContext } from "@src/web/reports/generics/state/providers/report.provider";
 import mockHookValues from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
 import useLastFM from "@src/web/reports/lastfm/generics/state/hooks/lastfm.hook";
-import type { UserContextInterface } from "@src/types/user/context.types";
+import LastFMReportPlayCountByArtistStateEncapsulation from "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/lastfm.report.encapsulation.playcount.by.artist.class";
+import type { ReportContextInterface } from "@src/web/reports/generics/types/state/providers/report.context.types";
 import type { ReactNode } from "react";
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
-jest.mock("@src/web/api/lastfm/reports/top20.albums.class");
+jest.mock("@src/web/api/lastfm/clients/flipcard/top20.albums.class");
 
-jest.mock("@src/web/api/lastfm/reports/top20.artists.class");
+jest.mock("@src/web/api/lastfm/clients/flipcard/top20.artists.class");
 
-jest.mock("@src/web/api/lastfm/reports/top20.tracks.class");
+jest.mock("@src/web/api/lastfm/clients/flipcard/top20.tracks.class");
 
 jest.mock(
-  "@src/web/api/lastfm/data/sunburst/playcount.by.artist.sunburst.client.class"
+  "@src/web/api/lastfm/clients/sunburst/lastfm.playcount.by.artist.sunburst.client.class"
 );
 
 jest.mock(
-  "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/playcount.by.artist/user.state.playcount.by.artist.sunburst.report.class"
+  "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/lastfm.report.encapsulation.playcount.by.artist.class"
 );
 
 interface MockUserContextWithChildren {
   children?: ReactNode;
-  mockContext: UserContextInterface;
+  mockContext: ReportContextInterface;
 }
 
 describe("useLastFM", () => {
@@ -51,13 +51,13 @@ describe("useLastFM", () => {
     mockContext,
   }: MockUserContextWithChildren) => {
     return (
-      <UserContext.Provider value={mockContext}>
+      <ReportContext.Provider value={mockContext}>
         {children}
-      </UserContext.Provider>
+      </ReportContext.Provider>
     );
   };
 
-  const arrange = (providerProps: UserContextInterface) => {
+  const arrange = (providerProps: ReportContextInterface) => {
     return renderHook(() => useLastFM(), {
       wrapper: providerWrapper,
       initialProps: {
@@ -69,13 +69,13 @@ describe("useLastFM", () => {
   describe("is rendered", () => {
     beforeEach(() => {
       received = arrange({
-        userProperties: { ...InitialState },
+        reportProperties: { ...InitialState },
         dispatch: mockDispatch,
       });
     });
 
     it("should contain the correct properties", () => {
-      expect(received.result.current.userProperties).toStrictEqual(
+      expect(received.result.current.reportProperties).toStrictEqual(
         InitialState
       );
     });
@@ -117,9 +117,9 @@ describe("useLastFM", () => {
       await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
       expect(mockDispatch).toHaveBeenCalledWith({
         type: "ReadyFetch",
-        userName: received.result.current.userProperties.userName,
-        data: received.result.current.userProperties.data.report,
-        integration: received.result.current.userProperties.data.integration,
+        userName: received.result.current.reportProperties.userName,
+        data: received.result.current.reportProperties.data.report,
+        integration: received.result.current.reportProperties.data.integration,
       });
     });
   });
@@ -198,11 +198,13 @@ describe("useLastFM", () => {
 
     it("should retrieve the report from lastfm", async () => {
       await waitFor(() =>
-        expect(PlayCountByArtistStateEncapsulation).toBeCalledTimes(1)
+        expect(LastFMReportPlayCountByArtistStateEncapsulation).toBeCalledTimes(
+          1
+        )
       );
       await waitFor(() =>
-        expect(PlayCountByArtistStateEncapsulation).toBeCalledWith(
-          received.result.current.userProperties
+        expect(LastFMReportPlayCountByArtistStateEncapsulation).toBeCalledWith(
+          received.result.current.reportProperties
         )
       );
 

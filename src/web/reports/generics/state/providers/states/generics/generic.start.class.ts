@@ -1,10 +1,10 @@
-import ReducerStateBaseClass from "../user.reducer.states.base.class";
-import type { UserStateInterface } from "@src/types/user/state.types";
+import ReportReducerStateBaseClass from "../report.reducer.states.base.class";
+import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 
-class ReducerGenericResetFetch extends ReducerStateBaseClass<"StartFetch"> {
+class ReducerGenericResetFetch extends ReportReducerStateBaseClass<"StartFetch"> {
   type = "StartFetch" as const;
 
-  generateState(): UserStateInterface {
+  generateState(): ReportStateInterface {
     return {
       data: {
         integration: this.action.integration,

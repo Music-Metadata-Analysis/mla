@@ -12,7 +12,7 @@ class NotFoundErrorConditionalDisplay<
       <ErrorDisplayContainer
         errorKey={"userNotFound"}
         handleClick={() =>
-          this.props.router.push(this.props.report.getRetryRoute())
+          this.props.router.push(this.props.query.getRetryRoute())
         }
       />
     );

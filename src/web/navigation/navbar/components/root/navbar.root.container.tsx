@@ -19,16 +19,16 @@ export default function NavBarRootContainer({
   const analytics = useAnalytics();
   const { status: authStatus, user } = useAuth();
   const { t: navBarT } = useTranslation("navbar");
-  const { userProperties } = useLastFM();
+  const { reportProperties } = useLastFM();
   const router = useRouter();
 
   const isTransaction = () =>
-    !userProperties.ready || authStatus === "processing";
+    !reportProperties.ready || authStatus === "processing";
 
   useEffect(() => {
     if (isTransaction()) controller.controls.mobileMenu.setFalse();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProperties, authStatus]);
+  }, [reportProperties, authStatus]);
 
   return (
     <NavBar

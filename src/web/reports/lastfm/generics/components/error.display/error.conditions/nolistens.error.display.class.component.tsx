@@ -6,7 +6,7 @@ class NoListensErrorConditionalDisplay<
   DrawerProps
 > extends ErrorBase<ReportType, DrawerProps> {
   render() {
-    if (this.props.report.queryUserHasNoData(this.props.userProperties))
+    if (this.props.query.queryUserHasNoData(this.props.reportProperties))
       return this.component();
     return null;
   }
@@ -16,7 +16,7 @@ class NoListensErrorConditionalDisplay<
       <ErrorDisplayContainer
         errorKey={"userWithNoListens"}
         handleClick={() =>
-          this.props.router.push(this.props.report.getRetryRoute())
+          this.props.router.push(this.props.query.getRetryRoute())
         }
       />
     );

@@ -7,9 +7,9 @@ import SunBurstStateToChartDataTranslator from "../translator.class";
 import LastFMTranslations from "@locales/lastfm.json";
 import MockSunburstData4 from "@src/web/reports/generics/components/charts/sunburst/svg/tests/data/sunburst.data.set.4.json";
 import MockSunburstData5 from "@src/web/reports/generics/components/charts/sunburst/svg/tests/data/sunburst.data.set.5.json";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
 import type { SunBurstData } from "@src/web/reports/generics/types/charts/sunburst.types";
-import type { LastFMAggregateReportContentType } from "@src/web/reports/lastfm/generics/types/state/aggregate.report.types";
+import type { LastFMAggregateReportContentType } from "@src/web/reports/lastfm/generics/types/state/lastfm.aggregate.report.types";
 
 describe("SunBurstStateToChartDataTranslator", () => {
   let instance: SunBurstStateToChartDataTranslator;
@@ -24,7 +24,7 @@ describe("SunBurstStateToChartDataTranslator", () => {
         value: 184368,
         children: [],
       };
-      const report = new MockReportClass();
+      const report = new MockQueryClass();
       instance = new SunBurstStateToChartDataTranslator(
         report.entityKeys,
         LastFMTranslations.playCountByArtist.remainderTag

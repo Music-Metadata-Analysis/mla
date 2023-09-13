@@ -9,34 +9,35 @@ import useFlipCardController from "@src/web/reports/lastfm/generics/components/r
 import BillBoardSpinner from "@src/web/ui/generics/components/billboard/billboard.spinner/billboard.spinner.component";
 import Condition from "@src/web/ui/generics/components/condition/condition.component";
 import useImagesController from "@src/web/ui/images/state/controllers/images.controller.hook";
-import type { userHookAsLastFM } from "@src/types/user/hook.types";
-import type FlipCardBaseReportState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type FlipCardBaseReport from "@src/web/reports/lastfm/generics/state/queries/flip.card.query.base.class";
+import type FlipCardBaseReportState from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.flipcard.base.class";
+import type FlipCardAbstractBaseQuery from "@src/web/reports/lastfm/generics/state/queries/flip.card.query.base.class";
 import type { LastFMFlipCardDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/flip.card.types";
+import type { reportHookAsLastFM } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 
 export interface FlipCardReportContainerProps<
   T extends FlipCardBaseReportState,
   R extends unknown[]
 > {
   userName: string;
-  lastfm: userHookAsLastFM;
-  reportClass: new () => FlipCardBaseReport<T, R>;
+  lastfm: reportHookAsLastFM;
+  queryClass: new () => FlipCardAbstractBaseQuery<T, R>;
 }
 
 export default function FlipCardReportContainer<
-  UserStateType extends FlipCardBaseReportState,
+  ReportEncapsulation extends FlipCardBaseReportState,
   ReportDataType extends unknown[]
 >({
   lastfm: reportHook,
   userName,
-  reportClass,
-}: FlipCardReportContainerProps<UserStateType, ReportDataType>) {
+  queryClass,
+}: FlipCardReportContainerProps<ReportEncapsulation, ReportDataType>) {
   const analytics = useAnalytics();
   const flipCardController = useFlipCardController();
   const imagesController = useImagesController();
   const { t } = useTranslation("lastfm");
   const metrics = useMetrics();
-  const report = new reportClass();
+
+  const query = new queryClass();
 
   useEffect(() => {
     imagesController.reset();
@@ -45,54 +46,54 @@ export default function FlipCardReportContainer<
 
   useEffect(() => {
     reportHook.clear();
-    report.startDataFetch(reportHook, userName);
+    query.startDataFetch(reportHook, userName);
     return () => reportHook.clear();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (reportHook.userProperties.error === "TimeoutFetch") {
-      report.startDataFetch(reportHook, userName);
+    if (reportHook.reportProperties.error === "TimeoutFetch") {
+      query.startDataFetch(reportHook, userName);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reportHook]);
 
   useEffect(() => {
     if (
-      !report.queryIsImagesLoaded(reportHook.userProperties, imagesController)
+      !query.queryIsImagesLoaded(reportHook.reportProperties, imagesController)
     )
       return;
-    if (!report.queryIsDataReady(reportHook.userProperties)) return;
+    if (!query.queryIsDataReady(reportHook.reportProperties)) return;
     reportHook.ready();
     metrics.increment("SearchMetric");
     analytics.event(
-      Events.LastFM.ReportPresented(report.getAnalyticsReportType())
+      Events.LastFM.ReportPresented(query.getAnalyticsReportType())
     );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imagesController.count, reportHook.userProperties]);
+  }, [imagesController.count, reportHook.reportProperties]);
 
   return (
     <LastFMErrorDisplayContainer<
       ReportDataType,
-      LastFMFlipCardDrawerInterface<UserStateType>
+      LastFMFlipCardDrawerInterface<ReportEncapsulation>
     >
-      report={report}
-      userProperties={reportHook.userProperties}
+      query={query}
+      reportProperties={reportHook.reportProperties}
     >
       <BillBoardSpinner
         titleText={t(
-          `${String(report.getReportTranslationKey())}.communication`
+          `${String(query.getReportTranslationKey())}.communication`
         )}
-        visible={!reportHook.userProperties.ready}
+        visible={!reportHook.reportProperties.ready}
       />
-      <Condition isTrue={!reportHook.userProperties.inProgress}>
-        <FlipCardReport<UserStateType, ReportDataType>
+      <Condition isTrue={!reportHook.reportProperties.inProgress}>
+        <FlipCardReport<ReportEncapsulation, ReportDataType>
           flipCardController={flipCardController}
           imageIsLoaded={imagesController.load}
-          report={report}
-          reportStateInstance={report.getEncapsulatedReportState(
-            reportHook.userProperties,
+          query={query}
+          reportStateInstance={query.getEncapsulatedReportState(
+            reportHook.reportProperties,
             t
           )}
           t={t}

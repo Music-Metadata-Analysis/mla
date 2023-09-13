@@ -13,14 +13,14 @@ import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook
 import NavBarControllerProvider from "@src/web/navigation/navbar/state/providers/navbar.provider";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 import type { JSONstringType } from "@src/types/json.types";
-import type { UserStateInterface } from "@src/types/user/state.types";
+import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
 jest.mock("@src/web/reports/lastfm/generics/state/hooks/lastfm.hook", () =>
-  jest.fn(() => ({ userProperties: getMockedUserProperties() }))
+  jest.fn(() => ({ reportProperties: getMockedReportProperties() }))
 );
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
@@ -37,8 +37,8 @@ jest.mock(
     )
 );
 
-const getMockedUserProperties = () => mockUserProperties;
-let mockUserProperties: UserStateInterface = {
+const getMockedReportProperties = () => mockReportProperties;
+let mockReportProperties: ReportStateInterface = {
   data: {
     integration: null,
     report: {
@@ -61,11 +61,11 @@ describe("NavBar", () => {
   const clickAbleLinks = Object.keys(config).map(
     (key) => (navbarTranslations[translationPrefix] as JSONstringType)[key]
   );
-  const baseMockUserProperties = { ...mockUserProperties };
-  let thisMockUserProperties = { ...baseMockUserProperties };
+  const baseMockReportProperties = { ...mockReportProperties };
+  let thisMockReportProperties = { ...baseMockReportProperties };
 
   beforeEach(() => {
-    thisMockUserProperties = { ...baseMockUserProperties };
+    thisMockReportProperties = { ...baseMockReportProperties };
     mockAuthHook.user = mockUserProfile;
     jest.clearAllMocks();
 
@@ -75,7 +75,7 @@ describe("NavBar", () => {
   });
 
   const arrange = () => {
-    mockUserProperties = { ...thisMockUserProperties };
+    mockReportProperties = { ...thisMockReportProperties };
     render(
       <NavBarControllerProvider>
         <NavBarContainer config={config} />

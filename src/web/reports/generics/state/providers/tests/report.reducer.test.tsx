@@ -1,44 +1,28 @@
 import {
   mockAlbumsReport,
-  mockUserStateWithError,
+  mockReportStateWithError,
 } from "./fixtures/report.state.data";
+import ConcreteStateOne, {
+  mockReadyState,
+} from "./implementations/concrete.report.state.1";
+import ConcreteStateTwo, {
+  mockResetState,
+} from "./implementations/concrete.report.state.2";
+import ConcreteStateThree, {
+  mockStartState,
+} from "./implementations/concrete.report.state.3";
 import { InitialState } from "../report.initial";
-import { UserReducer } from "../report.reducer";
-import UserReducerStateBase from "../states/user.reducer.states.base.class";
-import type { UserActionType } from "@src/types/user/action.types";
-import type { UserStateInterface } from "@src/types/user/state.types";
-import type { LastFMBaseReportInterface } from "@src/web/reports/lastfm/generics/types/state/base.report.types";
+import { ReportReducer } from "../report.reducer";
+import type { ReportActionType } from "@src/web/reports/generics/types/state/providers/report.action.types";
+import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
+import type { LastFMBaseReportInterface } from "@src/web/reports/lastfm/generics/types/state/lastfm.base.report.types";
 
-class ConcreteStateOne extends UserReducerStateBase<"ReadyFetch"> {
-  type = "ReadyFetch" as const;
-  generateState(): UserStateInterface {
-    return mockReadyState as unknown as UserStateInterface;
-  }
-}
-
-class ConcreteStateTwo extends UserReducerStateBase<"ResetState"> {
-  type = "ResetState" as const;
-  generateState(): UserStateInterface {
-    return mockResetState as unknown as UserStateInterface;
-  }
-}
-
-class ConcreteStateThree extends UserReducerStateBase<"StartFetch"> {
-  type = "StartFetch" as const;
-  generateState(): UserStateInterface {
-    return mockStartState as unknown as UserStateInterface;
-  }
-}
-
-jest.mock("../states/user.reducer.states", () => () => mockClasses);
+jest.mock("../states/report.reducer.states", () => () => mockClasses);
 
 const mockClasses = [ConcreteStateOne, ConcreteStateTwo, ConcreteStateThree];
-const mockReadyState = "mockReadyState";
-const mockResetState = "mockResetState";
-const mockStartState = "mockStartState";
 
-describe("UserReducer", () => {
-  let received: UserStateInterface | null;
+describe("ReportReducer", () => {
+  let received: ReportStateInterface | null;
   const testIntegrationType = "TEST" as const;
 
   beforeEach(() => {
@@ -49,10 +33,10 @@ describe("UserReducer", () => {
   const getInitialState = () => JSON.parse(JSON.stringify(InitialState));
 
   const arrange = (
-    action: UserActionType | { type: "NoAction" },
-    initialProps: UserStateInterface
+    action: ReportActionType | { type: "NoAction" },
+    initialProps: ReportStateInterface
   ) => {
-    return UserReducer({ ...initialProps }, action as UserActionType);
+    return ReportReducer({ ...initialProps }, action as ReportActionType);
   };
 
   it("should handle ReadyFetch correctly", () => {
@@ -70,7 +54,7 @@ describe("UserReducer", () => {
     const action = {
       type: "ResetState" as const,
     };
-    received = arrange(action, mockUserStateWithError);
+    received = arrange(action, mockReportStateWithError);
     expect(received).toBe(mockResetState);
   });
 
@@ -80,14 +64,14 @@ describe("UserReducer", () => {
       userName: "someguy",
       integration: testIntegrationType,
     };
-    received = arrange(action, mockUserStateWithError);
+    received = arrange(action, mockReportStateWithError);
     expect(received).toBe(mockStartState);
   });
 
   it("should handle an Unknown Action correctly", () => {
     const action = {
       type: "UnknownAction",
-    } as unknown as UserActionType;
+    } as unknown as ReportActionType;
     received = arrange(action, { ...getInitialState() });
     expect(received).toStrictEqual({ ...getInitialState() });
   });

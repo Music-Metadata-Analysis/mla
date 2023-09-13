@@ -10,7 +10,7 @@ import { testIDs as drawerTestIDs } from "@src/web/reports/generics/components/d
 import { testIDs as lastFMDrawerIDs } from "@src/web/reports/lastfm/generics/components/drawer/flip.card/flip.card.report.drawer.identifiers";
 import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
 import mockImageControllerHook from "@src/web/ui/images/state/controllers/__mocks__/images.controller.hook.mock";
-import type { userHookAsLastFMTop20TrackReport } from "@src/types/user/hook.types";
+import type { reportHookAsLastFMTop20TrackReport } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
@@ -85,7 +85,7 @@ describe("Top20TracksReport", () => {
   ];
 
   const Top20ReportBaseProps = {
-    lastfm: mockLastFMHook as userHookAsLastFMTop20TrackReport,
+    lastfm: mockLastFMHook as reportHookAsLastFMTop20TrackReport,
     userName: mockUsername,
   };
 
@@ -93,8 +93,8 @@ describe("Top20TracksReport", () => {
 
   const resetProps = () => {
     currentProps = { ...Top20ReportBaseProps };
-    currentProps.lastfm.userProperties = mockReportProperties;
-    currentProps.lastfm.userProperties.data.report.tracks = {
+    currentProps.lastfm.reportProperties = mockReportProperties;
+    currentProps.lastfm.reportProperties.data.report.tracks = {
       ...mockTrackData,
     };
   };
@@ -112,7 +112,7 @@ describe("Top20TracksReport", () => {
   const getDrawerTitle = (index: number) =>
     `${getDataSet()[index - 1].artist?.name}: ${getDataSet()[index - 1].name}`;
 
-  const getReport = () => currentProps.lastfm.userProperties.data.report;
+  const getReport = () => currentProps.lastfm.reportProperties.data.report;
 
   const getTranslation = () => translations[translationKey];
 
@@ -130,7 +130,7 @@ describe("Top20TracksReport", () => {
 
       expect(
         await screen.findByText(
-          currentProps.lastfm.userProperties.userName as string
+          currentProps.lastfm.reportProperties.userName as string
         )
       ).toBeTruthy();
     });
@@ -139,7 +139,7 @@ describe("Top20TracksReport", () => {
   describe("when data is available", () => {
     beforeEach(() => {
       resetProps();
-      currentProps.lastfm.userProperties.inProgress = false;
+      currentProps.lastfm.reportProperties.inProgress = false;
       getReport()[reportKey] = mockTrackData;
     });
 
@@ -280,7 +280,7 @@ describe("Top20TracksReport", () => {
   describe("when data is unavailable", () => {
     beforeEach(() => {
       resetProps();
-      currentProps.lastfm.userProperties.inProgress = true;
+      currentProps.lastfm.reportProperties.inProgress = true;
       arrange();
     });
 

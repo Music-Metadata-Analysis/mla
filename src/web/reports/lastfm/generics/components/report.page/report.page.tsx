@@ -4,19 +4,19 @@ import routes from "@src/config/routes";
 import Events from "@src/web/analytics/collection/events/definitions";
 import useLastFM from "@src/web/reports/lastfm/generics/state/hooks/lastfm.hook";
 import ErrorBoundaryContainer from "@src/web/ui/errors/components/boundary/error.boundary.container";
-import type { userHookAsLastFM } from "@src/types/user/hook.types";
+import type { reportHookAsLastFM } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 
-interface LastFMReportPage<T extends userHookAsLastFM> {
+interface LastFMReportPage<T extends reportHookAsLastFM> {
   NoUserComponent: FC;
   ReportContainer: FC<ReportContainerProps<T>>;
 }
 
-interface ReportContainerProps<T extends userHookAsLastFM> {
+interface ReportContainerProps<T extends reportHookAsLastFM> {
   userName: string;
   lastfm: T;
 }
 
-export default function LastFMReportPage<T extends userHookAsLastFM>({
+export default function LastFMReportPage<T extends reportHookAsLastFM>({
   NoUserComponent,
   ReportContainer,
 }: LastFMReportPage<T>) {

@@ -1,12 +1,12 @@
 import FlipCardReportContainer from "@src/web/reports/lastfm/generics/components/report.component/flip.card/flip.card.report.container";
-import Top20TracksReport from "@src/web/reports/lastfm/top20.tracks/state/queries/top20.tracks.query.class";
-import type { userHookAsLastFMTop20TrackReport } from "@src/types/user/hook.types";
-import type { LastFMTopTracksReportResponseInterface } from "@src/web/api/lastfm/types/response.types";
-import type UserTrackDataState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.track.flipcard.report.class";
+import Top20TracksQuery from "@src/web/reports/lastfm/top20.tracks/state/queries/top20.tracks.query.class";
+import type { LastFMTopTracksReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { reportHookAsLastFMTop20TrackReport } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
+import type LastFMReportFlipCardTopTracksStateEncapsulation from "@src/web/reports/lastfm/top20.tracks/state/encapsulations/lastfm.report.encapsulation.top.tracks.flipcard.class";
 
 export interface Top20TracksReportContainerProps {
   userName: string;
-  lastfm: userHookAsLastFMTop20TrackReport;
+  lastfm: reportHookAsLastFMTop20TrackReport;
 }
 
 export default function Top20TracksContainer({
@@ -15,12 +15,12 @@ export default function Top20TracksContainer({
 }: Top20TracksReportContainerProps) {
   return (
     <FlipCardReportContainer<
-      UserTrackDataState,
+      LastFMReportFlipCardTopTracksStateEncapsulation,
       LastFMTopTracksReportResponseInterface["tracks"]
     >
       lastfm={lastfm}
       userName={userName}
-      reportClass={Top20TracksReport}
+      queryClass={Top20TracksQuery}
     />
   );
 }

@@ -1,23 +1,23 @@
 import ReducerState from "../datapoint.start.class";
-import type { UserActionType } from "@src/types/user/action.types";
-import type { UserStateInterface } from "@src/types/user/state.types";
+import type { ReportActionType } from "@src/web/reports/generics/types/state/providers/report.action.types";
+import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 
 const testType = "DataPointStartFetch";
-type actionType = UserActionType & { type: typeof testType };
+type actionType = ReportActionType & { type: typeof testType };
 
 describe(testType, () => {
   let stateClass: ReducerState;
   let action: actionType;
-  let received: UserStateInterface;
+  let received: ReportStateInterface;
   const testIntegrationType = "TEST";
   const testUserName = "testUserName";
   const testState = {
     data: { integration: testIntegrationType },
     userName: testUserName,
     profileUrl: "mockProfile",
-  } as UserStateInterface;
+  } as ReportStateInterface;
 
-  const arrange = (state: UserStateInterface, action: actionType) => {
+  const arrange = (state: ReportStateInterface, action: actionType) => {
     stateClass = new ReducerState(state, action);
     received = stateClass.apply();
   };

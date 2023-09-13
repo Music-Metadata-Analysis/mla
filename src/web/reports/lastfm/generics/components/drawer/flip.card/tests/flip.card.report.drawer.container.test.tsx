@@ -6,8 +6,8 @@ import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
-import UserAlbumState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
 import mockFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
+import LastFMReportFlipCardTopAlbumsStateEncapsulation from "@src/web/reports/lastfm/top20.albums/state/encapsulations/lastfm.report.encapsulation.top.albums.flipcard.class";
 import type { LastFMFlipCardDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/flip.card.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
@@ -24,7 +24,7 @@ jest.mock("../flip.card.report.drawer.component", () =>
 );
 
 describe("FlipCardDrawerContainer", () => {
-  let currentProps: LastFMFlipCardDrawerInterface<UserAlbumState>;
+  let currentProps: LastFMFlipCardDrawerInterface<LastFMReportFlipCardTopAlbumsStateEncapsulation>;
 
   const MockImageUrl = "MockImageUrl";
   const mockReportState = {
@@ -63,14 +63,18 @@ describe("FlipCardDrawerContainer", () => {
 
   const mockT = new MockUseTranslation("lastfm").t;
 
-  const baseProps: LastFMFlipCardDrawerInterface<UserAlbumState> = {
-    artWorkAltTranslatedText: "artWorkAltTranslatedText",
-    fallbackImage: "/fallback.jpeg",
-    isOpen: mockFlipCardController.drawer.state,
-    objectIndex: 0,
-    onClose: mockFlipCardController.drawer.setFalse,
-    reportStateInstance: new UserAlbumState(mockReportState, mockT),
-  };
+  const baseProps: LastFMFlipCardDrawerInterface<LastFMReportFlipCardTopAlbumsStateEncapsulation> =
+    {
+      artWorkAltTranslatedText: "artWorkAltTranslatedText",
+      fallbackImage: "/fallback.jpeg",
+      isOpen: mockFlipCardController.drawer.state,
+      objectIndex: 0,
+      onClose: mockFlipCardController.drawer.setFalse,
+      reportStateInstance: new LastFMReportFlipCardTopAlbumsStateEncapsulation(
+        mockReportState,
+        mockT
+      ),
+    };
 
   beforeEach(() => {
     jest.clearAllMocks();

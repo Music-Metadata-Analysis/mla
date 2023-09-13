@@ -8,7 +8,7 @@ import HeaderContainer, {
   HeaderContainerProps,
 } from "@src/web/content/header/components/header.container";
 import MetricsProvider from "@src/web/metrics/collection/state/providers/metrics.provider";
-import UserProvider from "@src/web/reports/generics/state/providers/report.provider";
+import ReportProvider from "@src/web/reports/generics/state/providers/report.provider";
 import type { AuthVendorStateType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/flags/vendor.types";
 import type { UIVendorStateType } from "@src/vendors/types/integrations/ui.framework/vendor.types";
@@ -36,10 +36,10 @@ const RootProvider = ({
             <uiFrameworkVendor.popups.Provider popUps={popUps}>
               <ControllersProvider>
                 <MetricsProvider>
-                  <UserProvider>
+                  <ReportProvider>
                     <HeaderContainer pageKey={headerProps.pageKey} />
                     {children}
-                  </UserProvider>
+                  </ReportProvider>
                 </MetricsProvider>
               </ControllersProvider>
             </uiFrameworkVendor.popups.Provider>

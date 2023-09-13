@@ -8,27 +8,27 @@ import useMetrics from "@src/web/metrics/collection/state/hooks/metrics.hook";
 import useSunBurstController from "@src/web/reports/generics/state/controllers/sunburst/sunburst.controller.hook";
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
 import BillBoardProgressBar from "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
-import type { userHookAsLastFM } from "@src/types/user/hook.types";
-import type SunBurstBaseReportState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type SunBurstBaseReport from "@src/web/reports/lastfm/generics/state/queries/sunburst.query.base.class";
+import type SunBurstBaseReportState from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
+import type SunBurstBaseQuery from "@src/web/reports/lastfm/generics/state/queries/sunburst.query.base.class";
 import type { LastFMSunBurstDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/sunburst.types";
-import type { LastFMAggregateReportResponseInterface } from "@src/web/reports/lastfm/generics/types/state/aggregate.report.types";
+import type { reportHookAsLastFM } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
+import type { LastFMAggregateReportResponseInterface } from "@src/web/reports/lastfm/generics/types/state/lastfm.aggregate.report.types";
 
 interface SunBurstReportContainerProps<
   T extends SunBurstBaseReportState<unknown>
 > {
-  lastfm: userHookAsLastFM;
+  lastfm: reportHookAsLastFM;
   userName: string;
-  reportClass: new () => SunBurstBaseReport<T>;
+  queryClass: new () => SunBurstBaseQuery<T>;
 }
 
 export default function SunBurstReportContainer<
-  UserStateType extends SunBurstBaseReportState<unknown>
+  ReportStateType extends SunBurstBaseReportState<unknown>
 >({
   lastfm,
   userName,
-  reportClass,
-}: SunBurstReportContainerProps<UserStateType>) {
+  queryClass,
+}: SunBurstReportContainerProps<ReportStateType>) {
   const analytics = useAnalytics();
   const { t: lastFMt } = useTranslation("lastfm");
   const { t: sunBurstT } = useTranslation("sunburst");
@@ -36,19 +36,19 @@ export default function SunBurstReportContainer<
   const sunBurstController = useSunBurstController();
   const sunBurstLayoutController = useSunBurstLayoutController();
 
-  const report = new reportClass();
+  const query = new queryClass();
 
   useEffect(() => {
     lastfm.clear();
-    report.startDataFetch(lastfm, userName);
+    query.startDataFetch(lastfm, userName);
     return () => lastfm.clear();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (!report.getReportData(lastfm.userProperties).status.complete) return;
+    if (!query.getReportData(lastfm.reportProperties).status.complete) return;
     analytics.event(
-      report
+      query
         .getEncapsulatedNode(sunBurstController.node.selected)
         .getDrawerEvent()
     );
@@ -57,49 +57,49 @@ export default function SunBurstReportContainer<
   }, [sunBurstController.node.selected]);
 
   useEffect(() => {
-    if (report.queryIsResumable(lastfm.userProperties)) {
-      report.startDataFetch(lastfm, userName);
+    if (query.queryIsResumable(lastfm.reportProperties)) {
+      query.startDataFetch(lastfm, userName);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastfm.userProperties]);
+  }, [lastfm.reportProperties]);
 
   useEffect(() => {
-    if (report.queryIsDataReady(lastfm.userProperties)) {
+    if (query.queryIsDataReady(lastfm.reportProperties)) {
       lastfm.ready();
       metrics.increment("SearchMetric");
       analytics.event(
-        Events.LastFM.ReportPresented(report.getAnalyticsReportType())
+        Events.LastFM.ReportPresented(query.getAnalyticsReportType())
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastfm.userProperties]);
+  }, [lastfm.reportProperties]);
 
   return (
     <LastFMErrorDisplayContainer<
       LastFMAggregateReportResponseInterface<unknown>,
       LastFMSunBurstDrawerInterface
     >
-      report={report}
-      userProperties={lastfm.userProperties}
+      query={query}
+      reportProperties={lastfm.reportProperties}
     >
       <BillBoardProgressBar
-        details={report.getProgressDetails(lastfm.userProperties, sunBurstT)}
+        details={query.getProgressDetails(lastfm.reportProperties, sunBurstT)}
         titleText={lastFMt(
-          `${String(report.getReportTranslationKey())}.communication`
+          `${String(query.getReportTranslationKey())}.communication`
         )}
-        visible={!lastfm.userProperties.ready}
-        value={report.getProgressPercentage(lastfm.userProperties)}
+        visible={!lastfm.reportProperties.ready}
+        value={query.getProgressPercentage(lastfm.reportProperties)}
       />
-      <SunBurstReport<UserStateType>
-        encapsulatedReportState={report.getEncapsulatedReportState(
-          lastfm.userProperties
+      <SunBurstReport<ReportStateType>
+        encapsulatedReportState={query.getEncapsulatedReportState(
+          lastfm.reportProperties
         )}
         lastFMt={lastFMt}
-        report={report}
+        query={query}
         sunBurstT={sunBurstT}
         sunBurstController={sunBurstController}
         sunBurstLayoutController={sunBurstLayoutController}
-        visible={lastfm.userProperties.ready}
+        visible={lastfm.reportProperties.ready}
       />
     </LastFMErrorDisplayContainer>
   );

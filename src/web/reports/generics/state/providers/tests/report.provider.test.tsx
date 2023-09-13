@@ -1,24 +1,24 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import { InitialState } from "../report.initial";
-import UserProvider, { UserContext } from "../report.provider";
-import type { UserContextInterface } from "@src/types/user/context.types";
+import ReportProvider, { ReportContext } from "../report.provider";
+import type { ReportContextInterface } from "@src/web/reports/generics/types/state/providers/report.context.types";
 
-describe("UserProvider", () => {
-  const received: Partial<UserContextInterface> = {};
+describe("ReportProvider", () => {
+  const received: Partial<ReportContextInterface> = {};
 
   const arrange = () => {
     render(
-      <UserProvider>
-        <UserContext.Consumer>
+      <ReportProvider>
+        <ReportContext.Consumer>
           {(state) => (
             <div>
               {"Place Holder Div"}
               {JSON.stringify(Object.assign(received, state))}
             </div>
           )}
-        </UserContext.Consumer>
-      </UserProvider>
+        </ReportContext.Consumer>
+      </ReportProvider>
     );
   };
 
@@ -28,9 +28,9 @@ describe("UserProvider", () => {
     });
 
     it("should contain the expected properties", () => {
-      const properties = received as UserContextInterface;
+      const properties = received as ReportContextInterface;
       expect(properties.dispatch).toBeInstanceOf(Function);
-      expect(properties.userProperties).toStrictEqual(InitialState);
+      expect(properties.reportProperties).toStrictEqual(InitialState);
     });
   });
 });

@@ -1,11 +1,11 @@
-import ReducerStateBaseClass from "../user.reducer.states.base.class";
+import ReportReducerStateBaseClass from "../report.reducer.states.base.class";
 import { GenerateUserLink } from "@src/config/lastfm";
-import type { UserStateInterface } from "@src/types/user/state.types";
+import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 
-class ReducerGenericReadyFetch extends ReducerStateBaseClass<"ReadyFetch"> {
+class ReducerGenericReadyFetch extends ReportReducerStateBaseClass<"ReadyFetch"> {
   type = "ReadyFetch" as const;
 
-  generateState(): UserStateInterface {
+  generateState(): ReportStateInterface {
     return {
       data: {
         integration: this.action.integration,

@@ -8,7 +8,7 @@ import { MetricsContext } from "@src/web/metrics/collection/state/providers/metr
 import type { MetricsContextInterface } from "@src/web/metrics/collection/types/state/provider.types";
 import type { ReactNode } from "react";
 
-interface MockUserContextWithChildren {
+interface MockMetricsContextWithChildren {
   children?: ReactNode;
   mockContext: MetricsContextInterface;
 }
@@ -25,7 +25,7 @@ describe("useMetrics", () => {
   const providerWrapper = ({
     children,
     mockContext,
-  }: MockUserContextWithChildren) => {
+  }: MockMetricsContextWithChildren) => {
     return (
       <MetricsContext.Provider value={mockContext}>
         {children}

@@ -1,12 +1,12 @@
-import Report from "../top20.tracks.query.class";
+import Query from "../top20.tracks.query.class";
 import routes from "@src/config/routes";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
-import UserTrackDataState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.track.flipcard.report.class";
 import FlipCardDrawerContainer from "@src/web/reports/lastfm/generics/components/drawer/flip.card/flip.card.report.drawer.container";
-import type { LastFMUserTrackInterface } from "@src/web/api/lastfm/types/response.types";
+import LastFMReportFlipCardTopTracksStateEncapsulation from "@src/web/reports/lastfm/top20.tracks/state/encapsulations/lastfm.report.encapsulation.top.tracks.flipcard.class";
+import type { LastFMUserTrackInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 
-describe("Top20TracksReport", () => {
-  let report: Report;
+describe(Query.name, () => {
+  let query: Query;
   const mockTrackData = [
     {
       mbid: "some_mbid1",
@@ -35,28 +35,28 @@ describe("Top20TracksReport", () => {
   };
 
   beforeEach(() => {
-    report = new Report();
+    query = new Query();
   });
 
   it("should have the correct instance values", () => {
-    expect(report.getAnalyticsReportType()).toBe("TOP20 TRACKS");
-    expect(report.getDrawerArtWorkAltTextTranslationKey()).toBe(
+    expect(query.getAnalyticsReportType()).toBe("TOP20 TRACKS");
+    expect(query.getDrawerArtWorkAltTextTranslationKey()).toBe(
       "top20Tracks.drawer.artWorkAltText"
     );
-    expect(report.getDrawerComponent()).toBe(FlipCardDrawerContainer);
+    expect(query.getDrawerComponent()).toBe(FlipCardDrawerContainer);
     expect(
-      report.getEncapsulatedReportState(mockReportProperties, _t)
-    ).toBeInstanceOf(UserTrackDataState);
-    expect(report.getRetryRoute()).toBe(routes.search.lastfm.top20tracks);
-    expect(report.getReportTranslationKey()).toBe("top20Tracks");
-    expect(report.getHookMethod()).toBe("top20tracks");
+      query.getEncapsulatedReportState(mockReportProperties, _t)
+    ).toBeInstanceOf(LastFMReportFlipCardTopTracksStateEncapsulation);
+    expect(query.getRetryRoute()).toBe(routes.search.lastfm.top20tracks);
+    expect(query.getReportTranslationKey()).toBe("top20Tracks");
+    expect(query.getHookMethod()).toBe("top20tracks");
   });
 
   describe("getNumberOfImageLoads", () => {
     let value: number;
 
     beforeEach(() => {
-      value = report.getNumberOfImageLoads(mockReportProperties);
+      value = query.getNumberOfImageLoads(mockReportProperties);
     });
 
     it("should match the expected value", () => {
@@ -68,7 +68,7 @@ describe("Top20TracksReport", () => {
     let value: LastFMUserTrackInterface[];
 
     beforeEach(() => {
-      value = report.getReportData(mockReportProperties);
+      value = query.getReportData(mockReportProperties);
     });
 
     it("should match the expected value", () => {

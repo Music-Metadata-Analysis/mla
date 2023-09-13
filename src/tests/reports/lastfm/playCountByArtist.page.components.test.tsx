@@ -10,7 +10,7 @@ import {
   mockUtilities,
 } from "@src/vendors/integrations/web.framework/__mocks__/vendor.ssr.mock";
 import ReportPage from "@src/web/reports/lastfm/generics/components/report.page/report.page";
-import PlayCountByArtistReport from "@src/web/reports/lastfm/playcount.artists/components/playcount.artists.container";
+import PlayCountByArtistReport from "@src/web/reports/lastfm/playcount.by.artist/components/playcount.by.artist.container";
 
 jest.mock("@src/vendors/integrations/web.framework/vendor.ssr");
 
@@ -20,7 +20,7 @@ jest.mock(
 );
 
 jest.mock(
-  "@src/web/reports/lastfm/playcount.artists/components/playcount.artists.container",
+  "@src/web/reports/lastfm/playcount.by.artist/components/playcount.by.artist.container",
   () =>
     require("@fixtures/react/parent").createComponent("PlayCountByArtistReport")
 );

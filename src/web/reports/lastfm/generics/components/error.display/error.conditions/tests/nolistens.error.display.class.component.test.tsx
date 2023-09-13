@@ -2,28 +2,28 @@ import { render, screen } from "@testing-library/react";
 import NoListensErrorConditionalDisplay from "../nolistens.error.display.class.component";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
-import MockStage2Report from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import MockStage2Report from "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/tests/fixtures/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
 import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.display.container";
-import type { LastFMUserStateBase } from "@src/types/user/state.types";
-import type { LastFMAggregateReportResponseInterface } from "@src/web/reports/lastfm/generics/types/state/aggregate.report.types";
-import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.artists/types/state/aggregate.report.types";
+import type { LastFMAggregateReportResponseInterface } from "@src/web/reports/lastfm/generics/types/state/lastfm.aggregate.report.types";
+import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
+import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.by.artist/types/state/aggregate.report.types";
 
 jest.mock("@src/web/ui/errors/components/display/error.display.container", () =>
   require("@fixtures/react/parent").createComponent("ErrorDisplayContainer")
 );
 
 describe("NoListensErrorConditionalDisplay", () => {
-  let mockUserProperties: LastFMUserStateBase;
-  let mockReport: MockReportClass;
+  let mockReportProperties: LastFMReportStateBase;
+  let mockQuery: MockQueryClass;
 
   beforeEach(() => {
-    mockUserProperties = JSON.parse(JSON.stringify(MockStage2Report));
-    mockReport = new MockReportClass();
+    mockReportProperties = JSON.parse(JSON.stringify(MockStage2Report));
+    mockQuery = new MockQueryClass();
   });
 
-  const getUserState = () =>
-    mockUserProperties.data.report
+  const getReportState = () =>
+    mockReportProperties.data.report
       .playCountByArtist as LastFMAggregateReportResponseInterface<
       PlayCountByArtistReportInterface[]
     >;
@@ -32,8 +32,8 @@ describe("NoListensErrorConditionalDisplay", () => {
     render(
       <NoListensErrorConditionalDisplay
         router={mockRouterHook}
-        report={mockReport}
-        userProperties={mockUserProperties}
+        query={mockQuery}
+        reportProperties={mockReportProperties}
       />
     );
   };
@@ -50,16 +50,16 @@ describe("NoListensErrorConditionalDisplay", () => {
 
       it("should push the router to the retryRoute", () => {
         expect(mockRouterHook.push).toBeCalledTimes(1);
-        expect(mockRouterHook.push).toBeCalledWith(mockReport.retryRoute);
+        expect(mockRouterHook.push).toBeCalledWith(mockQuery.retryRoute);
       });
     });
   };
 
   describe("when the user has no listening data in their report", () => {
     beforeEach(() => {
-      mockUserProperties.userName = "niall-byrne";
-      mockUserProperties.ready = true;
-      getUserState().content = [];
+      mockReportProperties.userName = "niall-byrne";
+      mockReportProperties.ready = true;
+      getReportState().content = [];
     });
 
     describe("when instantiated with a concrete implementation", () => {
@@ -69,7 +69,7 @@ describe("NoListensErrorConditionalDisplay", () => {
         let received: boolean;
 
         beforeEach(
-          () => (received = mockReport.queryUserHasNoData(mockUserProperties))
+          () => (received = mockQuery.queryUserHasNoData(mockReportProperties))
         );
 
         it("should return true", () => {
@@ -96,9 +96,9 @@ describe("NoListensErrorConditionalDisplay", () => {
 
   describe("when the user has listening data in their report", () => {
     beforeEach(() => {
-      mockUserProperties.userName = "niall-byrne";
-      mockUserProperties.ready = true;
-      getUserState().content = [
+      mockReportProperties.userName = "niall-byrne";
+      mockReportProperties.ready = true;
+      getReportState().content = [
         { name: "The Cure", playcount: 100, albums: [], fetched: true },
       ];
     });
@@ -110,7 +110,7 @@ describe("NoListensErrorConditionalDisplay", () => {
         let received: boolean;
 
         beforeEach(
-          () => (received = mockReport.queryUserHasNoData(mockUserProperties))
+          () => (received = mockQuery.queryUserHasNoData(mockReportProperties))
         );
 
         it("should return false", () => {

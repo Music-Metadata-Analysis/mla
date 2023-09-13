@@ -1,35 +1,35 @@
 import LastFMReportQueryAbstractBaseClass from "@src/web/reports/lastfm/generics/state/queries/bases/query.base.class";
 import type translations from "@locales/lastfm.json";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
-import type FlipCardUserState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
+import type LastFMReportFlipCardBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.flipcard.base.class";
 import type { LastFMFlipCardDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/flip.card.types";
 import type { FlipCardReportStateQueryInterface } from "@src/web/reports/lastfm/generics/types/state/queries/flip.card.types";
 import type { ImagesControllerHookType } from "@src/web/ui/images/state/controllers/images.controller.hook";
 import type { FC } from "react";
 
-export default abstract class FlipCardAbstractBaseReport<
-    ReportState extends FlipCardUserState,
+export default abstract class FlipCardAbstractBaseQuery<
+    ReportStateEncapsulation extends LastFMReportFlipCardBaseStateEncapsulation,
     ReportDataType extends unknown[]
   >
   extends LastFMReportQueryAbstractBaseClass<
-    ReportState,
+    ReportStateEncapsulation,
     ReportDataType,
-    LastFMFlipCardDrawerInterface<ReportState>
+    LastFMFlipCardDrawerInterface<ReportStateEncapsulation>
   >
   implements
     FlipCardReportStateQueryInterface<
-      ReportState,
+      ReportStateEncapsulation,
       ReportDataType,
-      LastFMFlipCardDrawerInterface<ReportState>
+      LastFMFlipCardDrawerInterface<ReportStateEncapsulation>
     >
 {
   protected abstract drawerComponent: FC<
-    LastFMFlipCardDrawerInterface<ReportState>
+    LastFMFlipCardDrawerInterface<ReportStateEncapsulation>
   >;
   protected abstract encapsulationClass: new (
-    reportProperties: ReportState["userProperties"],
+    reportProperties: ReportStateEncapsulation["reportProperties"],
     t: tFunctionType
-  ) => ReportState;
+  ) => ReportStateEncapsulation;
   protected abstract drawerArtWorkAltTextTranslationKey: string;
 
   protected abstract hookMethod: "top20albums" | "top20artists" | "top20tracks";
@@ -40,7 +40,7 @@ export default abstract class FlipCardAbstractBaseReport<
   }
 
   queryIsImagesLoaded(
-    reportProperties: ReportState["userProperties"],
+    reportProperties: ReportStateEncapsulation["reportProperties"],
     imagesController: ImagesControllerHookType
   ) {
     return !(
@@ -48,7 +48,9 @@ export default abstract class FlipCardAbstractBaseReport<
     );
   }
 
-  queryUserHasNoData(reportProperties: ReportState["userProperties"]) {
+  queryUserHasNoData(
+    reportProperties: ReportStateEncapsulation["reportProperties"]
+  ) {
     return (
       reportProperties.ready &&
       reportProperties.userName !== null &&
@@ -56,10 +58,10 @@ export default abstract class FlipCardAbstractBaseReport<
     );
   }
   abstract getNumberOfImageLoads(
-    reportProperties: ReportState["userProperties"]
+    reportProperties: ReportStateEncapsulation["reportProperties"]
   ): number;
 
   abstract getReportData(
-    reportProperties: ReportState["userProperties"]
+    reportProperties: ReportStateEncapsulation["reportProperties"]
   ): ReportDataType;
 }

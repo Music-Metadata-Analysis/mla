@@ -3,9 +3,9 @@ import Top20AlbumsContainer from "../top20.albums.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import FlipCardReportContainer from "@src/web/reports/lastfm/generics/components/report.component/flip.card/flip.card.report.container";
 import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
-import Top20AlbumsReport from "@src/web/reports/lastfm/top20.albums/state/queries/top20.albums.query.class";
+import Top20AlbumsQuery from "@src/web/reports/lastfm/top20.albums/state/queries/top20.albums.query.class";
 import ImagesControllerProvider from "@src/web/ui/images/state/providers/images.provider";
-import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
+import type { reportHookAsLastFMTop20AlbumReport } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 
 jest.mock(
   "@src/web/reports/lastfm/generics/components/report.component/flip.card/flip.card.report.container",
@@ -27,7 +27,7 @@ describe("Top20AlbumsReportContainer", () => {
       <ImagesControllerProvider>
         <Top20AlbumsContainer
           userName={mockUsername}
-          lastfm={mockLastFMHook as userHookAsLastFMTop20AlbumReport}
+          lastfm={mockLastFMHook as reportHookAsLastFMTop20AlbumReport}
         />
       </ImagesControllerProvider>
     );
@@ -40,7 +40,7 @@ describe("Top20AlbumsReportContainer", () => {
       {
         lastfm: mockLastFMHook,
         userName: mockUsername,
-        reportClass: Top20AlbumsReport,
+        queryClass: Top20AlbumsQuery,
       },
       0
     );

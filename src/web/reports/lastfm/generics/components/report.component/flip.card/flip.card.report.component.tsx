@@ -4,31 +4,34 @@ import FlipCardContainer from "@src/web/reports/generics/components/charts/flip.
 import ReportTitleContainer from "@src/web/reports/generics/components/report.title/report.title.container";
 import type { FlipCardControllerHookType } from "./controllers/flip.card.controller.hook";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
-import type UserState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
-import type FlipCardBaseReport from "@src/web/reports/lastfm/generics/state/queries/flip.card.query.base.class";
+import type LastFMReportFlipCardBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.flipcard.base.class";
+import type LastFMReportQueryAbstractBaseClass from "@src/web/reports/lastfm/generics/state/queries/flip.card.query.base.class";
 
 export interface FlipCardReportProps<
-  UserStateType extends UserState,
+  ReportEncapsulation extends LastFMReportFlipCardBaseStateEncapsulation,
   ReportDataType extends unknown[]
 > {
   flipCardController: FlipCardControllerHookType;
   imageIsLoaded: () => void;
-  report: FlipCardBaseReport<UserStateType, ReportDataType>;
-  reportStateInstance: UserStateType;
+  query: LastFMReportQueryAbstractBaseClass<
+    ReportEncapsulation,
+    ReportDataType
+  >;
+  reportStateInstance: ReportEncapsulation;
   t: tFunctionType;
 }
 
 export default function FlipCardReport<
-  UserStateType extends UserState,
+  ReportEncapsulation extends LastFMReportFlipCardBaseStateEncapsulation,
   ReportDataType extends unknown[]
 >({
   flipCardController,
   imageIsLoaded,
-  report,
+  query,
   reportStateInstance,
   t,
-}: FlipCardReportProps<UserStateType, ReportDataType>) {
-  const DrawerComponent = report.getDrawerComponent();
+}: FlipCardReportProps<ReportEncapsulation, ReportDataType>) {
+  const DrawerComponent = query.getDrawerComponent();
 
   return (
     <Flex
@@ -38,12 +41,12 @@ export default function FlipCardReport<
       pl={50}
       pr={50}
       style={{
-        display: reportStateInstance.userProperties.ready ? "inline" : "none",
+        display: reportStateInstance.reportProperties.ready ? "inline" : "none",
       }}
     >
       <DrawerComponent
         artWorkAltTranslatedText={t(
-          report.getDrawerArtWorkAltTextTranslationKey()
+          query.getDrawerArtWorkAltTextTranslationKey()
         )}
         fallbackImage={"/images/static.gif"}
         isOpen={flipCardController.drawer.state}
@@ -59,15 +62,15 @@ export default function FlipCardReport<
           maxWidth={`${settings.maxWidth}px`}
         >
           <ReportTitleContainer
-            title={t(`${String(report.getReportTranslationKey())}.title`)}
-            userName={reportStateInstance.userProperties.userName}
+            title={t(`${String(query.getReportTranslationKey())}.title`)}
+            userName={reportStateInstance.reportProperties.userName}
             size={settings.cardSize}
           />
-          {report
-            .getReportData(reportStateInstance.userProperties)
+          {query
+            .getReportData(reportStateInstance.reportProperties)
             .map((_, index) => {
               const noArtWorkString = t(
-                `${String(report.getReportTranslationKey())}.noArtWork`
+                `${String(query.getReportTranslationKey())}.noArtWork`
               );
 
               return (

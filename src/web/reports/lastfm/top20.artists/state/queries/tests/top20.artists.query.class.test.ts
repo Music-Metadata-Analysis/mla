@@ -1,12 +1,12 @@
-import Report from "../top20.artists.query.class";
+import Query from "../top20.artists.query.class";
 import routes from "@src/config/routes";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
-import UserArtistDataState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.artist.flipcard.report.class";
 import FlipCardDrawerContainer from "@src/web/reports/lastfm/generics/components/drawer/flip.card/flip.card.report.drawer.container";
-import type { LastFMUserArtistInterface } from "@src/web/api/lastfm/types/response.types";
+import LastFMReportFlipCardTopArtistsStateEncapsulation from "@src/web/reports/lastfm/top20.artists/state/encapsulations/lastfm.report.encapsulation.top.artists.flipcard.class";
+import type { LastFMUserArtistInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 
-describe("Top20ArtistsReport", () => {
-  let report: Report;
+describe(Query.name, () => {
+  let query: Query;
   const mockArtistData = [
     {
       mbid: "some_mbid1",
@@ -35,28 +35,28 @@ describe("Top20ArtistsReport", () => {
   };
 
   beforeEach(() => {
-    report = new Report();
+    query = new Query();
   });
 
   it("should have the correct instance values", () => {
-    expect(report.getAnalyticsReportType()).toBe("TOP20 ARTISTS");
-    expect(report.getDrawerArtWorkAltTextTranslationKey()).toBe(
+    expect(query.getAnalyticsReportType()).toBe("TOP20 ARTISTS");
+    expect(query.getDrawerArtWorkAltTextTranslationKey()).toBe(
       "top20Artists.drawer.artWorkAltText"
     );
-    expect(report.getDrawerComponent()).toBe(FlipCardDrawerContainer);
+    expect(query.getDrawerComponent()).toBe(FlipCardDrawerContainer);
     expect(
-      report.getEncapsulatedReportState(mockReportProperties, _t)
-    ).toBeInstanceOf(UserArtistDataState);
-    expect(report.getRetryRoute()).toBe(routes.search.lastfm.top20artists);
-    expect(report.getReportTranslationKey()).toBe("top20Artists");
-    expect(report.getHookMethod()).toBe("top20artists");
+      query.getEncapsulatedReportState(mockReportProperties, _t)
+    ).toBeInstanceOf(LastFMReportFlipCardTopArtistsStateEncapsulation);
+    expect(query.getRetryRoute()).toBe(routes.search.lastfm.top20artists);
+    expect(query.getReportTranslationKey()).toBe("top20Artists");
+    expect(query.getHookMethod()).toBe("top20artists");
   });
 
   describe("getNumberOfImageLoads", () => {
     let value: number;
 
     beforeEach(() => {
-      value = report.getNumberOfImageLoads(mockReportProperties);
+      value = query.getNumberOfImageLoads(mockReportProperties);
     });
 
     it("should match the expected value", () => {
@@ -68,7 +68,7 @@ describe("Top20ArtistsReport", () => {
     let value: LastFMUserArtistInterface[];
 
     beforeEach(() => {
-      value = report.getReportData(mockReportProperties);
+      value = query.getReportData(mockReportProperties);
     });
 
     it("should match the expected value", () => {

@@ -14,9 +14,9 @@ import SunBurstChart from "@src/web/reports/generics/components/charts/sunburst/
 import nullNode from "@src/web/reports/generics/state/charts/sunburst/null.node";
 import mockSunBurstControllerHook from "@src/web/reports/generics/state/controllers/sunburst/__mocks__/sunburst.controller.hook.mock";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
-import type UserState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
+import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
 import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
+import type LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Box", "Flex"])
@@ -49,14 +49,16 @@ jest.mock(
 );
 
 describe("SunBurstReport", () => {
-  let currentProps: SunBurstReportProps<UserState<unknown>>;
+  let currentProps: SunBurstReportProps<
+    LastFMReportSunBurstBaseStateEncapsulation<unknown>
+  >;
   let mockVisible: boolean;
 
   const expectedBreakPoints = [250, 250, 300, 500, 600, 600];
   const mockNode = { data: { name: "mockNode", entity: "unknown" as const } };
-  const mockReport = new MockReportClass();
-  const mockUserState = {
-    userProperties: {
+  const mockReport = new MockQueryClass();
+  const mockReportState = {
+    reportProperties: {
       data: {
         report: {
           playcount: 100,
@@ -65,7 +67,7 @@ describe("SunBurstReport", () => {
       },
       userName: "niall-byrne",
     },
-  } as unknown as UserState<unknown>;
+  } as unknown as LastFMReportSunBurstBaseStateEncapsulation<unknown>;
 
   const mockLastFMt = jest.fn((key: string) => `lastFMt(${key})`);
   const mockSunBurstT = jest.fn((key: string) => `sunBurstT(${key})`);
@@ -88,9 +90,9 @@ describe("SunBurstReport", () => {
 
   const arrangeProps = () =>
     (currentProps = {
-      encapsulatedReportState: mockUserState,
+      encapsulatedReportState: mockReportState,
       lastFMt: mockLastFMt,
-      report: mockReport,
+      query: mockReport,
       sunBurstController: mockSunBurstControllerHook,
       sunBurstLayoutController: mockSunBurstLayoutControllerHook,
       sunBurstT: mockSunBurstT,
@@ -238,7 +240,7 @@ describe("SunBurstReport", () => {
           SunBurstTitlePanel,
           {
             breakPoints: expectedBreakPoints,
-            userName: mockUserState.userProperties.userName,
+            userName: mockReportState.reportProperties.userName,
             title: mockLastFMt(mockReport.getReportTranslationKey() + ".title"),
           },
           0,
@@ -315,7 +317,7 @@ describe("SunBurstReport", () => {
           {
             breakPoints: expectedBreakPoints,
             data: mockReport.getSunBurstData(
-              mockUserState.userProperties,
+              mockReportState.reportProperties,
               mockLastFMt(
                 `${String(mockReport.getReportTranslationKey())}.rootTag`
               ),

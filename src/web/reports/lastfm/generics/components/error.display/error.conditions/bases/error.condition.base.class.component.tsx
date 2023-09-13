@@ -1,14 +1,15 @@
 import ErrorBase from "./error.base.class.component";
-import type { LastFMUserStateBase } from "@src/types/user/state.types";
+import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 abstract class ErrorConditionBase<ReportType, DrawerProps> extends ErrorBase<
   ReportType,
   DrawerProps
 > {
-  abstract error: LastFMUserStateBase["error"];
+  abstract error: LastFMReportStateBase["error"];
 
   render() {
-    if (this.error === this.props.userProperties.error) return this.component();
+    if (this.error === this.props.reportProperties.error)
+      return this.component();
     return null;
   }
 

@@ -1,35 +1,35 @@
-import type { userDispatchType } from "@src/types/user/context.types";
-import type { LastFMUserStateBase } from "@src/types/user/state.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
-import type LastFMSunburstDataClient from "@src/web/api/lastfm/data/sunburst/sunburst.client.base.class";
-import type UserSunBurstReportBaseState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type ReportBaseState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/user.state.base.class";
+import type LastFMSunburstDataClient from "@src/web/api/lastfm/clients/bases/lastfm.api.sunburst.client.base.class";
 import type {
   d3Node,
   SunBurstData,
 } from "@src/web/reports/generics/types/charts/sunburst.types";
+import type { reportDispatchType } from "@src/web/reports/generics/types/state/providers/report.context.types";
 import type SunBurstBaseNodeEncapsulation from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
+import type LastFMReportBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/bases/lastfm.report.encapsulation.base.class";
+import type LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
+import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 import type { LastFMReportStateQueryInterface } from "@src/web/reports/lastfm/generics/types/state/queries/base.types";
 import type { BillBoardProgressBarDetails } from "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 
 export type SunBurstReportStateQueryConstructor<AggregateReportType> = new (
-  dispatch: userDispatchType,
+  dispatch: reportDispatchType,
   eventCreator: EventCreatorType,
-  encapsulatedState: UserSunBurstReportBaseState<AggregateReportType>
+  encapsulatedState: LastFMReportSunBurstBaseStateEncapsulation<AggregateReportType>
 ) => LastFMSunburstDataClient<AggregateReportType>;
 
 export type SunBurstReportStateEncapsulationConstructor<AggregateReportType> =
   new (
-    state: LastFMUserStateBase
-  ) => UserSunBurstReportBaseState<AggregateReportType>;
+    state: LastFMReportStateBase
+  ) => LastFMReportSunBurstBaseStateEncapsulation<AggregateReportType>;
 
 export interface SunBurstReportStateQueryInterface<
-  ReportState extends ReportBaseState,
+  ReportEncapsulation extends LastFMReportBaseStateEncapsulation,
   CompletedReportDataType,
   DrawerComponentProps
 > extends LastFMReportStateQueryInterface<
-    ReportState,
+    ReportEncapsulation,
     CompletedReportDataType,
     DrawerComponentProps
   > {
@@ -42,19 +42,21 @@ export interface SunBurstReportStateQueryInterface<
   getEntityTopLevel(): SunBurstData["entity"];
 
   getProgressPercentage(
-    reportProperties: ReportState["userProperties"]
+    reportProperties: ReportEncapsulation["reportProperties"]
   ): number;
 
   getProgressDetails(
-    reportProperties: ReportState["userProperties"],
+    reportProperties: ReportEncapsulation["reportProperties"],
     t: tFunctionType
   ): BillBoardProgressBarDetails;
 
   getSunBurstData(
-    reportProperties: ReportState["userProperties"],
+    reportProperties: ReportEncapsulation["reportProperties"],
     rootTag: string,
     remainderTag: string
   ): SunBurstData;
 
-  queryIsResumable(reportProperties: ReportState["userProperties"]): boolean;
+  queryIsResumable(
+    reportProperties: ReportEncapsulation["reportProperties"]
+  ): boolean;
 }

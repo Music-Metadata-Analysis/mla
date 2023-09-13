@@ -1,8 +1,8 @@
-import FlipCardBaseReport from "../../flip.card.query.base.class";
+import FlipCardAbstractBaseQuery from "../../flip.card.query.base.class";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import routes from "@src/config/routes";
-import UserAlbumState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.album.flipcard.report.class";
-import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/response.types";
+import LastFMReportFlipCardTopAlbumsStateEncapsulation from "@src/web/reports/lastfm/top20.albums/state/encapsulations/lastfm.report.encapsulation.top.albums.flipcard.class";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 
 export const mockImageUrl = "http://someurl";
 
@@ -10,7 +10,7 @@ export const mockGetReportArtWork = jest.fn(
   (index: number, size: string) => `${mockImageUrl}/${index}/${size}`
 );
 
-export class MockUserStateEncapsulation extends UserAlbumState {
+export class MockReportStateEncapsulation extends LastFMReportFlipCardTopAlbumsStateEncapsulation {
   getArtwork = jest.fn((index: number, size: string) =>
     mockGetReportArtWork(index, size)
   );
@@ -18,25 +18,27 @@ export class MockUserStateEncapsulation extends UserAlbumState {
 
 export const MockDrawerComponent = createSimpleComponent("DrawerComponent");
 
-export class MockReportClass extends FlipCardBaseReport<
-  MockUserStateEncapsulation,
+export class MockQueryClass extends FlipCardAbstractBaseQuery<
+  MockReportStateEncapsulation,
   LastFMTopAlbumsReportResponseInterface["albums"]
 > {
   analyticsReportType = "TOP20 ALBUMS" as const;
   drawerArtWorkAltTextTranslationKey = "top20Albums.drawer.artWorkAltText";
   drawerComponent = MockDrawerComponent;
-  encapsulationClass = MockUserStateEncapsulation;
+  encapsulationClass = MockReportStateEncapsulation;
   hookMethod = "top20albums" as const;
   retryRoute = routes.search.lastfm.top20albums;
   translationKey = "top20Albums" as const;
 
   getNumberOfImageLoads = (
-    userProperties: MockUserStateEncapsulation["userProperties"]
+    reportProperties: MockReportStateEncapsulation["reportProperties"]
   ) => {
-    return this.getReportData(userProperties).length * 2;
+    return this.getReportData(reportProperties).length * 2;
   };
 
-  getReportData(userProperties: MockUserStateEncapsulation["userProperties"]) {
-    return userProperties.data.report.albums;
+  getReportData(
+    reportProperties: MockReportStateEncapsulation["reportProperties"]
+  ) {
+    return reportProperties.data.report.albums;
   }
 }

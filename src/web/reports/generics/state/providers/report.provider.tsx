@@ -1,29 +1,29 @@
 import React, { useReducer, createContext } from "react";
 import InitialValues from "./report.initial";
-import { UserReducer } from "./report.reducer";
+import { ReportReducer } from "./report.reducer";
 
-export const UserContext = createContext({ ...InitialValues });
+export const ReportContext = createContext({ ...InitialValues });
 
-interface UserProviderProps {
+interface ReportProviderProps {
   children: React.ReactNode;
 }
 
-const UserProvider = ({ children }: UserProviderProps) => {
-  const [userProperties, dispatch] = useReducer(
-    UserReducer,
-    InitialValues.userProperties
+const ReportProvider = ({ children }: ReportProviderProps) => {
+  const [reportProperties, dispatch] = useReducer(
+    ReportReducer,
+    InitialValues.reportProperties
   );
 
   return (
-    <UserContext.Provider
+    <ReportContext.Provider
       value={{
-        userProperties,
+        reportProperties,
         dispatch,
       }}
     >
       {children}
-    </UserContext.Provider>
+    </ReportContext.Provider>
   );
 };
 
-export default UserProvider;
+export default ReportProvider;

@@ -15,9 +15,9 @@ import mockMetricsHook from "@src/web/metrics/collection/state/hooks/__mocks__/m
 import mockSunBurstControllerHook from "@src/web/reports/generics/state/controllers/sunburst/__mocks__/sunburst.controller.hook.mock";
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
 import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
 import BillBoardProgressBar from "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
-import type { userHookAsLastFMPlayCountByArtistReport } from "@src/types/user/hook.types";
+import type { reportHookAsLastFMPlayCountByArtistReport } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
@@ -52,9 +52,9 @@ jest.mock("../sunburst.report.component", () =>
 );
 
 describe("SunBurstReportContainer", () => {
-  let currentLastFMHookState: userHookAsLastFMPlayCountByArtistReport;
+  let currentLastFMHookState: reportHookAsLastFMPlayCountByArtistReport;
 
-  const mockReport = new MockReportClass();
+  const mockQuery = new MockQueryClass();
   const mockUsername = "mockUsername";
   const mockLastFmT = new MockUseTranslation("lastfm").t;
   const mockSunBurstT = new MockUseTranslation("sunburst").t;
@@ -69,17 +69,17 @@ describe("SunBurstReportContainer", () => {
       <SunBurstReportContainer
         userName={mockUsername}
         lastfm={currentLastFMHookState}
-        reportClass={MockReportClass}
+        queryClass={MockQueryClass}
       />
     );
   };
 
   const resetHookStates = () => {
     currentLastFMHookState =
-      mockLastFMHook as userHookAsLastFMPlayCountByArtistReport;
+      mockLastFMHook as reportHookAsLastFMPlayCountByArtistReport;
 
-    currentLastFMHookState.userProperties = JSON.parse(
-      JSON.stringify(mockLastFMHook.userProperties)
+    currentLastFMHookState.reportProperties = JSON.parse(
+      JSON.stringify(mockLastFMHook.reportProperties)
     );
 
     jest
@@ -92,10 +92,8 @@ describe("SunBurstReportContainer", () => {
     describe("useEffect (data fetching)", () => {
       it("should clear the state and start a fetch on component mount", () => {
         expect(currentLastFMHookState.clear).toBeCalledTimes(1);
-        expect(currentLastFMHookState[mockReport.hookMethod]).toBeCalledTimes(
-          1
-        );
-        expect(currentLastFMHookState[mockReport.hookMethod]).toBeCalledWith(
+        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledTimes(1);
+        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
           mockUsername
         );
       });
@@ -111,16 +109,14 @@ describe("SunBurstReportContainer", () => {
     describe("useEffect (report resume)", () => {
       it("should clear the state and start a fetch on component mount", () => {
         expect(currentLastFMHookState.clear).toBeCalledTimes(1);
-        expect(currentLastFMHookState[mockReport.hookMethod]).toBeCalledWith(
+        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
           mockUsername
         );
       });
 
       it("should resume the building the report", () => {
-        expect(currentLastFMHookState[mockReport.hookMethod]).toBeCalledTimes(
-          2
-        );
-        expect(currentLastFMHookState[mockReport.hookMethod]).toBeCalledWith(
+        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledTimes(2);
+        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
           mockUsername
         );
       });
@@ -141,7 +137,7 @@ describe("SunBurstReportContainer", () => {
       it("should trigger an analytics event for the selected node", () => {
         expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
         expect(mockAnalyticsHook.event).toBeCalledWith(
-          mockReport
+          mockQuery
             .getEncapsulatedNode(mockSunBurstControllerHook.node.selected)
             .getDrawerEvent()
         );
@@ -172,7 +168,7 @@ describe("SunBurstReportContainer", () => {
     it("should trigger an analytics event for report presentation", () => {
       expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
       expect(mockAnalyticsHook.event).toBeCalledWith(
-        Events.LastFM.ReportPresented(mockReport.analyticsReportType)
+        Events.LastFM.ReportPresented(mockQuery.analyticsReportType)
       );
     });
   };
@@ -181,8 +177,8 @@ describe("SunBurstReportContainer", () => {
     it("should call the LastFMErrorDisplayContainer with the expected props", () => {
       expect(LastFMErrorDisplayContainer).toBeCalledTimes(1);
       checkMockCall(LastFMErrorDisplayContainer, {
-        report: mockReport,
-        userProperties: currentLastFMHookState.userProperties,
+        query: mockQuery,
+        reportProperties: currentLastFMHookState.reportProperties,
       });
     });
   };
@@ -191,15 +187,15 @@ describe("SunBurstReportContainer", () => {
     it("should call the BillBoardProgressBar with the expected props", () => {
       expect(BillBoardProgressBar).toBeCalledTimes(1);
       checkMockCall(BillBoardProgressBar, {
-        details: mockReport.getProgressDetails(
-          currentLastFMHookState.userProperties,
+        details: mockQuery.getProgressDetails(
+          currentLastFMHookState.reportProperties,
           mockSunBurstT
         ),
-        titleText: _t(lastfm[mockReport.translationKey].communication),
-        value: mockReport.getProgressPercentage(
-          currentLastFMHookState.userProperties
+        titleText: _t(lastfm[mockQuery.translationKey].communication),
+        value: mockQuery.getProgressPercentage(
+          currentLastFMHookState.reportProperties
         ),
-        visible: !currentLastFMHookState.userProperties.ready,
+        visible: !currentLastFMHookState.reportProperties.ready,
       });
     });
 
@@ -214,15 +210,15 @@ describe("SunBurstReportContainer", () => {
       checkMockCall(
         SunBurstReport,
         {
-          encapsulatedReportState: mockReport.getEncapsulatedReportState(
-            currentLastFMHookState.userProperties
+          encapsulatedReportState: mockQuery.getEncapsulatedReportState(
+            currentLastFMHookState.reportProperties
           ),
           lastFMt: mockLastFmT,
-          report: mockReport,
+          query: mockQuery,
           sunBurstT: mockSunBurstT,
           sunBurstController: mockSunBurstControllerHook,
           sunBurstLayoutController: mockSunBurstLayoutControllerHook,
-          visible: currentLastFMHookState.userProperties.ready,
+          visible: currentLastFMHookState.reportProperties.ready,
         },
         0,
         ["update"],
@@ -230,7 +226,7 @@ describe("SunBurstReportContainer", () => {
         [
           {
             name: "encapsulatedReportState",
-            class: mockReport.encapsulationClass,
+            class: mockQuery.encapsulationClass,
           },
         ]
       );
@@ -239,16 +235,16 @@ describe("SunBurstReportContainer", () => {
 
   describe("when the data state is ready", () => {
     beforeEach(() => {
-      currentLastFMHookState.userProperties.ready = false;
+      currentLastFMHookState.reportProperties.ready = false;
     });
 
     describe("when the report is complete", () => {
       beforeEach(() => {
-        currentLastFMHookState.userProperties.inProgress = false;
-        mockReport.getReportData(
-          currentLastFMHookState.userProperties
+        currentLastFMHookState.reportProperties.inProgress = false;
+        mockQuery.getReportData(
+          currentLastFMHookState.reportProperties
         ).status.complete = true;
-        currentLastFMHookState.userProperties.error = null;
+        currentLastFMHookState.reportProperties.error = null;
 
         arrange();
       });
@@ -264,20 +260,20 @@ describe("SunBurstReportContainer", () => {
 
   describe("when the data state is NOT ready", () => {
     beforeEach(() => {
-      currentLastFMHookState.userProperties.ready = false;
+      currentLastFMHookState.reportProperties.ready = false;
     });
 
     describe("when the report is NOT complete", () => {
       beforeEach(() => {
-        mockReport.getReportData(
-          currentLastFMHookState.userProperties
+        mockQuery.getReportData(
+          currentLastFMHookState.reportProperties
         ).status.complete = false;
       });
 
       describe("and is resumable", () => {
         beforeEach(() => {
-          currentLastFMHookState.userProperties.inProgress = false;
-          currentLastFMHookState.userProperties.error = "TimeoutFetch";
+          currentLastFMHookState.reportProperties.inProgress = false;
+          currentLastFMHookState.reportProperties.error = "TimeoutFetch";
 
           arrange();
         });
@@ -290,8 +286,8 @@ describe("SunBurstReportContainer", () => {
 
       describe("and is NOT resumable", () => {
         beforeEach(() => {
-          currentLastFMHookState.userProperties.inProgress = false;
-          currentLastFMHookState.userProperties.error = "NotFoundFetch";
+          currentLastFMHookState.reportProperties.inProgress = false;
+          currentLastFMHookState.reportProperties.error = "NotFoundFetch";
 
           arrange();
         });
@@ -304,12 +300,12 @@ describe("SunBurstReportContainer", () => {
 
       describe("when the data is ABOUT to be complete", () => {
         beforeEach(() => {
-          currentLastFMHookState.userProperties.inProgress = false;
-          mockReport.getReportData(
-            currentLastFMHookState.userProperties
+          currentLastFMHookState.reportProperties.inProgress = false;
+          mockQuery.getReportData(
+            currentLastFMHookState.reportProperties
           ).status.complete = true;
-          currentLastFMHookState.userProperties.ready = false;
-          currentLastFMHookState.userProperties.error = null;
+          currentLastFMHookState.reportProperties.ready = false;
+          currentLastFMHookState.reportProperties.error = null;
 
           arrange();
         });

@@ -2,9 +2,9 @@ import { render, screen } from "@testing-library/react";
 import AuthenticationErrorConditionalDisplay from "../authentication.error.display.class.component";
 import Authentication from "@src/web/authentication/sign.in/components/authentication.container";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
-import MockStage2Report from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/playcount.by.artist/tests/fixtures/user.state.playcount.by.artist.sunburst.stage.2.json";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
-import type { LastFMUserStateBase } from "@src/types/user/state.types";
+import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import MockStage2Report from "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/tests/fixtures/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
+import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 jest.mock(
   "@src/web/authentication/sign.in/components/authentication.container",
@@ -13,27 +13,27 @@ jest.mock(
 );
 
 describe("AuthenticationErrorConditionalDisplay", () => {
-  let mockUserProperties: LastFMUserStateBase;
-  let mockReport: MockReportClass;
+  let mockReportProperties: LastFMReportStateBase;
+  let mockQuery: MockQueryClass;
   const errorType = "UnauthorizedFetch";
 
   beforeEach(() => {
-    mockUserProperties = JSON.parse(JSON.stringify(MockStage2Report));
-    mockReport = new MockReportClass();
+    mockReportProperties = JSON.parse(JSON.stringify(MockStage2Report));
+    mockQuery = new MockQueryClass();
   });
 
   const arrange = () => {
     render(
       <AuthenticationErrorConditionalDisplay
         router={mockRouterHook}
-        report={mockReport}
-        userProperties={mockUserProperties}
+        query={mockQuery}
+        reportProperties={mockReportProperties}
       />
     );
   };
 
-  describe("when userProperties prop has a matching error", () => {
-    beforeEach(() => (mockUserProperties.error = errorType));
+  describe("when reportProperties prop has a matching error", () => {
+    beforeEach(() => (mockReportProperties.error = errorType));
 
     describe("when instantiated with a concrete implementation", () => {
       beforeEach(() => arrange());
@@ -50,8 +50,8 @@ describe("AuthenticationErrorConditionalDisplay", () => {
     });
   });
 
-  describe("when userProperties prop has a non matching error", () => {
-    beforeEach(() => (mockUserProperties.error = "DataPointFailureFetch"));
+  describe("when reportProperties prop has a non matching error", () => {
+    beforeEach(() => (mockReportProperties.error = "DataPointFailureFetch"));
 
     describe("when instantiated with a concrete implementation", () => {
       beforeEach(() => arrange());

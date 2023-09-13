@@ -6,17 +6,17 @@ import RateLimitedErrorConditionalDisplay from "./error.conditions/ratelimited.e
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
 import type ErrorBase from "./error.conditions/bases/error.base.class.component";
 import type { ErrorBaseProps } from "./error.conditions/bases/error.base.class.component";
-import type { LastFMUserStateBase } from "@src/types/user/state.types";
-import type ReportStateBase from "@src/web/reports/generics/state/providers/encapsulations/lastfm/user.state.base.class";
+import type ReportEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/bases/lastfm.report.encapsulation.base.class";
+import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 import type { LastFMReportStateQueryInterface } from "@src/web/reports/lastfm/generics/types/state/queries/base.types";
 
 export type ErrorConditionProps<ReportType, DrawerProps> = {
-  report: LastFMReportStateQueryInterface<
-    ReportStateBase,
+  query: LastFMReportStateQueryInterface<
+    ReportEncapsulation,
     ReportType,
     DrawerProps
   >;
-  userProperties: LastFMUserStateBase;
+  reportProperties: LastFMReportStateBase;
 };
 
 type LastFMErrorDisplayContainerProps<ReportType, DrawerProps> =
@@ -26,8 +26,8 @@ type LastFMErrorDisplayContainerProps<ReportType, DrawerProps> =
 
 export default function LastFMErrorDisplayContainer<ReportType, DrawerProps>({
   children,
-  report,
-  userProperties,
+  query,
+  reportProperties,
 }: LastFMErrorDisplayContainerProps<ReportType, DrawerProps>) {
   const router = useRouter();
 
@@ -47,9 +47,9 @@ export default function LastFMErrorDisplayContainer<ReportType, DrawerProps>({
   const checkErrorConditions = () => {
     for (const ErrorComponent of ErrorConditions) {
       const rendered = new ErrorComponent({
-        report,
+        query,
         router,
-        userProperties,
+        reportProperties,
       }).render();
       if (rendered) return <>{rendered}</>;
     }

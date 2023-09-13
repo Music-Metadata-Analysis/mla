@@ -1,13 +1,13 @@
 import type translations from "@locales/lastfm.json";
-import type { userHookAsLastFM } from "@src/types/user/hook.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { IntegrationRequestType } from "@src/web/analytics/collection/types/analytics.types";
-import type ReportBaseState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/user.state.base.class";
+import type LastFMReportBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/bases/lastfm.report.encapsulation.base.class";
+import type { reportHookAsLastFM } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 import type { ImagesControllerHookType } from "@src/web/ui/images/state/controllers/images.controller.hook";
 import type { FC } from "react";
 
 export interface LastFMReportStateQueryInterface<
-  ReportState extends ReportBaseState,
+  ReportEncapsulation extends LastFMReportBaseStateEncapsulation,
   CompletedReportDataType,
   DrawerComponentProps
 > {
@@ -16,9 +16,9 @@ export interface LastFMReportStateQueryInterface<
   getDrawerComponent(): FC<DrawerComponentProps>;
 
   getEncapsulatedReportState(
-    reportProperties: ReportState["userProperties"],
+    reportProperties: ReportEncapsulation["reportProperties"],
     t?: tFunctionType
-  ): ReportState;
+  ): ReportEncapsulation;
 
   getHookMethod(): string;
 
@@ -26,18 +26,22 @@ export interface LastFMReportStateQueryInterface<
 
   getReportTranslationKey(): keyof typeof translations;
 
-  queryIsDataReady(reportProperties: ReportState["userProperties"]): boolean;
+  queryIsDataReady(
+    reportProperties: ReportEncapsulation["reportProperties"]
+  ): boolean;
 
   queryIsImagesLoaded?: (
-    reportProperties: ReportState["userProperties"],
+    reportProperties: ReportEncapsulation["reportProperties"],
     imagesController: ImagesControllerHookType
   ) => boolean;
 
-  queryUserHasNoData(reportProperties: ReportState["userProperties"]): boolean;
+  queryUserHasNoData(
+    reportProperties: ReportEncapsulation["reportProperties"]
+  ): boolean;
 
-  startDataFetch(user: userHookAsLastFM, userName: string): void;
+  startDataFetch(user: reportHookAsLastFM, userName: string): void;
 
   getReportData(
-    reportProperties: ReportState["userProperties"]
+    reportProperties: ReportEncapsulation["reportProperties"]
   ): CompletedReportDataType;
 }

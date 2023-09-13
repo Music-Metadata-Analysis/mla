@@ -14,10 +14,10 @@ import mockMetricsHook from "@src/web/metrics/collection/state/hooks/__mocks__/m
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
 import mockFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
-import { MockReportClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.last.fm.query.class";
+import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.last.fm.query.class";
 import BillBoardSpinner from "@src/web/ui/generics/components/billboard/billboard.spinner/billboard.spinner.component";
 import mockImageController from "@src/web/ui/images/state/controllers/__mocks__/images.controller.hook.mock";
-import type { userHookAsLastFMTop20AlbumReport } from "@src/types/user/hook.types";
+import type { reportHookAsLastFMTop20AlbumReport } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
@@ -51,10 +51,10 @@ jest.mock("../flip.card.report.component", () =>
 );
 
 describe("FlipCardReportContainer", () => {
-  let currentLastFMHookState: userHookAsLastFMTop20AlbumReport;
+  let currentLastFMHookState: reportHookAsLastFMTop20AlbumReport;
 
   const mockUserName = "niall-byrne";
-  const mockReport = new MockReportClass();
+  const mockQuery = new MockQueryClass();
   const mockReportState = {
     albums: [
       {
@@ -82,7 +82,7 @@ describe("FlipCardReportContainer", () => {
       <FlipCardReportContainer
         userName={mockUserName}
         lastfm={currentLastFMHookState}
-        reportClass={MockReportClass}
+        queryClass={MockQueryClass}
       />
     );
   };
@@ -92,10 +92,12 @@ describe("FlipCardReportContainer", () => {
 
     currentLastFMHookState = {
       ...mockLastFMHook,
-      userProperties: JSON.parse(JSON.stringify(mockLastFMHook.userProperties)),
+      reportProperties: JSON.parse(
+        JSON.stringify(mockLastFMHook.reportProperties)
+      ),
     };
-    currentLastFMHookState.userProperties.userName = mockUserName;
-    currentLastFMHookState.userProperties.data.report = mockReportState;
+    currentLastFMHookState.reportProperties.userName = mockUserName;
+    currentLastFMHookState.reportProperties.data.report = mockReportState;
   };
 
   const checkEffectHookImageCountReset = () => {
@@ -115,10 +117,8 @@ describe("FlipCardReportContainer", () => {
       });
 
       it("should start a fetch on component mount", () => {
-        expect(currentLastFMHookState[mockReport.hookMethod]).toBeCalledTimes(
-          1
-        );
-        expect(currentLastFMHookState[mockReport.hookMethod]).toBeCalledWith(
+        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledTimes(1);
+        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
           mockUserName
         );
       });
@@ -138,14 +138,12 @@ describe("FlipCardReportContainer", () => {
       });
 
       it("should start data fetching, and attempt to resume a timed out fetch", () => {
-        expect(currentLastFMHookState[mockReport.hookMethod]).toBeCalledTimes(
-          2
-        );
+        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledTimes(2);
         expect(
-          currentLastFMHookState[mockReport.hookMethod]
+          currentLastFMHookState[mockQuery.hookMethod]
         ).toHaveBeenNthCalledWith(1, mockUserName);
         expect(
-          currentLastFMHookState[mockReport.hookMethod]
+          currentLastFMHookState[mockQuery.hookMethod]
         ).toHaveBeenNthCalledWith(2, mockUserName);
       });
 
@@ -171,7 +169,7 @@ describe("FlipCardReportContainer", () => {
       it("should generate the correct analytics event", () => {
         expect(mockAnalyticsHook.event).toBeCalledTimes(1);
         expect(mockAnalyticsHook.event).toBeCalledWith(
-          Events.LastFM.ReportPresented(mockReport.analyticsReportType)
+          Events.LastFM.ReportPresented(mockQuery.analyticsReportType)
         );
       });
     });
@@ -199,13 +197,13 @@ describe("FlipCardReportContainer", () => {
       checkMockCall(
         LastFMErrorDisplayContainer,
         {
-          report: mockReport,
-          userProperties: currentLastFMHookState.userProperties,
+          query: mockQuery,
+          reportProperties: currentLastFMHookState.reportProperties,
         },
         0,
         [],
         false,
-        [{ name: "report", class: MockReportClass }]
+        [{ name: "query", class: MockQueryClass }]
       );
     });
   };
@@ -214,23 +212,23 @@ describe("FlipCardReportContainer", () => {
     it("should render the BillBoardProgressBar with the expected props", () => {
       expect(BillBoardSpinner).toBeCalledTimes(1);
       checkMockCall(BillBoardSpinner, {
-        titleText: _t(lastfm[mockReport.translationKey].communication),
-        visible: !currentLastFMHookState.userProperties.ready,
+        titleText: _t(lastfm[mockQuery.translationKey].communication),
+        visible: !currentLastFMHookState.reportProperties.ready,
       });
     });
   };
 
   const checkFlipCardReportProps = () => {
-    it("should render the SunBurstReport with the correct props", () => {
+    it("should render the FlipCardReport with the correct props", () => {
       expect(FlipCardReport).toBeCalledTimes(1);
       checkMockCall(
         FlipCardReport,
         {
           flipCardController: mockFlipCardController,
           imageIsLoaded: mockImageController.load,
-          report: mockReport,
-          reportStateInstance: mockReport.getEncapsulatedReportState(
-            currentLastFMHookState.userProperties,
+          query: mockQuery,
+          reportStateInstance: mockQuery.getEncapsulatedReportState(
+            currentLastFMHookState.reportProperties,
             mockT
           ),
           t: mockT,
@@ -239,10 +237,10 @@ describe("FlipCardReportContainer", () => {
         ["update"],
         false,
         [
-          { name: "report", class: MockReportClass },
+          { name: "query", class: MockQueryClass },
           {
             name: "reportStateInstance",
-            class: mockReport.encapsulationClass,
+            class: mockQuery.encapsulationClass,
           },
         ]
       );
@@ -257,13 +255,13 @@ describe("FlipCardReportContainer", () => {
 
   describe("when there is no timeout error", () => {
     beforeEach(() => {
-      currentLastFMHookState.userProperties.error = null;
+      currentLastFMHookState.reportProperties.error = null;
     });
 
     describe("when the report is ready", () => {
       beforeEach(() => {
-        currentLastFMHookState.userProperties.inProgress = false;
-        currentLastFMHookState.userProperties.ready = true;
+        currentLastFMHookState.reportProperties.inProgress = false;
+        currentLastFMHookState.reportProperties.ready = true;
 
         arrange();
       });
@@ -278,17 +276,17 @@ describe("FlipCardReportContainer", () => {
 
     describe("when the report is NOT ready", () => {
       beforeEach(() => {
-        currentLastFMHookState.userProperties.ready = false;
+        currentLastFMHookState.reportProperties.ready = false;
       });
 
       describe("when the report is in progress", () => {
         beforeEach(() => {
-          currentLastFMHookState.userProperties.inProgress = true;
+          currentLastFMHookState.reportProperties.inProgress = true;
         });
 
         describe("when all images are not yet loaded", () => {
           beforeEach(() => {
-            currentLastFMHookState.userProperties.data.report.albums = [
+            currentLastFMHookState.reportProperties.data.report.albums = [
               { name: "mockAlbum1" },
               { name: "mockAlbum2" },
             ];
@@ -307,7 +305,7 @@ describe("FlipCardReportContainer", () => {
 
         describe("when all images are loaded", () => {
           beforeEach(() => {
-            currentLastFMHookState.userProperties.data.report.albums = [
+            currentLastFMHookState.reportProperties.data.report.albums = [
               { name: "mockAlbum1" },
               { name: "mockAlbum2" },
             ];
@@ -327,12 +325,12 @@ describe("FlipCardReportContainer", () => {
 
       describe("when the report is NOT in progress", () => {
         beforeEach(() => {
-          currentLastFMHookState.userProperties.inProgress = false;
+          currentLastFMHookState.reportProperties.inProgress = false;
         });
 
         describe("when all images are not yet loaded", () => {
           beforeEach(() => {
-            currentLastFMHookState.userProperties.data.report.albums = [
+            currentLastFMHookState.reportProperties.data.report.albums = [
               { name: "mockAlbum1" },
               { name: "mockAlbum2" },
             ];
@@ -351,7 +349,7 @@ describe("FlipCardReportContainer", () => {
 
         describe("when all images are loaded", () => {
           beforeEach(() => {
-            currentLastFMHookState.userProperties.data.report.albums = [
+            currentLastFMHookState.reportProperties.data.report.albums = [
               { name: "mockAlbum1" },
               { name: "mockAlbum2" },
             ];
@@ -373,7 +371,7 @@ describe("FlipCardReportContainer", () => {
 
   describe("when there is a timeout error", () => {
     beforeEach(() => {
-      currentLastFMHookState.userProperties.error = "TimeoutFetch";
+      currentLastFMHookState.reportProperties.error = "TimeoutFetch";
 
       arrange();
     });

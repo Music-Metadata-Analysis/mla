@@ -1,4 +1,4 @@
-import type FlipCardReportStateBase from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.base.flipcard.report.class";
+import type FlipCardReportStateBase from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.flipcard.base.class";
 
 export interface LastFMFlipCardDrawerInterface<
   ReportStateType extends FlipCardReportStateBase

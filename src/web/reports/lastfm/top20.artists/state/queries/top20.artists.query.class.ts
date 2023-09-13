@@ -1,29 +1,32 @@
 import routes from "@src/config/routes";
-import UserArtistDataState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.artist.flipcard.report.class";
 import FlipCardDrawerContainer from "@src/web/reports/lastfm/generics/components/drawer/flip.card/flip.card.report.drawer.container";
-import FlipCardBaseReport from "@src/web/reports/lastfm/generics/state/queries/flip.card.query.base.class";
-import type { LastFMTopArtistsReportResponseInterface } from "@src/web/api/lastfm/types/response.types";
+import FlipCardAbstractBaseQuery from "@src/web/reports/lastfm/generics/state/queries/flip.card.query.base.class";
+import LastFMReportFlipCardTopArtistsStateEncapsulation from "@src/web/reports/lastfm/top20.artists/state/encapsulations/lastfm.report.encapsulation.top.artists.flipcard.class";
+import type { LastFMTopArtistsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 
-export default class Top20AlbumsReport extends FlipCardBaseReport<
-  UserArtistDataState,
+export default class Top20AlbumsQuery extends FlipCardAbstractBaseQuery<
+  LastFMReportFlipCardTopArtistsStateEncapsulation,
   LastFMTopArtistsReportResponseInterface["artists"]
 > {
   protected analyticsReportType = "TOP20 ARTISTS" as const;
   protected drawerArtWorkAltTextTranslationKey =
     "top20Artists.drawer.artWorkAltText";
   protected drawerComponent = FlipCardDrawerContainer;
-  protected encapsulationClass = UserArtistDataState;
+  protected encapsulationClass =
+    LastFMReportFlipCardTopArtistsStateEncapsulation;
   protected hookMethod = "top20artists" as const;
   protected retryRoute = routes.search.lastfm.top20artists;
   protected translationKey = "top20Artists" as const;
 
   getNumberOfImageLoads = (
-    userProperties: UserArtistDataState["userProperties"]
+    reportProperties: LastFMReportFlipCardTopArtistsStateEncapsulation["reportProperties"]
   ) => {
-    return this.getReportData(userProperties).length * 2;
+    return this.getReportData(reportProperties).length * 2;
   };
 
-  getReportData(userProperties: UserArtistDataState["userProperties"]) {
-    return userProperties.data.report.artists;
+  getReportData(
+    reportProperties: LastFMReportFlipCardTopArtistsStateEncapsulation["reportProperties"]
+  ) {
+    return reportProperties.data.report.artists;
   }
 }

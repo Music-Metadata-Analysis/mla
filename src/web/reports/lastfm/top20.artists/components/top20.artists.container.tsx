@@ -1,12 +1,12 @@
 import FlipCardReportContainer from "@src/web/reports/lastfm/generics/components/report.component/flip.card/flip.card.report.container";
-import Top20ArtistsReport from "@src/web/reports/lastfm/top20.artists/state/queries/top20.artists.query.class";
-import type { userHookAsLastFMTop20ArtistReport } from "@src/types/user/hook.types";
-import type { LastFMTopArtistsReportResponseInterface } from "@src/web/api/lastfm/types/response.types";
-import type UserArtistDataState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/flipcard/user.state.artist.flipcard.report.class";
+import Top20AlbumsQuery from "@src/web/reports/lastfm/top20.artists/state/queries/top20.artists.query.class";
+import type { LastFMTopArtistsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { reportHookAsLastFMTop20ArtistReport } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
+import type LastFMReportFlipCardTopArtistsStateEncapsulation from "@src/web/reports/lastfm/top20.artists/state/encapsulations/lastfm.report.encapsulation.top.artists.flipcard.class";
 
 export interface Top20ArtistsReportContainerProps {
   userName: string;
-  lastfm: userHookAsLastFMTop20ArtistReport;
+  lastfm: reportHookAsLastFMTop20ArtistReport;
 }
 
 export default function Top20ArtistsContainer({
@@ -15,12 +15,12 @@ export default function Top20ArtistsContainer({
 }: Top20ArtistsReportContainerProps) {
   return (
     <FlipCardReportContainer<
-      UserArtistDataState,
+      LastFMReportFlipCardTopArtistsStateEncapsulation,
       LastFMTopArtistsReportResponseInterface["artists"]
     >
       lastfm={lastfm}
       userName={userName}
-      reportClass={Top20ArtistsReport}
+      queryClass={Top20AlbumsQuery}
     />
   );
 }

@@ -9,13 +9,15 @@ import Condition from "@src/web/ui/generics/components/condition/condition.compo
 import type { SunBurstLayoutControllerHookType } from "./controllers/sunburst.report.layout.controller.hook";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { SunBurstControllerHookType } from "@src/web/reports/generics/state/controllers/sunburst/sunburst.controller.hook";
-import type UserState from "@src/web/reports/generics/state/providers/encapsulations/lastfm/sunburst/user.state.base.sunburst.report.class";
-import type SunBurstBaseReport from "@src/web/reports/lastfm/generics/state/queries/sunburst.query.base.class";
+import type LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
+import type SunBurstBaseQuery from "@src/web/reports/lastfm/generics/state/queries/sunburst.query.base.class";
 
-export interface SunBurstReportProps<T extends UserState<unknown>> {
+export interface SunBurstReportProps<
+  T extends LastFMReportSunBurstBaseStateEncapsulation<unknown>
+> {
   encapsulatedReportState: T;
   lastFMt: tFunctionType;
-  report: SunBurstBaseReport<T>;
+  query: SunBurstBaseQuery<T>;
   sunBurstController: SunBurstControllerHookType;
   sunBurstLayoutController: SunBurstLayoutControllerHookType;
   sunBurstT: tFunctionType;
@@ -23,17 +25,17 @@ export interface SunBurstReportProps<T extends UserState<unknown>> {
 }
 
 export default function SunBurstReport<
-  ReportStateType extends UserState<unknown>
+  ReportStateType extends LastFMReportSunBurstBaseStateEncapsulation<unknown>
 >({
   encapsulatedReportState,
   lastFMt,
-  report,
+  query,
   sunBurstController,
   sunBurstLayoutController,
   sunBurstT,
   visible,
 }: SunBurstReportProps<ReportStateType>) {
-  const DrawerComponent = report.getDrawerComponent();
+  const DrawerComponent = query.getDrawerComponent();
   const breakPoints = [250, 250, 300, 500, 600, 600];
 
   return (
@@ -51,7 +53,7 @@ export default function SunBurstReport<
         >
           <DrawerComponent
             alignment={"left"}
-            node={report.getEncapsulatedNode(sunBurstController.node.selected)}
+            node={query.getEncapsulatedNode(sunBurstController.node.selected)}
             isOpen={sunBurstController.drawer.state}
             onClose={sunBurstController.drawer.setFalse}
             setSelectedNode={sunBurstController.node.setSelected}
@@ -73,16 +75,16 @@ export default function SunBurstReport<
                 <SunBurstTitlePanel
                   breakPoints={breakPoints}
                   userName={String(
-                    encapsulatedReportState.userProperties.userName
+                    encapsulatedReportState.reportProperties.userName
                   )}
                   title={lastFMt(
-                    `${String(report.getReportTranslationKey())}.title`
+                    `${String(query.getReportTranslationKey())}.title`
                   )}
                 />
                 <SunBurstControlPanel
                   breakPoints={breakPoints}
                   isOpen={sunBurstController.drawer.state}
-                  node={report.getEncapsulatedNode(
+                  node={query.getEncapsulatedNode(
                     sunBurstController.node.selected
                   )}
                   lastFMt={lastFMt}
@@ -98,19 +100,17 @@ export default function SunBurstReport<
             <div ref={sunBurstLayoutController.ref.chart}>
               <SunBurstChart
                 breakPoints={breakPoints}
-                data={report.getSunBurstData(
-                  encapsulatedReportState.userProperties,
+                data={query.getSunBurstData(
+                  encapsulatedReportState.reportProperties,
+                  lastFMt(`${String(query.getReportTranslationKey())}.rootTag`),
                   lastFMt(
-                    `${String(report.getReportTranslationKey())}.rootTag`
-                  ),
-                  lastFMt(
-                    `${String(report.getReportTranslationKey())}.remainderTag`
+                    `${String(query.getReportTranslationKey())}.remainderTag`
                   )
                 )}
                 finishTransition={() =>
                   sunBurstController.svg.setTransitioning(false)
                 }
-                leafEntity={report.getEntityLeaf()}
+                leafEntity={query.getEntityLeaf()}
                 selectedNode={sunBurstController.node.selected}
                 setSelectedNode={sunBurstController.node.setSelected}
               />
