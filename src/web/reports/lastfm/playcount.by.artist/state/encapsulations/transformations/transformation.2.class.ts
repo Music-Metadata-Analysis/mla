@@ -2,23 +2,6 @@ import TransformationBase from "./lastfm.report.playcount.by.artist.sunburst.tra
 import type { LastFMTopArtistsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 
 class AttachUserArtists extends TransformationBase<LastFMTopArtistsReportResponseInterface> {
-  userWithoutListens() {
-    this.state.getReport().status = {
-      complete: true,
-      steps_total: this.state.getReportStatus().steps_total + 1,
-      steps_complete: this.state.getReportStatus().steps_complete + 1,
-    };
-  }
-
-  userWithListens(artistCount: number) {
-    this.state.getReport().status = {
-      complete: false,
-      steps_total: this.state.getReportStatus().steps_total + artistCount + 1,
-      steps_complete: this.state.getReportStatus().steps_complete + 1,
-      operation: this.state.getNextStep(this.params),
-    };
-  }
-
   transform() {
     const userArtists =
       this.response.artists?.map((artist) => ({
@@ -35,6 +18,23 @@ class AttachUserArtists extends TransformationBase<LastFMTopArtistsReportRespons
     } else {
       this.userWithListens(userArtists.length);
     }
+  }
+
+  private userWithoutListens() {
+    this.state.getReport().status = {
+      complete: true,
+      steps_total: this.state.getReportStatus().steps_total + 1,
+      steps_complete: this.state.getReportStatus().steps_complete + 1,
+    };
+  }
+
+  private userWithListens(artistCount: number) {
+    this.state.getReport().status = {
+      complete: false,
+      steps_total: this.state.getReportStatus().steps_total + artistCount + 1,
+      steps_complete: this.state.getReportStatus().steps_complete + 1,
+      operation: this.state.getNextStep(this.params),
+    };
   }
 }
 

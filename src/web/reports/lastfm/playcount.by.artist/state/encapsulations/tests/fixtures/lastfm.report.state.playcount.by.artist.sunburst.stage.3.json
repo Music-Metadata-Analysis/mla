@@ -19,6 +19,12 @@
             "playcount": 5709,
             "albums": [
               {
+                "name": "Requim",
+                "playcount": 100,
+                "fetched": true,
+                "tracks": [{ "name": "Mock Track", "rank": 1, "fetched": true }]
+              },
+              {
                 "name": "Mock Album",
                 "playcount": 100,
                 "fetched": true,

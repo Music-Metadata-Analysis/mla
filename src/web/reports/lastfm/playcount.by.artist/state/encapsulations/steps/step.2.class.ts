@@ -4,7 +4,7 @@ import apiRoutes from "@src/config/apiRoutes";
 class NextIsTopAlbums extends StepBase {
   getStep() {
     for (const artist of this.state.getReport().content) {
-      if (!artist.fetched)
+      if (!artist.fetched) {
         return {
           type: "Top Albums" as const,
           resource: artist.name,
@@ -14,6 +14,7 @@ class NextIsTopAlbums extends StepBase {
             userName: this.params.userName,
           },
         };
+      }
     }
     return null;
   }

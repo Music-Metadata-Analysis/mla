@@ -1,5 +1,9 @@
 import TransformationBase from "./lastfm.report.playcount.by.artist.sunburst.transformation.base.class";
 import type { LastFMAlbumInfoInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type {
+  PlayCountByArtistReportInterface,
+  PlayCountByArtistReportInterface_Album,
+} from "@src/web/reports/lastfm/playcount.by.artist/types/state/aggregate.report.types";
 
 class AttachAlbumInfo extends TransformationBase<LastFMAlbumInfoInterface> {
   transform() {
@@ -20,17 +24,51 @@ class AttachAlbumInfo extends TransformationBase<LastFMAlbumInfoInterface> {
     const artistIndex = this.findArtist();
     const albumIndex = this.findAlbum(artistIndex);
     this.state.getReport().content[artistIndex].albums[albumIndex] = albumInfo;
+
+    const identifiedPlaycount = this.countIdentifiedArtistPlays(
+      this.state.getReport().content[artistIndex]
+    );
+    if (
+      identifiedPlaycount >=
+      Number(this.state.getReport().content[artistIndex].playcount)
+    ) {
+      this.skipFetchingAlbums(
+        this.state.getReport().content[artistIndex].albums
+      );
+    }
+
     const operation = this.state.getNextStep(this.params);
     this.state.getReport().status = {
       complete: operation === undefined,
       steps_total: this.state.getReportStatus().steps_total,
       steps_complete: this.state.getReportStatus().steps_complete + 1,
     };
+
     if (operation) {
       this.state.getReport().status.operation = operation;
     } else {
       this.state.getReport().created = new Date().toISOString();
     }
+  }
+
+  private countIdentifiedArtistPlays(
+    artist: PlayCountByArtistReportInterface
+  ): number {
+    let count = 0;
+    for (const album of artist.albums) {
+      if (album.playcount) count += album.playcount;
+    }
+    return count;
+  }
+
+  private skipFetchingAlbums(albums: PlayCountByArtistReportInterface_Album[]) {
+    albums.forEach((album) => {
+      if (!album.fetched) {
+        this.state.getReport().status.steps_complete += 1;
+        album.fetched = true;
+        album.playcount = 0;
+      }
+    });
   }
 }
 

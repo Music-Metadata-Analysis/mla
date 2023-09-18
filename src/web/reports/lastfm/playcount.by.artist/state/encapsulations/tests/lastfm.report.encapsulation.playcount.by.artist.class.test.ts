@@ -402,6 +402,115 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
     });
   });
 
+  describe("when the report has top artist information, and has quickly found all user plays for The Cure (Stage3)", () => {
+    const target_artists = [12, 13];
+
+    beforeEach(() => {
+      mockReportProperties = JSON.parse(JSON.stringify(MockStage3Report));
+      target_artists.forEach((target_artist) => {
+        mockReportProperties.data.report.playCountByArtist.content[
+          target_artist
+        ].fetched = true;
+        mockReportProperties.data.report.playCountByArtist.content[
+          target_artist
+        ].albums.forEach((albumResult) => {
+          albumResult.fetched = false;
+          albumResult.playcount = null;
+          albumResult.tracks.forEach((trackResult) => {
+            trackResult.fetched = false;
+          });
+        });
+      });
+      instance = new LastFMReportPlayCountByArtistStateEncapsulation(
+        mockReportProperties
+      );
+    });
+
+    describe("getReport", () => {
+      it("should return the expected value", () => {
+        expect(instance.getReport()).toBe(
+          instance.reportProperties.data.report.playCountByArtist
+        );
+      });
+    });
+
+    describe("updateWithResponse", () => {
+      let expected: LastFMReportStatePlayCountByArtistReport;
+
+      beforeEach(() => {
+        expected = JSON.parse(JSON.stringify(mockReportProperties));
+        expected.data.report.playCountByArtist.content.forEach(
+          (artist, index) => {
+            if (!(index === target_artists[1])) {
+              artist.fetched = true;
+              artist.albums.forEach((albumResult) => {
+                albumResult.fetched = true;
+              });
+            }
+          }
+        );
+      });
+
+      describe("with a result that satisfies all listens ", () => {
+        beforeEach(() => {
+          instance.updateWithResponse(
+            {
+              name: "Greatest Hits",
+              userplaycount: 1946,
+              tracks: { track: [{ name: "Mock Track", "@attr": { rank: 1 } }] },
+            },
+            {
+              album: "Greatest Hits",
+              artist: "The Cure",
+              userName: "niall-byrne",
+            },
+            apiRoutes.v2.data.artists.albumsGet
+          );
+        });
+
+        it("should attach the results as expected", () => {
+          expected.data.report.playCountByArtist.content[12].albums.forEach(
+            (albumResult) => {
+              albumResult.playcount = 0;
+            }
+          );
+          expected.data.report.playCountByArtist.content[12].albums[0] = {
+            name: "Greatest Hits",
+            playcount: 1946,
+            fetched: true,
+            tracks: [{ name: "Mock Track", rank: 1, fetched: true }],
+          };
+
+          expected.data.report.playCountByArtist.status = {
+            complete: false,
+            steps_total:
+              expected.data.report.playCountByArtist.status.steps_total,
+            steps_complete:
+              mockReportProperties.data.report.playCountByArtist.status
+                .steps_complete +
+              mockReportProperties.data.report.playCountByArtist.content[12]
+                .albums.length,
+            operation: {
+              type: "Album Details" as const,
+              resource:
+                expected.data.report.playCountByArtist.content[13].albums[0]
+                  .name,
+              url: apiRoutes.v2.data.artists.albumsGet,
+              params: {
+                userName: "niall-byrne",
+                artist: expected.data.report.playCountByArtist.content[13].name,
+                album:
+                  expected.data.report.playCountByArtist.content[13].albums[0]
+                    .name,
+              },
+            },
+          };
+          expect(instance.reportProperties).toStrictEqual(expected);
+        });
+      });
+    });
+  });
+
   describe("when the report has top artist information, and album details, and is about to be completed (Stage3)", () => {
     beforeEach(() => {
       mockReportProperties = JSON.parse(JSON.stringify(MockStage3Report));

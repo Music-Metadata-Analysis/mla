@@ -11,11 +11,11 @@ export interface LastFMPlayCountByArtistResponseInterface
 export interface PlayCountByArtistReportInterface {
   name: string;
   playcount: number | null;
-  albums: PlayCountByArtistReportInterface_Artist[];
+  albums: PlayCountByArtistReportInterface_Album[];
   fetched: boolean;
 }
 
-interface PlayCountByArtistReportInterface_Artist {
+export interface PlayCountByArtistReportInterface_Album {
   name: string;
   playcount: number | null;
   tracks: PlayCountByArtistReportInterface_Track[];
