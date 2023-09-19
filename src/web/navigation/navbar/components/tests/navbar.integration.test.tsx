@@ -12,7 +12,6 @@ import mockAuthHook, {
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import NavBarControllerProvider from "@src/web/navigation/navbar/state/providers/navbar.provider";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
-import type { JSONstringType } from "@src/types/json.types";
 import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
@@ -59,7 +58,7 @@ describe("NavBar", () => {
   const translationPrefix = "menu" as const;
   const config: { [index: string]: string } = NavConfig.menuConfig;
   const clickAbleLinks = Object.keys(config).map(
-    (key) => (navbarTranslations[translationPrefix] as JSONstringType)[key]
+    (key) => (navbarTranslations[translationPrefix] as Record<string, string>)[key]
   );
   const baseMockReportProperties = { ...mockReportProperties };
   let thisMockReportProperties = { ...baseMockReportProperties };
@@ -158,7 +157,7 @@ describe("NavBar", () => {
         expect(
           await within(navBarMenu).findByText(
             _t(
-              (navbarTranslations[translationPrefix] as JSONstringType)[
+              (navbarTranslations[translationPrefix] as Record<string, string>)[
                 linkText
               ]
             )
