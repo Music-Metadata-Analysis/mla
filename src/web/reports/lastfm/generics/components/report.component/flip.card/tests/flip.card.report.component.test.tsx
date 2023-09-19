@@ -10,7 +10,7 @@ import {
   MockUseTranslation,
   _t,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
-import FlipCardContainer from "@src/web/reports/generics/components/charts/flip.card/flip.card.container";
+import FlipCardContainer from "@src/web/reports/generics/components/report.base/flip.card/flip.card.container";
 import ReportTitleContainer from "@src/web/reports/generics/components/report.title/report.title.container";
 import mockFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import {
@@ -28,7 +28,7 @@ jest.mock("@chakra-ui/react", () =>
 );
 
 jest.mock(
-  "@src/web/reports/generics/components/charts/flip.card/flip.card.container",
+  "@src/web/reports/generics/components/report.base/flip.card/flip.card.container",
   () => require("@fixtures/react/child").createComponent("FlipCardContainer")
 );
 

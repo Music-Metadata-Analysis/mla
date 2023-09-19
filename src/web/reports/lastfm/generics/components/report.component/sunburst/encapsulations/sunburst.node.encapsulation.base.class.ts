@@ -6,7 +6,7 @@ import type { SunBurstEntityTypes } from "@src/web/analytics/collection/types/an
 import type {
   d3Node,
   SunBurstData,
-} from "@src/web/reports/generics/types/charts/sunburst.types";
+} from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 type SunBurstNodeAbstractBaseConstructor = new (
   node: d3Node

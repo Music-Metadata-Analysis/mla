@@ -1,4 +1,4 @@
-import type { SunBurstData } from "@src/web/reports/generics/types/charts/sunburst.types";
+import type { SunBurstData } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 import type { LastFMAggregateReportContentType } from "@src/web/reports/lastfm/generics/types/state/lastfm.aggregate.report.types";
 
 class SunBurstStateToChartDataTranslator {

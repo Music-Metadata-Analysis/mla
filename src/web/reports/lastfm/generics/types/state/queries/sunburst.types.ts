@@ -4,7 +4,7 @@ import type LastFMSunburstDataClient from "@src/web/api/lastfm/clients/bases/las
 import type {
   d3Node,
   SunBurstData,
-} from "@src/web/reports/generics/types/charts/sunburst.types";
+} from "@src/web/reports/generics/types/state/charts/sunburst.types";
 import type { reportDispatchType } from "@src/web/reports/generics/types/state/providers/report.context.types";
 import type SunBurstBaseNodeEncapsulation from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type LastFMReportBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/bases/lastfm.report.encapsulation.base.class";

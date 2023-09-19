@@ -7,7 +7,7 @@ import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics
 import type {
   d3Node,
   SunBurstData,
-} from "@src/web/reports/generics/types/charts/sunburst.types";
+} from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 type d3NodeWithChildren = d3Node & { children: Array<d3NodeWithChildren> };
 

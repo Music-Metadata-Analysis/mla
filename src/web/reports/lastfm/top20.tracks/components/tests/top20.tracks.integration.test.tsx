@@ -6,8 +6,8 @@ import Top20TracksContainer, {
 import cardTranslations from "@locales/cards.json";
 import translations from "@locales/lastfm.json";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
-import { testIDs as drawerTestIDs } from "@src/web/reports/generics/components/drawer/drawer.identifiers";
-import { testIDs as lastFMDrawerIDs } from "@src/web/reports/lastfm/generics/components/drawer/flip.card/flip.card.report.drawer.identifiers";
+import { testIDs as drawerTestIDs } from "@src/web/reports/generics/components/report.drawer/report.drawer.identifiers";
+import { testIDs as lastFMDrawerIDs } from "@src/web/reports/lastfm/generics/components/report.drawer/flip.card/flip.card.report.drawer.identifiers";
 import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
 import mockImageControllerHook from "@src/web/ui/images/state/controllers/__mocks__/images.controller.hook.mock";
 import type { reportHookAsLastFMTop20TrackReport } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";

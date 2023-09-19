@@ -4,7 +4,7 @@ import SunBurstErrorPanel from "./panels/error/error.panel.component";
 import SunBurstInfoPanel from "./panels/info/info.panel.component";
 import SunBurstTitlePanel from "./panels/title/title.panel.component";
 import settings from "@src/config/sunburst";
-import SunBurstChart from "@src/web/reports/generics/components/charts/sunburst/sunburst.component";
+import SunBurstChart from "@src/web/reports/generics/components/report.base/sunburst/sunburst.chart.component";
 import Condition from "@src/web/ui/generics/components/condition/condition.component";
 import type { SunBurstLayoutControllerHookType } from "./controllers/sunburst.report.layout.controller.hook";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";

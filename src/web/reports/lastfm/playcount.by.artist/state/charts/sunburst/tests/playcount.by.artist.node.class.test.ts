@@ -5,7 +5,7 @@ import {
   _t,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import SunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
-import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
+import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 jest.mock("@src/utilities/generics/strings");
 

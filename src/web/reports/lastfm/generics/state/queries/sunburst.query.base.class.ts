@@ -5,7 +5,7 @@ import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendo
 import type {
   d3Node,
   SunBurstData,
-} from "@src/web/reports/generics/types/charts/sunburst.types";
+} from "@src/web/reports/generics/types/state/charts/sunburst.types";
 import type SunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
 import type { LastFMSunBurstDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/sunburst.types";

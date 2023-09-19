@@ -10,7 +10,7 @@ import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/compo
 import SunBurstDetailsPanel from "@src/web/reports/lastfm/generics/components/report.component/sunburst/panels/details/details.panel.component";
 import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 import ButtonWithoutAnalytics from "@src/web/ui/generics/components/buttons/button.base/button.base.component";
-import type { d3Node } from "@src/web/reports/generics/types/charts/sunburst.types";
+import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 

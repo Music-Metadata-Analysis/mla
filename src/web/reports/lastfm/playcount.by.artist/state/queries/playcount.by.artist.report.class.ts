@@ -1,6 +1,6 @@
 import LastFMReportPlayCountByArtistStateEncapsulation from "../encapsulations/lastfm.report.encapsulation.playcount.by.artist.class";
 import routes from "@src/config/routes";
-import SunBurstDrawerContainer from "@src/web/reports/lastfm/generics/components/drawer/sunburst/sunburst.report.drawer.container";
+import SunBurstDrawerContainer from "@src/web/reports/lastfm/generics/components/report.drawer/sunburst/sunburst.report.drawer.container";
 import SunBurstBaseQuery from "@src/web/reports/lastfm/generics/state/queries/sunburst.query.base.class";
 import PlayCountByArtistNodeEncapsulation from "@src/web/reports/lastfm/playcount.by.artist/state/charts/sunburst/playcount.by.artist.node.class";
 import type { LastFMAggregateReportResponseInterface } from "@src/web/reports/lastfm/generics/types/state/lastfm.aggregate.report.types";

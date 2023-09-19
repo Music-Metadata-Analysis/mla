@@ -1,7 +1,7 @@
 import Query from "../top20.artists.query.class";
 import routes from "@src/config/routes";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
-import FlipCardDrawerContainer from "@src/web/reports/lastfm/generics/components/drawer/flip.card/flip.card.report.drawer.container";
+import FlipCardDrawerContainer from "@src/web/reports/lastfm/generics/components/report.drawer/flip.card/flip.card.report.drawer.container";
 import LastFMReportFlipCardTopArtistsStateEncapsulation from "@src/web/reports/lastfm/top20.artists/state/encapsulations/lastfm.report.encapsulation.top.artists.flipcard.class";
 import type { LastFMUserArtistInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 

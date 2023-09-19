@@ -12,7 +12,7 @@ import MockStage2Report from "@src/web/reports/lastfm/playcount.by.artist/state/
 import type {
   d3Node,
   SunBurstData,
-} from "@src/web/reports/generics/types/charts/sunburst.types";
+} from "@src/web/reports/generics/types/state/charts/sunburst.types";
 import type { LastFMSunBurstDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/sunburst.types";
 import type {
   LastFMAggregateReportResponseInterface,

@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import settings from "@src/config/flip.card";
-import FlipCardContainer from "@src/web/reports/generics/components/charts/flip.card/flip.card.container";
+import FlipCardContainer from "@src/web/reports/generics/components/report.base/flip.card/flip.card.container";
 import ReportTitleContainer from "@src/web/reports/generics/components/report.title/report.title.container";
 import type { FlipCardControllerHookType } from "./controllers/flip.card.controller.hook";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
