@@ -58,7 +58,8 @@ describe("NavBar", () => {
   const translationPrefix = "menu" as const;
   const config: { [index: string]: string } = NavConfig.menuConfig;
   const clickAbleLinks = Object.keys(config).map(
-    (key) => (navbarTranslations[translationPrefix] as Record<string, string>)[key]
+    (key) =>
+      (navbarTranslations[translationPrefix] as Record<string, string>)[key]
   );
   const baseMockReportProperties = { ...mockReportProperties };
   let thisMockReportProperties = { ...baseMockReportProperties };

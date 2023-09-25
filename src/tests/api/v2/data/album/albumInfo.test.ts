@@ -1,4 +1,4 @@
-import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.endpoint.base.class";
+import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.lastfm.endpoint.base.class";
 import { mockLastFMProxyMethods } from "@src/backend/api/services/lastfm/proxy/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import { STATUS_400_MESSAGE, STATUS_503_MESSAGE } from "@src/config/status";

@@ -1,4 +1,3 @@
-import LastFMProxy from "@src/backend/api/services/lastfm/proxy/proxy.class";
 import { knownStatuses } from "@src/config/api";
 import requestSettings from "@src/config/requests";
 import * as status from "@src/config/status";
@@ -6,7 +5,6 @@ import { apiHandlerVendorBackend } from "@src/vendors/integrations/api.handler/v
 import { apiLoggerVendorBackend } from "@src/vendors/integrations/api.logger/vendor.backend";
 import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
 import type { ApiEndPointFactoryInterface } from "@src/backend/api/types/services/endpoint.types";
-import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
 import type {
   ApiEndpointRequestType,
   ApiEndpointRequestQueryParamType,
@@ -16,13 +14,13 @@ import type { ApiEndpointResponseType } from "@src/backend/api/types/services/re
 import type { ApiHandlerVendorHandlerType } from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
 import type { ApiLoggerVendorEndpointLoggerInterface } from "@src/vendors/types/integrations/api.logger/vendor.backend.types";
 
-export default abstract class LastFMEndpointBase
+export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
   implements ApiEndPointFactoryInterface
 {
   private readonly _endpointLogger: ApiLoggerVendorEndpointLoggerInterface;
   protected readonly timeOut = requestSettings.timeout;
   protected readonly handler: ApiHandlerVendorHandlerType;
-  protected readonly proxy: LastFMProxyInterface;
+  protected abstract proxy: ProxyClass;
   public abstract readonly route: string;
 
   constructor() {
@@ -30,13 +28,12 @@ export default abstract class LastFMEndpointBase
       errorHandler: this.errorHandler,
       fallBackHandler: this.fallBackHandler,
     }).create();
-    this.proxy = new LastFMProxy();
     this._endpointLogger = new apiLoggerVendorBackend.endpointLogger();
   }
 
   protected abstract getProxyResponse(
     params: ApiEndpointRequestQueryParamType | ApiEndpointRequestBodyType
-  ): ReturnType<LastFMProxyInterface[keyof LastFMProxyInterface]>;
+  ): ProxyClassReturnType;
 
   protected abstract setUpHandler(): void;
 

@@ -5,7 +5,7 @@ import ConcreteBaseEndpointTimeoutErrorClass from "./implementations/concrete.en
 import * as status from "@src/config/status";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
 import { mockEndpointLogger } from "@src/vendors/integrations/api.logger/__mocks__/vendor.backend.mock";
-import type LastFMEndpointBase from "../endpoint.base.class";
+import type APIEndpointBase from "../generic.endpoint.base.class";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   MockAPIEndpointRequestType,
@@ -14,10 +14,13 @@ import type {
 
 jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
 
-describe("LastFMEndpointBase", () => {
+describe("APIEndpointBase", () => {
   let clearTimeOut: jest.SpyInstance;
 
-  let factoryInstance: LastFMEndpointBase & { errorCode?: number };
+  let factoryInstance: APIEndpointBase<
+    Record<string, never>,
+    Promise<number[]>
+  > & { errorCode?: number };
 
   let mockReq: MockAPIEndpointRequestType;
   let mockRes: MockAPIEndpointResponseType;

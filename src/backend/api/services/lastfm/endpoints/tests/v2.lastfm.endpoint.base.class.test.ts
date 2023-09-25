@@ -1,7 +1,7 @@
 import { waitFor } from "@testing-library/react";
-import ConcreteV2EndpointProxyErrorClass from "./implementations/concrete.v2.proxy.error.class";
-import ConcreteV2EndpointProxyResponseErrorClass from "./implementations/concrete.v2.proxy.response.error.class";
-import ConcreteV2EndpointTimeoutErrorClass from "./implementations/concrete.v2.timeout.error.class";
+import ConcreteV2EndpointProxyErrorClass from "./implementations/concrete.v2.lastfm.proxy.error.class";
+import ConcreteV2EndpointProxyResponseErrorClass from "./implementations/concrete.v2.lastfm.proxy.response.error.class";
+import ConcreteV2EndpointTimeoutErrorClass from "./implementations/concrete.v2.lastfm.timeout.error.class";
 import * as status from "@src/config/status";
 import {
   createAPIMocks,
@@ -12,7 +12,7 @@ import { mockAuthClient } from "@src/vendors/integrations/auth/__mocks__/vendor.
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { mockFlagClient } from "@src/vendors/integrations/flags/__mocks__/vendor.backend.mock";
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
-import type LastFMApiEndpointFactoryV2 from "../v2.endpoint.base.class";
+import type LastFMApiEndpointFactoryV2 from "../v2.lastfm.endpoint.base.class";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   MockAPIEndpointRequestType,

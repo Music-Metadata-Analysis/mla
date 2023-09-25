@@ -1,4 +1,5 @@
-import LastFMEndpointBase from "./bases/endpoint.base.class";
+import APIEndpointBase from "@src/backend/api/services/generics/endpoints/generic.endpoint.base.class";
+import LastFMProxy from "@src/backend/api/services/lastfm/proxy/proxy.class";
 import * as status from "@src/config/status";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
@@ -9,10 +10,19 @@ import type {
 } from "@src/backend/api/types/services/request.types";
 import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
 
-export default abstract class LastFMApiEndpointFactoryV2 extends LastFMEndpointBase {
+export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase<
+  LastFMProxyInterface,
+  ReturnType<Awaited<LastFMProxyInterface[keyof LastFMProxyInterface]>>
+> {
+  protected proxy: LastFMProxy;
   protected readonly delay: number = 500;
   public abstract readonly flag: string | null;
   public readonly cacheMaxAgeValue = 3600 * 24;
+
+  constructor() {
+    super();
+    this.proxy = new LastFMProxy();
+  }
 
   protected setUpHandler(): void {
     this.handler.get(this.route, async (req, res, next) => {

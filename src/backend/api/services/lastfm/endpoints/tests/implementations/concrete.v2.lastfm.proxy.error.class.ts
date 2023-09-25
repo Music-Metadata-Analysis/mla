@@ -1,4 +1,4 @@
-import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.endpoint.base.class";
+import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.lastfm.endpoint.base.class";
 import { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
 import type { ApiEndpointRequestQueryParamType } from "@src/backend/api/types/services/request.types";
 
