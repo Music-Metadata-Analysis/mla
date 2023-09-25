@@ -18,6 +18,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
   protected readonly delay: number = 500;
   public abstract readonly flag: string | null;
   public readonly cacheMaxAgeValue = 3600 * 24;
+  public readonly service = "LAST.FM";
 
   constructor() {
     super();
@@ -105,7 +106,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
     req: ApiEndpointRequestType,
     res: ApiEndpointResponseType
   ): void {
-    req.proxyResponse = "Invalid LAST.FM response, please retry.";
+    req.proxyResponse = `${this.service}: Invalid response, please retry.`;
     res.setHeader("retry-after", 0);
     res.status(503).json(status.STATUS_503_MESSAGE);
   }
@@ -117,7 +118,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
       ReturnType<LastFMProxyInterface[keyof LastFMProxyInterface]>
     >
   ): void {
-    req.proxyResponse = "Success!";
+    req.proxyResponse = `${this.service}: Success!`;
     res.setHeader("Cache-Control", [
       "public",
       `max-age=${this.cacheMaxAgeValue}`,

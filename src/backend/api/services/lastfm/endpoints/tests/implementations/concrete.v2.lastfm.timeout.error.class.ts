@@ -1,7 +1,7 @@
 import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.lastfm.endpoint.base.class";
 import type { ApiEndpointRequestQueryParamType } from "@src/backend/api/types/services/request.types";
 
-export default class ConcreteV2EndpointTimeoutErrorClass extends LastFMApiEndpointFactoryV2 {
+export default class ConcreteV2EndpointWithProxyTimeout extends LastFMApiEndpointFactoryV2 {
   public cacheMaxAgeValue = 1000;
   public delay = 1;
   public flag = null;

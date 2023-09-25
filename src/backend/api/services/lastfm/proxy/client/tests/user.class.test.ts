@@ -2,7 +2,7 @@ import LastFMUserClientAdapter from "../user.class";
 import { mockVendorMethods } from "@src/__mocks__/@toplast/lastfm";
 import CacheController from "@src/backend/api/cache/controller/cache.controller.class";
 import ArtistImageCacheFactory from "@src/backend/api/services/lastfm/proxy/cache/artist.image.cache.controller.factory.class";
-import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
+import type ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.error.class";
 import type { LastFMUserProfileInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/user.profile.types";
 import type { LastFMUserAlbumInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
 import type { LastFMUserArtistInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.artists.types";

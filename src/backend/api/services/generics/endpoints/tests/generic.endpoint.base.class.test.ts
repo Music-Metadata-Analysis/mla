@@ -27,6 +27,8 @@ describe("APIEndpointBase", () => {
 
   let method: HttpApiClientHttpMethodType;
 
+  const mockService = "mockService";
+
   beforeEach(() => {
     jest.clearAllMocks();
     clearTimeOut = jest.spyOn(window, "clearTimeout");
@@ -56,7 +58,7 @@ describe("APIEndpointBase", () => {
     });
   };
 
-  const checkLogger = () => {
+  const checkLogger = (expectedProxyResponse?: string) => {
     it("should log a message", () => {
       expect(mockEndpointLogger).toBeCalledTimes(1);
 
@@ -66,6 +68,11 @@ describe("APIEndpointBase", () => {
       expect(call[2]).toBeInstanceOf(Function);
       expect(call[2].name).toBe("next");
       expect(call.length).toBe(3);
+    });
+
+    it("should log the correct proxy response", () => {
+      const call = jest.mocked(mockEndpointLogger).mock.calls[0];
+      expect(call[0].proxyResponse).toBe(expectedProxyResponse);
     });
   };
 
@@ -107,7 +114,7 @@ describe("APIEndpointBase", () => {
 
       checkNoRetryHeader();
       checkTimeoutCleared();
-      checkLogger();
+      checkLogger(`${mockService}: Error: mockError`);
     });
 
     describe.each([
@@ -136,7 +143,7 @@ describe("APIEndpointBase", () => {
 
         checkNoRetryHeader();
         checkTimeoutCleared();
-        checkLogger();
+        checkLogger(`${mockService}: Error: mockError`);
       }
     );
 
@@ -157,7 +164,7 @@ describe("APIEndpointBase", () => {
 
       checkRetryHeader();
       checkTimeoutNotCleared();
-      checkLogger();
+      checkLogger(`${mockService}: Timed out! Please retry this request!`);
     });
 
     describe("when a request uses the wrong method", () => {

@@ -8,6 +8,7 @@ export default class ConcreteBaseEndpointTimeoutErrorClass extends ApiEndpointBa
   protected proxy = {};
   public route = "/api/v1/endpoint";
   public timeOut = 100;
+  public service = "mockService";
 
   protected setUpHandler(): void {
     this.handler.get(this.route, async (req, res, next) => {

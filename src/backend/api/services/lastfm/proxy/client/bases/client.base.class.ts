@@ -1,5 +1,5 @@
 import LastFm from "@toplast/lastfm";
-import { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
+import ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.error.class";
 import type { LastFMVendorClientError } from "@src/vendors/types/integrations/lastfm/vendor.backend.types";
 
 class LastFmClientAdapterBase {

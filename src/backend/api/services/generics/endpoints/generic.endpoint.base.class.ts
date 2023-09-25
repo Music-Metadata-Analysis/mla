@@ -3,7 +3,6 @@ import requestSettings from "@src/config/requests";
 import * as status from "@src/config/status";
 import { apiHandlerVendorBackend } from "@src/vendors/integrations/api.handler/vendor.backend";
 import { apiLoggerVendorBackend } from "@src/vendors/integrations/api.logger/vendor.backend";
-import type { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
 import type { ApiEndPointFactoryInterface } from "@src/backend/api/types/services/endpoint.types";
 import type {
   ApiEndpointRequestType,
@@ -11,6 +10,7 @@ import type {
   ApiEndpointRequestBodyType,
 } from "@src/backend/api/types/services/request.types";
 import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
+import type { RemoteServiceError } from "@src/contracts/api/types/error.types";
 import type { ApiHandlerVendorHandlerType } from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
 import type { ApiLoggerVendorEndpointLoggerInterface } from "@src/vendors/types/integrations/api.logger/vendor.backend.types";
 
@@ -21,6 +21,7 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
   protected readonly timeOut = requestSettings.timeout;
   protected readonly handler: ApiHandlerVendorHandlerType;
   protected abstract proxy: ProxyClass;
+  public abstract readonly service: string;
   public abstract readonly route: string;
 
   constructor() {
@@ -49,7 +50,7 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
     next: () => void
   ): void => {
     req.proxyTimeoutInstance = setTimeout(() => {
-      req.proxyResponse = "Timed out! Please retry this request!";
+      req.proxyResponse = `${this.service}: Timed out! Please retry this request!`;
       res.setHeader("retry-after", 0);
       res.status(503).json(status.STATUS_503_MESSAGE);
       delete req.proxyTimeoutInstance;
@@ -65,13 +66,13 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
   };
 
   protected errorHandler = (
-    err: ProxyError,
+    err: RemoteServiceError,
     req: ApiEndpointRequestType,
     res: ApiEndpointResponseType,
     next: () => void
   ): void => {
     this.clearRequestTimeout(req);
-    req.proxyResponse = err.toString();
+    req.proxyResponse = `${this.service}: ${err.toString()}`;
     if (err.clientStatusCode && knownStatuses[err.clientStatusCode]) {
       res
         .status(err.clientStatusCode)

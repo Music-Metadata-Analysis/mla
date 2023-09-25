@@ -32,15 +32,13 @@ describe("StdOutLogger", () => {
     bytesRead: "300",
     method: "GET" as const,
     referer: "referred by someone",
-    proxyResponse: "Success!",
+    proxyResponse: "Remote Service: Success!",
     statusCode: 200,
     socketDefinedRemoteAddress: "8.8.8.8",
     url: apiRoutes.v1.reports.lastfm.top20artists,
     userAgent: "test user agent",
     next: jest.fn(),
   };
-
-  const defaultProxyResponse = "No Response";
 
   beforeAll(() => {
     consoleLogSpy = jest.spyOn(console, "log").mockImplementation(() => null);
@@ -89,7 +87,7 @@ describe("StdOutLogger", () => {
     expected_log_message += currentProps.bytesRead + " ";
     expected_log_message += currentProps.referer + " ";
     expected_log_message += currentProps.userAgent + " ";
-    expected_log_message += `(LastFM Service: ${proxyResponseMsg})`;
+    expected_log_message += `(${proxyResponseMsg})`;
     expect(console.log).toBeCalledTimes(1);
     expect(console.log).toBeCalledWith(expected_log_message);
   };
@@ -108,7 +106,7 @@ describe("StdOutLogger", () => {
 
     describe("with a proxy response message", () => {
       beforeEach(() => {
-        currentProps.proxyResponse = "Success!";
+        currentProps.proxyResponse = baseProps.proxyResponse;
       });
 
       describe("with a socket remote address defined", () => {
@@ -181,7 +179,7 @@ describe("StdOutLogger", () => {
           it("should log the expected message, using the socket's remote address", () => {
             checkLogMessage(
               currentProps.socketDefinedRemoteAddress as string,
-              defaultProxyResponse
+              instance.noProxyResponseMsg
             );
           });
 
@@ -205,7 +203,7 @@ describe("StdOutLogger", () => {
           it("should log the expected message, using the first x-forwarded header's address", () => {
             checkLogMessage(
               (currentProps.remoteAddress as string).split(",")[0],
-              defaultProxyResponse
+              instance.noProxyResponseMsg
             );
           });
 
@@ -222,7 +220,7 @@ describe("StdOutLogger", () => {
 
     describe("with a proxy response message", () => {
       beforeEach(() => {
-        currentProps.proxyResponse = "Success!";
+        currentProps.proxyResponse = baseProps.proxyResponse;
       });
 
       describe("with a socket remote address defined", () => {
@@ -295,7 +293,7 @@ describe("StdOutLogger", () => {
           it("should log the expected message, using the socket's remote address", () => {
             checkLogMessage(
               currentProps.socketDefinedRemoteAddress as string,
-              defaultProxyResponse
+              instance.noProxyResponseMsg
             );
           });
 
@@ -319,7 +317,7 @@ describe("StdOutLogger", () => {
           it("should log the expected message, using the first x-forwarded header's address", () => {
             checkLogMessage(
               (currentProps.remoteAddress as Array<string>)[0],
-              defaultProxyResponse
+              instance.noProxyResponseMsg
             );
           });
 
@@ -336,7 +334,7 @@ describe("StdOutLogger", () => {
 
     describe("with a proxy response message", () => {
       beforeEach(() => {
-        currentProps.proxyResponse = "Success!";
+        currentProps.proxyResponse = baseProps.proxyResponse;
       });
 
       describe("with a socket remote address defined", () => {
@@ -406,7 +404,7 @@ describe("StdOutLogger", () => {
           it("should log the expected message, using the socket's remote address", () => {
             checkLogMessage(
               currentProps.socketDefinedRemoteAddress as string,
-              defaultProxyResponse
+              instance.noProxyResponseMsg
             );
           });
 
@@ -428,7 +426,7 @@ describe("StdOutLogger", () => {
           });
 
           it("should log the expected message, using the first x-forwarded header's address", () => {
-            checkLogMessage("?.?.?.?", defaultProxyResponse);
+            checkLogMessage("?.?.?.?", instance.noProxyResponseMsg);
           });
 
           checkNextCalled();

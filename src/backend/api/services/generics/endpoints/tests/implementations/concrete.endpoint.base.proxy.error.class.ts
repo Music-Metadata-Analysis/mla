@@ -1,5 +1,5 @@
 import ApiEndpointBase from "../../generic.endpoint.base.class";
-import { ProxyError } from "@src/backend/api/services/lastfm/proxy/error/proxy.error.class";
+import ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.error.class";
 import type { ApiEndpointRequestPathParamType } from "@src/backend/api/types/services/request.types";
 
 export default class ConcreteBaseProxyErrorClass extends ApiEndpointBase<
@@ -11,6 +11,7 @@ export default class ConcreteBaseProxyErrorClass extends ApiEndpointBase<
   public mockError = "mockError";
   public route = "/api/v1/endpoint";
   public timeOut = 100;
+  public service = "mockService";
 
   protected setUpHandler(): void {
     this.handler.get(this.route, async (req, res, next) => {

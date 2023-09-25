@@ -10,6 +10,7 @@ export default class ConcreteBaseProxySuccessClass extends ApiEndpointBase<
   public mockError = "mockError";
   public route = "/api/v1/endpoint";
   public timeOut = 100;
+  public service = "mockService";
 
   protected setUpHandler(): void {
     this.handler.get(this.route, async (req, res, next) => {

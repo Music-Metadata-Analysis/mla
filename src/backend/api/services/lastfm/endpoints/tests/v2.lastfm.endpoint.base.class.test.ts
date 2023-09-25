@@ -1,7 +1,8 @@
 import { waitFor } from "@testing-library/react";
-import ConcreteV2EndpointProxyErrorClass from "./implementations/concrete.v2.lastfm.proxy.error.class";
-import ConcreteV2EndpointProxyResponseErrorClass from "./implementations/concrete.v2.lastfm.proxy.response.error.class";
-import ConcreteV2EndpointTimeoutErrorClass from "./implementations/concrete.v2.lastfm.timeout.error.class";
+import ConcreteV2EndpointWithProxyError from "./implementations/concrete.v2.lastfm.proxy.error.class";
+import ConcreteV2EndpointWithProxyResponseError from "./implementations/concrete.v2.lastfm.proxy.response.error.class";
+import ConcreteV2EndpointWithProxySuccess from "./implementations/concrete.v2.lastfm.proxy.success.class";
+import ConcreteV2EndpointWithProxyTimeout from "./implementations/concrete.v2.lastfm.timeout.error.class";
 import * as status from "@src/config/status";
 import {
   createAPIMocks,
@@ -43,6 +44,11 @@ describe("LastFMApiEndpointFactoryV2", () => {
   let username: [string] | null;
 
   const mockFlagEnvironment = "MockValue2";
+
+  const mockLoggedErrorMessage = "Error: mockError";
+  const mockLoggedInvalidResponseMessage = "Invalid response, please retry.";
+  const mockLoggedSuccessMessage = "Success!";
+  const mockLoggedTimedOutRequest = "Timed out! Please retry this request!";
 
   beforeAll(() => {
     originalEnvironment = process.env;
@@ -136,7 +142,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
     });
   };
 
-  const checkLogger = () => {
+  const checkLogger = (expectedProxyResponse?: string) => {
     it("should log a message", () => {
       expect(mockEndpointLogger).toBeCalledTimes(1);
 
@@ -146,6 +152,17 @@ describe("LastFMApiEndpointFactoryV2", () => {
       expect(call[2]).toBeInstanceOf(Function);
       expect(call[2].name).toBe("next");
       expect(call.length).toBe(3);
+    });
+
+    it("should log the correct proxy response", () => {
+      const call = jest.mocked(mockEndpointLogger).mock.calls[0];
+      if (expectedProxyResponse) {
+        expect(call[0].proxyResponse).toBe(
+          `${factoryInstance.service}: ${expectedProxyResponse}`
+        );
+      } else {
+        expect(call[0].proxyResponse).toBeUndefined();
+      }
     });
   };
 
@@ -167,9 +184,27 @@ describe("LastFMApiEndpointFactoryV2", () => {
         describe("with a bypassed flag", () => {
           beforeEach(async () => (requiredFlag = null));
 
+          describe("receives a request with a successful proxy response", () => {
+            beforeEach(async () => {
+              factoryInstance = new ConcreteV2EndpointWithProxySuccess();
+              await arrange();
+            });
+
+            it("should return a 200", () => {
+              expect(mockRes._getStatusCode()).toBe(200);
+              expect(mockRes._getJSONData()).toStrictEqual([]);
+            });
+
+            checkJWT();
+            checkNoFeatureFlagLookup();
+            checkTimeoutCleared();
+            checkNoRetryHeader();
+            checkLogger(mockLoggedSuccessMessage);
+          });
+
           describe("receives a request that generates an unknown proxy response", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyResponseErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyResponseError();
               await arrange();
             });
 
@@ -184,12 +219,12 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkNoFeatureFlagLookup();
             checkTimeoutCleared();
             checkRetryHeader();
-            checkLogger();
+            checkLogger(mockLoggedInvalidResponseMessage);
           });
 
           describe("receives a request that generates an unknown proxy error", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyError();
               await arrange();
             });
 
@@ -204,7 +239,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkNoFeatureFlagLookup();
             checkTimeoutCleared();
             checkNoRetryHeader();
-            checkLogger();
+            checkLogger(mockLoggedErrorMessage);
           });
 
           describe.each([
@@ -217,7 +252,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
             (errorMsg, errorCode, statusMessage) => {
               beforeEach(async () => {
-                factoryInstance = new ConcreteV2EndpointProxyErrorClass();
+                factoryInstance = new ConcreteV2EndpointWithProxyError();
                 factoryInstance.errorCode = errorCode;
                 await arrange();
               });
@@ -231,13 +266,13 @@ describe("LastFMApiEndpointFactoryV2", () => {
               checkNoFeatureFlagLookup();
               checkTimeoutCleared();
               checkNoRetryHeader();
-              checkLogger();
+              checkLogger(mockLoggedErrorMessage);
             }
           );
 
           describe("receives a request that times out", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -252,7 +287,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkNoFeatureFlagLookup();
             checkTimeoutNotCleared();
             checkRetryHeader();
-            checkLogger();
+            checkLogger(mockLoggedTimedOutRequest);
           });
         });
 
@@ -262,9 +297,27 @@ describe("LastFMApiEndpointFactoryV2", () => {
             mockFlagClient.isEnabled.mockReturnValueOnce(true);
           });
 
+          describe("receives a request with a successful proxy response", () => {
+            beforeEach(async () => {
+              factoryInstance = new ConcreteV2EndpointWithProxySuccess();
+              await arrange();
+            });
+
+            it("should return a 200", () => {
+              expect(mockRes._getStatusCode()).toBe(200);
+              expect(mockRes._getJSONData()).toStrictEqual([]);
+            });
+
+            checkJWT();
+            checkFeatureFlagLookup({ expectedCalls: 1 });
+            checkTimeoutCleared();
+            checkNoRetryHeader();
+            checkLogger(mockLoggedSuccessMessage);
+          });
+
           describe("receives a request that generates an unknown proxy response", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyResponseErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyResponseError();
               await arrange();
             });
 
@@ -279,12 +332,12 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkFeatureFlagLookup({ expectedCalls: 1 });
             checkTimeoutCleared();
             checkRetryHeader();
-            checkLogger();
+            checkLogger(mockLoggedInvalidResponseMessage);
           });
 
           describe("receives a request that generates an unknown proxy error", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyError();
               await arrange();
             });
 
@@ -299,7 +352,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkFeatureFlagLookup({ expectedCalls: 1 });
             checkTimeoutCleared();
             checkNoRetryHeader();
-            checkLogger();
+            checkLogger(mockLoggedErrorMessage);
           });
 
           describe.each([
@@ -312,7 +365,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
             (errorMsg, errorCode, statusMessage) => {
               beforeEach(async () => {
-                factoryInstance = new ConcreteV2EndpointProxyErrorClass();
+                factoryInstance = new ConcreteV2EndpointWithProxyError();
                 factoryInstance.errorCode = errorCode;
                 await arrange();
               });
@@ -326,13 +379,13 @@ describe("LastFMApiEndpointFactoryV2", () => {
               checkFeatureFlagLookup({ expectedCalls: 1 });
               checkTimeoutCleared();
               checkNoRetryHeader();
-              checkLogger();
+              checkLogger(mockLoggedErrorMessage);
             }
           );
 
           describe("receives a TIMED OUT request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -347,7 +400,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkFeatureFlagLookup({ expectedCalls: 1 });
             checkTimeoutNotCleared();
             checkRetryHeader();
-            checkLogger();
+            checkLogger(mockLoggedTimedOutRequest);
           });
         });
 
@@ -357,9 +410,29 @@ describe("LastFMApiEndpointFactoryV2", () => {
             mockFlagClient.isEnabled.mockReturnValueOnce(false);
           });
 
+          describe("receives a request with a successful proxy response", () => {
+            beforeEach(async () => {
+              factoryInstance = new ConcreteV2EndpointWithProxySuccess();
+              await arrange();
+            });
+
+            it("should return a 404", () => {
+              expect(mockRes._getStatusCode()).toBe(404);
+              expect(mockRes._getJSONData()).toStrictEqual(
+                status.STATUS_404_MESSAGE
+              );
+            });
+
+            checkJWT();
+            checkFeatureFlagLookup({ expectedCalls: 1 });
+            checkTimeoutNotCleared();
+            checkNoRetryHeader();
+            checkLogger();
+          });
+
           describe("receives a request that generates an unknown proxy response", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyResponseErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyResponseError();
               await arrange();
             });
 
@@ -379,7 +452,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request that generates an unknown proxy error", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyError();
               await arrange();
             });
 
@@ -407,7 +480,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
             (errorMsg, errorCode) => {
               beforeEach(async () => {
-                factoryInstance = new ConcreteV2EndpointProxyErrorClass();
+                factoryInstance = new ConcreteV2EndpointWithProxyError();
                 factoryInstance.errorCode = errorCode;
                 await arrange();
               });
@@ -429,7 +502,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request that times out", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -462,7 +535,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxySuccess();
               await arrange();
             });
 
@@ -486,7 +559,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxySuccess();
               await arrange();
             });
 
@@ -513,7 +586,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxySuccess();
               await arrange();
             });
 
@@ -546,7 +619,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
         describe("receives a request", () => {
           beforeEach(async () => {
-            factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+            factoryInstance = new ConcreteV2EndpointWithProxySuccess();
             await arrange();
           });
 
@@ -585,9 +658,29 @@ describe("LastFMApiEndpointFactoryV2", () => {
             requiredFlag = null;
           });
 
+          describe("receives a request with a successful proxy response", () => {
+            beforeEach(async () => {
+              factoryInstance = new ConcreteV2EndpointWithProxySuccess();
+              await arrange();
+            });
+
+            it("should return a 401", () => {
+              expect(mockRes._getStatusCode()).toBe(401);
+              expect(mockRes._getJSONData()).toStrictEqual(
+                status.STATUS_401_MESSAGE
+              );
+            });
+
+            checkJWT();
+            checkNoFeatureFlagLookup();
+            checkTimeoutNotCleared();
+            checkNoRetryHeader();
+            checkLogger();
+          });
+
           describe("receives a request that generates an unknown proxy response", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyResponseErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyResponseError();
               await arrange();
             });
 
@@ -607,7 +700,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request that generates an unknown proxy error", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyError();
               await arrange();
             });
 
@@ -627,7 +720,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a TIMED OUT request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -654,7 +747,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request that generates an unknown proxy response", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyResponseErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyResponseError();
               await arrange();
             });
 
@@ -674,7 +767,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request that generates an unknown proxy error", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyError();
               await arrange();
             });
 
@@ -694,7 +787,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a TIMED OUT request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -721,7 +814,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request that generates an unknown proxy response", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyResponseErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyResponseError();
               await arrange();
             });
 
@@ -741,7 +834,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request that generates an unknown proxy error", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointProxyErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyError();
               await arrange();
             });
 
@@ -761,7 +854,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a TIMED OUT request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -793,7 +886,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -820,7 +913,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -847,7 +940,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -885,7 +978,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -912,7 +1005,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 
@@ -939,7 +1032,7 @@ describe("LastFMApiEndpointFactoryV2", () => {
 
           describe("receives a request", () => {
             beforeEach(async () => {
-              factoryInstance = new ConcreteV2EndpointTimeoutErrorClass();
+              factoryInstance = new ConcreteV2EndpointWithProxyTimeout();
               await arrange();
             });
 

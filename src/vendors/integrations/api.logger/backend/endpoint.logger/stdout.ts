@@ -7,7 +7,7 @@ import type {
 export default class StdOutLogger
   implements ApiLoggerVendorEndpointLoggerInterface
 {
-  protected readonly noProxyResponseMsg = "No Response";
+  public readonly noProxyResponseMsg = "No remote service consumed.";
 
   public log: ApiLoggerVendorEndpointLoggerType = (req, res, next) => {
     const fields: Array<string> = [];
@@ -22,7 +22,7 @@ export default class StdOutLogger
     fields.push(String(req.headers["content-length"]));
     fields.push(String(req.headers["referer"]));
     fields.push(String(req.headers["user-agent"]));
-    fields.push(`(LastFM Service: ${proxyResponse})`);
+    fields.push(`(${proxyResponse})`);
 
     console.log(fields.join(" "));
 
