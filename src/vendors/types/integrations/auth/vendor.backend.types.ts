@@ -3,7 +3,7 @@ import type {
   VendorProfileType,
 } from "@src/vendors/integrations/auth/vendor.types";
 
-export type AuthVendorSessionType = {
+export type AuthVendorTokenType = {
   email: string | null;
   image: string | null;
   name: string | null;
@@ -11,7 +11,7 @@ export type AuthVendorSessionType = {
 } | null;
 
 export interface AuthVendorClientInterface {
-  getSession: () => AuthVendorSessionType | Promise<AuthVendorSessionType>;
+  getSession: () => AuthVendorTokenType | Promise<AuthVendorTokenType>;
 }
 
 export type AuthVendorProfilePersistenceClientConstructorType = new (

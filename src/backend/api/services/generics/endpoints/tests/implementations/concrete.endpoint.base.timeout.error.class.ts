@@ -1,5 +1,8 @@
 import ApiEndpointBase from "../../generic.endpoint.base.class";
-import type { ApiEndpointRequestPathParamType } from "@src/backend/api/types/services/request.types";
+import type {
+  ApiEndpointRequestQueryParamType,
+  ApiEndpointRequestBodyType,
+} from "@src/backend/api/types/services/request.types";
 
 export default class ConcreteBaseEndpointTimeoutErrorClass extends ApiEndpointBase<
   Record<string, never>,
@@ -13,7 +16,7 @@ export default class ConcreteBaseEndpointTimeoutErrorClass extends ApiEndpointBa
   protected setUpHandler(): void {
     this.handler.get(this.route, async (req, res, next) => {
       this.setRequestTimeout(req, res, next);
-      const response = await this.getProxyResponse({});
+      const response = await this.getProxyResponse({}, null);
       res.status(200).json(response);
       next();
     });
@@ -21,7 +24,9 @@ export default class ConcreteBaseEndpointTimeoutErrorClass extends ApiEndpointBa
 
   protected async getProxyResponse(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _: ApiEndpointRequestPathParamType
+    params: ApiEndpointRequestQueryParamType,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    body: ApiEndpointRequestBodyType | null
   ): Promise<number[]> {
     function timeout(ms: number) {
       return new Promise((resolve) => {
@@ -29,6 +34,6 @@ export default class ConcreteBaseEndpointTimeoutErrorClass extends ApiEndpointBa
       });
     }
     await timeout(this.timeOut * 2);
-    return [];
+    return Promise.resolve([]);
   }
 }

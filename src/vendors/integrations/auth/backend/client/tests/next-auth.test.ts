@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import NextAuthClient from "../next-auth";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
 import type { MockAPIEndpointRequestType } from "@src/vendors/types/integrations/api.framework/vendor.fixture.types";
-import type { AuthVendorSessionType } from "@src/vendors/types/integrations/auth/vendor.backend.types";
+import type { AuthVendorTokenType } from "@src/vendors/types/integrations/auth/vendor.backend.types";
 import type { JWT } from "next-auth/jwt";
 
 jest.mock("@src/utilities/generics/voids");
@@ -33,13 +33,13 @@ describe(NextAuthClient.name, () => {
     group: `normalizeNull(${mockValidJWT.group})`,
     image: `normalizeNull(${mockValidJWT.picture})`,
     name: `normalizeNull(${mockValidJWT.name})`,
-  } as AuthVendorSessionType;
+  } as AuthVendorTokenType;
   const mockValidNullSession = {
     email: `normalizeNull(null)`,
     image: `normalizeNull(null)`,
     name: `normalizeNull(null)`,
     group: `normalizeNull(null)`,
-  } as AuthVendorSessionType;
+  } as AuthVendorTokenType;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -66,7 +66,7 @@ describe(NextAuthClient.name, () => {
       beforeEach(() => MockedGetToken.mockResolvedValueOnce(mockValidJWT));
 
       describe("getSession", () => {
-        let result: AuthVendorSessionType;
+        let result: AuthVendorTokenType;
 
         beforeEach(async () => {
           result = await instance.getSession();
@@ -90,7 +90,7 @@ describe(NextAuthClient.name, () => {
       beforeEach(() => MockedGetToken.mockResolvedValueOnce(mockValidNullJWT));
 
       describe("getSession", () => {
-        let result: AuthVendorSessionType;
+        let result: AuthVendorTokenType;
 
         beforeEach(async () => {
           result = await instance.getSession();
@@ -114,7 +114,7 @@ describe(NextAuthClient.name, () => {
       beforeEach(() => MockedGetToken.mockResolvedValueOnce(null));
 
       describe("getToken", () => {
-        let result: AuthVendorSessionType;
+        let result: AuthVendorTokenType;
 
         beforeEach(async () => {
           result = await instance.getSession();

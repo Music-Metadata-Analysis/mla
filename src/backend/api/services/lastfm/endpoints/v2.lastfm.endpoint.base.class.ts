@@ -5,8 +5,8 @@ import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
 import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
 import type {
+  ApiEndpointRequestQueryParamType,
   ApiEndpointRequestType,
-  ApiEndpointRequestPathParamType,
 } from "@src/backend/api/types/services/request.types";
 import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
 
@@ -55,8 +55,8 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
 
   protected getParams(
     req: ApiEndpointRequestType
-  ): [ApiEndpointRequestPathParamType, boolean] {
-    const params = req.query as ApiEndpointRequestPathParamType;
+  ): [ApiEndpointRequestQueryParamType, boolean] {
+    const params = req.query as ApiEndpointRequestQueryParamType;
     const error = !params.username;
     return [params, error];
   }
@@ -83,12 +83,12 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
     req: ApiEndpointRequestType,
     res: ApiEndpointResponseType,
     next: () => void,
-    params: ApiEndpointRequestPathParamType
+    params: ApiEndpointRequestQueryParamType
   ): Promise<
     ReturnType<Awaited<LastFMProxyInterface[keyof LastFMProxyInterface]>>
   > {
     this.setRequestTimeout(req, res, next);
-    const proxyResponse = await this.getProxyResponse(params);
+    const proxyResponse = await this.getProxyResponse(params, null);
     this.clearRequestTimeout(req);
     return proxyResponse;
   }

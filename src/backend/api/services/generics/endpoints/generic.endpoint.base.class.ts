@@ -33,7 +33,8 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
   }
 
   protected abstract getProxyResponse(
-    params: ApiEndpointRequestQueryParamType | ApiEndpointRequestBodyType
+    params: ApiEndpointRequestQueryParamType,
+    body: ApiEndpointRequestBodyType | null
   ): ProxyClassReturnType;
 
   protected abstract setUpHandler(): void;
