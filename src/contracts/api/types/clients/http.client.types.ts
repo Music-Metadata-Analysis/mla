@@ -15,7 +15,7 @@ export interface HttpApiClientInterface {
   ): Promise<HttpApiClientResponse<ReportResponse>>;
 }
 
-export type HttpApiClientHttpMethodType = "GET" | "POST";
+export type HttpApiClientHttpMethodType = "GET" | "POST" | "PUT";
 
 export type HttpApiClientStatusMessageType = {
   detail: string;

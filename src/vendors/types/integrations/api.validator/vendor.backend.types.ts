@@ -3,10 +3,15 @@ export interface ApiValidationVendorResponseInterface {
   errors?: unknown;
 }
 
+export type ApiValidationVendorValidatorFunctionType = (
+  payload: Record<string | number | symbol, unknown>
+) => ApiValidationVendorResponseInterface;
+
 export interface ApiValidationVendorBackendInterface {
+  [key: string]: {
+    [key: string]: ApiValidationVendorValidatorFunctionType;
+  };
   lastfm: {
-    playCountByArtist: (
-      payload: Record<string | number | symbol, unknown>
-    ) => ApiValidationVendorResponseInterface;
+    playCountByArtist: ApiValidationVendorValidatorFunctionType;
   };
 }

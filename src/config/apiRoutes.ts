@@ -9,6 +9,7 @@ const apiRoutes = {
     },
   },
   v2: {
+    cache: "/api/v2/cache/:source/:report/:username",
     data: {
       artists: {
         albumsList: "/api/v2/data/artists/:artist/albums",
