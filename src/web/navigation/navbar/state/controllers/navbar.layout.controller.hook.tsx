@@ -13,7 +13,7 @@ const useNavBarLayoutController = () => {
 
   const focusChangeHandler = (event: MouseEvent) => {
     if (rootReference.current?.clientHeight) {
-      if (event.clientY > rootReference.current?.clientHeight)
+      if (event.clientY > rootReference.current.clientHeight)
         controls.mobileMenu.setFalse();
     }
   };

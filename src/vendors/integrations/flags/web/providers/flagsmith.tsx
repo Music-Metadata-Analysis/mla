@@ -12,7 +12,7 @@ const FlagProvider = ({
       serverState={state.serverState}
       options={{
         environmentID: process.env.NEXT_PUBLIC_FLAG_ENVIRONMENT,
-        identity: normalizeUndefined(state?.identity),
+        identity: normalizeUndefined(state.identity),
       }}
       flagsmith={flagsmith}
     >

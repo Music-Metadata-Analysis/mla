@@ -134,10 +134,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 97,
-        "branches": 76,
-        "functions": 99,
-        "lines": 97
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
       }
     },
     "globalSetup": "<rootDir>/jest/globalSetup.js",

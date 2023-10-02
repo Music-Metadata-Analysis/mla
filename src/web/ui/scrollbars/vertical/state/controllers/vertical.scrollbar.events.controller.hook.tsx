@@ -26,8 +26,8 @@ const useVerticalScrollBarEventsController = ({
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollbars.add(scrollRef.current?.id);
-      handlers.activeScrollBar = scrollRef.current?.id;
+      scrollbars.add(scrollRef.current.id);
+      handlers.activeScrollBar = scrollRef.current.id;
     }
     return () => {
       scrollbars.remove();

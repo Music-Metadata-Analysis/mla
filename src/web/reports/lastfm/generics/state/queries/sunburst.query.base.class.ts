@@ -2,6 +2,8 @@ import SunBurstStateToChartDataTranslator from "@src/web/reports/lastfm/generics
 import LastFMReportQueryAbstractBaseClass from "@src/web/reports/lastfm/generics/state/queries/bases/query.base.class";
 import type translations from "@locales/lastfm.json";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
+import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm.api.client.types";
+import type { GenericAggregateReportOperationType } from "@src/web/reports/generics/types/state/aggregate.report.types";
 import type {
   d3Node,
   SunBurstData,
@@ -80,10 +82,14 @@ export default abstract class SunBurstBaseQuery<
   ) {
     if (!this.getReportData(reportProperties).status.operation)
       return { resource: "", type: "" };
-    const resource = this.getReportData(reportProperties).status.operation
-      ?.resource as string;
-    const type = this.getReportData(reportProperties).status.operation
-      ?.type as string;
+    const resource = (
+      this.getReportData(reportProperties).status
+        .operation as GenericAggregateReportOperationType<LastFMReportClientParamsInterface>
+    ).resource;
+    const type = (
+      this.getReportData(reportProperties).status
+        .operation as GenericAggregateReportOperationType<LastFMReportClientParamsInterface>
+    ).type;
     return {
       resource,
       type: t(`detailTypes.${type}`),

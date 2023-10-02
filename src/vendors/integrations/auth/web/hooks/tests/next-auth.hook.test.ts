@@ -294,14 +294,34 @@ describe("useNextAuth", () => {
           });
         });
       });
+
+      describe("with a profile that is completely missing", () => {
+        beforeEach(() => {
+          MockedUseSession.mockImplementation(() => ({
+            data: null,
+            status: "authenticated",
+          }));
+          existingLocalStorageValue = { type: mockUserProfile.oauth };
+          received = arrange();
+        });
+
+        checkLocalStorage();
+        checkHookProperties(null);
+
+        it("should return status as authenticated", () => {
+          expect(received.result.current.status).toBe("unauthenticated");
+        });
+
+        it("should return the correct user profile", () => {
+          expect(received.result.current.user).toStrictEqual(null);
+        });
+      });
     });
 
     describe("with user who is NOT signed in", () => {
       beforeEach(() => {
         MockedUseSession.mockImplementation(() => ({
-          data: {
-            user: { mock: "data" },
-          },
+          data: null,
           status: "unauthenticated",
         }));
         received = arrange();
@@ -322,9 +342,7 @@ describe("useNextAuth", () => {
     describe("with user who is in the process of signing in", () => {
       beforeEach(() => {
         MockedUseSession.mockImplementation(() => ({
-          data: {
-            user: { mock: "data" },
-          },
+          data: null,
           status: "loading",
         }));
         existingLocalStorageValue = { type: null };

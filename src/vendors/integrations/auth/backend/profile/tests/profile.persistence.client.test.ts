@@ -1,7 +1,6 @@
 import ProfilePersistenceClient from "../profile.persistence.client.class";
 import { mockPersistenceClient } from "@src/vendors/integrations/persistence/__mocks__/vendor.backend.mock";
 import { persistenceVendorBackend } from "@src/vendors/integrations/persistence/vendor.backend";
-import type { VendorProfileType } from "@src/vendors/integrations/auth/vendor.types";
 
 jest.mock("@src/vendors/integrations/persistence/vendor.backend");
 
@@ -53,7 +52,7 @@ describe(ProfilePersistenceClient.name, () => {
 
       describe("when called with an invalid profile", () => {
         beforeEach(async () => {
-          await instance.persistProfile({} as VendorProfileType);
+          await instance.persistProfile(undefined);
         });
 
         it("should NOT call the underlying PersistenceClient", () => {

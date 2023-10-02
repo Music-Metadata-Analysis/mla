@@ -30,7 +30,7 @@ export default class StdOutLogger
   };
 
   protected getRemoteIpAddress(req: ApiFrameworkVendorApiRequestType): string {
-    if (req.socket?.remoteAddress) return req.socket.remoteAddress;
+    if (req.socket.remoteAddress) return req.socket.remoteAddress;
 
     const forwardHeader = req.headers["x-forwarded-for"];
     if (typeof forwardHeader === "string") return forwardHeader.split(",")[0];

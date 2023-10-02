@@ -161,7 +161,7 @@ export default class SunBurstChartSVG extends Component<SunBurstChartSVGProps> {
     this.graphic.colorSelector = d3.scaleOrdinal(
       d3.quantize(
         d3.interpolateRainbow,
-        valueToZero(this.props.data.children?.length) + 1
+        valueToZero((this.props.data.children as SunBurstData[]).length) + 1
       )
     );
   };
@@ -200,9 +200,11 @@ export default class SunBurstChartSVG extends Component<SunBurstChartSVGProps> {
   };
 
   private clearAllNodes = () => {
-    this.props.svgRef.current?.querySelectorAll("g").forEach((node) => {
-      node.remove();
-    });
+    (this.props.svgRef.current as SVGSVGElement)
+      .querySelectorAll("g")
+      .forEach((node) => {
+        node.remove();
+      });
   };
 
   private getSVGElement = () => {

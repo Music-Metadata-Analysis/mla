@@ -1,4 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react";
+import { normalizeUndefined } from "@src/utilities/generics/voids";
 import PersistentStateFactory from "@src/utilities/react/hooks/local.storage/persisted.state.hook.factory.class";
 import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 import type {
@@ -18,19 +19,27 @@ const useNextAuth = (): AuthVendorHookInterface => {
   });
   const { data, status } = useSession();
 
-  const mapStatus = {
-    authenticated: "authenticated" as const,
-    loading: "processing" as const,
-    unauthenticated: "unauthenticated" as const,
+  const mapStatus = (status: keyof typeof statusHash) => {
+    if (status == "authenticated" && !data) {
+      status = "unauthenticated" as const;
+    }
+
+    const statusHash = {
+      authenticated: "authenticated" as const,
+      loading: "processing" as const,
+      unauthenticated: "unauthenticated" as const,
+    };
+
+    return statusHash[status];
   };
 
   const mapSession = (session: Session | null) => {
-    if (status !== "authenticated") return null;
+    if (status !== "authenticated" || !session || !session.user) return null;
     return {
-      name: session?.user?.name ? session?.user?.name : undefined,
-      email: session?.user?.email ? session?.user?.email : undefined,
-      image: session?.user?.image ? session?.user?.image : undefined,
-      group: session?.group ? (session?.group as string) : undefined,
+      name: normalizeUndefined(session.user.name),
+      email: normalizeUndefined(session.user.email),
+      image: normalizeUndefined(session.user.image),
+      group: normalizeUndefined(session.group),
       oauth: oauth.type as AuthVendorServiceType,
     };
   };
@@ -48,7 +57,7 @@ const useNextAuth = (): AuthVendorHookInterface => {
   return {
     signIn: signInWithOauth,
     signOut: signOutWithOauth,
-    status: mapStatus[status],
+    status: mapStatus(status),
     user: mapSession(data),
   };
 };

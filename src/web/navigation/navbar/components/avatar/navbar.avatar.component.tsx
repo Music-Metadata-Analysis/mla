@@ -15,9 +15,9 @@ const NavBarAvatar = ({ user }: NavBarAvatarProps) => {
     <Avatar
       bg={buttonColour.background}
       loading={"eager"}
-      name={user?.name}
+      name={user.name}
       size={"sm"}
-      src={user?.image}
+      src={user.image}
     />
   );
 };

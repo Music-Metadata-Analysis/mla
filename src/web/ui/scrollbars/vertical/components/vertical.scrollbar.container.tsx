@@ -61,11 +61,11 @@ const VerticalScrollBarContainer = ({
 
   const asCSS = (value: number) => `${value}px`;
 
-  if (!scrollBarDiv.requiresScroll()) return null;
+  if (!scrollBarDiv.ref || !scrollBarDiv.requiresScroll()) return null;
 
   return (
     <VerticalScrollBar
-      ariaControls={scrollBarDiv.ref?.id}
+      ariaControls={scrollBarDiv.ref.id}
       ariaValuemax={getAriaMaximumValue()}
       ariaValuemin={getAriaMinimumValue()}
       ariaValuenow={getAriaValueNow()}

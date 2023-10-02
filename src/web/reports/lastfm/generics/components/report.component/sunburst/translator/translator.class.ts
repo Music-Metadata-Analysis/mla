@@ -60,8 +60,9 @@ class SunBurstStateToChartDataTranslator {
     childrenEntityType: SunBurstData["entity"]
   ) => {
     if (
-      selection.state[this.valueKey] > 0 ||
-      this.isLeafNode(selection.entityType)
+      (selection.state[this.valueKey] > 0 ||
+        this.isLeafNode(selection.entityType)) &&
+      selection.sunBurstData.children
     ) {
       const node: SunBurstData = {
         entity: selection.entityType,
@@ -69,7 +70,7 @@ class SunBurstStateToChartDataTranslator {
       };
       if (selection.state[this.valueKey])
         node.value = selection.state[this.valueKey];
-      selection.sunBurstData.children?.push(node);
+      selection.sunBurstData.children.push(node);
       const children = selection.state[
         childrenEntityType
       ] as LastFMAggregateReportContentType[];
@@ -93,7 +94,7 @@ class SunBurstStateToChartDataTranslator {
     ) {
       const remainder = this.getValue(selection.sunBurstData) - totalCount;
       if (remainder > 0) {
-        selection.sunBurstData.children?.push({
+        selection.sunBurstData.children.push({
           entity: selection.entityType,
           name: this.remainderKey,
           value: remainder,

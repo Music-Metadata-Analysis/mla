@@ -133,49 +133,97 @@ describe("MLA", () => {
     const mockFlagState = "mockFlagState";
     const mockExtraProps = { pageProps: "mockPageProp" };
 
-    beforeEach(async () => {
-      jest.mocked(App.getInitialProps).mockResolvedValueOnce(mockExtraProps);
-      mockAuthVendorSSRClient.getSession.mockReturnValue(mockSession);
-      mockFlagVendorSSRClient.getState.mockReturnValue(mockFlagState);
+    describe("with an authorized user", () => {
+      beforeEach(async () => {
+        jest.mocked(App.getInitialProps).mockResolvedValueOnce(mockExtraProps);
+        mockAuthVendorSSRClient.getSession.mockReturnValue(mockSession);
+        mockFlagVendorSSRClient.getState.mockReturnValue(mockFlagState);
 
-      result = await getInitialProps(mockContext);
-    });
+        result = await getInitialProps(mockContext);
+      });
 
-    it("should call App.getInitialProps as expected", () => {
-      expect(App.getInitialProps).toBeCalledTimes(1);
-      expect(App.getInitialProps).toBeCalledWith(mockContext);
-    });
+      it("should call App.getInitialProps as expected", () => {
+        expect(App.getInitialProps).toBeCalledTimes(1);
+        expect(App.getInitialProps).toBeCalledWith(mockContext);
+      });
 
-    it("should call the authVendor's SSR Client getSession method as expected", () => {
-      expect(authVendorSSR.Client).toBeCalledTimes(1);
-      expect(authVendorSSR.Client).toBeCalledWith();
-      expect(mockAuthVendorSSRClient.getSession).toBeCalledTimes(1);
-      expect(mockAuthVendorSSRClient.getSession).toBeCalledWith({
-        req: mockRequest,
+      it("should call the authVendor's SSR Client getSession method as expected", () => {
+        expect(authVendorSSR.Client).toBeCalledTimes(1);
+        expect(authVendorSSR.Client).toBeCalledWith();
+        expect(mockAuthVendorSSRClient.getSession).toBeCalledTimes(1);
+        expect(mockAuthVendorSSRClient.getSession).toBeCalledWith({
+          req: mockRequest,
+        });
+      });
+
+      it("should call the flagVendor's SSR Client getState method as expected", () => {
+        expect(flagVendorSSR.Client).toBeCalledTimes(1);
+        expect(flagVendorSSR.Client).toBeCalledWith();
+        expect(mockFlagVendorSSRClient.getState).toBeCalledTimes(1);
+        expect(mockFlagVendorSSRClient.getState).toBeCalledWith(
+          mockSession.group
+        );
+      });
+
+      it("should wrap the session in a normalizeUndefined call", () => {
+        expect(normalizeUndefined).toBeCalledTimes(1);
+        expect(normalizeUndefined).toBeCalledWith(mockSession);
+      });
+
+      it("should return the expected values", () => {
+        expect(result).toStrictEqual({
+          pageProps: {
+            flagState: mockFlagState,
+            session: `normalizeUndefined(${mockSession})`,
+            ...mockExtraProps,
+          },
+        });
       });
     });
 
-    it("should call the flagVendor's SSR Client getState method as expected", () => {
-      expect(flagVendorSSR.Client).toBeCalledTimes(1);
-      expect(flagVendorSSR.Client).toBeCalledWith();
-      expect(mockFlagVendorSSRClient.getState).toBeCalledTimes(1);
-      expect(mockFlagVendorSSRClient.getState).toBeCalledWith(
-        mockSession.group
-      );
-    });
+    describe("with an unauthorized user", () => {
+      beforeEach(async () => {
+        jest.mocked(App.getInitialProps).mockResolvedValueOnce(mockExtraProps);
+        mockAuthVendorSSRClient.getSession.mockReturnValue(null);
+        mockFlagVendorSSRClient.getState.mockReturnValue(mockFlagState);
 
-    it("should wrap the session in a normalizeUndefined call", () => {
-      expect(normalizeUndefined).toBeCalledTimes(1);
-      expect(normalizeUndefined).toBeCalledWith(mockSession);
-    });
+        result = await getInitialProps(mockContext);
+      });
 
-    it("should return the expected values", () => {
-      expect(result).toStrictEqual({
-        pageProps: {
-          flagState: mockFlagState,
-          session: `normalizeUndefined(${mockSession})`,
-          ...mockExtraProps,
-        },
+      it("should call App.getInitialProps as expected", () => {
+        expect(App.getInitialProps).toBeCalledTimes(1);
+        expect(App.getInitialProps).toBeCalledWith(mockContext);
+      });
+
+      it("should call the authVendor's SSR Client getSession method as expected", () => {
+        expect(authVendorSSR.Client).toBeCalledTimes(1);
+        expect(authVendorSSR.Client).toBeCalledWith();
+        expect(mockAuthVendorSSRClient.getSession).toBeCalledTimes(1);
+        expect(mockAuthVendorSSRClient.getSession).toBeCalledWith({
+          req: mockRequest,
+        });
+      });
+
+      it("should call the flagVendor's SSR Client getState method as expected", () => {
+        expect(flagVendorSSR.Client).toBeCalledTimes(1);
+        expect(flagVendorSSR.Client).toBeCalledWith();
+        expect(mockFlagVendorSSRClient.getState).toBeCalledTimes(1);
+        expect(mockFlagVendorSSRClient.getState).toBeCalledWith(undefined);
+      });
+
+      it("should wrap the session in a normalizeUndefined call", () => {
+        expect(normalizeUndefined).toBeCalledTimes(1);
+        expect(normalizeUndefined).toBeCalledWith(null);
+      });
+
+      it("should return the expected values", () => {
+        expect(result).toStrictEqual({
+          pageProps: {
+            flagState: mockFlagState,
+            session: `normalizeUndefined(null)`,
+            ...mockExtraProps,
+          },
+        });
       });
     });
   });

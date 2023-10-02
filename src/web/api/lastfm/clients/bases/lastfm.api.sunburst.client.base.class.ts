@@ -35,9 +35,9 @@ abstract class LastFMSunburstDataClient<AggregateReportType>
 
   getRoute() {
     let route = this.defaultRoute;
-    if (this.encapsulatedState.getReportStatus()?.operation?.url) {
-      route = this.encapsulatedState.getReportStatus()?.operation
-        ?.url as string;
+    const reportStatus = this.encapsulatedState.getReportStatus();
+    if (reportStatus && reportStatus.operation) {
+      route = reportStatus.operation.url;
     }
     return route;
   }
@@ -80,9 +80,9 @@ abstract class LastFMSunburstDataClient<AggregateReportType>
   }
 
   protected getParams(params: LastFMReportClientParamsInterface) {
-    if (this.encapsulatedState.getReportStatus()?.operation?.params) {
-      return this.encapsulatedState.getReportStatus()?.operation
-        ?.params as LastFMReportClientParamsInterface;
+    const reportStatus = this.encapsulatedState.getReportStatus();
+    if (reportStatus && reportStatus.operation) {
+      return reportStatus.operation.params;
     }
     return params;
   }

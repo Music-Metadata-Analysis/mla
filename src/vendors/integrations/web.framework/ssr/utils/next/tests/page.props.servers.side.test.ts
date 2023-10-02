@@ -31,6 +31,9 @@ type MLAPageProps = {
 
 describe("pageProps", () => {
   let generatedFunction: ReturnType<typeof pagePropsGenerator>;
+  let serverSideContext:
+    | GetServerSidePropsContext
+    | { locale: string; req: undefined };
   let returnValue: MLAPageProps;
   let expectedCookieContent: string | undefined;
 
@@ -44,8 +47,7 @@ describe("pageProps", () => {
   ];
   const mockTranslations = ["one", "two"];
   const mockPageKey = "test";
-
-  const mockServerSideContext = {
+  const baseServerSideProps = {
     locale: mockLocale,
     req: {
       headers: {},
@@ -71,7 +73,7 @@ describe("pageProps", () => {
         beforeEach(
           async () =>
             (returnValue = (await generatedFunction(
-              mockServerSideContext
+              serverSideContext as GetServerSidePropsContext
             )) as MLAPageProps)
         );
 
@@ -110,7 +112,7 @@ describe("pageProps", () => {
         beforeEach(
           async () =>
             (returnValue = (await generatedFunction(
-              mockServerSideContext
+              baseServerSideProps
             )) as MLAPageProps)
         );
 
@@ -123,18 +125,35 @@ describe("pageProps", () => {
     });
   };
 
-  describe("with defined cookie values", () => {
+  describe("with a valid request", () => {
     beforeEach(() => {
-      mockServerSideContext.req.headers.cookie = mockCookieContent;
-      expectedCookieContent = mockCookieContent;
+      serverSideContext = { ...baseServerSideProps };
     });
 
-    checkServerSideProps();
+    describe("with defined cookie values", () => {
+      beforeEach(() => {
+        (serverSideContext as GetServerSidePropsContext).req.headers.cookie =
+          mockCookieContent;
+        expectedCookieContent = mockCookieContent;
+      });
+
+      checkServerSideProps();
+    });
+
+    describe("with undefined cookie values", () => {
+      beforeEach(() => {
+        (serverSideContext as GetServerSidePropsContext).req.headers.cookie =
+          undefined;
+        expectedCookieContent = "";
+      });
+
+      checkServerSideProps();
+    });
   });
 
-  describe("with undefined cookie values", () => {
+  describe("with an invalid request", () => {
     beforeEach(() => {
-      mockServerSideContext.req.headers.cookie = undefined;
+      serverSideContext = { locale: "en", req: undefined };
       expectedCookieContent = "";
     });
 

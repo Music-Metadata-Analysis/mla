@@ -85,7 +85,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
 
   protected handleTimeout(params: LastFMReportClientParamsInterface): void {
     if (this.response.status === 503) {
-      const backOff = parseInt(this.response?.headers["retry-after"]);
+      const backOff = parseInt(this.response.headers["retry-after"]);
       if (!isNaN(backOff)) {
         setTimeout(() => {
           this.dispatch({

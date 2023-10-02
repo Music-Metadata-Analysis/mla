@@ -160,85 +160,155 @@ describe("useNavBarController", () => {
     });
   });
 
-  describe("when clicking on the document", () => {
+  describe("when the reference is defined", () => {
     beforeEach(() => (mockRootReference.current = { clientHeight: 100 }));
 
-    describe("when the document is clicked above the defined threshold", () => {
-      beforeEach(() => {
-        received = arrange();
+    describe("when clicking on the document", () => {
+      describe("when the document is clicked above the defined threshold", () => {
+        beforeEach(() => {
+          received = arrange();
 
-        fireEvent(
-          window.document,
-          new MouseEvent("click", {
-            clientY:
-              (
+          fireEvent(
+            window.document,
+            new MouseEvent("click", {
+              clientY:
+                (
+                  mockRootReference.current as NonNullable<
+                    typeof mockRootReference.current
+                  >
+                ).clientHeight + 1,
+            })
+          );
+        });
+
+        it("should close the mobile menu", () => {
+          expect(
+            received.result.current.controls.mobileMenu.setFalse
+          ).toBeCalledTimes(1);
+          expect(
+            received.result.current.controls.mobileMenu.setFalse
+          ).toBeCalledWith();
+        });
+
+        describe("when the hook is unmounted", () => {
+          beforeEach(() => {
+            mockHookValues.controls.mobileMenu.setFalse.mockClear();
+            received.unmount();
+          });
+
+          describe("when the document is clicked above the defined threshold again", () => {
+            beforeEach(() => {
+              fireEvent(
+                window.document,
+                new MouseEvent("click", {
+                  clientY:
+                    (
+                      mockRootReference.current as NonNullable<
+                        typeof mockRootReference.current
+                      >
+                    ).clientHeight + 1,
+                })
+              );
+            });
+
+            it("should NOT attempt to close the mobile menu again", () => {
+              expect(
+                received.result.current.controls.mobileMenu.setFalse
+              ).toBeCalledTimes(0);
+            });
+          });
+        });
+      });
+
+      describe("when the document is clicked below or equal to the defined threshold", () => {
+        beforeEach(() => {
+          received = arrange();
+
+          fireEvent(
+            window.document,
+            new MouseEvent("click", {
+              clientY: (
                 mockRootReference.current as NonNullable<
                   typeof mockRootReference.current
                 >
-              ).clientHeight + 1,
-          })
-        );
-      });
-
-      it("should close the mobile menu", () => {
-        expect(
-          received.result.current.controls.mobileMenu.setFalse
-        ).toBeCalledTimes(1);
-        expect(
-          received.result.current.controls.mobileMenu.setFalse
-        ).toBeCalledWith();
-      });
-
-      describe("when the hook is unmounted", () => {
-        beforeEach(() => {
-          mockHookValues.controls.mobileMenu.setFalse.mockClear();
-          received.unmount();
+              ).clientHeight,
+            })
+          );
         });
 
-        describe("when the document is clicked above the defined threshold again", () => {
-          beforeEach(() => {
-            fireEvent(
-              window.document,
-              new MouseEvent("click", {
-                clientY:
-                  (
-                    mockRootReference.current as NonNullable<
-                      typeof mockRootReference.current
-                    >
-                  ).clientHeight + 1,
-              })
-            );
-          });
-
-          it("should NOT attempt to close the mobile menu again", () => {
-            expect(
-              received.result.current.controls.mobileMenu.setFalse
-            ).toBeCalledTimes(0);
-          });
+        it("should NOT attempt to close the mobile menu", () => {
+          expect(
+            received.result.current.controls.mobileMenu.setFalse
+          ).toBeCalledTimes(0);
         });
       });
     });
+  });
 
-    describe("when the document is clicked below or equal to the defined threshold", () => {
-      beforeEach(() => {
-        received = arrange();
+  describe("when the reference is not defined", () => {
+    beforeEach(() => (mockRootReference.current = null));
 
-        fireEvent(
-          window.document,
-          new MouseEvent("click", {
-            clientY: (
-              mockRootReference.current as NonNullable<
-                typeof mockRootReference.current
-              >
-            ).clientHeight,
-          })
-        );
+    describe("when clicking on the document", () => {
+      describe("when the document is clicked above the defined threshold", () => {
+        beforeEach(() => {
+          received = arrange();
+
+          fireEvent(
+            window.document,
+            new MouseEvent("click", {
+              clientY: 1,
+            })
+          );
+        });
+
+        it("should NOT close the mobile menu", () => {
+          expect(
+            received.result.current.controls.mobileMenu.setFalse
+          ).toBeCalledTimes(0);
+        });
+
+        describe("when the hook is unmounted", () => {
+          beforeEach(() => {
+            mockHookValues.controls.mobileMenu.setFalse.mockClear();
+            received.unmount();
+          });
+
+          describe("when the document is clicked above the defined threshold again", () => {
+            beforeEach(() => {
+              fireEvent(
+                window.document,
+                new MouseEvent("click", {
+                  clientY: 1,
+                })
+              );
+            });
+
+            it("should NOT attempt to close the mobile menu", () => {
+              expect(
+                received.result.current.controls.mobileMenu.setFalse
+              ).toBeCalledTimes(0);
+            });
+          });
+        });
       });
 
-      it("should NOT attempt to close the mobile menu", () => {
-        expect(
-          received.result.current.controls.mobileMenu.setFalse
-        ).toBeCalledTimes(0);
+      describe("when the document is clicked below or equal to the defined threshold", () => {
+        beforeEach(() => {
+          received = arrange();
+
+          fireEvent(
+            window.document,
+            new MouseEvent("click", {
+              clientY: 0,
+            })
+          );
+        });
+
+        it("should NOT attempt to close the mobile menu", () => {
+          expect(
+            received.result.current.controls.mobileMenu.setFalse
+          ).toBeCalledTimes(0);
+        });
       });
     });
   });
