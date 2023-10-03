@@ -1,6 +1,15 @@
-import { PopUpsControllerReducer } from "../popups.reducer";
+import {
+  corePopUpsControllerReducer,
+  PopUpsControllerReducer,
+} from "../popups.reducer";
+import {
+  mockApplyMiddleware,
+  mockLoggingMiddleware,
+} from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import type { PopUpsControllerActionType } from "@src/vendors/types/integrations/ui.framework/popups/popups.action.types";
 import type { PopUpsControllerStateInterface } from "@src/vendors/types/integrations/ui.framework/popups/popups.state.types";
+
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 jest.mock("../popups.reducer.states.class", () => jest.fn(() => mockStates));
 
@@ -20,7 +29,8 @@ describe("PopUpsControllerReducer", () => {
 
   beforeEach(() => {
     received = null;
-    jest.clearAllMocks();
+    mockStates.HidePopUp.mockClear();
+    mockStates.ShowPopUp.mockClear();
   });
 
   const getInitialState = () =>
@@ -37,6 +47,13 @@ describe("PopUpsControllerReducer", () => {
       action as PopUpsControllerActionType
     ) as PopUpsControllerStateInterface;
   };
+
+  it("should be wrapped in the correct middlewares", () => {
+    expect(mockApplyMiddleware).toBeCalledTimes(1);
+    expect(mockApplyMiddleware).toBeCalledWith(corePopUpsControllerReducer, [
+      mockLoggingMiddleware,
+    ]);
+  });
 
   it("should handle HidePopUp correctly", () => {
     const action = {

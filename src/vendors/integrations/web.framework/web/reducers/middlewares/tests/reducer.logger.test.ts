@@ -1,12 +1,12 @@
 import reducerLoggingMiddleware from "../reducer.logger";
 import type { MutableEnv } from "@src/utilities/types/process.types";
-import type { ActionType } from "@src/utilities/types/react/reducer.types";
+import type { VendorActionType } from "@src/vendors/types/integrations/web.framework/vendor.types";
 import type { Reducer } from "react";
 
-type capturedOutput = Array<string | ActionType>;
+type capturedOutput = Array<string | VendorActionType>;
 type testState = typeof testState1 | typeof testState2;
 
-interface MockActionType extends ActionType {
+interface MockActionType extends VendorActionType {
   state: { key: string };
 }
 

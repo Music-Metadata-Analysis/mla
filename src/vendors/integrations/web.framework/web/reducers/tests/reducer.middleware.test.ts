@@ -1,14 +1,13 @@
-import withMiddleware from "../reducer.middleware";
-import type {
-  ActionType,
-  StateType,
-} from "@src/utilities/types/react/reducer.types";
+import applyMiddleware from "../reducer.middleware";
+import type { VendorActionType } from "@src/vendors/types/integrations/web.framework/vendor.types";
 import type { Reducer } from "react";
 
-const callStack: ActionType[] = [];
-let receivedAction: ActionType;
+type MockStateType = Record<string, unknown>;
 
-const mockReducer = (state: StateType, action: ActionType) => {
+const callStack: VendorActionType[] = [];
+let receivedAction: VendorActionType;
+
+const mockReducer = (state: MockStateType, action: VendorActionType) => {
   receivedAction = action;
   switch (action.type) {
     default:
@@ -16,8 +15,8 @@ const mockReducer = (state: StateType, action: ActionType) => {
   }
 };
 
-const mockMiddleware = (reducer: Reducer<StateType, ActionType>) => {
-  const wrappedReducer = (state: StateType, action: ActionType) => {
+const mockMiddleware = (reducer: Reducer<MockStateType, VendorActionType>) => {
+  const wrappedReducer = (state: MockStateType, action: VendorActionType) => {
     callStack.push(action);
     return reducer(state, action);
   };
@@ -32,7 +31,7 @@ describe("withMiddleware", () => {
   let mockMiddleware1: MockedMiddlewareOrReducer;
   let mockMiddleware2: MockedMiddlewareOrReducer;
   let mockMiddleware3: MockedMiddlewareOrReducer;
-  let wrappedReducer: Reducer<StateType, ActionType>;
+  let wrappedReducer: Reducer<MockStateType, VendorActionType>;
 
   const createMiddlewareStack = () => {
     mockMiddleware1 = jest.fn((i) => mockMiddleware(i));
@@ -42,7 +41,7 @@ describe("withMiddleware", () => {
   };
 
   beforeEach(() => {
-    wrappedReducer = withMiddleware(mockReducer, createMiddlewareStack());
+    wrappedReducer = applyMiddleware(mockReducer, createMiddlewareStack());
   });
 
   it("should correctly encapsulates the reducer", () => {
@@ -55,7 +54,7 @@ describe("withMiddleware", () => {
   });
 
   it("should create an encapsulated reducer that works as expected", () => {
-    const test_action = { type: "BogusAction", state: {} };
+    const test_action = { type: "MockAction", state: { mock: "State" } };
     expect(callStack.length).toBe(0);
     expect(receivedAction).toBeUndefined();
     wrappedReducer({}, test_action);

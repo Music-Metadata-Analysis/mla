@@ -1,10 +1,9 @@
 import PopUpsControllerReducerStates from "./popups.reducer.states.class";
-import reducerLoggingMiddleware from "@src/utilities/react/state/reducers/reducer.logger";
-import withMiddleware from "@src/utilities/react/state/reducers/reducer.middleware";
+import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 import type { PopUpsControllerActionType } from "@src/vendors/types/integrations/ui.framework/popups/popups.action.types";
 import type { PopUpsControllerStateInterface } from "@src/vendors/types/integrations/ui.framework/popups/popups.state.types";
 
-const popUpsControllerReducer = (
+export const corePopUpsControllerReducer = (
   state: PopUpsControllerStateInterface,
   action: PopUpsControllerActionType
 ) => {
@@ -14,8 +13,9 @@ const popUpsControllerReducer = (
   return newState;
 };
 
-const middlewares = [reducerLoggingMiddleware];
-export const PopUpsControllerReducer = withMiddleware<
-  PopUpsControllerStateInterface,
-  PopUpsControllerActionType
->(popUpsControllerReducer, middlewares);
+const middlewares = [webFrameworkVendor.reducers.middlewares.logger];
+export const PopUpsControllerReducer =
+  webFrameworkVendor.reducers.applyMiddleware<
+    PopUpsControllerStateInterface,
+    PopUpsControllerActionType
+  >(corePopUpsControllerReducer, middlewares);

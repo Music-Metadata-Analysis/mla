@@ -27,3 +27,6 @@ export const mockUseRouter = {
     jest.Mock
   >;
 };
+
+export const mockApplyMiddleware = jest.fn((props) => props);
+export const mockLoggingMiddleware = jest.fn();

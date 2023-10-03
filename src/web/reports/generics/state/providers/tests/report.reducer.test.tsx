@@ -12,10 +12,16 @@ import ConcreteStateThree, {
   mockStartState,
 } from "./implementations/concrete.report.state.3";
 import { InitialState } from "../report.initial";
-import { ReportReducer } from "../report.reducer";
+import { ReportReducer, coreReportReducer } from "../report.reducer";
+import {
+  mockApplyMiddleware,
+  mockLoggingMiddleware,
+} from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import type { ReportActionType } from "@src/web/reports/generics/types/state/providers/report.action.types";
 import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 import type { LastFMBaseReportInterface } from "@src/web/reports/lastfm/generics/types/state/lastfm.base.report.types";
+
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 jest.mock("../states/report.reducer.states", () => () => mockClasses);
 
@@ -27,7 +33,6 @@ describe("ReportReducer", () => {
 
   beforeEach(() => {
     received = null;
-    jest.clearAllMocks();
   });
 
   const getInitialState = () => JSON.parse(JSON.stringify(InitialState));
@@ -38,6 +43,13 @@ describe("ReportReducer", () => {
   ) => {
     return ReportReducer({ ...initialProps }, action as ReportActionType);
   };
+
+  it("should be wrapped in the correct middlewares", () => {
+    expect(mockApplyMiddleware).toBeCalledTimes(1);
+    expect(mockApplyMiddleware).toBeCalledWith(coreReportReducer, [
+      mockLoggingMiddleware,
+    ]);
+  });
 
   it("should handle ReadyFetch correctly", () => {
     const action = {
