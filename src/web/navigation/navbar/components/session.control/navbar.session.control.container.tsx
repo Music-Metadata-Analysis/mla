@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import NavSessionControl from "./navbar.session.control.component";
-import useToggle from "@src/utilities/react/hooks/toggle.hook";
 import useAuth from "@src/web/authentication/session/hooks/auth.hook";
+import useToggle from "@src/web/ui/generics/state/hooks/toggle.hook";
 import type { MouseEvent } from "react";
 
 export interface NavSessionControlContainerProps {

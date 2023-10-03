@@ -1,4 +1,4 @@
-import type mockToggleHook from "@src/utilities/react/hooks/__mocks__/toggle.hook.mock";
+import type mockToggleHook from "@src/web/ui/generics/state/hooks/__mocks__/toggle.hook.mock";
 
 export const checkIsToggle = (
   getHookValue: () => Record<string, unknown>,

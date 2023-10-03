@@ -10,7 +10,6 @@ import { testIDs as AuthModalTestIDs } from "../modals/signin/modal.signin.ident
 import { testIDs as SpinnerModalTestIDs } from "../modals/spinner/modal.spinner.identifiers";
 import authenticationTranslations from "@locales/authentication.json";
 import routes from "@src/config/routes";
-import mockToggleHook from "@src/utilities/react/hooks/__mocks__/toggle.hook.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook, {
@@ -18,6 +17,7 @@ import mockAuthHook, {
 } from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
+import mockToggleHook from "@src/web/ui/generics/state/hooks/__mocks__/toggle.hook.mock";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
@@ -27,7 +27,7 @@ jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
-jest.mock("@src/utilities/react/hooks/toggle.hook");
+jest.mock("@src/web/ui/generics/state/hooks/toggle.hook");
 
 jest.mock(
   "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container",

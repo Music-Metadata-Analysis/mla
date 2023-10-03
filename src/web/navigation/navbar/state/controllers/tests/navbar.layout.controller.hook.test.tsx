@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/navbar.layout.controller.hook.mock";
 import useNavBarLayoutController from "../navbar.layout.controller.hook";
-import type mockToggleHookValues from "@src/utilities/react/hooks/__mocks__/toggle.hook.mock";
+import type mockToggleHookValues from "@src/web/ui/generics/state/hooks/__mocks__/toggle.hook.mock";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 

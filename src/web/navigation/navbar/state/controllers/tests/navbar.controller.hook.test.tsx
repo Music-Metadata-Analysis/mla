@@ -3,10 +3,10 @@ import dk from "deep-keys";
 import mockHookValues from "../__mocks__/navbar.controller.hook.mock";
 import useNavBarController from "../navbar.controller.hook";
 import makeUniqueHookMock from "@src/tests/fixtures/mock.object.unique";
-import mockToggleHook from "@src/utilities/react/hooks/__mocks__/toggle.hook.mock";
-import { checkIsToggle } from "@src/utilities/react/hooks/tests/fixtures/toggle.hook";
-import useToggle from "@src/utilities/react/hooks/toggle.hook";
 import NavBarProvider from "@src/web/navigation/navbar/state/providers/navbar.provider";
+import mockToggleHook from "@src/web/ui/generics/state/hooks/__mocks__/toggle.hook.mock";
+import { checkIsToggle } from "@src/web/ui/generics/state/hooks/tests/fixtures/toggle.hook";
+import useToggle from "@src/web/ui/generics/state/hooks/toggle.hook";
 import type { NavBarControllerContextInterface } from "@src/web/navigation/navbar/types/state/provider.types";
 import type { ReactNode } from "react";
 
@@ -15,7 +15,7 @@ interface MockInterfaceContextWithChildren {
   mockContext: NavBarControllerContextInterface;
 }
 
-jest.mock("@src/utilities/react/hooks/toggle.hook");
+jest.mock("@src/web/ui/generics/state/hooks/toggle.hook");
 
 describe("useNavBarController", () => {
   let received: ReturnType<typeof arrange>;

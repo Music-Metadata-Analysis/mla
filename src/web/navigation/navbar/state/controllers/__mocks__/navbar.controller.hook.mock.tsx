@@ -1,5 +1,5 @@
 import makeUniqueHookMock from "@src/tests/fixtures/mock.object.unique";
-import mockToggleHookValues from "@src/utilities/react/hooks/__mocks__/toggle.hook.mock";
+import mockToggleHookValues from "@src/web/ui/generics/state/hooks/__mocks__/toggle.hook.mock";
 
 const mockValues = {
   hamburger:

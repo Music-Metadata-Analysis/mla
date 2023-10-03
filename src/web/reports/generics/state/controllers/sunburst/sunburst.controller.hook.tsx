@@ -1,7 +1,7 @@
 import { useState } from "react";
-import useToggle from "@src/utilities/react/hooks/toggle.hook";
 import useNavBarLayoutController from "@src/web/navigation/navbar/state/controllers/navbar.controller.hook";
 import nullNode from "@src/web/reports/generics/state/charts/sunburst/null.node";
+import useToggle from "@src/web/ui/generics/state/hooks/toggle.hook";
 import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 const useSunBurstController = () => {

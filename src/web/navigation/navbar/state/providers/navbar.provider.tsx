@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import InitialValues from "./navbar.initial";
-import useToggle from "@src/utilities/react/hooks/toggle.hook";
+import useToggle from "@src/web/ui/generics/state/hooks/toggle.hook";
 import type { NavBarControllerProviderInterface } from "@src/web/navigation/navbar/types/state/provider.types";
 
 export const NavBarControllerContext = createContext(InitialValues);

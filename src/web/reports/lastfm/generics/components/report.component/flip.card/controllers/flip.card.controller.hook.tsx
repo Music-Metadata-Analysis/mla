@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useToggle from "@src/utilities/react/hooks/toggle.hook";
+import useToggle from "@src/web/ui/generics/state/hooks/toggle.hook";
 
 const useFlipCardController = () => {
   const drawer = useToggle(false);
