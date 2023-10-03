@@ -2,7 +2,7 @@ import { createContext, ReactNode } from "react";
 import InitialValues from "./metrics.initial";
 import { MetricsReducer } from "./metrics.reducer";
 import settings from "@src/config/metrics";
-import PersistentReducerFactory from "@src/utilities/react/hooks/local.storage/persisted.reducer.hook.factory.class";
+import { persistenceVendor } from "@src/vendors/integrations/persistence/vendor";
 import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 
 export const MetricsContext = createContext({ ...InitialValues });
@@ -12,10 +12,11 @@ interface MetricsProviderProps {
 }
 
 const MetricsProvider = ({ children }: MetricsProviderProps) => {
-  const [metrics, dispatch] = new PersistentReducerFactory().create(
-    settings.localStorageKey,
-    webFrameworkVendor.isSSR()
-  )(MetricsReducer, InitialValues.metrics);
+  const [metrics, dispatch] =
+    new persistenceVendor.localStorageReducerFactory().create(
+      settings.localStorageKey,
+      webFrameworkVendor.isSSR()
+    )(MetricsReducer, InitialValues.metrics);
 
   return (
     <MetricsContext.Provider

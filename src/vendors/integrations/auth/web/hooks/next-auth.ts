@@ -1,6 +1,6 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import { normalizeUndefined } from "@src/utilities/generics/voids";
-import PersistentStateFactory from "@src/utilities/react/hooks/local.storage/persisted.state.hook.factory.class";
+import { persistenceVendor } from "@src/vendors/integrations/persistence/vendor";
 import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 import type {
   AuthVendorHookInterface,
@@ -9,14 +9,15 @@ import type {
 import type { Session } from "next-auth";
 
 const useNextAuth = (): AuthVendorHookInterface => {
-  const [oauth, setOauth] = new PersistentStateFactory().create(
-    "oauth",
-    webFrameworkVendor.isSSR()
-  )<{
-    type: AuthVendorServiceType | null;
-  }>({
-    type: null,
-  });
+  const [oauth, setOauth] =
+    new persistenceVendor.localStorageHookFactory().create(
+      "oauth",
+      webFrameworkVendor.isSSR()
+    )<{
+      type: AuthVendorServiceType | null;
+    }>({
+      type: null,
+    });
   const { data, status } = useSession();
 
   const mapStatus = (status: keyof typeof statusHash) => {

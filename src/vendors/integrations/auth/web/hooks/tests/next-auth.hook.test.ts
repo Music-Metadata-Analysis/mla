@@ -4,17 +4,15 @@ import dk from "deep-keys";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import useNextAuth from "../next-auth";
-import PersistentStateFactory from "@src/utilities/react/hooks/local.storage/persisted.state.hook.factory.class";
 import {
   mockAuthHook,
   mockUserProfile,
 } from "@src/vendors/integrations/auth/__mocks__/vendor.mock";
+import { MockPersistentStateFactory } from "@src/vendors/integrations/persistence/__mocks__/vendor.mock";
 import { mockIsSSR } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import type { AuthVendorSessionType } from "@src/vendors/types/integrations/auth/vendor.types";
 
-jest.mock(
-  "@src/utilities/react/hooks/local.storage/persisted.state.hook.factory.class"
-);
+jest.mock("@src/vendors/integrations/persistence/vendor");
 
 jest.mock("@src/vendors/integrations/web.framework/vendor");
 
@@ -50,7 +48,7 @@ describe("useNextAuth", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest
-      .mocked(PersistentStateFactory.prototype.create)
+      .mocked(MockPersistentStateFactory.prototype.create)
       .mockReturnValue(useMockLocalStorageHook);
     mockIsSSR.mockReturnValue(mockIsSSRValue);
   });
@@ -61,13 +59,13 @@ describe("useNextAuth", () => {
 
   const checkLocalStorage = () => {
     it("should instantiate the factory as expected", () => {
-      expect(PersistentStateFactory).toBeCalledTimes(1);
-      expect(PersistentStateFactory).toBeCalledWith();
+      expect(MockPersistentStateFactory).toBeCalledTimes(1);
+      expect(MockPersistentStateFactory).toBeCalledWith();
     });
 
     it("should initialize the local storage hook with the correct partition name", () => {
-      expect(PersistentStateFactory.prototype.create).toBeCalledTimes(1);
-      expect(PersistentStateFactory.prototype.create).toBeCalledWith(
+      expect(MockPersistentStateFactory.prototype.create).toBeCalledTimes(1);
+      expect(MockPersistentStateFactory.prototype.create).toBeCalledWith(
         "oauth",
         mockIsSSRValue
       );

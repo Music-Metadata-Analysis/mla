@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PersistentHookAbstractFactory from "./bases/persistent.hook.abstract.factory.class";
-import createPersistedState from "./state/state.hook.factory";
+import createPersistedState from "./local.storage/local.storage.state.hook.factory";
 
 export default class PersistentStateFactory extends PersistentHookAbstractFactory<
   typeof useState

@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import createLocalStorageState from "../state.hook.factory";
+import createLocalStorageState from "../local.storage.state.hook.factory";
 
 describe("createLocalStorageState", () => {
   let received: ReturnType<typeof arrange>;

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import PersistentHookAbstractFactory from "../bases/persistent.hook.abstract.factory.class";
+import createPersistedState from "../local.storage/local.storage.state.hook.factory";
 import PersistentStateFactory from "../persisted.state.hook.factory.class";
-import createPersistedState from "../state/state.hook.factory";
 
-jest.mock("../state/state.hook.factory");
+jest.mock("../local.storage/local.storage.state.hook.factory");
 
 describe(PersistentStateFactory.name, () => {
   let instance: PersistentStateFactory;
