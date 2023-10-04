@@ -2,6 +2,7 @@
   "globals": {
     "jest": true
   },
+  "ignorePatterns": ["src/vendors/integrations/api.validation/**/generated.js"],
   "parser": "@typescript-eslint/parser",
   "extends": [
     "next",

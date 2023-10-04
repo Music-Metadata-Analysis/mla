@@ -2,16 +2,18 @@ import ReportCacheProxy from "../proxy.class";
 import ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.error.class";
 import { mockPersistenceClient } from "@src/vendors/integrations/persistence/__mocks__/vendor.backend.mock";
 import { persistenceVendorBackend } from "@src/vendors/integrations/persistence/vendor.backend";
-import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/reponses/response.types";
+import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
 
 jest.mock("@src/vendors/integrations/persistence/vendor.backend");
 
 describe(ReportCacheProxy.name, () => {
   let originalEnvironment: typeof process.env;
   let instance: ReportCacheProxy;
+
   const mockBucketName = "mockBucketName";
   const mockError = "mockError";
-  const mockObjectContents = { mock: "contents" };
+  const mockCacheId = "mockObjectId";
+  const mockObjectContent = { mock: "content" };
   const mockObjectHeaders = {
     CacheControl: "max-age=14400",
     ContentType: "application/json",
@@ -48,10 +50,11 @@ describe(ReportCacheProxy.name, () => {
       let result: ReportCacheResponseInterface | ProxyError;
 
       const act = async () =>
-        (result = await instance.createCache(
-          mockObjectName,
-          mockObjectContents
-        ));
+        (result = await instance.createCacheObject({
+          cacheId: mockCacheId,
+          objectName: mockObjectName,
+          objectContent: mockObjectContent,
+        }));
 
       describe("when successful", () => {
         beforeEach(() => {
@@ -63,13 +66,13 @@ describe(ReportCacheProxy.name, () => {
           expect(mockPersistenceClient.write).toBeCalledTimes(1);
           expect(mockPersistenceClient.write).toBeCalledWith(
             mockObjectName,
-            mockObjectContents,
+            mockObjectContent,
             mockObjectHeaders
           );
         });
 
         it("should return the correct result", () => {
-          expect(result).toStrictEqual({ success: "ok" });
+          expect(result).toStrictEqual({ id: mockCacheId });
         });
       });
 

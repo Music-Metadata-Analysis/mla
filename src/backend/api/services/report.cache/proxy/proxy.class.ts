@@ -1,13 +1,13 @@
 import ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.error.class";
 import { persistenceVendorBackend } from "@src/vendors/integrations/persistence/vendor.backend";
-import type { LastFMReportCacheInterface } from "@src/backend/api/types/services/report.cache/lastfm.proxy.types";
-import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/reponses/response.types";
 import type {
-  PersistenceVendorClientInterface,
-  PersistenceVendorDataType,
-} from "@src/vendors/types/integrations/persistence/vendor.backend.types";
+  ReportCacheProxyCreateCacheObjectInterface,
+  ReportCacheProxyInterface,
+} from "@src/backend/api/types/services/report.cache/proxy.types";
+import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
+import type { PersistenceVendorClientInterface } from "@src/vendors/types/integrations/persistence/vendor.backend.types";
 
-class ReportCacheProxy implements LastFMReportCacheInterface {
+class ReportCacheProxy implements ReportCacheProxyInterface {
   protected persistanceClient: PersistenceVendorClientInterface;
   protected objectHeaders = {
     CacheControl: "max-age=14400",
@@ -20,10 +20,11 @@ class ReportCacheProxy implements LastFMReportCacheInterface {
     );
   }
 
-  async createCache(
-    objectName: string,
-    objectContent: PersistenceVendorDataType
-  ): Promise<ReportCacheResponseInterface> {
+  async createCacheObject({
+    cacheId,
+    objectName,
+    objectContent,
+  }: ReportCacheProxyCreateCacheObjectInterface): Promise<ReportCacheResponseInterface> {
     try {
       await this.persistanceClient.write(
         objectName,
@@ -34,7 +35,7 @@ class ReportCacheProxy implements LastFMReportCacheInterface {
       this.createProxyCompatibleError(e as Error);
     }
     return {
-      success: "ok",
+      id: cacheId,
     };
   }
 

@@ -3,102 +3,131 @@
   "title": "Playcount by Artist Report Schema (last.fm)",
   "description": "The specification for the playcount by artist report data.",
   "definitions": {
+    "constantFalse": {
+      "type": "boolean",
+      "const": false
+    },
+    "constantLastFM": {
+      "type": "string",
+      "const": "LAST.FM"
+    },
+    "constantNull": {
+      "type": "null",
+      "const": null
+    },
+    "constantTrue": {
+      "type": "boolean",
+      "const": true
+    },
     "validString": {
       "type": "string",
       "maxLength": 255
-    },
-    "trueConstant": {
-      "type": "boolean",
-      "const": true
     }
   },
   "type": "object",
-  "minProperties": 6,
+  "minProperties": 7,
   "additionalProperties": false,
   "properties": {
-    "albums": {
-      "type": "array",
-      "maxItems": 0
-    },
-    "artists": {
-      "type": "array",
-      "maxItems": 0
-    },
-    "playCountByArtist": {
+    "data": {
       "type": "object",
-      "minProperties": 3,
+      "minProperties": 2,
       "additionalProperties": false,
       "properties": {
-        "status": {
-          "minProperties": 3,
-          "additionalProperties": false,
+        "integration": {
+          "$ref": "#/definitions/constantLastFM"
+        },
+        "report": {
           "type": "object",
+          "minProperties": 6,
+          "additionalProperties": false,
           "properties": {
-            "complete": {
-              "$ref": "#/definitions/trueConstant"
+            "albums": {
+              "type": "array",
+              "maxItems": 0
             },
-            "steps_total": {
-              "type": "number"
+            "artists": {
+              "type": "array",
+              "maxItems": 0
             },
-            "steps_complete": {
-              "type": "number"
-            }
-          }
-        },
-        "created": {
-          "$ref": "#/definitions/validString"
-        },
-        "content": {
-          "type": "array",
-          "maxItems": 20,
-          "items": {
-            "type": "object",
-            "minProperties": 3,
-            "additionalProperties": false,
-            "properties": {
-              "name": {
-                "$ref": "#/definitions/validString"
-              },
-              "playcount": {
-                "type": "number"
-              },
-              "fetched": {
-                "$ref": "#/definitions/trueConstant"
-              },
-              "albums": {
-                "type": "array",
-                "uniqueItems": true,
-                "maxItems": 1000,
-                "items": {
-                  "type": "object",
+            "playCountByArtist": {
+              "type": "object",
+              "minProperties": 3,
+              "additionalProperties": false,
+              "properties": {
+                "status": {
                   "minProperties": 3,
                   "additionalProperties": false,
+                  "type": "object",
                   "properties": {
-                    "name": {
-                      "$ref": "#/definitions/validString"
+                    "complete": {
+                      "$ref": "#/definitions/constantTrue"
                     },
-                    "playcount": {
+                    "steps_total": {
                       "type": "number"
                     },
-                    "fetched": {
-                      "$ref": "#/definitions/trueConstant"
-                    },
-                    "tracks": {
-                      "type": "array",
-                      "maxItems": 1000,
-                      "items": {
-                        "type": "object",
-                        "minProperties": 3,
-                        "additionalProperties": false,
-                        "properties": {
-                          "name": {
-                            "$ref": "#/definitions/validString"
-                          },
-                          "rank": {
-                            "type": "number"
-                          },
-                          "fetched": {
-                            "$ref": "#/definitions/trueConstant"
+                    "steps_complete": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "created": {
+                  "$ref": "#/definitions/validString"
+                },
+                "content": {
+                  "type": "array",
+                  "maxItems": 20,
+                  "items": {
+                    "type": "object",
+                    "minProperties": 3,
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "$ref": "#/definitions/validString"
+                      },
+                      "playcount": {
+                        "type": "number"
+                      },
+                      "fetched": {
+                        "$ref": "#/definitions/constantTrue"
+                      },
+                      "albums": {
+                        "type": "array",
+                        "uniqueItems": true,
+                        "maxItems": 1000,
+                        "items": {
+                          "type": "object",
+                          "minProperties": 3,
+                          "additionalProperties": false,
+                          "properties": {
+                            "name": {
+                              "$ref": "#/definitions/validString"
+                            },
+                            "playcount": {
+                              "type": "number"
+                            },
+                            "fetched": {
+                              "$ref": "#/definitions/constantTrue"
+                            },
+                            "tracks": {
+                              "type": "array",
+                              "maxItems": 1000,
+                              "items": {
+                                "type": "object",
+                                "minProperties": 3,
+                                "additionalProperties": false,
+                                "properties": {
+                                  "name": {
+                                    "$ref": "#/definitions/validString"
+                                  },
+                                  "rank": {
+                                    "type": "number"
+                                  },
+                                  "fetched": {
+                                    "$ref": "#/definitions/constantTrue"
+                                  }
+                                }
+                              }
+                            }
                           }
                         }
                       }
@@ -106,35 +135,53 @@
                   }
                 }
               }
+            },
+            "tracks": {
+              "type": "array",
+              "maxItems": 0
+            },
+            "image": {
+              "type": "array",
+              "maxItems": 4,
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "minProperties": 2,
+                "additionalProperties": false,
+                "properties": {
+                  "size": {
+                    "$ref": "#/definitions/validString"
+                  },
+                  "#text": {
+                    "$ref": "#/definitions/validString"
+                  }
+                }
+              }
+            },
+            "playcount": {
+              "type": "number"
             }
           }
         }
       }
     },
-    "tracks": {
-      "type": "array",
-      "maxItems": 0
+    "error": {
+      "$ref": "#/definitions/constantNull"
     },
-    "image": {
-      "type": "array",
-      "maxItems": 4,
-      "uniqueItems": true,
-      "items": {
-        "type": "object",
-        "minProperties": 2,
-        "additionalProperties": false,
-        "properties": {
-          "size": {
-            "$ref": "#/definitions/validString"
-          },
-          "#text": {
-            "$ref": "#/definitions/validString"
-          }
-        }
-      }
+    "inProgress": {
+      "$ref": "#/definitions/constantFalse"
     },
-    "playcount": {
+    "profileUrl": {
+      "$ref": "#/definitions/validString"
+    },
+    "ready": {
+      "$ref": "#/definitions/constantFalse"
+    },
+    "retries": {
       "type": "number"
+    },
+    "userName": {
+      "$ref": "#/definitions/validString"
     }
   }
 }

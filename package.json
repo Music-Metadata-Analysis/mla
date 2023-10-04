@@ -5,6 +5,7 @@
   "scripts": {
     "postinstall": "cd ./node_modules/@toplast/lastfm && yarn add -D typescript@4.8.4 && yarn install && yarn run build",
     "build": "next build",
+    "build:validators": "ts-node $(find src/vendors/integrations/api.validation -name compile.ts)",
     "clean": "eslint --fix ./src ./cypress; prettier --write \"./(src|cypress)/**/*.+(ts|tsx|js|jsx|json|yml|yaml|css|scss|md|vue)\"",
     "compile": "npm --version && tsc --version && tsc",
     "coverage": "jest test --coverage --coverageDirectory=coverage --watchAll=false",
@@ -45,10 +46,10 @@
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.6.0",
     "@toplast/lastfm": "https://github.com/niall-byrne/lastfm#dev",
+    "ajv": "^8.12.0",
     "cheerio": "^1.0.0-rc.10",
     "ci": "^2.1.1",
     "d3": "^7.4.4",
-    "express-validator": "^6.14.0",
     "flagsmith": "^3.4.1",
     "flagsmith-nodejs": "^2.3.0",
     "formik": "^2.2.9",
@@ -123,8 +124,8 @@
   "jest": {
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/src/vendors/integrations/api.validation/**/generated.js",
       "!<rootDir>/src/**/implementations/concrete*.{js,jsx,ts,tsx}",
-      "!<rootDir>/src/backend/api/exports/tests/fixtures/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/src/tests/fixtures/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/src/**/tests/**/*.types\\.check.{ts,tsx}"
     ],
@@ -152,15 +153,15 @@
     ],
     "moduleNameMapper": {
       ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-      ".+\\.(png|jpg|ttf|woff|woff2)$": "<rootDir>/jest/modules/images.js",   
+      ".+\\.(png|jpg|ttf|woff|woff2)$": "<rootDir>/jest/modules/images.js",
       "^@fixtures/chakra$": "<rootDir>/src/fixtures/mocks/mock.chakra.react.factory.class.tsx",
       "^@fixtures/chakra/icons$": "<rootDir>/src/fixtures/mocks/mock.chakra.icon.factory.class.tsx",
       "^@fixtures/react/child$": "<rootDir>/src/fixtures/mocks/mock.component.child.factory.class.tsx",
       "^@fixtures/react/parent$": "<rootDir>/src/fixtures/mocks/mock.component.parent.factory.class.tsx",
       "^@fixtures/react/simple$": "<rootDir>/src/fixtures/mocks/mock.component.simple.factory.class.tsx",
-      "^@locales/(.*)": "<rootDir>/public/locales/en/$1",         
+      "^@locales/(.*)": "<rootDir>/public/locales/en/$1",
       "^@src/(.*)": "<rootDir>/src/$1",
-      "d3": "<rootDir>/node_modules/d3/dist/d3.min.js"      
+      "d3": "<rootDir>/node_modules/d3/dist/d3.min.js"
     },
     "roots": [
       "./src"

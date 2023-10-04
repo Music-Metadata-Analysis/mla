@@ -1,3 +1,3 @@
 export interface ReportCacheResponseInterface {
-  success: "ok";
+  id: string;
 }

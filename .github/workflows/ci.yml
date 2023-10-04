@@ -87,6 +87,38 @@ jobs:
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: error during build!"
 
+  compilation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compilation -- Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Compilation -- Setup Node
+        uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Compilation -- Setup Environment
+        run: |
+          source .github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Compilation -- Install Node Modules
+        run: |
+          npm install
+
+      - name: Compilation -- Recompile Validators
+        run: |
+          npm run build:validators
+          git diff --exit-code
+
+      - name: Compilation -- Report Job Status
+        if: ${{ failure() }}
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" ":x: compiled code checks have failed!"
+
   deploy_production:
     needs: [success_notification]
 
@@ -469,6 +501,7 @@ jobs:
       [
         architecture,
         build,
+        compilation,
         lint,
         security_test,
         shellcheck_test,
