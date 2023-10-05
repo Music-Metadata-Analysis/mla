@@ -2,7 +2,7 @@ import routes from "@src/config/routes";
 import FlipCardDrawerContainer from "@src/web/reports/lastfm/generics/components/report.drawer/flip.card/flip.card.report.drawer.container";
 import FlipCardAbstractBaseQuery from "@src/web/reports/lastfm/generics/state/queries/flip.card.query.base.class";
 import LastFMReportFlipCardTopTracksStateEncapsulation from "@src/web/reports/lastfm/top20.tracks/state/encapsulations/lastfm.report.encapsulation.top.tracks.flipcard.class";
-import type { LastFMTopTracksReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMTopTracksReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.tracks.types";
 
 export default class Top20TracksQuery extends FlipCardAbstractBaseQuery<
   LastFMReportFlipCardTopTracksStateEncapsulation,

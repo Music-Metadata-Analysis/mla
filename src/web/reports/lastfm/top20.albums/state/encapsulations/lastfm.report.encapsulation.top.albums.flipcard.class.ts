@@ -1,7 +1,7 @@
 import LastFMReportFlipCardBaseStateEncapsulation from "../../../generics/state/encapsulations/lastfm.report.encapsulation.flipcard.base.class";
 import Events from "@src/web/analytics/collection/events/definitions";
+import type { LastFMUserArtistInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.artists.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
-import type { LastFMUserArtistInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 import type { LastFMReportStateAlbumReport } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 export default class LastFMReportFlipCardTopAlbumsStateEncapsulation extends LastFMReportFlipCardBaseStateEncapsulation {

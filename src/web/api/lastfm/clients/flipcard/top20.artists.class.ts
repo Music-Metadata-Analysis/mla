@@ -1,6 +1,6 @@
 import LastFMReportBaseClient from "../bases/lastfm.api.client.base.class";
 import apiRoutes from "@src/config/apiRoutes";
-import type { LastFMTopArtistsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMTopArtistsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.artists.types";
 
 class LastFMTopArtistsReport extends LastFMReportBaseClient<LastFMTopArtistsReportResponseInterface> {
   route = apiRoutes.v2.reports.lastfm.top20artists;

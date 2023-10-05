@@ -1,6 +1,6 @@
 import HttpApiClient from "../http.client.class";
 import * as status from "@src/config/status";
-import type { HttpApiClientHttpMethodType } from "@src/web/api/transport/types/http.types";
+import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 
 describe("HttpApiClient", () => {
   const client = new HttpApiClient();

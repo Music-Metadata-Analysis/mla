@@ -3,9 +3,9 @@ import CacheControllerAbstractFactory from "@src/backend/api/cache/factory/cache
 import { persistenceVendorBackend } from "@src/vendors/integrations/persistence/vendor.backend";
 
 export default class ArtistImageCacheControllerFactory extends CacheControllerAbstractFactory<string> {
-  protected OriginServerPersistenceClient =
+  protected OriginServerPersistenceClientClass =
     persistenceVendorBackend.PersistenceClient;
-  protected CdnClient = ArtistImageCdnClient;
+  protected CdnClientClass = ArtistImageCdnClient;
   protected defaultResponse = "";
 
   protected getPartitionName(): string {

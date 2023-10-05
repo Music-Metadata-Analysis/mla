@@ -3,7 +3,7 @@ import LastFMBaseSunBurstDataPointClient from "../lastfm.api.sunburst.datapoint.
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import HttpApiClient from "@src/web/api/transport/clients/http.client.class";
 import InitialState from "@src/web/reports/generics/state/providers/report.initial";
-import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
 
 class ConcreteLastFMBaseSunBurstDataClient<
   ReportType

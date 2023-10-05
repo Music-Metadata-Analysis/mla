@@ -17,8 +17,8 @@ import { mockAuthClient } from "@src/vendors/integrations/auth/__mocks__/vendor.
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { cacheVendorBackend } from "@src/vendors/integrations/cache/vendor.backend";
 import type ReportCacheEndpointAbstractFactoryV2 from "../v2.report.cache.endpoint.abstract.factory.class";
-import type { ApiEndpointRequestBodyType } from "@src/backend/api/types/services/request.types";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
+import type { ApiEndpointRequestBodyType } from "@src/contracts/api/types/request.types";
 import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
 import type {
   MockAPIEndpointRequestType,

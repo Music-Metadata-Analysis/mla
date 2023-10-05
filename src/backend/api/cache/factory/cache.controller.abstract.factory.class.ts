@@ -6,10 +6,10 @@ import type { PersistenceVendorClientInterface } from "@src/vendors/types/integr
 export default abstract class CacheControllerAbstractFactory<ObjectType>
   implements CacheControllerFactoryInterface<ObjectType>
 {
-  protected abstract OriginServerPersistenceClient: new (
+  protected abstract OriginServerPersistenceClientClass: new (
     partitionType: string
   ) => PersistenceVendorClientInterface;
-  protected abstract CdnClient: new (
+  protected abstract CdnClientClass: new (
     originServerClient: PersistenceVendorClientInterface,
     cdnHostname: string
   ) => CacheVendorCdnInterface<ObjectType>;
@@ -21,8 +21,8 @@ export default abstract class CacheControllerAbstractFactory<ObjectType>
 
   public create(): CacheController<ObjectType> {
     const vendorPersistenceImplementation =
-      new this.OriginServerPersistenceClient(this.getPartitionName());
-    const vendorCdnImplementation = new this.CdnClient(
+      new this.OriginServerPersistenceClientClass(this.getPartitionName());
+    const vendorCdnImplementation = new this.CdnClientClass(
       vendorPersistenceImplementation,
       this.getCdnHostname()
     );

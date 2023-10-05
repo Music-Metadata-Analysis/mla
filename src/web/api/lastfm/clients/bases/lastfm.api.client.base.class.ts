@@ -1,10 +1,10 @@
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import HTTPClient from "@src/web/api/transport/clients/http.client.class";
+import type { HttpApiClientResponse } from "@src/contracts/api/types/clients/http.client.types";
 import type { LastFMReportClientParamsInterface } from "@src/contracts/api/types/clients/lastfm.client.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
 import type { IntegrationRequestType } from "@src/web/analytics/collection/types/analytics.types";
 import type { LastFMReportClientInterface } from "@src/web/api/lastfm/types/lastfm.api.client.types";
-import type { HttpApiClientResponse } from "@src/web/api/transport/types/http.types";
 import type { reportDispatchType } from "@src/web/reports/generics/types/state/providers/report.context.types";
 import type { LastFMBaseReportInterface } from "@src/web/reports/lastfm/generics/types/state/lastfm.base.report.types";
 

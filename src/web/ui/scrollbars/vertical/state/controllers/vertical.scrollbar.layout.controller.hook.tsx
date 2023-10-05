@@ -60,3 +60,7 @@ const useVerticalScrollBarLayoutController = ({
 };
 
 export default useVerticalScrollBarLayoutController;
+
+export type VerticalScrollBarLayoutControllerHookType = ReturnType<
+  typeof useVerticalScrollBarLayoutController
+>;

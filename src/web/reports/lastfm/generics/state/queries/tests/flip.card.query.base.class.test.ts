@@ -5,7 +5,7 @@ import {
 import FlipCardAbstractBaseQuery from "../flip.card.query.base.class";
 import { InitialState } from "@src/web/reports/generics/state/providers/report.initial";
 import mockImageController from "@src/web/ui/images/state/controllers/__mocks__/images.controller.hook.mock";
-import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
 
 describe(FlipCardAbstractBaseQuery.name, () => {
   let instance: FlipCardAbstractBaseQuery<

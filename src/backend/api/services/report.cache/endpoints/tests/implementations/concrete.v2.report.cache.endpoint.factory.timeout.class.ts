@@ -2,7 +2,7 @@ import ReportCacheRetrievalEndpointBaseV2 from "../../v2.report.cache.endpoint.a
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
-} from "@src/backend/api/types/services/request.types";
+} from "@src/contracts/api/types/request.types";
 import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
 import type { ApiValidationVendorBackendInterface } from "@src/vendors/types/integrations/api.validator/vendor.backend.types";
 

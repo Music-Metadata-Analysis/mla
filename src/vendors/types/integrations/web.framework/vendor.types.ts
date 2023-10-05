@@ -1,22 +1,26 @@
 import type { VendorAppComponentProps } from "@src/vendors/integrations/web.framework/_types/vendor.specific.types";
 import type { ReactNode, Reducer } from "react";
 
-export interface VendorActionType {
+export interface WebFrameworkVendorReducerActionType {
   type: string;
 }
 
-export type VendorMiddlewareType<STATE, ACTION extends VendorActionType> = (
-  reducer: Reducer<STATE, ACTION>
-) => Reducer<STATE, ACTION>;
-
-export type VendorMiddlewareOrReducerType<
+export type WebFrameworkVendorMiddlewareType<
   STATE,
-  ACTION extends VendorActionType
-> = Reducer<STATE, ACTION> | VendorMiddlewareType<STATE, ACTION>;
+  ACTION extends WebFrameworkVendorReducerActionType
+> = (reducer: Reducer<STATE, ACTION>) => Reducer<STATE, ACTION>;
 
-export type VendorNestedType<STATE, ACTION extends VendorActionType> = (
-  encapsulated: VendorMiddlewareOrReducerType<STATE, ACTION>
-) => VendorMiddlewareOrReducerType<STATE, ACTION>;
+export type WebFrameworkVendorMiddlewareOrReducerType<
+  STATE,
+  ACTION extends WebFrameworkVendorReducerActionType
+> = Reducer<STATE, ACTION> | WebFrameworkVendorMiddlewareType<STATE, ACTION>;
+
+export type WebFrameworkVendorNestedMiddlewareType<
+  STATE,
+  ACTION extends WebFrameworkVendorReducerActionType
+> = (
+  encapsulated: WebFrameworkVendorMiddlewareOrReducerType<STATE, ACTION>
+) => WebFrameworkVendorMiddlewareOrReducerType<STATE, ACTION>;
 
 export type WebFrameworkVendorAppComponentProps<T> = VendorAppComponentProps<T>;
 
@@ -47,12 +51,15 @@ export interface WebFrameworkVendorInterface {
   isSSR: () => boolean;
   routerHook: () => WebFrameworkVendorRouterHookInterface;
   reducers: {
-    applyMiddleware: <STATE, ACTION extends VendorActionType>(
+    applyMiddleware: <
+      STATE,
+      ACTION extends WebFrameworkVendorReducerActionType
+    >(
       originalReducer: Reducer<STATE, ACTION>,
-      middlewareStack: VendorMiddlewareType<STATE, ACTION>[]
+      middlewareStack: WebFrameworkVendorMiddlewareType<STATE, ACTION>[]
     ) => Reducer<STATE, ACTION>;
     middlewares: {
-      logger: <STATE, ACTION extends VendorActionType>(
+      logger: <STATE, ACTION extends WebFrameworkVendorReducerActionType>(
         reducer: Reducer<STATE, ACTION>
       ) => Reducer<STATE, ACTION>;
     };

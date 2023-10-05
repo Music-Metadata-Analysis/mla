@@ -1,4 +1,4 @@
-import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMImageDataInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/image.data.types";
 import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 export default class LastFMReportBaseStateEncapsulation {

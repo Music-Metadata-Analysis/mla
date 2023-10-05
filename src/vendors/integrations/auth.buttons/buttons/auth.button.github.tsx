@@ -1,11 +1,11 @@
 import { GithubLoginButton } from "react-social-login-buttons";
-import type { AuthButtonInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
+import type { AuthButtonVendorComponentInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
 
 export default function GithubAuthButton({
   width,
   text,
   callBack,
-}: AuthButtonInterface) {
+}: AuthButtonVendorComponentInterface) {
   return (
     <GithubLoginButton
       align={"center"}

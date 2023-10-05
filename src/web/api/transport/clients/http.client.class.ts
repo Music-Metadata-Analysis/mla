@@ -4,7 +4,7 @@ import type {
   HttpApiClientResponse,
   HttpApiClientHttpMethodType,
   HttpApiClientStatusMessageType,
-} from "@src/web/api/transport/types/http.types";
+} from "@src/contracts/api/types/clients/http.client.types";
 
 class HttpApiClient implements HttpApiClientInterface {
   async request<RESPONSE>(

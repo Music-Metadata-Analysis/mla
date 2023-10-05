@@ -3,7 +3,7 @@ import ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.err
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
-} from "@src/backend/api/types/services/request.types";
+} from "@src/contracts/api/types/request.types";
 
 export default class ConcreteBaseProxyErrorClass extends ApiEndpointBase<
   Record<string, never>,

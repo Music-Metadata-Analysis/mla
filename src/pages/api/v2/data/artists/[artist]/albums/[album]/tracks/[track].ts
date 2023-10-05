@@ -1,16 +1,14 @@
 import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.lastfm.endpoint.base.class";
 import apiRoutes from "@src/config/apiRoutes";
-import type {
-  ApiEndpointRequestType,
-  ApiEndpointRequestPathParamType,
-} from "@src/backend/api/types/services/request.types";
+import type { ApiEndpointRequestPathParamType } from "@src/contracts/api/types/request.types";
+import type { ApiFrameworkVendorApiRequestType } from "@src/vendors/types/integrations/api.framework/vendor.backend.types";
 
 class ArtistTopAlbums extends LastFMApiEndpointFactoryV2 {
   public readonly flag = null;
   public readonly route = apiRoutes.v2.data.artists.tracksGet;
 
   protected getParams(
-    req: ApiEndpointRequestType
+    req: ApiFrameworkVendorApiRequestType
   ): [ApiEndpointRequestPathParamType, boolean] {
     const params = req.query as ApiEndpointRequestPathParamType;
     const error = !params.artist || !params.track || !params.username;

@@ -1,11 +1,11 @@
 import { FacebookLoginButton } from "react-social-login-buttons";
-import type { AuthButtonInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
+import type { AuthButtonVendorComponentInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
 
 export default function FacebookAuthButton({
   width,
   text,
   callBack,
-}: AuthButtonInterface) {
+}: AuthButtonVendorComponentInterface) {
   return (
     <FacebookLoginButton
       align={"center"}

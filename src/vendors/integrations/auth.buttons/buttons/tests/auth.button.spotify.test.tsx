@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import SpotifyAuthButton, {
   SpotifyAuthButtonError,
 } from "../auth.button.spotify";
-import type { AuthButtonInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
+import type { AuthButtonVendorComponentInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
 
 describe("GoogleAuthButton", () => {
   const buttonWidth = 245;
@@ -10,7 +10,7 @@ describe("GoogleAuthButton", () => {
   const mockText = "Button Text";
   const mockIconText = "Mock Icon";
   let consoleSpy: jest.SpyInstance;
-  let iconComponent: AuthButtonInterface["iconComponent"];
+  let iconComponent: AuthButtonVendorComponentInterface["iconComponent"];
 
   beforeAll(() => {
     consoleSpy = jest.spyOn(console, "error").mockImplementation(() => null);

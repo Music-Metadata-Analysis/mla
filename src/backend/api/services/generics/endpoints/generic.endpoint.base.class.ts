@@ -4,13 +4,15 @@ import * as status from "@src/config/status";
 import { apiHandlerVendorBackend } from "@src/vendors/integrations/api.handler/vendor.backend";
 import { apiLoggerVendorBackend } from "@src/vendors/integrations/api.logger/vendor.backend";
 import type { ApiEndPointFactoryInterface } from "@src/backend/api/types/services/endpoint.types";
+import type { RemoteServiceError } from "@src/contracts/api/types/error.types";
 import type {
-  ApiEndpointRequestType,
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
-} from "@src/backend/api/types/services/request.types";
-import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
-import type { RemoteServiceError } from "@src/contracts/api/types/error.types";
+} from "@src/contracts/api/types/request.types";
+import type {
+  ApiFrameworkVendorApiRequestType,
+  ApiFrameworkVendorApiResponseType,
+} from "@src/vendors/types/integrations/api.framework/vendor.backend.types";
 import type { ApiHandlerVendorHandlerType } from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
 import type { ApiLoggerVendorEndpointLoggerInterface } from "@src/vendors/types/integrations/api.logger/vendor.backend.types";
 
@@ -46,8 +48,8 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
   }
 
   protected setRequestTimeout = (
-    req: ApiEndpointRequestType,
-    res: ApiEndpointResponseType,
+    req: ApiFrameworkVendorApiRequestType,
+    res: ApiFrameworkVendorApiResponseType,
     next: () => void
   ): void => {
     req.proxyTimeoutInstance = setTimeout(() => {
@@ -59,7 +61,9 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
     }, this.timeOut);
   };
 
-  protected clearRequestTimeout = (req: ApiEndpointRequestType): void => {
+  protected clearRequestTimeout = (
+    req: ApiFrameworkVendorApiRequestType
+  ): void => {
     if (req.proxyTimeoutInstance) {
       clearTimeout(req.proxyTimeoutInstance);
       delete req.proxyTimeoutInstance;
@@ -68,8 +72,8 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
 
   protected errorHandler = (
     err: RemoteServiceError,
-    req: ApiEndpointRequestType,
-    res: ApiEndpointResponseType,
+    req: ApiFrameworkVendorApiRequestType,
+    res: ApiFrameworkVendorApiResponseType,
     next: () => void
   ): void => {
     this.clearRequestTimeout(req);
@@ -85,8 +89,8 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
   };
 
   protected fallBackHandler = (
-    req: ApiEndpointRequestType,
-    res: ApiEndpointResponseType
+    req: ApiFrameworkVendorApiRequestType,
+    res: ApiFrameworkVendorApiResponseType
   ): void => {
     res.status(405).json(status.STATUS_405_MESSAGE);
   };

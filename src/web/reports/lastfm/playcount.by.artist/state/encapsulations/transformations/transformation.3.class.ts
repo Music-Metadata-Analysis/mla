@@ -1,5 +1,5 @@
 import TransformationBase from "./lastfm.report.playcount.by.artist.sunburst.transformation.base.class";
-import type { LastFMArtistTopAlbumsInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMArtistTopAlbumsInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/artist.topalbums.types";
 
 class AttachArtistAlbums extends TransformationBase<
   LastFMArtistTopAlbumsInterface[]

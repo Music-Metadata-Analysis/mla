@@ -1,11 +1,11 @@
 import { GoogleLoginButton } from "react-social-login-buttons";
-import type { AuthButtonInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
+import type { AuthButtonVendorComponentInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
 
 export default function GoogleAuthButton({
   width,
   text,
   callBack,
-}: AuthButtonInterface) {
+}: AuthButtonVendorComponentInterface) {
   return (
     <GoogleLoginButton
       align={"center"}

@@ -6,7 +6,7 @@ import { response as MockUserGetTopArtists } from "@src/contracts/api/services/l
 import { response as MockAlbumGetInfo } from "@src/contracts/api/services/lastfm/fixtures/responses/album.get.info";
 import { response as MockArtistGetTopAlbums } from "@src/contracts/api/services/lastfm/fixtures/responses/artist.get.topalbums";
 import { InitialState } from "@src/web/reports/generics/state/providers/report.initial";
-import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMImageDataInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/image.data.types";
 import type { LastFMReportStatePlayCountByArtistReport } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {

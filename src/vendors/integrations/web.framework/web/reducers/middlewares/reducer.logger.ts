@@ -1,8 +1,11 @@
 import { isTest, isProduction } from "@src/utilities/generics/env";
-import type { VendorActionType } from "@src/vendors/types/integrations/web.framework/vendor.types";
+import type { WebFrameworkVendorReducerActionType } from "@src/vendors/types/integrations/web.framework/vendor.types";
 import type { Reducer } from "react";
 
-const reducerLoggingMiddleware = <STATE, ACTION extends VendorActionType>(
+const reducerLoggingMiddleware = <
+  STATE,
+  ACTION extends WebFrameworkVendorReducerActionType
+>(
   reducer: Reducer<STATE, ACTION>
 ): Reducer<STATE, ACTION> => {
   const name = reducer.name;

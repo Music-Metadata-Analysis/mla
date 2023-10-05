@@ -2,7 +2,7 @@ import ApiEndpointBase from "../../generic.endpoint.base.class";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
-} from "@src/backend/api/types/services/request.types";
+} from "@src/contracts/api/types/request.types";
 
 export default class ConcreteBaseEndpointTimeoutErrorClass extends ApiEndpointBase<
   Record<string, never>,

@@ -4,13 +4,13 @@ import {
 } from "./fixtures/report.state.data";
 import ConcreteStateOne, {
   mockReadyState,
-} from "./implementations/concrete.report.state.1";
+} from "./implementations/concrete.report.state.1.class";
 import ConcreteStateTwo, {
   mockResetState,
-} from "./implementations/concrete.report.state.2";
+} from "./implementations/concrete.report.state.2.class";
 import ConcreteStateThree, {
   mockStartState,
-} from "./implementations/concrete.report.state.3";
+} from "./implementations/concrete.report.state.3.class";
 import { InitialState } from "../report.initial";
 import { ReportReducer, coreReportReducer } from "../report.reducer";
 import {

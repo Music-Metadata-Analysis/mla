@@ -1,6 +1,6 @@
 import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 
-export interface AuthButtonInterface {
+export interface AuthButtonVendorComponentInterface {
   callBack: (authServiceType: AuthVendorServiceType) => void;
   iconComponent?: ({
     width,
@@ -14,8 +14,10 @@ export interface AuthButtonInterface {
 }
 
 export interface AuthButtonVendorInterface {
-  FacebookAuthButton: (props: AuthButtonInterface) => JSX.Element;
-  GithubAuthButton: (props: AuthButtonInterface) => JSX.Element;
-  GoogleAuthButton: (props: AuthButtonInterface) => JSX.Element;
-  SpotifyAuthButton: (props: AuthButtonInterface) => JSX.Element;
+  FacebookAuthButton: (
+    props: AuthButtonVendorComponentInterface
+  ) => JSX.Element;
+  GithubAuthButton: (props: AuthButtonVendorComponentInterface) => JSX.Element;
+  GoogleAuthButton: (props: AuthButtonVendorComponentInterface) => JSX.Element;
+  SpotifyAuthButton: (props: AuthButtonVendorComponentInterface) => JSX.Element;
 }

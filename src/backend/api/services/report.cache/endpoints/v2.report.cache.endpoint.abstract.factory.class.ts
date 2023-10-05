@@ -7,12 +7,14 @@ import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend
 import { cacheVendorBackend } from "@src/vendors/integrations/cache/vendor.backend";
 import type { ReportCacheProxyInterface } from "@src/backend/api/types/services/report.cache/proxy.types";
 import type {
-  ApiEndpointRequestType,
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
-} from "@src/backend/api/types/services/request.types";
-import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
+} from "@src/contracts/api/types/request.types";
 import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
+import type {
+  ApiFrameworkVendorApiRequestType,
+  ApiFrameworkVendorApiResponseType,
+} from "@src/vendors/types/integrations/api.framework/vendor.backend.types";
 import type { ApiValidationVendorBackendInterface } from "@src/vendors/types/integrations/api.validator/vendor.backend.types";
 
 export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEndpointBase<
@@ -62,7 +64,7 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
   }
 
   protected getParams(
-    req: ApiEndpointRequestType
+    req: ApiFrameworkVendorApiRequestType
   ): [ApiEndpointRequestQueryParamType, boolean] {
     const params = req.query as ApiEndpointRequestQueryParamType;
     Object.keys(params).forEach((k) => {
@@ -88,17 +90,17 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
     params["authenticatedUser"] = tokenEmail;
   }
 
-  protected unauthorizedRequest(res: ApiEndpointResponseType): void {
+  protected unauthorizedRequest(res: ApiFrameworkVendorApiResponseType): void {
     res.status(401).json(status.STATUS_401_MESSAGE);
   }
 
-  protected invalidRequest(res: ApiEndpointResponseType): void {
+  protected invalidRequest(res: ApiFrameworkVendorApiResponseType): void {
     res.status(400).json(status.STATUS_400_MESSAGE);
   }
 
   protected async callProxy(
-    req: ApiEndpointRequestType,
-    res: ApiEndpointResponseType,
+    req: ApiFrameworkVendorApiRequestType,
+    res: ApiFrameworkVendorApiResponseType,
     next: () => void,
     params: ApiEndpointRequestQueryParamType
   ): Promise<Awaited<ReportCacheResponseInterface>> {
@@ -134,16 +136,16 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
   }
 
   protected invalidProxyResponse(
-    req: ApiEndpointRequestType,
-    res: ApiEndpointResponseType
+    req: ApiFrameworkVendorApiRequestType,
+    res: ApiFrameworkVendorApiResponseType
   ): void {
     req.proxyResponse = `${this.service}: Invalid response!`;
     res.status(502).json(status.STATUS_502_MESSAGE);
   }
 
   protected validProxyResponse(
-    req: ApiEndpointRequestType,
-    res: ApiEndpointResponseType,
+    req: ApiFrameworkVendorApiRequestType,
+    res: ApiFrameworkVendorApiResponseType,
     proxyResponse: ReportCacheResponseInterface
   ): void {
     req.proxyResponse = `${this.service}: Success!`;

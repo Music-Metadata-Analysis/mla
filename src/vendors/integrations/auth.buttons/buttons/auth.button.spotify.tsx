@@ -1,5 +1,5 @@
 import { createButton, createSvgIcon } from "react-social-login-buttons";
-import type { AuthButtonInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
+import type { AuthButtonVendorComponentInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
 
 export const SpotifyAuthButtonError = new Error(
   "SpotifyAuthButton requires an iconComponent!"
@@ -10,7 +10,7 @@ export default function SpotifyAuthButton({
   iconComponent,
   text,
   width,
-}: AuthButtonInterface) {
+}: AuthButtonVendorComponentInterface) {
   if (!iconComponent) throw SpotifyAuthButtonError;
 
   const config = {

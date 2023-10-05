@@ -9,7 +9,7 @@ import {
   _t,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import type LastFMReportFlipCardBaseStateEncapsulation from "../lastfm.report.encapsulation.flipcard.base.class";
-import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMImageDataInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/image.data.types";
 import type { LastFMReportStateAlbumReport } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 describe("LastFMReportFlipCardBaseStateEncapsulation", () => {

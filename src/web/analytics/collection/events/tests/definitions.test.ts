@@ -1,6 +1,6 @@
 import Events from "../definitions";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
-import type { AnalyticsEventDefinitionInterface } from "@src/web/analytics/collection/events/types/event.types";
+import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 
 describe("Dynamic Events", () => {
   const checkEvent = (

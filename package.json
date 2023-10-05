@@ -53,7 +53,6 @@
     "flagsmith": "^3.4.1",
     "flagsmith-nodejs": "^2.3.0",
     "formik": "^2.2.9",
-    "framer-motion": "^5.6.0",
     "i18next": "^22.4.13",
     "js-cookie": "^3.0.1",
     "next": "^12.1.1",

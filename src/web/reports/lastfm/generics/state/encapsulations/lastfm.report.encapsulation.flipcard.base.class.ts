@@ -1,7 +1,7 @@
 import LastFMReportBaseStateEncapsulation from "./bases/lastfm.report.encapsulation.base.class";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
+import type { LastFMImageDataInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/image.data.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
-import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 export default abstract class LastFMReportFlipCardBaseStateEncapsulation extends LastFMReportBaseStateEncapsulation {

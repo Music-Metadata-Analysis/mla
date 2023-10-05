@@ -42,3 +42,7 @@ const useVerticalScrollBarEventsController = ({
 };
 
 export default useVerticalScrollBarEventsController;
+
+export type VerticalScrollBarEventsControllerHookType = ReturnType<
+  typeof useVerticalScrollBarEventsController
+>;

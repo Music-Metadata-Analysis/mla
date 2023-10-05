@@ -3,7 +3,7 @@ import { isProduction, isTest } from "@src/utilities/generics/env";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import { AnalyticsContext } from "@src/web/analytics/collection/state/providers/analytics.provider";
 import useRouter from "@src/web/navigation/routing/hooks/router.hook";
-import type { AnalyticsEventDefinitionInterface } from "@src/web/analytics/collection/events/types/event.types";
+import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type {
   ButtonClickHandlerType,
   LinkClickHandlerType,

@@ -4,11 +4,11 @@ import * as status from "@src/config/status";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
 import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
+import type { ApiEndpointRequestQueryParamType } from "@src/contracts/api/types/request.types";
 import type {
-  ApiEndpointRequestQueryParamType,
-  ApiEndpointRequestType,
-} from "@src/backend/api/types/services/request.types";
-import type { ApiEndpointResponseType } from "@src/backend/api/types/services/response.types";
+  ApiFrameworkVendorApiRequestType,
+  ApiFrameworkVendorApiResponseType,
+} from "@src/vendors/types/integrations/api.framework/vendor.backend.types";
 
 export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase<
   LastFMProxyInterface,
@@ -54,7 +54,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
   }
 
   protected getParams(
-    req: ApiEndpointRequestType
+    req: ApiFrameworkVendorApiRequestType
   ): [ApiEndpointRequestQueryParamType, boolean] {
     const params = req.query as ApiEndpointRequestQueryParamType;
     const error = !params.username;
@@ -71,17 +71,17 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
     return await client.isEnabled(this.flag);
   }
 
-  protected unauthorizedRequest(res: ApiEndpointResponseType): void {
+  protected unauthorizedRequest(res: ApiFrameworkVendorApiResponseType): void {
     res.status(401).json(status.STATUS_401_MESSAGE);
   }
 
-  protected invalidRequest(res: ApiEndpointResponseType): void {
+  protected invalidRequest(res: ApiFrameworkVendorApiResponseType): void {
     res.status(400).json(status.STATUS_400_MESSAGE);
   }
 
   protected async queryProxy(
-    req: ApiEndpointRequestType,
-    res: ApiEndpointResponseType,
+    req: ApiFrameworkVendorApiRequestType,
+    res: ApiFrameworkVendorApiResponseType,
     next: () => void,
     params: ApiEndpointRequestQueryParamType
   ): Promise<
@@ -103,8 +103,8 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
   }
 
   protected invalidProxyResponse(
-    req: ApiEndpointRequestType,
-    res: ApiEndpointResponseType
+    req: ApiFrameworkVendorApiRequestType,
+    res: ApiFrameworkVendorApiResponseType
   ): void {
     req.proxyResponse = `${this.service}: Invalid response, please retry.`;
     res.setHeader("retry-after", 0);
@@ -112,8 +112,8 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
   }
 
   protected validProxyResponse(
-    req: ApiEndpointRequestType,
-    res: ApiEndpointResponseType,
+    req: ApiFrameworkVendorApiRequestType,
+    res: ApiFrameworkVendorApiResponseType,
     proxyResponse: Awaited<
       ReturnType<LastFMProxyInterface[keyof LastFMProxyInterface]>
     >

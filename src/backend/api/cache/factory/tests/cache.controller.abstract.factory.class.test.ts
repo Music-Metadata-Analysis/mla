@@ -1,9 +1,10 @@
 import ConcreteCacheControllerFactory, {
   MockedPersistenceVendorBaseClass,
-  MockedVendorCdnBaseClient,
+  MockedVendorCdnBaseClientClass,
 } from "./implementations/concrete.cache.controller.factory.class";
 import CacheControllerAbstractFactory from "../cache.controller.abstract.factory.class";
 import CacheController from "@src/backend/api/cache/controller/cache.controller.class";
+import { mockPersistenceClient } from "@src/vendors/integrations/persistence/__mocks__/vendor.backend.mock";
 
 jest.mock("@src/backend/api/cache/controller/cache.controller.class");
 
@@ -32,9 +33,9 @@ describe(CacheControllerAbstractFactory.name, () => {
       });
 
       it("should instantiate the CdnClient as expected", () => {
-        expect(MockedVendorCdnBaseClient).toBeCalledTimes(1);
-        expect(MockedVendorCdnBaseClient).toBeCalledWith(
-          MockedPersistenceVendorBaseClass.mock.instances[0],
+        expect(MockedVendorCdnBaseClientClass).toBeCalledTimes(1);
+        expect(MockedVendorCdnBaseClientClass).toBeCalledWith(
+          mockPersistenceClient,
           "mockCdnHostName"
         );
       });
@@ -43,7 +44,7 @@ describe(CacheControllerAbstractFactory.name, () => {
         expect(MockedCacheController).toBeCalledTimes(1);
         expect(MockedCacheController).toBeCalledWith(
           "mockDefaultResponse",
-          MockedVendorCdnBaseClient.mock.instances[0]
+          MockedVendorCdnBaseClientClass.mock.instances[0]
         );
       });
 

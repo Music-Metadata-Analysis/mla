@@ -1,13 +1,16 @@
 import applyMiddleware from "../reducer.middleware";
-import type { VendorActionType } from "@src/vendors/types/integrations/web.framework/vendor.types";
+import type { WebFrameworkVendorReducerActionType } from "@src/vendors/types/integrations/web.framework/vendor.types";
 import type { Reducer } from "react";
 
 type MockStateType = Record<string, unknown>;
 
-const callStack: VendorActionType[] = [];
-let receivedAction: VendorActionType;
+const callStack: WebFrameworkVendorReducerActionType[] = [];
+let receivedAction: WebFrameworkVendorReducerActionType;
 
-const mockReducer = (state: MockStateType, action: VendorActionType) => {
+const mockReducer = (
+  state: MockStateType,
+  action: WebFrameworkVendorReducerActionType
+) => {
   receivedAction = action;
   switch (action.type) {
     default:
@@ -15,8 +18,13 @@ const mockReducer = (state: MockStateType, action: VendorActionType) => {
   }
 };
 
-const mockMiddleware = (reducer: Reducer<MockStateType, VendorActionType>) => {
-  const wrappedReducer = (state: MockStateType, action: VendorActionType) => {
+const mockMiddleware = (
+  reducer: Reducer<MockStateType, WebFrameworkVendorReducerActionType>
+) => {
+  const wrappedReducer = (
+    state: MockStateType,
+    action: WebFrameworkVendorReducerActionType
+  ) => {
     callStack.push(action);
     return reducer(state, action);
   };
@@ -31,7 +39,10 @@ describe("withMiddleware", () => {
   let mockMiddleware1: MockedMiddlewareOrReducer;
   let mockMiddleware2: MockedMiddlewareOrReducer;
   let mockMiddleware3: MockedMiddlewareOrReducer;
-  let wrappedReducer: Reducer<MockStateType, VendorActionType>;
+  let wrappedReducer: Reducer<
+    MockStateType,
+    WebFrameworkVendorReducerActionType
+  >;
 
   const createMiddlewareStack = () => {
     mockMiddleware1 = jest.fn((i) => mockMiddleware(i));

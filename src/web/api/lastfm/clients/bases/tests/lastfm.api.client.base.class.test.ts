@@ -2,7 +2,7 @@ import { waitFor } from "@testing-library/react";
 import LastFMReportBaseClient from "../lastfm.api.client.base.class";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import HttpApiClient from "@src/web/api/transport/clients/http.client.class";
-import type { LastFMTopAlbumsReportResponseInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMTopAlbumsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
 
 class ConcreteLastFMBaseClient<
   ReportType

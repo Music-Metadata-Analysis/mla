@@ -3,7 +3,7 @@ import type {
   PlayCountByArtistReportInterface,
   PlayCountByArtistReportInterface_Album,
 } from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.playcount.by.artist.report.types";
-import type { LastFMAlbumInfoInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMAlbumInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/album.info.types";
 
 class AttachAlbumInfo extends TransformationBase<LastFMAlbumInfoInterface> {
   transform() {

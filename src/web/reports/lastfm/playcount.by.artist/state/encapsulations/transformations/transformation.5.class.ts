@@ -1,5 +1,5 @@
 import TransformationBase from "./lastfm.report.playcount.by.artist.sunburst.transformation.base.class";
-import type { LastFMTrackInfoInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMTrackInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/track.info.types";
 
 class RemoveEntity extends TransformationBase<LastFMTrackInfoInterface> {
   transform() {

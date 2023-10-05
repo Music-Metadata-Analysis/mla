@@ -1,7 +1,7 @@
 import { baseReportProperties } from "../../../../generics/state/encapsulations/bases/tests/states/lastfm.report.state.data.set";
 import LastFMReportFlipCardTopArtistsStateEncapsulation from "../lastfm.report.encapsulation.top.artists.flipcard.class";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
-import type { LastFMUserArtistInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMUserArtistInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.artists.types";
 import type { LastFMReportStateArtistReport } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 describe("LastFMReportFlipCardTopArtistsStateEncapsulation", () => {

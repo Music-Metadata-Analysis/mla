@@ -12,22 +12,22 @@ FILENAME_REGEX="([a-z0-9\.]+)"
 CLASS_FILENAME_REGEX="(${FILENAME_REGEX}+\.class\.(test\.)*ts)"
 CLASS_MOCK_FILENAME_REGEX="(${FILENAME_REGEX}+\.class\.mock\.ts)"
 
-COMPONENT_FILENAME_REGEX="src/web/${PATH_NAME_REGEX}+components/${PATH_NAME_REGEX}*${FILENAME_REGEX}+\.(component|container|integration\.test|page|style)"
+COMPONENT_FILENAME_REGEX="src/web/${PATH_NAME_REGEX}+(components|providers|providers/tests/implementations)/${PATH_NAME_REGEX}*${FILENAME_REGEX}+\.(component|container|integration\.test|page|provider|style)"
 COMPONENT_STYLE_FILENAME_REGEX="src/web/${PATH_NAME_REGEX}+components/${PATH_NAME_REGEX}*${FILENAME_REGEX}+\.style"
+COMPONENT_FACTORY_FILENAME_REGEX="src/web/${PATH_NAME_REGEX}+${FILENAME_REGEX}+\.factory\.class"
 
-# TODO: Deprecate once finished restructuring
-COMPONENT_FILENAME_REGEX_OLD="src/components/${PATH_NAME_REGEX}+${FILENAME_REGEX}+\.(component|container|integration\.test|page|style)"
-COMPONENT_STYLE_FILENAME_REGEX_OLD="src/components/${PATH_NAME_REGEX}+${FILENAME_REGEX}+\.style"
-
-COMPONENT_FACTORY_FILENAME_REGEX="src/components/${PATH_NAME_REGEX}+${FILENAME_REGEX}+\.factory\.class"
+FORM_COMPONENT_FILENAME_REGEX="src/web/forms/${PATH_NAME_REGEX}+.+\.form.(component|container)(\.test)*\.tsx"
 
 HOOK_DEFINITION_REGEX="const use[A-Z]+|function use[A-Z]+"
 HOOK_FILENAME_REGEX="(${FILENAME_REGEX}+\.hook\.(test\.)*tsx)"
 HOOK_FACTORY_REGEX="(${FILENAME_REGEX}+\.hook\.factory\.(test\.)*tsx)"
 HOOK_MOCK_FILENAME_REGEX="(${FILENAME_REGEX}+\.hook\.mock\.tsx)"
-HOOK_FULL_PATH_REGEX="src/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*(${HOOK_FILENAME_REGEX}|${HOOK_FACTORY_REGEX}):"
-HOOK_MOCK_LOCATOR_REGEX="src/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*__mocks__/.*"
-HOOK_MOCK_FULL_PATH_REGEX="src/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*__mocks__/(${CLASS_FILENAME_REGEX}|${CLASS_MOCK_FILENAME_REGEX}|${HOOK_FILENAME_REGEX}|${HOOK_MOCK_FILENAME_REGEX})"
+HOOK_FULL_PATH_REGEX="src/web/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*(${HOOK_FILENAME_REGEX}|${HOOK_FACTORY_REGEX}):"
+HOOK_MOCK_LOCATOR_REGEX="src/web/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*__mocks__/.*"
+HOOK_MOCK_FULL_PATH_REGEX="src/web/${PATH_NAME_REGEX}*(hooks|controllers)/${PATH_NAME_REGEX}*__mocks__/(${CLASS_FILENAME_REGEX}|${CLASS_MOCK_FILENAME_REGEX}|${HOOK_FILENAME_REGEX}|${HOOK_MOCK_FILENAME_REGEX})"
+
+REPORT_FLIPCARD_COMPONENT_FILENAME_REGEX="src/web/reports/generics/components/report.base/flip.card/(tests)*.+\.component(\.test)*\.tsx"
+REPORT_SUNBURST_COMPONENT_FILENAME_REGEX="src/web/reports/generics/components/report.base/sunburst/(tests)*.+\.component(\.test)*\.tsx"
 
 TYPE_DEFINITION_WHITELIST_REGEX="tContentType|tFunctionType"
 
@@ -75,7 +75,7 @@ main() {
 
   echo "*** Architecture Enforcement ***"
 
-  echo "Component Decoupling ..."
+  echo "********** Component Level Decoupling **********"
 
   echo "  Checking Imports into the BACKEND/API Component..."
   ! search 'from "@src/.+' src/backend/api                                                                          | 
@@ -87,6 +87,12 @@ main() {
     allows 'from "@src/vendors/.+'                                                                                  ||
     error_restricted
 
+  echo "  Checking Imports into the CONFIG Component..."
+  ! search 'from "@src/.+' src/config                                                                               | 
+    allows 'from "@src/config/.+'                                                                                   |
+    allows 'from "@src/contracts/.+'                                                                                ||
+    error_restricted
+
   echo "  Checking Imports into the CONTRACTS Component..."
   ! search 'from "@src/.+' src/contracts                                                                            | 
     allows 'from "@src/contracts/.+'                                                                                ||
@@ -95,6 +101,30 @@ main() {
   echo "  Checking Imports into the FIXTURES Component..."
   ! search 'from "@src/.+' src/fixtures                                                                             | 
     allows 'from "@src/fixtures/.+'                                                                                 ||
+    error_restricted
+
+  echo "  Checking Imports into the PAGES Component..."
+  ! search 'from "@src/.+' src/pages                                                                                | 
+    allows 'from "@src/backend/.+'                                                                                  |
+    allows 'from "@src/config/.+'                                                                                   |
+    allows 'from "@src/contracts/.+'                                                                                |
+    allows 'from "@src/pages/.+'                                                                                    |
+    allows 'from "@src/utilities/.+'                                                                                |
+    allows 'from "@src/vendors/.+'                                                                                  |
+    allows 'from "@src/web/.+'                                                                                      ||
+    error_restricted
+
+  # The PAGES component has it's tests in src/tests (next framework design)
+
+  ! search 'from "@src/.+' src/tests                                                                                | 
+    allows 'from "@src/backend/.+'                                                                                  |
+    allows 'from "@src/config/.+'                                                                                   |
+    allows 'from "@src/contracts/.+'                                                                                |
+    allows 'from "@src/fixtures/.+'                                                                                 |
+    allows 'from "@src/pages/.+'                                                                                    |
+    allows 'from "@src/utilities/.+'                                                                                |
+    allows 'from "@src/vendors/.+'                                                                                  |
+    allows 'from "@src/web/.+'                                                                                      ||
     error_restricted
 
   echo "  Checking Imports into the UTILITIES Component..."
@@ -119,91 +149,168 @@ main() {
     allows 'from "@src/config/.+'                                                                                   |
     allows 'from "@src/contracts/.+'                                                                                |
     allows 'from "@src/fixtures/.+'                                                                                 |
-    allows 'from "@src/tests/.+'                                                                                    | 
-    # ^ TODO: deprecate
     allows 'from "@src/utilities/.+'                                                                                |
-    allows 'from "@src/tests/.+'                                                                                    | 
     allows 'from "@src/vendors/.+'                                                                                  ||
     error_restricted
 
-  echo "Framework Decoupling..."
+  echo "********** Framework Decoupling **********"
 
-  # Enforce Analytics Framework Isolation
-  echo "  Checking Analytics Framework Isolation..."
+  # Enforce Analytics Framework Vendors Isolation
+  echo "  Checking Analytics Framework Vendors Isolation..."
   ! search 'from "react-ga' src                                                                                     | 
     excludes_vendor_locations "analytics"                                                                           || 
     error_decoupling "Analytics"
 
+  echo "    COMPONENTS: Checking Analytics Consent Vendors Isolation..."
   ! search 'from "js-cookie' src                                                                                    |
-    excludes '^src/web/analytics/consent'                                                                           ||
+    excludes '^src/web/analytics/consent/components'                                                                ||
     error_decoupling "Analytics"
 
   ! search 'from "react-cookie-consent' src                                                                         |
-    excludes '^src/web/analytics/consent'                                                                           ||
+    excludes '^src/web/analytics/consent/components'                                                                ||
     error_decoupling "Analytics"
 
-  # Enforce API Handler Framework Isolation
-  echo "  Checking API Handler Framework Isolation..."
+  # Enforce API Framework Vendors Isolation
+  echo "  Checking API Framework Vendors Isolation..."
+
+  # Enforce API Handler Framework Vendors Isolation
+  echo "  Checking API Handler Framework Vendors Isolation..."
   ! search 'from "next-connect"' src                                                                                | 
     excludes_vendor_locations "api.handler"                                                                         || 
     error_decoupling "API Handler"
 
- # Enforce Auth Framework Isolation
-  echo "  Checking Auth Framework Isolation..."
+  # Enforce API Logger Framework Vendors Isolation
+  echo "  Checking API Logger Framework Vendors Isolation..."
+
+  # Enforce API Validation Framework Vendors Isolation
+  echo "  Checking API Validation Framework Vendors Isolation..."
+  ! search 'from "ajv' src                                                                                          | 
+    excludes_vendor_locations "api.validation"                                                                      || 
+    error_decoupling "Validation"
+
+  # Enforce Auth Framework Vendors Isolation
+  echo "  Checking Auth Framework Vendors Isolation..."
   ! search 'from "next-auth' src                                                                                    | 
     excludes_vendor_locations "auth"                                                                                || 
     error_decoupling "Auth"
 
-  # Enforce Flag Framework Isolation
-  echo "  Checking Feature Flags Framework Isolation..."
+  # Enforce Auth Buttons Framework Vendors Isolation
+  echo "  Checking Auth Buttons Framework Vendors Isolation..."
+  ! search 'from "react-social-login-buttons' src                                                                   | 
+    excludes_vendor_locations "auth.buttons"                                                                        || 
+    error_decoupling "Auth Buttons"
+
+  # Enforce Cache Framework Vendors Isolation
+  echo "  Checking Cache Framework Vendor Isolation..."
+
+  # Enforce Errors Framework Vendors Isolation
+  echo "  Checking Errors Framework Vendors Isolation..."
+  ! search 'from "react-error-boundary' src                                                                         | 
+    excludes_vendor_locations "errors"                                                                              || 
+    error_decoupling "Errors"
+
+  # Enforce Flag Framework Vendors Isolation
+  echo "  Checking Feature Flags Framework Vendors Isolation..."
   ! search 'from "flagsmith' src                                                                                    | 
     excludes_vendor_locations "flags"                                                                               || 
     error_decoupling "Feature Flags"
 
-  # Enforce Lastfm Framework Isolation
-  echo "  Checking Lastfm Framework Isolation..."
-  #! search 'from "@toplast/lastfm' src | excludes_vendor_locations "lastfm" || error_decoupling "Last FM"
+  ! search 'from "flagsmith-nodejs' src                                                                             | 
+    excludes_vendor_locations "flags"                                                                               || 
+    error_decoupling "Feature Flags"
 
-  # Enforce Lastfm Scraper Framework Isolation
-  echo "  Checking Lastfm Scraper Framework Isolation..."
+  # Enforce Lastfm Framework Vendors Isolation
+  echo "  Checking Lastfm Framework Vendors Isolation..."
+  # TODO: migrate client to vendors
+  #! search 'from "@toplast/lastfm' src | 
+  #  excludes_vendor_locations "lastfm" || 
+  #  error_decoupling "Last FM"
+
   ! search 'from "cheerio' src                                                                                      | 
     excludes_vendor_locations "lastfm"                                                                              || 
-    error_decoupling "Last FM Scraper"
+    error_decoupling "Last FM"
 
-  # Enforce Locale Framework Isolation
-  echo "  Checking Locale Framework Isolation..."
+  # Enforce Locale Framework Vendors Isolation
+  echo "  Checking Locale Framework Vendors Isolation..."
   ! search 'from "next-i18next' src                                                                                 | 
     excludes_vendor_locations "locale"                                                                              || 
     error_decoupling "Locale"
 
-  # Enforce Persistence Framework Isolation
-  echo "  Checking Persistence Framework Isolation..."
+  ! search 'from "react-i18next' src                                                                                || 
+    error_decoupling "Locale"
+
+  ! search 'from "i18next' src                                                                                      || 
+    error_decoupling "Locale"
+
+  # Enforce Persistence Framework Vendors solation
+  echo "  Checking Persistence Framework Vendors Isolation..."
   ! search 'from "@aws-sdk' src                                                                                     | 
     excludes_vendor_locations "persistence"                                                                         || 
     error_decoupling "Persistence"
 
-  # Enforce UI Framework Isolation
-  echo "  Checking UI Framework Isolation..."
-  ! search 'from "@chakra-ui|from "@emotion/styled' src                                                             | 
+  ! search 'from "use-persisted-reducer' src                                                                        | 
+    excludes_vendor_locations "persistence"                                                                         || 
+    error_decoupling "Persistence"
+
+  # Enforce UI Framework Vendors Isolation
+  echo "  Checking UI Framework Vendors Isolation..."
+  ! search 'from "@chakra-ui' src                                                                                   | 
     excludes_vendor_locations "ui.framework"                                                                        | 
     excludes "${UI_FRAMEWORK_WHITELIST_REGEX}"                                                                      | 
-    excludes "${COMPONENT_FILENAME_REGEX}"                                                                          | 
-    excludes "${COMPONENT_FILENAME_REGEX_OLD}"                                                                      ||
+    excludes "${COMPONENT_FILENAME_REGEX}"                                                                          || 
     error_decoupling "UI"
 
-  ! search 'from "@emotion/styled' src                                                                              | 
-    excludes "${COMPONENT_STYLE_FILENAME_REGEX_OLD}"                                                                |
+  ! search 'from "@emotion' src                                                                                     | 
     excludes "${COMPONENT_STYLE_FILENAME_REGEX}"                                                                    ||
     error_decoupling "UI"
 
-  # Enforce Web Framework Isolation
-  echo "  Checking Web Framework Isolation..."
+  echo "    COMPONENTS: Checking Form Vendors Isolation..."
+  ! search 'from "formik' src                                                                                       | 
+    excludes "${FORM_COMPONENT_FILENAME_REGEX}"                                                                     ||
+    error_decoupling "FORMS COMPONENTS"
+
+  echo "    COMPONENTS: Checking Icon Vendors Isolation..."
+  ! search 'from "react-icons| from "@chackra-ui/icons' src                                                         | 
+    excludes "${COMPONENT_FILENAME_REGEX}"                                                                          ||
+    error_decoupling "ICON COMPONENTS"
+
+  echo "    COMPONENTS: Checking Report Vendors Isolation..."
+  ! search 'from "react-card-flip' src                                                                              |
+    excludes "${REPORT_FLIPCARD_COMPONENT_FILENAME_REGEX}"                                                          ||
+    error_decouple "REPORT COMPONENTS"
+
+  ! search 'from "d3' src                                                                                           |
+    excludes "${REPORT_SUNBURST_COMPONENT_FILENAME_REGEX}"                                                          ||
+    error_decouple "REPORT COMPONENTS"
+
+  # Enforce Web Framework Vendors Isolation
+  echo "  Checking Web Framework Vendors Isolation..."
   ! search 'from "next"|^import .+ from "next/' src                                                                 | 
     excludes "${WEB_FRAMEWORK_WHITELIST_REGEX}"                                                                     | 
     excludes_vendor_locations "web.framework"                                                                       | 
     excludes_vendor_locations "api.framework"                                                                       || 
     error_decoupling "WEB"
-  
+
+  echo "  Checking React Framework Isolation..."
+  ! search 'from "react"|from "react/' src                                                                          | 
+    excludes "${WEB_FRAMEWORK_WHITELIST_REGEX}"                                                                     | 
+    excludes "src/fixtures"                                                                                         |
+    excludes "src/web"                                                                                              |
+    excludes "src/vendors"                                                                                          ||
+    error_decoupling "REACT"
+
+  # Enforce Test Framework Isolation
+    echo "  Checking Test Framework Vendors Isolation..."
+  ! search 'from "node-fetch' src                                                                                   ||
+    error_decoupling "TEST"
+
+  # Enforce Security Framework Isolation
+    echo "  Checking Security Framework Vendors Isolation..."
+  ! search 'from "ci"' src                                                                                          ||
+    error_decoupling "SECURITY"
+
+  echo "********** Buisiness Logic Separation in UI **********"
+
   # Enforce Separation of Business Logic (No hook usage inside component level files.)
   echo "  Checking Hook Usage Patterns..."
   ! search " = use" src                                                                                             | 
@@ -212,7 +319,7 @@ main() {
     excludes "useColour"                                                                                            || 
     false
 
-  echo "File Name Conventions..."
+  echo "********** File Name Conventions **********"
 
   # Enforce General Naming Convention (lowercase, . seperator)
   echo "  Checking General Naming Conventions..."
@@ -229,16 +336,15 @@ main() {
 
   # Component File Naming Convention
   echo "  Checking Component File Naming Conventions..."
-  ! find src/components -type f -regex ".*tsx$"                                                                     | 
+  ! find src/web -type f -regex ".*tsx$"                                                                            | 
     excludes "${COMPONENT_FACTORY_FILENAME_REGEX}"                                                                  |
     excludes "(${HOOK_FILENAME_REGEX}|${HOOK_MOCK_FILENAME_REGEX})"                                                 | 
-    excludes "${COMPONENT_FILENAME_REGEX}"                                                                          |
-    excludes "${COMPONENT_FILENAME_REGEX_OLD}"                                                                      ||
+    excludes "${COMPONENT_FILENAME_REGEX}"                                                                          ||
     false
 
   # Enforce Hook Naming Conventions
   echo "  Checking Hook Naming Conventions..."
-  ! search "${HOOK_DEFINITION_REGEX}" {src/hooks,src/components}                                                    | 
+  ! search "${HOOK_DEFINITION_REGEX}" src/web                                                                       |   
     excludes "${HOOK_FULL_PATH_REGEX}"                                                                              || 
     error_naming_convention
 
@@ -248,37 +354,25 @@ main() {
     excludes "${HOOK_MOCK_FULL_PATH_REGEX}"                                                                         || 
     error_naming_convention
 
-  echo "Type Definitions..."
+  echo "********** Type Definitions **********"
 
   # Enforce Hook Type Exports (Must export it's own type definition.)
   echo "  Checking Hook Exports..."
   readarray -t HOOK_FILES < <(
-    search "${HOOK_DEFINITION_REGEX}" {src/hooks,src/components}                                                    | 
-    cut -d":" -f1
+    search "${HOOK_DEFINITION_REGEX}" src/web                                                                       | 
+    cut -d":" -f1                                                                                                   |
+    excludes "test"
   )
   for HOOK_FILE in "${HOOK_FILES[@]}"; do
     ! search "^export type" "$HOOK_FILE" > /dev/null && 
-    echo "${HOOK_FILE}: missing hook type export"
-  done
-
-  # Enforce Type Definition Flow (No references to vendor types directly.)
-  echo "  Checking Vendor Type Imports..."
-  readarray -t IMPORT_FILES < <(
-    search 'from "(@src/clients/.+|@src/backend/api/integrations.+)' src                                            | 
-    cut -d":" -f1                                                                                                   | 
-    excludes "^src/types|^src/backend/api/types"
-  )
-  for IMPORT_FILE in "${IMPORT_FILES[@]}"; do
-    ! tr -d '\n'  < "$IMPORT_FILE"                                                                                  | 
-      grep -Eo '(import type .*? from \"(@src/clients/.+|@src/backend/api/integrations.+))' > /dev/null             || 
-      (echo "${IMPORT_FILE}: should not be importing types directly from a vendor folder." && exit 1)               || 
-      false
+      echo "${HOOK_FILE}: missing hook type export" &&
+      exit 127   
   done
 
   # Enforce Vendor Type Exports (Must be named consistenly: [vendor type]Vendor[type name](Interface|Type))
   echo "  Checking Vendor Type Definitions..."
   readarray -t VENDOR_TYPE_FILES < <(
-    find {src/types,src/backend/api/types}                                                                          | 
+    find src/vendors/types                                                                                          | 
     grep "vendor.types.ts"                                                                                          | 
     cut -d":" -f1
   )

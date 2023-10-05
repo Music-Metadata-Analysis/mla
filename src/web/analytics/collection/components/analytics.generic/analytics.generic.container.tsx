@@ -1,6 +1,6 @@
 import AnalyticsGenericWrapper from "./analytics.generic.component";
 import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
-import type { AnalyticsEventDefinitionInterface } from "@src/web/analytics/collection/events/types/event.types";
+import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type { MouseEventHandler } from "react";
 
 interface AnalyticsGenericWrapperProps {

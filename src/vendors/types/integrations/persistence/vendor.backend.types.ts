@@ -15,8 +15,10 @@ export interface PersistenceVendorClientInterface {
   ): void;
 }
 
+export type PersistenceVendorClientConstructorType = new (
+  partitionName: string
+) => PersistenceVendorClientInterface;
+
 export interface PersistenceVendorBackendInterface {
-  PersistenceClient: new (
-    partitionName: string
-  ) => PersistenceVendorClientInterface;
+  PersistenceClient: PersistenceVendorClientConstructorType;
 }

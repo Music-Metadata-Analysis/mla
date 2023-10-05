@@ -1,22 +1,30 @@
 import type {
-  VendorActionType,
-  VendorMiddlewareOrReducerType,
-  VendorMiddlewareType,
-  VendorNestedType,
+  WebFrameworkVendorReducerActionType,
+  WebFrameworkVendorMiddlewareOrReducerType,
+  WebFrameworkVendorMiddlewareType,
+  WebFrameworkVendorNestedMiddlewareType,
 } from "@src/vendors/types/integrations/web.framework/vendor.types";
 import type { Reducer } from "react";
 
-const applyMiddleware = <STATE, ACTION extends VendorActionType>(
+const applyMiddleware = <
+  STATE,
+  ACTION extends WebFrameworkVendorReducerActionType
+>(
   originalReducer: Reducer<STATE, ACTION>,
-  middlewareStack: VendorMiddlewareType<STATE, ACTION>[]
+  middlewareStack: WebFrameworkVendorMiddlewareType<STATE, ACTION>[]
 ): Reducer<STATE, ACTION> => {
-  const combinedStack: VendorMiddlewareOrReducerType<STATE, ACTION>[] = [
-    originalReducer,
-    ...middlewareStack,
-  ];
+  const combinedStack: WebFrameworkVendorMiddlewareOrReducerType<
+    STATE,
+    ACTION
+  >[] = [originalReducer, ...middlewareStack];
   const reducerWithMiddleWare = combinedStack.reduce(
     (last, middlewareToApply) => {
-      return (middlewareToApply as VendorNestedType<STATE, ACTION>)(last);
+      return (
+        middlewareToApply as WebFrameworkVendorNestedMiddlewareType<
+          STATE,
+          ACTION
+        >
+      )(last);
     }
   );
   return reducerWithMiddleWare as Reducer<STATE, ACTION>;

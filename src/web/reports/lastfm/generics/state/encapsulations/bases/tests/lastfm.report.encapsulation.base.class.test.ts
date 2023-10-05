@@ -3,7 +3,7 @@ import {
   mockUrls,
 } from "./states/lastfm.report.state.data.set";
 import LastFMReportBaseStateEncapsulation from "../lastfm.report.encapsulation.base.class";
-import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
+import type { LastFMImageDataInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/image.data.types";
 import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 describe("LastFMReportBaseStateEncapsulation", () => {
