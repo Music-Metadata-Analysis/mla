@@ -2,7 +2,7 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/navbar.controller.hook.mock";
 import useNavBarController from "../navbar.controller.hook";
-import makeUniqueHookMock from "@src/tests/fixtures/mock.object.unique";
+import makeUniqueHookMock from "@src/fixtures/mocks/mock.object.unique";
 import NavBarProvider from "@src/web/navigation/navbar/state/providers/navbar.provider";
 import mockToggleHook from "@src/web/ui/generics/state/hooks/__mocks__/toggle.hook.mock";
 import { checkIsToggle } from "@src/web/ui/generics/state/hooks/tests/fixtures/toggle.hook";

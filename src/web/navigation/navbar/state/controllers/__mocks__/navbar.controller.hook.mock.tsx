@@ -1,4 +1,4 @@
-import makeUniqueHookMock from "@src/tests/fixtures/mock.object.unique";
+import makeUniqueHookMock from "@src/fixtures/mocks/mock.object.unique";
 import mockToggleHookValues from "@src/web/ui/generics/state/hooks/__mocks__/toggle.hook.mock";
 
 const mockValues = {
