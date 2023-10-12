@@ -1,4 +1,4 @@
-import ReportCacheEndpointAbstractFactoryV2 from "@src/backend/api/services/report.cache/endpoints/v2.report.cache.endpoint.abstract.factory.class";
+import ReportCacheEndpointAbstractFactoryV2 from "@src/api/services/report.cache/endpoints/v2.report.cache.endpoint.abstract.factory.class";
 import apiRoutes from "@src/config/apiRoutes";
 
 class ReportCacheEndpointFactoryV2 extends ReportCacheEndpointAbstractFactoryV2 {

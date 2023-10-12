@@ -1,5 +1,5 @@
-import ReportCacheEndpointAbstractFactoryV2 from "@src/backend/api/services/report.cache/endpoints/v2.report.cache.endpoint.abstract.factory.class";
-import { mockReportCacheProxyMethods } from "@src/backend/api/services/report.cache/proxy/__mocks__/proxy.class.mock";
+import ReportCacheEndpointAbstractFactoryV2 from "@src/api/services/report.cache/endpoints/v2.report.cache.endpoint.abstract.factory.class";
+import { mockReportCacheProxyMethods } from "@src/api/services/report.cache/proxy/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import MockReportState from "@src/contracts/api/services/lastfm/fixtures/aggregates/playcount.by.artist/lastfm.report.state.playcount.by.artist.sunburst.complete.1.json";
 import handleProxy, {
@@ -13,7 +13,7 @@ import type {
   MockAPIEndpointResponseType,
 } from "@src/vendors/types/integrations/api.framework/vendor.fixture.types";
 
-jest.mock("@src/backend/api/services/report.cache/proxy/proxy.class");
+jest.mock("@src/api/services/report.cache/proxy/proxy.class");
 
 jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
 

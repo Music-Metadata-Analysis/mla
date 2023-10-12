@@ -1,5 +1,5 @@
-import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.lastfm.endpoint.base.class";
-import { mockLastFMProxyMethods } from "@src/backend/api/services/lastfm/proxy/__mocks__/proxy.class.mock";
+import LastFMApiEndpointFactoryV2 from "@src/api/services/lastfm/endpoints/v2.lastfm.endpoint.base.class";
+import { mockLastFMProxyMethods } from "@src/api/services/lastfm/proxy/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import { STATUS_400_MESSAGE, STATUS_503_MESSAGE } from "@src/config/status";
 import handleProxy, {
@@ -13,7 +13,7 @@ import type {
   MockAPIEndpointResponseType,
 } from "@src/vendors/types/integrations/api.framework/vendor.fixture.types";
 
-jest.mock("@src/backend/api/services/lastfm/proxy/proxy.class");
+jest.mock("@src/api/services/lastfm/proxy/proxy.class");
 
 jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
 

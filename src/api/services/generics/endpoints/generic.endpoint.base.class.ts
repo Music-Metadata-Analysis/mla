@@ -3,7 +3,7 @@ import requestSettings from "@src/config/requests";
 import * as status from "@src/config/status";
 import { apiHandlerVendorBackend } from "@src/vendors/integrations/api.handler/vendor.backend";
 import { apiLoggerVendorBackend } from "@src/vendors/integrations/api.logger/vendor.backend";
-import type { ApiEndPointFactoryInterface } from "@src/backend/api/types/services/endpoint.types";
+import type { ApiEndPointFactoryInterface } from "@src/api/types/services/endpoint.types";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,

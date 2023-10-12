@@ -68,7 +68,7 @@ search() {
 }
 
 excludes_vendor_locations() {
-  excludes "src/clients/$1|src/backend/api/integrations/$1|src/vendors/integrations/$1" 
+  excludes "src/clients/$1|src/api/integrations/$1|src/vendors/integrations/$1" 
 }
 
 main() {
@@ -77,9 +77,9 @@ main() {
 
   echo "********** Component Level Decoupling **********"
 
-  echo "  Checking Imports into the BACKEND/API Component..."
-  ! search 'from "@src/.+' src/backend/api                                                                          | 
-    allows 'from "@src/backend/api/.+'                                                                              |
+  echo "  Checking Imports into the API Component..."
+  ! search 'from "@src/.+' src/api                                                                                  | 
+    allows 'from "@src/api/.+'                                                                                      |
     allows 'from "@src/config/.+'                                                                                   |
     allows 'from "@src/contracts/.+'                                                                                |
     allows 'from "@src/utilities/.+'                                                                                |
@@ -104,7 +104,7 @@ main() {
 
   echo "  Checking Imports into the PAGES Component..."
   ! search 'from "@src/.+' src/pages                                                                                | 
-    allows 'from "@src/backend/.+'                                                                                  |
+    allows 'from "@src/api/.+'                                                                                      |
     allows 'from "@src/config/.+'                                                                                   |
     allows 'from "@src/contracts/.+'                                                                                |
     allows 'from "@src/pages/.+'                                                                                    |
@@ -116,7 +116,7 @@ main() {
   # The PAGES component has it's tests in src/tests (next framework design)
 
   ! search 'from "@src/.+' src/tests                                                                                | 
-    allows 'from "@src/backend/.+'                                                                                  |
+    allows 'from "@src/api/.+'                                                                                  |
     allows 'from "@src/config/.+'                                                                                   |
     allows 'from "@src/contracts/.+'                                                                                |
     allows 'from "@src/fixtures/.+'                                                                                 |
@@ -143,7 +143,7 @@ main() {
     error_restricted
 
   # Enforce WEB Component Isolation (No imports into WEB except from designated points.)
-  echo "  Checking Imports into the FRONTEND/WEB Component..."
+  echo "  Checking Imports into the WEB Component..."
   ! search 'from "@src/.+' src/web                                                                                  | 
     allows 'from "@src/web/.+'                                                                                      |
     allows 'from "@src/config/.+'                                                                                   |

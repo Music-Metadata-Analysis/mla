@@ -5,7 +5,7 @@ import ConcreteReportCacheEndpointFactoryV2Success, {
 import ConcreteReportCacheEndpointFactoryV2Timeout, {
   mockValidator as mockConcreteTimeoutValidator,
 } from "./implementations/concrete.v2.report.cache.endpoint.factory.timeout.class";
-import { mockReportCacheProxyMethods } from "@src/backend/api/services/report.cache/proxy/__mocks__/proxy.class.mock";
+import { mockReportCacheProxyMethods } from "@src/api/services/report.cache/proxy/__mocks__/proxy.class.mock";
 import * as status from "@src/config/status";
 import {
   createAPIMocks,
@@ -25,7 +25,7 @@ import type {
   MockAPIEndpointResponseType,
 } from "@src/vendors/types/integrations/api.framework/vendor.fixture.types";
 
-jest.mock("@src/backend/api/services/report.cache/proxy/proxy.class");
+jest.mock("@src/api/services/report.cache/proxy/proxy.class");
 
 jest.mock("@src/vendors/integrations/auth/vendor.backend");
 

@@ -1,5 +1,5 @@
 import { lastFMVendorBackend } from "@src/vendors/integrations/lastfm/vendor.backend";
-import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy/proxy.types";
+import type { LastFMProxyInterface } from "@src/api/types/services/lastfm/proxy/proxy.types";
 import type { LastFMAlbumInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/album.info.types";
 import type { LastFMArtistTopAlbumsInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/artist.topalbums.types";
 import type { LastFMTrackInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/track.info.types";

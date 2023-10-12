@@ -1,11 +1,11 @@
-import APIEndpointBase from "@src/backend/api/services/generics/endpoints/generic.endpoint.base.class";
-import ReportCacheProxy from "@src/backend/api/services/report.cache/proxy/proxy.class";
+import APIEndpointBase from "@src/api/services/generics/endpoints/generic.endpoint.base.class";
+import ReportCacheProxy from "@src/api/services/report.cache/proxy/proxy.class";
 import * as status from "@src/config/status";
 import { keysToLower } from "@src/utilities/generics/objects";
 import { apiValidationVendorBackend } from "@src/vendors/integrations/api.validation/vendor.backend";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { cacheVendorBackend } from "@src/vendors/integrations/cache/vendor.backend";
-import type { ReportCacheProxyInterface } from "@src/backend/api/types/services/report.cache/proxy/proxy.types";
+import type { ReportCacheProxyInterface } from "@src/api/types/services/report.cache/proxy/proxy.types";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,

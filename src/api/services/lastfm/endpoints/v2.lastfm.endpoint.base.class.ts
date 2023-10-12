@@ -1,9 +1,9 @@
-import APIEndpointBase from "@src/backend/api/services/generics/endpoints/generic.endpoint.base.class";
-import LastFMProxy from "@src/backend/api/services/lastfm/proxy/proxy.class";
+import APIEndpointBase from "@src/api/services/generics/endpoints/generic.endpoint.base.class";
+import LastFMProxy from "@src/api/services/lastfm/proxy/proxy.class";
 import * as status from "@src/config/status";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
-import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy/proxy.types";
+import type { LastFMProxyInterface } from "@src/api/types/services/lastfm/proxy/proxy.types";
 import type { ApiEndpointRequestQueryParamType } from "@src/contracts/api/types/request.types";
 import type {
   ApiFrameworkVendorApiRequestType,
