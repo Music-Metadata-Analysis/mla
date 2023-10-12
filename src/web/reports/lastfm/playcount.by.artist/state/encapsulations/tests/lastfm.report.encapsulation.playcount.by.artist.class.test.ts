@@ -142,7 +142,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
             operation: {
               type: "Top Albums" as const,
               resource: mockTopArtists[0].name,
-              url: apiRoutes.v2.data.artists.albumsList,
+              url: apiRoutes.v2.data.lastfm.artists.albumsList,
               params: { userName: "niall-byrne", artist: "Lights & Motion" },
             },
           };
@@ -179,7 +179,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
             operation: {
               type: "Top Albums" as const,
               resource: mockTopArtists[0].name,
-              url: apiRoutes.v2.data.artists.albumsList,
+              url: apiRoutes.v2.data.lastfm.artists.albumsList,
               params: { userName: "niall-byrne", artist: "Lights & Motion" },
             },
           };
@@ -238,7 +238,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
           instance.updateWithResponse(
             MockArtistGetTopAlbums.topalbums.album,
             { artist: "The Cure", userName: "niall-byrne" },
-            apiRoutes.v2.data.artists.albumsList
+            apiRoutes.v2.data.lastfm.artists.albumsList
           )
         );
 
@@ -255,7 +255,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
             operation: {
               type: "Album Details" as const,
               resource: mockTopAlbums[0].name,
-              url: apiRoutes.v2.data.artists.albumsGet,
+              url: apiRoutes.v2.data.lastfm.artists.albumsGet,
               params: {
                 userName: "niall-byrne",
                 artist: "The Cure",
@@ -309,7 +309,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
               artist: "The Cure",
               userName: "niall-byrne",
             },
-            apiRoutes.v2.data.artists.albumsGet
+            apiRoutes.v2.data.lastfm.artists.albumsGet
           );
         });
 
@@ -336,7 +336,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
             operation: {
               type: "Album Details" as const,
               resource: "Wish",
-              url: apiRoutes.v2.data.artists.albumsGet,
+              url: apiRoutes.v2.data.lastfm.artists.albumsGet,
               params: {
                 userName: "niall-byrne",
                 artist: "The Cure",
@@ -361,7 +361,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
               artist: "The Cure",
               userName: "niall-byrne",
             },
-            apiRoutes.v2.data.artists.albumsGet
+            apiRoutes.v2.data.lastfm.artists.albumsGet
           );
         });
 
@@ -388,7 +388,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
             operation: {
               type: "Album Details" as const,
               resource: "Wish",
-              url: apiRoutes.v2.data.artists.albumsGet,
+              url: apiRoutes.v2.data.lastfm.artists.albumsGet,
               params: {
                 userName: "niall-byrne",
                 artist: "The Cure",
@@ -464,7 +464,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
               artist: "The Cure",
               userName: "niall-byrne",
             },
-            apiRoutes.v2.data.artists.albumsGet
+            apiRoutes.v2.data.lastfm.artists.albumsGet
           );
         });
 
@@ -495,7 +495,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
               resource:
                 expected.data.report.playCountByArtist.content[13].albums[0]
                   .name,
-              url: apiRoutes.v2.data.artists.albumsGet,
+              url: apiRoutes.v2.data.lastfm.artists.albumsGet,
               params: {
                 userName: "niall-byrne",
                 artist: expected.data.report.playCountByArtist.content[13].name,
@@ -537,7 +537,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
               album: "Disintegration",
               userName: "niall-byrne",
             },
-            apiRoutes.v2.data.artists.albumsGet
+            apiRoutes.v2.data.lastfm.artists.albumsGet
           )
         );
 
@@ -571,7 +571,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
               artist: "The Cure",
               userName: "niall-byrne",
             },
-            apiRoutes.v2.data.artists.albumsGet
+            apiRoutes.v2.data.lastfm.artists.albumsGet
           );
         });
 
@@ -610,7 +610,7 @@ describe("LastFMReportPlayCountByArtistStateEncapsulation", () => {
               artist: "The Cure",
               userName: "niall-byrne",
             },
-            apiRoutes.v2.data.artists.albumsGet
+            apiRoutes.v2.data.lastfm.artists.albumsGet
           );
         });
 

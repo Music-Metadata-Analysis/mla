@@ -21,8 +21,8 @@ export default class LastFMReportPlayCountByArtistStateEncapsulation extends Las
   private transformations = {
     DEFAULT: Transformation1,
     [apiRoutes.v2.reports.lastfm.top20artists]: Transformation2,
-    [apiRoutes.v2.data.artists.albumsList]: Transformation3,
-    [apiRoutes.v2.data.artists.albumsGet]: Transformation4,
+    [apiRoutes.v2.data.lastfm.artists.albumsList]: Transformation3,
+    [apiRoutes.v2.data.lastfm.artists.albumsGet]: Transformation4,
   };
   private sequence = [Step1, Step2, Step3];
   errorMessage = "Error generating the PlayCount By Artist Report!";

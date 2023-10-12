@@ -11,10 +11,13 @@ const apiRoutes = {
   v2: {
     cache: "/api/v2/cache/:source/:report/:username",
     data: {
-      artists: {
-        albumsList: "/api/v2/data/artists/:artist/albums",
-        albumsGet: "/api/v2/data/artists/:artist/albums/:album",
-        tracksGet: "/api/v2/data/artists/:artist/albums/:album/tracks/:track",
+      lastfm: {
+        artists: {
+          albumsList: "/api/v2/data/lastfm/artists/:artist/albums",
+          albumsGet: "/api/v2/data/lastfm/artists/:artist/albums/:album",
+          tracksGet:
+            "/api/v2/data/lastfm/artists/:artist/albums/:album/tracks/:track",
+        },
       },
     },
     reports: {

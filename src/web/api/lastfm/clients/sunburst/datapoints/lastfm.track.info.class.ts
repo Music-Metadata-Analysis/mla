@@ -8,7 +8,7 @@ class LastFMTrackInfo<
   EncapsulationType,
   LastFMTrackInfoInterface
 > {
-  route = apiRoutes.v2.data.artists.tracksGet;
+  route = apiRoutes.v2.data.lastfm.artists.tracksGet;
 }
 
 export default LastFMTrackInfo;

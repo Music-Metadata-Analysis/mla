@@ -8,7 +8,7 @@ class NextIsTopAlbums extends StepBase {
         return {
           type: "Top Albums" as const,
           resource: artist.name,
-          url: apiRoutes.v2.data.artists.albumsList,
+          url: apiRoutes.v2.data.lastfm.artists.albumsList,
           params: {
             artist: artist.name,
             userName: this.params.userName,

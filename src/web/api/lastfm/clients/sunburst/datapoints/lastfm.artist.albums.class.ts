@@ -8,7 +8,7 @@ class LastFMArtistGetAlbums<
   EncapsulationType,
   LastFMArtistTopAlbumsInterface
 > {
-  route = apiRoutes.v2.data.artists.albumsList;
+  route = apiRoutes.v2.data.lastfm.artists.albumsList;
 }
 
 export default LastFMArtistGetAlbums;

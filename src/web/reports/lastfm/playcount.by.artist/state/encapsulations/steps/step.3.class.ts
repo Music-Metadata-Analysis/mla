@@ -9,7 +9,7 @@ class NextIsAlbumDetails extends StepBase {
           return {
             type: "Album Details" as const,
             resource: album.name,
-            url: apiRoutes.v2.data.artists.albumsGet,
+            url: apiRoutes.v2.data.lastfm.artists.albumsGet,
             params: {
               album: album.name,
               artist: artist.name,

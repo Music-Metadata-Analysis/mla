@@ -82,11 +82,11 @@ describe("SunBurstDataClientBase", () => {
         }));
         mockDataPointClasses[1].mockImplementationOnce(() => ({
           retrieveReport: mockDataPointRetrieveReport,
-          getRoute: () => apiRoutes.v2.data.artists.albumsGet,
+          getRoute: () => apiRoutes.v2.data.lastfm.artists.albumsGet,
         }));
         mockState.getReportStatus.mockReturnValue({
           operation: {
-            url: apiRoutes.v2.data.artists.albumsGet,
+            url: apiRoutes.v2.data.lastfm.artists.albumsGet,
             params: { userName: "niall-byrne", artist: "Uchu Corbini" },
           },
         });
@@ -116,7 +116,7 @@ describe("SunBurstDataClientBase", () => {
         }));
         mockState.getReportStatus.mockReturnValue({
           operation: {
-            url: apiRoutes.v2.data.artists.albumsGet,
+            url: apiRoutes.v2.data.lastfm.artists.albumsGet,
           },
         });
         instance.retrieveReport(mockParams);

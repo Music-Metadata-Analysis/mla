@@ -4,7 +4,7 @@ import apiRoutes from "@src/config/apiRoutes";
 import { STATUS_400_MESSAGE } from "@src/config/status";
 import handleProxy, {
   endpointFactory,
-} from "@src/pages/api/v2/data/artists/[artist]/albums/index";
+} from "@src/pages/api/v2/data/lastfm/artists/[artist]/albums/[album]/tracks/[track]";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type { ApiEndpointRequestQueryParamType } from "@src/contracts/api/types/request.types";
@@ -21,7 +21,7 @@ jest.mock("@src/vendors/integrations/auth/vendor.backend", () =>
   require("@src/vendors/integrations/auth/__mocks__/vendor.backend.mock").authenticated()
 );
 
-const endpointUnderTest = apiRoutes.v2.data.artists.albumsList;
+const endpointUnderTest = apiRoutes.v2.data.lastfm.artists.tracksGet;
 
 type ArrangeArgs = {
   query: ApiEndpointRequestQueryParamType;
@@ -73,10 +73,14 @@ describe(endpointUnderTest, () => {
           method = "GET" as const;
         });
 
-        describe("with a valid lastfm response", () => {
+        describe("with a valid payload", () => {
           beforeEach(async () => {
-            query = { artist: "The%20Cure" };
-            mockLastFMProxyMethods.getArtistTopAlbums.mockReturnValueOnce(
+            query = {
+              artist: "The%20Cure",
+              track: "Open",
+              username: "niall-byrne",
+            };
+            mockLastFMProxyMethods.getTrackInfo.mockReturnValueOnce(
               Promise.resolve(mockResponse)
             );
             await actRequest({ query, method });
@@ -95,27 +99,29 @@ describe(endpointUnderTest, () => {
           });
 
           it("should call the proxy method with the correct params", () => {
-            expect(mockLastFMProxyMethods.getArtistTopAlbums).toBeCalledWith(
-              query.artist
+            expect(mockLastFMProxyMethods.getTrackInfo).toBeCalledWith(
+              query.artist,
+              query.track,
+              query.username
             );
           });
         });
-      });
-    });
 
-    describe("with an invalid payload", () => {
-      beforeEach(async () => {
-        query = {};
-        await actRequest({ query, method });
-      });
+        describe("with an invalid payload", () => {
+          beforeEach(async () => {
+            query = {};
+            await actRequest({ query, method });
+          });
 
-      it("should return a 400 status code", () => {
-        expect(mockRes._getStatusCode()).toBe(400);
-        expect(mockRes._getJSONData()).toStrictEqual(STATUS_400_MESSAGE);
-      });
+          it("should return a 400 status code", () => {
+            expect(mockRes._getStatusCode()).toBe(400);
+            expect(mockRes._getJSONData()).toStrictEqual(STATUS_400_MESSAGE);
+          });
 
-      it("should NOT call the proxy method", () => {
-        expect(mockLastFMProxyMethods.getArtistTopAlbums).toBeCalledTimes(0);
+          it("should NOT call the proxy method", () => {
+            expect(mockLastFMProxyMethods.getTrackInfo).toBeCalledTimes(0);
+          });
+        });
       });
     });
   });

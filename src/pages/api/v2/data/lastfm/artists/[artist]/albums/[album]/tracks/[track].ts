@@ -5,7 +5,7 @@ import type { ApiFrameworkVendorApiRequestType } from "@src/vendors/types/integr
 
 class ArtistTopAlbums extends LastFMApiEndpointFactoryV2 {
   public readonly flag = null;
-  public readonly route = apiRoutes.v2.data.artists.tracksGet;
+  public readonly route = apiRoutes.v2.data.lastfm.artists.tracksGet;
 
   protected getParams(
     req: ApiFrameworkVendorApiRequestType

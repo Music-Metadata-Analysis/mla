@@ -24,7 +24,7 @@ describe("LastFMTrackInfo", () => {
     });
 
     it("should have the correct api route configured", () => {
-      expect(instance.route).toBe(apiRoutes.v2.data.artists.tracksGet);
+      expect(instance.route).toBe(apiRoutes.v2.data.lastfm.artists.tracksGet);
     });
   });
 });

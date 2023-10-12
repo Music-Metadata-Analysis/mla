@@ -4,7 +4,7 @@ import apiRoutes from "@src/config/apiRoutes";
 import { STATUS_400_MESSAGE, STATUS_503_MESSAGE } from "@src/config/status";
 import handleProxy, {
   endpointFactory,
-} from "@src/pages/api/v2/data/artists/[artist]/albums/[album]";
+} from "@src/pages/api/v2/data/lastfm/artists/[artist]/albums/[album]";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type { ApiEndpointRequestQueryParamType } from "@src/contracts/api/types/request.types";
@@ -21,7 +21,7 @@ jest.mock("@src/vendors/integrations/auth/vendor.backend", () =>
   require("@src/vendors/integrations/auth/__mocks__/vendor.backend.mock").authenticated()
 );
 
-const endpointUnderTest = apiRoutes.v2.data.artists.albumsGet;
+const endpointUnderTest = apiRoutes.v2.data.lastfm.artists.albumsGet;
 
 type ArrangeArgs = {
   query: ApiEndpointRequestQueryParamType;
