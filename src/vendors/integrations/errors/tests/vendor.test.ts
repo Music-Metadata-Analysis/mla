@@ -4,5 +4,6 @@ import ReactErrorBoundaryContainer from "../web/boundary/react-error-boundary";
 describe("errorVendor", () => {
   it("should be configured with the correct properties", () => {
     expect(errorVendor.ErrorBoundary).toBe(ReactErrorBoundaryContainer);
+    expect(Object.keys(errorVendor).length).toBe(1);
   });
 });

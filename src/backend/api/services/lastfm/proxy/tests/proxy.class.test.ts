@@ -1,13 +1,7 @@
-import LastFmAlbumClientAdapter from "../client/album.class";
-import LastFmArtistClientAdapter from "../client/artist.class";
-import LastFmTrackClientAdapter from "../client/track.class";
-import LastFmUserClientAdapter from "../client/user.class";
 import LastFMProxy from "../proxy.class";
+import { lastFMVendorBackend } from "@src/vendors/integrations/lastfm/vendor.backend";
 
-jest.mock("../client/album.class");
-jest.mock("../client/artist.class");
-jest.mock("../client/track.class");
-jest.mock("../client/user.class");
+jest.mock("@src/vendors/integrations/lastfm/vendor.backend");
 
 describe("LastFMProxy", () => {
   let originalEnvironment: typeof process.env;
@@ -71,10 +65,7 @@ describe("LastFMProxy", () => {
   describe("getAlbumInfo", () => {
     beforeEach(() => {
       albumMethods = "getAlbumInfo";
-      underlyingClientMock1 = jest.spyOn(
-        LastFmAlbumClientAdapter.prototype,
-        "getInfo"
-      );
+      underlyingClientMock1 = lastFMVendorBackend.AlbumClient.prototype.getInfo;
     });
 
     describe("when all requests are successful", () => {
@@ -103,10 +94,8 @@ describe("LastFMProxy", () => {
   describe("getArtistTopAlbums", () => {
     beforeEach(() => {
       artistMethods = "getArtistTopAlbums";
-      underlyingClientMock1 = jest.spyOn(
-        LastFmArtistClientAdapter.prototype,
-        "getTopAlbums"
-      );
+      underlyingClientMock1 =
+        lastFMVendorBackend.ArtistClient.prototype.getTopAlbums;
     });
 
     describe("when requests are successful", () => {
@@ -137,10 +126,7 @@ describe("LastFMProxy", () => {
   describe("getTrackInfo", () => {
     beforeEach(() => {
       trackMethods = "getTrackInfo";
-      underlyingClientMock1 = jest.spyOn(
-        LastFmTrackClientAdapter.prototype,
-        "getInfo"
-      );
+      underlyingClientMock1 = lastFMVendorBackend.TrackClient.prototype.getInfo;
     });
 
     describe("when requests are successful", () => {
@@ -169,14 +155,10 @@ describe("LastFMProxy", () => {
   describe("getUserTopAlbums", () => {
     beforeEach(() => {
       userMethods = "getUserTopAlbums";
-      underlyingClientMock1 = jest.spyOn(
-        LastFmUserClientAdapter.prototype,
-        "getTopAlbums"
-      );
-      underlyingClientMock2 = jest.spyOn(
-        LastFmUserClientAdapter.prototype,
-        "getUserProfile"
-      );
+      underlyingClientMock1 =
+        lastFMVendorBackend.UserClient.prototype.getTopAlbums;
+      underlyingClientMock2 =
+        lastFMVendorBackend.UserClient.prototype.getUserProfile;
     });
 
     describe("when requests are successful", () => {
@@ -227,14 +209,10 @@ describe("LastFMProxy", () => {
   describe("getUserTopArtists", () => {
     beforeEach(() => {
       userMethods = "getUserTopArtists";
-      underlyingClientMock1 = jest.spyOn(
-        LastFmUserClientAdapter.prototype,
-        "getTopArtists"
-      );
-      underlyingClientMock2 = jest.spyOn(
-        LastFmUserClientAdapter.prototype,
-        "getUserProfile"
-      );
+      underlyingClientMock1 =
+        lastFMVendorBackend.UserClient.prototype.getTopArtists;
+      underlyingClientMock2 =
+        lastFMVendorBackend.UserClient.prototype.getUserProfile;
     });
 
     describe("when requests are successful", () => {
@@ -285,14 +263,10 @@ describe("LastFMProxy", () => {
   describe("getUserTopTracks", () => {
     beforeEach(() => {
       userMethods = "getUserTopTracks";
-      underlyingClientMock1 = jest.spyOn(
-        LastFmUserClientAdapter.prototype,
-        "getTopTracks"
-      );
-      underlyingClientMock2 = jest.spyOn(
-        LastFmUserClientAdapter.prototype,
-        "getUserProfile"
-      );
+      underlyingClientMock1 =
+        lastFMVendorBackend.UserClient.prototype.getTopTracks;
+      underlyingClientMock2 =
+        lastFMVendorBackend.UserClient.prototype.getUserProfile;
     });
 
     describe("when requests are successful", () => {

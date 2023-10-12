@@ -1,9 +1,10 @@
-import ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.error.class";
+import { errorVendorBackend } from "@src/vendors/integrations/errors/vendor.backend";
 import { persistenceVendorBackend } from "@src/vendors/integrations/persistence/vendor.backend";
 import type {
   ReportCacheProxyCreateCacheObjectInterface,
   ReportCacheProxyInterface,
-} from "@src/backend/api/types/services/report.cache/proxy.types";
+} from "@src/backend/api/types/services/report.cache/proxy/proxy.types";
+import type { RemoteServiceError } from "@src/contracts/api/types/services/generics/proxy/proxy.error.types";
 import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
 import type { PersistenceVendorClientInterface } from "@src/vendors/types/integrations/persistence/vendor.backend.types";
 
@@ -39,8 +40,8 @@ class ReportCacheProxy implements ReportCacheProxyInterface {
     };
   }
 
-  createProxyCompatibleError(err: Error): ProxyError {
-    throw new ProxyError(err.message);
+  createProxyCompatibleError(err: Error): RemoteServiceError {
+    throw new errorVendorBackend.ProxyError(err.message);
   }
 }
 

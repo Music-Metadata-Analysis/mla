@@ -1,5 +1,5 @@
-import ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.error.class";
 import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.lastfm.endpoint.base.class";
+import { errorVendorBackend } from "@src/vendors/integrations/errors/vendor.backend";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
@@ -20,7 +20,7 @@ export default class ConcreteV2EndpointWithProxyError extends LastFMApiEndpointF
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     body: ApiEndpointRequestBodyType | null
   ): Promise<LastFMArtistTopAlbumsInterface[]> {
-    throw new ProxyError(this.mockError, this.errorCode);
+    throw new errorVendorBackend.ProxyError(this.mockError, this.errorCode);
     return Promise.resolve([]);
   }
 }

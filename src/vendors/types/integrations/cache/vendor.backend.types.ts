@@ -17,6 +17,15 @@ export interface CacheVendorCdnOriginReportsCacheObjectInterface {
   getStorageName(): string;
 }
 
+export interface CacheVendorCdnControllerInterface<ObjectType> {
+  logCacheHitRate(): void;
+  query(keyName?: string): Promise<ObjectType>;
+}
+
+export interface CacheVendorCdnControllerFactoryInterface<ObjectType> {
+  create(): CacheVendorCdnControllerInterface<ObjectType>;
+}
+
 export interface CacheVendorBackendInterface {
   CdnBaseClient: abstract new <ObjectType>(
     originServerClient: PersistenceVendorClientInterface,
@@ -25,4 +34,11 @@ export interface CacheVendorBackendInterface {
   CdnOriginReportsCacheObject: new (
     args: CacheVendorCdnOriginReportsCacheObjectConstructorInterface
   ) => CacheVendorCdnOriginReportsCacheObjectInterface;
+  CdnController: new <ObjectType>(
+    defaultResponse: ObjectType,
+    cdnClient: CacheVendorCdnInterface<ObjectType>
+  ) => CacheVendorCdnControllerInterface<ObjectType>;
+  CdnControllerAbstractFactory: abstract new <
+    ObjectType
+  >() => CacheVendorCdnControllerFactoryInterface<ObjectType>;
 }

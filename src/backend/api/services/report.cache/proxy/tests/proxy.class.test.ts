@@ -1,7 +1,8 @@
 import ReportCacheProxy from "../proxy.class";
-import ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.error.class";
+import { errorVendorBackend } from "@src/vendors/integrations/errors/vendor.backend";
 import { mockPersistenceClient } from "@src/vendors/integrations/persistence/__mocks__/vendor.backend.mock";
 import { persistenceVendorBackend } from "@src/vendors/integrations/persistence/vendor.backend";
+import type { RemoteServiceError } from "@src/contracts/api/types/services/generics/proxy/proxy.error.types";
 import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
 
 jest.mock("@src/vendors/integrations/persistence/vendor.backend");
@@ -47,7 +48,7 @@ describe(ReportCacheProxy.name, () => {
     });
 
     describe("createCache", () => {
-      let result: ReportCacheResponseInterface | ProxyError;
+      let result: ReportCacheResponseInterface | RemoteServiceError;
 
       const act = async () =>
         (result = await instance.createCacheObject({
@@ -85,8 +86,10 @@ describe(ReportCacheProxy.name, () => {
 
         it("should throw the expected error", async () => {
           const t = async () => await act();
-          await expect(t).rejects.toThrow(ProxyError);
-          await expect(t).rejects.toEqual(new ProxyError(mockError));
+          await expect(t).rejects.toThrow(errorVendorBackend.ProxyError);
+          await expect(t).rejects.toEqual(
+            new errorVendorBackend.ProxyError(mockError)
+          );
           await expect(t).rejects.not.toHaveProperty("clientStatusCode");
         });
       });

@@ -1,26 +1,37 @@
-import LastFmAlbumClientAdapter from "./client/album.class";
-import LastFmArtistClientAdapter from "./client/artist.class";
-import LastFmTrackClientAdapter from "./client/track.class";
-import LastFmUserClientAdapter from "./client/user.class";
-import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
+import { lastFMVendorBackend } from "@src/vendors/integrations/lastfm/vendor.backend";
+import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy/proxy.types";
 import type { LastFMAlbumInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/album.info.types";
 import type { LastFMArtistTopAlbumsInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/artist.topalbums.types";
 import type { LastFMTrackInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/track.info.types";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
 import type { LastFMTopArtistsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.artists.types";
 import type { LastFMTopTracksReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.tracks.types";
+import type {
+  LastFMVendorAlbumClientInterface,
+  LastFMVendorArtistClientInterface,
+  LastFMVendorTrackClientInterface,
+  LastFMVendorUserClientInterface,
+} from "@src/vendors/types/integrations/lastfm/vendor.backend.types";
 
 class LastFMProxy implements LastFMProxyInterface {
-  protected albumClient: LastFmAlbumClientAdapter;
-  protected artistClient: LastFmArtistClientAdapter;
-  protected trackClient: LastFmTrackClientAdapter;
-  protected userClient: LastFmUserClientAdapter;
+  protected albumClient: LastFMVendorAlbumClientInterface;
+  protected artistClient: LastFMVendorArtistClientInterface;
+  protected trackClient: LastFMVendorTrackClientInterface;
+  protected userClient: LastFMVendorUserClientInterface;
 
   constructor() {
-    this.albumClient = new LastFmAlbumClientAdapter(process.env.LAST_FM_KEY);
-    this.artistClient = new LastFmArtistClientAdapter(process.env.LAST_FM_KEY);
-    this.trackClient = new LastFmTrackClientAdapter(process.env.LAST_FM_KEY);
-    this.userClient = new LastFmUserClientAdapter(process.env.LAST_FM_KEY);
+    this.albumClient = new lastFMVendorBackend.AlbumClient(
+      process.env.LAST_FM_KEY
+    );
+    this.artistClient = new lastFMVendorBackend.ArtistClient(
+      process.env.LAST_FM_KEY
+    );
+    this.trackClient = new lastFMVendorBackend.TrackClient(
+      process.env.LAST_FM_KEY
+    );
+    this.userClient = new lastFMVendorBackend.UserClient(
+      process.env.LAST_FM_KEY
+    );
   }
 
   public async getAlbumInfo(

@@ -1,6 +1,6 @@
 import LastFMApiEndpointFactoryV2 from "@src/backend/api/services/lastfm/endpoints/v2.lastfm.endpoint.base.class";
 import apiRoutes from "@src/config/apiRoutes";
-import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy.types";
+import type { LastFMProxyInterface } from "@src/backend/api/types/services/lastfm/proxy/proxy.types";
 import type { ApiEndpointRequestPathParamType } from "@src/contracts/api/types/request.types";
 import type { ApiFrameworkVendorApiRequestType } from "@src/vendors/types/integrations/api.framework/vendor.backend.types";
 

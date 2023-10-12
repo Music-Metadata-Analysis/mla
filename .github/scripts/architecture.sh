@@ -80,7 +80,6 @@ main() {
   echo "  Checking Imports into the BACKEND/API Component..."
   ! search 'from "@src/.+' src/backend/api                                                                          | 
     allows 'from "@src/backend/api/.+'                                                                              |
-    allows 'from "@src/__mocks__/.+'                                                                                |    
     allows 'from "@src/config/.+'                                                                                   |
     allows 'from "@src/contracts/.+'                                                                                |
     allows 'from "@src/utilities/.+'                                                                                |
@@ -135,11 +134,12 @@ main() {
 
   echo "  Checking Imports into the VENDORS Component..."
   ! search 'from "@src/.+' src/vendors                                                                              | 
-    allows 'from "@src/vendors/.+'                                                                                  |
+    allows 'from "@src/__mocks__/.+'                                                                                |    
     allows 'from "@src/config/.+'                                                                                   |
     allows 'from "@src/contracts/.+'                                                                                |    
     allows 'from "@src/fixtures/.+'                                                                                 | 
-    allows 'from "@src/utilities/.+'                                                                                ||
+    allows 'from "@src/utilities/.+'                                                                                |
+    allows 'from "@src/vendors/.+'                                                                                  ||
     error_restricted
 
   # Enforce WEB Component Isolation (No imports into WEB except from designated points.)
@@ -221,10 +221,9 @@ main() {
 
   # Enforce Lastfm Framework Vendors Isolation
   echo "  Checking Lastfm Framework Vendors Isolation..."
-  # TODO: migrate client to vendors
-  #! search 'from "@toplast/lastfm' src | 
-  #  excludes_vendor_locations "lastfm" || 
-  #  error_decoupling "Last FM"
+  ! search 'from "@toplast/lastfm' src                                                                              | 
+    excludes_vendor_locations "lastfm"                                                                              || 
+    error_decoupling "Last FM"
 
   ! search 'from "cheerio' src                                                                                      | 
     excludes_vendor_locations "lastfm"                                                                              || 

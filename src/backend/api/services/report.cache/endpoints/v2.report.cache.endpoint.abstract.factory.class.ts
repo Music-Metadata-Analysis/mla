@@ -5,7 +5,7 @@ import { keysToLower } from "@src/utilities/generics/objects";
 import { apiValidationVendorBackend } from "@src/vendors/integrations/api.validation/vendor.backend";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { cacheVendorBackend } from "@src/vendors/integrations/cache/vendor.backend";
-import type { ReportCacheProxyInterface } from "@src/backend/api/types/services/report.cache/proxy.types";
+import type { ReportCacheProxyInterface } from "@src/backend/api/types/services/report.cache/proxy/proxy.types";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,

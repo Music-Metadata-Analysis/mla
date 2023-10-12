@@ -4,11 +4,11 @@ import * as status from "@src/config/status";
 import { apiHandlerVendorBackend } from "@src/vendors/integrations/api.handler/vendor.backend";
 import { apiLoggerVendorBackend } from "@src/vendors/integrations/api.logger/vendor.backend";
 import type { ApiEndPointFactoryInterface } from "@src/backend/api/types/services/endpoint.types";
-import type { RemoteServiceError } from "@src/contracts/api/types/error.types";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
 } from "@src/contracts/api/types/request.types";
+import type { RemoteServiceError } from "@src/contracts/api/types/services/generics/proxy/proxy.error.types";
 import type {
   ApiFrameworkVendorApiRequestType,
   ApiFrameworkVendorApiResponseType,

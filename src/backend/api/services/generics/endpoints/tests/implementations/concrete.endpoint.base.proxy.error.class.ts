@@ -1,5 +1,5 @@
 import ApiEndpointBase from "../../generic.endpoint.base.class";
-import ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.error.class";
+import { errorVendorBackend } from "@src/vendors/integrations/errors/vendor.backend";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
@@ -31,7 +31,7 @@ export default class ConcreteBaseProxyErrorClass extends ApiEndpointBase<
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     body: ApiEndpointRequestBodyType | null
   ): Promise<number[]> {
-    throw new ProxyError(this.mockError, this.errorCode);
+    throw new errorVendorBackend.ProxyError(this.mockError, this.errorCode);
     return Promise.resolve([]);
   }
 }

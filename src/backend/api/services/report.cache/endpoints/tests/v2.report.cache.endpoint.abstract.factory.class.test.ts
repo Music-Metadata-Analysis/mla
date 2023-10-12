@@ -5,7 +5,6 @@ import ConcreteReportCacheEndpointFactoryV2Success, {
 import ConcreteReportCacheEndpointFactoryV2Timeout, {
   mockValidator as mockConcreteTimeoutValidator,
 } from "./implementations/concrete.v2.report.cache.endpoint.factory.timeout.class";
-import ProxyError from "@src/backend/api/services/generics/proxy/error/proxy.error.class";
 import { mockReportCacheProxyMethods } from "@src/backend/api/services/report.cache/proxy/__mocks__/proxy.class.mock";
 import * as status from "@src/config/status";
 import {
@@ -16,6 +15,7 @@ import { mockEndpointLogger } from "@src/vendors/integrations/api.logger/__mocks
 import { mockAuthClient } from "@src/vendors/integrations/auth/__mocks__/vendor.backend.mock";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { cacheVendorBackend } from "@src/vendors/integrations/cache/vendor.backend";
+import { errorVendorBackend } from "@src/vendors/integrations/errors/vendor.backend";
 import type ReportCacheEndpointAbstractFactoryV2 from "../v2.report.cache.endpoint.abstract.factory.class";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type { ApiEndpointRequestBodyType } from "@src/contracts/api/types/request.types";
@@ -760,7 +760,10 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
             beforeEach(() => {
               mockReportCacheProxyMethods.createCacheObject.mockImplementation(
                 () => {
-                  throw new ProxyError("Unknown error", errorCode);
+                  throw new errorVendorBackend.ProxyError(
+                    "Unknown error",
+                    errorCode
+                  );
                 }
               );
             });
@@ -1458,7 +1461,10 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
           beforeEach(() => {
             mockReportCacheProxyMethods.createCacheObject.mockImplementation(
               () => {
-                throw new ProxyError("Unknown error", errorCode);
+                throw new errorVendorBackend.ProxyError(
+                  "Unknown error",
+                  errorCode
+                );
               }
             );
           });

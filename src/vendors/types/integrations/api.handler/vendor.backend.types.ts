@@ -1,4 +1,4 @@
-import type { RemoteServiceError } from "@src/contracts/api/types/error.types";
+import type { RemoteServiceError } from "@src/contracts/api/types/services/generics/proxy/proxy.error.types";
 import type { ParameterizedVendorApiHandlerType } from "@src/vendors/integrations/api.handler/_types/vendor.specific.types";
 import type {
   ApiFrameworkVendorApiRequestType,
