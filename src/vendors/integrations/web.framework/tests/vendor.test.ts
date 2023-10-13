@@ -18,5 +18,8 @@ describe("webFrameworkVendor", () => {
     expect(webFrameworkVendor.reducers.middlewares).toStrictEqual({
       logger: reducerLoggingMiddleware,
     });
+    expect(Object.keys(webFrameworkVendor).length).toBe(6);
+    expect(Object.keys(webFrameworkVendor.reducers).length).toBe(2);
+    expect(Object.keys(webFrameworkVendor.reducers.middlewares).length).toBe(1);
   });
 });

@@ -1,4 +1,4 @@
-import type { VendorHOCType } from "@src/vendors/integrations/locale/vendor.types";
+import type { VendorHOCType } from "@src/vendors/integrations/locale/_types/vendor.specific.types";
 
 export type tFunctionType = (key: string) => string;
 

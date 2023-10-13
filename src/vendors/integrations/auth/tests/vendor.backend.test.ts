@@ -11,5 +11,7 @@ describe("authVendorBackend", () => {
     expect(JSON.stringify(authVendorBackend.ApiRoutes)).toStrictEqual(
       JSON.stringify(createRoutes(ProfilePersistenceClient))
     );
+    expect(Object.keys(authVendorBackend).length).toBe(3);
+    expect(Object.keys(authVendorBackend.config).length).toBe(1);
   });
 });

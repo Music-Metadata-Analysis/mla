@@ -6,5 +6,6 @@ describe("apiHandlerVendorBackend", () => {
     expect(apiHandlerVendorBackend.HandlerFactory).toBe(
       NextConnectHandlerFactory
     );
+    expect(Object.keys(apiHandlerVendorBackend).length).toBe(1);
   });
 });

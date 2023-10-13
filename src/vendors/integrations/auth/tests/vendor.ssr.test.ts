@@ -4,5 +4,6 @@ import { authVendorSSR } from "../vendor.ssr";
 describe("authVendorSSR", () => {
   it("should be configured with the correct properties", () => {
     expect(authVendorSSR.Client).toBe(NextAuthSSRClient);
+    expect(Object.keys(authVendorSSR).length).toBe(1);
   });
 });

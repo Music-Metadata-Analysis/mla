@@ -22,7 +22,7 @@ describe("uiFrameworkVendor", () => {
     expect(uiFrameworkVendor.popups.creatorHook).toBe(useChakraPopUp);
     expect(uiFrameworkVendor.popups.Provider).toBe(PopUpsControllerProvider);
     expect(uiFrameworkVendor.popups.controllerHook).toBe(usePopUpsController);
-
+    expect(Object.keys(uiFrameworkVendor).length).toBe(2);
     expect(Object.keys(uiFrameworkVendor.core).length).toBe(5);
     expect(Object.keys(uiFrameworkVendor.popups).length).toBe(4);
   });

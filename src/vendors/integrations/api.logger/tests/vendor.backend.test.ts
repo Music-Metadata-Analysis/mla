@@ -4,5 +4,6 @@ import { apiLoggerVendorBackend } from "../vendor.backend";
 describe("apiLoggerVendorBackend", () => {
   it("should be configured with the correct properties", () => {
     expect(apiLoggerVendorBackend.endpointLogger).toBe(stdoutLogger);
+    expect(Object.keys(apiLoggerVendorBackend).length).toBe(1);
   });
 });

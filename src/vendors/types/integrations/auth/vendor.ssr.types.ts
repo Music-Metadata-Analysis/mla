@@ -1,4 +1,4 @@
-import type { VendorStateType } from "@src/vendors/integrations/auth/vendor.types";
+import type { VendorStateType } from "@src/vendors/integrations/auth/_types/vendor.specific.types";
 
 export type AuthVendorStateType = VendorStateType;
 

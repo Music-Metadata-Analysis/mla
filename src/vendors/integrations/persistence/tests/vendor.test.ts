@@ -10,5 +10,6 @@ describe("persistenceVendor", () => {
     expect(persistenceVendor.localStorageReducerFactory).toBe(
       PersistantReducerFactory
     );
+    expect(Object.keys(persistenceVendor).length).toBe(2);
   });
 });

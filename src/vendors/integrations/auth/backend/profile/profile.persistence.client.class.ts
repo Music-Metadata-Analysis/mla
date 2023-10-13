@@ -1,5 +1,5 @@
 import { persistenceVendorBackend } from "@src/vendors/integrations/persistence/vendor.backend";
-import type { VendorProfileType } from "../../vendor.types";
+import type { VendorProfileType } from "../../_types/vendor.specific.types";
 import type {
   PersistenceVendorDataType,
   PersistenceVendorClientInterface,

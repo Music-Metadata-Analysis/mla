@@ -6,5 +6,6 @@ describe("persistenceVendorBackend", () => {
     expect(persistenceVendorBackend.PersistenceClient).toBe(
       S3PersistenceClient
     );
+    expect(Object.keys(persistenceVendorBackend).length).toBe(1);
   });
 });
