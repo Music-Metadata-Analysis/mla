@@ -1,4 +1,5 @@
 export type HttpApiClientResponse<ReportResponse> = {
+  ok: boolean;
   status: number;
   headers: Record<string, string>;
   response: ReportResponse | HttpApiClientStatusMessageType;
