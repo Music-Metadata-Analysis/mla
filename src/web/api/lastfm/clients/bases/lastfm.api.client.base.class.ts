@@ -181,22 +181,18 @@ abstract class LastFMReportBaseClient<ResponseType>
         return Promise.resolve(response);
       })
       .then((response) => {
-        this.response = response;
         this.handleRatelimited(params);
         return Promise.resolve(response);
       })
       .then((response) => {
-        this.response = response;
         this.handleTimeout(params);
         return Promise.resolve(response);
       })
       .then((response) => {
-        this.response = response;
         this.handleUnauthorized(params);
         return Promise.resolve(response);
       })
       .then((response) => {
-        this.response = response;
         this.handleSuccessful(params);
         return Promise.resolve(response);
       })
