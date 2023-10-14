@@ -35,7 +35,7 @@ describe("StdOutLogger", () => {
     proxyResponse: "Remote Service: Success!",
     statusCode: 200,
     socketDefinedRemoteAddress: "8.8.8.8",
-    url: apiRoutes.v1.reports.lastfm.top20artists,
+    url: apiRoutes.v2.reports.lastfm.top20artists,
     userAgent: "test user agent",
     next: jest.fn(),
   };

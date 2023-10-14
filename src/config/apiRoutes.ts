@@ -1,13 +1,4 @@
 const apiRoutes = {
-  v1: {
-    reports: {
-      lastfm: {
-        top20albums: "/api/v1/reports/lastfm/top20albums",
-        top20artists: "/api/v1/reports/lastfm/top20artists",
-        top20tracks: "/api/v1/reports/lastfm/top20tracks",
-      },
-    },
-  },
   v2: {
     cache: "/api/v2/cache/:source/:report/:username",
     data: {
