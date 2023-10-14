@@ -46,7 +46,7 @@ class HttpApiClient implements HttpApiClientInterface {
   protected handleKnownStatuses(response: Response): Response {
     if (response.status in knownStatuses) {
       return {
-        ok: true,
+        ok: response.ok,
         headers: response.headers,
         status: response.status,
         json: () => Promise.resolve(knownStatuses[response.status]),
@@ -60,7 +60,7 @@ class HttpApiClient implements HttpApiClientInterface {
     method: HttpApiClientHttpMethodType,
     url: string
   ): Response {
-    if (!response.ok) {
+    if (!response.ok && !(response.status in knownStatuses)) {
       throw Error(`${method}: ${url}`);
     }
     return response;

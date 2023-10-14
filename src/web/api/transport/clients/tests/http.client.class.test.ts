@@ -156,7 +156,7 @@ describe("HttpApiClient", () => {
       });
     });
 
-    describe("when a 'not ok' status is returned", () => {
+    describe("when a 'not ok' status is returned with an unrecognized status code", () => {
       beforeEach(() => setupFetch({ success: false, status: 400 }));
 
       it("should call the underlying fetch function correctly", () => {
@@ -300,7 +300,7 @@ describe("HttpApiClient", () => {
       });
     });
 
-    describe("when a 'not ok' status is returned", () => {
+    describe("when a 'not ok' status is returned with an unrecognized status code", () => {
       beforeEach(() => setupFetch({ success: false, status: 400 }));
 
       it("should call the underlying fetch function correctly", () => {
