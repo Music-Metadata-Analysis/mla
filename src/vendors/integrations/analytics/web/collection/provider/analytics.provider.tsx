@@ -1,10 +1,10 @@
 import React from "react";
 import InitialValues from "./analytics.initial";
-import type { AnalyticsProviderInterface } from "@src/web/analytics/collection/types/state/provider.types";
+import type { AnalyticsVendorProviderInterface } from "@src/vendors/types/integrations/analytics/vendor.types";
 
 export const AnalyticsContext = React.createContext(InitialValues);
 
-const AnalyticsProvider = ({ children }: AnalyticsProviderInterface) => {
+const AnalyticsProvider = ({ children }: AnalyticsVendorProviderInterface) => {
   const [initialized, setInitialized] = React.useState(false);
 
   return (

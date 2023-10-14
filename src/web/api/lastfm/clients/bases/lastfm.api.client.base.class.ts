@@ -38,7 +38,7 @@ abstract class LastFMReportBaseClient<ResponseType>
 
   protected handleBegin(params: LastFMReportClientParamsInterface): void {
     this.eventDispatch(
-      new analyticsVendor.EventDefinition({
+      new analyticsVendor.collection.EventDefinition({
         category: "LAST.FM",
         label: "REQUEST",
         action: `${this.eventType}: REQUEST WAS SENT TO LAST.FM.`,
@@ -59,7 +59,7 @@ abstract class LastFMReportBaseClient<ResponseType>
         integration: this.integration,
       });
       this.eventDispatch(
-        new analyticsVendor.EventDefinition({
+        new analyticsVendor.collection.EventDefinition({
           category: "LAST.FM",
           label: "ERROR",
           action: `${this.eventType}: REQUEST WAS MADE FOR AN UNKNOWN ENTITY.`,
@@ -77,7 +77,7 @@ abstract class LastFMReportBaseClient<ResponseType>
         integration: this.integration,
       });
       this.eventDispatch(
-        new analyticsVendor.EventDefinition({
+        new analyticsVendor.collection.EventDefinition({
           category: "LAST.FM",
           label: "RESPONSE",
           action: `${this.eventType}: RECEIVED RESPONSE FROM LAST.FM.`,
@@ -94,7 +94,7 @@ abstract class LastFMReportBaseClient<ResponseType>
         integration: this.integration,
       });
       this.eventDispatch(
-        new analyticsVendor.EventDefinition({
+        new analyticsVendor.collection.EventDefinition({
           category: "LAST.FM",
           label: "ERROR",
           action: `${this.eventType}: REQUEST WAS RATELIMITED BY LAST.FM.`,
@@ -130,7 +130,7 @@ abstract class LastFMReportBaseClient<ResponseType>
         integration: this.integration,
       });
       this.eventDispatch(
-        new analyticsVendor.EventDefinition({
+        new analyticsVendor.collection.EventDefinition({
           category: "LAST.FM",
           label: "ERROR",
           action: `${this.eventType}: AN UNAUTHORIZED REQUEST WAS MADE.`,
@@ -146,7 +146,7 @@ abstract class LastFMReportBaseClient<ResponseType>
       integration: this.integration,
     });
     this.eventDispatch(
-      new analyticsVendor.EventDefinition({
+      new analyticsVendor.collection.EventDefinition({
         category: "LAST.FM",
         label: "ERROR",
         action: `${this.eventType}: ERROR DURING REQUEST.`,

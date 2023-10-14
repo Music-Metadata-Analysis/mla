@@ -5,7 +5,7 @@ import SunBurstReportContainer from "../sunburst.report.container";
 import lastfm from "@locales/lastfm.json";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Events from "@src/web/analytics/collection/events/definitions";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import {
   MockUseTranslation,
   _t,
@@ -135,8 +135,10 @@ describe("SunBurstReportContainer", () => {
   }) => {
     describe("useEffect (node selection)", () => {
       it("should trigger an analytics event for the selected node", () => {
-        expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
-        expect(mockAnalyticsHook.event).toBeCalledWith(
+        expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(
+          analyticsCallCount
+        );
+        expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
           mockQuery
             .getEncapsulatedNode(mockSunBurstControllerHook.node.selected)
             .getDrawerEvent()
@@ -166,8 +168,10 @@ describe("SunBurstReportContainer", () => {
     });
 
     it("should trigger an analytics event for report presentation", () => {
-      expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
-      expect(mockAnalyticsHook.event).toBeCalledWith(
+      expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(
+        analyticsCallCount
+      );
+      expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
         Events.LastFM.ReportPresented(mockQuery.analyticsReportType)
       );
     });

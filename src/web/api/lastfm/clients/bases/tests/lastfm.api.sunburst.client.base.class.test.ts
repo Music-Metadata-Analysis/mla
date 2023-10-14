@@ -66,7 +66,7 @@ describe("SunBurstDataClientBase", () => {
       it("should emit an analytics report request event", async () => {
         expect(mockEvent).toBeCalledTimes(1);
         expect(mockEvent).toHaveBeenCalledWith(
-          new analyticsVendor.EventDefinition({
+          new analyticsVendor.collection.EventDefinition({
             category: "LAST.FM",
             label: "AGGREGATE REQUESTS",
             action: `${instance.eventType}: AGGREGATE REQUESTS BEING SENT TO LAST.FM.`,

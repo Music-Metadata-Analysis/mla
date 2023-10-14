@@ -2,21 +2,20 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import Consent from "./consent.component";
 import { settings } from "@src/config/cookies";
-import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
-import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
+import { localeVendor } from "@src/vendors/integrations/locale/vendor";
 
 export default function ConsentContainer() {
-  const analytics = useAnalytics();
-  const { t } = useTranslation("main");
+  const { t } = localeVendor.hook("main");
 
-  const onAccept = () => {
-    analytics.setup();
-  };
+  const { setup } = analyticsVendor.collection.hook(
+    analyticsVendor.ClientClass
+  );
 
   useEffect(() => {
     const previousConsent = Cookies.get(settings.consentCookieName);
     if (previousConsent === "true") {
-      onAccept();
+      setup();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -27,7 +26,7 @@ export default function ConsentContainer() {
       declineButtonText={t("analytics.declineMessage")}
       consentMessageLine1Text={t("analytics.message1")}
       consentMessageLine2Text={t("analytics.message2")}
-      onAccept={onAccept}
+      onAccept={setup}
     />
   );
 }

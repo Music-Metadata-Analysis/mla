@@ -272,7 +272,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         it("should emit an analytics event for the error", () => {
           expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
-            new analyticsVendor.EventDefinition({
+            new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
               label: "ERROR",
               action: `${reportType}: ERROR DURING REQUEST.`,
@@ -343,7 +343,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         it("should emit an analytics event for an unauthorized request", () => {
           expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
-            new analyticsVendor.EventDefinition({
+            new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
               label: "ERROR",
               action: `${reportType}: AN UNAUTHORIZED REQUEST WAS MADE.`,
@@ -374,7 +374,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         it("should emit an analytics event for an unauthorized request", () => {
           expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
-            new analyticsVendor.EventDefinition({
+            new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
               label: "ERROR",
               action: `${reportType}: AN UNAUTHORIZED REQUEST WAS MADE.`,
@@ -419,7 +419,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         it("should emit an analytics event for the unknown entity", () => {
           expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
-            new analyticsVendor.EventDefinition({
+            new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
               label: "ERROR",
               action: `${reportType}: REQUEST WAS MADE FOR AN UNKNOWN ENTITY.`,
@@ -489,7 +489,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         it("should emit and analytics event for being ratelimited", () => {
           expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
-            new analyticsVendor.EventDefinition({
+            new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
               label: "ERROR",
               action: `${reportType}: REQUEST WAS RATELIMITED BY LAST.FM.`,
@@ -520,7 +520,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         it("should emit and analytics event for being ratelimited", () => {
           expect(mockEvent).toBeCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
-            new analyticsVendor.EventDefinition({
+            new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
               label: "ERROR",
               action: `${reportType}: REQUEST WAS RATELIMITED BY LAST.FM.`,
@@ -625,7 +625,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           it("should register an analytics event for the error", () => {
             expect(mockEvent).toBeCalledTimes(1);
             expect(mockEvent).toHaveBeenCalledWith(
-              new analyticsVendor.EventDefinition({
+              new analyticsVendor.collection.EventDefinition({
                 category: "LAST.FM",
                 label: "ERROR",
                 action: `${reportType}: ERROR DURING REQUEST.`,
@@ -657,7 +657,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           it("should register an analytics event for the error", () => {
             expect(mockEvent).toBeCalledTimes(1);
             expect(mockEvent).toHaveBeenCalledWith(
-              new analyticsVendor.EventDefinition({
+              new analyticsVendor.collection.EventDefinition({
                 category: "LAST.FM",
                 label: "ERROR",
                 action: `${reportType}: ERROR DURING REQUEST.`,

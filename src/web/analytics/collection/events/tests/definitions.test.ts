@@ -14,7 +14,7 @@ describe("Dynamic Events", () => {
     describe("HandleLogin", () => {
       it("should generate the expected result", () => {
         const provider = "Test Provider";
-        const expected = new analyticsVendor.EventDefinition({
+        const expected = new analyticsVendor.collection.EventDefinition({
           category: "AUTH",
           label: "LOGIN",
           action: `LOGIN FLOW STARTED USING PROVIDER: ${provider}.`,
@@ -28,7 +28,7 @@ describe("Dynamic Events", () => {
     describe("ReportPresented", () => {
       it("should generate the expected result", () => {
         const title = "BASE";
-        const expected = new analyticsVendor.EventDefinition({
+        const expected = new analyticsVendor.collection.EventDefinition({
           category: "LAST.FM",
           label: "REPORT",
           action: `REPORT PRESENTED TO USER: ${title}.`,
@@ -41,7 +41,7 @@ describe("Dynamic Events", () => {
       it("should generate the expected result", () => {
         const artistName = "Test Artist";
         const albumName = "Test Album";
-        const expected = new analyticsVendor.EventDefinition({
+        const expected = new analyticsVendor.collection.EventDefinition({
           category: "LAST.FM",
           label: "DATA: ALBUM",
           action: `VIEWED ALBUM DETAILS: ${artistName}:${albumName}.`,
@@ -53,7 +53,7 @@ describe("Dynamic Events", () => {
     describe("ArtistViewed", () => {
       it("should generate the expected result", () => {
         const artistName = "Test Artist";
-        const expected = new analyticsVendor.EventDefinition({
+        const expected = new analyticsVendor.collection.EventDefinition({
           category: "LAST.FM",
           label: "DATA: ARTIST",
           action: `VIEWED ARTIST DETAILS: ${artistName}.`,
@@ -66,7 +66,7 @@ describe("Dynamic Events", () => {
       it("should generate the expected result", () => {
         const artistName = "Test Artist";
         const trackName = "Test Track";
-        const expected = new analyticsVendor.EventDefinition({
+        const expected = new analyticsVendor.collection.EventDefinition({
           category: "LAST.FM",
           label: "DATA: TRACK",
           action: `VIEWED TRACK DETAILS: ${artistName}:${trackName}.`,
@@ -79,7 +79,7 @@ describe("Dynamic Events", () => {
       it("should generate the expected result", () => {
         const entityName = "Test Track";
         const entityType = "UNKNOWN";
-        const expected = new analyticsVendor.EventDefinition({
+        const expected = new analyticsVendor.collection.EventDefinition({
           category: "LAST.FM",
           label: `DATA: ${entityType}`,
           action: `VIEWED ${entityType} DETAILS: ${entityName}.`,

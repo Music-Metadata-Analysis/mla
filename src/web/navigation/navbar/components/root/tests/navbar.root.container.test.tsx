@@ -3,7 +3,7 @@ import NavBarRoot from "../navbar.root.component";
 import NavBarRootContainer from "../navbar.root.container";
 import NavConfig from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
@@ -55,7 +55,9 @@ describe("NavBarRootContainer", () => {
         checkMockCall(
           NavBarRoot,
           {
-            analytics: { trackButtonClick: mockAnalyticsHook.trackButtonClick },
+            analytics: {
+              trackButtonClick: mockAnalyticsCollectionHook.trackButtonClick,
+            },
             controls: mockControllerHook.controls,
             config: NavConfig.menuConfig,
             navBarT: mockNavBarT,

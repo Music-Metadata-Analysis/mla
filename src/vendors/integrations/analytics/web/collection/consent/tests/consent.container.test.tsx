@@ -5,19 +5,29 @@ import ConsentContainer from "../consent.container";
 import translations from "@locales/main.json";
 import { settings } from "@src/config/cookies";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
-import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import { mockAnalyticsCollectionHook } from "@src/vendors/integrations/analytics/__mocks__/vendor.mock";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
+import {
+  mockLocaleVendorHook,
+  _t,
+  MockLocaleVendorUseTranslation,
+} from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
 
-jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
+jest.mock("@src/vendors/integrations/analytics/vendor");
 
-jest.mock("@src/web/locale/translation/hooks/translation.hook");
+jest.mock("@src/vendors/integrations/locale/vendor");
 
 jest.mock("../consent.component", () =>
   require("@fixtures/react/child").createComponent("Consent")
 );
 
 describe("ConsentContainer", () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockLocaleVendorHook.t.mockImplementation((props) =>
+      new MockLocaleVendorUseTranslation("main").t(props)
+    );
+  });
 
   const arrange = () => render(<ConsentContainer />);
 
@@ -45,9 +55,16 @@ describe("ConsentContainer", () => {
       arrange();
     });
 
+    it("should call the underlying analytics hook during render", () => {
+      expect(analyticsVendor.collection.hook).toBeCalledTimes(1);
+      expect(analyticsVendor.collection.hook).toBeCalledWith(
+        analyticsVendor.ClientClass
+      );
+    });
+
     it("should initialize analytics", () => {
-      expect(mockAnalyticsHook.setup).toBeCalledTimes(1);
-      expect(mockAnalyticsHook.setup).toBeCalledWith();
+      expect(mockAnalyticsCollectionHook.setup).toBeCalledTimes(1);
+      expect(mockAnalyticsCollectionHook.setup).toBeCalledWith();
     });
 
     checkConsentProps();
@@ -60,8 +77,15 @@ describe("ConsentContainer", () => {
       arrange();
     });
 
+    it("should call the underlying analytics hook during render", () => {
+      expect(analyticsVendor.collection.hook).toBeCalledTimes(1);
+      expect(analyticsVendor.collection.hook).toBeCalledWith(
+        analyticsVendor.ClientClass
+      );
+    });
+
     it("should NOT initialize analytics", () => {
-      expect(mockAnalyticsHook.setup).toBeCalledTimes(0);
+      expect(mockAnalyticsCollectionHook.setup).toBeCalledTimes(0);
     });
 
     checkConsentProps();

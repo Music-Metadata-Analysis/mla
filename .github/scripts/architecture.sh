@@ -161,13 +161,12 @@ main() {
     excludes_vendor_locations "analytics"                                                                           || 
     error_decoupling "Analytics"
 
-  echo "    COMPONENTS: Checking Analytics Consent Vendors Isolation..."
   ! search 'from "js-cookie' src                                                                                    |
-    excludes '^src/web/analytics/consent/components'                                                                ||
+    excludes_vendor_locations "analytics"                                                                           ||
     error_decoupling "Analytics"
 
   ! search 'from "react-cookie-consent' src                                                                         |
-    excludes '^src/web/analytics/consent/components'                                                                ||
+    excludes_vendor_locations "analytics"                                                                           ||
     error_decoupling "Analytics"
 
   # Enforce API Framework Vendors Isolation
@@ -254,7 +253,8 @@ main() {
   # Enforce UI Framework Vendors Isolation
   echo "  Checking UI Framework Vendors Isolation..."
   ! search 'from "@chakra-ui' src                                                                                   | 
-    excludes_vendor_locations "ui.framework"                                                                        | 
+    excludes_vendor_locations "analytics"                                                                           |
+    excludes_vendor_locations "ui.framework"                                                                        |  
     excludes "${UI_FRAMEWORK_WHITELIST_REGEX}"                                                                      | 
     excludes "${COMPONENT_FILENAME_REGEX}"                                                                          || 
     error_decoupling "UI"

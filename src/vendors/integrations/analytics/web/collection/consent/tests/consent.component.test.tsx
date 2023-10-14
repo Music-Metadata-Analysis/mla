@@ -5,9 +5,9 @@ import Consent, { ConsentProps } from "../consent.component";
 import { testIDs } from "../consent.identifiers";
 import { settings } from "@src/config/cookies";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
+import mockColourHook from "@src/vendors/integrations/ui.framework/__mocks__/vendor.colour.hook.mock";
 
-jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
+jest.mock("@src/vendors/integrations/ui.framework/vendor");
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Text"])
@@ -31,7 +31,6 @@ describe("Consent", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-
     arrange();
   });
 

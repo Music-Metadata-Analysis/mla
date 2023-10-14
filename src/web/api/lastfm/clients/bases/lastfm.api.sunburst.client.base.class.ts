@@ -60,7 +60,7 @@ abstract class LastFMSunburstDataClient<AggregateReportType>
 
   protected emitInitialAnalyticsEvent() {
     this.eventDispatch(
-      new analyticsVendor.EventDefinition({
+      new analyticsVendor.collection.EventDefinition({
         category: "LAST.FM",
         label: "AGGREGATE REQUESTS",
         action: `${this.eventType}: AGGREGATE REQUESTS BEING SENT TO LAST.FM.`,

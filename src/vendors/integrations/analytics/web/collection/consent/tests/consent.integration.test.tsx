@@ -4,17 +4,26 @@ import ConsentContainer from "../consent.container";
 import { testIDs } from "../consent.identifiers";
 import translations from "@locales/main.json";
 import { settings } from "@src/config/cookies";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
-import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import { mockAnalyticsCollectionHook } from "@src/vendors/integrations/analytics/__mocks__/vendor.mock";
+import { mockLocaleVendorHook } from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
+import {
+  _t,
+  MockLocaleVendorUseTranslation,
+} from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
 
-jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
+jest.mock("@src/vendors/integrations/analytics/vendor");
 
-jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
+jest.mock("@src/vendors/integrations/locale/vendor");
 
-jest.mock("@src/web/locale/translation/hooks/translation.hook");
+jest.mock("@src/vendors/integrations/ui.framework/vendor");
 
 describe("Consent", () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockLocaleVendorHook.t.mockImplementation((props) =>
+      new MockLocaleVendorUseTranslation("main").t(props)
+    );
+  });
 
   const arrange = () => render(<ConsentContainer />);
 
@@ -29,7 +38,7 @@ describe("Consent", () => {
     });
 
     it("should initialize analytics", () => {
-      expect(mockAnalyticsHook.setup).toBeCalledTimes(1);
+      expect(mockAnalyticsCollectionHook.setup).toBeCalledTimes(1);
     });
   });
 
@@ -74,7 +83,7 @@ describe("Consent", () => {
       });
 
       it("should initialize analytics", () => {
-        expect(mockAnalyticsHook.setup).toBeCalledTimes(1);
+        expect(mockAnalyticsCollectionHook.setup).toBeCalledTimes(1);
       });
     });
 

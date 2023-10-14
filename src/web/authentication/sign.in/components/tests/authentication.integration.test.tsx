@@ -11,7 +11,7 @@ import { testIDs as SpinnerModalTestIDs } from "../modals/spinner/modal.spinner.
 import authenticationTranslations from "@locales/authentication.json";
 import routes from "@src/config/routes";
 import Events from "@src/web/analytics/collection/events/definitions";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook, {
   mockUserProfile,
 } from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
@@ -74,8 +74,10 @@ describe("AuthenticationContainer", () => {
     });
 
     it("should generate an analytics event", async () => {
-      expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-      expect(mockAnalyticsHook.event).toBeCalledWith(Events.Auth.OpenModal);
+      expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
+      expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
+        Events.Auth.OpenModal
+      );
     });
   };
 
@@ -123,8 +125,8 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should generate an analytics event", () => {
-          expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-          expect(mockAnalyticsHook.event).toBeCalledWith(
+          expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
+          expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
             Events.Auth.HandleLogin(provider)
           );
         });
@@ -223,8 +225,8 @@ describe("AuthenticationContainer", () => {
           });
 
           it("should generate an analytics event", () => {
-            expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-            expect(mockAnalyticsHook.event).toBeCalledWith(
+            expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
+            expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
               Events.Auth.CloseModal
             );
           });

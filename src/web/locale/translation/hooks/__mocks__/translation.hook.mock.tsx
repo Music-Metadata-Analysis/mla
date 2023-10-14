@@ -1,42 +1,14 @@
-import { mockLocaleVendorHook } from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
-import type {
-  LocaleVendorHookInterface,
-  tContentType,
-} from "@src/vendors/types/integrations/locale/vendor.types";
+import {
+  mockLocaleVendorHook,
+  MockLocaleVendorUseTranslation,
+} from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
+export {
+  _t,
+  MockLocaleVendorUseTranslation as MockUseTranslation,
+} from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
 
-const mockValues = mockLocaleVendorHook;
-
-export const mockTranslations: Record<string, MockUseTranslation> = {};
-
-export const _t = (value: string) => `t(${value})`;
-
-export class MockUseTranslation implements LocaleVendorHookInterface {
-  namespace: string;
-  protected json: tContentType;
-
-  constructor(namespace: string) {
-    this.namespace = namespace;
-    this.json = require(`@locales/${namespace}.json`);
-  }
-
-  t = jest.fn((key: string) => {
-    const translation = this.recursiveKeyLookup(key, this.json) as string;
-    return _t(translation);
-  });
-
-  protected recursiveKeyLookup = (
-    translationDotKey: string,
-    content: tContentType
-  ): string | tContentType => {
-    const splitKeys = translationDotKey.split(".");
-    if (splitKeys.length === 1) return content[translationDotKey];
-    const firstKey = splitKeys.shift() as string;
-    return this.recursiveKeyLookup(
-      splitKeys.join("."),
-      content[firstKey] as tContentType
-    );
-  };
-}
+export const mockTranslations: Record<string, MockLocaleVendorUseTranslation> =
+  {};
 
 export const checkTProp = (params: {
   name: string;
@@ -56,4 +28,5 @@ export const checkTProp = (params: {
   });
 };
 
+const mockValues = mockLocaleVendorHook;
 export default mockValues;

@@ -1,9 +1,9 @@
 import ReactGA from "react-ga";
 import { isProduction } from "@src/utilities/generics/env";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
-import type { AnalyticsVendorGoogleAnalyticsInterface } from "@src/vendors/types/integrations/analytics/vendor.types";
+import type { AnalyticsVendorClientInterface } from "@src/vendors/types/integrations/analytics/vendor.types";
 
-class VendorReactGA implements AnalyticsVendorGoogleAnalyticsInterface {
+class GoogleAnalytics implements AnalyticsVendorClientInterface {
   vendor: typeof ReactGA;
 
   constructor() {
@@ -26,4 +26,4 @@ class VendorReactGA implements AnalyticsVendorGoogleAnalyticsInterface {
   }
 }
 
-export default VendorReactGA;
+export default GoogleAnalytics;

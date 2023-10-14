@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import AnalyticsProvider, { AnalyticsContext } from "../analytics.provider";
-import type { AnalyticsContextInterface } from "@src/web/analytics/collection/types/state/provider.types";
+import type { AnalyticsVendorContextInterface } from "@src/vendors/types/integrations/analytics/vendor.types";
 
 describe("AnalyticsProvider", () => {
-  const received: Partial<AnalyticsContextInterface> = {};
+  const received: Partial<AnalyticsVendorContextInterface> = {};
 
   const arrange = () => {
     render(
@@ -27,7 +27,7 @@ describe("AnalyticsProvider", () => {
     });
 
     it("should contain the expected properties", () => {
-      const properties = received as AnalyticsContextInterface;
+      const properties = received as AnalyticsVendorContextInterface;
       expect(typeof properties.initialized).toBe("boolean");
       expect(typeof properties.setInitialized).toBe("function");
     });

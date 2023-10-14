@@ -1,9 +1,9 @@
 import ControllersProvider from "./controllers.provider";
 import { popUps } from "@src/config/popups";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import { authVendor } from "@src/vendors/integrations/auth/vendor";
 import { flagVendor } from "@src/vendors/integrations/flags/vendor";
 import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
-import AnalyticsProvider from "@src/web/analytics/collection/state/providers/analytics.provider";
 import HeaderContainer, {
   HeaderContainerProps,
 } from "@src/web/content/header/components/header.container";
@@ -31,7 +31,7 @@ const RootProvider = ({
   return (
     <authVendor.Provider session={session}>
       <flagVendor.Provider state={flagState}>
-        <AnalyticsProvider>
+        <analyticsVendor.collection.Provider>
           <uiFrameworkVendor.core.Provider cookies={cookies}>
             <uiFrameworkVendor.popups.Provider popUps={popUps}>
               <ControllersProvider>
@@ -44,7 +44,7 @@ const RootProvider = ({
               </ControllersProvider>
             </uiFrameworkVendor.popups.Provider>
           </uiFrameworkVendor.core.Provider>
-        </AnalyticsProvider>
+        </analyticsVendor.collection.Provider>
       </flagVendor.Provider>
     </authVendor.Provider>
   );

@@ -1,5 +1,5 @@
 import ReactGA from "react-ga";
-import VendorReactGA from "../react.ga.class";
+import GoogleAnalytics from "../react.ga.class";
 import { isProduction } from "@src/utilities/generics/env";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 
@@ -14,8 +14,8 @@ jest.mock("@src/utilities/generics/env");
 
 const MockedIsProduction = jest.mocked(isProduction);
 
-describe(VendorReactGA.name, () => {
-  let instance: VendorReactGA;
+describe(GoogleAnalytics.name, () => {
+  let instance: GoogleAnalytics;
   const mockEvent = {
     category: "TEST",
     label: "TEST",
@@ -23,8 +23,8 @@ describe(VendorReactGA.name, () => {
   } as AnalyticsEventDefinitionInterface;
   const mockAnalyticsID = "mockAnalyticsID";
   const mockUrl = "/mockUrl";
-
-  const arrange = () => (instance = new VendorReactGA());
+  GoogleAnalytics;
+  const arrange = () => (instance = new GoogleAnalytics());
 
   beforeEach(() => jest.clearAllMocks());
 

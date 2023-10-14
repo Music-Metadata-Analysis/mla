@@ -12,7 +12,7 @@ jest.mock("../analytics.generic.component", () =>
 
 describe("AnalyticsGenericWrapperContainer", () => {
   const buttonText = "Click Me";
-  const mockEvent = new analyticsVendor.EventDefinition({
+  const mockEvent = new analyticsVendor.collection.EventDefinition({
     category: "TEST",
     label: "TEST",
     action: "Test Event",

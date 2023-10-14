@@ -2,10 +2,10 @@ import "@src/web/ui/css/root.css";
 import App, { AppContext } from "next/app";
 import NavConfig from "@src/config/navbar";
 import { normalizeUndefined } from "@src/utilities/generics/voids";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import { authVendorSSR } from "@src/vendors/integrations/auth/vendor.ssr";
 import { flagVendorSSR } from "@src/vendors/integrations/flags/vendor.ssr";
 import { localeVendor } from "@src/vendors/integrations/locale/vendor";
-import ConsentContainer from "@src/web/analytics/consent/components/consent.container";
 import NavBarContainer from "@src/web/navigation/navbar/components/navbar.container";
 import RootPopUpContainer from "@src/web/notifications/popups/components/root.popup.container";
 import RootProvider from "@src/web/ui/generics/state/providers/root.provider";
@@ -36,7 +36,7 @@ function MLA({
       <NavBarContainer config={NavConfig.menuConfig} />
       <Component {...otherProps} />
       <RootPopUpContainer />
-      <ConsentContainer />
+      <analyticsVendor.collection.ConsentBannerComponent />
     </RootProvider>
   );
 }

@@ -5,7 +5,7 @@ import { testIDs as NavBarRootTestIDs } from "../root/navbar.root.identifiers";
 import navbarTranslations from "@locales/navbar.json";
 import NavConfig from "@src/config/navbar";
 import { mockIsBuildTime } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import mockAuthHook, {
   mockUserProfile,
 } from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
@@ -108,8 +108,8 @@ describe("NavBar", () => {
       });
 
       it(`should produce an analytics event`, async () => {
-        expect(mockAnalyticsHook.trackButtonClick).toBeCalledTimes(1);
-        const call = mockAnalyticsHook.trackButtonClick.mock.calls[0];
+        expect(mockAnalyticsCollectionHook.trackButtonClick).toBeCalledTimes(1);
+        const call = mockAnalyticsCollectionHook.trackButtonClick.mock.calls[0];
         expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
         expect(call[1]).toBe(_t(link));
         expect(Object.keys(call).length).toBe(2);

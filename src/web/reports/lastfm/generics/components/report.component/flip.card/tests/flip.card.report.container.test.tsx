@@ -4,7 +4,7 @@ import FlipCardReportContainer from "../flip.card.report.container";
 import lastfm from "@locales/lastfm.json";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Events from "@src/web/analytics/collection/events/definitions";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import {
   _t,
   MockUseTranslation,
@@ -167,8 +167,8 @@ describe("FlipCardReportContainer", () => {
       });
 
       it("should generate the correct analytics event", () => {
-        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-        expect(mockAnalyticsHook.event).toBeCalledWith(
+        expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
+        expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
           Events.LastFM.ReportPresented(mockQuery.analyticsReportType)
         );
       });
@@ -186,7 +186,7 @@ describe("FlipCardReportContainer", () => {
       });
 
       it("should NOT generate an analytics event", () => {
-        expect(mockAnalyticsHook.event).toBeCalledTimes(0);
+        expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(0);
       });
     });
   };

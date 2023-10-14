@@ -18,7 +18,7 @@ export default class ConcreteBaseReportState extends LastFMReportFlipCardBaseSta
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getDrawerEvent = (index: number) =>
-    new analyticsVendor.EventDefinition({
+    new analyticsVendor.collection.EventDefinition({
       category: "LAST.FM",
       label: "TEST",
       action: "TEST",

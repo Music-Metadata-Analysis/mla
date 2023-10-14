@@ -34,11 +34,12 @@ export const mockErrorHandlerFactory = jest.fn(
   ) => MockErrorHandlerComponent
 );
 
-export const mockAnalyticsEvent = new analyticsVendor.EventDefinition({
-  category: "TEST",
-  label: "TEST",
-  action: "Test Action.",
-});
+export const mockAnalyticsEvent =
+  new analyticsVendor.collection.EventDefinition({
+    category: "TEST",
+    label: "TEST",
+    action: "Test Action.",
+  });
 
 export const ErrorBoundaryTestHarness = ({
   mockRoute,

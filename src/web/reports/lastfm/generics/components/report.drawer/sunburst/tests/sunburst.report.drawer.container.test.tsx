@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { useRef } from "react";
+import react from "react";
 import LastFMSunBurstDrawer from "../sunburst.report.drawer.component";
 import LastFMSunBurstDrawerContainer from "../sunburst.report.drawer.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -8,17 +8,13 @@ import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunbur
 import type { LastFMSunBurstDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/sunburst.types";
 import type { RefObject } from "react";
 
-jest.mock("react", () => ({
-  ...jest.requireActual("react"),
-  useRef: jest.fn(),
-}));
-
 jest.mock("../sunburst.report.drawer.component", () =>
   require("@fixtures/react/child").createComponent("SunBurstReportDrawer")
 );
 
 describe("LastFMSunBurstDrawerContainer", () => {
   let currentProps: LastFMSunBurstDrawerInterface;
+  let useRef: jest.SpyInstance;
 
   const mockClose = jest.fn();
   const mockD3Node = { name: "mockD3Node" } as unknown as d3Node;
@@ -53,6 +49,14 @@ describe("LastFMSunBurstDrawerContainer", () => {
     svgTransition: true,
   };
 
+  beforeAll(() => {
+    useRef = jest.spyOn(react, "useRef");
+  });
+
+  afterAll(() => {
+    useRef.mockRestore();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
     createProps();
@@ -63,7 +67,7 @@ describe("LastFMSunBurstDrawerContainer", () => {
   };
 
   const createProps = () => {
-    jest.mocked(useRef).mockReturnValueOnce(mockRef);
+    useRef.mockReturnValueOnce(mockRef);
 
     currentProps = {
       ...baseProps,

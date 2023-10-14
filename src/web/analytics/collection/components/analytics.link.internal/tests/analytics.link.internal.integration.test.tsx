@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import AnalyticsInternalLinkWrapperContainer from "../analytics.link.internal.container";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
@@ -34,8 +34,11 @@ describe("AnalyticsInternalLinkWrapper", () => {
     });
 
     it("should call the button tracker", () => {
-      expect(mockAnalyticsHook.trackInternalLinkClick).toBeCalledTimes(1);
-      const call = mockAnalyticsHook.trackInternalLinkClick.mock.calls[0];
+      expect(
+        mockAnalyticsCollectionHook.trackInternalLinkClick
+      ).toBeCalledTimes(1);
+      const call =
+        mockAnalyticsCollectionHook.trackInternalLinkClick.mock.calls[0];
       expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
       expect(call[1]).toBe(mockLinkName);
       expect(Object.keys(call).length).toBe(2);

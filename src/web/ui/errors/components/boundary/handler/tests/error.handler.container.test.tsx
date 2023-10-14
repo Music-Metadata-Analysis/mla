@@ -4,7 +4,7 @@ import ErrorHandlerContainer, {
 } from "../error.handler.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Events from "@src/web/analytics/collection/events/definitions";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.display.container";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
@@ -57,8 +57,8 @@ describe("createErrorHandlerContainer", () => {
 
   const checkAnalyticsEvent = () => {
     it("should emit the correct analytics event (useEffect)", () => {
-      expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-      expect(mockAnalyticsHook.event).toBeCalledWith(
+      expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
+      expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
         currentProps.eventDefinition
       );
     });

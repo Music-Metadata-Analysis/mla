@@ -14,7 +14,6 @@ export interface LastFMSunBurstDrawerProps {
   node: SunBurstNodeAbstractBase;
   nodeListScrollRef: RefObject<HTMLDivElement>;
   onClose: () => void;
-
   selectChildNode: (targetNode: SunBurstNodeAbstractBase) => void;
   selectParentNode: () => void;
   svgTransition: boolean;

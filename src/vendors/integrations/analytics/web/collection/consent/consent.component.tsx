@@ -2,7 +2,7 @@ import { Text } from "@chakra-ui/react";
 import CookieConsent from "react-cookie-consent";
 import { testIDs } from "./consent.identifiers";
 import { settings } from "@src/config/cookies";
-import useColours from "@src/web/ui/colours/state/hooks/colour.hook";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 
 export interface ConsentProps {
   acceptButtonText: string;
@@ -24,7 +24,7 @@ export default function Consent({
     componentColour,
     buttonColour,
     consentColour,
-  } = useColours();
+  } = uiFrameworkVendor.core.colourHook();
 
   return (
     <CookieConsent

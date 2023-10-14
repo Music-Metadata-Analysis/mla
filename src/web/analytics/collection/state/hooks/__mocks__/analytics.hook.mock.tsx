@@ -1,9 +1,5 @@
-const mockValues = {
-  event: jest.fn(),
-  setup: jest.fn(),
-  trackButtonClick: jest.fn(),
-  trackExternalLinkClick: jest.fn(),
-  trackInternalLinkClick: jest.fn(),
-};
+import { mockAnalyticsCollectionHook } from "@src/vendors/integrations/analytics/__mocks__/vendor.mock";
 
-export default mockValues;
+const mockAnalyticsHook = mockAnalyticsCollectionHook;
+
+export default mockAnalyticsHook;

@@ -3,7 +3,7 @@ import FlipCardDrawer from "../flip.card.report.drawer.component";
 import FlipCardDrawerContainer from "../flip.card.report.drawer.container";
 import settings from "@src/config/flip.card";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import mockFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
@@ -93,8 +93,8 @@ describe("FlipCardDrawerContainer", () => {
   const checkEffectHookEmitsEvent = () => {
     describe("useEffect (analytics)", () => {
       it("should emit the expected analytics event", () => {
-        expect(mockAnalyticsHook.event).toBeCalledTimes(1);
-        expect(mockAnalyticsHook.event).toBeCalledWith(
+        expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
+        expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
           currentProps.reportStateInstance.getDrawerEvent(
             currentProps.objectIndex as number
           )
@@ -106,7 +106,7 @@ describe("FlipCardDrawerContainer", () => {
   const checkEffectHookDoesNotEmitEvent = () => {
     describe("useEffect (analytics)", () => {
       it("should NOT emit an analytics event", () => {
-        expect(mockAnalyticsHook.event).toBeCalledTimes(0);
+        expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(0);
       });
     });
   };

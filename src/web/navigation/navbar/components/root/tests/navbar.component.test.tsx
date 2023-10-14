@@ -11,7 +11,7 @@ import {
   getMockComponentProp,
   getMockComponentPropCount,
 } from "@src/fixtures/mocks/mock.component.props";
-import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import NavBarColourModeContainer from "@src/web/navigation/navbar/components/colour.mode/navbar.colour.mode.container";
 import NavBarLogo from "@src/web/navigation/navbar/components/logo/navbar.logo.component";
@@ -99,7 +99,9 @@ describe("NavBar", () => {
   const arrange = () => {
     render(
       <NavBarRoot
-        analytics={{ trackButtonClick: mockAnalyticsHook.trackButtonClick }}
+        analytics={{
+          trackButtonClick: mockAnalyticsCollectionHook.trackButtonClick,
+        }}
         config={mockConfig}
         controls={mockNavBarLayoutControllerHook.controls}
         navBarT={mockNavBarT}
@@ -235,7 +237,7 @@ describe("NavBar", () => {
         currentPath: mockRouterHook.path,
         navBarT: mockNavBarT,
         transaction: mockTransaction,
-        tracker: mockAnalyticsHook.trackButtonClick,
+        tracker: mockAnalyticsCollectionHook.trackButtonClick,
         user: mockUserAuth,
       });
     });
@@ -254,7 +256,7 @@ describe("NavBar", () => {
       checkMockCall(
         NavBarColourModeContainer,
         {
-          tracker: mockAnalyticsHook.trackButtonClick,
+          tracker: mockAnalyticsCollectionHook.trackButtonClick,
         },
         0
       );
@@ -289,7 +291,7 @@ describe("NavBar", () => {
           currentPath: mockRouterHook.path,
           navBarT: mockNavBarT,
           transaction: mockTransaction,
-          tracker: mockAnalyticsHook.trackButtonClick,
+          tracker: mockAnalyticsCollectionHook.trackButtonClick,
         },
         0
       );
@@ -302,7 +304,9 @@ describe("NavBar", () => {
       checkMockCall(
         NavBarMobileMenu,
         {
-          analytics: { trackButtonClick: mockAnalyticsHook.trackButtonClick },
+          analytics: {
+            trackButtonClick: mockAnalyticsCollectionHook.trackButtonClick,
+          },
           config: mockConfig,
           controls: mockNavBarLayoutControllerHook.controls,
           navBarT: mockNavBarT,

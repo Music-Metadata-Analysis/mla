@@ -5,12 +5,12 @@ import NavConfig from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import MLA, { getInitialProps, MLAProps } from "@src/pages/_app";
 import { normalizeUndefined } from "@src/utilities/generics/voids";
+import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import { mockAuthVendorSSRClient } from "@src/vendors/integrations/auth/__mocks__/vendor.ssr.mock";
 import { authVendorSSR } from "@src/vendors/integrations/auth/vendor.ssr";
 import { mockFlagVendorSSRClient } from "@src/vendors/integrations/flags/__mocks__/vendor.ssr.mock";
 import { flagVendorSSR } from "@src/vendors/integrations/flags/vendor.ssr";
 import { mockLocaleVendorHOCIdentifier } from "@src/vendors/integrations/locale/__mocks__/vendor.mock";
-import ConsentContainer from "@src/web/analytics/consent/components/consent.container";
 import NavBarContainer from "@src/web/navigation/navbar/components/navbar.container";
 import RootPopUpContainer from "@src/web/notifications/popups/components/root.popup.container";
 import RootProvider from "@src/web/ui/generics/state/providers/root.provider";
@@ -20,6 +20,8 @@ import type { WebFrameworkVendorAppComponentProps } from "@src/vendors/types/int
 import type { AppContext } from "next/app";
 import type { Router } from "next/router";
 
+jest.mock("@src/vendors/integrations/analytics/vendor");
+
 jest.mock("@src/vendors/integrations/auth/vendor.ssr");
 
 jest.mock("@src/vendors/integrations/flags/vendor.ssr");
@@ -27,6 +29,8 @@ jest.mock("@src/vendors/integrations/flags/vendor.ssr");
 jest.mock("@src/vendors/integrations/locale/vendor");
 
 jest.mock("@src/utilities/generics/voids");
+
+jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 jest.mock("next/app");
 
@@ -40,10 +44,6 @@ jest.mock("@src/web/navigation/navbar/components/navbar.container", () =>
 
 jest.mock("@src/web/notifications/popups/components/root.popup.container", () =>
   require("@fixtures/react/child").createComponent("RootPopUpContainer")
-);
-
-jest.mock("@src/web/analytics/consent/components/consent.container", () =>
-  require("@fixtures/react/child").createComponent("ConsentContainer")
 );
 
 describe("MLA", () => {
@@ -105,9 +105,11 @@ describe("MLA", () => {
     checkMockCall(RootPopUpContainer, {});
   });
 
-  it("should render the ConsentContainer component with the correct props", () => {
-    expect(ConsentContainer).toBeCalledTimes(1);
-    checkMockCall(ConsentContainer, {});
+  it("should render the ConsentBannerComponent component with the correct props", () => {
+    expect(analyticsVendor.collection.ConsentBannerComponent).toBeCalledTimes(
+      1
+    );
+    checkMockCall(analyticsVendor.collection.ConsentBannerComponent, {});
   });
 
   it("should wrap the MLA app in the appWithTranslation function", async () => {
