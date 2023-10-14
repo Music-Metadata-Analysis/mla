@@ -21,11 +21,21 @@ jest.mock(
 describe("Dialogue", () => {
   let currentProps: DialogueProps;
 
+  const implementation = (name: string) => name + "MockImplementation";
+
   const mockT = new MockUseTranslation("splash").t;
-  const mockBody = createSimpleComponent(testIDs.DialogueBodyComponent);
-  const mockFooter = createSimpleComponent(testIDs.DialogueFooterComponent);
-  const mockHeader = createSimpleComponent(testIDs.DialogueHeaderComponent);
-  const mockToggle = createSimpleComponent(testIDs.DialogueToggleComponent);
+  const mockBody = createSimpleComponent(
+    implementation(testIDs.DialogueBodyComponent)
+  );
+  const mockFooter = createSimpleComponent(
+    implementation(testIDs.DialogueFooterComponent)
+  );
+  const mockHeader = createSimpleComponent(
+    implementation(testIDs.DialogueHeaderComponent)
+  );
+  const mockToggle = createSimpleComponent(
+    implementation(testIDs.DialogueToggleComponent)
+  );
 
   const baseProps: DialogueProps = {
     BodyComponent: mockBody,
@@ -123,7 +133,9 @@ describe("Dialogue", () => {
         .mock.calls.find((call) => call[0]["data-testid"] == testId);
       expect(call).toBeDefined();
       expect(
-        await within(await screen.findByTestId(testId)).findByText(testId)
+        await within(await screen.findByTestId(testId)).findByText(
+          implementation(testId)
+        )
       ).toBeTruthy();
     });
   };

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import {
   ErrorBoundaryTestHarness,
   mockErrorHandlerFactory,
@@ -41,8 +41,12 @@ describe("ErrorBoundary", () => {
       expect(await screen.findByTestId(testIDs.TestComponent)).toBeTruthy();
     });
 
-    it("should render the component without an error", () => {
-      expect(screen.queryByTestId(testIDs.ComponentWithOutError)).toBeNull();
+    it("should render the component without an error", async () => {
+      await waitFor(() =>
+        expect(
+          screen.queryByTestId(testIDs.ComponentWithOutError)
+        ).not.toBeNull()
+      );
     });
 
     it("should NOT render the error handler component", () => {
@@ -59,8 +63,10 @@ describe("ErrorBoundary", () => {
         fireEvent.click(link);
       });
 
-      it("should NOT render the component without an error", () => {
-        expect(screen.queryByTestId(testIDs.ComponentWithOutError)).toBeNull();
+      it("should NOT render the component without an error", async () => {
+        await waitFor(() =>
+          expect(screen.queryByTestId(testIDs.ComponentWithOutError)).toBeNull()
+        );
       });
 
       it("should call the ErrorHandler factory as expected", () => {
