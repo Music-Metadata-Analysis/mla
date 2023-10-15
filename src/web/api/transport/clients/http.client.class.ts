@@ -1,4 +1,3 @@
-import { knownStatuses as defaultKnownStatuses } from "@src/config/api";
 import type {
   HttpApiClientInterface,
   HttpApiClientResponse,
@@ -7,16 +6,14 @@ import type {
 } from "@src/contracts/api/types/clients/http.client.types";
 
 class HttpApiClient implements HttpApiClientInterface {
-  protected readonly knownStatuses: {
+  protected readonly serviceStatusCodes: {
     [index: number]: HttpApiClientStatusMessageType;
   };
 
-  constructor(
-    knownStatuses: { [index: number]: HttpApiClientStatusMessageType } = {
-      ...defaultKnownStatuses,
-    }
-  ) {
-    this.knownStatuses = { ...knownStatuses };
+  constructor(serviceStatusCodes: {
+    [index: number]: HttpApiClientStatusMessageType;
+  }) {
+    this.serviceStatusCodes = { ...serviceStatusCodes };
   }
 
   async request<RESPONSE>(
@@ -43,8 +40,8 @@ class HttpApiClient implements HttpApiClientInterface {
       body,
     });
 
-    fetchResponse = this.handleKnownStatuses(fetchResponse);
-    fetchResponse = this.handleUnknownStatus(fetchResponse, method, url);
+    fetchResponse = this.handleConfiguredStatuses(fetchResponse);
+    fetchResponse = this.handleUnconfiguredStatuses(fetchResponse, method, url);
 
     const json: RESPONSE | HttpApiClientStatusMessageType =
       await fetchResponse.json();
@@ -57,24 +54,24 @@ class HttpApiClient implements HttpApiClientInterface {
     };
   }
 
-  protected handleKnownStatuses(response: Response): Response {
-    if (response.status in this.knownStatuses) {
+  protected handleConfiguredStatuses(response: Response): Response {
+    if (response.status in this.serviceStatusCodes) {
       return {
         ok: response.ok,
         headers: response.headers,
         status: response.status,
-        json: () => Promise.resolve(this.knownStatuses[response.status]),
+        json: () => Promise.resolve(this.serviceStatusCodes[response.status]),
       } as Response;
     }
     return response;
   }
 
-  protected handleUnknownStatus(
+  protected handleUnconfiguredStatuses(
     response: Response,
     method: HttpApiClientHttpMethodType,
     url: string
   ): Response {
-    if (!response.ok && !(response.status in this.knownStatuses)) {
+    if (!response.ok && !(response.status in this.serviceStatusCodes)) {
       throw Error(`${method}: ${url}`);
     }
     return response;

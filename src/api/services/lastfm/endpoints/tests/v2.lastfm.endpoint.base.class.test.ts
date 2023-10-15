@@ -3,6 +3,8 @@ import ConcreteV2EndpointWithProxyError from "./implementations/concrete.v2.last
 import ConcreteV2EndpointWithProxyResponseError from "./implementations/concrete.v2.lastfm.proxy.response.error.class";
 import ConcreteV2EndpointWithProxySuccess from "./implementations/concrete.v2.lastfm.proxy.success.class";
 import ConcreteV2EndpointWithProxyTimeout from "./implementations/concrete.v2.lastfm.timeout.error.class";
+import LastFMApiEndpointFactoryV2 from "../v2.lastfm.endpoint.base.class";
+import { proxyFailureStatusCodes } from "@src/config/api";
 import * as status from "@src/config/status";
 import {
   createAPIMocks,
@@ -13,7 +15,6 @@ import { mockAuthClient } from "@src/vendors/integrations/auth/__mocks__/vendor.
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { mockFlagClient } from "@src/vendors/integrations/flags/__mocks__/vendor.backend.mock";
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
-import type LastFMApiEndpointFactoryV2 from "../v2.lastfm.endpoint.base.class";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   MockAPIEndpointRequestType,
@@ -26,7 +27,7 @@ jest.mock("@src/vendors/integrations/flags/vendor.backend");
 
 jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
 
-describe("LastFMApiEndpointFactoryV2", () => {
+describe(LastFMApiEndpointFactoryV2.name, () => {
   let clearTimeOutSpy: jest.SpyInstance;
 
   let factoryInstance: LastFMApiEndpointFactoryV2 & {
@@ -242,23 +243,18 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkLogger(mockLoggedErrorMessage);
           });
 
-          describe.each([
-            ["unauthorized", 401, status.STATUS_401_MESSAGE],
-            ["notfound", 404, status.STATUS_404_MESSAGE],
-            ["ratelimited", 429, status.STATUS_429_MESSAGE],
-            ["unavailable", 503, status.STATUS_503_MESSAGE],
-          ])(
+          describe.each(Object.entries(proxyFailureStatusCodes.lastfm))(
             "receives a request that generates a known proxy error (%s)",
 
-            (errorMsg, errorCode, statusMessage) => {
+            (errorCode, statusMessage) => {
               beforeEach(async () => {
                 factoryInstance = new ConcreteV2EndpointWithProxyError();
-                factoryInstance.errorCode = errorCode;
+                factoryInstance.errorCode = parseInt(errorCode);
                 await arrange();
               });
 
               it(`should return a ${errorCode}`, () => {
-                expect(mockRes._getStatusCode()).toBe(errorCode);
+                expect(mockRes._getStatusCode()).toBe(parseInt(errorCode));
                 expect(mockRes._getJSONData()).toStrictEqual(statusMessage);
               });
 
@@ -355,23 +351,18 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkLogger(mockLoggedErrorMessage);
           });
 
-          describe.each([
-            ["unauthorized", 401, status.STATUS_401_MESSAGE],
-            ["notfound", 404, status.STATUS_404_MESSAGE],
-            ["ratelimited", 429, status.STATUS_429_MESSAGE],
-            ["unavailable", 503, status.STATUS_503_MESSAGE],
-          ])(
+          describe.each(Object.entries(proxyFailureStatusCodes.lastfm))(
             "receives a request that generates a known proxy error (%s)",
 
-            (errorMsg, errorCode, statusMessage) => {
+            (errorCode, statusMessage) => {
               beforeEach(async () => {
                 factoryInstance = new ConcreteV2EndpointWithProxyError();
-                factoryInstance.errorCode = errorCode;
+                factoryInstance.errorCode = parseInt(errorCode);
                 await arrange();
               });
 
               it(`should return a ${errorCode}`, () => {
-                expect(mockRes._getStatusCode()).toBe(errorCode);
+                expect(mockRes._getStatusCode()).toBe(parseInt(errorCode));
                 expect(mockRes._getJSONData()).toStrictEqual(statusMessage);
               });
 
@@ -470,18 +461,13 @@ describe("LastFMApiEndpointFactoryV2", () => {
             checkLogger();
           });
 
-          describe.each([
-            ["unauthorized", 401],
-            ["notfound", 404],
-            ["ratelimited", 429],
-            ["unavailable", 503],
-          ])(
+          describe.each(Object.entries(proxyFailureStatusCodes.lastfm))(
             "receives a request that generates a known proxy error (%s)",
 
-            (errorMsg, errorCode) => {
+            (errorCode) => {
               beforeEach(async () => {
                 factoryInstance = new ConcreteV2EndpointWithProxyError();
-                factoryInstance.errorCode = errorCode;
+                factoryInstance.errorCode = parseInt(errorCode);
                 await arrange();
               });
 

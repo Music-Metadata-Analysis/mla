@@ -6,6 +6,7 @@ import ConcreteReportCacheEndpointFactoryV2Timeout, {
   mockValidator as mockConcreteTimeoutValidator,
 } from "./implementations/concrete.v2.report.cache.endpoint.factory.timeout.class";
 import { mockReportCacheProxyMethods } from "@src/api/services/report.cache/proxy/__mocks__/proxy.class.mock";
+import { proxyFailureStatusCodes } from "@src/config/api";
 import * as status from "@src/config/status";
 import {
   createAPIMocks,
@@ -94,6 +95,10 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
     }));
     await factoryInstance.createHandler()(mockReq, mockRes);
   };
+
+  const isEmptyEachArray = (err: Error) =>
+    (err as Error).message.toString() !==
+    "Error: `.each` called with an empty Array of table data.\n";
 
   const checkCaching = () => {
     it("should use the CdnOriginReports class to create a storage name", () => {
@@ -193,16 +198,19 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
       expect(call.length).toBe(3);
     });
 
-    it("should log the correct proxy response", () => {
-      const call = jest.mocked(mockEndpointLogger).mock.calls[0];
-      if (expectedProxyResponse) {
+    if (expectedProxyResponse) {
+      it("should log the correct proxy response", () => {
+        const call = jest.mocked(mockEndpointLogger).mock.calls[0];
         expect(call[0].proxyResponse).toBe(
           `${factoryInstance.service}: ${expectedProxyResponse}`
         );
-      } else {
+      });
+    } else {
+      it("should log the correct proxy response", () => {
+        const call = jest.mocked(mockEndpointLogger).mock.calls[0];
         expect(call[0].proxyResponse).toBeUndefined();
-      }
-    });
+      });
+    }
   };
 
   const expect400RegardlessOfPayload = () => {
@@ -592,7 +600,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
           concreteValidatorSelection = mockConcreteValidator;
           mockReportCacheProxyMethods.createCacheObject.mockImplementation(
             () => {
-              throw new Error("Unknown error");
+              throw unknownError;
             }
           );
         });
@@ -749,170 +757,173 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
           concreteValidatorSelection = mockConcreteValidator;
         });
 
-        describe.each([
-          ["unauthorized", 401, status.STATUS_401_MESSAGE],
-          ["notfound", 404, status.STATUS_404_MESSAGE],
-          ["ratelimited", 429, status.STATUS_429_MESSAGE],
-          ["unavailable", 503, status.STATUS_503_MESSAGE],
-        ])(
-          "when the proxy error is: %s",
-          (errorMsg, errorCode, statusMessage) => {
-            beforeEach(() => {
-              mockReportCacheProxyMethods.createCacheObject.mockImplementation(
-                () => {
-                  throw new errorVendorBackend.ProxyError(
-                    "Unknown error",
-                    errorCode
-                  );
-                }
-              );
-            });
-
-            describe("with a valid username", () => {
+        try {
+          describe.each(Object.entries(proxyFailureStatusCodes.reportCache))(
+            "when the proxy error is: %s",
+            (errorCode, statusMessage) => {
               beforeEach(() => {
-                username = ["validUser"];
+                mockReportCacheProxyMethods.createCacheObject.mockImplementation(
+                  () => {
+                    throw new errorVendorBackend.ProxyError(
+                      "Unknown error",
+                      parseInt(errorCode)
+                    );
+                  }
+                );
               });
 
-              describe("with a valid report name", () => {
+              describe("with a valid username", () => {
                 beforeEach(() => {
-                  report = mockValidReport;
+                  username = ["validUser"];
                 });
 
-                describe("with a valid source name", () => {
+                describe("with a valid report name", () => {
                   beforeEach(() => {
-                    source = mockValidSource;
+                    report = mockValidReport;
                   });
 
-                  describe("with a valid payload", () => {
-                    beforeEach(async () => {
-                      concreteValidatorSelection.mockImplementation(() => ({
-                        valid: true,
-                      }));
-                      payload = mockValidPayload;
-                      await arrange();
+                  describe("with a valid source name", () => {
+                    beforeEach(() => {
+                      source = mockValidSource;
                     });
 
-                    it(`should return a ${errorCode}`, () => {
-                      expect(mockRes._getStatusCode()).toBe(errorCode);
-                      expect(mockRes._getJSONData()).toStrictEqual(
-                        statusMessage
-                      );
+                    describe("with a valid payload", () => {
+                      beforeEach(async () => {
+                        concreteValidatorSelection.mockImplementation(() => ({
+                          valid: true,
+                        }));
+                        payload = mockValidPayload;
+                        await arrange();
+                      });
+
+                      it(`should return a ${errorCode}`, () => {
+                        expect(mockRes._getStatusCode()).toBe(
+                          parseInt(errorCode)
+                        );
+                        expect(mockRes._getJSONData()).toStrictEqual(
+                          statusMessage
+                        );
+                      });
+
+                      checkJWT();
+                      checkTimeoutCleared();
+                      checkNoRetryHeader();
+                      checkLogger(mockLoggedErrorMessage);
+                      checkCaching();
                     });
 
-                    checkJWT();
-                    checkTimeoutCleared();
-                    checkNoRetryHeader();
-                    checkLogger(mockLoggedErrorMessage);
-                    checkCaching();
+                    describe("with an invalid payload", () => {
+                      beforeEach(async () => {
+                        concreteValidatorSelection.mockImplementation(() => ({
+                          valid: false,
+                        }));
+                        payload = mockInvalidPayload;
+                        await arrange();
+                      });
+
+                      it("should return a 400", () => {
+                        expect(mockRes._getStatusCode()).toBe(400);
+                        expect(mockRes._getJSONData()).toStrictEqual(
+                          status.STATUS_400_MESSAGE
+                        );
+                      });
+
+                      checkJWT();
+                      checkTimeoutNotCleared();
+                      checkNoRetryHeader();
+                      checkLogger(undefined);
+                      checkNoCaching();
+                    });
                   });
 
-                  describe("with an invalid payload", () => {
-                    beforeEach(async () => {
-                      concreteValidatorSelection.mockImplementation(() => ({
-                        valid: false,
-                      }));
-                      payload = mockInvalidPayload;
-                      await arrange();
+                  describe("with an invalid source name", () => {
+                    beforeEach(() => {
+                      source = null;
                     });
 
-                    it("should return a 400", () => {
-                      expect(mockRes._getStatusCode()).toBe(400);
-                      expect(mockRes._getJSONData()).toStrictEqual(
-                        status.STATUS_400_MESSAGE
-                      );
+                    expect400RegardlessOfPayload();
+                  });
+                });
+
+                describe("with an invalid report name", () => {
+                  beforeEach(() => {
+                    report = null;
+                  });
+
+                  describe("with a valid source name", () => {
+                    beforeEach(() => {
+                      source = mockValidSource;
                     });
 
-                    checkJWT();
-                    checkTimeoutNotCleared();
-                    checkNoRetryHeader();
-                    checkLogger(undefined);
-                    checkNoCaching();
-                  });
-                });
-
-                describe("with an invalid source name", () => {
-                  beforeEach(() => {
-                    source = null;
+                    expect400RegardlessOfPayload();
                   });
 
-                  expect400RegardlessOfPayload();
+                  describe("with an invalid source name", () => {
+                    beforeEach(() => {
+                      source = null;
+                    });
+
+                    expect400RegardlessOfPayload();
+                  });
                 });
               });
 
-              describe("with an invalid report name", () => {
+              describe("with an invalid username", () => {
                 beforeEach(() => {
-                  report = null;
+                  username = null;
                 });
 
-                describe("with a valid source name", () => {
+                describe("with a valid report name", () => {
                   beforeEach(() => {
-                    source = mockValidSource;
+                    report = mockValidReport;
                   });
 
-                  expect400RegardlessOfPayload();
+                  describe("with a valid source name", () => {
+                    beforeEach(() => {
+                      source = mockValidSource;
+                    });
+
+                    expect400RegardlessOfPayload();
+                  });
+
+                  describe("with an invalid source name", () => {
+                    beforeEach(() => {
+                      source = null;
+                    });
+
+                    expect400RegardlessOfPayload();
+                  });
                 });
 
-                describe("with an invalid source name", () => {
+                describe("with an invalid report name", () => {
                   beforeEach(() => {
-                    source = null;
+                    report = null;
                   });
 
-                  expect400RegardlessOfPayload();
+                  describe("with a valid source name", () => {
+                    beforeEach(() => {
+                      source = mockValidSource;
+                    });
+
+                    expect400RegardlessOfPayload();
+                  });
+
+                  describe("with an invalid source name", () => {
+                    beforeEach(() => {
+                      source = null;
+                    });
+
+                    expect400RegardlessOfPayload();
+                  });
                 });
               });
-            });
-
-            describe("with an invalid username", () => {
-              beforeEach(() => {
-                username = null;
-              });
-
-              describe("with a valid report name", () => {
-                beforeEach(() => {
-                  report = mockValidReport;
-                });
-
-                describe("with a valid source name", () => {
-                  beforeEach(() => {
-                    source = mockValidSource;
-                  });
-
-                  expect400RegardlessOfPayload();
-                });
-
-                describe("with an invalid source name", () => {
-                  beforeEach(() => {
-                    source = null;
-                  });
-
-                  expect400RegardlessOfPayload();
-                });
-              });
-
-              describe("with an invalid report name", () => {
-                beforeEach(() => {
-                  report = null;
-                });
-
-                describe("with a valid source name", () => {
-                  beforeEach(() => {
-                    source = mockValidSource;
-                  });
-
-                  expect400RegardlessOfPayload();
-                });
-
-                describe("with an invalid source name", () => {
-                  beforeEach(() => {
-                    source = null;
-                  });
-
-                  expect400RegardlessOfPayload();
-                });
-              });
-            });
+            }
+          );
+        } catch (err) {
+          if (isEmptyEachArray(err as Error)) {
+            throw err;
           }
-        );
+        }
       });
 
       describe("that times out", () => {
@@ -1226,7 +1237,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
           concreteFactoryClassSelector =
             ConcreteReportCacheEndpointFactoryV2Success;
           mockReportCacheProxyMethods.createCacheObject.mockImplementation(() =>
-            Promise.resolve(null as unknown as ReportCacheResponseInterface)
+            Promise.resolve({} as unknown as ReportCacheResponseInterface)
           );
           concreteValidatorSelection = mockConcreteValidator;
         });
@@ -1338,7 +1349,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
             ConcreteReportCacheEndpointFactoryV2Success;
           mockReportCacheProxyMethods.createCacheObject.mockImplementation(
             () => {
-              throw new Error("Unknown error");
+              throw unknownError;
             }
           );
           concreteValidatorSelection = mockConcreteValidator;
@@ -1452,123 +1463,127 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
           concreteValidatorSelection = mockConcreteValidator;
         });
 
-        describe.each([
-          ["unauthorized", 401, status.STATUS_401_MESSAGE],
-          ["notfound", 404, status.STATUS_404_MESSAGE],
-          ["ratelimited", 429, status.STATUS_429_MESSAGE],
-          ["unavailable", 503, status.STATUS_503_MESSAGE],
-        ])("when the proxy error is: %s", (errorMsg, errorCode) => {
-          beforeEach(() => {
-            mockReportCacheProxyMethods.createCacheObject.mockImplementation(
-              () => {
-                throw new errorVendorBackend.ProxyError(
-                  "Unknown error",
-                  errorCode
+        try {
+          describe.each(Object.entries(proxyFailureStatusCodes.reportCache))(
+            "when the proxy error is: %s",
+            (errorCode) => {
+              beforeEach(() => {
+                mockReportCacheProxyMethods.createCacheObject.mockImplementation(
+                  () => {
+                    throw new errorVendorBackend.ProxyError(
+                      "Unknown error",
+                      parseInt(errorCode)
+                    );
+                  }
                 );
-              }
-            );
-          });
-
-          describe("with a valid username", () => {
-            beforeEach(() => {
-              username = ["validUser"];
-            });
-
-            describe("with a valid report name", () => {
-              beforeEach(() => {
-                report = mockValidReport;
               });
 
-              describe("with a valid source name", () => {
+              describe("with a valid username", () => {
                 beforeEach(() => {
-                  source = mockValidSource;
+                  username = ["validUser"];
                 });
 
-                expect401RegardlessOfPayload();
-              });
+                describe("with a valid report name", () => {
+                  beforeEach(() => {
+                    report = mockValidReport;
+                  });
 
-              describe("with an invalid source name", () => {
-                beforeEach(() => {
-                  source = null;
+                  describe("with a valid source name", () => {
+                    beforeEach(() => {
+                      source = mockValidSource;
+                    });
+
+                    expect401RegardlessOfPayload();
+                  });
+
+                  describe("with an invalid source name", () => {
+                    beforeEach(() => {
+                      source = null;
+                    });
+
+                    expect401RegardlessOfPayload();
+                  });
                 });
 
-                expect401RegardlessOfPayload();
-              });
-            });
+                describe("with an invalid report name", () => {
+                  beforeEach(() => {
+                    report = null;
+                  });
 
-            describe("with an invalid report name", () => {
-              beforeEach(() => {
-                report = null;
+                  describe("with a valid source name", () => {
+                    beforeEach(() => {
+                      source = mockValidSource;
+                    });
+
+                    expect401RegardlessOfPayload();
+                  });
+
+                  describe("with an invalid source name", () => {
+                    beforeEach(() => {
+                      source = null;
+                    });
+
+                    expect401RegardlessOfPayload();
+                  });
+                });
               });
 
-              describe("with a valid source name", () => {
+              describe("with an invalid username", () => {
                 beforeEach(() => {
-                  source = mockValidSource;
+                  username = null;
                 });
 
-                expect401RegardlessOfPayload();
-              });
+                describe("with a valid report name", () => {
+                  beforeEach(() => {
+                    report = mockValidReport;
+                  });
 
-              describe("with an invalid source name", () => {
-                beforeEach(() => {
-                  source = null;
+                  describe("with a valid source name", () => {
+                    beforeEach(() => {
+                      source = mockValidSource;
+                    });
+
+                    expect401RegardlessOfPayload();
+                  });
+
+                  describe("with an invalid source name", () => {
+                    beforeEach(() => {
+                      source = null;
+                    });
+
+                    expect401RegardlessOfPayload();
+                  });
                 });
 
-                expect401RegardlessOfPayload();
-              });
-            });
-          });
+                describe("with an invalid report name", () => {
+                  beforeEach(() => {
+                    report = null;
+                  });
 
-          describe("with an invalid username", () => {
-            beforeEach(() => {
-              username = null;
-            });
+                  describe("with a valid source name", () => {
+                    beforeEach(() => {
+                      source = mockValidSource;
+                    });
 
-            describe("with a valid report name", () => {
-              beforeEach(() => {
-                report = mockValidReport;
-              });
+                    expect401RegardlessOfPayload();
+                  });
 
-              describe("with a valid source name", () => {
-                beforeEach(() => {
-                  source = mockValidSource;
+                  describe("with an invalid source name", () => {
+                    beforeEach(() => {
+                      source = null;
+                    });
+
+                    expect401RegardlessOfPayload();
+                  });
                 });
-
-                expect401RegardlessOfPayload();
               });
-
-              describe("with an invalid source name", () => {
-                beforeEach(() => {
-                  source = null;
-                });
-
-                expect401RegardlessOfPayload();
-              });
-            });
-
-            describe("with an invalid report name", () => {
-              beforeEach(() => {
-                report = null;
-              });
-
-              describe("with a valid source name", () => {
-                beforeEach(() => {
-                  source = mockValidSource;
-                });
-
-                expect401RegardlessOfPayload();
-              });
-
-              describe("with an invalid source name", () => {
-                beforeEach(() => {
-                  source = null;
-                });
-
-                expect401RegardlessOfPayload();
-              });
-            });
-          });
-        });
+            }
+          );
+        } catch (err) {
+          if (isEmptyEachArray(err as Error)) {
+            throw err;
+          }
+        }
       });
 
       describe("that times out", () => {

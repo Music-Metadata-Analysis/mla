@@ -99,7 +99,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
   }
 
   protected handleSuccessful(params: LastFMReportClientParamsInterface): void {
-    if (this.response.status === 200) {
+    if (this.response.ok) {
       this.updateReport(params);
       if (this.isComplete()) {
         this.dispatch({

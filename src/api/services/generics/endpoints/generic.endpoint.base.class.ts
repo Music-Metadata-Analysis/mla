@@ -1,9 +1,9 @@
-import { knownStatuses } from "@src/config/api";
 import requestSettings from "@src/config/requests";
 import * as status from "@src/config/status";
 import { apiHandlerVendorBackend } from "@src/vendors/integrations/api.handler/vendor.backend";
 import { apiLoggerVendorBackend } from "@src/vendors/integrations/api.logger/vendor.backend";
 import type { ApiEndPointFactoryInterface } from "@src/api/types/services/endpoint.types";
+import type { HttpApiClientStatusMessageType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
@@ -20,6 +20,9 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
   implements ApiEndPointFactoryInterface
 {
   private readonly _endpointLogger: ApiLoggerVendorEndpointLoggerInterface;
+  protected abstract readonly proxyFailureStatusCodes: {
+    [index: number]: HttpApiClientStatusMessageType;
+  };
   protected readonly timeOut = requestSettings.timeout;
   protected readonly handler: ApiHandlerVendorHandlerType;
   protected abstract proxy: ProxyClass;
@@ -78,10 +81,13 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
   ): void => {
     this.clearRequestTimeout(req);
     req.proxyResponse = `${this.service}: ${err.toString()}`;
-    if (err.clientStatusCode && knownStatuses[err.clientStatusCode]) {
+    if (
+      err.clientStatusCode &&
+      this.proxyFailureStatusCodes[err.clientStatusCode]
+    ) {
       res
         .status(err.clientStatusCode)
-        .json(knownStatuses[err.clientStatusCode]);
+        .json(this.proxyFailureStatusCodes[err.clientStatusCode]);
     } else {
       res.status(502).json(status.STATUS_502_MESSAGE);
     }

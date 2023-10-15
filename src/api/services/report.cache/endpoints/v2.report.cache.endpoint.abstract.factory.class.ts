@@ -1,11 +1,13 @@
 import APIEndpointBase from "@src/api/services/generics/endpoints/generic.endpoint.base.class";
 import ReportCacheProxy from "@src/api/services/report.cache/proxy/proxy.class";
+import { proxyFailureStatusCodes } from "@src/config/api";
 import * as status from "@src/config/status";
 import { keysToLower } from "@src/utilities/generics/objects";
 import { apiValidationVendorBackend } from "@src/vendors/integrations/api.validation/vendor.backend";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { cacheVendorBackend } from "@src/vendors/integrations/cache/vendor.backend";
 import type { ReportCacheProxyInterface } from "@src/api/types/services/report.cache/proxy/proxy.types";
+import type { HttpApiClientStatusMessageType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
@@ -22,6 +24,9 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
   Promise<ReportCacheResponseInterface>
 > {
   protected readonly delay: number = 500;
+  protected readonly proxyFailureStatusCodes: {
+    [index: number]: HttpApiClientStatusMessageType;
+  };
   protected proxy: ReportCacheProxyInterface;
   protected readonly validators =
     keysToLower<ApiValidationVendorBackendInterface>(
@@ -32,6 +37,7 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
   constructor() {
     super();
     this.proxy = new ReportCacheProxy();
+    this.proxyFailureStatusCodes = { ...proxyFailureStatusCodes.reportCache };
   }
 
   protected setUpHandler(): void {
@@ -54,7 +60,11 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
         this.updateParamsWithAuthenticatedUser(params, token.email);
         const proxyResponse = await this.callProxy(req, res, next, params);
         if (this.isProxyResponseValid(proxyResponse)) {
-          this.validProxyResponse(req, res, proxyResponse);
+          this.validProxyResponse(
+            req,
+            res,
+            proxyResponse as ReportCacheResponseInterface
+          );
         } else {
           this.invalidProxyResponse(req, res);
         }

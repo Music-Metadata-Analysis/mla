@@ -1,3 +1,4 @@
+import { serviceFailureStatusCodes } from "@src/config/api";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import HTTPClient from "@src/web/api/transport/clients/http.client.class";
 import type { HttpApiClientResponse } from "@src/contracts/api/types/clients/http.client.types";
@@ -24,7 +25,7 @@ abstract class LastFMReportBaseClient<ResponseType>
   constructor(dispatch: reportDispatchType, event: EventCreatorType) {
     this.dispatch = dispatch;
     this.eventDispatch = event;
-    this.client = new HTTPClient();
+    this.client = new HTTPClient(serviceFailureStatusCodes.lastfm);
   }
 
   retrieveReport(params: LastFMReportClientParamsInterface): void {
@@ -69,7 +70,7 @@ abstract class LastFMReportBaseClient<ResponseType>
   }
 
   protected handleSuccessful(params: LastFMReportClientParamsInterface): void {
-    if (this.response.status === 200) {
+    if (this.response.ok) {
       this.dispatch({
         type: "SuccessFetch",
         userName: params.userName,

@@ -1,4 +1,6 @@
 import ApiEndpointBase from "../../generic.endpoint.base.class";
+import { serviceFailureStatusCodes } from "@src/config/api";
+import type { HttpApiClientStatusMessageType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
@@ -9,9 +11,17 @@ export default class ConcreteBaseEndpointTimeoutErrorClass extends ApiEndpointBa
   Promise<number[]>
 > {
   protected proxy = {};
+  protected readonly proxyFailureStatusCodes: {
+    [index: number]: HttpApiClientStatusMessageType;
+  };
   public route = "/api/v1/endpoint";
   public timeOut = 100;
   public service = "mockService";
+
+  constructor() {
+    super();
+    this.proxyFailureStatusCodes = { ...serviceFailureStatusCodes.lastfm };
+  }
 
   protected setUpHandler(): void {
     this.handler.get(this.route, async (req, res, next) => {

@@ -2,6 +2,7 @@ import { waitFor } from "@testing-library/react";
 import ConcreteBaseProxyErrorClass from "./implementations/concrete.endpoint.base.proxy.error.class";
 import ConcreteBaseProxySuccessClass from "./implementations/concrete.endpoint.base.proxy.success";
 import ConcreteBaseEndpointTimeoutErrorClass from "./implementations/concrete.endpoint.base.timeout.error.class";
+import { proxyFailureStatusCodes } from "@src/config/api";
 import * as status from "@src/config/status";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
 import { mockEndpointLogger } from "@src/vendors/integrations/api.logger/__mocks__/vendor.backend.mock";
@@ -117,27 +118,22 @@ describe("APIEndpointBase", () => {
       checkLogger(`${mockService}: Error: mockError`);
     });
 
-    describe.each([
-      ["unauthorized", 401, status.STATUS_401_MESSAGE],
-      ["notfound", 404, status.STATUS_404_MESSAGE],
-      ["ratelimited", 429, status.STATUS_429_MESSAGE],
-      ["unavailable", 503, status.STATUS_503_MESSAGE],
-    ])(
-      "receives a request that generates a known proxy error (%s)",
+    describe.each(Object.entries(proxyFailureStatusCodes.lastfm))(
+      "receives a request that generates a recognized proxy error (%s)",
 
-      (errorMsg, errorCode, statusMessage) => {
+      (errorCode, statusMessage) => {
         beforeEach(async () => {
           factoryInstance = new ConcreteBaseProxyErrorClass();
           ({ req: mockReq, res: mockRes } = createAPIMocks({
             url: factoryInstance.route,
             method,
           }));
-          factoryInstance.errorCode = errorCode;
+          factoryInstance.errorCode = parseInt(errorCode);
           await factoryInstance.createHandler()(mockReq, mockRes);
         });
 
         it(`should return a ${errorCode}`, () => {
-          expect(mockRes._getStatusCode()).toBe(errorCode);
+          expect(mockRes._getStatusCode()).toBe(parseInt(errorCode));
           expect(mockRes._getJSONData()).toStrictEqual(statusMessage);
         });
 

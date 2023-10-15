@@ -1,9 +1,11 @@
 import APIEndpointBase from "@src/api/services/generics/endpoints/generic.endpoint.base.class";
 import LastFMProxy from "@src/api/services/lastfm/proxy/proxy.class";
+import { proxyFailureStatusCodes } from "@src/config/api";
 import * as status from "@src/config/status";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
 import type { LastFMProxyInterface } from "@src/api/types/services/lastfm/proxy/proxy.types";
+import type { HttpApiClientStatusMessageType } from "@src/contracts/api/types/clients/http.client.types";
 import type { ApiEndpointRequestQueryParamType } from "@src/contracts/api/types/request.types";
 import type {
   ApiFrameworkVendorApiRequestType,
@@ -16,6 +18,9 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
 > {
   protected proxy: LastFMProxy;
   protected readonly delay: number = 500;
+  protected readonly proxyFailureStatusCodes: {
+    [index: number]: HttpApiClientStatusMessageType;
+  };
   public abstract readonly flag: string | null;
   public readonly cacheMaxAgeValue = 3600 * 24;
   public readonly service = "LAST.FM";
@@ -23,6 +28,7 @@ export default abstract class LastFMApiEndpointFactoryV2 extends APIEndpointBase
   constructor() {
     super();
     this.proxy = new LastFMProxy();
+    this.proxyFailureStatusCodes = { ...proxyFailureStatusCodes.lastfm };
   }
 
   protected setUpHandler(): void {
