@@ -1,5 +1,4 @@
-import ReactGA from "react-ga";
-import { isProduction } from "@src/utilities/generics/env";
+import ReactGA from "react-ga4";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 import type { AnalyticsVendorClientInterface } from "@src/vendors/types/integrations/analytics/vendor.types";
 
@@ -16,13 +15,13 @@ class GoogleAnalytics implements AnalyticsVendorClientInterface {
 
   initialize(analyticsID: string): void {
     this.vendor.initialize(analyticsID, {
-      debug: !isProduction(),
+      testMode: false,
     });
   }
 
-  routeChange(url: string): void {
-    this.vendor.set({ page: url });
-    this.vendor.pageview(url);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  routeChange(_: string): void {
+    // Deprecated in GA4
   }
 }
 

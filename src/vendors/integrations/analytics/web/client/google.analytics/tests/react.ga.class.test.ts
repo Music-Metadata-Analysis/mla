@@ -1,12 +1,11 @@
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import GoogleAnalytics from "../react.ga.class";
 import { isProduction } from "@src/utilities/generics/env";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
 
-jest.mock("react-ga", () => ({
+jest.mock("react-ga4", () => ({
   event: jest.fn(),
   initialize: jest.fn(),
-  pageview: jest.fn(),
   set: jest.fn(),
 }));
 
@@ -54,7 +53,7 @@ describe(GoogleAnalytics.name, () => {
         it("should initialize the service without debugging", () => {
           expect(ReactGA.initialize).toBeCalledTimes(1);
           expect(ReactGA.initialize).toBeCalledWith(mockAnalyticsID, {
-            debug: false,
+            testMode: false,
           });
         });
       });
@@ -68,7 +67,7 @@ describe(GoogleAnalytics.name, () => {
         it("should initialize the service with debugging", () => {
           expect(ReactGA.initialize).toBeCalledTimes(1);
           expect(ReactGA.initialize).toBeCalledWith(mockAnalyticsID, {
-            debug: true,
+            testMode: false,
           });
         });
       });
@@ -77,11 +76,8 @@ describe(GoogleAnalytics.name, () => {
     describe("routeChange", () => {
       beforeEach(() => instance.routeChange(mockUrl));
 
-      it("should send the event to GoogleAnalytics", () => {
-        expect(ReactGA.set).toBeCalledTimes(1);
-        expect(ReactGA.pageview).toBeCalledTimes(1);
-        expect(ReactGA.set).toBeCalledWith({ page: mockUrl });
-        expect(ReactGA.pageview).toBeCalledWith(mockUrl);
+      it("should not manually send events to GoogleAnalytics", () => {
+        expect(ReactGA.set).toBeCalledTimes(0);
       });
     });
   });

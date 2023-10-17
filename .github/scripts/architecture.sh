@@ -157,16 +157,16 @@ main() {
 
   # Enforce Analytics Framework Vendors Isolation
   echo "  Checking Analytics Framework Vendors Isolation..."
-  ! search 'from "react-ga' src                                                                                     | 
-    excludes_vendor_locations "analytics"                                                                           || 
-    error_decoupling "Analytics"
-
   ! search 'from "js-cookie' src                                                                                    |
     excludes_vendor_locations "analytics"                                                                           ||
     error_decoupling "Analytics"
 
   ! search 'from "react-cookie-consent' src                                                                         |
     excludes_vendor_locations "analytics"                                                                           ||
+    error_decoupling "Analytics"
+
+  ! search 'from "react-ga4' src                                                                                    | 
+    excludes_vendor_locations "analytics"                                                                           || 
     error_decoupling "Analytics"
 
   # Enforce API Framework Vendors Isolation
