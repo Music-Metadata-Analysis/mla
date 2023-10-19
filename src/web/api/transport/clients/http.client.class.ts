@@ -27,15 +27,18 @@ class HttpApiClient implements HttpApiClientInterface {
     const method = params?.method ? params.method : "GET";
     const cache = params?.cache ? params.cache : "default";
     const body = params?.body ? JSON.stringify(params.body) : undefined;
+    const headers = params?.body
+      ? {
+          "Content-Type": "application/json",
+        }
+      : undefined;
 
     let fetchResponse = await fetch(url, {
       method,
       mode: "cors",
       cache,
       credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       referrerPolicy: "same-origin",
       body,
     });

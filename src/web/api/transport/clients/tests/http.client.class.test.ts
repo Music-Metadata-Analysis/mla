@@ -10,9 +10,6 @@ describe("HttpApiClient", () => {
   type responseType = { success: boolean };
   const mockFetchParams = {
     credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-    },
     mode: "cors",
     referrerPolicy: "same-origin",
   };
@@ -123,6 +120,9 @@ describe("HttpApiClient", () => {
     describe("post", () => {
       const postParams = {
         ...mockFetchParams,
+        headers: {
+          "Content-Type": "application/json",
+        },
         method: "POST" as HttpApiClientHttpMethodType,
         cache: "no-cache",
         body: JSON.stringify({ test: "post body" }),
@@ -310,6 +310,9 @@ describe("HttpApiClient", () => {
     describe("post", () => {
       const postParams = {
         ...mockFetchParams,
+        headers: {
+          "Content-Type": "application/json",
+        },
         method: "POST" as HttpApiClientHttpMethodType,
         cache: "no-cache",
         body: JSON.stringify({ test: "post body" }),
