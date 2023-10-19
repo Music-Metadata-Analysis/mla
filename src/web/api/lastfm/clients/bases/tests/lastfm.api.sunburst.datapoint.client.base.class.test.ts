@@ -1,5 +1,6 @@
 import { waitFor } from "@testing-library/react";
 import LastFMBaseSunBurstDataPointClient from "../lastfm.api.sunburst.datapoint.client.base.class";
+import settings from "@src/config/lastfm";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import HttpApiClient from "@src/web/api/transport/clients/http.client.class";
 import InitialState from "@src/web/reports/generics/state/providers/report.initial";
@@ -121,9 +122,10 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "SuccessFetch",
-              userName: mockUserParams.userName,
               data: mockCompleteReport,
               integration: integrationType,
+              userName: mockUserParams.userName,
+              userProfile: `${settings.homePage}/user/${mockUserParams.userName}`,
             });
           });
         });
@@ -151,9 +153,10 @@ describe("LastFMBaseSunBurstDataClient", () => {
             });
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "SuccessFetch",
-              userName: mockUserParamsWithArtist.userName,
               data: mockCompleteReport,
               integration: integrationType,
+              userName: mockUserParamsWithArtist.userName,
+              userProfile: `${settings.homePage}/user/${mockUserParams.userName}`,
             });
           });
 

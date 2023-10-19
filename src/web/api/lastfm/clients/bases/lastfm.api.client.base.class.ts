@@ -1,4 +1,5 @@
 import { serviceFailureStatusCodes } from "@src/config/api";
+import settings from "@src/config/lastfm";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import HTTPClient from "@src/web/api/transport/clients/http.client.class";
 import type { HttpApiClientResponse } from "@src/contracts/api/types/clients/http.client.types";
@@ -73,9 +74,10 @@ abstract class LastFMReportBaseClient<ResponseType>
     if (this.response.ok) {
       this.dispatch({
         type: "SuccessFetch",
-        userName: params.userName,
         data: this.response.response as unknown as LastFMBaseReportInterface,
         integration: this.integration,
+        userName: params.userName,
+        userProfile: `${settings.homePage}/user/${params.userName}`,
       });
       this.eventDispatch(
         new analyticsVendor.collection.EventDefinition({

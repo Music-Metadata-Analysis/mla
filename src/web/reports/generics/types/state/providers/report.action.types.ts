@@ -37,9 +37,6 @@ export type ReportActionType =
     }
   | {
       type: "ReadyFetch";
-      userName: string;
-      data: ReportType;
-      integration: DataSourceTypes;
     }
   | { type: "ResetState" }
   | {
@@ -49,9 +46,10 @@ export type ReportActionType =
     }
   | {
       type: "SuccessFetch";
-      userName: string;
       data: ReportType;
       integration: DataSourceTypes;
+      userName: string;
+      userProfile: string;
     }
   | {
       type: "TimeoutFetch";

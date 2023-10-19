@@ -117,9 +117,6 @@ describe("useLastFM", () => {
       await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
       expect(mockDispatch).toHaveBeenCalledWith({
         type: "ReadyFetch",
-        userName: received.result.current.reportProperties.userName,
-        data: received.result.current.reportProperties.data.report,
-        integration: received.result.current.reportProperties.data.integration,
       });
     });
   });

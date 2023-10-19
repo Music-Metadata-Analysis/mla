@@ -1,10 +1,6 @@
 import flags from "./flags";
 import routes from "./routes";
 
-export const GenerateUserLink = (username: string) => {
-  return `${settings.homePage}/user/${username}`;
-};
-
 const settings = {
   apiRoot: "https://ws.audioscrobbler.com/2.0/",
   homePage: "https://www.last.fm",

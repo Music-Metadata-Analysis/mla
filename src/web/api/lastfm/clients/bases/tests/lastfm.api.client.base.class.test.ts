@@ -1,5 +1,6 @@
 import { waitFor } from "@testing-library/react";
 import ConcreteLastFMBaseClient from "./implementations/concrete.lastfm.api.client.base";
+import settings from "@src/config/lastfm";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
 import HttpApiClient from "@src/web/api/transport/clients/http.client.class";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
@@ -125,6 +126,7 @@ describe("LastFMBaseClient", () => {
               userName: mockUserParams.userName,
               data: mockAPIResponse,
               integration: integrationType,
+              userProfile: `${settings.homePage}/user/${mockUserParams.userName}`,
             });
           });
 
@@ -159,9 +161,10 @@ describe("LastFMBaseClient", () => {
             });
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "SuccessFetch",
-              userName: mockUserParams.userName,
               data: mockAPIResponse,
               integration: integrationType,
+              userName: mockUserParams.userName,
+              userProfile: `${settings.homePage}/user/${mockUserParams.userName}`,
             });
           });
 

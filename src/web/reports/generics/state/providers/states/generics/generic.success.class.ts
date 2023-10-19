@@ -12,7 +12,7 @@ class ReducerGenericSuccessFetch extends ReportReducerStateBaseClass<"SuccessFet
       },
       error: null,
       inProgress: false,
-      profileUrl: null,
+      profileUrl: this.action.userProfile,
       ready: false,
       retries: this.initialRetries,
       userName: this.action.userName,

@@ -1,3 +1,4 @@
+import settings from "@src/config/lastfm";
 import LastFMReportBaseClient from "@src/web/api/lastfm/clients/bases/lastfm.api.client.base.class";
 import type { LastFMReportClientParamsInterface } from "@src/contracts/api/types/clients/lastfm.client.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
@@ -107,6 +108,7 @@ abstract class LastFMBaseSunBurstDataPointClient<
           userName: params.userName,
           data: this.getDispatchState(),
           integration: this.integration,
+          userProfile: `${settings.homePage}/user/${params.userName}`,
         });
       } else {
         this.dispatch({

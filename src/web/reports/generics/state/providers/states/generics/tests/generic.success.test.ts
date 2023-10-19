@@ -10,10 +10,15 @@ describe(testType, () => {
   let stateClass: ReducerState;
   let action: actionType;
   let received: ReportStateInterface;
-  const emptyState = {} as ReportStateInterface;
+
+  const initialState = {
+    retries: 2,
+  } as ReportStateInterface;
+
   const testIntegrationType = "TEST";
   const testUserName = "testUserName";
   const testType = "SuccessFetch";
+  const testProfile = "http://test.profile.com/image.jpg";
 
   const arrange = (state: ReportStateInterface, action: actionType) => {
     stateClass = new ReducerState(state, action);
@@ -26,16 +31,17 @@ describe(testType, () => {
         beforeEach(() => {
           action = {
             type: testType,
-            userName: testUserName,
             data: mockAlbumsReport,
             integration: testIntegrationType,
+            userName: testUserName,
+            userProfile: testProfile,
           };
-          arrange(emptyState, action);
+          arrange(initialState, action);
         });
 
         it("should return the correct state", () => {
           expect(received.inProgress).toBe(false);
-          expect(received.profileUrl).toBe(null);
+          expect(received.profileUrl).toBe(testProfile);
           expect(received.userName).toBe(testUserName);
           expect(received.data).toStrictEqual({
             integration: testIntegrationType,
@@ -52,11 +58,11 @@ describe(testType, () => {
           action = {
             type: "UnknownType",
           } as unknown as actionType;
-          arrange(emptyState, action);
+          arrange(initialState, action);
         });
 
         it("should return the correct state", () => {
-          expect(received).toStrictEqual(emptyState);
+          expect(received).toStrictEqual(initialState);
         });
       });
     });
