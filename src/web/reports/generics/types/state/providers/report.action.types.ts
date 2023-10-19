@@ -1,4 +1,5 @@
 import type { ReportType } from "../generic.report.types";
+import type { ReportStateInterface } from "./report.state.types";
 import type { DataSourceTypes } from "@src/web/reports/generics/types/source.types";
 
 export type ReportActionType =
@@ -21,9 +22,15 @@ export type ReportActionType =
       type: "DataPointTimeoutFetch";
     }
   | {
+      type: "FailureCreateCachedReport";
+    }
+  | {
       type: "FailureFetch";
       userName: string;
       integration: DataSourceTypes;
+    }
+  | {
+      type: "FailureRetrieveCachedReport";
     }
   | {
       type: "NotFoundFetch";
@@ -40,9 +47,18 @@ export type ReportActionType =
     }
   | { type: "ResetState" }
   | {
+      type: "StartCreateCachedReport";
+    }
+  | {
       type: "StartFetch";
       userName: string;
       integration: DataSourceTypes;
+    }
+  | {
+      type: "StartRetrieveCachedReport";
+    }
+  | {
+      type: "SuccessCreateCachedReport";
     }
   | {
       type: "SuccessFetch";
@@ -50,6 +66,10 @@ export type ReportActionType =
       integration: DataSourceTypes;
       userName: string;
       userProfile: string;
+    }
+  | {
+      type: "SuccessRetrieveCachedReport";
+      cachedReportState: ReportStateInterface;
     }
   | {
       type: "TimeoutFetch";

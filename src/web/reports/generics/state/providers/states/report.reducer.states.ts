@@ -1,4 +1,10 @@
 import ReducerAuthUnauthorized from "./auth/auth.unauthorized.class";
+import ReducerCacheFailureCreate from "./cache/cache.failure.create.class";
+import ReducerCacheFailureRetrive from "./cache/cache.failure.retrieve.class";
+import ReducerCacheStartCreate from "./cache/cache.start.create.class";
+import ReducerCacheStartRetrieve from "./cache/cache.start.retrieve.class";
+import ReducerCacheSuccessCreate from "./cache/cache.success.create.class";
+import ReducerCacheSuccessRetrieve from "./cache/cache.success.retrieve.class";
 import ReducerDataPointFailureFetch from "./datapoints/datapoint.failure.class";
 import ReducerDataPointNotFoundFetch from "./datapoints/datapoint.notfound.class";
 import ReducerDataPointSuccessFetch from "./datapoints/datapoint.success.class";
@@ -14,6 +20,12 @@ import ReducerGenericTimeoutFetch from "./generics/generic.timeout.class";
 
 const getReducerStates = () => [
   ReducerAuthUnauthorized,
+  ReducerCacheFailureCreate,
+  ReducerCacheFailureRetrive,
+  ReducerCacheStartCreate,
+  ReducerCacheStartRetrieve,
+  ReducerCacheSuccessCreate,
+  ReducerCacheSuccessRetrieve,
   ReducerDataPointFailureFetch,
   ReducerDataPointNotFoundFetch,
   ReducerDataPointSuccessFetch,
