@@ -2,6 +2,7 @@
   "data": {
     "integration": "LAST.FM",
     "report": {
+      "albums": [],
       "artists": [],
       "playCountByArtist": {
         "status": {
@@ -21,7 +22,7 @@
       },
       "tracks": [],
       "image": [],
-      "playcount": 184368
+      "playcount": 5709
     }
   },
   "error": null,

@@ -114,18 +114,17 @@ main() {
 
   # Enforce WEB Component Isolation (No imports into WEB except from designated points.)
   echo "  Checking Imports into the FRONTEND/WEB Component..."
-  ! search 'from "(@src/contracts/api.+|@src/backend/.+)' src                                                       | 
-    excludes 'from "@src/contracts/api/fixtures'                                                                    | 
-    excludes 'from "@src/contracts/api/types'                                                                       | 
-    excludes "^src/backend/"                                                                                        |
-    excludes "^src/config/"                                                                                         |
-    excludes "^src/contracts/"                                                                                      |
-    excludes "^src/pages/"                                                                                          |
-    excludes "^src/tests/api/"                                                                                      |
-    excludes "^src/tests/_app\..+"                                                                                  |
-    excludes "^src/types/clients/api"                                                                               |
-    excludes "^src/types/reports/"                                                                                  ||
-    (echo "WEB should not be importing directly from external components." && false)
+  ! search 'from "@src/.+' src/web                                                                                  | 
+    allows 'from "@src/web/.+'                                                                                      |
+    allows 'from "@src/config/.+'                                                                                   |
+    allows 'from "@src/contracts/.+'                                                                                |
+    allows 'from "@src/fixtures/.+'                                                                                 |
+    allows 'from "@src/tests/.+'                                                                                    | 
+    # ^ TODO: deprecate
+    allows 'from "@src/utilities/.+'                                                                                |
+    allows 'from "@src/tests/.+'                                                                                    | 
+    allows 'from "@src/vendors/.+'                                                                                  ||
+    error_restricted
 
   echo "Framework Decoupling..."
 

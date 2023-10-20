@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import FetchErrorConditionalDisplay from "../failure.error.display.class.component";
+import MockStage2Report from "@src/contracts/api/services/lastfm/fixtures/aggregates/playcount.by.artist/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
-import MockStage2Report from "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/tests/fixtures/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
 import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.display.container";
 import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 

@@ -1,6 +1,6 @@
 import LastFMReportBaseClient from "@src/web/api/lastfm/clients/bases/lastfm.api.client.base.class";
+import type { LastFMReportClientParamsInterface } from "@src/contracts/api/types/clients/lastfm.client.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
-import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm.api.client.types";
 import type { reportDispatchType } from "@src/web/reports/generics/types/state/providers/report.context.types";
 import type LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
 

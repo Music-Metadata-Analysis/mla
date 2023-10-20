@@ -1,6 +1,6 @@
 import LastFMReportBaseStateEncapsulation from "./bases/lastfm.report.encapsulation.base.class";
-import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm.api.client.types";
-import type { LastFMAggregateReportResponseInterface } from "@src/web/reports/lastfm/generics/types/state/lastfm.aggregate.report.types";
+import type { LastFMReportClientParamsInterface } from "@src/contracts/api/types/clients/lastfm.client.types";
+import type { LastFMAggregateReportResponseInterface } from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.aggregate.report.types";
 import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 export default abstract class LastFMReportSunBurstBaseStateEncapsulation<

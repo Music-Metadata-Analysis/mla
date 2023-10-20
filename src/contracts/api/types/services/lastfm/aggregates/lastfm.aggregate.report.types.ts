@@ -1,9 +1,9 @@
-import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm.api.client.types";
+import type { LastFMReportClientParamsInterface } from "@src/contracts/api/types/clients/lastfm.client.types";
 import type {
   GenericAggregateBaseReportResponseInterface,
   GenericAggregateReportOperationType,
-} from "@src/web/reports/generics/types/state/aggregate.report.types";
-import type { SunBurstData } from "@src/web/reports/generics/types/state/charts/sunburst.types";
+} from "@src/contracts/api/types/services/generics/aggregates/generic.aggregate.report.types";
+import type { SunBurstData } from "@src/contracts/api/types/services/generics/aggregates/generic.sunburst.types";
 
 export type LastFMAggregateReportResponseInterface<ReportContentType> =
   GenericAggregateBaseReportResponseInterface<

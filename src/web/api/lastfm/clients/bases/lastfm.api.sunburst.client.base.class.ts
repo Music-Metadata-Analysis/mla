@@ -1,9 +1,9 @@
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
+import type { LastFMReportClientParamsInterface } from "@src/contracts/api/types/clients/lastfm.client.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
 import type { IntegrationRequestType } from "@src/web/analytics/collection/types/analytics.types";
 import type {
   LastFMReportClientInterface,
-  LastFMReportClientParamsInterface,
   LastFMSunBurstDataPointClientConstructor,
 } from "@src/web/api/lastfm/types/lastfm.api.client.types";
 import type { reportDispatchType } from "@src/web/reports/generics/types/state/providers/report.context.types";

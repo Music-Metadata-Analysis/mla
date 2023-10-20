@@ -8,12 +8,12 @@ import Transformation4 from "./transformations/transformation.4.class";
 import Transformation5 from "./transformations/transformation.5.class";
 import apiRoutes from "@src/config/apiRoutes";
 import LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
-import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm.api.client.types";
+import type { LastFMReportClientParamsInterface } from "@src/contracts/api/types/clients/lastfm.client.types";
 import type {
   LastFMAggregateReportResponseInterface,
   LastFMAggregateReportOperationType,
-} from "@src/web/reports/lastfm/generics/types/state/lastfm.aggregate.report.types";
-import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.by.artist/types/state/aggregate.report.types";
+} from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.aggregate.report.types";
+import type { PlayCountByArtistReportInterface } from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.playcount.by.artist.report.types";
 
 export default class LastFMReportPlayCountByArtistStateEncapsulation extends LastFMReportSunBurstBaseStateEncapsulation<
   PlayCountByArtistReportInterface[]

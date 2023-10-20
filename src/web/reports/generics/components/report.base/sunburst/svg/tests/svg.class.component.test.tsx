@@ -13,10 +13,8 @@ import { classes, ids, testIDs } from "../svg.identifiers";
 import LastFMTranslations from "@locales/lastfm.json";
 import { getMockProp } from "@src/fixtures/mocks/mock.component.props";
 import nullNode from "@src/web/reports/generics/state/charts/sunburst/null.node";
-import type {
-  SunBurstData,
-  d3Node,
-} from "@src/web/reports/generics/types/state/charts/sunburst.types";
+import type { SunBurstData } from "@src/contracts/api/types/services/generics/aggregates/generic.sunburst.types";
+import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 import type { SetStateAction } from "react";
 
 type CheckClickProps = {

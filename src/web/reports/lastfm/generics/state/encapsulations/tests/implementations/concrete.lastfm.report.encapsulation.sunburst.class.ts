@@ -1,7 +1,7 @@
 import LastFMReportSunBurstBaseStateEncapsulation from "../../lastfm.report.encapsulation.sunburst.base.class";
-import type { LastFMReportClientParamsInterface } from "@src/web/api/lastfm/types/lastfm.api.client.types";
-import type { LastFMAggregateReportResponseInterface } from "@src/web/reports/lastfm/generics/types/state/lastfm.aggregate.report.types";
-import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.by.artist/types/state/aggregate.report.types";
+import type { LastFMReportClientParamsInterface } from "@src/contracts/api/types/clients/lastfm.client.types";
+import type { LastFMAggregateReportResponseInterface } from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.aggregate.report.types";
+import type { PlayCountByArtistReportInterface } from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.playcount.by.artist.report.types";
 
 export default class ConcreteLastFMReportSunBurstStateEncapsulation extends LastFMReportSunBurstBaseStateEncapsulation<
   PlayCountByArtistReportInterface[]

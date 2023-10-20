@@ -3,23 +3,21 @@ import {
   MockDrawerComponent,
 } from "./implementations/concrete.sunburst.query.class";
 import SunBurstBaseQuery from "../sunburst.query.base.class";
+import MockStage2Report from "@src/contracts/api/services/lastfm/fixtures/aggregates/playcount.by.artist/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import SunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import MockCompleteReport1 from "@src/web/reports/lastfm/generics/components/report.component/sunburst/translator/tests/states/state.data.set.1.json";
 import SunBurstStateToChartDataTranslator from "@src/web/reports/lastfm/generics/components/report.component/sunburst/translator/translator.class";
 import ConcreteLastFMReportSunBurstStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/tests/implementations/concrete.lastfm.report.encapsulation.sunburst.class";
-import MockStage2Report from "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/tests/fixtures/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
-import type {
-  d3Node,
-  SunBurstData,
-} from "@src/web/reports/generics/types/state/charts/sunburst.types";
-import type { LastFMSunBurstDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/sunburst.types";
+import type { SunBurstData } from "@src/contracts/api/types/services/generics/aggregates/generic.sunburst.types";
 import type {
   LastFMAggregateReportResponseInterface,
   LastFMAggregateReportOperationType,
-} from "@src/web/reports/lastfm/generics/types/state/lastfm.aggregate.report.types";
+} from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.aggregate.report.types";
+import type { PlayCountByArtistReportInterface } from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.playcount.by.artist.report.types";
+import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
+import type { LastFMSunBurstDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/sunburst.types";
 import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
-import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.by.artist/types/state/aggregate.report.types";
 import type { BillBoardProgressBarDetails } from "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
 import type { FC } from "react";
 

@@ -1,12 +1,10 @@
 import { singular } from "@src/utilities/generics/strings";
 import Events from "@src/web/analytics/collection/events/definitions";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
+import type { SunBurstData } from "@src/contracts/api/types/services/generics/aggregates/generic.sunburst.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { SunBurstEntityTypes } from "@src/web/analytics/collection/types/analytics.types";
-import type {
-  d3Node,
-  SunBurstData,
-} from "@src/web/reports/generics/types/state/charts/sunburst.types";
+import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 type SunBurstNodeAbstractBaseConstructor = new (
   node: d3Node

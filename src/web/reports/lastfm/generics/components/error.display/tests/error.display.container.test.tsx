@@ -2,9 +2,9 @@ import { render } from "@testing-library/react";
 import ErrorBase from "../error.conditions/bases/error.base.class.component";
 import LastFMErrorDisplayContainer from "../error.display.container";
 import { createSimpleComponent } from "@fixtures/react/simple";
+import MockStage2Report from "@src/contracts/api/services/lastfm/fixtures/aggregates/playcount.by.artist/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
 import mockRouterHook from "@src/web/navigation/routing/hooks/__mocks__/router.hook.mock";
 import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
-import MockStage2Report from "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/tests/fixtures/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
 import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");

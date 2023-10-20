@@ -2,10 +2,8 @@ import { render, waitFor, fireEvent } from "@testing-library/react";
 import MockSunBurstData from "./data/sunburst.data.set.4.json";
 import SunBurstChartSVG from "../svg.class.component";
 import SunBurstChartSVGContainer from "../svg.container";
-import type {
-  d3Node,
-  SunBurstData,
-} from "@src/web/reports/generics/types/state/charts/sunburst.types";
+import type { SunBurstData } from "@src/contracts/api/types/services/generics/aggregates/generic.sunburst.types";
+import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 jest.mock("../svg.class.component", () =>
   require("@fixtures/react/child").createComponent("SunBurstChartSVG")

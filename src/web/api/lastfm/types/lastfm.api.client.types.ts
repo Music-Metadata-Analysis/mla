@@ -1,3 +1,4 @@
+import type { LastFMReportClientParamsInterface } from "@src/contracts/api/types/clients/lastfm.client.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
 import type SunburstDataPointClient from "@src/web/api/lastfm/clients/bases/lastfm.api.sunburst.datapoint.client.base.class";
 import type { reportDispatchType } from "@src/web/reports/generics/types/state/providers/report.context.types";
@@ -6,13 +7,6 @@ import type LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/la
 export interface LastFMReportClientInterface {
   getRoute(): string;
   retrieveReport: (params: LastFMReportClientParamsInterface) => void;
-}
-
-export interface LastFMReportClientParamsInterface {
-  userName: string;
-  artist?: string;
-  album?: string;
-  track?: string;
 }
 
 export type LastFMSunBurstDataPointClientConstructor<EncapsulationType> = {

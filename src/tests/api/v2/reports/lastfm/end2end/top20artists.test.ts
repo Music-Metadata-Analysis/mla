@@ -1,7 +1,7 @@
 import apiRoutes from "@src/config/apiRoutes";
 import * as status from "@src/config/status";
-import testResponses from "@src/contracts/api/fixtures/services/lastfm/end2end/lastfm.topartists";
-import testAccounts from "@src/contracts/api/fixtures/services/lastfm/end2end/lastfm.users";
+import testResponses from "@src/contracts/api/services/lastfm/fixtures/end2end/lastfm.topartists";
+import testAccounts from "@src/contracts/api/services/lastfm/fixtures/end2end/lastfm.users";
 import artistHandler from "@src/pages/api/v2/reports/lastfm/top20artists/[username]";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";

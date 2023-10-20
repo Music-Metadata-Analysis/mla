@@ -4,10 +4,8 @@ import RGBA from "@src/utilities/colours/rgba.class";
 import Events from "@src/web/analytics/collection/events/definitions";
 import type SunBurstNodeAbstractBase from "../sunburst.node.encapsulation.base.class";
 import type { AnalyticsEventDefinitionInterface } from "@src/contracts/analytics/types/event.types";
-import type {
-  d3Node,
-  SunBurstData,
-} from "@src/web/reports/generics/types/state/charts/sunburst.types";
+import type { SunBurstData } from "@src/contracts/api/types/services/generics/aggregates/generic.sunburst.types";
+import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 type d3NodeWithChildren = d3Node & { children: Array<d3NodeWithChildren> };
 

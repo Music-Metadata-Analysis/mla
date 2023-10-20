@@ -2,10 +2,8 @@ import { Box, Center } from "@chakra-ui/react";
 import settings from "@src/config/sunburst";
 import SunBurstChartSVGContainer from "@src/web/reports/generics/components/report.base/sunburst/svg/svg.container";
 import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
-import type {
-  d3Node,
-  SunBurstData,
-} from "@src/web/reports/generics/types/state/charts/sunburst.types";
+import type { SunBurstData } from "@src/contracts/api/types/services/generics/aggregates/generic.sunburst.types";
+import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 export interface SunBurstChartProps {
   breakPoints: Array<number>;

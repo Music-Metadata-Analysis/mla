@@ -1,10 +1,10 @@
-import MockStage2Report from "./fixtures/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
-import MockStage3Report from "./fixtures/lastfm.report.state.playcount.by.artist.sunburst.stage.3.json";
 import LastFMReportPlayCountByArtistStateEncapsulation from "../lastfm.report.encapsulation.playcount.by.artist.class";
 import apiRoutes from "@src/config/apiRoutes";
-import { response as MockUserGetTopArtists } from "@src/contracts/api/fixtures/services/lastfm/reports/tops/top.artists";
-import { response as MockAlbumGetInfo } from "@src/contracts/api/fixtures/services/lastfm/responses/album.get.info";
-import { response as MockArtistGetTopAlbums } from "@src/contracts/api/fixtures/services/lastfm/responses/artist.get.topalbums";
+import MockStage2Report from "@src/contracts/api/services/lastfm/fixtures/aggregates/playcount.by.artist/lastfm.report.state.playcount.by.artist.sunburst.stage.2.json";
+import MockStage3Report from "@src/contracts/api/services/lastfm/fixtures/aggregates/playcount.by.artist/lastfm.report.state.playcount.by.artist.sunburst.stage.3.json";
+import { response as MockUserGetTopArtists } from "@src/contracts/api/services/lastfm/fixtures/reports/tops/top.artists";
+import { response as MockAlbumGetInfo } from "@src/contracts/api/services/lastfm/fixtures/responses/album.get.info";
+import { response as MockArtistGetTopAlbums } from "@src/contracts/api/services/lastfm/fixtures/responses/artist.get.topalbums";
 import { InitialState } from "@src/web/reports/generics/state/providers/report.initial";
 import type { LastFMImageDataInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 import type { LastFMReportStatePlayCountByArtistReport } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";

@@ -1,10 +1,8 @@
+import type { SunBurstData } from "@src/contracts/api/types/services/generics/aggregates/generic.sunburst.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
 import type { EventCreatorType } from "@src/web/analytics/collection/events/types/event.types";
 import type LastFMSunburstDataClient from "@src/web/api/lastfm/clients/bases/lastfm.api.sunburst.client.base.class";
-import type {
-  d3Node,
-  SunBurstData,
-} from "@src/web/reports/generics/types/state/charts/sunburst.types";
+import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 import type { reportDispatchType } from "@src/web/reports/generics/types/state/providers/report.context.types";
 import type SunBurstBaseNodeEncapsulation from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/sunburst.node.encapsulation.base.class";
 import type LastFMReportBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/bases/lastfm.report.encapsulation.base.class";

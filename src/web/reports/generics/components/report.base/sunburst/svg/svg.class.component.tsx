@@ -4,10 +4,8 @@ import { classes, ids, testIDs } from "./svg.identifiers";
 import RGB from "@src/utilities/colours/rgb.class";
 import { valueToZero } from "@src/utilities/generics/numeric";
 import { alwaysString, truncate } from "@src/utilities/generics/strings";
-import type {
-  SunBurstData,
-  d3Node,
-} from "@src/web/reports/generics/types/state/charts/sunburst.types";
+import type { SunBurstData } from "@src/contracts/api/types/services/generics/aggregates/generic.sunburst.types";
+import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 import type { RefObject } from "react";
 
 export interface SunBurstChartSVGProps {

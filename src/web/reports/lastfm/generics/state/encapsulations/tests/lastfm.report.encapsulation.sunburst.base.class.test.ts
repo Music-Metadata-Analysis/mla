@@ -4,8 +4,8 @@ import ConcreteLastFMReportSunBurstStateEncapsulation, {
 } from "./implementations/concrete.lastfm.report.encapsulation.sunburst.class";
 import { InitialState } from "@src/web/reports/generics/state/providers/report.initial";
 import type LastFMReportSunBurstBaseStateEncapsulation from "../lastfm.report.encapsulation.sunburst.base.class";
+import type { PlayCountByArtistReportInterface } from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.playcount.by.artist.report.types";
 import type { LastFMReportStatePlayCountByArtistReport } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
-import type { PlayCountByArtistReportInterface } from "@src/web/reports/lastfm/playcount.by.artist/types/state/aggregate.report.types";
 
 describe("LastFMReportSunBurstBaseStateEncapsulation", () => {
   let instance: LastFMReportSunBurstBaseStateEncapsulation<

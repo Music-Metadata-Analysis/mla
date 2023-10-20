@@ -1,9 +1,9 @@
 import TransformationBase from "./lastfm.report.playcount.by.artist.sunburst.transformation.base.class";
-import type { LastFMAlbumInfoInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 import type {
   PlayCountByArtistReportInterface,
   PlayCountByArtistReportInterface_Album,
-} from "@src/web/reports/lastfm/playcount.by.artist/types/state/aggregate.report.types";
+} from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.playcount.by.artist.report.types";
+import type { LastFMAlbumInfoInterface } from "@src/web/api/lastfm/types/lastfm.api.response.types";
 
 class AttachAlbumInfo extends TransformationBase<LastFMAlbumInfoInterface> {
   transform() {

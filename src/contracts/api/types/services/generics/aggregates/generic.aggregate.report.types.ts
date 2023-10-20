@@ -24,11 +24,3 @@ export type GenericAggregateReportOperationType<ParamType> = {
   url: string;
   params: ParamType;
 };
-
-export interface StepInterface {
-  getStep(): void;
-}
-
-export interface TransformationInterface {
-  transform(): void;
-}
