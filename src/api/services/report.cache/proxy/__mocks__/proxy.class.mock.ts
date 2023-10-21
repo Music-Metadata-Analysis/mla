@@ -2,4 +2,5 @@ import type { ReportCacheProxyInterface } from "@src/api/types/services/report.c
 
 export const mockReportCacheProxyMethods = {
   createCacheObject: jest.fn(),
+  retrieveCacheObject: jest.fn(),
 } as Record<keyof ReportCacheProxyInterface, jest.Mock>;

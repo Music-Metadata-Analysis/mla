@@ -15,12 +15,11 @@ import {
 import { mockEndpointLogger } from "@src/vendors/integrations/api.logger/__mocks__/vendor.backend.mock";
 import { mockAuthClient } from "@src/vendors/integrations/auth/__mocks__/vendor.backend.mock";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
-import { cacheVendorBackend } from "@src/vendors/integrations/cache/vendor.backend";
 import { errorVendorBackend } from "@src/vendors/integrations/errors/vendor.backend";
 import type ReportCacheEndpointAbstractFactoryV2 from "../v2.report.cache.endpoint.abstract.factory.class";
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type { ApiEndpointRequestBodyType } from "@src/contracts/api/types/request.types";
-import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
+import type { ReportCacheCreateResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
 import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,
@@ -31,8 +30,6 @@ jest.mock("@src/api/services/report.cache/proxy/proxy.class");
 jest.mock("@src/vendors/integrations/auth/vendor.backend");
 
 jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
-
-jest.mock("@src/vendors/integrations/cache/vendor.backend");
 
 describe("ReportCacheEndpointAbstractFactoryV2", () => {
   let clearTimeOutSpy: jest.SpyInstance;
@@ -55,9 +52,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
 
   const unknownError = new Error("Unknown error");
 
-  const mockCacheId = "mockCacheId";
   const mockInvalidPayload = undefined;
-  const mockObjectName = "mockObjectName";
   const mockSuccessfulProxyResponse = {
     id: "mock cache id",
   } as const;
@@ -73,16 +68,6 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     clearTimeOutSpy = jest.spyOn(window, "clearTimeout");
-    jest
-      .mocked(
-        cacheVendorBackend.CdnOriginReportsCacheObject.prototype.getCacheId
-      )
-      .mockImplementation(() => mockCacheId);
-    jest
-      .mocked(
-        cacheVendorBackend.CdnOriginReportsCacheObject.prototype.getStorageName
-      )
-      .mockImplementation(() => mockObjectName);
   });
 
   const arrange = async () => {
@@ -100,45 +85,19 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
     (err as Error).message.toString() !==
     "Error: `.each` called with an empty Array of table data.\n";
 
-  const checkCaching = () => {
-    it("should use the CdnOriginReports class to create a storage name", () => {
-      expect(cacheVendorBackend.CdnOriginReportsCacheObject).toBeCalledTimes(1);
-      expect(cacheVendorBackend.CdnOriginReportsCacheObject).toBeCalledWith({
-        authenticatedUserName: "mock@gmail.com",
-        sourceName: mockValidSource.toLowerCase(),
-        reportName: String(mockValidReport).toLowerCase(),
-        userName: String(username),
-      });
-    });
-
-    it("should generate a cache id", () => {
-      expect(
-        jest.mocked(cacheVendorBackend.CdnOriginReportsCacheObject).mock
-          .instances[0].getCacheId
-      ).toBeCalledTimes(1);
-    });
-
-    it("should generate a storage name", () => {
-      expect(
-        jest.mocked(cacheVendorBackend.CdnOriginReportsCacheObject).mock
-          .instances[0].getStorageName
-      ).toBeCalledTimes(1);
-    });
-
+  const checkProxyCall = () => {
     it("should call the proxy service with the correct props", () => {
       expect(mockReportCacheProxyMethods.createCacheObject).toBeCalledWith({
-        cacheId: mockCacheId,
-        objectContent: mockValidPayload,
-        objectName: mockObjectName,
+        authenticatedUserName: mockSession?.email,
+        reportName: String(report).toLowerCase(),
+        sourceName: String(source).toLowerCase(),
+        userName: String(username),
+        content: mockValidPayload,
       });
     });
   };
 
-  const checkNoCaching = () => {
-    it("should NOT instantiate the CdnOriginReports class", () => {
-      expect(cacheVendorBackend.CdnOriginReportsCacheObject).toBeCalledTimes(0);
-    });
-
+  const checkNoProxyCall = () => {
     it("should NOT call the proxy service", () => {
       expect(mockReportCacheProxyMethods.createCacheObject).toBeCalledTimes(0);
     });
@@ -232,7 +191,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
       checkTimeoutNotCleared();
       checkNoRetryHeader();
       checkLogger(undefined);
-      checkNoCaching();
+      checkNoProxyCall();
     });
 
     describe("with an invalid payload", () => {
@@ -253,7 +212,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
       checkTimeoutNotCleared();
       checkNoRetryHeader();
       checkLogger(undefined);
-      checkNoCaching();
+      checkNoProxyCall();
     });
   };
 
@@ -276,7 +235,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
       checkTimeoutNotCleared();
       checkNoRetryHeader();
       checkLogger(undefined);
-      checkNoCaching();
+      checkNoProxyCall();
     });
 
     describe("with an invalid payload", () => {
@@ -297,7 +256,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
       checkTimeoutNotCleared();
       checkNoRetryHeader();
       checkLogger(undefined);
-      checkNoCaching();
+      checkNoProxyCall();
     });
   };
 
@@ -356,7 +315,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
                 checkTimeoutCleared();
                 checkNoRetryHeader();
                 checkLogger(mockLoggedSuccessMessage);
-                checkCaching();
+                checkProxyCall();
               });
 
               describe("with an invalid payload", () => {
@@ -379,7 +338,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
                 checkTimeoutNotCleared();
                 checkNoRetryHeader();
                 checkLogger(undefined);
-                checkNoCaching();
+                checkNoProxyCall();
               });
             });
 
@@ -472,7 +431,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
             ConcreteReportCacheEndpointFactoryV2Success;
           concreteValidatorSelection = mockConcreteValidator;
           mockReportCacheProxyMethods.createCacheObject.mockImplementation(() =>
-            Promise.resolve({} as unknown as ReportCacheResponseInterface)
+            Promise.resolve({} as unknown as ReportCacheCreateResponseInterface)
           );
         });
 
@@ -511,7 +470,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
                 checkTimeoutCleared();
                 checkNoRetryHeader();
                 checkLogger(mockLoggedInvalidResponseMessage);
-                checkCaching();
+                checkProxyCall();
               });
 
               describe("with an invalid payload", () => {
@@ -534,7 +493,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
                 checkTimeoutNotCleared();
                 checkNoRetryHeader();
                 checkLogger(undefined);
-                checkNoCaching();
+                checkNoProxyCall();
               });
             });
 
@@ -640,7 +599,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
                 checkTimeoutCleared();
                 checkNoRetryHeader();
                 checkLogger(mockLoggedErrorMessage);
-                checkCaching();
+                checkProxyCall();
               });
 
               describe("with an invalid payload", () => {
@@ -663,7 +622,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
                 checkTimeoutNotCleared();
                 checkNoRetryHeader();
                 checkLogger(undefined);
-                checkNoCaching();
+                checkNoProxyCall();
               });
             });
 
@@ -809,7 +768,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
                       checkTimeoutCleared();
                       checkNoRetryHeader();
                       checkLogger(mockLoggedErrorMessage);
-                      checkCaching();
+                      checkProxyCall();
                     });
 
                     describe("with an invalid payload", () => {
@@ -832,7 +791,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
                       checkTimeoutNotCleared();
                       checkNoRetryHeader();
                       checkLogger(undefined);
-                      checkNoCaching();
+                      checkNoProxyCall();
                     });
                   });
 
@@ -968,7 +927,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
                 checkTimeoutNotCleared();
                 checkRetryHeader();
                 checkLogger(mockLoggedTimedOutRequest);
-                checkCaching();
+                checkProxyCall();
               });
 
               describe("with an invalid payload", () => {
@@ -991,7 +950,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
                 checkTimeoutNotCleared();
                 checkNoRetryHeader();
                 checkLogger(undefined);
-                checkNoCaching();
+                checkNoProxyCall();
               });
             });
 
@@ -1105,7 +1064,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
           checkTimeoutNotCleared();
           checkNoRetryHeader();
           checkLogger(undefined);
-          checkNoCaching();
+          checkNoProxyCall();
         });
       });
     });
@@ -1237,7 +1196,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
           concreteFactoryClassSelector =
             ConcreteReportCacheEndpointFactoryV2Success;
           mockReportCacheProxyMethods.createCacheObject.mockImplementation(() =>
-            Promise.resolve({} as unknown as ReportCacheResponseInterface)
+            Promise.resolve({} as unknown as ReportCacheCreateResponseInterface)
           );
           concreteValidatorSelection = mockConcreteValidator;
         });
@@ -1721,7 +1680,7 @@ describe("ReportCacheEndpointAbstractFactoryV2", () => {
           checkTimeoutNotCleared();
           checkNoRetryHeader();
           checkLogger(undefined);
-          checkNoCaching();
+          checkNoProxyCall();
         });
       });
     });

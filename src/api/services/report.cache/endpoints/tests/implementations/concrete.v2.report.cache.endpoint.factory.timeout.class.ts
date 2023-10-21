@@ -3,7 +3,7 @@ import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
 } from "@src/contracts/api/types/request.types";
-import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
+import type { ReportCacheCreateResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
 import type { ApiValidationVendorBackendInterface } from "@src/vendors/types/integrations/api.validator/vendor.backend.types";
 
 export default class ConcreteReportCacheEndpointWithTimeoutV2 extends ReportCacheRetrievalEndpointBaseV2 {
@@ -18,7 +18,7 @@ export default class ConcreteReportCacheEndpointWithTimeoutV2 extends ReportCach
   protected override async getProxyResponse(
     params: ApiEndpointRequestQueryParamType,
     body: ApiEndpointRequestBodyType
-  ): Promise<ReportCacheResponseInterface> {
+  ): Promise<ReportCacheCreateResponseInterface> {
     function sleep(ms: number) {
       return new Promise((resolve) => {
         setTimeout(resolve, ms * 2);

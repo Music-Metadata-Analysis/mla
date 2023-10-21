@@ -5,14 +5,13 @@ import * as status from "@src/config/status";
 import { keysToLower } from "@src/utilities/generics/objects";
 import { apiValidationVendorBackend } from "@src/vendors/integrations/api.validation/vendor.backend";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
-import { cacheVendorBackend } from "@src/vendors/integrations/cache/vendor.backend";
 import type { ReportCacheProxyInterface } from "@src/api/types/services/report.cache/proxy/proxy.types";
 import type { HttpApiClientStatusMessageType } from "@src/contracts/api/types/clients/http.client.types";
 import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
 } from "@src/contracts/api/types/request.types";
-import type { ReportCacheResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
+import type { ReportCacheCreateResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
 import type {
   ApiFrameworkVendorApiRequestType,
   ApiFrameworkVendorApiResponseType,
@@ -21,7 +20,7 @@ import type { ApiValidationVendorBackendInterface } from "@src/vendors/types/int
 
 export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEndpointBase<
   ReportCacheProxyInterface,
-  Promise<ReportCacheResponseInterface>
+  Promise<ReportCacheCreateResponseInterface>
 > {
   protected readonly delay: number = 500;
   protected readonly proxyFailureStatusCodes: {
@@ -63,7 +62,7 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
           this.validProxyResponse(
             req,
             res,
-            proxyResponse as ReportCacheResponseInterface
+            proxyResponse as ReportCacheCreateResponseInterface
           );
         } else {
           this.invalidProxyResponse(req, res);
@@ -97,7 +96,7 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
     params: ApiEndpointRequestQueryParamType,
     tokenEmail: string
   ) {
-    params["authenticatedUser"] = tokenEmail;
+    params["authenticated"] = tokenEmail;
   }
 
   protected unauthorizedRequest(res: ApiFrameworkVendorApiResponseType): void {
@@ -113,7 +112,7 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
     res: ApiFrameworkVendorApiResponseType,
     next: () => void,
     params: ApiEndpointRequestQueryParamType
-  ): Promise<Awaited<ReportCacheResponseInterface>> {
+  ): Promise<Awaited<ReportCacheCreateResponseInterface>> {
     this.setRequestTimeout(req, res, next);
     const proxyResponse = await this.getProxyResponse(params, req.body);
     this.clearRequestTimeout(req);
@@ -124,22 +123,17 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
     params: ApiEndpointRequestQueryParamType,
     body: ApiEndpointRequestBodyType
   ) {
-    const cacheReportObject =
-      new cacheVendorBackend.CdnOriginReportsCacheObject({
-        sourceName: String(params.source),
-        authenticatedUserName: String(params.authenticatedUser),
-        reportName: String(params.report),
-        userName: String(params.username),
-      });
     return await this.proxy.createCacheObject({
-      cacheId: cacheReportObject.getCacheId(),
-      objectContent: body,
-      objectName: cacheReportObject.getStorageName(),
+      authenticatedUserName: String(params.authenticated),
+      reportName: String(params.report),
+      sourceName: String(params.source),
+      userName: String(params.username),
+      content: body,
     });
   }
 
   protected isProxyResponseValid(
-    proxyResponse: ReportCacheResponseInterface
+    proxyResponse: ReportCacheCreateResponseInterface
   ): boolean {
     if (proxyResponse && proxyResponse.id) return true;
     return false;
@@ -156,7 +150,7 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
   protected validProxyResponse(
     req: ApiFrameworkVendorApiRequestType,
     res: ApiFrameworkVendorApiResponseType,
-    proxyResponse: ReportCacheResponseInterface
+    proxyResponse: ReportCacheCreateResponseInterface
   ): void {
     req.proxyResponse = `${this.service}: Success!`;
     res.status(201).json(proxyResponse);
