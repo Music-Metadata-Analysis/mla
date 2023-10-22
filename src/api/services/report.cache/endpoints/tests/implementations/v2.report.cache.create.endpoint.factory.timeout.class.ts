@@ -1,15 +1,12 @@
-import ReportCacheRetrievalEndpointBaseV2 from "../../v2.report.cache.endpoint.abstract.factory.class";
+import ReportCacheCreateEndpointBaseV2 from "../../v2.report.cache.create.endpoint.factory.class";
 import type {
-  ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
+  ApiEndpointRequestQueryParamType,
 } from "@src/contracts/api/types/request.types";
 import type { ReportCacheCreateResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
 import type { ApiValidationVendorBackendInterface } from "@src/vendors/types/integrations/api.validator/vendor.backend.types";
 
-export default class ConcreteReportCacheEndpointWithTimeoutV2 extends ReportCacheRetrievalEndpointBaseV2 {
-  public delay = 1;
-  public errorCode?: number;
-  public route = "/api/v2/cache/endpoint/:report/:cacheKey";
+export default class ReportCacheEndpointTestDoubleWithTimeoutV2 extends ReportCacheCreateEndpointBaseV2 {
   public timeOut = 100;
   public validators = {
     mocksource: { mockreport: mockValidator },

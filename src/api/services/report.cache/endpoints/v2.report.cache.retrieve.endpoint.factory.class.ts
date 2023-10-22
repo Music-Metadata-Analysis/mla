@@ -1,59 +1,47 @@
 import APIEndpointBase from "@src/api/services/generics/endpoints/generic.endpoint.base.class";
 import ReportCacheProxy from "@src/api/services/report.cache/proxy/proxy.class";
 import { proxyFailureStatusCodes } from "@src/config/api";
+import apiRoutes from "@src/config/apiRoutes";
 import * as status from "@src/config/status";
-import { keysToLower } from "@src/utilities/generics/objects";
-import { apiValidationVendorBackend } from "@src/vendors/integrations/api.validation/vendor.backend";
 import { authVendorBackend } from "@src/vendors/integrations/auth/vendor.backend";
 import type { ReportCacheProxyInterface } from "@src/api/types/services/report.cache/proxy/proxy.types";
 import type { HttpApiClientStatusMessageType } from "@src/contracts/api/types/clients/http.client.types";
-import type {
-  ApiEndpointRequestQueryParamType,
-  ApiEndpointRequestBodyType,
-} from "@src/contracts/api/types/request.types";
-import type { ReportCacheCreateResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
+import type { ApiEndpointRequestQueryParamType } from "@src/contracts/api/types/request.types";
+import type { ReportCacheRetrieveResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
 import type {
   ApiFrameworkVendorApiRequestType,
   ApiFrameworkVendorApiResponseType,
 } from "@src/vendors/types/integrations/api.framework/vendor.backend.types";
-import type { ApiValidationVendorBackendInterface } from "@src/vendors/types/integrations/api.validator/vendor.backend.types";
+import type { PersistenceVendorDataType } from "@src/vendors/types/integrations/persistence/vendor.backend.types";
 
-export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEndpointBase<
+export default class ReportCacheRetrieveEndpointFactoryV2 extends APIEndpointBase<
   ReportCacheProxyInterface,
-  Promise<ReportCacheCreateResponseInterface>
+  Promise<ReportCacheRetrieveResponseInterface<PersistenceVendorDataType>>
 > {
   protected readonly delay: number = 500;
   protected readonly proxyFailureStatusCodes: {
     [index: number]: HttpApiClientStatusMessageType;
   };
   protected proxy: ReportCacheProxyInterface;
-  protected readonly validators =
-    keysToLower<ApiValidationVendorBackendInterface>(
-      apiValidationVendorBackend
-    );
-  public readonly service = "S3";
+  public readonly service = "CloudFront";
+  public readonly route = apiRoutes.v2.cache.retrieve;
 
   constructor() {
     super();
     this.proxy = new ReportCacheProxy();
-    this.proxyFailureStatusCodes = { ...proxyFailureStatusCodes.reportCache };
+    this.proxyFailureStatusCodes = {
+      ...proxyFailureStatusCodes.reportCacheRetrieve,
+    };
   }
 
   protected setUpHandler(): void {
-    this.handler.post(this.route, async (req, res, next) => {
+    this.handler.get(this.route, async (req, res, next) => {
       const authClient = new authVendorBackend.Client(req);
       const token = await authClient.getSession();
       const [params, paramErrors] = this.getParams(req);
       if (!token || !token.email) {
         this.unauthorizedRequest(res);
       } else if (paramErrors) {
-        this.invalidRequest(res);
-      } else if (
-        !req.body ||
-        !this.validators[params.source.toString()][params.report.toString()](
-          req.body
-        ).valid
-      ) {
         this.invalidRequest(res);
       } else {
         this.updateParamsWithAuthenticatedUser(params, token.email);
@@ -62,7 +50,7 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
           this.validProxyResponse(
             req,
             res,
-            proxyResponse as ReportCacheCreateResponseInterface
+            proxyResponse as ReportCacheRetrieveResponseInterface<PersistenceVendorDataType>
           );
         } else {
           this.invalidProxyResponse(req, res);
@@ -81,22 +69,8 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
         params[k] = params[k].toString().toLowerCase();
       }
     });
-    const error =
-      !params.source ||
-      !params.report ||
-      !params.username ||
-      !Object.keys(this.validators).includes(params.source.toString()) ||
-      !Object.keys(this.validators[params.source.toString()]).includes(
-        params.report.toString()
-      );
+    const error = !params.source || !params.report || !params.username;
     return [params, error];
-  }
-
-  protected updateParamsWithAuthenticatedUser(
-    params: ApiEndpointRequestQueryParamType,
-    tokenEmail: string
-  ) {
-    params["authenticated"] = tokenEmail;
   }
 
   protected unauthorizedRequest(res: ApiFrameworkVendorApiResponseType): void {
@@ -107,35 +81,46 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
     res.status(400).json(status.STATUS_400_MESSAGE);
   }
 
+  protected updateParamsWithAuthenticatedUser(
+    params: ApiEndpointRequestQueryParamType,
+    tokenEmail: string
+  ) {
+    params["authenticated"] = tokenEmail;
+  }
+
   protected async callProxy(
     req: ApiFrameworkVendorApiRequestType,
     res: ApiFrameworkVendorApiResponseType,
     next: () => void,
     params: ApiEndpointRequestQueryParamType
-  ): Promise<Awaited<ReportCacheCreateResponseInterface>> {
+  ): Promise<
+    Awaited<ReportCacheRetrieveResponseInterface<PersistenceVendorDataType> | void>
+  > {
     this.setRequestTimeout(req, res, next);
-    const proxyResponse = await this.getProxyResponse(params, req.body);
+    const proxyResponse = await this.getProxyResponse(params);
     this.clearRequestTimeout(req);
     return proxyResponse;
   }
 
   protected async getProxyResponse(
-    params: ApiEndpointRequestQueryParamType,
-    body: ApiEndpointRequestBodyType
-  ) {
-    return await this.proxy.createCacheObject({
+    params: ApiEndpointRequestQueryParamType
+  ): Promise<
+    Awaited<ReportCacheRetrieveResponseInterface<PersistenceVendorDataType>>
+  > {
+    return (await this.proxy.retrieveCacheObject({
       authenticatedUserName: String(params.authenticated),
       reportName: String(params.report),
       sourceName: String(params.source),
       userName: String(params.username),
-      content: body,
-    });
+    })) as ReportCacheRetrieveResponseInterface<PersistenceVendorDataType>;
   }
 
   protected isProxyResponseValid(
-    proxyResponse: ReportCacheCreateResponseInterface
+    proxyResponse: ReportCacheRetrieveResponseInterface<PersistenceVendorDataType> | void
   ): boolean {
-    if (proxyResponse && proxyResponse.id) return true;
+    if (proxyResponse && proxyResponse.response && proxyResponse.cacheControl) {
+      return true;
+    }
     return false;
   }
 
@@ -150,9 +135,10 @@ export default abstract class ReportCacheEndpointAbstractFactoryV2 extends APIEn
   protected validProxyResponse(
     req: ApiFrameworkVendorApiRequestType,
     res: ApiFrameworkVendorApiResponseType,
-    proxyResponse: ReportCacheCreateResponseInterface
+    proxyResponse: ReportCacheRetrieveResponseInterface<PersistenceVendorDataType>
   ): void {
     req.proxyResponse = `${this.service}: Success!`;
-    res.status(201).json(proxyResponse);
+    res.setHeader("Cache-Control", proxyResponse.cacheControl);
+    res.status(200).json(proxyResponse.response);
   }
 }

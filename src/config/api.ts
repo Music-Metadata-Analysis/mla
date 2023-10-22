@@ -22,7 +22,8 @@ export const serviceFailureStatusCodes: {
 
 export const proxyFailureStatusCodes: {
   lastfm: statusCodeConfig;
-  reportCache: statusCodeConfig;
+  reportCacheCreate: statusCodeConfig;
+  reportCacheRetrieve: statusCodeConfig;
 } = {
   lastfm: {
     401: status.STATUS_401_MESSAGE,
@@ -30,5 +31,8 @@ export const proxyFailureStatusCodes: {
     429: status.STATUS_429_MESSAGE,
     503: status.STATUS_503_MESSAGE,
   },
-  reportCache: {},
+  reportCacheCreate: {},
+  reportCacheRetrieve: {
+    404: status.STATUS_404_MESSAGE,
+  },
 };
