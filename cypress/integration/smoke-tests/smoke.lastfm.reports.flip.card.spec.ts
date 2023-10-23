@@ -10,6 +10,7 @@ describe("Flip Card Reports", () => {
   const authorizationCookieName = getAuthorizationCookieName();
   const expectedFlipCards = 20;
   const timeout = 40000;
+  const flipCardTestUser = "niall-byrne";
 
   before(() => setup());
 
@@ -40,7 +41,7 @@ describe("Flip Card Reports", () => {
             describe("when we enter a username", () => {
               before(() => {
                 cy.get(`input[name="${fields.username}"]`, { timeout }).type(
-                  "niall-byrne{enter}"
+                  flipCardTestUser + "{enter}"
                 );
               });
 

@@ -47,7 +47,7 @@ describe("Count By Artist SunBurst Report", async () => {
           describe("when we enter a username", () => {
             before(() => {
               cy.get(`input[name="${fields.username}"]`, { timeout }).type(
-                "test-account-2{enter}"
+                Cypress.env(env.LASTFM_TEST_ACCOUNT_WITH_LISTENS) + "{enter}"
               );
             });
 
