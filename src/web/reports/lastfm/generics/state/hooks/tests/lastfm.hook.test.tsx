@@ -2,6 +2,7 @@ import { act, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import dk from "deep-keys";
 import React from "react";
+import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import LastFMTopAlbumsReport from "@src/web/api/lastfm/clients/flipcard/top20.albums.class";
 import LastFMTopArtistsReport from "@src/web/api/lastfm/clients/flipcard/top20.artists.class";
 import LastFMTopTracksReport from "@src/web/api/lastfm/clients/flipcard/top20.tracks.class";
@@ -13,6 +14,8 @@ import useLastFM from "@src/web/reports/lastfm/generics/state/hooks/lastfm.hook"
 import LastFMReportPlayCountByArtistStateEncapsulation from "@src/web/reports/lastfm/playcount.by.artist/state/encapsulations/lastfm.report.encapsulation.playcount.by.artist.class";
 import type { ReportContextInterface } from "@src/web/reports/generics/types/state/providers/report.context.types";
 import type { ReactNode } from "react";
+
+jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
@@ -122,90 +125,123 @@ describe("useLastFM", () => {
   });
 
   describe("top20albums", () => {
-    let mockRetrieveTopAlbums: jest.SpyInstance;
-
     beforeEach(async () => {
-      mockRetrieveTopAlbums = jest.spyOn(
-        LastFMTopAlbumsReport.prototype,
-        "retrieveReport"
-      );
-
       act(() => received.result.current.top20albums(mockUserName));
     });
 
+    it("should initialize the LastFMTopAlbumsReport class", async () => {
+      await waitFor(() => expect(LastFMTopAlbumsReport).toBeCalledTimes(1));
+      expect(LastFMTopAlbumsReport).toBeCalledWith(
+        mockDispatch,
+        mockAnalyticsHook.event
+      );
+    });
+
     it("should retrieve the report from lastfm", async () => {
-      await waitFor(() => expect(mockRetrieveTopAlbums).toBeCalledTimes(1));
-      expect(mockRetrieveTopAlbums).toHaveBeenCalledWith({
+      await waitFor(() =>
+        expect(LastFMTopAlbumsReport.prototype.retrieveReport).toBeCalledTimes(
+          1
+        )
+      );
+      expect(
+        LastFMTopAlbumsReport.prototype.retrieveReport
+      ).toHaveBeenCalledWith({
         userName: mockUserName,
       });
     });
   });
 
   describe("top20artists", () => {
-    let mockRetrieveTopArtists: jest.SpyInstance;
-
     beforeEach(async () => {
-      mockRetrieveTopArtists = jest.spyOn(
-        LastFMTopArtistsReport.prototype,
-        "retrieveReport"
-      );
-
       act(() => received.result.current.top20artists(mockUserName));
     });
 
+    it("should initialize the LastFMTopArtistsReport class", async () => {
+      await waitFor(() => expect(LastFMTopArtistsReport).toBeCalledTimes(1));
+      expect(LastFMTopArtistsReport).toBeCalledWith(
+        mockDispatch,
+        mockAnalyticsHook.event
+      );
+    });
+
     it("should retrieve the report from lastfm", async () => {
-      await waitFor(() => expect(mockRetrieveTopArtists).toBeCalledTimes(1));
-      expect(mockRetrieveTopArtists).toHaveBeenCalledWith({
+      await waitFor(() =>
+        expect(LastFMTopArtistsReport.prototype.retrieveReport).toBeCalledTimes(
+          1
+        )
+      );
+      expect(
+        LastFMTopArtistsReport.prototype.retrieveReport
+      ).toHaveBeenCalledWith({
         userName: mockUserName,
       });
     });
   });
 
   describe("top20tracks", () => {
-    let mockRetrieveTopTracks: jest.SpyInstance;
-
     beforeEach(async () => {
-      mockRetrieveTopTracks = jest.spyOn(
-        LastFMTopTracksReport.prototype,
-        "retrieveReport"
-      );
-
       act(() => received.result.current.top20tracks(mockUserName));
     });
 
+    it("should initialize the LastFMTopTracksReport class", async () => {
+      await waitFor(() => expect(LastFMTopTracksReport).toBeCalledTimes(1));
+      expect(LastFMTopTracksReport).toBeCalledWith(
+        mockDispatch,
+        mockAnalyticsHook.event
+      );
+    });
+
     it("should retrieve the report from lastfm", async () => {
-      await waitFor(() => expect(mockRetrieveTopTracks).toBeCalledTimes(1));
-      expect(mockRetrieveTopTracks).toHaveBeenCalledWith({
+      await waitFor(() =>
+        expect(LastFMTopTracksReport.prototype.retrieveReport).toBeCalledTimes(
+          1
+        )
+      );
+      expect(
+        LastFMTopTracksReport.prototype.retrieveReport
+      ).toHaveBeenCalledWith({
         userName: mockUserName,
       });
     });
   });
 
   describe("playCountByArtist", () => {
-    let mockRetrievePlayCountByArtist: jest.SpyInstance;
-
     beforeEach(async () => {
-      mockRetrievePlayCountByArtist = jest.spyOn(
-        LastFMPlayCountByArtistDataClient.prototype,
-        "retrieveReport"
-      );
-
       act(() => received.result.current.playCountByArtist(mockUserName));
     });
 
-    it("should retrieve the report from lastfm", async () => {
+    it("should initialize the LastFMReportPlayCountByArtistStateEncapsulation class", async () => {
       await waitFor(() =>
         expect(LastFMReportPlayCountByArtistStateEncapsulation).toBeCalledTimes(
           1
         )
       );
-      await waitFor(() =>
-        expect(LastFMReportPlayCountByArtistStateEncapsulation).toBeCalledWith(
-          received.result.current.reportProperties
-        )
+      expect(LastFMReportPlayCountByArtistStateEncapsulation).toBeCalledWith(
+        received.result.current.reportProperties
       );
+    });
 
-      expect(mockRetrievePlayCountByArtist).toHaveBeenCalledWith({
+    it("should initialize the LastFMPlayCountByArtistDataClient class", async () => {
+      await waitFor(() =>
+        expect(LastFMPlayCountByArtistDataClient).toBeCalledTimes(1)
+      );
+      expect(LastFMPlayCountByArtistDataClient).toBeCalledWith(
+        mockDispatch,
+        mockAnalyticsHook.event,
+        jest.mocked(LastFMReportPlayCountByArtistStateEncapsulation).mock
+          .instances[0]
+      );
+    });
+
+    it("should retrieve the report from lastfm", async () => {
+      await waitFor(() =>
+        expect(
+          LastFMPlayCountByArtistDataClient.prototype.retrieveReport
+        ).toBeCalledTimes(1)
+      );
+      expect(
+        LastFMPlayCountByArtistDataClient.prototype.retrieveReport
+      ).toHaveBeenCalledWith({
         userName: mockUserName,
       });
     });
