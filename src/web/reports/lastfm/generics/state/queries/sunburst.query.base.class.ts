@@ -134,6 +134,7 @@ export default abstract class SunBurstBaseQuery<
 
     if (
       reportProperties.error === null ||
+      reportProperties.error === "FailureRetrieveCachedReport" ||
       reportProperties.error === "TimeoutFetch" ||
       reportProperties.error.startsWith("DataPoint")
     ) {
@@ -157,7 +158,6 @@ export default abstract class SunBurstBaseQuery<
   ): LastFMAggregateReportResponseInterface<unknown[]>;
 
   startDataFetch(user: reportHookAsLastFM, userName: string) {
-    // TODO: attach caching here
     super.startDataFetch(user, userName);
   }
 }

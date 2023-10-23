@@ -1,22 +1,32 @@
 import { cleanup, render } from "@testing-library/react";
+import mockSunburstCacheControllerHook from "../controllers/__mocks__/sunburst.report.cache.controller.hook.mock";
 import mockSunBurstLayoutControllerHook from "../controllers/__mocks__/sunburst.report.layout.controller.hook.mock";
+import useSunBurstLayoutController from "../controllers/sunburst.report.layout.controller.hook";
 import SunBurstReport from "../sunburst.report.component";
 import SunBurstReportContainer from "../sunburst.report.container";
 import lastfm from "@locales/lastfm.json";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import {
+  mockAuthHook,
+  mockUserProfile,
+} from "@src/vendors/integrations/auth/__mocks__/vendor.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
-import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
+import useAnalytics from "@src/web/analytics/collection/state/hooks/analytics.hook";
 import {
   MockUseTranslation,
   _t,
 } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import mockMetricsHook from "@src/web/metrics/collection/state/hooks/__mocks__/metrics.hook.mock";
-import mockSunBurstControllerHook from "@src/web/reports/generics/state/controllers/sunburst/__mocks__/sunburst.controller.hook.mock";
+import useMetrics from "@src/web/metrics/collection/state/hooks/metrics.hook";
+import mockSunBurstControllerHookValues from "@src/web/reports/generics/state/controllers/sunburst/__mocks__/sunburst.controller.hook.mock";
 import LastFMErrorDisplayContainer from "@src/web/reports/lastfm/generics/components/error.display/error.display.container";
+import useSunBurstCacheController from "@src/web/reports/lastfm/generics/components/report.component/sunburst/controllers/sunburst.report.cache.controller.hook";
 import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
 import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
 import BillBoardProgressBar from "@src/web/ui/generics/components/billboard/billboard.progress.bar/billboard.progress.bar.component";
+import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 import type { reportHookAsLastFMPlayCountByArtistReport } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
@@ -30,6 +40,8 @@ jest.mock("@src/web/metrics/collection/state/hooks/metrics.hook");
 jest.mock(
   "@src/web/reports/generics/state/controllers/sunburst/sunburst.controller.hook"
 );
+
+jest.mock("../controllers/sunburst.report.cache.controller.hook");
 
 jest.mock("../controllers/sunburst.report.layout.controller.hook");
 
@@ -55,9 +67,17 @@ describe("SunBurstReportContainer", () => {
   let currentLastFMHookState: reportHookAsLastFMPlayCountByArtistReport;
 
   const mockQuery = new MockQueryClass();
-  const mockUsername = "mockUsername";
+  const mockUserName = "mockUsername";
   const mockLastFmT = new MockUseTranslation("lastfm").t;
   const mockSunBurstT = new MockUseTranslation("sunburst").t;
+
+  const resumableReportErrors: [ReportStateInterface["error"]][] = [
+    ["TimeoutFetch"],
+    ["FailureRetrieveCachedReport"],
+    ["DataPointFailureFetch"],
+    ["DataPointNotFoundFetch"],
+    ["DataPointTimeoutFetch"],
+  ];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -67,7 +87,7 @@ describe("SunBurstReportContainer", () => {
   const arrange = () => {
     render(
       <SunBurstReportContainer
-        userName={mockUsername}
+        userName={mockUserName}
         lastfm={currentLastFMHookState}
         queryClass={MockQueryClass}
       />
@@ -86,16 +106,74 @@ describe("SunBurstReportContainer", () => {
       .mocked(useTranslation)
       .mockReturnValueOnce({ t: mockLastFmT })
       .mockReturnValueOnce({ t: mockSunBurstT });
+
+    mockAuthHook.user = { ...mockUserProfile };
   };
 
-  const checkEffectHookDataFetching = () => {
+  const checkInstantiateHooks = () => {
+    it("should instantiate the useAnalytics hook as expected", () => {
+      expect(useAnalytics).toBeCalledTimes(1);
+      expect(useAnalytics).toBeCalledWith();
+    });
+
+    it("should instantiate the useTranslation hook as expected", () => {
+      expect(useTranslation).toBeCalledTimes(2);
+      expect(useTranslation).toBeCalledWith("lastfm");
+      expect(useTranslation).toBeCalledWith("sunburst");
+    });
+
+    it("should instantiate the useMetrics hook as expected", () => {
+      expect(useMetrics).toBeCalledTimes(1);
+      expect(useMetrics).toBeCalledWith();
+    });
+
+    it("should instantiate the useSunBurstCacheController hook as expected", () => {
+      expect(useSunBurstCacheController).toBeCalledTimes(1);
+      expect(useSunBurstCacheController).toBeCalledWith({
+        queryClass: MockQueryClass,
+        sourceName: "lastfm",
+        userName: mockUserName,
+      });
+    });
+
+    it("should instantiate the useSunBurstLayoutController hook as expected", () => {
+      expect(useSunBurstLayoutController).toBeCalledTimes(1);
+      expect(useSunBurstLayoutController).toBeCalledWith();
+    });
+  };
+
+  const checkEffectHookDataFetchingWithCacheRetrieval = () => {
     describe("useEffect (data fetching)", () => {
+      it("should attempt to retrieve a cached report", () => {
+        expect(mockSunburstCacheControllerHook.read).toBeCalledTimes(1);
+        expect(mockSunburstCacheControllerHook.read).toBeCalledWith();
+      });
+
       it("should clear the state and start a fetch on component mount", () => {
         expect(currentLastFMHookState.clear).toBeCalledTimes(1);
         expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledTimes(1);
         expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
-          mockUsername
+          mockUserName
         );
+      });
+
+      it("should clear the report state during unmounting of the component", () => {
+        cleanup();
+        expect(currentLastFMHookState.clear).toBeCalledTimes(2);
+      });
+    });
+  };
+
+  const checkEffectHookDataFetchingWithNoCacheRetrieval = () => {
+    describe("useEffect (data fetching)", () => {
+      it("should attempt to retrieve a cached report", () => {
+        expect(mockSunburstCacheControllerHook.read).toBeCalledTimes(1);
+        expect(mockSunburstCacheControllerHook.read).toBeCalledWith();
+      });
+
+      it("should clear the state but NOT start a fetch on component mount", () => {
+        expect(currentLastFMHookState.clear).toBeCalledTimes(1);
+        expect(currentLastFMHookState.clear).toBeCalledWith();
       });
 
       it("should clear the report state during unmounting of the component", () => {
@@ -110,14 +188,14 @@ describe("SunBurstReportContainer", () => {
       it("should clear the state and start a fetch on component mount", () => {
         expect(currentLastFMHookState.clear).toBeCalledTimes(1);
         expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
-          mockUsername
+          mockUserName
         );
       });
 
       it("should resume the building the report", () => {
         expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledTimes(2);
         expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
-          mockUsername
+          mockUserName
         );
       });
 
@@ -135,12 +213,10 @@ describe("SunBurstReportContainer", () => {
   }) => {
     describe("useEffect (node selection)", () => {
       it("should trigger an analytics event for the selected node", () => {
-        expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(
-          analyticsCallCount
-        );
-        expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
+        expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
+        expect(mockAnalyticsHook.event).toBeCalledWith(
           mockQuery
-            .getEncapsulatedNode(mockSunBurstControllerHook.node.selected)
+            .getEncapsulatedNode(mockSunBurstControllerHookValues.node.selected)
             .getDrawerEvent()
         );
       });
@@ -152,7 +228,54 @@ describe("SunBurstReportContainer", () => {
     });
   };
 
-  const checkEffectHookReportReady = ({
+  const checkEffectHookNodeSelectionNoUpdate = ({
+    analyticsCallCount,
+  }: {
+    analyticsCallCount: number;
+  }) => {
+    describe("useEffect (node selection)", () => {
+      it("should NOT trigger an analytics event for the selected node", () => {
+        expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
+        expect(mockAnalyticsHook.event).not.toBeCalledWith(
+          mockQuery
+            .getEncapsulatedNode(mockSunBurstControllerHookValues.node.selected)
+            .getDrawerEvent()
+        );
+      });
+
+      it("should NOT trigger a layout update", () => {
+        expect(mockSunBurstLayoutControllerHook.update).toBeCalledTimes(0);
+      });
+    });
+  };
+
+  const checkEffectHookReportReadyWithCacheWriting = ({
+    analyticsCallCount,
+  }: {
+    analyticsCallCount: number;
+  }) => {
+    it("should write the report to the remote cache", () => {
+      expect(mockSunburstCacheControllerHook.write).toBeCalledTimes(1);
+      expect(mockSunburstCacheControllerHook.write).toBeCalledWith();
+    });
+
+    it("should NOT update the report state to ready", () => {
+      expect(currentLastFMHookState.ready).toBeCalledTimes(0);
+    });
+
+    it("should NOT increment the search metric", () => {
+      expect(mockMetricsHook.increment).toBeCalledTimes(0);
+    });
+
+    it("should NOT trigger an analytics event for report presentation", () => {
+      expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
+      expect(mockAnalyticsHook.event).not.toBeCalledWith(
+        Events.LastFM.ReportPresented(mockQuery.analyticsReportType)
+      );
+    });
+  };
+
+  const checkEffectHookReportReadyWithNoCacheWriting = ({
     analyticsCallCount,
   }: {
     analyticsCallCount: number;
@@ -168,10 +291,8 @@ describe("SunBurstReportContainer", () => {
     });
 
     it("should trigger an analytics event for report presentation", () => {
-      expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(
-        analyticsCallCount
-      );
-      expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
+      expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
+      expect(mockAnalyticsHook.event).toBeCalledWith(
         Events.LastFM.ReportPresented(mockQuery.analyticsReportType)
       );
     });
@@ -220,7 +341,7 @@ describe("SunBurstReportContainer", () => {
           lastFMt: mockLastFmT,
           query: mockQuery,
           sunBurstT: mockSunBurstT,
-          sunBurstController: mockSunBurstControllerHook,
+          sunBurstController: mockSunBurstControllerHookValues,
           sunBurstLayoutController: mockSunBurstLayoutControllerHook,
           visible: currentLastFMHookState.reportProperties.ready,
         },
@@ -237,89 +358,447 @@ describe("SunBurstReportContainer", () => {
     });
   };
 
-  describe("when the data state is ready", () => {
+  describe("when report cache retrieval is bypassed", () => {
     beforeEach(() => {
-      currentLastFMHookState.reportProperties.ready = false;
+      mockSunburstCacheControllerHook.read.mockResolvedValue({
+        bypassed: true,
+      });
     });
 
-    describe("when the report is complete", () => {
+    describe("when report cache writing is bypassed", () => {
       beforeEach(() => {
-        currentLastFMHookState.reportProperties.inProgress = false;
-        mockQuery.getReportData(
-          currentLastFMHookState.reportProperties
-        ).status.complete = true;
-        currentLastFMHookState.reportProperties.error = null;
-
-        arrange();
+        mockSunburstCacheControllerHook.write.mockResolvedValue({
+          bypassed: true,
+        });
       });
 
-      checkEffectHookDataFetching();
-      checkEffectHookNodeSelection({ analyticsCallCount: 2 });
-      checkEffectHookReportReady({ analyticsCallCount: 2 });
-      checkErrorDisplayContainerProps();
-      checkBillBoardProgressBarProps();
-      checkSunBurstReportProps();
+      describe("when the data state is ready", () => {
+        beforeEach(() => {
+          currentLastFMHookState.reportProperties.ready = false;
+        });
+
+        describe("when the report is complete", () => {
+          beforeEach(() => {
+            currentLastFMHookState.reportProperties.inProgress = false;
+            mockQuery.getReportData(
+              currentLastFMHookState.reportProperties
+            ).status.complete = true;
+            currentLastFMHookState.reportProperties.error = null;
+
+            arrange();
+          });
+
+          checkInstantiateHooks();
+          checkEffectHookDataFetchingWithCacheRetrieval();
+          checkEffectHookNodeSelection({ analyticsCallCount: 2 });
+          checkEffectHookReportReadyWithNoCacheWriting({
+            analyticsCallCount: 2,
+          });
+          checkErrorDisplayContainerProps();
+          checkBillBoardProgressBarProps();
+          checkSunBurstReportProps();
+        });
+      });
+
+      describe("when the data state is NOT ready", () => {
+        beforeEach(() => {
+          currentLastFMHookState.reportProperties.ready = false;
+        });
+
+        describe("when the report is NOT complete", () => {
+          beforeEach(() => {
+            mockQuery.getReportData(
+              currentLastFMHookState.reportProperties
+            ).status.complete = false;
+          });
+
+          describe.each(resumableReportErrors)(
+            "and is resumable (%s)",
+            (resumableCondition) => {
+              beforeEach(() => {
+                currentLastFMHookState.reportProperties.inProgress = false;
+                currentLastFMHookState.reportProperties.error =
+                  resumableCondition;
+                arrange();
+              });
+
+              checkInstantiateHooks();
+              checkEffectHookDataFetchingWithResume();
+              checkEffectHookNodeSelectionNoUpdate({ analyticsCallCount: 0 });
+              checkErrorDisplayContainerProps();
+              checkBillBoardProgressBarProps();
+              checkSunBurstReportProps();
+            }
+          );
+
+          describe("and is NOT resumable (NotFoundFetch)", () => {
+            beforeEach(() => {
+              currentLastFMHookState.reportProperties.inProgress = false;
+              currentLastFMHookState.reportProperties.error = "NotFoundFetch";
+
+              arrange();
+            });
+
+            checkInstantiateHooks();
+            checkEffectHookDataFetchingWithCacheRetrieval();
+            checkEffectHookNodeSelectionNoUpdate({ analyticsCallCount: 0 });
+            checkErrorDisplayContainerProps();
+            checkBillBoardProgressBarProps();
+            checkSunBurstReportProps();
+          });
+
+          describe("when the data is ABOUT to be complete", () => {
+            beforeEach(() => {
+              currentLastFMHookState.reportProperties.inProgress = false;
+              mockQuery.getReportData(
+                currentLastFMHookState.reportProperties
+              ).status.complete = true;
+              currentLastFMHookState.reportProperties.ready = false;
+              currentLastFMHookState.reportProperties.error = null;
+
+              arrange();
+            });
+
+            checkEffectHookDataFetchingWithCacheRetrieval();
+            checkEffectHookNodeSelection({ analyticsCallCount: 2 });
+            checkEffectHookReportReadyWithNoCacheWriting({
+              analyticsCallCount: 2,
+            });
+            checkErrorDisplayContainerProps();
+            checkBillBoardProgressBarProps();
+            checkSunBurstReportProps();
+          });
+        });
+      });
+    });
+
+    describe("when report cache writing is NOT bypassed", () => {
+      beforeEach(() => {
+        mockSunburstCacheControllerHook.write.mockResolvedValue({
+          bypassed: false,
+        });
+      });
+
+      describe("when the data state is ready", () => {
+        beforeEach(() => {
+          currentLastFMHookState.reportProperties.ready = false;
+        });
+
+        describe("when the report is complete", () => {
+          beforeEach(() => {
+            currentLastFMHookState.reportProperties.inProgress = false;
+            mockQuery.getReportData(
+              currentLastFMHookState.reportProperties
+            ).status.complete = true;
+            currentLastFMHookState.reportProperties.error = null;
+
+            arrange();
+          });
+
+          checkInstantiateHooks();
+          checkEffectHookDataFetchingWithCacheRetrieval();
+          checkEffectHookNodeSelection({ analyticsCallCount: 1 });
+          checkEffectHookReportReadyWithCacheWriting({ analyticsCallCount: 1 });
+          checkErrorDisplayContainerProps();
+          checkBillBoardProgressBarProps();
+          checkSunBurstReportProps();
+        });
+      });
+
+      describe("when the data state is NOT ready", () => {
+        beforeEach(() => {
+          currentLastFMHookState.reportProperties.ready = false;
+        });
+
+        describe("when the report is NOT complete", () => {
+          beforeEach(() => {
+            mockQuery.getReportData(
+              currentLastFMHookState.reportProperties
+            ).status.complete = false;
+          });
+
+          describe.each(resumableReportErrors)(
+            "and is resumable (%s)",
+            (resumableCondition) => {
+              beforeEach(() => {
+                currentLastFMHookState.reportProperties.inProgress = false;
+                currentLastFMHookState.reportProperties.error =
+                  resumableCondition;
+
+                arrange();
+              });
+
+              checkInstantiateHooks();
+              checkEffectHookDataFetchingWithResume();
+              checkEffectHookNodeSelectionNoUpdate({ analyticsCallCount: 0 });
+              checkErrorDisplayContainerProps();
+              checkBillBoardProgressBarProps();
+              checkSunBurstReportProps();
+            }
+          );
+
+          describe("and is NOT resumable (NotFoundFetch)", () => {
+            beforeEach(() => {
+              currentLastFMHookState.reportProperties.inProgress = false;
+              currentLastFMHookState.reportProperties.error = "NotFoundFetch";
+
+              arrange();
+            });
+
+            checkInstantiateHooks();
+            checkEffectHookDataFetchingWithCacheRetrieval();
+            checkEffectHookNodeSelectionNoUpdate({ analyticsCallCount: 0 });
+            checkErrorDisplayContainerProps();
+            checkBillBoardProgressBarProps();
+            checkSunBurstReportProps();
+          });
+
+          describe("when the data is ABOUT to be complete", () => {
+            beforeEach(() => {
+              currentLastFMHookState.reportProperties.inProgress = false;
+              mockQuery.getReportData(
+                currentLastFMHookState.reportProperties
+              ).status.complete = true;
+              currentLastFMHookState.reportProperties.ready = false;
+              currentLastFMHookState.reportProperties.error = null;
+
+              arrange();
+            });
+
+            checkEffectHookDataFetchingWithCacheRetrieval();
+            checkEffectHookNodeSelection({ analyticsCallCount: 1 });
+            checkEffectHookReportReadyWithCacheWriting({
+              analyticsCallCount: 1,
+            });
+            checkErrorDisplayContainerProps();
+            checkBillBoardProgressBarProps();
+            checkSunBurstReportProps();
+          });
+        });
+      });
     });
   });
 
-  describe("when the data state is NOT ready", () => {
+  describe("when report cache retrieval is NOT bypassed", () => {
     beforeEach(() => {
-      currentLastFMHookState.reportProperties.ready = false;
+      mockSunburstCacheControllerHook.read.mockResolvedValue({
+        bypassed: false,
+      });
     });
 
-    describe("when the report is NOT complete", () => {
+    describe("when report cache writing is bypassed", () => {
       beforeEach(() => {
-        mockQuery.getReportData(
-          currentLastFMHookState.reportProperties
-        ).status.complete = false;
-      });
-
-      describe("and is resumable", () => {
-        beforeEach(() => {
-          currentLastFMHookState.reportProperties.inProgress = false;
-          currentLastFMHookState.reportProperties.error = "TimeoutFetch";
-
-          arrange();
+        mockSunburstCacheControllerHook.write.mockResolvedValue({
+          bypassed: true,
         });
-
-        checkEffectHookDataFetchingWithResume();
-        checkErrorDisplayContainerProps();
-        checkBillBoardProgressBarProps();
-        checkSunBurstReportProps();
       });
 
-      describe("and is NOT resumable", () => {
+      describe("when the data state is ready", () => {
         beforeEach(() => {
-          currentLastFMHookState.reportProperties.inProgress = false;
-          currentLastFMHookState.reportProperties.error = "NotFoundFetch";
-
-          arrange();
-        });
-
-        checkEffectHookDataFetching();
-        checkErrorDisplayContainerProps();
-        checkBillBoardProgressBarProps();
-        checkSunBurstReportProps();
-      });
-
-      describe("when the data is ABOUT to be complete", () => {
-        beforeEach(() => {
-          currentLastFMHookState.reportProperties.inProgress = false;
-          mockQuery.getReportData(
-            currentLastFMHookState.reportProperties
-          ).status.complete = true;
           currentLastFMHookState.reportProperties.ready = false;
-          currentLastFMHookState.reportProperties.error = null;
-
-          arrange();
         });
 
-        checkEffectHookDataFetching();
-        checkEffectHookNodeSelection({ analyticsCallCount: 2 });
-        checkEffectHookReportReady({ analyticsCallCount: 2 });
-        checkErrorDisplayContainerProps();
-        checkBillBoardProgressBarProps();
-        checkSunBurstReportProps();
+        describe("when the report is complete", () => {
+          beforeEach(() => {
+            currentLastFMHookState.reportProperties.inProgress = false;
+            mockQuery.getReportData(
+              currentLastFMHookState.reportProperties
+            ).status.complete = true;
+            currentLastFMHookState.reportProperties.error = null;
+
+            arrange();
+          });
+
+          checkInstantiateHooks();
+          checkEffectHookDataFetchingWithNoCacheRetrieval();
+          checkEffectHookNodeSelection({ analyticsCallCount: 2 });
+          checkEffectHookReportReadyWithNoCacheWriting({
+            analyticsCallCount: 2,
+          });
+          checkErrorDisplayContainerProps();
+          checkBillBoardProgressBarProps();
+          checkSunBurstReportProps();
+        });
+      });
+
+      describe("when the data state is NOT ready", () => {
+        beforeEach(() => {
+          currentLastFMHookState.reportProperties.ready = false;
+        });
+
+        describe("when the report is NOT complete", () => {
+          beforeEach(() => {
+            mockQuery.getReportData(
+              currentLastFMHookState.reportProperties
+            ).status.complete = false;
+          });
+
+          describe.each(resumableReportErrors)(
+            "and is resumable (%s)",
+            (resumableCondition) => {
+              beforeEach(() => {
+                currentLastFMHookState.reportProperties.inProgress = false;
+                currentLastFMHookState.reportProperties.error =
+                  resumableCondition;
+
+                arrange();
+              });
+
+              checkInstantiateHooks();
+              checkEffectHookDataFetchingWithNoCacheRetrieval();
+              checkEffectHookNodeSelectionNoUpdate({ analyticsCallCount: 0 });
+              checkErrorDisplayContainerProps();
+              checkBillBoardProgressBarProps();
+              checkSunBurstReportProps();
+            }
+          );
+
+          describe("and is NOT resumable (NotFoundFetch)", () => {
+            beforeEach(() => {
+              currentLastFMHookState.reportProperties.inProgress = false;
+              currentLastFMHookState.reportProperties.error = "NotFoundFetch";
+
+              arrange();
+            });
+
+            checkInstantiateHooks();
+            checkEffectHookDataFetchingWithNoCacheRetrieval();
+            checkEffectHookNodeSelectionNoUpdate({ analyticsCallCount: 0 });
+            checkErrorDisplayContainerProps();
+            checkBillBoardProgressBarProps();
+            checkSunBurstReportProps();
+          });
+
+          describe("when the data is ABOUT to be complete", () => {
+            beforeEach(() => {
+              currentLastFMHookState.reportProperties.inProgress = false;
+              mockQuery.getReportData(
+                currentLastFMHookState.reportProperties
+              ).status.complete = true;
+              currentLastFMHookState.reportProperties.ready = false;
+              currentLastFMHookState.reportProperties.error = null;
+
+              arrange();
+            });
+
+            checkInstantiateHooks();
+            checkEffectHookDataFetchingWithNoCacheRetrieval();
+            checkEffectHookNodeSelection({ analyticsCallCount: 2 });
+            checkEffectHookReportReadyWithNoCacheWriting({
+              analyticsCallCount: 2,
+            });
+            checkErrorDisplayContainerProps();
+            checkBillBoardProgressBarProps();
+            checkSunBurstReportProps();
+          });
+        });
+      });
+    });
+
+    describe("when report cache writing is NOT bypassed", () => {
+      beforeEach(() => {
+        mockSunburstCacheControllerHook.write.mockResolvedValue({
+          bypassed: false,
+        });
+      });
+
+      describe("when the data state is ready", () => {
+        beforeEach(() => {
+          currentLastFMHookState.reportProperties.ready = false;
+        });
+
+        describe("when the report is complete", () => {
+          beforeEach(() => {
+            currentLastFMHookState.reportProperties.inProgress = false;
+            mockQuery.getReportData(
+              currentLastFMHookState.reportProperties
+            ).status.complete = true;
+            currentLastFMHookState.reportProperties.error = null;
+
+            arrange();
+          });
+
+          checkInstantiateHooks();
+          checkEffectHookDataFetchingWithNoCacheRetrieval();
+          checkEffectHookNodeSelection({ analyticsCallCount: 1 });
+          checkEffectHookReportReadyWithCacheWriting({ analyticsCallCount: 1 });
+          checkErrorDisplayContainerProps();
+          checkBillBoardProgressBarProps();
+          checkSunBurstReportProps();
+        });
+      });
+
+      describe("when the data state is NOT ready", () => {
+        beforeEach(() => {
+          currentLastFMHookState.reportProperties.ready = false;
+        });
+
+        describe("when the report is NOT complete", () => {
+          beforeEach(() => {
+            mockQuery.getReportData(
+              currentLastFMHookState.reportProperties
+            ).status.complete = false;
+          });
+
+          describe.each(resumableReportErrors)(
+            "and is resumable (%s)",
+            (resumableCondition) => {
+              beforeEach(() => {
+                currentLastFMHookState.reportProperties.inProgress = false;
+                currentLastFMHookState.reportProperties.error =
+                  resumableCondition;
+
+                arrange();
+              });
+
+              checkInstantiateHooks();
+              checkEffectHookDataFetchingWithNoCacheRetrieval();
+              checkEffectHookNodeSelectionNoUpdate({ analyticsCallCount: 0 });
+              checkErrorDisplayContainerProps();
+              checkBillBoardProgressBarProps();
+              checkSunBurstReportProps();
+            }
+          );
+
+          describe("and is NOT resumable (NotFoundFetch)", () => {
+            beforeEach(() => {
+              currentLastFMHookState.reportProperties.inProgress = false;
+              currentLastFMHookState.reportProperties.error = "NotFoundFetch";
+
+              arrange();
+            });
+
+            checkInstantiateHooks();
+            checkEffectHookDataFetchingWithNoCacheRetrieval();
+            checkEffectHookNodeSelectionNoUpdate({ analyticsCallCount: 0 });
+            checkErrorDisplayContainerProps();
+            checkBillBoardProgressBarProps();
+            checkSunBurstReportProps();
+          });
+
+          describe("when the data is ABOUT to be complete", () => {
+            beforeEach(() => {
+              currentLastFMHookState.reportProperties.inProgress = false;
+              mockQuery.getReportData(
+                currentLastFMHookState.reportProperties
+              ).status.complete = true;
+              currentLastFMHookState.reportProperties.ready = false;
+              currentLastFMHookState.reportProperties.error = null;
+
+              arrange();
+            });
+
+            checkInstantiateHooks();
+            checkEffectHookDataFetchingWithNoCacheRetrieval();
+            checkEffectHookNodeSelection({ analyticsCallCount: 1 });
+            checkEffectHookReportReadyWithCacheWriting({
+              analyticsCallCount: 1,
+            });
+            checkErrorDisplayContainerProps();
+            checkBillBoardProgressBarProps();
+            checkSunBurstReportProps();
+          });
+        });
       });
     });
   });
