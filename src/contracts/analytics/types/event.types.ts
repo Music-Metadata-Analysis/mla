@@ -1,5 +1,5 @@
 export interface AnalyticsEventDefinitionInterface {
-  category: "AUTH" | "LAST.FM" | "MAIN" | "TEST";
+  category: "AUTH" | "CACHE" | "LAST.FM" | "MAIN" | "TEST";
   label:
     | "AGGREGATE REQUESTS"
     | "BUTTON"

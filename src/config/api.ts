@@ -8,6 +8,7 @@ type statusCodeConfig = {
 export const serviceFailureStatusCodes: {
   lastfm: statusCodeConfig;
   reportCache: statusCodeConfig;
+  reportCacheCdn: statusCodeConfig;
 } = {
   lastfm: {
     401: status.STATUS_401_MESSAGE,
@@ -17,6 +18,9 @@ export const serviceFailureStatusCodes: {
   },
   reportCache: {
     401: status.STATUS_401_MESSAGE,
+  },
+  reportCacheCdn: {
+    404: status.STATUS_404_MESSAGE,
   },
 };
 

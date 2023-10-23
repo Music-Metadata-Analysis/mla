@@ -8,12 +8,14 @@ export type HttpApiClientResponse<ReportResponse> = {
 export interface HttpApiClientInterface {
   request<ReportResponse>(
     url: string,
-    params?: {
-      method?: HttpApiClientHttpMethodType;
-      cache?: RequestCache;
-      body?: unknown;
-    }
+    params?: HttpApiClientParamsInterface
   ): Promise<HttpApiClientResponse<ReportResponse>>;
+}
+
+export interface HttpApiClientParamsInterface {
+  method?: HttpApiClientHttpMethodType;
+  cache?: RequestCache;
+  body?: unknown;
 }
 
 export type HttpApiClientHttpMethodType = "GET" | "POST" | "PUT";
