@@ -21,7 +21,7 @@ export default function checkBillboardTitle({
 
     const checkNoTitleElement = () => {
       it("should NOT render the title text", () => {
-        getTitle().should("not.exist", { timeout });
+        getTitle().should("not.exist", { timeout: 1000 });
       });
     };
 

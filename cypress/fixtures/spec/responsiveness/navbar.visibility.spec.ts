@@ -19,9 +19,9 @@ export default function checkNavBarInputToggle({
 
     const checkNoNavBarElement = () => {
       it("should NOT render the NavBar", () => {
-        cy.get(`[data-testid="${navBarIDs.NavBarRoot}"]`, {
+        cy.get(`[data-testid="${navBarIDs.NavBarRoot}"]`).should("not.exist", {
           timeout,
-        }).should("not.exist");
+        });
       });
     };
 

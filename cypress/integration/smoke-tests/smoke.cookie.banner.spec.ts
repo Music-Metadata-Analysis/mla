@@ -45,7 +45,7 @@ describe("Cookie Consent Banner", () => {
       });
 
       it("should no longer display the cookie consent banner", () => {
-        getConsentBanner().should("not.exist", { timeout });
+        getConsentBanner().should("not.exist", { timeout: 1000 });
       });
     });
   });

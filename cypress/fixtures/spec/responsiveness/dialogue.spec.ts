@@ -21,7 +21,7 @@ export default function checkDialogueToggle({
 
     const checkNoToggleElement = () => {
       it("should NOT render the dialogue's toggle element", () => {
-        getDialogue().should("not.exist", { timeout });
+        getDialogue().should("not.exist", { timeout: 1000 });
       });
     };
 

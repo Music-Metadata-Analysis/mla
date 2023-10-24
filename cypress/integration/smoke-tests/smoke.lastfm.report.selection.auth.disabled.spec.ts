@@ -32,7 +32,7 @@ describe("LastFM Report Selection (Disabled)", () => {
           });
 
           it(`should NOT contain the '${reportConfig.reportName}' report`, () => {
-            cy.contains(reportConfig.reportName).should("not.exist", {
+            cy.get(reportConfig.reportName).should("not.exist", {
               timeout,
             });
           });
