@@ -1,7 +1,7 @@
 import { config, getValueOf } from "@cypress/config";
 import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
+import { checkAuthenticationModal } from "@cypress/fixtures/spec/components/authentication.modal.spec";
 import { setup } from "@cypress/fixtures/spec/setup.spec";
-import authentication from "@locales/authentication.json";
 import type { CypressReportType } from "@cypress/types/reports";
 
 describe("LastFM Report Viewing (Unauthenticated)", () => {
@@ -26,44 +26,7 @@ describe("LastFM Report Viewing (Unauthenticated)", () => {
             );
           });
 
-          it("should prompt us to log in", () => {
-            cy.contains(authentication.title, { timeout }).should(
-              "be.visible",
-              {
-                timeout,
-              }
-            );
-            cy.contains(authentication.buttons.facebook, {
-              timeout,
-            }).should("be.visible", { timeout });
-            cy.contains(authentication.buttons.github, { timeout }).should(
-              "be.visible",
-              {
-                timeout,
-              }
-            );
-            cy.contains(authentication.buttons.google, { timeout }).should(
-              "be.visible",
-              {
-                timeout,
-              }
-            );
-            cy.contains(authentication.buttons.spotify, { timeout }).should(
-              "be.visible",
-              {
-                timeout,
-              }
-            );
-          });
-
-          it("should offer to show us the terms of service", () => {
-            cy.contains(authentication.terms, { timeout }).should(
-              "be.visible",
-              {
-                timeout,
-              }
-            );
-          });
+          checkAuthenticationModal({ timeout });
         });
       });
     });

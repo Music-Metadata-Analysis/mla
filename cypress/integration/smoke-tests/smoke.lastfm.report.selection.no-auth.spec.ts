@@ -1,7 +1,7 @@
 import { config, getValueOf } from "@cypress/config";
+import { checkAuthenticationModal } from "@cypress/fixtures/spec/components/authentication.modal.spec";
 import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.spec";
 import { setup } from "@cypress/fixtures/spec/setup.spec";
-import authentication from "@locales/authentication.json";
 import lastfm from "@locales/lastfm.json";
 import main from "@locales/main.json";
 import routes from "@src/config/routes";
@@ -56,44 +56,7 @@ describe("LastFM Report Selection (Unauthenticated)", () => {
                 cy.contains(reportConfig.reportName, { timeout }).click();
               });
 
-              it("should prompt us to log in", () => {
-                cy.contains(authentication.title, { timeout }).should(
-                  "be.visible",
-                  {
-                    timeout,
-                  }
-                );
-                cy.contains(authentication.buttons.facebook, {
-                  timeout,
-                }).should("be.visible", { timeout });
-                cy.contains(authentication.buttons.github, { timeout }).should(
-                  "be.visible",
-                  {
-                    timeout,
-                  }
-                );
-                cy.contains(authentication.buttons.google, { timeout }).should(
-                  "be.visible",
-                  {
-                    timeout,
-                  }
-                );
-                cy.contains(authentication.buttons.spotify, { timeout }).should(
-                  "be.visible",
-                  {
-                    timeout,
-                  }
-                );
-              });
-
-              it("should offer to show us the terms of service", () => {
-                cy.contains(authentication.terms, { timeout }).should(
-                  "be.visible",
-                  {
-                    timeout,
-                  }
-                );
-              });
+              checkAuthenticationModal({ timeout });
             });
           });
         });
