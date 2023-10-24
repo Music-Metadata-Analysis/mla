@@ -23,9 +23,11 @@ export default class VerticalScrollBarEventHandlers {
   };
 
   protected touchStartHandler = (e: TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (this._activeScrollBar !== this.scrollRef.current?.id) return;
     if (this.scrollRef.current) {
-      this.startY = e.touches[0].pageY;
+      this.startY = e.changedTouches[0].pageY;
       this.registerTouchHandlers();
     }
   };
@@ -44,8 +46,10 @@ export default class VerticalScrollBarEventHandlers {
   };
 
   protected touchMoveHandler = (e: TouchEvent) => {
-    const deltaY = e.touches[0].pageY - this.startY;
-    this.getDefinedRef().scrollTop += deltaY / this.scrollModifier;
+    e.preventDefault();
+    e.stopPropagation();
+    const deltaY = e.changedTouches[0].pageY - this.startY;
+    this.getDefinedRef().scrollTop -= deltaY;
   };
 
   protected getDefinedRef = () => {
@@ -65,7 +69,9 @@ export default class VerticalScrollBarEventHandlers {
   };
 
   protected registerTouchHandlers = () => {
-    document.addEventListener("touchmove", this.touchMoveHandler);
+    document.addEventListener("touchmove", this.touchMoveHandler, {
+      passive: false,
+    });
     document.addEventListener("touchend", this.unregisterTouchHandlers);
   };
 

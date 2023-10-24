@@ -35,8 +35,8 @@ describe(VerticalScrollBarEventHandlers.name, () => {
     clientY: number;
   };
 
-  type MutableTouchEvent = Omit<TouchEvent, "touches"> & {
-    touches: TouchList;
+  type MutableTouchEvent = Omit<TouchEvent, "changedTouches"> & {
+    changedTouches: TouchList;
   };
 
   type MutableWheelEvent = Omit<WheelEvent, "deltaY"> & {
@@ -73,7 +73,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
     Object.defineProperty(newEvent, "preventDefault", {
       value: jest.fn(),
     });
-    Object.defineProperty(newEvent, "touches", {
+    Object.defineProperty(newEvent, "changedTouches", {
       writable: true,
       configurable: true,
     });
@@ -82,9 +82,9 @@ describe(VerticalScrollBarEventHandlers.name, () => {
 
   const assignTouches = (
     event: MutableTouchEvent,
-    touches: { pageY: number }[]
+    changedTouches: { pageY: number }[]
   ) => {
-    event.touches = touches as unknown as TouchList;
+    event.changedTouches = changedTouches as unknown as TouchList;
   };
 
   const checkProperties = () => {
@@ -392,12 +392,11 @@ describe(VerticalScrollBarEventHandlers.name, () => {
 
                   it("should scroll the element as expected", () => {
                     const deltaY =
-                      (touchMoveEvent.touches[0].pageY -
-                        touchStartEvent.touches[0].pageY) /
-                      scrollModifierValue;
+                      touchMoveEvent.changedTouches[0].pageY -
+                      touchStartEvent.changedTouches[0].pageY;
 
                     expect(element.scrollTop).toBe(
-                      elementStartingScrollTop + deltaY
+                      elementStartingScrollTop - deltaY
                     );
                   });
                 });
