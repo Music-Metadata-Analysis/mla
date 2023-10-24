@@ -1,5 +1,4 @@
-import env from "@cypress/config/env";
-import type { envVarSetType } from "@cypress/types/env";
+import { config, getValueOf } from "@cypress/config";
 
 export const AllAccessIdentity = {
   email: "all-access@mla.com",
@@ -25,14 +24,14 @@ export type IdentityType = typeof AllAccessIdentity | typeof NoAccessIdentity;
 
 export const authenticate = (
   authorizationCookieName: string,
-  sourceEnvVar: keyof envVarSetType
+  sourceEnvVar: config
 ) => {
   Cypress.Cookies.defaults({
     preserve: authorizationCookieName,
   });
-  cy.setCookie(authorizationCookieName, Cypress.env(sourceEnvVar), {
+  cy.setCookie(authorizationCookieName, getValueOf(sourceEnvVar), {
     httpOnly: true,
-    domain: Cypress.env(env.BASEURL).split("//")[1],
+    domain: getValueOf(config.BASEURL).split("//")[1],
     expiry: new Date().getTime() + 20000,
     sameSite: "lax",
     secure: true,

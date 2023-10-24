@@ -14,7 +14,7 @@
     "newkey": "jose newkey -s 256 -t oct -a HS512",
     "security": "audit-ci --config .audit-ci.json",
     "smoke:dev": "cypress open",
-    "smoke:env": "ts-node cypress/utils/env.ts",
+    "smoke:env": "ts-node cypress/utils/build.config.ts",
     "smoke:run": "cypress run --config video=false,screenshotOnRunFailure=false",
     "start": "next start",
     "test": "jest --watch"

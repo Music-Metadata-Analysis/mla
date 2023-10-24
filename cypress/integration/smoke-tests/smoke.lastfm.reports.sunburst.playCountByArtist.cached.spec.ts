@@ -1,4 +1,4 @@
-import env from "@cypress/config/env";
+import { config, getValueOf } from "@cypress/config";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { sunBurstReports } from "@cypress/fixtures/reports";
 import { authenticate } from "@cypress/fixtures/spec/auth.spec";
@@ -24,7 +24,10 @@ describe("Count By Artist SunBurst Report", async () => {
   describe(reportConfig.reportName, () => {
     describe("when we are logged in", () => {
       before(() => {
-        authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN);
+        authenticate(
+          authorizationCookieName,
+          config.SMOKE_TEST_ALL_ACCESS_TOKEN
+        );
       });
 
       describe("when we visit the search selection screen", () => {
@@ -47,7 +50,7 @@ describe("Count By Artist SunBurst Report", async () => {
           describe("when we enter a username", () => {
             before(() => {
               cy.get(`input[name="${fields.username}"]`, { timeout }).type(
-                Cypress.env(env.LASTFM_TEST_ACCOUNT_WITH_LISTENS) + "{enter}"
+                getValueOf(config.LASTFM_TEST_ACCOUNT_WITH_LISTENS) + "{enter}"
               );
             });
 

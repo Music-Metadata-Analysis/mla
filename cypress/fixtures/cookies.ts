@@ -1,7 +1,7 @@
-import env from "@cypress/config/env";
+import { config, getValueOf } from "@cypress/config";
 import authVendor from "@cypress/vendors/auth/vendor";
 
-const cookiePrefix = Cypress.env(env.BASEURL).includes("localhost")
+const cookiePrefix = getValueOf(config.BASEURL).includes("localhost")
   ? ""
   : "__Secure-";
 

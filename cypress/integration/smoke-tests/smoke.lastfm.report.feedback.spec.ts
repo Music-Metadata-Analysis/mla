@@ -1,4 +1,4 @@
-import env from "@cypress/config/env";
+import { config, getValueOf } from "@cypress/config";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { sunBurstReports } from "@cypress/fixtures/reports";
 import { authenticate } from "@cypress/fixtures/spec/auth.spec";
@@ -36,7 +36,7 @@ describe("Feedback Dialogue", () => {
         before(() => {
           authenticate(
             authorizationCookieName,
-            env.SMOKE_TEST_ALL_ACCESS_TOKEN
+            config.SMOKE_TEST_ALL_ACCESS_TOKEN
           );
         });
 
@@ -44,7 +44,9 @@ describe("Feedback Dialogue", () => {
           before(() => {
             cy.visit(
               sunBurstReports[0].reportRoute +
-                `?username=${Cypress.env(env.LASTFM_TEST_ACCOUNT_WITH_LISTENS)}`
+                `?username=${getValueOf(
+                  config.LASTFM_TEST_ACCOUNT_WITH_LISTENS
+                )}`
             );
           });
 

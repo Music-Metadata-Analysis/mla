@@ -1,4 +1,4 @@
-import env from "@cypress/config/env";
+import { config } from "@cypress/config";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
 import { authenticate } from "@cypress/fixtures/spec/auth.spec";
@@ -21,7 +21,7 @@ describe("LastFM Search Dialogues (Enabled)", () => {
         before(() => {
           authenticate(
             authorizationCookieName,
-            env.SMOKE_TEST_ALL_ACCESS_TOKEN
+            config.SMOKE_TEST_ALL_ACCESS_TOKEN
           );
         });
 

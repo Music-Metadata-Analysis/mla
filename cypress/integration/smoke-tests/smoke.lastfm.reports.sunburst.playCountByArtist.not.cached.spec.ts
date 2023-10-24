@@ -1,4 +1,4 @@
-import env from "@cypress/config/env";
+import { config } from "@cypress/config";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { sunBurstReports } from "@cypress/fixtures/reports";
 import { authenticate } from "@cypress/fixtures/spec/auth.spec";
@@ -23,14 +23,19 @@ describe("Count By Artist SunBurst Report", async () => {
   describe(reportConfig.reportName, () => {
     describe("when we are logged in", () => {
       before(() => {
-        authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN);
+        authenticate(
+          authorizationCookieName,
+          config.SMOKE_TEST_ALL_ACCESS_TOKEN
+        );
       });
 
       describe("when we visit the cache disabled url for the test account", () => {
         before(() =>
           cy.visit(
             routes.reports.lastfm.playCountByArtist +
-              `?username=${Cypress.env(env.LASTFM_TEST_ACCOUNT_WITH_LISTENS)}` +
+              `?username=${Cypress.env(
+                config.LASTFM_TEST_ACCOUNT_WITH_LISTENS
+              )}` +
               `&cached=0`
           )
         );

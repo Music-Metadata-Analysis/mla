@@ -1,4 +1,4 @@
-import env from "@cypress/config/env";
+import { config, getValueOf } from "@cypress/config";
 import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.spec";
 import { setup } from "@cypress/fixtures/spec/setup.spec";
 import authentication from "@locales/authentication.json";
@@ -11,7 +11,7 @@ describe("LastFM Report Selection (Unauthenticated)", () => {
   const timeout = 5000;
 
   const reports: CypressFlagEnabledReportType[] = JSON.parse(
-    Cypress.env(env.FLAG_ENABLED_REPORTS)
+    getValueOf(config.FLAG_ENABLED_REPORTS)
   );
 
   before(() => setup());

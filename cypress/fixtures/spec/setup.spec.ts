@@ -1,4 +1,4 @@
-import env from "@cypress/config/env";
+import { config, getValueOf } from "@cypress/config";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 
 export const setup = () => {
@@ -7,7 +7,7 @@ export const setup = () => {
   viewPort();
 };
 const baseUrl = () => {
-  Cypress.config("baseUrl", Cypress.env(env.BASEURL));
+  Cypress.config("baseUrl", getValueOf(config.BASEURL));
 };
 
 const viewPort = () => {

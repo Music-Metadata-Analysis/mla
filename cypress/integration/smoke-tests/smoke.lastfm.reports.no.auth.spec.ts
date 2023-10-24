@@ -1,4 +1,4 @@
-import env from "@cypress/config/env";
+import { config, getValueOf } from "@cypress/config";
 import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
 import { setup } from "@cypress/fixtures/spec/setup.spec";
 import authentication from "@locales/authentication.json";
@@ -20,7 +20,9 @@ describe("LastFM Report Viewing (Unauthenticated)", () => {
           before(() => {
             cy.visit(
               reportConfig.reportRoute +
-                `?username=${Cypress.env(env.LASTFM_TEST_ACCOUNT_WITH_LISTENS)}`
+                `?username=${getValueOf(
+                  config.LASTFM_TEST_ACCOUNT_WITH_LISTENS
+                )}`
             );
           });
 

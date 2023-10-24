@@ -8,7 +8,7 @@ import {
 import authVendor from "@cypress/vendors/auth/vendor";
 import testAccounts from "@src/contracts/api/services/lastfm/fixtures/end2end/lastfm.users";
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
-import type { envVarType } from "@cypress/types/env";
+import type { CypressConfigurationType } from "@cypress/types/config";
 import type { CypressFlagEnabledReportType } from "@cypress/types/reports";
 
 const environmentFile = "cypress.env.json";
@@ -46,7 +46,7 @@ loadEnvironment()
       LASTFM_TEST_ACCOUNT_WITH_LISTENS: testAccounts.hasListens,
       SMOKE_TEST_ALL_ACCESS_TOKEN: tokens[0],
       SMOKE_TEST_NO_ACCESS_TOKEN: tokens[1],
-    } as envVarType);
+    } as CypressConfigurationType);
     writeFile(environmentFile, content, (err) => {
       if (err) {
         console.error(err);
