@@ -1,62 +1,78 @@
 import env from "@cypress/config/env";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
-import { flipCardReports } from "@cypress/fixtures/reports";
+import { sunBurstReports } from "@cypress/fixtures/reports";
 import { authenticate } from "@cypress/fixtures/spec/auth.spec";
 import { setup } from "@cypress/fixtures/spec/setup.spec";
+import LastFmTranslations from "@locales/lastfm.json";
 import translations from "@locales/main.json";
 import metrics from "@src/config/metrics";
-import routes from "@src/config/routes";
-import { fields } from "@src/web/forms/lastfm/components/username/username.form.identifiers";
 import { testIDs as feedBackTestIDs } from "@src/web/notifications/popups/components/feedback/feedback.popup.identifiers";
+import { testIDs as SunBurstTitleIDs } from "@src/web/reports/lastfm/generics/components/report.component/sunburst/panels/title/title.panel.identifiers";
 
 describe("Feedback Dialogue", () => {
   const authorizationCookieName = getAuthorizationCookieName();
-  const thresholdSearchMetricValue = { SearchMetric: 4 };
   const timeout = 40000;
-  const report = flipCardReports[0].reportName;
 
   before(() => setup());
 
-  describe("when local storage contains a threshold search metric value", () => {
-    before(() => {
-      window.localStorage.setItem(
-        metrics.localStorageKey,
-        JSON.stringify(thresholdSearchMetricValue)
-      );
-    });
-
-    after(() => window.localStorage.clear());
-
-    describe("when we are logged in", () => {
+  [
+    { condition: { SearchMetric: 3 }, result: false },
+    { condition: { SearchMetric: 4 }, result: true },
+    { condition: { SearchMetric: 5 }, result: false },
+  ].forEach((testCase) =>
+    describe(`when local storage contains a search metric value (${JSON.stringify(
+      testCase.condition
+    )})`, () => {
       before(() => {
-        authenticate(authorizationCookieName, env.SMOKE_TEST_ALL_ACCESS_TOKEN);
+        window.localStorage.setItem(
+          metrics.localStorageKey,
+          JSON.stringify(testCase.condition)
+        );
       });
 
-      describe("when we visit the search selection screen", () => {
-        before(() => cy.visit(routes.search.lastfm.selection));
+      after(() => window.localStorage.clear());
 
-        describe(`when we select the '${report}' report`, () => {
+      describe("when we are logged in", () => {
+        before(() => {
+          authenticate(
+            authorizationCookieName,
+            env.SMOKE_TEST_ALL_ACCESS_TOKEN
+          );
+        });
+
+        describe("when we visit a user's lastfm playcount by artist report page", () => {
           before(() => {
-            cy.contains(report, { timeout }).click();
+            cy.visit(
+              sunBurstReports[0].reportRoute +
+                `?username=${Cypress.env(env.LASTFM_TEST_ACCOUNT_WITH_LISTENS)}`
+            );
           });
 
-          it("should display an input field for a lastfm username", () => {
-            cy.get(`input[name="${fields.username}"]`, { timeout });
-          });
+          describe("when the title dialogue is displayed", () => {
+            const getDialogue = () =>
+              cy.get(`[data-testid="${feedBackTestIDs.FeedBackDialogue}"]`, {
+                timeout,
+              });
 
-          describe("when we enter a username", () => {
-            before(() => {
-              cy.get(`input[name="${fields.username}"]`, { timeout }).type(
-                "niall-byrne{enter}"
-              );
-            });
-
-            describe("when the feedback dialogue is displayed", () => {
-              const getDialogue = () =>
-                cy.get(`[data-testid="${feedBackTestIDs.FeedBackDialogue}"]`, {
-                  timeout,
+            const noDialogue = () =>
+              cy
+                .get(`[data-testid="${feedBackTestIDs.FeedBackDialogue}"]`)
+                .should("not.exist", {
+                  timeout: 500,
                 });
 
+            it("should load a title for the report", () => {
+              cy.get(
+                `[data-testid="${SunBurstTitleIDs.SunBurstTitlePanelTitle}"]`,
+                { timeout }
+              )
+                .contains(LastFmTranslations.playCountByArtist.title, {
+                  timeout,
+                })
+                .should("be.visible", { timeout });
+            });
+
+            if (testCase.result) {
               it("should display the feedback dialogue icon", () => {
                 getDialogue()
                   .get(
@@ -86,10 +102,14 @@ describe("Feedback Dialogue", () => {
                     timeout,
                   });
               });
-            });
+            } else {
+              it("should NOT display the feedback dialogue icon", () => {
+                noDialogue();
+              });
+            }
           });
         });
       });
-    });
-  });
+    })
+  );
 });

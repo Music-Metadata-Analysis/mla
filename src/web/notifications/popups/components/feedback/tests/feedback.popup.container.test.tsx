@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react";
+import { useEffect } from "react";
 import FeedbackPopUp from "../feedback.popup.component";
 import FeedbackPopUpContainer from "../feedback.popup.container";
 import translations from "@locales/main.json";
@@ -10,6 +11,7 @@ import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook
 import mockMetricsHook from "@src/web/metrics/collection/state/hooks/__mocks__/metrics.hook.mock";
 import mockPopUpsControllerHook from "@src/web/notifications/popups/state/controllers/__mocks__/popups.controller.hook.mock";
 import usePopUpsGenerator from "@src/web/notifications/popups/state/controllers/popups.generator.hook";
+import useNotOnMountEffect from "@src/web/ui/generics/state/hooks/not.on.mount.hook";
 
 jest.mock("@src/web/authentication/session/hooks/auth.hook");
 
@@ -25,6 +27,8 @@ jest.mock(
   "@src/web/notifications/popups/state/controllers/popups.generator.hook"
 );
 
+jest.mock("@src/web/ui/generics/state/hooks/not.on.mount.hook");
+
 jest.mock("../feedback.popup.component", () =>
   require("@fixtures/react/child").createComponent("FeedbackPopUp")
 );
@@ -36,8 +40,12 @@ describe("FeedbackPopUpContainer", () => {
     jest.clearAllMocks();
   });
 
+  const WrapperComponent = () => {
+    return <FeedbackPopUpContainer />;
+  };
+
   const arrange = () => {
-    render(<FeedbackPopUpContainer />);
+    render(<WrapperComponent />);
   };
 
   const checkPopUpTogglesOpen = () => {
@@ -64,63 +72,138 @@ describe("FeedbackPopUpContainer", () => {
     });
   };
 
-  describe("user is logged in", () => {
+  describe("when on the first render", () => {
     beforeEach(() => {
-      mockAuthHook.status = "authenticated";
-      mockAuthHook.user = mockUserProfile;
+      jest.mocked(useNotOnMountEffect).mockRestore();
     });
 
-    describe("metric count matches a target", () => {
+    describe("user is logged in", () => {
       beforeEach(() => {
-        mockMetricsHook.metrics["SearchMetric"] =
-          settings.FeedBack.searchMetricCount[0];
-
-        arrange();
+        mockAuthHook.status = "authenticated";
+        mockAuthHook.user = mockUserProfile;
       });
 
-      checkPopUpGeneratorRender();
-      checkPopUpTogglesOpen();
+      describe("metric count matches a target", () => {
+        beforeEach(() => {
+          mockMetricsHook.metrics["SearchMetric"] =
+            settings.FeedBack.searchMetricCount[0];
+
+          arrange();
+        });
+
+        checkPopUpGeneratorRender();
+        checkPopUpDoesNotToggleOpen();
+      });
+
+      describe("metric count does NOT match a target", () => {
+        beforeEach(() => {
+          mockMetricsHook.metrics["SearchMetric"] = 0;
+
+          arrange();
+        });
+
+        checkPopUpGeneratorRender();
+        checkPopUpDoesNotToggleOpen();
+      });
     });
 
-    describe("metric count does NOT match a target", () => {
+    describe("user is NOT logged in", () => {
       beforeEach(() => {
-        mockMetricsHook.metrics["SearchMetric"] = 0;
-
-        arrange();
+        mockAuthHook.status = "unauthenticated";
+        mockAuthHook.user = null;
       });
 
-      checkPopUpGeneratorRender();
-      checkPopUpDoesNotToggleOpen();
+      describe("metric count matches a target", () => {
+        beforeEach(() => {
+          mockMetricsHook.metrics["SearchMetric"] =
+            settings.FeedBack.searchMetricCount[0];
+
+          arrange();
+        });
+
+        checkPopUpGeneratorRender();
+        checkPopUpDoesNotToggleOpen();
+      });
+
+      describe("metric count does NOT match a target", () => {
+        beforeEach(() => {
+          mockMetricsHook.metrics["SearchMetric"] = 0;
+
+          arrange();
+        });
+
+        checkPopUpGeneratorRender();
+        checkPopUpDoesNotToggleOpen();
+      });
     });
   });
 
-  describe("user is NOT logged in", () => {
+  describe("when on a subsequent render", () => {
     beforeEach(() => {
-      mockAuthHook.status = "unauthenticated";
-      mockAuthHook.user = null;
+      jest
+        .mocked(useNotOnMountEffect)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        .mockImplementation((props, deps) => useEffect(props, deps));
     });
 
-    describe("metric count matches a target", () => {
+    describe("user is logged in", () => {
       beforeEach(() => {
-        mockMetricsHook.metrics["SearchMetric"] =
-          settings.FeedBack.searchMetricCount[0];
-
-        arrange();
+        mockAuthHook.status = "authenticated";
+        mockAuthHook.user = mockUserProfile;
       });
 
-      checkPopUpGeneratorRender();
-      checkPopUpDoesNotToggleOpen();
+      describe("metric count matches a target", () => {
+        beforeEach(() => {
+          mockMetricsHook.metrics["SearchMetric"] =
+            settings.FeedBack.searchMetricCount[0];
+
+          arrange();
+        });
+
+        checkPopUpGeneratorRender();
+        checkPopUpTogglesOpen();
+      });
+
+      describe("metric count does NOT match a target", () => {
+        beforeEach(() => {
+          mockMetricsHook.metrics["SearchMetric"] = 0;
+
+          arrange();
+        });
+
+        checkPopUpGeneratorRender();
+        checkPopUpDoesNotToggleOpen();
+      });
     });
 
-    describe("metric count does NOT match a target", () => {
+    describe("user is NOT logged in", () => {
       beforeEach(() => {
-        mockMetricsHook.metrics["SearchMetric"] = 0;
-
-        arrange();
+        mockAuthHook.status = "unauthenticated";
+        mockAuthHook.user = null;
       });
 
-      checkPopUpGeneratorRender();
-      checkPopUpDoesNotToggleOpen();
+      describe("metric count matches a target", () => {
+        beforeEach(() => {
+          mockMetricsHook.metrics["SearchMetric"] =
+            settings.FeedBack.searchMetricCount[0];
+
+          arrange();
+        });
+
+        checkPopUpGeneratorRender();
+        checkPopUpDoesNotToggleOpen();
+      });
+
+      describe("metric count does NOT match a target", () => {
+        beforeEach(() => {
+          mockMetricsHook.metrics["SearchMetric"] = 0;
+
+          arrange();
+        });
+
+        checkPopUpGeneratorRender();
+        checkPopUpDoesNotToggleOpen();
+      });
     });
   });
 });

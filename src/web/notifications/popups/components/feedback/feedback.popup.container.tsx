@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import FeedbackPopUp from "./feedback.popup.component";
 import settings from "@src/config/popups";
 import useAuth from "@src/web/authentication/session/hooks/auth.hook";
@@ -6,6 +5,7 @@ import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import useMetrics from "@src/web/metrics/collection/state/hooks/metrics.hook";
 import usePopUpsController from "@src/web/notifications/popups/state/controllers/popups.controller.hook";
 import usePopUpsGenerator from "@src/web/notifications/popups/state/controllers/popups.generator.hook";
+import useNotOnMountEffect from "@src/web/ui/generics/state/hooks/not.on.mount.hook";
 
 const popUpName = "FeedBack" as const;
 
@@ -21,7 +21,7 @@ export default function FeedbackPopUpContainer() {
     name: popUpName,
   });
 
-  useEffect(() => {
+  useNotOnMountEffect(() => {
     if (
       settings[popUpName].searchMetricCount.includes(metrics["SearchMetric"]) &&
       authStatus === "authenticated"
