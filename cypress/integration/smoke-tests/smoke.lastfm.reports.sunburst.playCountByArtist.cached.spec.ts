@@ -15,7 +15,7 @@ import { testIDs as SunBurstDrawerListIDs } from "@src/web/reports/lastfm/generi
 
 describe("Count By Artist SunBurst Report", async () => {
   const authorizationCookieName = getAuthorizationCookieName();
-  const timeout = 40000;
+  const timeout = 10000;
 
   const reportConfig = sunBurstReports[0];
 
