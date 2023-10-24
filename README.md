@@ -6,11 +6,15 @@
 
 ### Production
 
-[![Music Analytics Project CI/CD](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml/badge.svg?branch=production)](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml)&nbsp;[![Netlify Status](https://api.netlify.com/api/v1/badges/6009f81f-5635-4571-ba0d-8dbb3bbe6171/deploy-status)](https://app.netlify.com/sites/production-mla/deploys)
+[![MLA CI/CD](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml/badge.svg?branch=production)](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml)
+
+<a href="https://www.statuscake.com" title="Website Uptime Monitoring"><img src="https://app.statuscake.com/button/index.php?Track=7031388&Days=1&Design=1" /></a>
 
 ### Stage
 
-[![Music Analytics Project CI/CD](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml)&nbsp;[![Netlify Status](https://api.netlify.com/api/v1/badges/4a472878-8636-4fdf-adbd-34ae850092ce/deploy-status)](https://app.netlify.com/sites/stage-mla/deploys)
+[![MLA CI/CD](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml)
+
+<a href="https://www.statuscake.com" title="Website Uptime Monitoring"><img src="https://app.statuscake.com/button/index.php?Track=7031389&Days=1&Design=1" /></a>
 
 # About
 
