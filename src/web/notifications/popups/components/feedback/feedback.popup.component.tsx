@@ -4,15 +4,16 @@ import { testIDs } from "./feedback.popup.identifiers";
 import externalLinks from "@src/config/external";
 import ClickLink from "@src/web/navigation/links/components/click.link.external/click.link.external.component";
 import useColour from "@src/web/ui/colours/state/hooks/colour.hook";
-import SVSIconContainer from "@src/web/ui/generics/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/web/ui/generics/components/styles/hover.dim/hover.dim.style";
 import type { PopUpComponentProps } from "@src/vendors/types/integrations/ui.framework/popups/popups.component.types";
 
 export default function FeedbackDialogue({
   message,
   onClose,
+  subComponents,
 }: PopUpComponentProps) {
   const { feedbackColour } = useColour();
+  const Icon = subComponents.Icon;
 
   return (
     <Box
@@ -29,7 +30,7 @@ export default function FeedbackDialogue({
           <DimOnHover ml={2} mb={2}>
             <Avatar
               data-testid={testIDs.FeedBackDialogueIcon}
-              icon={<SVSIconContainer width={75} height={75} />}
+              icon={<Icon />}
               width={50}
             />
           </DimOnHover>

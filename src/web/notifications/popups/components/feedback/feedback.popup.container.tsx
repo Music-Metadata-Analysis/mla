@@ -5,6 +5,7 @@ import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import useMetrics from "@src/web/metrics/collection/state/hooks/metrics.hook";
 import usePopUpsController from "@src/web/notifications/popups/state/controllers/popups.controller.hook";
 import usePopUpsGenerator from "@src/web/notifications/popups/state/controllers/popups.generator.hook";
+import SVSIcon from "@src/web/ui/generics/components/icons/svs/svs.icon.component";
 import useNotOnMountEffect from "@src/web/ui/generics/state/hooks/not.on.mount.hook";
 
 const popUpName = "FeedBack" as const;
@@ -15,10 +16,15 @@ export default function FeedbackPopUpContainer() {
   const { metrics } = useMetrics();
   const popups = usePopUpsController();
 
+  const Icon = () => (
+    <SVSIcon altText={t("altText.svs")} width={75} height={75} />
+  );
+
   usePopUpsGenerator({
     component: FeedbackPopUp,
     message: t(`popups.${popUpName}`),
     name: popUpName,
+    subComponents: { Icon },
   });
 
   useNotOnMountEffect(() => {

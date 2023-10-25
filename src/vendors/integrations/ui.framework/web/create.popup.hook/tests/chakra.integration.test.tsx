@@ -10,6 +10,8 @@ import MockPopUpComponent, {
   testColours,
 } from "./implementations/concrete.popup.component";
 import useChakraPopUp from "../chakra";
+import { createSimpleComponent } from "@fixtures/react/simple";
+import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 import usePopUpsController from "@src/vendors/integrations/ui.framework/web/popups/controller/popups.controller.hook";
 import PopUpsControllerProvider from "@src/vendors/integrations/ui.framework/web/popups/provider/popups.provider";
@@ -18,6 +20,9 @@ describe("useChakraPopUp", () => {
   const mockDataId = "mockDataId";
   const mockName = "FeedBack";
   const mockMessage = "mockMessage";
+
+  const subComponent1ID = "SubComponent1";
+  const subComponent1 = createSimpleComponent(subComponent1ID);
 
   beforeEach(() => jest.clearAllMocks());
 
@@ -28,6 +33,7 @@ describe("useChakraPopUp", () => {
       component: MockPopUpComponent,
       name: mockName,
       message: mockMessage,
+      subComponents: { one: subComponent1 },
     });
 
     return (
@@ -89,6 +95,16 @@ describe("useChakraPopUp", () => {
             await screen.findByTestId(testIDs.MockPopUpComponentColourIndicator)
           ).findByText(testColours.dark)
         ).toBeTruthy();
+      });
+
+      it("should render the passed sub component", async () => {
+        await waitFor(() => expect(subComponent1).toBeCalledTimes(1));
+        expect(
+          await within(
+            await screen.findByTestId(testIDs.MockPopUpComponent)
+          ).findByText(subComponent1ID)
+        ).toBeTruthy();
+        checkMockCall(subComponent1, {});
       });
 
       describe("when the MockPopUp's close button is clicked", () => {

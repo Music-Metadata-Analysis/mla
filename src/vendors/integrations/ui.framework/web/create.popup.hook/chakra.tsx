@@ -16,7 +16,11 @@ export default function useChakraPopUp(
     duration: null,
     isClosable: true,
     render: () => (
-      <props.component message={props.message} onClose={closeToast} />
+      <props.component
+        message={props.message}
+        onClose={closeToast}
+        subComponents={props.subComponents}
+      />
     ),
   };
 

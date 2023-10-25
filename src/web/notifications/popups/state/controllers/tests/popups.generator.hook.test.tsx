@@ -12,11 +12,14 @@ describe("usePopUpsGenerator", () => {
   let received: ReturnType<typeof arrange>;
 
   const mockPopUpComponent = createSimpleComponent("MockPopUpComponent");
+  const subComponent1ID = "SubComponent1";
+  const subComponent1 = createSimpleComponent(subComponent1ID);
 
   const mockProps: UIVendorCreatePopUpHookInterface = {
     name: "FeedBack",
     message: "mockMessage",
     component: mockPopUpComponent,
+    subComponents: { one: subComponent1 },
   };
 
   beforeEach(() => {

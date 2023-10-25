@@ -14,9 +14,10 @@ export const testColours = {
 };
 
 const MockPopUpComponent = jest.fn(
-  ({ message, onClose }: PopUpComponentProps) => {
+  ({ message, onClose, subComponents }: PopUpComponentProps) => {
     const { toggleColorMode } = useColorMode();
     const colour = useColorModeValue(testColours.light, testColours.dark);
+    const PassedComponentOne = subComponents.one;
 
     return (
       <div data-testid={testIDs.MockPopUpComponent}>
@@ -33,6 +34,7 @@ const MockPopUpComponent = jest.fn(
           data-testid={testIDs.MockPopUpComponentColourToggle}
           onClick={toggleColorMode}
         />
+        <PassedComponentOne />
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import FeedbackPopUp from "../feedback.popup.component";
 import { testIDs } from "../feedback.popup.identifiers";
+import { createSimpleComponent } from "@fixtures/react/simple";
 import externalLinks from "@src/config/external";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
@@ -11,13 +12,22 @@ describe("FeedbackPopUp", () => {
   const mockClose = jest.fn();
   const mockMessage = "mockMessage";
 
+  const mockIconID = "mockIconID";
+  const mockIcon = createSimpleComponent(mockIconID);
+
   beforeEach(() => {
     jest.clearAllMocks();
     arrange();
   });
 
   const arrange = () => {
-    render(<FeedbackPopUp message={mockMessage} onClose={mockClose} />);
+    render(
+      <FeedbackPopUp
+        message={mockMessage}
+        onClose={mockClose}
+        subComponents={{ Icon: mockIcon }}
+      />
+    );
   };
 
   describe("when rendered", () => {

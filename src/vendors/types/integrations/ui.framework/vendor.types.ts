@@ -11,6 +11,7 @@ import type {
 import type usePopUpsController from "@src/vendors/integrations/ui.framework/web/popups/controller/popups.controller.hook";
 import type PopUpsControllerProvider from "@src/vendors/integrations/ui.framework/web/popups/provider/popups.provider";
 import type { PopUpsControllerContext } from "@src/vendors/integrations/ui.framework/web/popups/provider/popups.provider";
+import type { FC } from "react";
 
 export type UIVendorColourType = VendorColourType;
 
@@ -34,6 +35,7 @@ export interface UIVendorCreatePopUpHookInterface {
   name: PopUpComponentNameType;
   message: string;
   component: PopUpComponentType;
+  subComponents: { [key: string]: FC };
 }
 
 export type UIVendorProviderComponentProps = VendorProviderProps;

@@ -4,11 +4,11 @@ import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import FeedbackPopUp from "../feedback.popup.component";
 import { testIDs } from "../feedback.popup.identifiers";
+import { createSimpleComponent } from "@fixtures/react/simple";
 import externalRoutes from "@src/config/external";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import ClickLink from "@src/web/navigation/links/components/click.link.external/click.link.external.component";
 import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
-import SVSIconContainer from "@src/web/ui/generics/components/icons/svs/svs.icon.container";
 import DimOnHover from "@src/web/ui/generics/components/styles/hover.dim/hover.dim.style";
 
 jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
@@ -41,6 +41,8 @@ jest.mock(
 describe("FeedbackPopUp", () => {
   const mockClose = jest.fn();
   const mockMessage = "mockMessage";
+  const mockIconID = "mockIconID";
+  const mockIcon = createSimpleComponent(mockIconID);
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -48,18 +50,22 @@ describe("FeedbackPopUp", () => {
   });
 
   const arrange = () => {
-    render(<FeedbackPopUp message={mockMessage} onClose={mockClose} />);
+    render(
+      <FeedbackPopUp
+        message={mockMessage}
+        onClose={mockClose}
+        subComponents={{ Icon: mockIcon }}
+      />
+    );
   };
 
-  it("should call Avatar as expected to display the logo", () => {
+  it("should call the Avatar correctly to display the icon", () => {
     expect(Avatar).toBeCalledTimes(1);
     const call = jest.mocked(Avatar).mock.calls[0][0];
     expect(call["data-testid"]).toBe(testIDs.FeedBackDialogueIcon);
     expect(call.width).toStrictEqual(50);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(renderToString(call.icon!)).toBe(
-      renderToString(<SVSIconContainer width={75} height={75} />)
-    );
+    expect(renderToString(call.icon!)).toBe(renderToString(mockIcon()));
     expect(Object.keys(call).length).toBe(3);
   });
 
