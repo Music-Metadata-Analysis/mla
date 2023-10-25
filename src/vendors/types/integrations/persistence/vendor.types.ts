@@ -1,7 +1,7 @@
 import type { useState, useReducer } from "react";
 
 export interface PersistanceVendorFactoryInterface<
-  T extends typeof useState | typeof useReducer
+  T extends typeof useState | typeof useReducer,
 > {
   create(partitionName: string, isSSR: boolean): T;
 }

@@ -3,7 +3,7 @@ import Authentication from "@src/web/authentication/sign.in/components/authentic
 
 class AuthenticationErrorConditionalDisplay<
   ReportType,
-  DrawerProps
+  DrawerProps,
 > extends ErrorConditionBase<ReportType, DrawerProps> {
   error = "UnauthorizedFetch" as const;
 

@@ -15,7 +15,7 @@ describe(CdnController.name, () => {
       ({
         logCacheHitRate: mockCdnLogCacheHitRate,
         query: mockCdnQuery,
-      } as unknown as CacheVendorCdnInterface<string>)
+      }) as unknown as CacheVendorCdnInterface<string>
   );
 
   beforeEach(() => jest.clearAllMocks());

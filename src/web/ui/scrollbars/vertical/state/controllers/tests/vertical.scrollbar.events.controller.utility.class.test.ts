@@ -53,12 +53,11 @@ describe(VerticalScrollBarEventHandlers.name, () => {
   };
 
   const createEvent = <
-    T extends MutableMouseEvent | MutableTouchEvent | MutableWheelEvent
+    T extends MutableMouseEvent | MutableTouchEvent | MutableWheelEvent,
   >(
-    EventConstructor: new (eventType: string) =>
-      | MutableMouseEvent
-      | MutableTouchEvent
-      | MutableWheelEvent,
+    EventConstructor: new (
+      eventType: string
+    ) => MutableMouseEvent | MutableTouchEvent | MutableWheelEvent,
     eventType: string
   ) => {
     const newEvent = new EventConstructor(eventType) as T;

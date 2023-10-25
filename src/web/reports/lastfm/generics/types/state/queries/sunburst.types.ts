@@ -25,7 +25,7 @@ export type SunBurstReportStateEncapsulationConstructor<AggregateReportType> =
 export interface SunBurstReportStateQueryInterface<
   ReportEncapsulation extends LastFMReportBaseStateEncapsulation,
   CompletedReportDataType,
-  DrawerComponentProps
+  DrawerComponentProps,
 > extends LastFMReportStateQueryInterface<
     ReportEncapsulation,
     CompletedReportDataType,

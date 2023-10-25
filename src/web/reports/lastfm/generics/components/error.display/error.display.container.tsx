@@ -32,10 +32,9 @@ export default function LastFMErrorDisplayContainer<ReportType, DrawerProps>({
   const router = useRouter();
 
   const ErrorConditions: Array<
-    new (props: ErrorBaseProps<ReportType, DrawerProps>) => ErrorBase<
-      ReportType,
-      DrawerProps
-    >
+    new (
+      props: ErrorBaseProps<ReportType, DrawerProps>
+    ) => ErrorBase<ReportType, DrawerProps>
   > = [
     AuthenticationErrorConditionalDisplay,
     FetchFailureConditionalDisplay,

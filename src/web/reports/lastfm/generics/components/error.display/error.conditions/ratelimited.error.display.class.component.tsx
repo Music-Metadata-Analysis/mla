@@ -3,7 +3,7 @@ import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.d
 
 class RateLimitedErrorConditionalDisplay<
   ReportType,
-  DrawerProps
+  DrawerProps,
 > extends ErrorConditionBase<ReportType, DrawerProps> {
   error = "RatelimitedFetch" as const;
 

@@ -1,5 +1,5 @@
 const makeUniqueHookMock = <
-  T extends Record<string, string | number | boolean | jest.Mock>
+  T extends Record<string, string | number | boolean | jest.Mock>,
 >(
   mockedObject: Record<keyof T, string | number | boolean | jest.Mock>
 ): T => {

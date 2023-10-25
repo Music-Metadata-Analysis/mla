@@ -20,7 +20,7 @@ jest.mock(
     )
 );
 
-type translationKeyType = keyof typeof translations["select"][
+type translationKeyType = keyof (typeof translations)["select"][
   | "indicators"
   | "reports"];
 

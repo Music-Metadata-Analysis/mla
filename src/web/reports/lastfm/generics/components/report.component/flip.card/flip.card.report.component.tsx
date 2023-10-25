@@ -9,7 +9,7 @@ import type LastFMReportQueryAbstractBaseClass from "@src/web/reports/lastfm/gen
 
 export interface FlipCardReportProps<
   ReportEncapsulation extends LastFMReportFlipCardBaseStateEncapsulation,
-  ReportDataType extends unknown[]
+  ReportDataType extends unknown[],
 > {
   flipCardController: FlipCardControllerHookType;
   imageIsLoaded: () => void;
@@ -23,7 +23,7 @@ export interface FlipCardReportProps<
 
 export default function FlipCardReport<
   ReportEncapsulation extends LastFMReportFlipCardBaseStateEncapsulation,
-  ReportDataType extends unknown[]
+  ReportDataType extends unknown[],
 >({
   flipCardController,
   imageIsLoaded,

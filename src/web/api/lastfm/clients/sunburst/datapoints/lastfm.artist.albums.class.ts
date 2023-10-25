@@ -3,7 +3,7 @@ import apiRoutes from "@src/config/apiRoutes";
 import type { LastFMArtistTopAlbumsInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/artist.topalbums.types";
 
 class LastFMArtistGetAlbums<
-  EncapsulationType
+  EncapsulationType,
 > extends LastFMBaseSunBurstDataPointClient<
   EncapsulationType,
   LastFMArtistTopAlbumsInterface

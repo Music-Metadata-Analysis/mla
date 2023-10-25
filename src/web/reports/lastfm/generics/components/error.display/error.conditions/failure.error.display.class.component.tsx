@@ -3,7 +3,7 @@ import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.d
 
 class FetchErrorConditionalDisplay<
   ReportType,
-  DrawerProps
+  DrawerProps,
 > extends ErrorConditionBase<ReportType, DrawerProps> {
   error = "FailureFetch" as const;
 

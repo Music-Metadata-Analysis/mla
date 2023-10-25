@@ -3,7 +3,7 @@ import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.d
 
 class NoListensErrorConditionalDisplay<
   ReportType,
-  DrawerProps
+  DrawerProps,
 > extends ErrorBase<ReportType, DrawerProps> {
   render() {
     if (this.props.query.queryUserHasNoData(this.props.reportProperties))

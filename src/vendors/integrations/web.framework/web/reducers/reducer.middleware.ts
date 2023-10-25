@@ -8,7 +8,7 @@ import type { Reducer } from "react";
 
 const applyMiddleware = <
   STATE,
-  ACTION extends WebFrameworkVendorReducerActionType
+  ACTION extends WebFrameworkVendorReducerActionType,
 >(
   originalReducer: Reducer<STATE, ACTION>,
   middlewareStack: WebFrameworkVendorMiddlewareType<STATE, ACTION>[]

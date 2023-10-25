@@ -16,7 +16,7 @@ import type { reportHookAsLastFM } from "@src/web/reports/lastfm/generics/types/
 
 export interface FlipCardReportContainerProps<
   T extends FlipCardBaseReportState,
-  R extends unknown[]
+  R extends unknown[],
 > {
   userName: string;
   lastfm: reportHookAsLastFM;
@@ -25,7 +25,7 @@ export interface FlipCardReportContainerProps<
 
 export default function FlipCardReportContainer<
   ReportEncapsulation extends FlipCardBaseReportState,
-  ReportDataType extends unknown[]
+  ReportDataType extends unknown[],
 >({
   lastfm: reportHook,
   userName,

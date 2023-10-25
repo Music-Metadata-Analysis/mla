@@ -1,6 +1,6 @@
 export interface GenericAggregateBaseReportResponseInterface<
   ReportContentType,
-  ParamType
+  ParamType,
 > {
   status: {
     complete: boolean;

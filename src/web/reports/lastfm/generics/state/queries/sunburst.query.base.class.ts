@@ -19,7 +19,8 @@ type AggregateReportContent = {
 } & { playcount: number; name: string };
 
 export default abstract class SunBurstBaseQuery<
-    ReportStateEncapsulation extends LastFMReportSunBurstBaseStateEncapsulation<unknown>
+    ReportStateEncapsulation extends
+      LastFMReportSunBurstBaseStateEncapsulation<unknown>,
   >
   extends LastFMReportQueryAbstractBaseClass<
     ReportStateEncapsulation,

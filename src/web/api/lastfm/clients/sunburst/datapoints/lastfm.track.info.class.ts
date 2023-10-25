@@ -3,7 +3,7 @@ import apiRoutes from "@src/config/apiRoutes";
 import type { LastFMTrackInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/track.info.types";
 
 class LastFMTrackInfo<
-  EncapsulationType
+  EncapsulationType,
 > extends LastFMBaseSunBurstDataPointClient<
   EncapsulationType,
   LastFMTrackInfoInterface

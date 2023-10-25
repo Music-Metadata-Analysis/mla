@@ -131,7 +131,7 @@ describe("calculateLayoutType", () => {
   const mockRef = () =>
     ({
       current: { clientWidth, clientHeight },
-    } as RefObject<HTMLDivElement>);
+    }) as RefObject<HTMLDivElement>;
   const windowHeight = window.innerHeight;
   const windowWidth = window.innerWidth;
 

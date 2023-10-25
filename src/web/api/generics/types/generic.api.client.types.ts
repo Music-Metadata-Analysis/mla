@@ -10,7 +10,7 @@ export interface GenericApiClientInterface {
 
 export type GenericApiClientHandlerProps<
   ResponseType,
-  ParamsType extends Record<string, string | ReportStateInterface>
+  ParamsType extends Record<string, string | ReportStateInterface>,
 > = {
   dispatcher: reportDispatchType;
   eventDispatcher: EventCreatorType;
@@ -21,7 +21,7 @@ export type GenericApiClientHandlerProps<
 
 export type GenericApiClientHandlerType<
   ResponseType,
-  ParamsType extends Record<string, string | ReportStateInterface>
+  ParamsType extends Record<string, string | ReportStateInterface>,
 > = (
   props: GenericApiClientHandlerProps<ResponseType, ParamsType>
 ) => HttpApiClientResponse<ResponseType>;

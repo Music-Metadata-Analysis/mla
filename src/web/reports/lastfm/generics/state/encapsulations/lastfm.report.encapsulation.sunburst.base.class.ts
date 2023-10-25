@@ -4,7 +4,7 @@ import type { LastFMAggregateReportResponseInterface } from "@src/contracts/api/
 import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 export default abstract class LastFMReportSunBurstBaseStateEncapsulation<
-  ReportType
+  ReportType,
 > extends LastFMReportBaseStateEncapsulation {
   lastfmPrefix = "https://last.fm/music";
   abstract errorMessage: string;

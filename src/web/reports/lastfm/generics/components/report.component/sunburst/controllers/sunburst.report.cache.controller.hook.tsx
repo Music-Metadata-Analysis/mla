@@ -11,7 +11,7 @@ import type SunBurstBaseQuery from "@src/web/reports/lastfm/generics/state/queri
 import type { LastFMReportStateBase } from "@src/web/reports/lastfm/generics/types/state/providers/lastfm.report.state.types";
 
 export type SunBurstCacheControllerProps<
-  ReportType extends SunBurstBaseReportState<unknown>
+  ReportType extends SunBurstBaseReportState<unknown>,
 > = {
   queryClass: new () => SunBurstBaseQuery<ReportType>;
   sourceName: string;
@@ -19,7 +19,7 @@ export type SunBurstCacheControllerProps<
 };
 
 const useSunBurstCacheController = <
-  ReportType extends SunBurstBaseReportState<unknown>
+  ReportType extends SunBurstBaseReportState<unknown>,
 >({
   queryClass,
   sourceName,

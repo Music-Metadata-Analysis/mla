@@ -3,7 +3,7 @@ import apiRoutes from "@src/config/apiRoutes";
 import type { LastFMAlbumInfoInterface } from "@src/contracts/api/types/services/lastfm/responses/datapoints/album.info.types";
 
 class LastFMAlbumInfo<
-  EncapsulationType
+  EncapsulationType,
 > extends LastFMBaseSunBurstDataPointClient<
   EncapsulationType,
   LastFMAlbumInfoInterface

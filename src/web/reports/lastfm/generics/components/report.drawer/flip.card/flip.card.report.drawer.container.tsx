@@ -7,7 +7,7 @@ import type FlipCardReportStateBase from "@src/web/reports/lastfm/generics/state
 import type { LastFMFlipCardDrawerInterface } from "@src/web/reports/lastfm/generics/types/components/drawer/flip.card.types";
 
 export default function FlipCardDrawerContainer<
-  ReportStateType extends FlipCardReportStateBase
+  ReportStateType extends FlipCardReportStateBase,
 >({
   artWorkAltTranslatedText,
   fallbackImage,
