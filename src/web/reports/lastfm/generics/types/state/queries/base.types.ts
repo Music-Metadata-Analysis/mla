@@ -9,7 +9,7 @@ import type { FC } from "react";
 export interface LastFMReportStateQueryInterface<
   ReportEncapsulation extends LastFMReportBaseStateEncapsulation,
   CompletedReportDataType,
-  DrawerComponentProps
+  DrawerComponentProps,
 > {
   getAnalyticsReportType(): IntegrationRequestType;
 

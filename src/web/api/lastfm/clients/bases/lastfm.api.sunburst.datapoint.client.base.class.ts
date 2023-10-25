@@ -7,7 +7,7 @@ import type LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/la
 
 abstract class LastFMBaseSunBurstDataPointClient<
   ReportType,
-  ResponseType
+  ResponseType,
 > extends LastFMReportBaseClient<ResponseType> {
   protected encapsulatedState: LastFMReportSunBurstBaseStateEncapsulation<ReportType>;
 

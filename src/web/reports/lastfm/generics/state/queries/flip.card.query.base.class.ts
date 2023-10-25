@@ -9,7 +9,7 @@ import type { FC } from "react";
 
 export default abstract class FlipCardAbstractBaseQuery<
     ReportStateEncapsulation extends LastFMReportFlipCardBaseStateEncapsulation,
-    ReportDataType extends unknown[]
+    ReportDataType extends unknown[],
   >
   extends LastFMReportQueryAbstractBaseClass<
     ReportStateEncapsulation,

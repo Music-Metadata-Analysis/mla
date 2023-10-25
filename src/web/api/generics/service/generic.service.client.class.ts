@@ -14,7 +14,7 @@ import type { ReportStateInterface } from "@src/web/reports/generics/types/state
 
 abstract class GenericApiAbstractClient<
   ResponseType,
-  ParamsType extends Record<string, string | ReportStateInterface>
+  ParamsType extends Record<string, string | ReportStateInterface>,
 > implements GenericApiClientInterface
 {
   protected abstract client: HTTPClient;

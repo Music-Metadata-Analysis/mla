@@ -7,17 +7,17 @@ export interface WebFrameworkVendorReducerActionType {
 
 export type WebFrameworkVendorMiddlewareType<
   STATE,
-  ACTION extends WebFrameworkVendorReducerActionType
+  ACTION extends WebFrameworkVendorReducerActionType,
 > = (reducer: Reducer<STATE, ACTION>) => Reducer<STATE, ACTION>;
 
 export type WebFrameworkVendorMiddlewareOrReducerType<
   STATE,
-  ACTION extends WebFrameworkVendorReducerActionType
+  ACTION extends WebFrameworkVendorReducerActionType,
 > = Reducer<STATE, ACTION> | WebFrameworkVendorMiddlewareType<STATE, ACTION>;
 
 export type WebFrameworkVendorNestedMiddlewareType<
   STATE,
-  ACTION extends WebFrameworkVendorReducerActionType
+  ACTION extends WebFrameworkVendorReducerActionType,
 > = (
   encapsulated: WebFrameworkVendorMiddlewareOrReducerType<STATE, ACTION>
 ) => WebFrameworkVendorMiddlewareOrReducerType<STATE, ACTION>;
@@ -53,7 +53,7 @@ export interface WebFrameworkVendorInterface {
   reducers: {
     applyMiddleware: <
       STATE,
-      ACTION extends WebFrameworkVendorReducerActionType
+      ACTION extends WebFrameworkVendorReducerActionType,
     >(
       originalReducer: Reducer<STATE, ACTION>,
       middlewareStack: WebFrameworkVendorMiddlewareType<STATE, ACTION>[]

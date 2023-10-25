@@ -9,7 +9,7 @@ import type { FC } from "react";
 export default abstract class LastFMReportQueryAbstractBaseClass<
   ReportStateEncapsulation extends LastFMReportBaseStateEncapsulation,
   CompletedReportDataType,
-  DrawerComponentProps
+  DrawerComponentProps,
 > implements
     LastFMReportStateQueryInterface<
       ReportStateEncapsulation,

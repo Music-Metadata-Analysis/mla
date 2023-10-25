@@ -16,7 +16,7 @@ import type { LastFMSunBurstDrawerInterface } from "@src/web/reports/lastfm/gene
 import type { reportHookAsLastFM } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 
 interface SunBurstReportContainerProps<
-  T extends SunBurstBaseReportState<unknown>
+  T extends SunBurstBaseReportState<unknown>,
 > {
   lastfm: reportHookAsLastFM;
   userName: string;
@@ -24,7 +24,7 @@ interface SunBurstReportContainerProps<
 }
 
 export default function SunBurstReportContainer<
-  ReportStateType extends SunBurstBaseReportState<unknown>
+  ReportStateType extends SunBurstBaseReportState<unknown>,
 >({
   lastfm,
   userName,

@@ -2,7 +2,7 @@ import type { PersistanceVendorFactoryInterface } from "@src/vendors/types/integ
 import type { useState, useReducer } from "react";
 
 export default abstract class PersistentHookAbstractFactory<
-  T extends typeof useState | typeof useReducer
+  T extends typeof useState | typeof useReducer,
 > implements PersistanceVendorFactoryInterface<T>
 {
   protected abstract primitiveHook: T;

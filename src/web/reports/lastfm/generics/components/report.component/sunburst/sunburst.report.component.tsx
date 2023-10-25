@@ -13,7 +13,7 @@ import type LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/la
 import type SunBurstBaseQuery from "@src/web/reports/lastfm/generics/state/queries/sunburst.query.base.class";
 
 export interface SunBurstReportProps<
-  T extends LastFMReportSunBurstBaseStateEncapsulation<unknown>
+  T extends LastFMReportSunBurstBaseStateEncapsulation<unknown>,
 > {
   encapsulatedReportState: T;
   lastFMt: tFunctionType;
@@ -25,7 +25,7 @@ export interface SunBurstReportProps<
 }
 
 export default function SunBurstReport<
-  ReportStateType extends LastFMReportSunBurstBaseStateEncapsulation<unknown>
+  ReportStateType extends LastFMReportSunBurstBaseStateEncapsulation<unknown>,
 >({
   encapsulatedReportState,
   lastFMt,

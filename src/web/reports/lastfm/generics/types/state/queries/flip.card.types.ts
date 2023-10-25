@@ -12,7 +12,7 @@ export type FlipCardReportStateQueryConstructor = new (
 export interface FlipCardReportStateQueryInterface<
   ReportEncapsulation extends LastFMReportBaseStateEncapsulation,
   CompletedReportDataType,
-  DrawerComponentProps
+  DrawerComponentProps,
 > extends LastFMReportStateQueryInterface<
     ReportEncapsulation,
     CompletedReportDataType,

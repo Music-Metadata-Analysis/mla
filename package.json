@@ -6,7 +6,7 @@
     "postinstall": "cd ./node_modules/@toplast/lastfm && yarn add -D typescript@4.8.4 && yarn install && yarn run build",
     "build": "next build",
     "build:validators": "ts-node $(find src/vendors/integrations/api.validation -name compile.ts)",
-    "clean": "eslint --fix ./src ./cypress; prettier --write \"./(src|cypress)/**/*.+(ts|tsx|js|jsx|json|yml|yaml|css|scss|md|vue)\"",
+    "clean": "eslint --fix ./src ./cypress; prettier --trailing-comma=es5 --write \"./(src|cypress)/**/*.+(ts|tsx|js|jsx|json|yml|yaml|css|scss|md|vue)\"",
     "compile": "npm --version && tsc --version && tsc",
     "coverage": "jest test --coverage --coverageDirectory=coverage --watchAll=false",
     "dev": "next dev",

@@ -7,7 +7,7 @@ import InitialState from "@src/web/reports/generics/state/providers/report.initi
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
 
 class ConcreteLastFMBaseSunBurstDataClient<
-  ReportType
+  ReportType,
 > extends LastFMBaseSunBurstDataPointClient<jest.Mock, ReportType> {
   route = "/api/v2/some/route/:username";
 }

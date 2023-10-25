@@ -3,7 +3,7 @@ import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.d
 
 class NotFoundErrorConditionalDisplay<
   ReportType,
-  DrawerProps
+  DrawerProps,
 > extends ErrorConditionBase<ReportType, DrawerProps> {
   error = "NotFoundFetch" as const;
 

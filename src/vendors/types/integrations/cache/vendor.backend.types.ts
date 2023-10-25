@@ -39,6 +39,6 @@ export interface CacheVendorBackendInterface {
     cdnClient: CacheVendorCdnInterface<ObjectType>
   ) => CacheVendorCdnControllerInterface<ObjectType>;
   CdnControllerAbstractFactory: abstract new <
-    ObjectType
+    ObjectType,
   >() => CacheVendorCdnControllerFactoryInterface<ObjectType>;
 }

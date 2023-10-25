@@ -4,7 +4,7 @@ import type { Reducer } from "react";
 
 const reducerLoggingMiddleware = <
   STATE,
-  ACTION extends WebFrameworkVendorReducerActionType
+  ACTION extends WebFrameworkVendorReducerActionType,
 >(
   reducer: Reducer<STATE, ACTION>
 ): Reducer<STATE, ACTION> => {
