@@ -1,9 +1,9 @@
 import { config } from "@cypress/config";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
-import { authenticate } from "@cypress/fixtures/spec/auth.spec";
-import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.spec";
-import { setup } from "@cypress/fixtures/spec/setup.spec";
+import { authenticate } from "@cypress/fixtures/spec/auth.cy";
+import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.cy";
+import { setup } from "@cypress/fixtures/spec/setup.cy";
 import lastfm from "@locales/lastfm.json";
 import main from "@locales/main.json";
 import routes from "@src/config/routes";
@@ -13,7 +13,9 @@ describe("LastFM Report Selection (Disabled)", () => {
   const reports = flipCardReports.concat(sunBurstReports);
   const timeout = 10000;
 
-  before(() => setup());
+  before(() => {
+    setup();
+  });
 
   reports.forEach((reportConfig) => {
     describe(reportConfig.reportName, () => {
@@ -23,11 +25,10 @@ describe("LastFM Report Selection (Disabled)", () => {
             authorizationCookieName,
             config.SMOKE_TEST_NO_ACCESS_TOKEN
           );
+          cy.visit(routes.search.lastfm.selection);
         });
 
         describe("when we visit the search selection screen", () => {
-          before(() => cy.visit(routes.search.lastfm.selection));
-
           it("should contain the lastfm logo", () => {
             cy.get(`[alt="${main.altText.lastfm}"]`).should("be.visible", {
               timeout,

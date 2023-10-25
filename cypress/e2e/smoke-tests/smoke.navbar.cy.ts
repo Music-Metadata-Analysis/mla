@@ -1,4 +1,4 @@
-import { setup } from "@cypress/fixtures/spec/setup.spec";
+import { setup } from "@cypress/fixtures/spec/setup.cy";
 import navbar from "@locales/navbar.json";
 import routes from "@src/config/routes";
 import { testIDs as navBarMobileMenuIDs } from "@src/web/navigation/navbar/components/mobile.menu/navbar.mobile.menu.identifiers";

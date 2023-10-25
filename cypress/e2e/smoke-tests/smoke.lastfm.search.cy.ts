@@ -1,10 +1,10 @@
 import { config } from "@cypress/config";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
-import { authenticate } from "@cypress/fixtures/spec/auth.spec";
-import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.spec";
-import checkNavBarInputToggle from "@cypress/fixtures/spec/responsiveness/navbar.visibility.spec";
-import { setup } from "@cypress/fixtures/spec/setup.spec";
+import { authenticate } from "@cypress/fixtures/spec/auth.cy";
+import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.cy";
+import checkNavBarInputToggle from "@cypress/fixtures/spec/responsiveness/navbar.visibility.cy";
+import { setup } from "@cypress/fixtures/spec/setup.cy";
 import routes from "@src/config/routes";
 import { fields } from "@src/web/forms/lastfm/components/username/username.form.identifiers";
 

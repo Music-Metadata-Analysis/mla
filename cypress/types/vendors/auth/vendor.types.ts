@@ -1,4 +1,4 @@
-import type { IdentityType } from "@cypress/fixtures/spec/auth.spec";
+import type { IdentityType } from "@cypress/fixtures/spec/auth.cy";
 
 export interface AuthVendorInterface {
   authorizationCookieName: string;

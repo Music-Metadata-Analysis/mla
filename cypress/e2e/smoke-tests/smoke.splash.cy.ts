@@ -1,6 +1,6 @@
-import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.spec";
-import checkDialogueToggle from "@cypress/fixtures/spec/responsiveness/dialogue.spec";
-import { setup } from "@cypress/fixtures/spec/setup.spec";
+import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.cy";
+import checkDialogueToggle from "@cypress/fixtures/spec/responsiveness/dialogue.cy";
+import { setup } from "@cypress/fixtures/spec/setup.cy";
 import splash from "@locales/splash.json";
 import routes from "@src/config/routes";
 

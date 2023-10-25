@@ -4,7 +4,7 @@ import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
 import {
   AllAccessIdentity,
   NoAccessIdentity,
-} from "@cypress/fixtures/spec/auth.spec";
+} from "@cypress/fixtures/spec/auth.cy";
 import authVendor from "@cypress/vendors/auth/vendor";
 import testAccounts from "@src/contracts/api/services/lastfm/fixtures/end2end/lastfm.users";
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
