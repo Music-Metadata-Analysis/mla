@@ -1,7 +1,7 @@
 import { config, getValueOf } from "@cypress/config";
 import { flipCardReports, sunBurstReports } from "@cypress/fixtures/reports";
-import { checkAuthenticationModal } from "@cypress/fixtures/spec/components/authentication.modal.spec";
-import { setup } from "@cypress/fixtures/spec/setup.spec";
+import { checkAuthenticationModal } from "@cypress/fixtures/spec/components/authentication.modal.cy";
+import { setup } from "@cypress/fixtures/spec/setup.cy";
 import type { CypressReportType } from "@cypress/types/reports";
 
 describe("LastFM Report Viewing (Unauthenticated)", () => {

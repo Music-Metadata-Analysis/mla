@@ -1,14 +1,14 @@
 import { config, getValueOf } from "@cypress/config";
-import { checkAuthenticationModal } from "@cypress/fixtures/spec/components/authentication.modal.spec";
-import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.spec";
-import { setup } from "@cypress/fixtures/spec/setup.spec";
+import { checkAuthenticationModal } from "@cypress/fixtures/spec/components/authentication.modal.cy";
+import checkBillboardTitleToggle from "@cypress/fixtures/spec/responsiveness/billboard.cy";
+import { setup } from "@cypress/fixtures/spec/setup.cy";
 import lastfm from "@locales/lastfm.json";
 import main from "@locales/main.json";
 import routes from "@src/config/routes";
 import type { CypressFlagEnabledReportType } from "@cypress/types/reports";
 
 describe("LastFM Report Selection (Unauthenticated)", () => {
-  const timeout = 5000;
+  const timeout = 10000;
 
   const reports: CypressFlagEnabledReportType[] = JSON.parse(
     getValueOf(config.FLAG_ENABLED_REPORTS)

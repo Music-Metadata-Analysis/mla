@@ -1,4 +1,4 @@
-import { setup } from "@cypress/fixtures/spec/setup.spec";
+import { setup } from "@cypress/fixtures/spec/setup.cy";
 import main from "@locales/main.json";
 import routes from "@src/config/routes";
 
@@ -38,7 +38,7 @@ describe("Cookie Consent Banner", () => {
     });
 
     describe("when we click the accept button", () => {
-      before(() => {
+      beforeEach(() => {
         getConsentBanner()
           .contains(main.analytics.acceptMessage, { timeout })
           .click();

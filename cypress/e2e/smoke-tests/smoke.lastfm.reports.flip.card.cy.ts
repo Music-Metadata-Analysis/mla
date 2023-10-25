@@ -1,8 +1,8 @@
 import { config } from "@cypress/config";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { flipCardReports } from "@cypress/fixtures/reports";
-import { authenticate } from "@cypress/fixtures/spec/auth.spec";
-import { setup } from "@cypress/fixtures/spec/setup.spec";
+import { authenticate } from "@cypress/fixtures/spec/auth.cy";
+import { setup } from "@cypress/fixtures/spec/setup.cy";
 import routes from "@src/config/routes";
 import { fields } from "@src/web/forms/lastfm/components/username/username.form.identifiers";
 

@@ -1,8 +1,8 @@
 import { config, getValueOf } from "@cypress/config";
 import { getAuthorizationCookieName } from "@cypress/fixtures/cookies";
 import { sunBurstReports } from "@cypress/fixtures/reports";
-import { authenticate } from "@cypress/fixtures/spec/auth.spec";
-import { setup } from "@cypress/fixtures/spec/setup.spec";
+import { authenticate } from "@cypress/fixtures/spec/auth.cy";
+import { setup } from "@cypress/fixtures/spec/setup.cy";
 import LastFmTranslations from "@locales/lastfm.json";
 import translations from "@locales/main.json";
 import metrics from "@src/config/metrics";
@@ -15,30 +15,27 @@ describe("Feedback Dialogue", () => {
 
   before(() => setup());
 
-  [
-    { condition: { SearchMetric: 3 }, result: false },
-    { condition: { SearchMetric: 4 }, result: true },
-    { condition: { SearchMetric: 5 }, result: false },
-  ].forEach((testCase) =>
-    describe(`when local storage contains a search metric value (${JSON.stringify(
-      testCase.condition
-    )})`, () => {
-      before(() => {
-        window.localStorage.setItem(
-          metrics.localStorageKey,
-          JSON.stringify(testCase.condition)
-        );
-      });
+  describe("when we are logged in", () => {
+    before(() => {
+      authenticate(authorizationCookieName, config.SMOKE_TEST_ALL_ACCESS_TOKEN);
+    });
 
-      after(() => window.localStorage.clear());
-
-      describe("when we are logged in", () => {
+    [
+      { condition: { SearchMetric: 3 }, result: false },
+      { condition: { SearchMetric: 4 }, result: true },
+      { condition: { SearchMetric: 5 }, result: false },
+    ].forEach((testCase) =>
+      describe(`when local storage contains a search metric value (${JSON.stringify(
+        testCase.condition
+      )})`, () => {
         before(() => {
-          authenticate(
-            authorizationCookieName,
-            config.SMOKE_TEST_ALL_ACCESS_TOKEN
+          window.localStorage.setItem(
+            metrics.localStorageKey,
+            JSON.stringify(testCase.condition)
           );
         });
+
+        after(() => window.localStorage.clear());
 
         describe("when we visit a user's lastfm playcount by artist report page", () => {
           before(() => {
@@ -111,7 +108,7 @@ describe("Feedback Dialogue", () => {
             }
           });
         });
-      });
-    })
-  );
+      })
+    );
+  });
 });

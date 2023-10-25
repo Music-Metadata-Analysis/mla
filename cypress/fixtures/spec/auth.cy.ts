@@ -26,14 +26,19 @@ export const authenticate = (
   authorizationCookieName: string,
   sourceEnvVar: config
 ) => {
-  Cypress.Cookies.defaults({
-    preserve: authorizationCookieName,
-  });
-  cy.setCookie(authorizationCookieName, getValueOf(sourceEnvVar), {
-    httpOnly: true,
-    domain: getValueOf(config.BASEURL).split("//")[1],
-    expiry: new Date().getTime() + 20000,
-    sameSite: "lax",
-    secure: true,
-  });
+  cy.session(
+    "cypress_e2e_session",
+    () => {
+      cy.setCookie(authorizationCookieName, getValueOf(sourceEnvVar), {
+        httpOnly: true,
+        domain: getValueOf(config.BASEURL).split("//")[1].split(":")[0],
+        expiry: new Date().getTime() + 20000,
+        sameSite: "lax",
+        secure: true,
+      });
+    },
+    {
+      cacheAcrossSpecs: false,
+    }
+  );
 };
