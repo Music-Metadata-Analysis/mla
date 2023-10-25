@@ -15,7 +15,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
       <g>
         <path
           class="SunBurstClickableNode"
-          d="M0.1874998046875739,-98.9998224433925A99,99,0,1,1,-34.06569395793532,-92.95444311685316L-17.292002420749036,-46.91467416790624A50,50,0,1,0,0.18749980468756186,-49.99964843699646Z"
+          d="M0.187,-99A99,99,0,1,1,-34.066,-92.954L-17.292,-46.915A50,50,0,1,0,0.187,-50Z"
           fill="rgba(110,64,170,0.4)"
           style="cursor: pointer;"
         >
@@ -26,7 +26,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
         </path>
         <path
           class="SunBurstClickableNode"
-          d="M-33.7133504056589,-93.08281261556968A99,99,0,0,1,-15.451601527226032,-97.7867476207478L-7.895491665407653,-49.37267676925648A50,50,0,0,0,-16.93965886847263,-47.04304366662277Z"
+          d="M-33.713,-93.083A99,99,0,0,1,-15.452,-97.787L-7.895,-49.373A50,50,0,0,0,-16.94,-47.043Z"
           fill="rgba(255,140,56,0.6)"
           style="cursor: pointer;"
         >
@@ -37,7 +37,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
         </path>
         <path
           class="SunBurstClickableNode"
-          d="M-15.081087380578317,-97.84457472654967A99,99,0,0,1,-0.1874998046874981,-98.9998224433925L-0.18749980468752359,-49.99964843699646A50,50,0,0,0,-7.524977518759955,-49.430503875058335Z"
+          d="M-15.081,-97.845A99,99,0,0,1,-0.187,-99L-0.187,-50A50,50,0,0,0,-7.525,-49.431Z"
           fill="rgba(40,234,141,0.6)"
           style="cursor: pointer;"
         >
@@ -48,7 +48,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
         </path>
         <path
           class="SunBurstClickableNode"
-          d="M-50.82932179330278,-140.06205783877687A149,149,0,0,1,-38.16623148783551,-144.0289511661352L-25.67451949156716,-96.64791280145235A100,100,0,0,0,-34.055670033296295,-94.02239806866896Z"
+          d="M-50.829,-140.062A149,149,0,0,1,-38.166,-144.029L-25.675,-96.648A100,100,0,0,0,-34.056,-94.022Z"
           fill="rgba(255,140,56,0.6)"
           style="cursor: pointer;"
         >
@@ -59,7 +59,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
         </path>
         <path
           class="SunBurstClickableNode"
-          d="M-37.803622305853814,-144.1245507904755A149,149,0,0,1,-28.90122572147532,-146.1701718949401L-19.457282105550703,-98.08880758305209A100,100,0,0,0,-25.3119103095854,-96.74351242579269Z"
+          d="M-37.804,-144.125A149,149,0,0,1,-28.901,-146.17L-19.457,-98.089A100,100,0,0,0,-25.312,-96.744Z"
           fill="rgba(255,140,56,0.4)"
           style="cursor: pointer;"
         >
@@ -70,7 +70,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
         </path>
         <path
           class="SunBurstClickableNode"
-          d="M-28.533256914048472,-146.24244681308127A149,149,0,0,1,-24.46015848523037,-146.9785720670786L-16.477035176904774,-98.63319579015496A100,100,0,0,0,-19.089313298123805,-98.16108250119329Z"
+          d="M-28.533,-146.242A149,149,0,0,1,-24.46,-146.979L-16.477,-98.633A100,100,0,0,0,-19.089,-98.161Z"
           fill="rgba(255,140,56,0.6)"
           style="cursor: pointer;"
         >
@@ -81,7 +81,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
         </path>
         <path
           class="SunBurstClickableNode"
-          d="M-24.111880421926795,-147.0361085669731A149,149,0,0,1,-23.140165753574607,-147.19216259331574L-15.584075779565993,-98.77821916848241A100,100,0,0,0,-16.128759194121066,-98.69074488956933Z"
+          d="M-24.112,-147.036A149,149,0,0,1,-23.14,-147.192L-15.584,-98.778A100,100,0,0,0,-16.129,-98.691Z"
           fill="rgba(255,140,56,0.6)"
           style="cursor: pointer;"
         >
@@ -92,7 +92,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
         </path>
         <path
           class="SunBurstClickableNode"
-          d="M-22.791385373721933,-147.24657127670747A149,149,0,0,1,-0.9948719588069169,-148.99667858642212L-0.7293588821094958,-99.99734014273123A100,100,0,0,0,-15.235293430483948,-98.83261523448144Z"
+          d="M-22.791,-147.247A149,149,0,0,1,-0.995,-148.997L-0.729,-99.997A100,100,0,0,0,-15.235,-98.833Z"
           fill="rgba(40,234,141,0.4)"
           style="cursor: pointer;"
         >
@@ -103,7 +103,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
         </path>
         <path
           class="SunBurstClickableNode"
-          d="M-0.7057771120616025,-148.99832844253015A149,149,0,0,1,-0.10159973784959132,-148.99996536071163L-0.10159973784965104,-99.99994838745303A100,100,0,0,0,-0.4402642566282984,-99.99903083222524Z"
+          d="M-0.706,-148.998A149,149,0,0,1,-0.102,-149L-0.102,-100A100,100,0,0,0,-0.44,-99.999Z"
           fill="rgba(40,234,141,0.6)"
           style="cursor: pointer;"
         >
@@ -113,7 +113,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -122,7 +122,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -131,7 +131,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -140,7 +140,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -149,7 +149,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -158,7 +158,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -167,7 +167,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -176,7 +176,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -185,7 +185,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -194,7 +194,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -203,7 +203,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -212,7 +212,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -221,7 +221,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-68.12148494542818,-186.97717317584465L-51.34785297394084,-140.93756772048593Z"
+          d="M-68.121,-186.977L-51.348,-140.938Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -230,7 +230,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-38.35392984559224,-195.26898387967145L-28.90999737104943,-147.18767629120964Z"
+          d="M-38.354,-195.269L-28.91,-147.188Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -239,7 +239,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-38.35392984559224,-195.26898387967145L-28.90999737104943,-147.18767629120964Z"
+          d="M-38.354,-195.269L-28.91,-147.188Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -248,7 +248,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-38.35392984559224,-195.26898387967145L-28.90999737104943,-147.18767629120964Z"
+          d="M-38.354,-195.269L-28.91,-147.188Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -257,7 +257,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-38.35392984559224,-195.26898387967145L-28.90999737104943,-147.18767629120964Z"
+          d="M-38.354,-195.269L-28.91,-147.188Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -266,7 +266,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-38.35392984559224,-195.26898387967145L-28.90999737104943,-147.18767629120964Z"
+          d="M-38.354,-195.269L-28.91,-147.188Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -275,7 +275,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-38.35392984559224,-195.26898387967145L-28.90999737104943,-147.18767629120964Z"
+          d="M-38.354,-195.269L-28.91,-147.188Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -284,7 +284,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-38.35392984559224,-195.26898387967145L-28.90999737104943,-147.18767629120964Z"
+          d="M-38.354,-195.269L-28.91,-147.188Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -293,7 +293,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-38.35392984559224,-195.26898387967145L-28.90999737104943,-147.18767629120964Z"
+          d="M-38.354,-195.269L-28.91,-147.188Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -302,7 +302,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-38.35392984559224,-195.26898387967145L-28.90999737104943,-147.18767629120964Z"
+          d="M-38.354,-195.269L-28.91,-147.188Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -311,7 +311,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-32.421217636235866,-196.34119447274387L-24.438103745906435,-147.99587523071145Z"
+          d="M-32.421,-196.341L-24.438,-147.996Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -320,7 +320,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-32.421217636235866,-196.34119447274387L-24.438103745906435,-147.99587523071145Z"
+          d="M-32.421,-196.341L-24.438,-147.996Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -329,7 +329,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-32.421217636235866,-196.34119447274387L-24.438103745906435,-147.99587523071145Z"
+          d="M-32.421,-196.341L-24.438,-147.996Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -338,7 +338,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-32.421217636235866,-196.34119447274387L-24.438103745906435,-147.99587523071145Z"
+          d="M-32.421,-196.341L-24.438,-147.996Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -347,7 +347,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-32.421217636235866,-196.34119447274387L-24.438103745906435,-147.99587523071145Z"
+          d="M-32.421,-196.341L-24.438,-147.996Z"
           fill="rgba(255,140,56,0)"
         >
           <title>
@@ -356,7 +356,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>
@@ -365,7 +365,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>
@@ -374,7 +374,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>
@@ -383,7 +383,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>
@@ -392,7 +392,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>
@@ -401,7 +401,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>
@@ -410,7 +410,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>
@@ -419,7 +419,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>
@@ -428,7 +428,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>
@@ -437,7 +437,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>
@@ -446,7 +446,7 @@ exports[`SunBurstChartSVG with mockDataSet4 should match the snapshot on file: m
           </title>
         </path>
         <path
-          d="M-1.0783069373232652,-198.9970785065673L-0.8127941738617578,-149.99779786927184Z"
+          d="M-1.078,-198.997L-0.813,-149.998Z"
           fill="rgba(40,234,141,0)"
         >
           <title>

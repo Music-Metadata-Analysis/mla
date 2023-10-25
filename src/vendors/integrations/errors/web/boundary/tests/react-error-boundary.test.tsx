@@ -82,7 +82,9 @@ describe("ErrorBoundary", () => {
 
       it("should report an error to the console", () => {
         expect(consoleErrorSpy).toBeCalledTimes(2);
-        expect(consoleErrorSpy.mock.calls[0][0]).toContain("Test Error!");
+        expect(consoleErrorSpy.mock.calls[0][0].message).toBe(
+          "Uncaught [Error: Test Error!]"
+        );
         expect(consoleErrorSpy.mock.calls[1][0]).toContain(
           testIDs.ComponentWithError
         );

@@ -46,7 +46,7 @@ export default class CheerioArtistImageScraper
   protected parseImageSource(html: string): string {
     try {
       const page = cheerio.load(html);
-      const image = (page(this.targetCssClass)[0] as cheerio.NodeWithChildren)
+      const image = (page(this.targetCssClass)[0] as cheerio.ParentNode)
         .children[1] as cheerio.Element;
       return image.attribs.src
         ? image.attribs.src

@@ -148,7 +148,7 @@ describe(ReportCacheProxy.name, () => {
           await expect(t).rejects.toEqual(
             new errorVendorBackend.ProxyError(mockError)
           );
-          await expect(t).rejects.not.toHaveProperty("clientStatusCode");
+          await expect(t).rejects.toHaveProperty("clientStatusCode", undefined);
         });
       });
     });
@@ -299,9 +299,9 @@ describe(ReportCacheProxy.name, () => {
           expect(mockHeaders.get).toBeCalledTimes(0);
         });
 
-        it("should throw the expected error", async () => {
-          await expect(error.message).toEqual(proxyServiceError);
-          await expect(error.clientStatusCode).toBe(404);
+        it("should throw the expected error", () => {
+          expect(error.message).toEqual(proxyServiceError);
+          expect(error.clientStatusCode).toBe(404);
         });
       });
 
@@ -329,9 +329,9 @@ describe(ReportCacheProxy.name, () => {
           expect(mockHeaders.get).toBeCalledTimes(0);
         });
 
-        it("should throw the expected error", async () => {
-          await expect(error.message).toEqual("Unknown error occurred.");
-          await expect(error).not.toHaveProperty("clientStatusCode");
+        it("should throw the expected error", () => {
+          expect(error.message).toEqual("Unknown error occurred.");
+          expect(error).toHaveProperty("clientStatusCode", undefined);
         });
       });
     });

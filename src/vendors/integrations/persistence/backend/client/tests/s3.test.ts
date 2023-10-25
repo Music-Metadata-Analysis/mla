@@ -87,8 +87,8 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockedS3Client.mock.instances[0].send).toBeCalledTimes(1);
-            expect(MockedS3Client.mock.instances[0].send).toBeCalledWith(
+            expect(MockedS3Client.prototype.send).toBeCalledTimes(1);
+            expect(MockedS3Client.prototype.send).toBeCalledWith(
               MockedPutObjectCommand.mock.instances[0]
             );
           });
@@ -111,8 +111,8 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockedS3Client.mock.instances[0].send).toBeCalledTimes(1);
-            expect(MockedS3Client.mock.instances[0].send).toBeCalledWith(
+            expect(MockedS3Client.prototype.send).toBeCalledTimes(1);
+            expect(MockedS3Client.prototype.send).toBeCalledWith(
               MockedPutObjectCommand.mock.instances[0]
             );
           });
@@ -138,8 +138,8 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockedS3Client.mock.instances[0].send).toBeCalledTimes(1);
-            expect(MockedS3Client.mock.instances[0].send).toBeCalledWith(
+            expect(MockedS3Client.prototype.send).toBeCalledTimes(1);
+            expect(MockedS3Client.prototype.send).toBeCalledWith(
               MockedPutObjectCommand.mock.instances[0]
             );
           });
@@ -162,8 +162,8 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockedS3Client.mock.instances[0].send).toBeCalledTimes(1);
-            expect(MockedS3Client.mock.instances[0].send).toBeCalledWith(
+            expect(MockedS3Client.prototype.send).toBeCalledTimes(1);
+            expect(MockedS3Client.prototype.send).toBeCalledWith(
               MockedPutObjectCommand.mock.instances[0]
             );
           });
