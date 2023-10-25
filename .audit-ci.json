@@ -1,7 +1,7 @@
 {
   "low": true,
   "package-manager": "auto",
-  "allowlist": [],
+  "allowlist": ["GHSA-c59h-r6p8-q9wc"],
   "registry": "https://registry.npmjs.org",
   "skip-dev": true
 }
