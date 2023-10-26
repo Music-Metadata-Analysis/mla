@@ -44,3 +44,8 @@ cypress.env.json
 
 # Typescript
 *.tsbuildinfo
+
+# CICD-Tools
+.cicd-tools/boxes/*
+!.cicd-tools/boxes/bootstrap
+poetry.lock

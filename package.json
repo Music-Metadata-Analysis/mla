@@ -12,10 +12,12 @@
     "dev": "next dev",
     "lint": "eslint ./src ./cypress",
     "newkey": "jose newkey -s 256 -t oct -a HS512",
+    "netlify:ci": "npm install --unsafe-perm=true netlify-cli -g",
     "security": "audit-ci --config .audit-ci.json",
+    "smoke:ci": "npm run smoke:env && npm run smoke:run",
     "smoke:dev": "cypress open",
     "smoke:env": "ts-node cypress/utils/build.config.ts",
-    "smoke:run": "cypress run --config video=false,screenshotOnRunFailure=false",
+    "smoke:run": "cypress run --e2e --headless --config video=false,screenshotOnRunFailure=false",
     "start": "next start",
     "test": "jest --watch"
   },

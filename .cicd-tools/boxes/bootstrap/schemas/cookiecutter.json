@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "0.1.0",
+  "description": "CICD-Tools Cookiecutter Required Fields Schema",
+  "additionalProperties": true,
+  "minProperties": 10,
+  "required": [
+    "github_handle",
+    "project_slug",
+    "project_name",
+    "_BRANCH_NAME_BASE",
+    "_BRANCH_NAME_DEVELOPMENT",
+    "_DOCKER_DEFAULT_CONTAINER",
+    "_GITHUB_CI_DEFAULT_CONCURRENCY",
+    "_GITHUB_CI_DEFAULT_PYTHON_VERSIONS",
+    "_GITHUB_CI_DEFAULT_VERBOSE_NOTIFICATIONS"
+  ],
+  "type": "object",
+  "uniqueItems": true,
+  "properties": {
+    "github_handle": {
+      "description": "The author's GitHub handle, used to create repository paths.",
+      "type": "string"
+    },
+    "project_name": {
+      "description": "The plaintext name of the new project that will be templated.",
+      "type": "string"
+    },
+    "project_slug": {
+      "description": "The slugified name of the new project that will be templated, used for the repository name.",
+      "type": "string"
+    },
+    "_BRANCH_NAME_BASE": {
+      "description": "The name of the base branch that will be used in the templated repository.",
+      "type": "string"
+    },
+    "_BRANCH_NAME_DEVELOPMENT": {
+      "description": "The name of the development branch that will be used in the templated repository.",
+      "type": "string"
+    },
+    "_DOCKER_DEFAULT_CONTAINER": {
+      "description": "The container that will be used for the shellcheck, shfmt and other core binaries.",
+      "type": "string"
+    },
+    "_GITHUB_CI_DEFAULT_CONCURRENCY": {
+      "description": "The default concurrency value that will be used for GitHub workflows.",
+      "type": "number"
+    },
+    "_GITHUB_CI_DEFAULT_PYTHON_VERSIONS": {
+      "description": "The list of Python versions that will be used in GitHub workflows.",
+      "type": "array",
+      "contains": {
+        "pattern": "^3\\.[0-9]$",
+        "type": "string"
+      },
+      "minContains": 1
+    },
+    "_GITHUB_CI_DEFAULT_VERBOSE_NOTIFICATIONS": {
+      "description": "The default verbosity of GitHub Action notifications.",
+      "type": "boolean"
+    }
+  }
+}
