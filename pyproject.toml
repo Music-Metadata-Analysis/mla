@@ -1,0 +1,27 @@
+[build-system]
+build-backend = 'poetry.core.masonry.api'
+requires = ['poetry-core']
+
+[tool]
+[tool.commitizen]
+bump_message = 'bump(RELEASE): $current_version → $new_version'
+pre_bump_hooks = ['.cicd-tools/boxes/bootstrap/commitizen/pre_bump.sh']
+version = '0.1.0'
+version_files = ['pyproject.toml:version']
+version_provider = 'poetry'
+
+[tool.poetry]
+authors = ['Niall Byrne <9848926+niall-byrne@users.noreply.github.com>']
+description = ''
+name = 'top20-nextjs'
+readme = 'README.md'
+version = '0.1.0'
+
+[tool.poetry.dependencies]
+python = '^3.9'
+
+[tool.poetry.group]
+[tool.poetry.group.dev]
+[tool.poetry.group.dev.dependencies]
+commitizen = '^3.12.0'
+pre-commit = '^3.5.0'

@@ -1,6 +1,8 @@
 # Music Listening Analytics
 
-### Music MetaData Visualization.
+[![cicd-tools](https://img.shields.io/badge/ci/cd:-cicd_tools-blue)](https://github.com/cicd-tools-org/cicd-tools)
+
+### Music MetaData Visualization
 
 > Powered by [last.fm](https://last.fm)
 

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "0.1.0",
+  "description": "CICD-Tools Manifest Schema",
+  "additionalProperties": false,
+  "minProperties": 5,
+  "type": "object",
+  "uniqueItems": true,
+  "properties": {
+    "disable_security": {
+      "description": "Use hash validation to ensure downloaded content is trusted (highly recommended).",
+      "type": "boolean"
+    },
+    "manifest": {
+      "description": "Trusted bundles and files available on this SHA of CICD-Tools.",
+      "type": "object",
+      "uniqueItems": true,
+      "properties": {},
+      "patternProperties": {
+        "^[A-Za-z0-9\\.]$": {
+          "$ref": "#/definitions/ENTRY"
+        }
+      }
+    },
+    "source": {
+      "description": "The download URL for CICD-Tools repository.",
+      "$ref": "#/definitions/URL"
+    },
+    "toolbox_path": {
+      "description": "The path in the CICD-Tools repository to bundles.",
+      "type": "string"
+    },
+    "version": {
+      "description": "The SHA identifier (Branch, Tag or Commit ID) of the CICD-Tools repository to use.",
+      "pattern": "^[A-Za-z]+$",
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "URL": {
+      "format": "uri",
+      "pattern": "^https?:\/\/"
+    },
+    "ENTRY": {
+      "description": "A downloadable file in the manifest, with it's SHA256 sum.",
+      "format": "string"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "0.1.0",
+  "description": "NodeJS GitHub Push Workflow Schema",
+  "additionalProperties": false,
+  "required": [
+    "ci_commit_spelling_rev_range",
+    "ci_commitizen_rev_range",
+    "ci_concurrency_limit",
+    "ci_extra_release_content",
+    "ci_netlify_production_url",
+    "ci_verbose_notifications",
+    "ci_python_versions",
+    "ci_trufflehog_extra_scan_args"
+  ],
+  "type": "object",
+  "uniqueItems": true,
+  "properties": {
+    "ci_commit_spelling_rev_range": {
+      "description": "This is the fallback commit range for commit spelling checks.  This should contain the id of the first correctly spelled commit in this repo, or HEAD for all commits.",
+      "type": "string"
+    },
+    "ci_commitizen_rev_range": {
+      "description": "This is the fallback commit range for commitizen to lint.  This should contain the id of the first linted commit in this repo, or HEAD for all commits.",
+      "type": "string"
+    },
+    "ci_concurrency_limit": {
+      "description": "This controls the concurrency of each matrix instance in GitHub Actions.",
+      "type": "number"
+    },
+    "ci_extra_release_content": {
+      "description": "This controls the concurrency of each matrix instance in GitHub Actions.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ci_netlify_production_url": {
+      "description": "This string is the url next auth will use in production, as it's not a standard netlify domain.",
+      "pattern": "^https://.+",
+      "type": "string"
+    },
+    "ci_python_versions": {
+      "description": "This array contains the list of Python versions the workflow steps will execute on.",
+      "type": "array",
+      "contains": {
+        "pattern": "^3\\.[0-9]$",
+        "type": "string"
+      }
+    },
+    "ci_trufflehog_extra_scan_args": {
+      "description": "This is a space separated list of extra arguments you can pass to the trufflehog binary.",
+      "type": "string"
+    },
+    "ci_verbose_notifications": {
+      "description": "This enables success notifications for each job in the GitHub workflows.",
+      "type": "boolean"
+    }
+  }
+}

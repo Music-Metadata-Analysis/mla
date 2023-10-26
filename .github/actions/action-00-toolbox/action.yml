@@ -1,0 +1,18 @@
+---
+name: action-00-toolbox
+description: "Fetches the CICD-Tools toolbox."
+author: niall@niallbyrne.ca
+
+inputs:
+  PROJECT_ROOT_PATH:
+    default: "."
+    description: "Optional, allows you to specify a path to the project's root."
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Toolbox - Install CICD-Tools Toolbox
+      uses: cicd-tools-org/cicd-tools/.github/actions/action-00-toolbox@master
+      with:
+        PROJECT_ROOT_PATH: ${{ inputs.PROJECT_ROOT_PATH }}
