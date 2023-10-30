@@ -1,5 +1,6 @@
 import { authButtonVendor } from "@src/vendors/integrations/auth.buttons/vendor";
 import AnalyticsButtonWrapper from "@src/web/analytics/collection/components/analytics.button/analytics.button.container";
+import LastFMIconContainer from "@src/web/ui/generics/components/icons/lastfm/lastfm.icon.container";
 import SpotifyIconContainer from "@src/web/ui/generics/components/icons/spotify/spotify.icon.container";
 import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendor.types";
@@ -35,6 +36,14 @@ export default function SignInButtons({
         <authButtonVendor.GoogleAuthButton
           callBack={handleSignIn}
           text={t("buttons.google")}
+          width={buttonWidth}
+        />
+      </AnalyticsButtonWrapper>
+      <AnalyticsButtonWrapper buttonName={"LastFM Login"}>
+        <authButtonVendor.LastFMAuthButton
+          callBack={handleSignIn}
+          iconComponent={() => LastFMIconContainer({ width: 26, height: 26 })}
+          text={t("buttons.lastfm")}
           width={buttonWidth}
         />
       </AnalyticsButtonWrapper>

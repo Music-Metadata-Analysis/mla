@@ -4,6 +4,7 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
 import createRoutes, { getGroup } from "../next-auth";
+import LastFMProvider from "../providers/lastfm";
 import { createAPIMocks } from "@src/vendors/integrations/api.framework/fixtures";
 import nextAuthConfiguration from "@src/vendors/integrations/auth/backend/config/next-auth";
 import { mockFlagGroup } from "@src/vendors/integrations/flags/__mocks__/vendor.backend.mock";
@@ -18,6 +19,7 @@ jest.mock("next-auth/providers/facebook");
 jest.mock("next-auth/providers/github");
 jest.mock("next-auth/providers/google");
 jest.mock("next-auth/providers/spotify");
+jest.mock("../providers/lastfm.ts");
 
 jest.mock("@src/vendors/integrations/flags/vendor.backend");
 
@@ -151,6 +153,10 @@ describe("NextAuthRoutes", () => {
         clientId: process.env.AUTH_SPOTIFY_ID,
         clientSecret: process.env.AUTH_SPOTIFY_SECRET,
       });
+    });
+
+    it("should initialize the LastFMProvider", () => {
+      expect(LastFMProvider).toBeCalledTimes(1);
     });
 
     it("should initialize the JWT Key", async () => {

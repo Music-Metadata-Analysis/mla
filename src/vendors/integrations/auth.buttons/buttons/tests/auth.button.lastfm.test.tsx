@@ -1,10 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import SpotifyAuthButton, {
-  SpotifyAuthButtonError,
-} from "../auth.button.spotify";
+import LastFMAuthButton, { LastFMAuthButtonError } from "../auth.button.lastfm";
 import type { AuthButtonVendorComponentInterface } from "@src/vendors/types/integrations/auth.buttons/vendor.types";
 
-describe("SpotifyAuthButton", () => {
+describe("LastFMAuthButton", () => {
   const buttonWidth = 245;
   const mockCallBack = jest.fn();
   const mockText = "Button Text";
@@ -26,7 +24,7 @@ describe("SpotifyAuthButton", () => {
 
   const arrange = () => {
     render(
-      <SpotifyAuthButton
+      <LastFMAuthButton
         callBack={mockCallBack}
         iconComponent={iconComponent}
         text={mockText}
@@ -40,9 +38,9 @@ describe("SpotifyAuthButton", () => {
       iconComponent = undefined;
     });
 
-    it("should throw SpotifyAuthButtonError", () => {
+    it("should throw LastFMAuthButtonError", () => {
       const test = () => arrange();
-      expect(test).toThrow(SpotifyAuthButtonError);
+      expect(test).toThrow(LastFMAuthButtonError);
     });
   });
 
@@ -51,9 +49,9 @@ describe("SpotifyAuthButton", () => {
       iconComponent = jest.fn(() => <div>{mockIconText}</div>);
     });
 
-    it("should NOT throw SpotifyAuthButtonError", () => {
+    it("should NOT throw LastFMAuthButtonError", () => {
       const test = () => arrange();
-      expect(test).not.toThrow(SpotifyAuthButtonError);
+      expect(test).not.toThrow(LastFMAuthButtonError);
     });
 
     it("should render the underlying iconComponent", () => {
@@ -89,7 +87,7 @@ describe("SpotifyAuthButton", () => {
 
       it("should call the callBack as expected", () => {
         expect(mockCallBack).toBeCalledTimes(1);
-        expect(mockCallBack).toBeCalledWith("spotify");
+        expect(mockCallBack).toBeCalledWith("lastfm");
       });
     });
   });

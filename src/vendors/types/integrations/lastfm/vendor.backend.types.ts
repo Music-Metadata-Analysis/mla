@@ -42,6 +42,17 @@ export interface LastFMVendorTrackClientInterface {
   ) => Promise<LastFMTrackInfoInterface>;
 }
 
+export interface LastFMVendorSignedRequestInterface {
+  method: "auth.getSession" | "user.getInfo";
+  params: [string, string][];
+}
+
+export interface LastFMVendorSignedClientInterface {
+  signedRequest(
+    props: LastFMVendorSignedRequestInterface & { sk?: string }
+  ): Promise<Response>;
+}
+
 export interface LastFMVendorUserClientInterface {
   getTopAlbums: (username: string) => Promise<LastFMUserAlbumInterface[]>;
   getTopArtists: (username: string) => Promise<LastFMUserArtistInterface[]>;
@@ -53,5 +64,9 @@ export interface LastFMVendorBackendInterface {
   AlbumClient: new (secret_key: string) => LastFMVendorAlbumClientInterface;
   ArtistClient: new (secret_key: string) => LastFMVendorArtistClientInterface;
   TrackClient: new (secret_key: string) => LastFMVendorTrackClientInterface;
+  SignedClient: new (
+    secret_key: string,
+    shared_secret: string
+  ) => LastFMVendorSignedClientInterface;
   UserClient: new (secret_key: string) => LastFMVendorUserClientInterface;
 }

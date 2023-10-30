@@ -3,6 +3,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
+import LastFMProvider from "./providers/lastfm";
 import nextAuthConfiguration from "@src/vendors/integrations/auth/backend/config/next-auth";
 import { flagVendorBackend } from "@src/vendors/integrations/flags/vendor.backend";
 import type {
@@ -67,6 +68,7 @@ const createRoutes = (
             clientId: process.env.AUTH_SPOTIFY_ID,
             clientSecret: process.env.AUTH_SPOTIFY_SECRET,
           }),
+          LastFMProvider(),
         ],
         secret: process.env.AUTH_MASTER_SECRET_KEY,
         events: {
