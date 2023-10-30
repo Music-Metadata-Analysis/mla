@@ -17,6 +17,7 @@ declare namespace NodeJS {
     LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME: string;
     LASTFM_CACHE_AWS_S3_BUCKET_NAME: string;
     LAST_FM_KEY: string;
+    LAST_FM_SECRET: string;
     MLA_AWS_ACCESS_KEY_ID: string;
     MLA_AWS_REGION: string;
     MLA_AWS_SECRET_ACCESS_KEY: string;

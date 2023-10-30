@@ -1,4 +1,11 @@
 const apiRoutes = {
+  auth: {
+    redirect: {
+      callback: {
+        lastfm: "/api/auth/redirect/callback/lastfm",
+      },
+    },
+  },
   v2: {
     cache: {
       create: "/api/v2/cache/:source/:report/:username",

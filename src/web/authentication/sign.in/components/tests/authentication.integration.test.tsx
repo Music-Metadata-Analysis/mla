@@ -44,6 +44,7 @@ describe("AuthenticationContainer", () => {
     "facebook",
     "github",
     "google",
+    "lastfm",
     "spotify",
   ];
 

@@ -19,5 +19,6 @@ export interface AuthButtonVendorInterface {
   ) => JSX.Element;
   GithubAuthButton: (props: AuthButtonVendorComponentInterface) => JSX.Element;
   GoogleAuthButton: (props: AuthButtonVendorComponentInterface) => JSX.Element;
+  LastFMAuthButton: (props: AuthButtonVendorComponentInterface) => JSX.Element;
   SpotifyAuthButton: (props: AuthButtonVendorComponentInterface) => JSX.Element;
 }

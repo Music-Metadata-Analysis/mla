@@ -5,6 +5,7 @@ export type AuthVendorStateType = VendorStateType;
 
 export type AuthVendorServiceType =
   | "facebook"
+  | "lastfm"
   | "github"
   | "google"
   | "spotify";

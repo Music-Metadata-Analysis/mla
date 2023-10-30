@@ -3,6 +3,7 @@
     "facebook": "Sign-In with Facebook",
     "github": "Sign-In with Github",
     "google": "Sign-In with Google",
+    "lastfm": "Sign-In with last.fm",
     "spotify": "Sign-In with Spotify"
   },
   "title": "Please Sign-In to Continue.",
