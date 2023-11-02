@@ -45,11 +45,11 @@ describe("SunBurstChartSVGContainer", () => {
       });
 
       it("should render the SunBurstChart component", () => {
-        expect(SunBurstChartSVG).toBeCalledTimes(1);
+        expect(SunBurstChartSVG).toHaveBeenCalledTimes(1);
       });
 
       it("should render the SunBurstChart component with expected props", () => {
-        expect(SunBurstChartSVG).toBeCalledWith(
+        expect(SunBurstChartSVG).toHaveBeenCalledWith(
           {
             containerSize: 1000,
             colourSet: mockProps.colourSet,
@@ -73,7 +73,9 @@ describe("SunBurstChartSVGContainer", () => {
         });
 
         it("should rerender the SunBurstChart component", async () => {
-          await waitFor(() => expect(SunBurstChartSVG).toBeCalledTimes(2));
+          await waitFor(() =>
+            expect(SunBurstChartSVG).toHaveBeenCalledTimes(2)
+          );
           expect(SunBurstChartSVG).toHaveBeenNthCalledWith(
             2,
             {

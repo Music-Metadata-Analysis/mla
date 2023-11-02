@@ -47,7 +47,7 @@ describe("SunBurstDrawerControlPanel", () => {
 
   const checkChakraFlexProps = () => {
     it("should render the chakra Flex component with the expected props", () => {
-      expect(Flex).toBeCalledTimes(2);
+      expect(Flex).toHaveBeenCalledTimes(2);
       checkMockCall(
         Flex,
         {
@@ -70,7 +70,7 @@ describe("SunBurstDrawerControlPanel", () => {
 
   const checkChakraTextProps = () => {
     it("should render the chakra Text component with the expected props", () => {
-      expect(Text).toBeCalledTimes(2);
+      expect(Text).toHaveBeenCalledTimes(2);
       checkMockCall(
         Text,
         {
@@ -116,7 +116,7 @@ describe("SunBurstDrawerControlPanel", () => {
 
   const checkButtonProps = ({ parent }: { parent: boolean }) => {
     it("should render the ButtonBase component with the correct props", () => {
-      expect(ButtonWithoutAnalytics).toBeCalledTimes(1);
+      expect(ButtonWithoutAnalytics).toHaveBeenCalledTimes(1);
       checkMockCall(
         ButtonWithoutAnalytics,
         {
@@ -143,12 +143,12 @@ describe("SunBurstDrawerControlPanel", () => {
 
       if (parent) {
         it("should select the parent node", () => {
-          expect(currentProps.selectParentNode).toBeCalledTimes(1);
-          expect(currentProps.selectParentNode).toBeCalledWith();
+          expect(currentProps.selectParentNode).toHaveBeenCalledTimes(1);
+          expect(currentProps.selectParentNode).toHaveBeenCalledWith();
         });
       } else {
         it("should not select anything", () => {
-          expect(currentProps.selectParentNode).toBeCalledTimes(0);
+          expect(currentProps.selectParentNode).toHaveBeenCalledTimes(0);
         });
       }
     });

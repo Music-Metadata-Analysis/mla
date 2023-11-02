@@ -25,7 +25,7 @@ describe("PrivacyHeader", () => {
     beforeEach(() => arrange());
 
     it("should call Text with the correct props", () => {
-      expect(Text).toBeCalledTimes(1);
+      expect(Text).toHaveBeenCalledTimes(1);
       checkMockCall(
         Text,
         {

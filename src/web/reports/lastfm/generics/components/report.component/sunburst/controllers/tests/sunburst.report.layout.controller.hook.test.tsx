@@ -45,13 +45,13 @@ describe("useSunBurstLayoutController", () => {
 
   const checkLayoutFunctionCalls = () => {
     it("should call calculateCanFitOnScreen", () => {
-      expect(calculateCanFitOnScreen).toBeCalledTimes(1);
-      expect(calculateCanFitOnScreen).toBeCalledWith();
+      expect(calculateCanFitOnScreen).toHaveBeenCalledTimes(1);
+      expect(calculateCanFitOnScreen).toHaveBeenCalledWith();
     });
 
     it("should call calculateLayoutType", () => {
-      expect(calculateLayoutType).toBeCalledTimes(1);
-      expect(calculateLayoutType).toBeCalledWith(mockRef1, mockRef2);
+      expect(calculateLayoutType).toHaveBeenCalledTimes(1);
+      expect(calculateLayoutType).toHaveBeenCalledWith(mockRef1, mockRef2);
     });
   };
 

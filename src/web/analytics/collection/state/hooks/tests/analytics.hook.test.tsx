@@ -31,8 +31,8 @@ describe("useAnalytics", () => {
     });
 
     it("should call the underlying vendor hook during render", () => {
-      expect(analyticsVendor.collection.hook).toBeCalledTimes(1);
-      expect(analyticsVendor.collection.hook).toBeCalledWith(
+      expect(analyticsVendor.collection.hook).toHaveBeenCalledTimes(1);
+      expect(analyticsVendor.collection.hook).toHaveBeenCalledWith(
         analyticsVendor.ClientClass
       );
     });

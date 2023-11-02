@@ -151,8 +151,8 @@ describe("SearchTopTracks", () => {
           username: enteredUsername,
         };
         const query = new URLSearchParams(params);
-        expect(mockRouterHook.push).toBeCalledTimes(1);
-        expect(mockRouterHook.push).toBeCalledWith(
+        expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+        expect(mockRouterHook.push).toHaveBeenCalledWith(
           `${routes.reports.lastfm.top20tracks}?${query.toString()}`
         );
       });

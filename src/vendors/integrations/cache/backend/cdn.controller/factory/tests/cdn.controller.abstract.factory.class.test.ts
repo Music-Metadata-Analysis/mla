@@ -26,23 +26,23 @@ describe(CdnControllerAbstractFactory.name, () => {
       beforeEach(() => (result = instance.create()));
 
       it("should instantiate the OriginServerPersistenceClient as expected", () => {
-        expect(MockedPersistenceVendorBaseClass).toBeCalledTimes(1);
-        expect(MockedPersistenceVendorBaseClass).toBeCalledWith(
+        expect(MockedPersistenceVendorBaseClass).toHaveBeenCalledTimes(1);
+        expect(MockedPersistenceVendorBaseClass).toHaveBeenCalledWith(
           "mockPartitionName"
         );
       });
 
       it("should instantiate the CdnClient as expected", () => {
-        expect(MockedVendorCdnBaseClientClass).toBeCalledTimes(1);
-        expect(MockedVendorCdnBaseClientClass).toBeCalledWith(
+        expect(MockedVendorCdnBaseClientClass).toHaveBeenCalledTimes(1);
+        expect(MockedVendorCdnBaseClientClass).toHaveBeenCalledWith(
           mockPersistenceClient,
           "mockCdnHostName"
         );
       });
 
       it("should instantiate the CacheController as expected", () => {
-        expect(MockedCacheController).toBeCalledTimes(1);
-        expect(MockedCacheController).toBeCalledWith(
+        expect(MockedCacheController).toHaveBeenCalledTimes(1);
+        expect(MockedCacheController).toHaveBeenCalledWith(
           "mockDefaultResponse",
           MockedVendorCdnBaseClientClass.mock.instances[0]
         );

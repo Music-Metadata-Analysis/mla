@@ -51,7 +51,7 @@ describe("UserNameFormContainer", () => {
     beforeEach(() => arrange());
 
     it("should render the UserNameForm component with the correct props", () => {
-      expect(UserNameForm).toBeCalledTimes(1);
+      expect(UserNameForm).toHaveBeenCalledTimes(1);
       checkMockCall(
         UserNameForm,
         {
@@ -72,7 +72,7 @@ describe("UserNameFormContainer", () => {
     beforeEach(() => {
       arrange();
 
-      expect(UserNameForm).toBeCalledTimes(1);
+      expect(UserNameForm).toHaveBeenCalledTimes(1);
       validateUserName =
         jest.mocked(UserNameForm).mock.calls[0][0].validateUserName;
     });
@@ -87,8 +87,8 @@ describe("UserNameFormContainer", () => {
       });
 
       it("should generate an error", () => {
-        expect(mockFormHook.error.open).toBeCalledTimes(1);
-        expect(mockFormHook.error.open).toBeCalledWith(
+        expect(mockFormHook.error.open).toHaveBeenCalledTimes(1);
+        expect(mockFormHook.error.open).toHaveBeenCalledWith(
           fields.username,
           _t(lastfmTranslations.search.errors[fields.username].required)
         );
@@ -110,8 +110,8 @@ describe("UserNameFormContainer", () => {
       });
 
       it("should generate an error", () => {
-        expect(mockFormHook.error.open).toBeCalledTimes(1);
-        expect(mockFormHook.error.open).toBeCalledWith(
+        expect(mockFormHook.error.open).toHaveBeenCalledTimes(1);
+        expect(mockFormHook.error.open).toHaveBeenCalledWith(
           fields.username,
           _t(lastfmTranslations.search.errors[fields.username].valid)
         );
@@ -126,12 +126,12 @@ describe("UserNameFormContainer", () => {
       });
 
       it("should NOT generate an error", () => {
-        expect(mockFormHook.error.open).toBeCalledTimes(0);
+        expect(mockFormHook.error.open).toHaveBeenCalledTimes(0);
       });
 
       it("should close existing errors", () => {
-        expect(mockFormHook.error.close).toBeCalledTimes(1);
-        expect(mockFormHook.error.close).toBeCalledWith(fields.username);
+        expect(mockFormHook.error.close).toHaveBeenCalledTimes(1);
+        expect(mockFormHook.error.close).toHaveBeenCalledWith(fields.username);
       });
     });
   });
@@ -139,7 +139,7 @@ describe("UserNameFormContainer", () => {
   describe("handleSubmit", () => {
     const arrangeHandleSubmit = () => {
       arrange();
-      expect(UserNameForm).toBeCalledTimes(1);
+      expect(UserNameForm).toHaveBeenCalledTimes(1);
       handleSubmit = jest.mocked(UserNameForm).mock.calls[0][0].handleSubmit;
     };
 
@@ -159,13 +159,13 @@ describe("UserNameFormContainer", () => {
         beforeEach(() => handleSubmit(mockFormContent, mockAction));
 
         it("should NOT call setSubmitting", () => {
-          expect(mockAction.setSubmitting).toBeCalledTimes(0);
+          expect(mockAction.setSubmitting).toHaveBeenCalledTimes(0);
         });
 
         it("should redirect to the expected route", () => {
           const query = new URLSearchParams(mockFormContent);
-          expect(mockRouterHook.push).toBeCalledTimes(1);
-          expect(mockRouterHook.push).toBeCalledWith(
+          expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+          expect(mockRouterHook.push).toHaveBeenCalledWith(
             `${mockRoute}?${query.toString()}`
           );
         });
@@ -183,20 +183,20 @@ describe("UserNameFormContainer", () => {
         beforeEach(() => handleSubmit(mockFormContent, mockAction));
 
         it("should call setSubmitting as expected", () => {
-          expect(mockAction.setSubmitting).toBeCalledTimes(1);
-          expect(mockAction.setSubmitting).toBeCalledWith(false);
+          expect(mockAction.setSubmitting).toHaveBeenCalledTimes(1);
+          expect(mockAction.setSubmitting).toHaveBeenCalledWith(false);
         });
 
         it("should generate an error", () => {
-          expect(mockFormHook.error.open).toBeCalledTimes(1);
-          expect(mockFormHook.error.open).toBeCalledWith(
+          expect(mockFormHook.error.open).toHaveBeenCalledTimes(1);
+          expect(mockFormHook.error.open).toHaveBeenCalledWith(
             "session",
             _t(lastfmTranslations.search.errors.session.notLoggedIn)
           );
         });
 
         it("should NOT redirect", () => {
-          expect(mockRouterHook.push).toBeCalledTimes(0);
+          expect(mockRouterHook.push).toHaveBeenCalledTimes(0);
         });
       });
     });

@@ -58,8 +58,8 @@ describe(PersistentStateFactory.name, () => {
         });
 
         it("should use the correct key for local storage", () => {
-          expect(createPersistedState).toBeCalledTimes(1);
-          expect(createPersistedState).toBeCalledWith(mockPartitionName);
+          expect(createPersistedState).toHaveBeenCalledTimes(1);
+          expect(createPersistedState).toHaveBeenCalledWith(mockPartitionName);
         });
       });
     });

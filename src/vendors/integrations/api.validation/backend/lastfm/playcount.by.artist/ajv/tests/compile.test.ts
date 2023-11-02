@@ -27,22 +27,26 @@ describe("playcount.by.artist validator compiler", () => {
     });
 
     it("should compile the correct schema", () => {
-      expect(Ajv).toBeCalledTimes(1);
-      expect(jest.mocked(Ajv).mock.instances[0].compile).toBeCalledTimes(1);
-      expect(jest.mocked(Ajv).mock.instances[0].compile).toBeCalledWith(schema);
+      expect(Ajv).toHaveBeenCalledTimes(1);
+      expect(jest.mocked(Ajv).mock.instances[0].compile).toHaveBeenCalledTimes(
+        1
+      );
+      expect(jest.mocked(Ajv).mock.instances[0].compile).toHaveBeenCalledWith(
+        schema
+      );
     });
 
     it("should create a standalone function", () => {
-      expect(standaloneCode).toBeCalledTimes(1);
-      expect(standaloneCode).toBeCalledWith(
+      expect(standaloneCode).toHaveBeenCalledTimes(1);
+      expect(standaloneCode).toHaveBeenCalledWith(
         jest.mocked(Ajv).mock.instances[0],
         mockCompiledValidator
       );
     });
 
     it("should write the expected output", () => {
-      expect(fs.writeFileSync).toBeCalledTimes(1);
-      expect(fs.writeFileSync).toBeCalledWith(
+      expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+      expect(fs.writeFileSync).toHaveBeenCalledWith(
         path.join(__dirname, "../generated.js"),
         mockCompiledCode
       );

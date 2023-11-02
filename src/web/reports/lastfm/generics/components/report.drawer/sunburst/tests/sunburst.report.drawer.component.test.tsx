@@ -89,7 +89,7 @@ describe("LastFMSunBurstReportDrawer", () => {
 
   const checkReportDrawerComponent = () => {
     it("should call the common ReportDrawer component with the correct props", () => {
-      expect(ReportDrawer).toBeCalledTimes(1);
+      expect(ReportDrawer).toHaveBeenCalledTimes(1);
       checkMockCall(
         ReportDrawer,
         {
@@ -107,7 +107,7 @@ describe("LastFMSunBurstReportDrawer", () => {
 
   const checkChakraFlexComponent = () => {
     it("should render the chakra Flex component with the expected props", () => {
-      expect(Flex).toBeCalledTimes(1);
+      expect(Flex).toHaveBeenCalledTimes(1);
       checkMockCall(
         Flex,
         {
@@ -124,7 +124,7 @@ describe("LastFMSunBurstReportDrawer", () => {
 
   const checkSunBurstDrawerTitle = () => {
     it("should render the SunBurstDrawerTitle component with the correct props", () => {
-      expect(SunBurstDrawerTitleContainer).toBeCalledTimes(1);
+      expect(SunBurstDrawerTitleContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         SunBurstDrawerTitleContainer,
         {
@@ -138,7 +138,7 @@ describe("LastFMSunBurstReportDrawer", () => {
 
   const checkChakraDividerComponent = () => {
     it("should render chakra Divider component with the expected props", () => {
-      expect(Divider).toBeCalledTimes(2);
+      expect(Divider).toHaveBeenCalledTimes(2);
       const dividerProps = {
         mt: "10px",
         mb: "10px",
@@ -152,7 +152,7 @@ describe("LastFMSunBurstReportDrawer", () => {
 
   const checkSunBurstDrawerControl = () => {
     it("should render the SunBurstDrawerControl component with the correct props", () => {
-      expect(SunBurstDrawerControlContainer).toBeCalledTimes(1);
+      expect(SunBurstDrawerControlContainer).toHaveBeenCalledTimes(1);
 
       checkMockCall(
         SunBurstDrawerControlContainer,
@@ -167,7 +167,7 @@ describe("LastFMSunBurstReportDrawer", () => {
 
   const checkSunBurstNodeList = () => {
     it("should render the SunBurstNodeList component with the correct props", () => {
-      expect(SunBurstNodeListContainer).toBeCalledTimes(1);
+      expect(SunBurstNodeListContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         SunBurstNodeListContainer,
         {

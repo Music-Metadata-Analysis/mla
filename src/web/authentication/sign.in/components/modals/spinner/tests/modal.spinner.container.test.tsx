@@ -25,7 +25,7 @@ describe("AuthenticationSpinnerModalContainer", () => {
   };
 
   it("should render the AuthenticationSpinnerModal as expected", () => {
-    expect(AuthenticationSpinnerModal).toBeCalledTimes(1);
+    expect(AuthenticationSpinnerModal).toHaveBeenCalledTimes(1);
     checkMockCall(
       AuthenticationSpinnerModal,
       {

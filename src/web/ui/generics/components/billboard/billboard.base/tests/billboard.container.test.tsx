@@ -37,8 +37,8 @@ describe("BillboardContainer", () => {
 
   const checkWindowThreshold = () => {
     it("should initialize the window threshold with the correct settings", () => {
-      expect(useWindowThreshold).toBeCalledTimes(1);
-      expect(useWindowThreshold).toBeCalledWith({
+      expect(useWindowThreshold).toHaveBeenCalledTimes(1);
+      expect(useWindowThreshold).toHaveBeenCalledWith({
         axis: "innerHeight",
         lowState: false,
         threshold: settings.minimumTitleHeight,
@@ -48,7 +48,7 @@ describe("BillboardContainer", () => {
 
   const checkBillBoardComponentRender = () => {
     it("should render the Billboard Component as expected", () => {
-      expect(Billboard).toBeCalledTimes(1);
+      expect(Billboard).toHaveBeenCalledTimes(1);
       checkMockCall(
         Billboard,
         {
@@ -63,7 +63,7 @@ describe("BillboardContainer", () => {
 
   const checkMockChildComponentRender = () => {
     it("should render the MockChild Component as expected", () => {
-      expect(MockChild).toBeCalledTimes(1);
+      expect(MockChild).toHaveBeenCalledTimes(1);
       checkMockCall(MockChild, {}, 0);
     });
   };

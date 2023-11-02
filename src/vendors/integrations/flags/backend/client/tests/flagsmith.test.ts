@@ -28,8 +28,8 @@ describe(FlagSmithClient.name, () => {
 
   const checkFlagSmithEnvironmentSelection = () => {
     it("should query the correct FlagSmith environment", () => {
-      expect(Flagsmith).toBeCalledTimes(1);
-      expect(Flagsmith).toBeCalledWith({
+      expect(Flagsmith).toHaveBeenCalledTimes(1);
+      expect(Flagsmith).toHaveBeenCalledWith({
         environmentKey: mockEnvironmentName,
       });
     });
@@ -37,25 +37,25 @@ describe(FlagSmithClient.name, () => {
 
   const checkFlagSmithGroupQuery = () => {
     it("should query the group's flags from FlagSmith", () => {
-      expect(mockGetIdentityFlags).toBeCalledTimes(1);
-      expect(mockGetIdentityFlags).toBeCalledWith(mockGroupName);
+      expect(mockGetIdentityFlags).toHaveBeenCalledTimes(1);
+      expect(mockGetIdentityFlags).toHaveBeenCalledWith(mockGroupName);
     });
 
     it("should check if this specific feature is enabled", () => {
-      expect(mockIsFeatureEnabled).toBeCalledTimes(1);
-      expect(mockIsFeatureEnabled).toBeCalledWith(mockFlagName);
+      expect(mockIsFeatureEnabled).toHaveBeenCalledTimes(1);
+      expect(mockIsFeatureEnabled).toHaveBeenCalledWith(mockFlagName);
     });
   };
 
   const checkFlagSmithEnvironmentQuery = () => {
     it("should query the environment's flags from FlagSmith", () => {
-      expect(mockGetEnvironmentFlags).toBeCalledTimes(1);
-      expect(mockGetEnvironmentFlags).toBeCalledWith();
+      expect(mockGetEnvironmentFlags).toHaveBeenCalledTimes(1);
+      expect(mockGetEnvironmentFlags).toHaveBeenCalledWith();
     });
 
     it("should check if this specific feature is enabled", () => {
-      expect(mockIsFeatureEnabled).toBeCalledTimes(1);
-      expect(mockIsFeatureEnabled).toBeCalledWith(mockFlagName);
+      expect(mockIsFeatureEnabled).toHaveBeenCalledTimes(1);
+      expect(mockIsFeatureEnabled).toHaveBeenCalledWith(mockFlagName);
     });
   };
 

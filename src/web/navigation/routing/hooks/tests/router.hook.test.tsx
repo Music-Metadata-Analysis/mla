@@ -33,8 +33,8 @@ describe("useRouter", () => {
     });
 
     it("should call the underlying vendor hook during render", () => {
-      expect(webFrameworkVendor.routerHook).toBeCalledTimes(1);
-      expect(webFrameworkVendor.routerHook).toBeCalledWith();
+      expect(webFrameworkVendor.routerHook).toHaveBeenCalledTimes(1);
+      expect(webFrameworkVendor.routerHook).toHaveBeenCalledWith();
     });
 
     it("should return the vendor hook", () => {

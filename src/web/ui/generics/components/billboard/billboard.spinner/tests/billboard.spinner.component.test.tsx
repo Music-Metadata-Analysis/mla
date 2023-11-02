@@ -44,7 +44,7 @@ describe("BillBoardSpinner", () => {
 
   const checkBillBoardComponent = () => {
     it("should call the BillBoard component with the correct props", () => {
-      expect(BillBoardContainer).toBeCalledTimes(1);
+      expect(BillBoardContainer).toHaveBeenCalledTimes(1);
       checkMockCall(BillBoardContainer, { titleText: testTitle });
     });
   };
@@ -55,7 +55,7 @@ describe("BillBoardSpinner", () => {
     expectedPaddingBottom: number;
   }) => {
     it("should call the Flex component with the correct props", () => {
-      expect(Flex).toBeCalledTimes(1);
+      expect(Flex).toHaveBeenCalledTimes(1);
       checkMockCall(Flex, {
         justify: "center",
         pb: expectedPaddingBottom,
@@ -66,7 +66,7 @@ describe("BillBoardSpinner", () => {
 
   const checkSpinnerComponent = () => {
     it("should render the Spinner component with the correct props", () => {
-      expect(Spinner).toBeCalledTimes(1);
+      expect(Spinner).toHaveBeenCalledTimes(1);
       checkMockCall(Spinner, spinnerProps);
     });
   };

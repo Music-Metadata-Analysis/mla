@@ -35,8 +35,8 @@ describe("useNextRouter", () => {
 
   const checkHookRender = () => {
     it("should render the NextJS useRouter hook during render", () => {
-      expect(useRouter).toBeCalledTimes(1);
-      expect(useRouter).toBeCalledWith();
+      expect(useRouter).toHaveBeenCalledTimes(1);
+      expect(useRouter).toHaveBeenCalledWith();
     });
   };
 
@@ -82,8 +82,8 @@ describe("useNextRouter", () => {
         });
 
         it("should call the underlying NextJS router method correctly", () => {
-          expect(mockNextRouter.back).toBeCalledTimes(1);
-          expect(mockNextRouter.back).toBeCalledWith();
+          expect(mockNextRouter.back).toHaveBeenCalledTimes(1);
+          expect(mockNextRouter.back).toHaveBeenCalledWith();
         });
       });
     });
@@ -95,8 +95,8 @@ describe("useNextRouter", () => {
         });
 
         it("should call the underlying NextJS router method correctly", () => {
-          expect(mockNextRouter.events.on).toBeCalledTimes(1);
-          expect(mockNextRouter.events.on).toBeCalledWith(
+          expect(mockNextRouter.events.on).toHaveBeenCalledTimes(1);
+          expect(mockNextRouter.events.on).toHaveBeenCalledWith(
             "routeChangeStart",
             mockCallBack
           );
@@ -113,8 +113,8 @@ describe("useNextRouter", () => {
         });
 
         it("should call the underlying NextJS router method correctly", () => {
-          expect(mockNextRouter.events.off).toBeCalledTimes(1);
-          expect(mockNextRouter.events.off).toBeCalledWith(
+          expect(mockNextRouter.events.off).toHaveBeenCalledTimes(1);
+          expect(mockNextRouter.events.off).toHaveBeenCalledWith(
             "routeChangeStart",
             mockCallBack
           );
@@ -129,8 +129,8 @@ describe("useNextRouter", () => {
         });
 
         it("should call the underlying NextJS router method correctly", () => {
-          expect(mockNextRouter.push).toBeCalledTimes(1);
-          expect(mockNextRouter.push).toBeCalledWith(mockAlternatePath);
+          expect(mockNextRouter.push).toHaveBeenCalledTimes(1);
+          expect(mockNextRouter.push).toHaveBeenCalledWith(mockAlternatePath);
         });
       });
     });
@@ -142,8 +142,8 @@ describe("useNextRouter", () => {
         });
 
         it("should call the underlying NextJS router method correctly", () => {
-          expect(mockNextRouter.reload).toBeCalledTimes(1);
-          expect(mockNextRouter.reload).toBeCalledWith();
+          expect(mockNextRouter.reload).toHaveBeenCalledTimes(1);
+          expect(mockNextRouter.reload).toHaveBeenCalledWith();
         });
       });
     });

@@ -29,12 +29,12 @@ describe("NavBarContainer", () => {
 
   const checkNotRendered = () => {
     it("should NOT render the NavBarRootContainer", () => {
-      expect(NavBarRootContainer).toBeCalledTimes(0);
+      expect(NavBarRootContainer).toHaveBeenCalledTimes(0);
     });
   };
   const checkRendered = () => {
     it("should render the NavBarRootContainer with the correct props", () => {
-      expect(NavBarRootContainer).toBeCalledTimes(1);
+      expect(NavBarRootContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         NavBarRootContainer,
         {

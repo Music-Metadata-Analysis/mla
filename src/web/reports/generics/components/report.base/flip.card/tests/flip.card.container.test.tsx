@@ -61,7 +61,9 @@ describe("FlipCardContainer", () => {
     expectedImage: string;
   }) => {
     it("should call the FlipCard component with the correct props", async () => {
-      await waitFor(() => expect(FlipCard).toBeCalledTimes(expectedCallCount));
+      await waitFor(() =>
+        expect(FlipCard).toHaveBeenCalledTimes(expectedCallCount)
+      );
       checkMockCall(
         FlipCard,
         {
@@ -118,8 +120,8 @@ describe("FlipCardContainer", () => {
       });
 
       it(`should call the flipCard function with '1'`, () => {
-        expect(mockFlipCard).toBeCalledTimes(1);
-        expect(mockFlipCard).toBeCalledWith(currentProps.index);
+        expect(mockFlipCard).toHaveBeenCalledTimes(1);
+        expect(mockFlipCard).toHaveBeenCalledWith(currentProps.index);
       });
     });
   });
@@ -159,8 +161,8 @@ describe("FlipCardContainer", () => {
       });
 
       it("should call the flipCard function with 'null'", () => {
-        expect(mockFlipCard).toBeCalledTimes(1);
-        expect(mockFlipCard).toBeCalledWith(null);
+        expect(mockFlipCard).toHaveBeenCalledTimes(1);
+        expect(mockFlipCard).toHaveBeenCalledWith(null);
       });
     });
   });

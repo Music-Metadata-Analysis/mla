@@ -40,7 +40,9 @@ describe("SunBurstNodeAbstractBase", () => {
       });
 
       it("should call the event generator with the correct values", () => {
-        expect(Events.LastFM.SunBurstNodeSelected).toBeCalledWith(...expected);
+        expect(Events.LastFM.SunBurstNodeSelected).toHaveBeenCalledWith(
+          ...expected
+        );
       });
     });
   };

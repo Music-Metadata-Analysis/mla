@@ -31,7 +31,7 @@ describe("FacebookAuthButton", () => {
   };
 
   it("should call the underlying FacebookLoginButton with the correct props", () => {
-    expect(FacebookLoginButton).toBeCalledTimes(1);
+    expect(FacebookLoginButton).toHaveBeenCalledTimes(1);
     checkMockCall(FacebookLoginButton, {
       align: "center",
       style: { width: `${buttonWidth}px` },
@@ -45,8 +45,8 @@ describe("FacebookAuthButton", () => {
     );
 
     it("should call the callBack as expected", () => {
-      expect(mockCallBack).toBeCalledTimes(1);
-      expect(mockCallBack).toBeCalledWith("facebook");
+      expect(mockCallBack).toHaveBeenCalledTimes(1);
+      expect(mockCallBack).toHaveBeenCalledWith("facebook");
     });
   });
 });

@@ -69,8 +69,8 @@ describe("VerticalScrollBarContainer", () => {
 
   const checkUseVerticalScrollBarLayoutControllerRender = () => {
     it("should render the useVerticalScrollBarLayoutController hook as expected", () => {
-      expect(useVerticalScrollLayoutController).toBeCalledTimes(1);
-      expect(useVerticalScrollLayoutController).toBeCalledWith({
+      expect(useVerticalScrollLayoutController).toHaveBeenCalledTimes(1);
+      expect(useVerticalScrollLayoutController).toHaveBeenCalledWith({
         scrollRef: currentProps.scrollRef,
         update: currentProps.update,
         verticalAdjustment: mockVerticalAdjustment,
@@ -80,8 +80,8 @@ describe("VerticalScrollBarContainer", () => {
 
   const checkUseVerticalScrollBarEventsControllerRender = () => {
     it("should render the useVerticalScrollBarEventsController hook as expected", () => {
-      expect(useVerticalScrollBarEventsController).toBeCalledTimes(1);
-      expect(useVerticalScrollBarEventsController).toBeCalledWith({
+      expect(useVerticalScrollBarEventsController).toHaveBeenCalledTimes(1);
+      expect(useVerticalScrollBarEventsController).toHaveBeenCalledWith({
         scrollRef: currentProps.scrollRef,
       });
     });
@@ -89,7 +89,7 @@ describe("VerticalScrollBarContainer", () => {
 
   const checkVerticalScrollBarRender = () => {
     it("should render the title VerticalScrollBar with the correct props", () => {
-      expect(VerticalScrollBar).toBeCalledTimes(1);
+      expect(VerticalScrollBar).toHaveBeenCalledTimes(1);
 
       const asCSS = (value: number) => `${value}px`;
 
@@ -127,7 +127,7 @@ describe("VerticalScrollBarContainer", () => {
 
   const checkNoVerticalScrollBarRender = () => {
     it("should not render the VerticalScrollBar Component", () => {
-      expect(VerticalScrollBar).toBeCalledTimes(0);
+      expect(VerticalScrollBar).toHaveBeenCalledTimes(0);
     });
   };
 
@@ -135,7 +135,7 @@ describe("VerticalScrollBarContainer", () => {
     it("should call the VerticalScrollBarDiv.getRefProperty method 3 times", () => {
       expect(
         mockUseVerticalScrollBarLayoutController.scrollBarDiv.getRefProperty
-      ).toBeCalledTimes(3);
+      ).toHaveBeenCalledTimes(3);
       expect(
         mockUseVerticalScrollBarLayoutController.scrollBarDiv.getRefProperty
       ).toHaveBeenNthCalledWith(1, "offsetHeight");
@@ -152,7 +152,7 @@ describe("VerticalScrollBarContainer", () => {
     it("should NOT call the VerticalScrollBarDiv.getRefProperty method", () => {
       expect(
         mockUseVerticalScrollBarLayoutController.scrollBarDiv.getRefProperty
-      ).toBeCalledTimes(0);
+      ).toHaveBeenCalledTimes(0);
     });
   };
 

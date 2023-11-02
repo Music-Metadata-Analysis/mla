@@ -69,8 +69,12 @@ describe("useSunBurstController", () => {
       });
 
       it("should disable the navbar's mobile menu", () => {
-        expect(mockNavBarControllerHook.hamburger.setFalse).toBeCalledTimes(1);
-        expect(mockNavBarControllerHook.hamburger.setFalse).toBeCalledWith();
+        expect(
+          mockNavBarControllerHook.hamburger.setFalse
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          mockNavBarControllerHook.hamburger.setFalse
+        ).toHaveBeenCalledWith();
       });
     });
 
@@ -84,8 +88,12 @@ describe("useSunBurstController", () => {
       });
 
       it("should enable the navbar's mobile menu", () => {
-        expect(mockNavBarControllerHook.hamburger.setTrue).toBeCalledTimes(1);
-        expect(mockNavBarControllerHook.hamburger.setTrue).toBeCalledWith();
+        expect(
+          mockNavBarControllerHook.hamburger.setTrue
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          mockNavBarControllerHook.hamburger.setTrue
+        ).toHaveBeenCalledWith();
       });
     });
 

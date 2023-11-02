@@ -67,7 +67,7 @@ describe("NavSessionControl", () => {
     expectedCallCount: number;
   }) => {
     it("should call the AnalyticsButtonWrapperContainer component with the expected props", () => {
-      expect(AnalyticsButtonWrapperContainer).toBeCalledTimes(
+      expect(AnalyticsButtonWrapperContainer).toHaveBeenCalledTimes(
         expectedCallCount
       );
       for (let i = 0; i < expectedCallCount; i++) {
@@ -88,7 +88,7 @@ describe("NavSessionControl", () => {
     hidden: boolean;
   }) => {
     it("should call the Authentication component with the expected props", () => {
-      expect(Authentication).toBeCalledTimes(expectedCallCount);
+      expect(Authentication).toHaveBeenCalledTimes(expectedCallCount);
       for (let i = 0; i < expectedCallCount; i++) {
         checkMockCall(Authentication, { hidden }, 0, ["onModalClose"]);
       }
@@ -101,7 +101,7 @@ describe("NavSessionControl", () => {
     expectedCallCount: number;
   }) => {
     it("should call the Box component with the expected props", () => {
-      expect(Box).toBeCalledTimes(expectedCallCount);
+      expect(Box).toHaveBeenCalledTimes(expectedCallCount);
       for (let i = 0; i < expectedCallCount; i++) {
         checkMockCall(Box, { pl: [0, 2, 2], pr: [0, 0.5] }, i);
       }
@@ -114,7 +114,7 @@ describe("NavSessionControl", () => {
     expectedCallCount: number;
   }) => {
     it("should call the Button component with the expected props", () => {
-      expect(Button).toBeCalledTimes(expectedCallCount);
+      expect(Button).toHaveBeenCalledTimes(expectedCallCount);
       for (let i = 0; i < expectedCallCount; i++) {
         checkMockCall(
           Button,

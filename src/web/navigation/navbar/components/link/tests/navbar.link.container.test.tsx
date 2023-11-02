@@ -38,7 +38,7 @@ describe("NavBarLinkContainer", () => {
 
   const checkNavBarLink = () => {
     it("should render the title NavBarLink with the correct props", () => {
-      expect(NavBarLink).toBeCalledTimes(1);
+      expect(NavBarLink).toHaveBeenCalledTimes(1);
       const call = jest.mocked(NavBarLink).mock.calls[0][0];
 
       expect(call.children).toBe(linkText);
@@ -53,24 +53,24 @@ describe("NavBarLinkContainer", () => {
   const checkNavBarLinkClick = () => {
     describe("when the link click handler function is invoked", () => {
       beforeEach(() => {
-        expect(NavBarLink).toBeCalledTimes(1);
+        expect(NavBarLink).toHaveBeenCalledTimes(1);
         const call = jest.mocked(NavBarLink).mock.calls[0][0];
         call.handleClick(mockMouseEvent);
       });
 
       it("should call the analytics tracker as expected", () => {
-        expect(mockTracker).toBeCalledTimes(1);
-        expect(mockTracker).toBeCalledWith(mockMouseEvent, linkText);
+        expect(mockTracker).toHaveBeenCalledTimes(1);
+        expect(mockTracker).toHaveBeenCalledWith(mockMouseEvent, linkText);
       });
 
       it("should close the mobile menu as expected", () => {
-        expect(mockCloseMobileMenu).toBeCalledTimes(1);
-        expect(mockCloseMobileMenu).toBeCalledWith();
+        expect(mockCloseMobileMenu).toHaveBeenCalledTimes(1);
+        expect(mockCloseMobileMenu).toHaveBeenCalledWith();
       });
 
       it("should change the url to the link's path", () => {
-        expect(mockRouterHook.push).toBeCalledTimes(1);
-        expect(mockRouterHook.push).toBeCalledWith(mockPath);
+        expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+        expect(mockRouterHook.push).toHaveBeenCalledWith(mockPath);
       });
     });
   };

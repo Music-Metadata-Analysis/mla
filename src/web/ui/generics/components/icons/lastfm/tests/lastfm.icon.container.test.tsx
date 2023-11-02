@@ -42,7 +42,7 @@ describe("LastFMIconContainer", () => {
       });
 
       it("should render the LastFMIcon component with the correct props", () => {
-        expect(LastFMIcon).toBeCalledTimes(1);
+        expect(LastFMIcon).toHaveBeenCalledTimes(1);
         checkMockCall(
           LastFMIcon,
           {
@@ -64,7 +64,7 @@ describe("LastFMIconContainer", () => {
       });
 
       it("should render the LastFMIcon component with the correct props", () => {
-        expect(LastFMIcon).toBeCalledTimes(1);
+        expect(LastFMIcon).toHaveBeenCalledTimes(1);
         checkMockCall(
           LastFMIcon,
           {

@@ -37,7 +37,7 @@ describe("Consent", () => {
   const arrange = () => render(<Consent {...currentProps} />);
 
   it("should render the chakra Text component with the correct props", () => {
-    expect(Text).toBeCalledTimes(2);
+    expect(Text).toHaveBeenCalledTimes(2);
     checkMockCall(
       Text,
       {
@@ -72,7 +72,7 @@ describe("Consent", () => {
   });
 
   it("should render the CookieConsent component with the correct props", () => {
-    expect(CookieConsent).toBeCalledTimes(1);
+    expect(CookieConsent).toHaveBeenCalledTimes(1);
     checkMockCall(
       CookieConsent as never as React.FC,
       {

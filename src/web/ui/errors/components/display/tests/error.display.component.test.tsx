@@ -51,7 +51,7 @@ describe("ErrorDisplay", () => {
 
   const checkBillBoardRender = () => {
     it("should render the BillboardContainer component as expected", () => {
-      expect(BillboardContainer).toBeCalledTimes(1);
+      expect(BillboardContainer).toHaveBeenCalledTimes(1);
       checkMockCall(BillboardContainer, {
         titleText: currentProps.titleText,
       });
@@ -60,7 +60,7 @@ describe("ErrorDisplay", () => {
 
   const checkChakraFlexRender = () => {
     it("should render the chakra Flex component as expected", () => {
-      expect(Flex).toBeCalledTimes(1);
+      expect(Flex).toHaveBeenCalledTimes(1);
       checkMockCall(Flex, {
         align: "center",
         direction: "column",
@@ -71,7 +71,7 @@ describe("ErrorDisplay", () => {
 
   const checkChakraIconRender = () => {
     it("should render the Chakra WarningTwoIcon as expected", () => {
-      expect(WarningTwoIcon).toBeCalledTimes(1);
+      expect(WarningTwoIcon).toHaveBeenCalledTimes(1);
       checkMockCall(WarningTwoIcon, {
         boxSize: 50,
         color: mockUseColour.errorColour.icon,
@@ -81,7 +81,7 @@ describe("ErrorDisplay", () => {
 
   const checkChakraContainerRender = () => {
     it("should render the chakra Container component as expected", () => {
-      expect(Container).toBeCalledTimes(1);
+      expect(Container).toHaveBeenCalledTimes(1);
       checkMockCall(Container, {
         centerContent: true,
         fontSize: [20, 24, 30],
@@ -93,7 +93,7 @@ describe("ErrorDisplay", () => {
 
   const checkChakraStyledButtonRender = () => {
     it("should render the Button correctly", () => {
-      expect(StyledButton).toBeCalledTimes(1);
+      expect(StyledButton).toHaveBeenCalledTimes(1);
       checkMockCall(StyledButton, {
         analyticsName: "Clear Error State",
         mt: 5,
@@ -101,7 +101,7 @@ describe("ErrorDisplay", () => {
     });
 
     it("should pass the handleClick function to Button", () => {
-      expect(StyledButton).toBeCalledTimes(1);
+      expect(StyledButton).toHaveBeenCalledTimes(1);
       expect(jest.mocked(StyledButton).mock.calls[0][0].onClick).toBe(
         currentProps.handleClick
       );

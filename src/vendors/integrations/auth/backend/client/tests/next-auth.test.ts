@@ -73,8 +73,8 @@ describe(NextAuthClient.name, () => {
         });
 
         it("should call the underlying vendor function as expected", () => {
-          expect(getToken).toBeCalledTimes(1);
-          expect(getToken).toBeCalledWith({
+          expect(getToken).toHaveBeenCalledTimes(1);
+          expect(getToken).toHaveBeenCalledWith({
             req: mockRequest,
             secret: mockJWTSecret,
           });
@@ -97,8 +97,8 @@ describe(NextAuthClient.name, () => {
         });
 
         it("should call the underlying vendor function as expected", () => {
-          expect(getToken).toBeCalledTimes(1);
-          expect(getToken).toBeCalledWith({
+          expect(getToken).toHaveBeenCalledTimes(1);
+          expect(getToken).toHaveBeenCalledWith({
             req: mockRequest,
             secret: mockJWTSecret,
           });
@@ -121,8 +121,8 @@ describe(NextAuthClient.name, () => {
         });
 
         it("should call the underlying vendor function as expected", () => {
-          expect(getToken).toBeCalledTimes(1);
-          expect(getToken).toBeCalledWith({
+          expect(getToken).toHaveBeenCalledTimes(1);
+          expect(getToken).toHaveBeenCalledWith({
             req: mockRequest,
             secret: mockJWTSecret,
           });

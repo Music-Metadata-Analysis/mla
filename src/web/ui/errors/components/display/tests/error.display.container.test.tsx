@@ -37,7 +37,7 @@ describe("ErrorDisplayContainer", () => {
 
   const checkErrorDisplayRender = () => {
     it("should render the ErrorDisplay component with the expected props", () => {
-      expect(ErrorDisplay).toBeCalledTimes(1);
+      expect(ErrorDisplay).toHaveBeenCalledTimes(1);
       checkMockCall(
         ErrorDisplay,
         {

@@ -50,15 +50,15 @@ describe("createErrorHandlerContainer", () => {
 
   const checkConsoleErrorLogging = () => {
     it("should write the error message using console.error (useEffect)", () => {
-      expect(consoleErrorSpy).toBeCalledTimes(1);
-      expect(consoleErrorSpy).toBeCalledWith(currentProps.error);
+      expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+      expect(consoleErrorSpy).toHaveBeenCalledWith(currentProps.error);
     });
   };
 
   const checkAnalyticsEvent = () => {
     it("should emit the correct analytics event (useEffect)", () => {
-      expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
-      expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
+      expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledTimes(1);
+      expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledWith(
         currentProps.eventDefinition
       );
     });
@@ -66,7 +66,7 @@ describe("createErrorHandlerContainer", () => {
 
   const checkErrorDisplayRender = () => {
     it("should render the ErrorDisplayContainer component with the expected props", () => {
-      expect(ErrorDisplayContainer).toBeCalledTimes(1);
+      expect(ErrorDisplayContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         ErrorDisplayContainer,
         {

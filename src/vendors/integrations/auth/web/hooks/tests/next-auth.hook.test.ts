@@ -59,21 +59,23 @@ describe("useNextAuth", () => {
 
   const checkLocalStorage = () => {
     it("should instantiate the factory as expected", () => {
-      expect(MockPersistentStateFactory).toBeCalledTimes(1);
-      expect(MockPersistentStateFactory).toBeCalledWith();
+      expect(MockPersistentStateFactory).toHaveBeenCalledTimes(1);
+      expect(MockPersistentStateFactory).toHaveBeenCalledWith();
     });
 
     it("should initialize the local storage hook with the correct partition name", () => {
-      expect(MockPersistentStateFactory.prototype.create).toBeCalledTimes(1);
-      expect(MockPersistentStateFactory.prototype.create).toBeCalledWith(
+      expect(MockPersistentStateFactory.prototype.create).toHaveBeenCalledTimes(
+        1
+      );
+      expect(MockPersistentStateFactory.prototype.create).toHaveBeenCalledWith(
         "oauth",
         mockIsSSRValue
       );
     });
 
     it("should initialize the state with the expected value", () => {
-      expect(useMockLocalStorageHook).toBeCalledTimes(1);
-      expect(useMockLocalStorageHook).toBeCalledWith({ type: null });
+      expect(useMockLocalStorageHook).toHaveBeenCalledTimes(1);
+      expect(useMockLocalStorageHook).toHaveBeenCalledWith({ type: null });
     });
   };
 
@@ -87,8 +89,8 @@ describe("useNextAuth", () => {
         );
 
         it("should call the underlying next-auth signIn function correctly", () => {
-          expect(signIn).toBeCalledTimes(1);
-          expect(signIn).toBeCalledWith(mockOauthProvider);
+          expect(signIn).toHaveBeenCalledTimes(1);
+          expect(signIn).toHaveBeenCalledWith(mockOauthProvider);
         });
 
         it("should set the oauth property correctly", async () => {
@@ -108,7 +110,7 @@ describe("useNextAuth", () => {
         );
 
         it("should call the underlying next-auth signOut function correctly", () => {
-          expect(signOut).toBeCalledWith();
+          expect(signOut).toHaveBeenCalledWith();
         });
 
         it("should clear the oauth property correctly", async () => {

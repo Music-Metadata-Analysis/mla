@@ -81,7 +81,7 @@ describe("MLA", () => {
   };
 
   it("should render the RootProvider with the correct props", () => {
-    expect(RootProvider).toBeCalledTimes(1);
+    expect(RootProvider).toHaveBeenCalledTimes(1);
     checkMockCall(RootProvider, {
       cookies: currentProps.pageProps.cookies,
       flagState: currentProps.pageProps.flagState,
@@ -91,24 +91,24 @@ describe("MLA", () => {
   });
 
   it("should render the NavBarContainer with the correct props", () => {
-    expect(NavBarContainer).toBeCalledTimes(1);
+    expect(NavBarContainer).toHaveBeenCalledTimes(1);
     checkMockCall(NavBarContainer, { config: NavConfig.menuConfig });
   });
 
   it("should render the passed Component with the correct props", () => {
-    expect(currentProps.Component).toBeCalledTimes(1);
+    expect(currentProps.Component).toHaveBeenCalledTimes(1);
     checkMockCall(currentProps.Component, {});
   });
 
   it("should render the RootPopUpContainer component with the correct props", () => {
-    expect(RootPopUpContainer).toBeCalledTimes(1);
+    expect(RootPopUpContainer).toHaveBeenCalledTimes(1);
     checkMockCall(RootPopUpContainer, {});
   });
 
   it("should render the ConsentBannerComponent component with the correct props", () => {
-    expect(analyticsVendor.collection.ConsentBannerComponent).toBeCalledTimes(
-      1
-    );
+    expect(
+      analyticsVendor.collection.ConsentBannerComponent
+    ).toHaveBeenCalledTimes(1);
     checkMockCall(analyticsVendor.collection.ConsentBannerComponent, {});
   });
 
@@ -145,31 +145,31 @@ describe("MLA", () => {
       });
 
       it("should call App.getInitialProps as expected", () => {
-        expect(App.getInitialProps).toBeCalledTimes(1);
-        expect(App.getInitialProps).toBeCalledWith(mockContext);
+        expect(App.getInitialProps).toHaveBeenCalledTimes(1);
+        expect(App.getInitialProps).toHaveBeenCalledWith(mockContext);
       });
 
       it("should call the authVendor's SSR Client getSession method as expected", () => {
-        expect(authVendorSSR.Client).toBeCalledTimes(1);
-        expect(authVendorSSR.Client).toBeCalledWith();
-        expect(mockAuthVendorSSRClient.getSession).toBeCalledTimes(1);
-        expect(mockAuthVendorSSRClient.getSession).toBeCalledWith({
+        expect(authVendorSSR.Client).toHaveBeenCalledTimes(1);
+        expect(authVendorSSR.Client).toHaveBeenCalledWith();
+        expect(mockAuthVendorSSRClient.getSession).toHaveBeenCalledTimes(1);
+        expect(mockAuthVendorSSRClient.getSession).toHaveBeenCalledWith({
           req: mockRequest,
         });
       });
 
       it("should call the flagVendor's SSR Client getState method as expected", () => {
-        expect(flagVendorSSR.Client).toBeCalledTimes(1);
-        expect(flagVendorSSR.Client).toBeCalledWith();
-        expect(mockFlagVendorSSRClient.getState).toBeCalledTimes(1);
-        expect(mockFlagVendorSSRClient.getState).toBeCalledWith(
+        expect(flagVendorSSR.Client).toHaveBeenCalledTimes(1);
+        expect(flagVendorSSR.Client).toHaveBeenCalledWith();
+        expect(mockFlagVendorSSRClient.getState).toHaveBeenCalledTimes(1);
+        expect(mockFlagVendorSSRClient.getState).toHaveBeenCalledWith(
           mockSession.group
         );
       });
 
       it("should wrap the session in a normalizeUndefined call", () => {
-        expect(normalizeUndefined).toBeCalledTimes(1);
-        expect(normalizeUndefined).toBeCalledWith(mockSession);
+        expect(normalizeUndefined).toHaveBeenCalledTimes(1);
+        expect(normalizeUndefined).toHaveBeenCalledWith(mockSession);
       });
 
       it("should return the expected values", () => {
@@ -193,29 +193,31 @@ describe("MLA", () => {
       });
 
       it("should call App.getInitialProps as expected", () => {
-        expect(App.getInitialProps).toBeCalledTimes(1);
-        expect(App.getInitialProps).toBeCalledWith(mockContext);
+        expect(App.getInitialProps).toHaveBeenCalledTimes(1);
+        expect(App.getInitialProps).toHaveBeenCalledWith(mockContext);
       });
 
       it("should call the authVendor's SSR Client getSession method as expected", () => {
-        expect(authVendorSSR.Client).toBeCalledTimes(1);
-        expect(authVendorSSR.Client).toBeCalledWith();
-        expect(mockAuthVendorSSRClient.getSession).toBeCalledTimes(1);
-        expect(mockAuthVendorSSRClient.getSession).toBeCalledWith({
+        expect(authVendorSSR.Client).toHaveBeenCalledTimes(1);
+        expect(authVendorSSR.Client).toHaveBeenCalledWith();
+        expect(mockAuthVendorSSRClient.getSession).toHaveBeenCalledTimes(1);
+        expect(mockAuthVendorSSRClient.getSession).toHaveBeenCalledWith({
           req: mockRequest,
         });
       });
 
       it("should call the flagVendor's SSR Client getState method as expected", () => {
-        expect(flagVendorSSR.Client).toBeCalledTimes(1);
-        expect(flagVendorSSR.Client).toBeCalledWith();
-        expect(mockFlagVendorSSRClient.getState).toBeCalledTimes(1);
-        expect(mockFlagVendorSSRClient.getState).toBeCalledWith(undefined);
+        expect(flagVendorSSR.Client).toHaveBeenCalledTimes(1);
+        expect(flagVendorSSR.Client).toHaveBeenCalledWith();
+        expect(mockFlagVendorSSRClient.getState).toHaveBeenCalledTimes(1);
+        expect(mockFlagVendorSSRClient.getState).toHaveBeenCalledWith(
+          undefined
+        );
       });
 
       it("should wrap the session in a normalizeUndefined call", () => {
-        expect(normalizeUndefined).toBeCalledTimes(1);
-        expect(normalizeUndefined).toBeCalledWith(null);
+        expect(normalizeUndefined).toHaveBeenCalledTimes(1);
+        expect(normalizeUndefined).toHaveBeenCalledWith(null);
       });
 
       it("should return the expected values", () => {

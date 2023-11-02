@@ -40,8 +40,10 @@ describe("usePopUpsGenerator", () => {
     });
 
     it("should call the underlying vendor hook when generating the popup", () => {
-      expect(uiFrameworkVendor.popups.creatorHook).toBeCalledTimes(1);
-      expect(uiFrameworkVendor.popups.creatorHook).toBeCalledWith(mockProps);
+      expect(uiFrameworkVendor.popups.creatorHook).toHaveBeenCalledTimes(1);
+      expect(uiFrameworkVendor.popups.creatorHook).toHaveBeenCalledWith(
+        mockProps
+      );
     });
 
     it("should return the vendor hook", () => {

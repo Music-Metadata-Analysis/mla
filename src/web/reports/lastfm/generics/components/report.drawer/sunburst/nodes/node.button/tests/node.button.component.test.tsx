@@ -59,7 +59,7 @@ describe("SunBurstEntityButton", () => {
     });
 
     it("should call Flex as expected", () => {
-      expect(Flex).toBeCalledTimes(2);
+      expect(Flex).toHaveBeenCalledTimes(2);
       checkMockCall(
         Flex,
         {
@@ -81,7 +81,7 @@ describe("SunBurstEntityButton", () => {
     });
 
     it("should call Box as expected", () => {
-      expect(Box).toBeCalledTimes(2);
+      expect(Box).toHaveBeenCalledTimes(2);
       checkMockCall(
         Box,
         {
@@ -123,13 +123,13 @@ describe("SunBurstEntityButton", () => {
       });
 
       it("should call the click handler correctly", () => {
-        expect(mockSelectNode).toBeCalledTimes(1);
-        expect(mockSelectNode).toBeCalledWith(mockNode);
+        expect(mockSelectNode).toHaveBeenCalledTimes(1);
+        expect(mockSelectNode).toHaveBeenCalledWith(mockNode);
       });
     });
 
     it("should call Container as expected", () => {
-      expect(Container).toBeCalledTimes(1);
+      expect(Container).toHaveBeenCalledTimes(1);
       checkMockCall(Container, {
         m: 0,
         p: 0,
@@ -139,7 +139,7 @@ describe("SunBurstEntityButton", () => {
     });
 
     it("should call Text as expected", () => {
-      expect(Text).toBeCalledTimes(2);
+      expect(Text).toHaveBeenCalledTimes(2);
       checkMockCall(
         Text,
         {

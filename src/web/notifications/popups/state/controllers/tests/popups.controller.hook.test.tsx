@@ -69,8 +69,8 @@ describe("usePopUpsController", () => {
     });
 
     it("should call the underlying vendor hook when generating the popup", () => {
-      expect(uiFrameworkVendor.popups.controllerHook).toBeCalledTimes(1);
-      expect(uiFrameworkVendor.popups.controllerHook).toBeCalledWith();
+      expect(uiFrameworkVendor.popups.controllerHook).toHaveBeenCalledTimes(1);
+      expect(uiFrameworkVendor.popups.controllerHook).toHaveBeenCalledWith();
     });
 
     it("should return the vendor hook", () => {

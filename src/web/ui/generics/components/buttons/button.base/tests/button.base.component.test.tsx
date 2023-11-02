@@ -25,7 +25,7 @@ describe("StandardButton", () => {
 
   it("should render Button as expected", () => {
     arrange();
-    expect(Button).toBeCalledTimes(1);
+    expect(Button).toHaveBeenCalledTimes(1);
     checkMockCall(Button, {
       _hover: {
         bg: mockColourHook.buttonColour.hoverBackground,
@@ -46,7 +46,7 @@ describe("StandardButton", () => {
     });
 
     it("should call the mock handler as expected", () => {
-      expect(mockClickHandler).toBeCalledTimes(1);
+      expect(mockClickHandler).toHaveBeenCalledTimes(1);
     });
   });
 });

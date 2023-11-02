@@ -54,17 +54,17 @@ describe("Search", () => {
     });
 
     it("should render the Authentication component with the correct props", () => {
-      expect(Authentication).toBeCalledTimes(1);
+      expect(Authentication).toHaveBeenCalledTimes(1);
       checkMockCall(Authentication, {});
     });
 
     it("should render the BillboardContainer component with the correct props", () => {
-      expect(BillboardContainer).toBeCalledTimes(1);
+      expect(BillboardContainer).toHaveBeenCalledTimes(1);
       checkMockCall(BillboardContainer, { titleText: mockTitleText }, 0, []);
     });
 
     it("should render the chakra Flex component with the correct props", () => {
-      expect(Flex).toBeCalledTimes(1);
+      expect(Flex).toHaveBeenCalledTimes(1);
       checkMockCall(Flex, {
         align: "center",
         justify: "space-evenly",
@@ -73,13 +73,13 @@ describe("Search", () => {
     });
 
     it("should render the chakra Box component with the correct props", () => {
-      expect(Box).toBeCalledTimes(2);
+      expect(Box).toHaveBeenCalledTimes(2);
       checkMockCall(Box, {}, 0, []);
       checkMockCall(Box, { pl: 5 }, 1, []);
     });
 
     it("should render the Avatar component with the correct props", () => {
-      expect(Avatar).toBeCalledTimes(1);
+      expect(Avatar).toHaveBeenCalledTimes(1);
       const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.width).toStrictEqual([50, 50, 75]);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -90,7 +90,7 @@ describe("Search", () => {
     });
 
     it("should render the UsernameFormContainer component with the correct props", () => {
-      expect(UserNameFormContainer).toBeCalledTimes(1);
+      expect(UserNameFormContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         UserNameFormContainer,
         {

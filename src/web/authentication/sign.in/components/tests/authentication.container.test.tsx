@@ -30,7 +30,7 @@ describe("AuthenticationContainer", () => {
 
   const checkModalSignInComponent = () => {
     it("should call the ModalComponent with the correct props", () => {
-      expect(ModalSignInComponent).toBeCalledTimes(1);
+      expect(ModalSignInComponent).toHaveBeenCalledTimes(1);
       checkMockCall(
         ModalSignInComponent,
         {
@@ -62,12 +62,12 @@ describe("AuthenticationContainer", () => {
         checkModalSignInComponent();
 
         it("should close the modal on render", () => {
-          expect(mockToggleHook.setFalse).toBeCalledTimes(1);
-          expect(mockToggleHook.setFalse).toBeCalledWith();
+          expect(mockToggleHook.setFalse).toHaveBeenCalledTimes(1);
+          expect(mockToggleHook.setFalse).toHaveBeenCalledWith();
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toHaveBeenCalledTimes(0);
         });
       });
 
@@ -81,11 +81,11 @@ describe("AuthenticationContainer", () => {
         checkModalSignInComponent();
 
         it("should NOT close the modal on render", () => {
-          expect(mockToggleHook.setFalse).toBeCalledTimes(0);
+          expect(mockToggleHook.setFalse).toHaveBeenCalledTimes(0);
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toHaveBeenCalledTimes(0);
         });
       });
     });
@@ -105,12 +105,12 @@ describe("AuthenticationContainer", () => {
         checkModalSignInComponent();
 
         it("should close the modal on render", () => {
-          expect(mockToggleHook.setFalse).toBeCalledTimes(1);
-          expect(mockToggleHook.setFalse).toBeCalledWith();
+          expect(mockToggleHook.setFalse).toHaveBeenCalledTimes(1);
+          expect(mockToggleHook.setFalse).toHaveBeenCalledWith();
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toHaveBeenCalledTimes(0);
         });
       });
 
@@ -124,12 +124,12 @@ describe("AuthenticationContainer", () => {
         checkModalSignInComponent();
 
         it("should NOT close the modal on render", () => {
-          expect(mockToggleHook.setFalse).toBeCalledTimes(0);
+          expect(mockToggleHook.setFalse).toHaveBeenCalledTimes(0);
         });
 
         it("should open the modal on render", () => {
-          expect(mockToggleHook.setTrue).toBeCalledTimes(1);
-          expect(mockToggleHook.setTrue).toBeCalledWith();
+          expect(mockToggleHook.setTrue).toHaveBeenCalledTimes(1);
+          expect(mockToggleHook.setTrue).toHaveBeenCalledWith();
         });
       });
     });
@@ -153,16 +153,16 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should NOT call the ModalComponent", () => {
-          expect(ModalSignInComponent).toBeCalledTimes(0);
+          expect(ModalSignInComponent).toHaveBeenCalledTimes(0);
         });
 
         it("should close the modal on render", () => {
-          expect(mockToggleHook.setFalse).toBeCalledTimes(1);
-          expect(mockToggleHook.setFalse).toBeCalledWith();
+          expect(mockToggleHook.setFalse).toHaveBeenCalledTimes(1);
+          expect(mockToggleHook.setFalse).toHaveBeenCalledWith();
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toHaveBeenCalledTimes(0);
         });
       });
 
@@ -174,15 +174,15 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should NOT call the ModalComponent", () => {
-          expect(ModalSignInComponent).toBeCalledTimes(0);
+          expect(ModalSignInComponent).toHaveBeenCalledTimes(0);
         });
 
         it("should NOT close the modal on render", () => {
-          expect(mockToggleHook.setFalse).toBeCalledTimes(0);
+          expect(mockToggleHook.setFalse).toHaveBeenCalledTimes(0);
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toHaveBeenCalledTimes(0);
         });
       });
     });
@@ -200,16 +200,16 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should NOT call the ModalComponent", () => {
-          expect(ModalSignInComponent).toBeCalledTimes(0);
+          expect(ModalSignInComponent).toHaveBeenCalledTimes(0);
         });
 
         it("should close the modal on render", () => {
-          expect(mockToggleHook.setFalse).toBeCalledTimes(1);
-          expect(mockToggleHook.setFalse).toBeCalledWith();
+          expect(mockToggleHook.setFalse).toHaveBeenCalledTimes(1);
+          expect(mockToggleHook.setFalse).toHaveBeenCalledWith();
         });
 
         it("should NOT open the modal on render", () => {
-          expect(mockToggleHook.setTrue).toBeCalledTimes(0);
+          expect(mockToggleHook.setTrue).toHaveBeenCalledTimes(0);
         });
       });
 
@@ -221,16 +221,16 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should NOT call the ModalComponent", () => {
-          expect(ModalSignInComponent).toBeCalledTimes(0);
+          expect(ModalSignInComponent).toHaveBeenCalledTimes(0);
         });
 
         it("should NOT close the modal on render", () => {
-          expect(mockToggleHook.setFalse).toBeCalledTimes(0);
+          expect(mockToggleHook.setFalse).toHaveBeenCalledTimes(0);
         });
 
         it("should open the modal on render", () => {
-          expect(mockToggleHook.setTrue).toBeCalledTimes(1);
-          expect(mockToggleHook.setTrue).toBeCalledWith();
+          expect(mockToggleHook.setTrue).toHaveBeenCalledTimes(1);
+          expect(mockToggleHook.setTrue).toHaveBeenCalledWith();
         });
       });
     });

@@ -58,7 +58,7 @@ describe("FeedbackPopUp", () => {
     });
 
     it("should no longer show the expected text", async () => {
-      expect(mockClose).toBeCalledTimes(1);
+      expect(mockClose).toHaveBeenCalledTimes(1);
     });
   });
 });

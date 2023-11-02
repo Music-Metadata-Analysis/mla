@@ -130,7 +130,7 @@ describe("FlipCardReport", () => {
     expectedDisplay: "inline" | "none";
   }) => {
     it("should render the Flex component as expected", () => {
-      expect(Flex).toBeCalledTimes(3);
+      expect(Flex).toHaveBeenCalledTimes(3);
       checkMockCall(
         Flex,
         {
@@ -168,7 +168,7 @@ describe("FlipCardReport", () => {
 
   const checkDrawerComponent = () => {
     it("should render the Drawer component as expected", () => {
-      expect(MockDrawerComponent).toBeCalledTimes(1);
+      expect(MockDrawerComponent).toHaveBeenCalledTimes(1);
       checkMockCall(
         MockDrawerComponent,
         {
@@ -188,7 +188,7 @@ describe("FlipCardReport", () => {
 
   const checkReportTitle = () => {
     it("should render the ReportTitleContainer component as expected", () => {
-      expect(ReportTitleContainer).toBeCalledTimes(1);
+      expect(ReportTitleContainer).toHaveBeenCalledTimes(1);
       checkMockCall(ReportTitleContainer, {
         size: 100,
         title: _t(
@@ -208,20 +208,23 @@ describe("FlipCardReport", () => {
   const checkFlipCardComponents = () => {
     describe("for each report data element passed in the ReportStateInstance", () => {
       it("should call the getReportArtwork method", () => {
-        expect(mockGetReportArtWork).toBeCalledTimes(
+        expect(mockGetReportArtWork).toHaveBeenCalledTimes(
           currentProps.reportStateInstance.reportProperties.data.report.albums
             .length
         );
 
         currentProps.reportStateInstance.reportProperties.data.report.albums.forEach(
           (_, elementIndex) => {
-            expect(mockGetReportArtWork).toBeCalledWith(elementIndex, "large");
+            expect(mockGetReportArtWork).toHaveBeenCalledWith(
+              elementIndex,
+              "large"
+            );
           }
         );
       });
 
       it("should render a FlipCard component", () => {
-        expect(FlipCardContainer).toBeCalledTimes(
+        expect(FlipCardContainer).toHaveBeenCalledTimes(
           currentProps.reportStateInstance.reportProperties.data.report.albums
             .length
         );

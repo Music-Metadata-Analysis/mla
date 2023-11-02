@@ -54,7 +54,7 @@ describe("ErrorBoundary", () => {
     });
 
     it("should NOT log an error to the console", () => {
-      expect(consoleErrorSpy).toBeCalledTimes(0);
+      expect(consoleErrorSpy).toHaveBeenCalledTimes(0);
     });
 
     describe("when the create error button is clicked", () => {
@@ -71,8 +71,10 @@ describe("ErrorBoundary", () => {
       });
 
       it("should call the ErrorHandler factory as expected", () => {
-        expect(mockErrorHandlerFactory).toBeCalledTimes(1);
-        expect(mockErrorHandlerFactory).toBeCalledWith(mockAnalyticsEvent);
+        expect(mockErrorHandlerFactory).toHaveBeenCalledTimes(1);
+        expect(mockErrorHandlerFactory).toHaveBeenCalledWith(
+          mockAnalyticsEvent
+        );
       });
 
       it("should render the error handler component", async () => {
@@ -82,7 +84,7 @@ describe("ErrorBoundary", () => {
       });
 
       it("should report an error to the console", () => {
-        expect(consoleErrorSpy).toBeCalledTimes(3);
+        expect(consoleErrorSpy).toHaveBeenCalledTimes(3);
         expect(consoleErrorSpy.mock.calls[0][0].message).toBe(
           "Uncaught [Error: Test Error!]"
         );
@@ -104,13 +106,13 @@ describe("ErrorBoundary", () => {
         });
 
         it("should call the state reset function", () => {
-          expect(mockStateReset).toBeCalledTimes(1);
-          expect(mockStateReset).toBeCalledWith();
+          expect(mockStateReset).toHaveBeenCalledTimes(1);
+          expect(mockStateReset).toHaveBeenCalledWith();
         });
 
         it("should route to the configured destination", () => {
-          expect(mockUseRouter.push).toBeCalledTimes(1);
-          expect(mockUseRouter.push).toBeCalledWith(mockRoute);
+          expect(mockUseRouter.push).toHaveBeenCalledTimes(1);
+          expect(mockUseRouter.push).toHaveBeenCalledWith(mockRoute);
         });
       });
     });

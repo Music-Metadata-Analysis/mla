@@ -97,7 +97,7 @@ describe("useAnalytics", () => {
       beforeEach(() => received.result.current.setup());
 
       it("should NOT initialize analytics", () => {
-        expect(mockGoogleAnalytics.initialize).toBeCalledTimes(0);
+        expect(mockGoogleAnalytics.initialize).toHaveBeenCalledTimes(0);
       });
 
       it("should NOT set initialized to true", () => {
@@ -111,7 +111,7 @@ describe("useAnalytics", () => {
       beforeEach(() => received.result.current.event(testEvent));
 
       it("should NOT process events", () => {
-        expect(mockGoogleAnalytics.event).toBeCalledTimes(0);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledTimes(0);
       });
     });
 
@@ -124,7 +124,7 @@ describe("useAnalytics", () => {
       });
 
       it("should NOT process events", () => {
-        expect(mockGoogleAnalytics.event).toBeCalledTimes(0);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledTimes(0);
       });
     });
 
@@ -137,7 +137,7 @@ describe("useAnalytics", () => {
       });
 
       it("should NOT process events", () => {
-        expect(mockGoogleAnalytics.event).toBeCalledTimes(0);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledTimes(0);
       });
     });
 
@@ -150,7 +150,7 @@ describe("useAnalytics", () => {
       });
 
       it("should NOT process events", () => {
-        expect(mockGoogleAnalytics.event).toBeCalledTimes(0);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledTimes(0);
       });
     });
   };
@@ -160,17 +160,17 @@ describe("useAnalytics", () => {
       beforeEach(() => received.result.current.event(testEvent));
 
       it("should log events", async () => {
-        expect(console.log).toBeCalledTimes(1);
-        expect(console.log).toBeCalledWith(testEvent);
-        expect(console.group).toBeCalledTimes(1);
-        expect(console.group).toBeCalledWith("EVENT");
-        expect(console.groupEnd).toBeCalledTimes(1);
-        expect(console.groupEnd).toBeCalledWith();
+        expect(console.log).toHaveBeenCalledTimes(1);
+        expect(console.log).toHaveBeenCalledWith(testEvent);
+        expect(console.group).toHaveBeenCalledTimes(1);
+        expect(console.group).toHaveBeenCalledWith("EVENT");
+        expect(console.groupEnd).toHaveBeenCalledTimes(1);
+        expect(console.groupEnd).toHaveBeenCalledWith();
       });
 
       it("should process events", async () => {
-        expect(mockGoogleAnalytics.event).toBeCalledTimes(1);
-        expect(mockGoogleAnalytics.event).toBeCalledWith(testEvent);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledTimes(1);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledWith(testEvent);
       });
     });
   };
@@ -180,14 +180,14 @@ describe("useAnalytics", () => {
       beforeEach(() => received.result.current.event(testEvent));
 
       it("should NOT log events", async () => {
-        expect(console.log).toBeCalledTimes(0);
-        expect(console.group).toBeCalledTimes(0);
-        expect(console.groupEnd).toBeCalledTimes(0);
+        expect(console.log).toHaveBeenCalledTimes(0);
+        expect(console.group).toHaveBeenCalledTimes(0);
+        expect(console.groupEnd).toHaveBeenCalledTimes(0);
       });
 
       it("should process events", async () => {
-        expect(mockGoogleAnalytics.event).toBeCalledTimes(1);
-        expect(mockGoogleAnalytics.event).toBeCalledWith(testEvent);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledTimes(1);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledWith(testEvent);
       });
     });
   };
@@ -202,7 +202,7 @@ describe("useAnalytics", () => {
       });
 
       it("should initialize analytics (with debug disabled)", () => {
-        expect(mockGoogleAnalytics.initialize).toBeCalledTimes(1);
+        expect(mockGoogleAnalytics.initialize).toHaveBeenCalledTimes(1);
         expect(mockGoogleAnalytics.initialize).toHaveBeenCalledWith(
           process.env.NEXT_PUBLIC_ANALYTICS_UA_CODE
         );
@@ -224,8 +224,10 @@ describe("useAnalytics", () => {
       });
 
       it("should process events as expected", async () => {
-        expect(mockGoogleAnalytics.event).toBeCalledTimes(1);
-        expect(mockGoogleAnalytics.event).toBeCalledWith(mockButtonClickEvent);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledTimes(1);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledWith(
+          mockButtonClickEvent
+        );
       });
     });
 
@@ -238,8 +240,8 @@ describe("useAnalytics", () => {
       });
 
       it("should process events as expected", async () => {
-        expect(mockGoogleAnalytics.event).toBeCalledTimes(1);
-        expect(mockGoogleAnalytics.event).toBeCalledWith(
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledTimes(1);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledWith(
           mockExternalLinkClickEvent
         );
       });
@@ -254,8 +256,8 @@ describe("useAnalytics", () => {
       });
 
       it("should process events as expected", async () => {
-        expect(mockGoogleAnalytics.event).toBeCalledTimes(1);
-        expect(mockGoogleAnalytics.event).toBeCalledWith(
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledTimes(1);
+        expect(mockGoogleAnalytics.event).toHaveBeenCalledWith(
           mockInternalLinkClickEvent
         );
       });

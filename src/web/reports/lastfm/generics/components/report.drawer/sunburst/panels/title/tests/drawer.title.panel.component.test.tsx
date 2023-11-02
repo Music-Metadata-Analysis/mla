@@ -26,7 +26,7 @@ describe("SunBurstDrawerTitlePanel", () => {
 
   const checkChakraContainerProps = () => {
     it("should render the chakra Container component with the expected props", () => {
-      expect(Container).toBeCalledTimes(1);
+      expect(Container).toHaveBeenCalledTimes(1);
       checkMockCall(
         Container,
         {
@@ -43,7 +43,7 @@ describe("SunBurstDrawerTitlePanel", () => {
 
   const checkChakraTextProps = () => {
     it("should render the chakra Text component with the expected props", () => {
-      expect(Text).toBeCalledTimes(2);
+      expect(Text).toHaveBeenCalledTimes(2);
       checkMockCall(
         Text,
         {

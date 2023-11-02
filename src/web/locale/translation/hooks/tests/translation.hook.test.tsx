@@ -33,8 +33,8 @@ describe("useTranslation", () => {
     });
 
     it("should call the underlying vendor hook during render", () => {
-      expect(localeVendor.hook).toBeCalledTimes(1);
-      expect(localeVendor.hook).toBeCalledWith(mockNS);
+      expect(localeVendor.hook).toHaveBeenCalledTimes(1);
+      expect(localeVendor.hook).toHaveBeenCalledWith(mockNS);
     });
 
     it("should return the vendor hook", () => {

@@ -82,15 +82,17 @@ describe("NextAuthRoutes", () => {
         beforeEach(() => getGroup(mockEmail));
 
         it("should instantiate the flag vendor's Group class correctly", () => {
-          expect(flagVendorBackend.Group).toBeCalledTimes(1);
-          expect(flagVendorBackend.Group).toBeCalledWith(
+          expect(flagVendorBackend.Group).toHaveBeenCalledTimes(1);
+          expect(flagVendorBackend.Group).toHaveBeenCalledWith(
             JSON.parse(process.env.FLAG_GROUPS_HASH)
           );
         });
 
         it("should call the getFromIdentifier method correctly", () => {
-          expect(mockFlagGroup.getFromIdentifier).toBeCalledTimes(1);
-          expect(mockFlagGroup.getFromIdentifier).toBeCalledWith(mockEmail);
+          expect(mockFlagGroup.getFromIdentifier).toHaveBeenCalledTimes(1);
+          expect(mockFlagGroup.getFromIdentifier).toHaveBeenCalledWith(
+            mockEmail
+          );
         });
       });
     });
@@ -102,13 +104,15 @@ describe("NextAuthRoutes", () => {
         beforeEach(() => getGroup(mockEmail));
 
         it("should instantiate the flag vendor's Group class correctly", () => {
-          expect(flagVendorBackend.Group).toBeCalledTimes(1);
-          expect(flagVendorBackend.Group).toBeCalledWith({});
+          expect(flagVendorBackend.Group).toHaveBeenCalledTimes(1);
+          expect(flagVendorBackend.Group).toHaveBeenCalledWith({});
         });
 
         it("should call the getFromIdentifier method correctly", () => {
-          expect(mockFlagGroup.getFromIdentifier).toBeCalledTimes(1);
-          expect(mockFlagGroup.getFromIdentifier).toBeCalledWith(mockEmail);
+          expect(mockFlagGroup.getFromIdentifier).toHaveBeenCalledTimes(1);
+          expect(mockFlagGroup.getFromIdentifier).toHaveBeenCalledWith(
+            mockEmail
+          );
         });
       });
     });
@@ -124,62 +128,62 @@ describe("NextAuthRoutes", () => {
     });
 
     it("should initialize the Facebook Provider", async () => {
-      expect(FacebookProvider).toBeCalledTimes(1);
-      expect(FacebookProvider).toBeCalledWith({
+      expect(FacebookProvider).toHaveBeenCalledTimes(1);
+      expect(FacebookProvider).toHaveBeenCalledWith({
         clientId: process.env.AUTH_FACEBOOK_ID,
         clientSecret: process.env.AUTH_FACEBOOK_SECRET,
       });
     });
 
     it("should initialize the Github Provider", async () => {
-      expect(GithubProvider).toBeCalledTimes(1);
-      expect(GithubProvider).toBeCalledWith({
+      expect(GithubProvider).toHaveBeenCalledTimes(1);
+      expect(GithubProvider).toHaveBeenCalledWith({
         clientId: process.env.AUTH_GITHUB_ID,
         clientSecret: process.env.AUTH_GITHUB_SECRET,
       });
     });
 
     it("should initialize the Google Provider", async () => {
-      expect(GoogleProvider).toBeCalledTimes(1);
-      expect(GoogleProvider).toBeCalledWith({
+      expect(GoogleProvider).toHaveBeenCalledTimes(1);
+      expect(GoogleProvider).toHaveBeenCalledWith({
         clientId: process.env.AUTH_GOOGLE_ID,
         clientSecret: process.env.AUTH_GOOGLE_SECRET,
       });
     });
 
     it("should initialize the Spotify Provider", async () => {
-      expect(SpotifyProvider).toBeCalledTimes(1);
-      expect(SpotifyProvider).toBeCalledWith({
+      expect(SpotifyProvider).toHaveBeenCalledTimes(1);
+      expect(SpotifyProvider).toHaveBeenCalledWith({
         clientId: process.env.AUTH_SPOTIFY_ID,
         clientSecret: process.env.AUTH_SPOTIFY_SECRET,
       });
     });
 
     it("should initialize the LastFMProvider", () => {
-      expect(LastFMProvider).toBeCalledTimes(1);
+      expect(LastFMProvider).toHaveBeenCalledTimes(1);
     });
 
     it("should initialize the JWT Key", async () => {
-      expect(NextAuth).toBeCalledTimes(1);
+      expect(NextAuth).toHaveBeenCalledTimes(1);
       const call = (NextAuth as jest.Mock).mock.calls[0][2];
       expect(call.jwt.secret).toBe(process.env.AUTH_MASTER_JWT_SECRET);
     });
 
     it("should initialize the Secret hash value", async () => {
-      expect(NextAuth).toBeCalledTimes(1);
+      expect(NextAuth).toHaveBeenCalledTimes(1);
       const call = (NextAuth as jest.Mock).mock.calls[0][2];
       expect(call.secret).toBe(process.env.AUTH_MASTER_SECRET_KEY);
     });
 
     it("should initialize the Session", async () => {
-      expect(NextAuth).toBeCalledTimes(1);
+      expect(NextAuth).toHaveBeenCalledTimes(1);
       const call = (NextAuth as jest.Mock).mock.calls[0][2];
       expect(call.session.maxAge).toBe(nextAuthConfiguration.maxAge);
       expect(call.session.strategy).toBe("jwt");
     });
 
     it("should initialize a signIn event handler", async () => {
-      expect(NextAuth).toBeCalledTimes(1);
+      expect(NextAuth).toHaveBeenCalledTimes(1);
       const call = (NextAuth as jest.Mock).mock.calls[0][2];
       expect(typeof call.events.signIn).toBe("function");
     });
@@ -208,15 +212,15 @@ describe("NextAuthRoutes", () => {
           });
 
           it("should instantiate the flag vendor's Group class correctly", () => {
-            expect(flagVendorBackend.Group).toBeCalledTimes(1);
-            expect(flagVendorBackend.Group).toBeCalledWith(
+            expect(flagVendorBackend.Group).toHaveBeenCalledTimes(1);
+            expect(flagVendorBackend.Group).toHaveBeenCalledWith(
               JSON.parse(process.env.FLAG_GROUPS_HASH)
             );
           });
 
           it("should call the getFromIdentifier method correctly", () => {
-            expect(mockFlagGroup.getFromIdentifier).toBeCalledTimes(1);
-            expect(mockFlagGroup.getFromIdentifier).toBeCalledWith(
+            expect(mockFlagGroup.getFromIdentifier).toHaveBeenCalledTimes(1);
+            expect(mockFlagGroup.getFromIdentifier).toHaveBeenCalledWith(
               mockTestToken?.email
             );
           });
@@ -274,7 +278,7 @@ describe("NextAuthRoutes", () => {
           });
 
           it("should NOT instantiate the flag vendor's Group class", () => {
-            expect(flagVendorBackend.Group).toBeCalledTimes(0);
+            expect(flagVendorBackend.Group).toHaveBeenCalledTimes(0);
           });
 
           it("should NOT assign the group", () => {
@@ -301,7 +305,7 @@ describe("NextAuthRoutes", () => {
           });
 
           it("should NOT instantiate the flag vendor's Group class", () => {
-            expect(flagVendorBackend.Group).toBeCalledTimes(0);
+            expect(flagVendorBackend.Group).toHaveBeenCalledTimes(0);
           });
 
           it("should NOT assign the group", () => {
@@ -333,29 +337,29 @@ describe("NextAuthRoutes", () => {
           });
 
           it("should instantiate the flag vendor's Group class correctly", () => {
-            expect(flagVendorBackend.Group).toBeCalledTimes(1);
-            expect(flagVendorBackend.Group).toBeCalledWith(
+            expect(flagVendorBackend.Group).toHaveBeenCalledTimes(1);
+            expect(flagVendorBackend.Group).toHaveBeenCalledWith(
               JSON.parse(process.env.FLAG_GROUPS_HASH)
             );
           });
 
           it("should call the getFromIdentifier method correctly", () => {
-            expect(mockFlagGroup.getFromIdentifier).toBeCalledTimes(1);
-            expect(mockFlagGroup.getFromIdentifier).toBeCalledWith(
+            expect(mockFlagGroup.getFromIdentifier).toHaveBeenCalledTimes(1);
+            expect(mockFlagGroup.getFromIdentifier).toHaveBeenCalledWith(
               mockProfile?.email
             );
           });
 
           it("should instantiate the ProfilePersistenceClient class correctly", () => {
-            expect(MockProfilePersistenceClient).toBeCalledTimes(1);
-            expect(MockProfilePersistenceClient).toBeCalledWith(
+            expect(MockProfilePersistenceClient).toHaveBeenCalledTimes(1);
+            expect(MockProfilePersistenceClient).toHaveBeenCalledWith(
               process.env.AUTH_EMAILS_BUCKET_NAME
             );
           });
 
           it("should call the persistProfile method correctly", () => {
-            expect(mockPersistProfile).toBeCalledTimes(1);
-            expect(mockPersistProfile).toBeCalledWith({
+            expect(mockPersistProfile).toHaveBeenCalledTimes(1);
+            expect(mockPersistProfile).toHaveBeenCalledWith({
               ...mockProfile,
               group: mockGroup,
             });
@@ -378,19 +382,19 @@ describe("NextAuthRoutes", () => {
           });
 
           it("should NOT instantiate the flag vendor's Group class", () => {
-            expect(flagVendorBackend.Group).toBeCalledTimes(0);
+            expect(flagVendorBackend.Group).toHaveBeenCalledTimes(0);
           });
 
           it("should instantiate the ProfilePersistenceClient class correctly", () => {
-            expect(MockProfilePersistenceClient).toBeCalledTimes(1);
-            expect(MockProfilePersistenceClient).toBeCalledWith(
+            expect(MockProfilePersistenceClient).toHaveBeenCalledTimes(1);
+            expect(MockProfilePersistenceClient).toHaveBeenCalledWith(
               process.env.AUTH_EMAILS_BUCKET_NAME
             );
           });
 
           it("should call the persistProfile method correctly", () => {
-            expect(mockPersistProfile).toBeCalledTimes(1);
-            expect(mockPersistProfile).toBeCalledWith(null);
+            expect(mockPersistProfile).toHaveBeenCalledTimes(1);
+            expect(mockPersistProfile).toHaveBeenCalledWith(null);
           });
         });
       });

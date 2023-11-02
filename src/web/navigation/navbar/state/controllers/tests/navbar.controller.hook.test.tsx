@@ -70,18 +70,24 @@ describe("useNavBarController", () => {
 
       if (notCalled) {
         it(`should NOT call ${property}'s underlying useToggle method`, () => {
-          expect(mockToggleHooks[mockIndex][toggleFunction]).toBeCalledTimes(0);
+          expect(
+            mockToggleHooks[mockIndex][toggleFunction]
+          ).toHaveBeenCalledTimes(0);
         });
       } else {
         it(`should call ${property}'s underlying useToggle method`, () => {
-          expect(mockToggleHooks[mockIndex][toggleFunction]).toBeCalledTimes(1);
-          expect(mockToggleHooks[mockIndex][toggleFunction]).toBeCalledWith();
+          expect(
+            mockToggleHooks[mockIndex][toggleFunction]
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            mockToggleHooks[mockIndex][toggleFunction]
+          ).toHaveBeenCalledWith();
         });
 
         it(`should only call ${property}'s underlying useToggle method`, () => {
           mockToggleHooks.forEach((mockFn, index) => {
             if (index !== mockIndex) {
-              expect(mockFn[toggleFunction]).toBeCalledTimes(0);
+              expect(mockFn[toggleFunction]).toHaveBeenCalledTimes(0);
             }
           });
         });

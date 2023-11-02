@@ -26,7 +26,7 @@ describe("SplashFooter", () => {
     beforeEach(() => arrange());
 
     it("should call Button with the correct props", () => {
-      expect(Button).toBeCalledTimes(1);
+      expect(Button).toHaveBeenCalledTimes(1);
       checkMockCall(Button, {
         ...dialogueSettings.buttonComponentProps,
         analyticsName: "Splash Page Start",

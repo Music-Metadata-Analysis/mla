@@ -28,7 +28,7 @@ describe("ClickInternalLinkContainer", () => {
   };
 
   it("should render ClickInternalLink Component as expected", () => {
-    expect(ClickInternalLink).toBeCalledTimes(1);
+    expect(ClickInternalLink).toHaveBeenCalledTimes(1);
     checkMockCall(ClickInternalLink, { path: mockPath }, 0, ["clickHandler"]);
   });
 });

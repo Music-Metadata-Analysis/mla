@@ -59,26 +59,26 @@ describe("useFlagSmithVendor", () => {
 
   const checkHookRender = () => {
     it("should render the useAuth hook during render", () => {
-      expect(authVendor.hook).toBeCalledTimes(1);
-      expect(authVendor.hook).toBeCalledWith();
+      expect(authVendor.hook).toHaveBeenCalledTimes(1);
+      expect(authVendor.hook).toHaveBeenCalledWith();
     });
 
     it("should render the useFlagsmith hook during render", () => {
-      expect(MockUseFlagSmith).toBeCalledTimes(1);
-      expect(MockUseFlagSmith).toBeCalledWith();
+      expect(MockUseFlagSmith).toHaveBeenCalledTimes(1);
+      expect(MockUseFlagSmith).toHaveBeenCalledWith();
     });
   };
 
   const checkIdentify = () => {
     it("should identify the user correctly", () => {
-      expect(mockIdentify).toBeCalledTimes(1);
-      expect(mockIdentify).toBeCalledWith(mockGroup);
+      expect(mockIdentify).toHaveBeenCalledTimes(1);
+      expect(mockIdentify).toHaveBeenCalledWith(mockGroup);
     });
   };
 
   const checkDoesNotIdentify = () => {
     it("should NOT attempt to identify the user", () => {
-      expect(mockIdentify).toBeCalledTimes(0);
+      expect(mockIdentify).toHaveBeenCalledTimes(0);
     });
   };
 

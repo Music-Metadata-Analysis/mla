@@ -41,7 +41,7 @@ describe("ReportOption", () => {
 
   const checkChakraFlexRender = () => {
     it("should render the chakra Flex component with the correct props", () => {
-      expect(Flex).toBeCalledTimes(1);
+      expect(Flex).toHaveBeenCalledTimes(1);
       checkMockCall(Flex, {
         align: "center",
         justify: "center",
@@ -52,7 +52,7 @@ describe("ReportOption", () => {
 
   const checkButtonRender = () => {
     it("should render the Button component with the correct props", () => {
-      expect(Button).toBeCalledTimes(1);
+      expect(Button).toHaveBeenCalledTimes(1);
       checkMockCall(Button, {
         analyticsName: mockAnalyticsName,
         "data-testid": testIDs.OptionButton,

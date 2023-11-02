@@ -66,7 +66,7 @@ describe("ReportDrawer", () => {
     placement: ReportDrawerProps["placement"];
   }) => {
     it("should call the Drawer component with the expected props", () => {
-      expect(Drawer).toBeCalledTimes(1);
+      expect(Drawer).toHaveBeenCalledTimes(1);
       checkMockCall(
         Drawer,
         {
@@ -90,11 +90,11 @@ describe("ReportDrawer", () => {
   }) => {
     if (alwaysOpen || !isOpen) {
       it("should NOT call the DrawerOverlay component", () => {
-        expect(DrawerOverlay).toBeCalledTimes(0);
+        expect(DrawerOverlay).toHaveBeenCalledTimes(0);
       });
     } else {
       it("should call the DrawerOverlay component with the expected props", () => {
-        expect(DrawerOverlay).toBeCalledTimes(1);
+        expect(DrawerOverlay).toHaveBeenCalledTimes(1);
         checkMockCall(DrawerOverlay, {}, 0);
       });
     }
@@ -109,7 +109,7 @@ describe("ReportDrawer", () => {
   }) => {
     if (isOpen) {
       it("should call the DrawerContent component with the expected props", () => {
-        expect(DrawerContent).toBeCalledTimes(1);
+        expect(DrawerContent).toHaveBeenCalledTimes(1);
         checkMockCall(
           DrawerContent,
           {
@@ -126,7 +126,7 @@ describe("ReportDrawer", () => {
       });
     } else {
       it("should NOT call the DrawerContent component", () => {
-        expect(DrawerContent).toBeCalledTimes(0);
+        expect(DrawerContent).toHaveBeenCalledTimes(0);
       });
     }
   };
@@ -138,7 +138,7 @@ describe("ReportDrawer", () => {
   }) => {
     if (isOpen) {
       it("should call the DrawerCloseButton component with the expected props", () => {
-        expect(DrawerCloseButton).toBeCalledTimes(1);
+        expect(DrawerCloseButton).toHaveBeenCalledTimes(1);
         checkMockCall(
           DrawerCloseButton,
           {
@@ -152,7 +152,7 @@ describe("ReportDrawer", () => {
       });
     } else {
       it("should NOT call the DrawerCloseButton component", () => {
-        expect(DrawerCloseButton).toBeCalledTimes(0);
+        expect(DrawerCloseButton).toHaveBeenCalledTimes(0);
       });
     }
   };
@@ -166,7 +166,7 @@ describe("ReportDrawer", () => {
   }) => {
     if (title && isOpen) {
       it("should call the DrawerHeader component with the correct props", () => {
-        expect(DrawerHeader).toBeCalledTimes(1);
+        expect(DrawerHeader).toHaveBeenCalledTimes(1);
         checkMockCall(DrawerHeader, {
           "data-testid": testIDs.DrawerHeader,
         });
@@ -180,7 +180,7 @@ describe("ReportDrawer", () => {
       });
     } else {
       it("should NOT call the DrawerHeader component", () => {
-        expect(DrawerHeader).toBeCalledTimes(0);
+        expect(DrawerHeader).toHaveBeenCalledTimes(0);
       });
     }
   };
@@ -192,12 +192,12 @@ describe("ReportDrawer", () => {
   }) => {
     if (isOpen) {
       it("should call the DrawerBody component with the expected props", () => {
-        expect(DrawerBody).toBeCalledTimes(1);
+        expect(DrawerBody).toHaveBeenCalledTimes(1);
         checkMockCall(DrawerBody, { "data-testid": testIDs.DrawerBody });
       });
     } else {
       it("should NOT call the DrawerBody component ", () => {
-        expect(DrawerBody).toBeCalledTimes(0);
+        expect(DrawerBody).toHaveBeenCalledTimes(0);
       });
     }
   };
@@ -209,7 +209,7 @@ describe("ReportDrawer", () => {
   }) => {
     if (isOpen) {
       it("should call the Divider component with the expected props", () => {
-        expect(Divider).toBeCalledTimes(2);
+        expect(Divider).toHaveBeenCalledTimes(2);
         checkMockCall(
           Divider,
           {
@@ -230,7 +230,7 @@ describe("ReportDrawer", () => {
       });
     } else {
       it("should NOT call the Divider component", () => {
-        expect(Divider).toBeCalledTimes(0);
+        expect(Divider).toHaveBeenCalledTimes(0);
       });
     }
   };

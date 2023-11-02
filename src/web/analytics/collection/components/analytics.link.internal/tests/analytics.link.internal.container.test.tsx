@@ -31,7 +31,7 @@ describe("AnalyticsInternalLinkWrapperContainer", () => {
   };
 
   it("should render the AnalyticsGenericWrapper as expected", () => {
-    expect(AnalyticsInternalLinkWrapper).toBeCalledTimes(1);
+    expect(AnalyticsInternalLinkWrapper).toHaveBeenCalledTimes(1);
     checkMockCall(AnalyticsInternalLinkWrapper, {}, 0, ["clickHandler"]);
   });
 });

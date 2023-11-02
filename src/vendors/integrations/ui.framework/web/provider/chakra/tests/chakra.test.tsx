@@ -35,12 +35,12 @@ describe("ChakraProvider", () => {
     beforeEach(() => arrange());
 
     it("should call BackGround with the correct props", () => {
-      expect(ChakraMainBackGround).toBeCalledTimes(1);
+      expect(ChakraMainBackGround).toHaveBeenCalledTimes(1);
       checkMockCall(ChakraMainBackGround, {});
     });
 
     it("should call UserInterfaceChakraProvider with the correct props", () => {
-      expect(ChakraConfigurationProvider).toBeCalledTimes(1);
+      expect(ChakraConfigurationProvider).toHaveBeenCalledTimes(1);
       checkMockCall(ChakraConfigurationProvider, { cookies: mockCookies });
     });
 

@@ -57,8 +57,8 @@ describe(S3PersistenceClient.name, () => {
     });
 
     it("should instantiate S3Client correctly", () => {
-      expect(MockedS3Client).toBeCalledTimes(1);
-      expect(MockedS3Client).toBeCalledWith({
+      expect(MockedS3Client).toHaveBeenCalledTimes(1);
+      expect(MockedS3Client).toHaveBeenCalledWith({
         credentials: {
           accessKeyId: "MockValue1",
           secretAccessKey: "MockValue2",
@@ -79,16 +79,16 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should create the expected PutObjectCommand", () => {
-            expect(MockedPutObjectCommand).toBeCalledTimes(1);
-            expect(MockedPutObjectCommand).toBeCalledWith({
+            expect(MockedPutObjectCommand).toHaveBeenCalledTimes(1);
+            expect(MockedPutObjectCommand).toHaveBeenCalledWith({
               ...expectedStringCommand,
               ...mockHeaders,
             });
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockedS3Client.prototype.send).toBeCalledTimes(1);
-            expect(MockedS3Client.prototype.send).toBeCalledWith(
+            expect(MockedS3Client.prototype.send).toHaveBeenCalledTimes(1);
+            expect(MockedS3Client.prototype.send).toHaveBeenCalledWith(
               MockedPutObjectCommand.mock.instances[0]
             );
           });
@@ -103,16 +103,16 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should create the expected PutObjectCommand", () => {
-            expect(MockedPutObjectCommand).toBeCalledTimes(1);
-            expect(MockedPutObjectCommand).toBeCalledWith({
+            expect(MockedPutObjectCommand).toHaveBeenCalledTimes(1);
+            expect(MockedPutObjectCommand).toHaveBeenCalledWith({
               ...expectedStringCommand,
               ...mockHeaders,
             });
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockedS3Client.prototype.send).toBeCalledTimes(1);
-            expect(MockedS3Client.prototype.send).toBeCalledWith(
+            expect(MockedS3Client.prototype.send).toHaveBeenCalledTimes(1);
+            expect(MockedS3Client.prototype.send).toHaveBeenCalledWith(
               MockedPutObjectCommand.mock.instances[0]
             );
           });
@@ -130,16 +130,16 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should create the expected PutObjectCommand", () => {
-            expect(MockedPutObjectCommand).toBeCalledTimes(1);
-            expect(MockedPutObjectCommand).toBeCalledWith({
+            expect(MockedPutObjectCommand).toHaveBeenCalledTimes(1);
+            expect(MockedPutObjectCommand).toHaveBeenCalledWith({
               ...expectedObjectCommand,
               ...mockHeaders,
             });
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockedS3Client.prototype.send).toBeCalledTimes(1);
-            expect(MockedS3Client.prototype.send).toBeCalledWith(
+            expect(MockedS3Client.prototype.send).toHaveBeenCalledTimes(1);
+            expect(MockedS3Client.prototype.send).toHaveBeenCalledWith(
               MockedPutObjectCommand.mock.instances[0]
             );
           });
@@ -154,16 +154,16 @@ describe(S3PersistenceClient.name, () => {
           });
 
           it("should create the expected PutObjectCommand", () => {
-            expect(MockedPutObjectCommand).toBeCalledTimes(1);
-            expect(MockedPutObjectCommand).toBeCalledWith({
+            expect(MockedPutObjectCommand).toHaveBeenCalledTimes(1);
+            expect(MockedPutObjectCommand).toHaveBeenCalledWith({
               ...expectedObjectCommand,
               ...mockHeaders,
             });
           });
 
           it("should send the PutObjectCommand to S3", () => {
-            expect(MockedS3Client.prototype.send).toBeCalledTimes(1);
-            expect(MockedS3Client.prototype.send).toBeCalledWith(
+            expect(MockedS3Client.prototype.send).toHaveBeenCalledTimes(1);
+            expect(MockedS3Client.prototype.send).toHaveBeenCalledWith(
               MockedPutObjectCommand.mock.instances[0]
             );
           });

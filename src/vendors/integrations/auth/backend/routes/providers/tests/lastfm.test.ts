@@ -72,8 +72,8 @@ describe("LastFMProvider", () => {
 
     const checkInstantiation = () => {
       it("should instantiate the last.fm SignedClient", () => {
-        expect(lastFMVendorBackend.SignedClient).toBeCalledTimes(1);
-        expect(lastFMVendorBackend.SignedClient).toBeCalledWith(
+        expect(lastFMVendorBackend.SignedClient).toHaveBeenCalledTimes(1);
+        expect(lastFMVendorBackend.SignedClient).toHaveBeenCalledWith(
           mockLastFmApiKey,
           mockLastFmSharedSecret
         );
@@ -82,7 +82,7 @@ describe("LastFMProvider", () => {
 
     const checkNoInstantiation = () => {
       it("should NOT instantiate the last.fm SignedClient", () => {
-        expect(lastFMVendorBackend.SignedClient).toBeCalledTimes(0);
+        expect(lastFMVendorBackend.SignedClient).toHaveBeenCalledTimes(0);
       });
     };
 

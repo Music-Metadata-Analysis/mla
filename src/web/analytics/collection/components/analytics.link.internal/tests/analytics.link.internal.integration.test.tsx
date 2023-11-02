@@ -36,7 +36,7 @@ describe("AnalyticsInternalLinkWrapper", () => {
     it("should call the button tracker", () => {
       expect(
         mockAnalyticsCollectionHook.trackInternalLinkClick
-      ).toBeCalledTimes(1);
+      ).toHaveBeenCalledTimes(1);
       const call =
         mockAnalyticsCollectionHook.trackInternalLinkClick.mock.calls[0];
       expect(call[0].constructor.name).toBe("SyntheticBaseEvent");

@@ -63,7 +63,7 @@ describe("FlipCard", () => {
 
   const checkReactCardFlipProps = () => {
     it("should render the ReactCardFlip component with the correct props", () => {
-      expect(ReactCardFlip).toBeCalledTimes(1);
+      expect(ReactCardFlip).toHaveBeenCalledTimes(1);
       checkMockCall(
         ReactCardFlip,
         {
@@ -82,7 +82,7 @@ describe("FlipCard", () => {
 
   const checkChakraBoxProps = () => {
     it("should render the chakra Box component with the correct props", () => {
-      expect(Box).toBeCalledTimes(4);
+      expect(Box).toHaveBeenCalledTimes(4);
       checkMockCall(
         Box,
         {
@@ -138,7 +138,7 @@ describe("FlipCard", () => {
 
   const checkChakraCenterProps = () => {
     it("should render the chakra Center component with the correct props", () => {
-      expect(Center).toBeCalledTimes(2);
+      expect(Center).toHaveBeenCalledTimes(2);
       checkMockCall(
         Center,
         {
@@ -160,7 +160,7 @@ describe("FlipCard", () => {
 
   const checkChakraImageProps = () => {
     it("should render the chakra Center component with the correct props", () => {
-      expect(Img).toBeCalledTimes(2);
+      expect(Img).toHaveBeenCalledTimes(2);
       checkMockCall(
         Img,
         {
@@ -193,7 +193,7 @@ describe("FlipCard", () => {
 
   const checkChakraTextPropsWithFront = () => {
     it("should render the chakra Text component with the correct props", () => {
-      expect(Text).toBeCalledTimes(2);
+      expect(Text).toHaveBeenCalledTimes(2);
       checkMockCall(
         Text,
         {
@@ -219,7 +219,7 @@ describe("FlipCard", () => {
 
   const checkChakraTextPropsWithOutFront = () => {
     it("should render the chakra Text component with the correct props", () => {
-      expect(Text).toBeCalledTimes(1);
+      expect(Text).toHaveBeenCalledTimes(1);
       checkMockCall(
         Text,
         {

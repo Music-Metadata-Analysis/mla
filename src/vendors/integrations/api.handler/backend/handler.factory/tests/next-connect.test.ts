@@ -39,8 +39,8 @@ describe(NextConnectHandlerFactory.name, () => {
     beforeEach(() => (received = instance.create()));
 
     it("should call the underlying vendor function correctly", () => {
-      expect(nextConnect).toBeCalledTimes(1);
-      expect(nextConnect).toBeCalledWith({
+      expect(nextConnect).toHaveBeenCalledTimes(1);
+      expect(nextConnect).toHaveBeenCalledWith({
         onError: mockErrorHandler,
         onNoMatch: mockFallBackHandler,
       });

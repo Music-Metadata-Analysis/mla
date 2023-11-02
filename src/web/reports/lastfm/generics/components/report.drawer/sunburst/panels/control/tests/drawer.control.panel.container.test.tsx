@@ -44,7 +44,7 @@ describe("SunBurstDrawerControlPanelContainer", () => {
 
   const checkSunBurstDrawerControlPanelProps = () => {
     it("should render the SunBurstDrawerControlPanel component with the expected props", () => {
-      expect(SunBurstDrawerControlPanel).toBeCalledTimes(1);
+      expect(SunBurstDrawerControlPanel).toHaveBeenCalledTimes(1);
       checkMockCall(
         SunBurstDrawerControlPanel,
         {

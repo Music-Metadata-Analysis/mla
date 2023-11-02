@@ -53,8 +53,8 @@ describe("404", () => {
       });
 
       it("should route us back to home", () => {
-        expect(mockRouterHook.push).toBeCalledTimes(1);
-        expect(mockRouterHook.push).toBeCalledWith(routes.home);
+        expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+        expect(mockRouterHook.push).toHaveBeenCalledWith(routes.home);
       });
     });
   });

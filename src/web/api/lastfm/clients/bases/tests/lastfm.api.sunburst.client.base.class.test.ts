@@ -59,12 +59,12 @@ describe("SunBurstDataClientBase", () => {
       });
 
       it("should call mockDataPointRetrieveReport as expected on the default route datapoint", () => {
-        expect(mockDataPointRetrieveReport).toBeCalledTimes(1);
-        expect(mockDataPointRetrieveReport).toBeCalledWith(mockParams);
+        expect(mockDataPointRetrieveReport).toHaveBeenCalledTimes(1);
+        expect(mockDataPointRetrieveReport).toHaveBeenCalledWith(mockParams);
       });
 
       it("should emit an analytics report request event", async () => {
-        expect(mockEvent).toBeCalledTimes(1);
+        expect(mockEvent).toHaveBeenCalledTimes(1);
         expect(mockEvent).toHaveBeenCalledWith(
           new analyticsVendor.collection.EventDefinition({
             category: "LAST.FM",
@@ -94,15 +94,15 @@ describe("SunBurstDataClientBase", () => {
       });
 
       it("should call mockDataPointRetrieveReport as expected on the matching datapoint", () => {
-        expect(mockDataPointRetrieveReport).toBeCalledTimes(1);
-        expect(mockDataPointRetrieveReport).toBeCalledWith({
+        expect(mockDataPointRetrieveReport).toHaveBeenCalledTimes(1);
+        expect(mockDataPointRetrieveReport).toHaveBeenCalledWith({
           userName: "niall-byrne",
           artist: "Uchu Corbini",
         });
       });
 
       it("should NOT emit an analytics event", async () => {
-        expect(mockEvent).toBeCalledTimes(0);
+        expect(mockEvent).toHaveBeenCalledTimes(0);
       });
     });
 
@@ -123,12 +123,12 @@ describe("SunBurstDataClientBase", () => {
       });
 
       it("should call throwError as expected", () => {
-        expect(mockState.throwError).toBeCalledTimes(1);
-        expect(mockState.throwError).toBeCalledWith();
+        expect(mockState.throwError).toHaveBeenCalledTimes(1);
+        expect(mockState.throwError).toHaveBeenCalledWith();
       });
 
       it("should NOT emit an analytics event", async () => {
-        expect(mockEvent).toBeCalledTimes(0);
+        expect(mockEvent).toHaveBeenCalledTimes(0);
       });
     });
   });

@@ -95,9 +95,9 @@ describe(endpointUnderTest, () => {
           });
 
           it("should call the proxy method with the correct params", () => {
-            expect(mockLastFMProxyMethods.getArtistTopAlbums).toBeCalledWith(
-              query.artist
-            );
+            expect(
+              mockLastFMProxyMethods.getArtistTopAlbums
+            ).toHaveBeenCalledWith(query.artist);
           });
         });
       });
@@ -115,7 +115,9 @@ describe(endpointUnderTest, () => {
       });
 
       it("should NOT call the proxy method", () => {
-        expect(mockLastFMProxyMethods.getArtistTopAlbums).toBeCalledTimes(0);
+        expect(mockLastFMProxyMethods.getArtistTopAlbums).toHaveBeenCalledTimes(
+          0
+        );
       });
     });
   });

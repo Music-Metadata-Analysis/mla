@@ -181,7 +181,7 @@ describe("SunBurstChartSVG", () => {
       });
 
       it("should select the clicked Node", async () => {
-        expect(mockSetSelectedNode).toBeCalledTimes(1);
+        expect(mockSetSelectedNode).toHaveBeenCalledTimes(1);
         selected = getMockProp({
           mock: mockSetSelectedNode,
           propName: "data",
@@ -224,7 +224,9 @@ describe("SunBurstChartSVG", () => {
       });
 
       it("should select the parent node", async () => {
-        await waitFor(() => expect(mockSetSelectedNode).toBeCalledTimes(1));
+        await waitFor(() =>
+          expect(mockSetSelectedNode).toHaveBeenCalledTimes(1)
+        );
         selected = getMockProp({
           mock: mockSetSelectedNode,
           propName: "data",
@@ -269,7 +271,7 @@ describe("SunBurstChartSVG", () => {
     selected: SunBurstData;
   }) => {
     it("should select the root node after mounting", async () => {
-      expect(mockSetSelectedNode).toBeCalledTimes(1);
+      expect(mockSetSelectedNode).toHaveBeenCalledTimes(1);
       const selection = getMockProp({
         mock: mockSetSelectedNode,
         propName: "data",
@@ -289,7 +291,9 @@ describe("SunBurstChartSVG", () => {
 
   const checkTransition = ({ transitionType }: { transitionType: string }) => {
     it(`should trigger the path transition for ${transitionType}`, async () => {
-      await waitFor(() => expect(mockFinishTransition).toBeCalledTimes(1));
+      await waitFor(() =>
+        expect(mockFinishTransition).toHaveBeenCalledTimes(1)
+      );
     });
   };
 

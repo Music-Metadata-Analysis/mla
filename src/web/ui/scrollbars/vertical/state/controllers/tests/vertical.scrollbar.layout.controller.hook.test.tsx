@@ -87,8 +87,8 @@ describe("useVerticalScrollBarLayoutController", () => {
       expect(received.result.current.hook.scrollBarDiv).toBeInstanceOf(
         VerticalScrollBarDiv
       );
-      expect(VerticalScrollBarDiv).toBeCalledTimes(1);
-      expect(VerticalScrollBarDiv).toBeCalledWith({
+      expect(VerticalScrollBarDiv).toHaveBeenCalledTimes(1);
+      expect(VerticalScrollBarDiv).toHaveBeenCalledWith({
         scrollRef: currentProps.scrollRef,
         verticalAdjustment: currentProps.verticalAdjustment,
       });
@@ -121,7 +121,7 @@ describe("useVerticalScrollBarLayoutController", () => {
         await waitFor(() =>
           expect(
             VerticalScrollBarDiv.prototype.getScrollAttributes
-          ).toBeCalledTimes(1)
+          ).toHaveBeenCalledTimes(1)
         );
         expect(received.result.current.hook.scrollThumbOffset).toBe(
           mockInternalAttributeScrollThumbOffset
@@ -161,13 +161,13 @@ describe("useVerticalScrollBarLayoutController", () => {
         await waitFor(() =>
           expect(
             VerticalScrollBarDiv.prototype.getScrollAttributes
-          ).toBeCalledTimes(6)
+          ).toHaveBeenCalledTimes(6)
         );
       });
 
       it("should update the ref", () => {
-        expect(mockSetter).toBeCalledTimes(2);
-        expect(mockSetter).toBeCalledWith(mockScrollRef.current);
+        expect(mockSetter).toHaveBeenCalledTimes(2);
+        expect(mockSetter).toHaveBeenCalledWith(mockScrollRef.current);
       });
 
       it("should update the returned attributes", () => {
@@ -183,7 +183,7 @@ describe("useVerticalScrollBarLayoutController", () => {
         await waitFor(() =>
           expect(
             VerticalScrollBarDiv.prototype.getScrollAttributes
-          ).toBeCalledTimes(6)
+          ).toHaveBeenCalledTimes(6)
         );
         expect(received.result.current.hook.scrollThumbOffset).toBe(
           mockInternalAttributeScrollThumbOffset

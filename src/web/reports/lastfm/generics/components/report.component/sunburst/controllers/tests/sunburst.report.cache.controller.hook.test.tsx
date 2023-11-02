@@ -98,8 +98,8 @@ describe(useSunBurstCacheController.name, () => {
 
       const checkInstansiateClient = () => {
         it("should instantitate the ReportCacheRetrieveClient as expected", () => {
-          expect(ReportCacheRetrieveClient).toBeCalledTimes(1);
-          expect(ReportCacheRetrieveClient).toBeCalledWith(
+          expect(ReportCacheRetrieveClient).toHaveBeenCalledTimes(1);
+          expect(ReportCacheRetrieveClient).toHaveBeenCalledWith(
             mockDispatch,
             mockAnalyticsHook.event
           );
@@ -110,10 +110,10 @@ describe(useSunBurstCacheController.name, () => {
         it("should call the ReportCacheRetrieveClient lookup method as expected", () => {
           expect(
             jest.mocked(ReportCacheRetrieveClient).mock.instances[0].lookup
-          ).toBeCalledTimes(1);
+          ).toHaveBeenCalledTimes(1);
           expect(
             jest.mocked(ReportCacheRetrieveClient).mock.instances[0].lookup
-          ).toBeCalledWith({
+          ).toHaveBeenCalledWith({
             authenticatedUserName: mockAuthHook.user?.email,
             reportName: queryInstance.getReportTranslationKey().toLowerCase(),
             sourceName: mockHookProps.sourceName,
@@ -182,8 +182,8 @@ describe(useSunBurstCacheController.name, () => {
 
       const checkInstansiateClient = () => {
         it("should instantitate the ReportCacheCreateClient as expected", () => {
-          expect(ReportCacheCreateClient).toBeCalledTimes(1);
-          expect(ReportCacheCreateClient).toBeCalledWith(
+          expect(ReportCacheCreateClient).toHaveBeenCalledTimes(1);
+          expect(ReportCacheCreateClient).toHaveBeenCalledWith(
             mockDispatch,
             mockAnalyticsHook.event
           );
@@ -194,10 +194,10 @@ describe(useSunBurstCacheController.name, () => {
         it("should call the ReportCacheCreateClient populate method as expected", () => {
           expect(
             jest.mocked(ReportCacheCreateClient).mock.instances[0].populate
-          ).toBeCalledTimes(1);
+          ).toHaveBeenCalledTimes(1);
           expect(
             jest.mocked(ReportCacheCreateClient).mock.instances[0].populate
-          ).toBeCalledWith({
+          ).toHaveBeenCalledWith({
             authenticatedUserName: mockAuthHook.user?.email,
             reportName: queryInstance.getReportTranslationKey().toLowerCase(),
             sourceName: mockHookProps.sourceName,
@@ -217,7 +217,7 @@ describe(useSunBurstCacheController.name, () => {
           });
 
           it("should NOT instantiate the client again", () => {
-            expect(ReportCacheCreateClient).toBeCalledTimes(0);
+            expect(ReportCacheCreateClient).toHaveBeenCalledTimes(0);
           });
 
           it("should return the expected results", () => {
@@ -257,7 +257,7 @@ describe(useSunBurstCacheController.name, () => {
             });
 
             it("should NOT instantiate the client", () => {
-              expect(ReportCacheCreateClient).toBeCalledTimes(0);
+              expect(ReportCacheCreateClient).toHaveBeenCalledTimes(0);
             });
 
             it("should return the expected results", () => {
@@ -330,7 +330,7 @@ describe(useSunBurstCacheController.name, () => {
             });
 
             it("should NOT instantiate the client", () => {
-              expect(ReportCacheCreateClient).toBeCalledTimes(0);
+              expect(ReportCacheCreateClient).toHaveBeenCalledTimes(0);
             });
 
             it("should return the expected results", () => {

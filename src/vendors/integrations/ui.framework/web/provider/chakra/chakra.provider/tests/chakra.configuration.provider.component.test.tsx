@@ -54,14 +54,14 @@ describe("ChakraConfigurationProvider", () => {
 
   const checkCreateTheme = () => {
     it("should call createTheme", () => {
-      expect(createChakraTheme).toBeCalledTimes(1);
-      expect(createChakraTheme).toBeCalledWith();
+      expect(createChakraTheme).toHaveBeenCalledTimes(1);
+      expect(createChakraTheme).toHaveBeenCalledWith();
     });
   };
 
   const checkCSSReset = () => {
     it("should initialize the CSSReset", () => {
-      expect(CSSReset).toBeCalledTimes(1);
+      expect(CSSReset).toHaveBeenCalledTimes(1);
       checkMockCall(CSSReset, {});
     });
   };
@@ -77,7 +77,7 @@ describe("ChakraConfigurationProvider", () => {
     checkCSSReset();
 
     it("should initialize the ChakraProvider Provider", () => {
-      expect(ChakraProvider).toBeCalledTimes(1);
+      expect(ChakraProvider).toHaveBeenCalledTimes(1);
       checkMockCall(ChakraProvider, {
         colorModeManager: mockColourModeManager,
         theme: createChakraTheme(),
@@ -96,7 +96,7 @@ describe("ChakraConfigurationProvider", () => {
     checkCSSReset();
 
     it("should initialize the ChakraProvider Provider", () => {
-      expect(ChakraProvider).toBeCalledTimes(1);
+      expect(ChakraProvider).toHaveBeenCalledTimes(1);
       checkMockCall(ChakraProvider, {
         colorModeManager: mockColourModeManager,
         theme: createChakraTheme(),

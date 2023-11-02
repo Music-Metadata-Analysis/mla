@@ -50,14 +50,14 @@ describe("NavBarMobileMenu", () => {
 
   const checkNotRendered = () => {
     it("should NOT render the mobile menu", () => {
-      expect(Box).toBeCalledTimes(0);
+      expect(Box).toHaveBeenCalledTimes(0);
       expect(screen.queryByTestId(testIDs.NavBarMobileMenu)).toBeNull();
     });
   };
 
   const checkRendered = () => {
     it("should render the mobile menu Chakra Box component with the expected props", () => {
-      expect(Box).toBeCalledTimes(1);
+      expect(Box).toHaveBeenCalledTimes(1);
       checkMockCall(
         Box,
         {
@@ -70,7 +70,7 @@ describe("NavBarMobileMenu", () => {
     });
 
     it("should ALSO render the mobile menu NavBarOptions component inside the mobile menu Box component", async () => {
-      expect(NavBarOptions).toBeCalledTimes(1);
+      expect(NavBarOptions).toHaveBeenCalledTimes(1);
       const menu = await screen.findByTestId(testIDs.NavBarMobileMenu);
       within(menu).findByTestId(mockedNavBarComponents.NavBarOptions);
       checkMockCall(

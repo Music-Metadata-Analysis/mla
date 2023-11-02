@@ -42,8 +42,8 @@ describe("createLocalStorageState", () => {
       });
 
       it("should call the underlying local storage getItem method", () => {
-        expect(getItem).toBeCalledTimes(1);
-        expect(getItem).toBeCalledWith(mockStorageKey);
+        expect(getItem).toHaveBeenCalledTimes(1);
+        expect(getItem).toHaveBeenCalledWith(mockStorageKey);
       });
 
       it("should should update the hook's current value to the initial value", () => {
@@ -59,8 +59,8 @@ describe("createLocalStorageState", () => {
       });
 
       it("should call the underlying local storage getItem method", () => {
-        expect(getItem).toBeCalledTimes(1);
-        expect(getItem).toBeCalledWith(mockStorageKey);
+        expect(getItem).toHaveBeenCalledTimes(1);
+        expect(getItem).toHaveBeenCalledWith(mockStorageKey);
       });
 
       it("should should update the hook's current value to the local storage value", () => {
@@ -87,13 +87,13 @@ describe("createLocalStorageState", () => {
       afterEach(() => consoleErrorSpy.mockRestore());
 
       it("should log an error message", () => {
-        expect(consoleErrorSpy).toBeCalledTimes(1);
-        expect(consoleErrorSpy).toBeCalledWith(mockError);
+        expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+        expect(consoleErrorSpy).toHaveBeenCalledWith(mockError);
       });
 
       it("should call the underlying local storage getItem method", () => {
-        expect(getItem).toBeCalledTimes(1);
-        expect(getItem).toBeCalledWith(mockStorageKey);
+        expect(getItem).toHaveBeenCalledTimes(1);
+        expect(getItem).toHaveBeenCalledWith(mockStorageKey);
       });
 
       it("should should update the hook's current value to the initial value", () => {
@@ -116,8 +116,8 @@ describe("createLocalStorageState", () => {
         });
 
         it("should call the underlying local storage setItem method", () => {
-          expect(setItem).toBeCalledTimes(1);
-          expect(setItem).toBeCalledWith(
+          expect(setItem).toHaveBeenCalledTimes(1);
+          expect(setItem).toHaveBeenCalledWith(
             mockStorageKey,
             JSON.stringify(mockStorageValue)
           );
@@ -136,8 +136,8 @@ describe("createLocalStorageState", () => {
         });
 
         it("should call the underlying local storage setItem method", () => {
-          expect(setItem).toBeCalledTimes(1);
-          expect(setItem).toBeCalledWith(
+          expect(setItem).toHaveBeenCalledTimes(1);
+          expect(setItem).toHaveBeenCalledWith(
             mockStorageKey,
             JSON.stringify(mockFunction(mockInitialValue))
           );
@@ -164,8 +164,8 @@ describe("createLocalStorageState", () => {
         });
 
         it("should call the underlying local storage setItem method", () => {
-          expect(setItem).toBeCalledTimes(1);
-          expect(setItem).toBeCalledWith(
+          expect(setItem).toHaveBeenCalledTimes(1);
+          expect(setItem).toHaveBeenCalledWith(
             mockStorageKey,
             JSON.stringify(mockStorageValue)
           );
@@ -184,8 +184,8 @@ describe("createLocalStorageState", () => {
         });
 
         it("should call the underlying local storage setItem method", () => {
-          expect(setItem).toBeCalledTimes(1);
-          expect(setItem).toBeCalledWith(
+          expect(setItem).toHaveBeenCalledTimes(1);
+          expect(setItem).toHaveBeenCalledWith(
             mockStorageKey,
             JSON.stringify(mockFunction(mockStorageValue))
           );
@@ -224,13 +224,13 @@ describe("createLocalStorageState", () => {
         });
 
         it("should log an error message", () => {
-          expect(consoleErrorSpy).toBeCalledTimes(1);
-          expect(consoleErrorSpy).toBeCalledWith(mockError);
+          expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+          expect(consoleErrorSpy).toHaveBeenCalledWith(mockError);
         });
 
         it("should call the underlying local storage setItem method", () => {
-          expect(setItem).toBeCalledTimes(1);
-          expect(setItem).toBeCalledWith(
+          expect(setItem).toHaveBeenCalledTimes(1);
+          expect(setItem).toHaveBeenCalledWith(
             mockStorageKey,
             JSON.stringify(mockStorageValue)
           );
@@ -249,13 +249,13 @@ describe("createLocalStorageState", () => {
         });
 
         it("should log an error message", () => {
-          expect(consoleErrorSpy).toBeCalledTimes(1);
-          expect(consoleErrorSpy).toBeCalledWith(mockError);
+          expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+          expect(consoleErrorSpy).toHaveBeenCalledWith(mockError);
         });
 
         it("should call the underlying local storage setItem method", () => {
-          expect(setItem).toBeCalledTimes(1);
-          expect(setItem).toBeCalledWith(
+          expect(setItem).toHaveBeenCalledTimes(1);
+          expect(setItem).toHaveBeenCalledWith(
             mockStorageKey,
             JSON.stringify(mockFunction(mockStorageValue))
           );

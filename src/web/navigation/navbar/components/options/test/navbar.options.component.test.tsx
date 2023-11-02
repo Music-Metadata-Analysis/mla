@@ -53,7 +53,9 @@ describe("NavBarOptions", () => {
     it(`should call NavLinkContainer ${
       Object.keys(mockConfig).length
     } times`, () => {
-      expect(NavLinkContainer).toBeCalledTimes(Object.keys(mockConfig).length);
+      expect(NavLinkContainer).toHaveBeenCalledTimes(
+        Object.keys(mockConfig).length
+      );
     });
 
     (Object.keys(mockConfig) as Array<keyof typeof mockConfig>).forEach(

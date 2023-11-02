@@ -38,7 +38,7 @@ describe("Consent", () => {
     });
 
     it("should initialize analytics", () => {
-      expect(mockAnalyticsCollectionHook.setup).toBeCalledTimes(1);
+      expect(mockAnalyticsCollectionHook.setup).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -83,7 +83,7 @@ describe("Consent", () => {
       });
 
       it("should initialize analytics", () => {
-        expect(mockAnalyticsCollectionHook.setup).toBeCalledTimes(1);
+        expect(mockAnalyticsCollectionHook.setup).toHaveBeenCalledTimes(1);
       });
     });
 

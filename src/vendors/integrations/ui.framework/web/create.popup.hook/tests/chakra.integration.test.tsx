@@ -98,7 +98,7 @@ describe("useChakraPopUp", () => {
       });
 
       it("should render the passed sub component", async () => {
-        await waitFor(() => expect(subComponent1).toBeCalledTimes(1));
+        await waitFor(() => expect(subComponent1).toHaveBeenCalledTimes(1));
         expect(
           await within(
             await screen.findByTestId(testIDs.MockPopUpComponent)

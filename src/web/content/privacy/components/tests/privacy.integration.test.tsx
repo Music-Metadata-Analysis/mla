@@ -56,7 +56,7 @@ describe("Privacy", () => {
       let button: HTMLButtonElement;
 
       beforeEach(async () => {
-        expect(mockRouterHook.push).toBeCalledTimes(0);
+        expect(mockRouterHook.push).toHaveBeenCalledTimes(0);
         const footer = await screen.findByTestId(
           testIDs.DialogueFooterComponent
         );
@@ -77,7 +77,7 @@ describe("Privacy", () => {
       let button: HTMLButtonElement;
 
       beforeEach(async () => {
-        expect(mockRouterHook.push).toBeCalledTimes(0);
+        expect(mockRouterHook.push).toHaveBeenCalledTimes(0);
         const footer = await screen.findByTestId(
           testIDs.DialogueFooterComponent
         );

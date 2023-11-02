@@ -71,7 +71,7 @@ describe("FlipCardDrawer", () => {
 
   const checkDrawerComponent = () => {
     it("should render the common ReportDrawer component with correct props", () => {
-      expect(ReportDrawer).toBeCalledTimes(1);
+      expect(ReportDrawer).toHaveBeenCalledTimes(1);
       checkMockCall(
         ReportDrawer,
         {
@@ -88,7 +88,7 @@ describe("FlipCardDrawer", () => {
 
   const checkFlexComponent = () => {
     it("should render the chakra Flex component with expected props", () => {
-      expect(Flex).toBeCalledTimes(2);
+      expect(Flex).toHaveBeenCalledTimes(2);
       checkMockCall(Flex, {}, 0);
       checkMockCall(
         Flex,
@@ -100,14 +100,14 @@ describe("FlipCardDrawer", () => {
 
   const checkBoxComponent = () => {
     it("should render the chakra Box component with expected props", () => {
-      expect(Box).toBeCalledTimes(1);
+      expect(Box).toHaveBeenCalledTimes(1);
       checkMockCall(Box, {}, 0);
     });
   };
 
   const checkDividerComponent = () => {
     it("should render the chakra Divider component with expected props", () => {
-      expect(Divider).toBeCalledTimes(1);
+      expect(Divider).toHaveBeenCalledTimes(1);
       checkMockCall(
         Divider,
         {
@@ -122,7 +122,7 @@ describe("FlipCardDrawer", () => {
 
   const checkImageComponent = () => {
     it("should render the chakra Img component with expected props", () => {
-      expect(Img).toBeCalledTimes(1);
+      expect(Img).toHaveBeenCalledTimes(1);
       checkMockCall(
         Img,
         {
@@ -144,7 +144,7 @@ describe("FlipCardDrawer", () => {
 
   const checkTextComponent = () => {
     it("should render the chakra Text component with expected props", () => {
-      expect(Text).toBeCalledTimes(3);
+      expect(Text).toHaveBeenCalledTimes(3);
       checkMockCall(
         Text,
         {
@@ -201,7 +201,7 @@ describe("FlipCardDrawer", () => {
 
   const checkButtonLink = () => {
     it("should render the chakra StyledButtonLink component with expected props", () => {
-      expect(StyledButtonLink).toBeCalledTimes(1);
+      expect(StyledButtonLink).toHaveBeenCalledTimes(1);
       const call = jest.mocked(StyledButtonLink).mock.calls[0][0];
       expect(call.href).toBe(currentProps.externalLink);
     });

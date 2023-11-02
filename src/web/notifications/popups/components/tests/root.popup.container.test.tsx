@@ -28,8 +28,8 @@ describe("RootPopupContainer", () => {
     });
 
     it("should call the FeedbackPopUpContainer component", () => {
-      expect(FeedbackPopUpContainer).toBeCalledTimes(1);
-      expect(FeedbackPopUpContainer).toBeCalledWith({}, {});
+      expect(FeedbackPopUpContainer).toHaveBeenCalledTimes(1);
+      expect(FeedbackPopUpContainer).toHaveBeenCalledWith({}, {});
     });
   });
 
@@ -41,7 +41,7 @@ describe("RootPopupContainer", () => {
     });
 
     it("should NOT call the FeedbackPopUpContainer component", () => {
-      expect(FeedbackPopUpContainer).toBeCalledTimes(0);
+      expect(FeedbackPopUpContainer).toHaveBeenCalledTimes(0);
     });
   });
 });

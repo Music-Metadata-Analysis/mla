@@ -56,8 +56,8 @@ describe("useChakraColourMode", () => {
       });
 
       it("should call the underlying vendor hook's toggleColorMode method correctly", () => {
-        expect(mockToggle).toBeCalledTimes(1);
-        expect(mockToggle).toBeCalledWith();
+        expect(mockToggle).toHaveBeenCalledTimes(1);
+        expect(mockToggle).toHaveBeenCalledWith();
       });
     });
   });

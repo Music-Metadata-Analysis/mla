@@ -29,7 +29,7 @@ describe("AnalyticsButtonWrapperContainer", () => {
   };
 
   it("should render the AnalyticsButtonWrapper as expected", () => {
-    expect(AnalyticsButtonWrapper).toBeCalledTimes(1);
+    expect(AnalyticsButtonWrapper).toHaveBeenCalledTimes(1);
     checkMockCall(AnalyticsButtonWrapper, {}, 0, ["clickHandler"]);
   });
 });

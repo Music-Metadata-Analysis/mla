@@ -33,8 +33,8 @@ describe("LastFMArtistClientAdapter", () => {
 
       it("should call the external library correctly", async () => {
         res = await instance.getInfo(artist, track, username);
-        expect(mockVendorMethods.track.getInfo).toBeCalledTimes(1);
-        expect(mockVendorMethods.track.getInfo).toBeCalledWith({
+        expect(mockVendorMethods.track.getInfo).toHaveBeenCalledTimes(1);
+        expect(mockVendorMethods.track.getInfo).toHaveBeenCalledWith({
           artist,
           track,
           username,

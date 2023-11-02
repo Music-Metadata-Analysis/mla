@@ -36,7 +36,7 @@ describe("NavBarAvatar", () => {
     });
 
     it("should render the Avatar component correctly", () => {
-      expect(Avatar).toBeCalledTimes(1);
+      expect(Avatar).toHaveBeenCalledTimes(1);
       checkMockCall(Avatar, {
         bg: mockColourHook.buttonColour.background,
         loading: "eager",
@@ -55,7 +55,7 @@ describe("NavBarAvatar", () => {
     });
 
     it("should render the Avatar component correctly", () => {
-      expect(Avatar).toBeCalledTimes(1);
+      expect(Avatar).toHaveBeenCalledTimes(1);
       checkMockCall(Avatar, {
         bg: mockColourHook.buttonColour.background,
         loading: "eager",

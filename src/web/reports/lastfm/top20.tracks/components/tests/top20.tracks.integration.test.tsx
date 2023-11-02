@@ -149,7 +149,7 @@ describe("Top20TracksReport", () => {
         `${_t(cardTranslations.frontAltText)}: 1`
       )) as HTMLImageElement;
       fireEvent.load(CardFrontImage);
-      expect(mockImageControllerHook.load).toBeCalledTimes(1);
+      expect(mockImageControllerHook.load).toHaveBeenCalledTimes(1);
     });
 
     describe("with the drawer closed", () => {

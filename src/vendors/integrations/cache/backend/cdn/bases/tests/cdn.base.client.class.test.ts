@@ -47,7 +47,7 @@ describe(CacheVendorCdnBaseClient.name, () => {
       });
 
       it("should NOT log when called without requests", () => {
-        expect(consoleLogSpy).toBeCalledTimes(0);
+        expect(consoleLogSpy).toHaveBeenCalledTimes(0);
       });
     });
 
@@ -71,8 +71,8 @@ describe(CacheVendorCdnBaseClient.name, () => {
           });
 
           it("should call fetch with the expected arguments", () => {
-            expect(fetchSpy).toBeCalledTimes(1);
-            expect(fetchSpy).toBeCalledWith(
+            expect(fetchSpy).toHaveBeenCalledTimes(1);
+            expect(fetchSpy).toHaveBeenCalledWith(
               `https://mockCacheServer/${mockObjectName}`
             );
           });
@@ -82,11 +82,11 @@ describe(CacheVendorCdnBaseClient.name, () => {
           });
 
           it("should NOT create a new object", () => {
-            expect(mockObjectCreator).toBeCalledTimes(0);
+            expect(mockObjectCreator).toHaveBeenCalledTimes(0);
           });
 
           it("should NOT use the originServerClient", () => {
-            expect(mockPersistenceClient.write).toBeCalledTimes(0);
+            expect(mockPersistenceClient.write).toHaveBeenCalledTimes(0);
           });
 
           describe("logCacheHitRate", () => {
@@ -95,8 +95,8 @@ describe(CacheVendorCdnBaseClient.name, () => {
             });
 
             it("should log the correct cache hit rate", () => {
-              expect(consoleLogSpy).toBeCalledTimes(1);
-              expect(consoleLogSpy).toBeCalledWith(
+              expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+              expect(consoleLogSpy).toHaveBeenCalledWith(
                 "[mockCdnClient] hit rate: 100.00%"
               );
             });
@@ -114,8 +114,8 @@ describe(CacheVendorCdnBaseClient.name, () => {
           });
 
           it("should call fetch with the expected arguments", () => {
-            expect(fetchSpy).toBeCalledTimes(1);
-            expect(fetchSpy).toBeCalledWith(
+            expect(fetchSpy).toHaveBeenCalledTimes(1);
+            expect(fetchSpy).toHaveBeenCalledWith(
               `https://mockCacheServer/${mockObjectName}`
             );
           });
@@ -125,11 +125,11 @@ describe(CacheVendorCdnBaseClient.name, () => {
           });
 
           it("should NOT create a new object", () => {
-            expect(mockObjectCreator).toBeCalledTimes(0);
+            expect(mockObjectCreator).toHaveBeenCalledTimes(0);
           });
 
           it("should NOT use the originServerClient", () => {
-            expect(mockPersistenceClient.write).toBeCalledTimes(0);
+            expect(mockPersistenceClient.write).toHaveBeenCalledTimes(0);
           });
 
           describe("logCacheHitRate", () => {
@@ -138,8 +138,8 @@ describe(CacheVendorCdnBaseClient.name, () => {
             });
 
             it("should log the correct cache hit rate", () => {
-              expect(consoleLogSpy).toBeCalledTimes(1);
-              expect(consoleLogSpy).toBeCalledWith(
+              expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+              expect(consoleLogSpy).toHaveBeenCalledWith(
                 "[mockCdnClient] hit rate: 0.00%"
               );
             });
@@ -156,8 +156,8 @@ describe(CacheVendorCdnBaseClient.name, () => {
         });
 
         it("should call fetch with the expected arguments", () => {
-          expect(fetchSpy).toBeCalledTimes(1);
-          expect(fetchSpy).toBeCalledWith(
+          expect(fetchSpy).toHaveBeenCalledTimes(1);
+          expect(fetchSpy).toHaveBeenCalledWith(
             `https://mockCacheServer/${mockObjectName}`
           );
         });
@@ -167,13 +167,13 @@ describe(CacheVendorCdnBaseClient.name, () => {
         });
 
         it("should create a new object", () => {
-          expect(mockObjectCreator).toBeCalledTimes(1);
-          expect(mockObjectCreator).toBeCalledWith(mockObjectName);
+          expect(mockObjectCreator).toHaveBeenCalledTimes(1);
+          expect(mockObjectCreator).toHaveBeenCalledWith(mockObjectName);
         });
 
         it("should use the originServerClient", () => {
-          expect(mockPersistenceClient.write).toBeCalledTimes(1);
-          expect(mockPersistenceClient.write).toBeCalledWith(
+          expect(mockPersistenceClient.write).toHaveBeenCalledTimes(1);
+          expect(mockPersistenceClient.write).toHaveBeenCalledWith(
             `${mockObjectName}>transformed`,
             `${mockObjectName}>Created>mockSerializedObject`,
             { ContentType: "text/plain" }
@@ -186,8 +186,8 @@ describe(CacheVendorCdnBaseClient.name, () => {
           });
 
           it("should log the correct cache hit rate", () => {
-            expect(consoleLogSpy).toBeCalledTimes(1);
-            expect(consoleLogSpy).toBeCalledWith(
+            expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+            expect(consoleLogSpy).toHaveBeenCalledWith(
               "[mockCdnClient] hit rate: 0.00%"
             );
           });

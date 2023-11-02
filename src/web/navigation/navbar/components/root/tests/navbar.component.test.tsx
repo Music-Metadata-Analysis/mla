@@ -148,7 +148,7 @@ describe("NavBar", () => {
 
   const checkChakraFlexComponent = () => {
     it("should render the Chakra Flex component with the correct props", async () => {
-      expect(Flex).toBeCalledTimes(4);
+      expect(Flex).toHaveBeenCalledTimes(4);
       checkMockCall(
         Flex,
         {
@@ -193,7 +193,7 @@ describe("NavBar", () => {
 
   const checkChakraIconButtonComponent = ({ isOpen }: { isOpen: boolean }) => {
     it("should render the Menu Hamburger Button with the right props", () => {
-      expect(IconButton).toBeCalledTimes(1);
+      expect(IconButton).toHaveBeenCalledTimes(1);
       const iconRender = { component: IconButton, call: 0 };
 
       expect(getMockComponentPropCount(iconRender)).toBe(8);
@@ -230,7 +230,7 @@ describe("NavBar", () => {
 
   const checkLogoComponent = () => {
     it("should render the NavBarLogo component with the expected props", async () => {
-      expect(NavBarLogo).toBeCalledTimes(1);
+      expect(NavBarLogo).toHaveBeenCalledTimes(1);
       checkMockCall(NavBarLogo, {
         closeMobileMenu:
           mockNavBarLayoutControllerHook.controls.mobileMenu.setFalse,
@@ -245,14 +245,14 @@ describe("NavBar", () => {
 
   const checkSpinnerComponent = () => {
     it("should render the NavBarSpinner component with the expected props", async () => {
-      expect(NavBarSpinner).toBeCalledTimes(1);
+      expect(NavBarSpinner).toHaveBeenCalledTimes(1);
       checkMockCall(NavBarSpinner, { whileTrue: mockTransaction }, 0);
     });
   };
 
   const checkColourModeContainer = () => {
     it("should render the NavBarColourModeContainer component with the expected props", () => {
-      expect(NavBarColourModeContainer).toBeCalledTimes(1);
+      expect(NavBarColourModeContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         NavBarColourModeContainer,
         {
@@ -265,7 +265,7 @@ describe("NavBar", () => {
 
   const checkSessionControllerContainer = () => {
     it("should render the NavBarSessionControlContainer component with the expected props", () => {
-      expect(NavBarSessionControlContainer).toBeCalledTimes(1);
+      expect(NavBarSessionControlContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         NavBarSessionControlContainer,
         {
@@ -279,7 +279,7 @@ describe("NavBar", () => {
 
   const checkNavBarOptionsComponent = () => {
     it("should render the NavBarOptions component inside the menu Flex component", async () => {
-      expect(NavBarOptions).toBeCalledTimes(1);
+      expect(NavBarOptions).toHaveBeenCalledTimes(1);
       const menu = await screen.findByTestId(testIDs.NavBarMenu);
       within(menu).findByTestId(mockedComponents.NavBarOptions);
       checkMockCall(
@@ -300,7 +300,7 @@ describe("NavBar", () => {
 
   const checkNavBarMobileMenuComponent = () => {
     it("should render the NavBarOptions component inside the menu Flex component", async () => {
-      expect(NavBarMobileMenu).toBeCalledTimes(1);
+      expect(NavBarMobileMenu).toHaveBeenCalledTimes(1);
       checkMockCall(
         NavBarMobileMenu,
         {

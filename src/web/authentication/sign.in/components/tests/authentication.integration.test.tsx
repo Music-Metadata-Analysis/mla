@@ -75,8 +75,8 @@ describe("AuthenticationContainer", () => {
     });
 
     it("should generate an analytics event", async () => {
-      expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
-      expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
+      expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledTimes(1);
+      expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledWith(
         Events.Auth.OpenModal
       );
     });
@@ -122,12 +122,12 @@ describe("AuthenticationContainer", () => {
         });
 
         it("should start the sign-in sequence", () => {
-          expect(mockAuthHook.signIn).toBeCalledWith(provider);
+          expect(mockAuthHook.signIn).toHaveBeenCalledWith(provider);
         });
 
         it("should generate an analytics event", () => {
-          expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
-          expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
+          expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledTimes(1);
+          expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledWith(
             Events.Auth.HandleLogin(provider)
           );
         });
@@ -167,13 +167,15 @@ describe("AuthenticationContainer", () => {
           });
 
           it("should close the modal", () => {
-            expect(mockToggleHook.setFalse).toBeCalledTimes(1);
-            expect(mockToggleHook.setFalse).toBeCalledWith();
+            expect(mockToggleHook.setFalse).toHaveBeenCalledTimes(1);
+            expect(mockToggleHook.setFalse).toHaveBeenCalledWith();
           });
 
           it("should route to the correct url", () => {
-            expect(mockRouterHook.push).toBeCalledTimes(1);
-            expect(mockRouterHook.push).toBeCalledWith(routes.legal.terms);
+            expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+            expect(mockRouterHook.push).toHaveBeenCalledWith(
+              routes.legal.terms
+            );
           });
         });
 
@@ -187,12 +189,12 @@ describe("AuthenticationContainer", () => {
           });
 
           it("should call the callBack function", () => {
-            expect(mockCallBack).toBeCalledTimes(1);
-            expect(mockCallBack).toBeCalledWith();
+            expect(mockCallBack).toHaveBeenCalledTimes(1);
+            expect(mockCallBack).toHaveBeenCalledWith();
           });
 
           it("should NOT change the route", () => {
-            expect(mockRouterHook.push).toBeCalledTimes(0);
+            expect(mockRouterHook.push).toHaveBeenCalledTimes(0);
           });
         });
       });
@@ -221,13 +223,13 @@ describe("AuthenticationContainer", () => {
           });
 
           it("should push the correct url", () => {
-            expect(mockRouterHook.push).toBeCalledTimes(1);
-            expect(mockRouterHook.push).toBeCalledWith(routes.home);
+            expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+            expect(mockRouterHook.push).toHaveBeenCalledWith(routes.home);
           });
 
           it("should generate an analytics event", () => {
-            expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
-            expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
+            expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledTimes(1);
+            expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledWith(
               Events.Auth.CloseModal
             );
           });

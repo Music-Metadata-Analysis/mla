@@ -31,12 +31,12 @@ describe("About", () => {
     beforeEach(() => arrange());
 
     it("should call Flex with the correct props", () => {
-      expect(Flex).toBeCalledTimes(1);
+      expect(Flex).toHaveBeenCalledTimes(1);
       checkMockCall(Flex, {}, 0);
     });
 
     it("should call Button with the correct props", () => {
-      expect(Button).toBeCalledTimes(2);
+      expect(Button).toHaveBeenCalledTimes(2);
       checkMockCall(
         Button,
         {

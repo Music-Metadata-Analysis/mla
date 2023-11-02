@@ -83,7 +83,7 @@ describe("SearchSelection", () => {
     });
 
     it("should call Flex as expected to center content", () => {
-      expect(Flex).toBeCalledTimes(2);
+      expect(Flex).toHaveBeenCalledTimes(2);
       checkMockCall(Flex, { align: "center", justify: "space-evenly" }, 0);
       checkMockCall(
         Flex,
@@ -98,7 +98,7 @@ describe("SearchSelection", () => {
     });
 
     it("should call Box as expected to create a margin around the form", () => {
-      expect(BoxWithRef).toBeCalledTimes(3);
+      expect(BoxWithRef).toHaveBeenCalledTimes(3);
       checkMockCall(BoxWithRef, { position: "relative" }, 0);
       checkMockCall(BoxWithRef, { mb: 1 }, 1);
       checkMockCall(
@@ -115,7 +115,7 @@ describe("SearchSelection", () => {
     });
 
     it("should call Avatar as expected to display the logo", () => {
-      expect(Avatar).toBeCalledTimes(1);
+      expect(Avatar).toHaveBeenCalledTimes(1);
       const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.width).toStrictEqual([50, 50, 75]);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -126,7 +126,7 @@ describe("SearchSelection", () => {
     });
 
     it("should call VerticalScrollBarComponent as expected", () => {
-      expect(VerticalScrollBarContainer).toBeCalledTimes(1);
+      expect(VerticalScrollBarContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         VerticalScrollBarContainer,
         {
@@ -142,7 +142,9 @@ describe("SearchSelection", () => {
 
   const checkReportOptionRenders = () => {
     it("should render an Option for each configured reportOptionProp", () => {
-      expect(Option).toBeCalledTimes(currentProps.reportOptionProps.length);
+      expect(Option).toHaveBeenCalledTimes(
+        currentProps.reportOptionProps.length
+      );
 
       (
         currentProps.reportOptionProps as unknown[] as Record<string, unknown>[]

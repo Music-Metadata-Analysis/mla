@@ -60,7 +60,7 @@ describe("FeedbackPopUp", () => {
   };
 
   it("should call the Avatar correctly to display the icon", () => {
-    expect(Avatar).toBeCalledTimes(1);
+    expect(Avatar).toHaveBeenCalledTimes(1);
     const call = jest.mocked(Avatar).mock.calls[0][0];
     expect((call as { "data-testid": string })["data-testid"]).toBe(
       testIDs.FeedBackDialogueIcon
@@ -72,7 +72,7 @@ describe("FeedbackPopUp", () => {
   });
 
   it("should call the Box component correctly", () => {
-    expect(Box).toBeCalledTimes(1);
+    expect(Box).toHaveBeenCalledTimes(1);
     checkMockCall(Box, {
       bg: mockColourHook.feedbackColour.background,
       borderColor: mockColourHook.feedbackColour.border,
@@ -85,7 +85,7 @@ describe("FeedbackPopUp", () => {
   });
 
   it("should call the CloseIcon component correctly", () => {
-    expect(CloseIcon).toBeCalledTimes(1);
+    expect(CloseIcon).toHaveBeenCalledTimes(1);
     checkMockCall(
       CloseIcon,
       {
@@ -99,7 +99,7 @@ describe("FeedbackPopUp", () => {
   });
 
   it("should call the DimOnHover component correctly", () => {
-    expect(DimOnHover).toBeCalledTimes(2);
+    expect(DimOnHover).toHaveBeenCalledTimes(2);
     checkMockCall(
       DimOnHover,
       {
@@ -118,7 +118,7 @@ describe("FeedbackPopUp", () => {
   });
 
   it("should call the Flex component correctly", () => {
-    expect(Flex).toBeCalledTimes(1);
+    expect(Flex).toHaveBeenCalledTimes(1);
     checkMockCall(
       Flex,
       {
@@ -131,7 +131,7 @@ describe("FeedbackPopUp", () => {
   });
 
   it("should call the Text component correctly", () => {
-    expect(Text).toBeCalledTimes(1);
+    expect(Text).toHaveBeenCalledTimes(1);
     checkMockCall(
       Text,
       {
@@ -145,7 +145,7 @@ describe("FeedbackPopUp", () => {
   });
 
   it("should call the ClickLink component correctly", () => {
-    expect(ClickLink).toBeCalledTimes(1);
+    expect(ClickLink).toHaveBeenCalledTimes(1);
     checkMockCall(ClickLink, {
       href: externalRoutes.svsContact,
     });

@@ -31,8 +31,8 @@ describe("LastFMArtistClientAdapter", () => {
 
       it("should call the external library correctly", async () => {
         res = await instance.getTopAlbums(artist);
-        expect(mockVendorMethods.artist.getTopAlbums).toBeCalledTimes(1);
-        expect(mockVendorMethods.artist.getTopAlbums).toBeCalledWith({
+        expect(mockVendorMethods.artist.getTopAlbums).toHaveBeenCalledTimes(1);
+        expect(mockVendorMethods.artist.getTopAlbums).toHaveBeenCalledWith({
           artist,
           limit: instance.reportCount,
           page: 1,

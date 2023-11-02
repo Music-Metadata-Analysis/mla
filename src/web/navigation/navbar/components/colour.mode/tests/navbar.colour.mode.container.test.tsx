@@ -27,7 +27,7 @@ describe("NavBarLinkContainer", () => {
 
   const checkNavBarColourModeToggle = () => {
     it("should render the NavBarColorModeToggle with the correct props", () => {
-      expect(NavBarColorModeToggle).toBeCalledTimes(1);
+      expect(NavBarColorModeToggle).toHaveBeenCalledTimes(1);
       checkMockCall(
         NavBarColorModeToggle,
         {
@@ -42,27 +42,27 @@ describe("NavBarLinkContainer", () => {
   const checkNavBarColourModeToggleClick = () => {
     describe("when the link click handler function is invoked", () => {
       beforeEach(() => {
-        expect(NavBarColorModeToggle).toBeCalledTimes(1);
+        expect(NavBarColorModeToggle).toHaveBeenCalledTimes(1);
         const call = jest.mocked(NavBarColorModeToggle).mock.calls[0][0];
         call.handleChange(mockChangeEvent);
       });
 
       it("should blur focus on the target element", () => {
-        expect(mockChangeEvent.target.blur).toBeCalledTimes(1);
-        expect(mockChangeEvent.target.blur).toBeCalledWith();
+        expect(mockChangeEvent.target.blur).toHaveBeenCalledTimes(1);
+        expect(mockChangeEvent.target.blur).toHaveBeenCalledWith();
       });
 
       it("should call the analytics tracker as expected", () => {
-        expect(mockTracker).toBeCalledTimes(1);
-        expect(mockTracker).toBeCalledWith(
+        expect(mockTracker).toHaveBeenCalledTimes(1);
+        expect(mockTracker).toHaveBeenCalledWith(
           mockChangeEvent,
           expectedAnalyticsName
         );
       });
 
       it("should toggle the colour mode", () => {
-        expect(mockUseColourMode.toggle).toBeCalledTimes(1);
-        expect(mockUseColourMode.toggle).toBeCalledWith();
+        expect(mockUseColourMode.toggle).toHaveBeenCalledTimes(1);
+        expect(mockUseColourMode.toggle).toHaveBeenCalledWith();
       });
     });
   };

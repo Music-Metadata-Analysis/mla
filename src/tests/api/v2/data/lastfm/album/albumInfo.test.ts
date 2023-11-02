@@ -108,7 +108,7 @@ describe(endpointUnderTest, () => {
             });
 
             it("should call the proxy method with the correct params", () => {
-              expect(mockLastFMProxyMethods.getAlbumInfo).toBeCalledWith(
+              expect(mockLastFMProxyMethods.getAlbumInfo).toHaveBeenCalledWith(
                 query.artist,
                 query.album,
                 query.username
@@ -139,7 +139,7 @@ describe(endpointUnderTest, () => {
             });
 
             it("should call the proxy method with the correct params", () => {
-              expect(mockLastFMProxyMethods.getAlbumInfo).toBeCalledWith(
+              expect(mockLastFMProxyMethods.getAlbumInfo).toHaveBeenCalledWith(
                 query.artist,
                 query.album,
                 query.username
@@ -169,7 +169,7 @@ describe(endpointUnderTest, () => {
             });
 
             it("should call the proxy method with the correct params", () => {
-              expect(mockLastFMProxyMethods.getAlbumInfo).toBeCalledWith(
+              expect(mockLastFMProxyMethods.getAlbumInfo).toHaveBeenCalledWith(
                 query.artist,
                 query.album,
                 query.username
@@ -190,7 +190,9 @@ describe(endpointUnderTest, () => {
           });
 
           it("should NOT call the proxy method", () => {
-            expect(mockLastFMProxyMethods.getAlbumInfo).toBeCalledTimes(0);
+            expect(mockLastFMProxyMethods.getAlbumInfo).toHaveBeenCalledTimes(
+              0
+            );
           });
         });
       });

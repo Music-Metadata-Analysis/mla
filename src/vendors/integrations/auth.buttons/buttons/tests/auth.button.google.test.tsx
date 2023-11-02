@@ -31,7 +31,7 @@ describe("GoogleAuthButton", () => {
   };
 
   it("should call the underlying GoogleLoginButton with the correct props", () => {
-    expect(GoogleLoginButton).toBeCalledTimes(1);
+    expect(GoogleLoginButton).toHaveBeenCalledTimes(1);
     checkMockCall(GoogleLoginButton, {
       align: "center",
       style: { width: `${buttonWidth}px` },
@@ -45,8 +45,8 @@ describe("GoogleAuthButton", () => {
     );
 
     it("should call the callBack as expected", () => {
-      expect(mockCallBack).toBeCalledTimes(1);
-      expect(mockCallBack).toBeCalledWith("google");
+      expect(mockCallBack).toHaveBeenCalledTimes(1);
+      expect(mockCallBack).toHaveBeenCalledWith("google");
     });
   });
 });

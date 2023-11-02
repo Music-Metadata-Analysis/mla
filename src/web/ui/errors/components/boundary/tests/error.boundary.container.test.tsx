@@ -54,7 +54,7 @@ describe("ErrorBoundaryContainer", () => {
     });
 
     it("should render the underlying vendor ErrorBoundary component with the expected props", () => {
-      expect(MockErrorBoundary).toBeCalledTimes(1);
+      expect(MockErrorBoundary).toHaveBeenCalledTimes(1);
       checkMockCall(
         MockErrorBoundary,
         {

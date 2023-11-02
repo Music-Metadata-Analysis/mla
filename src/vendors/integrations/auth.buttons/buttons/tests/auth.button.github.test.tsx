@@ -31,7 +31,7 @@ describe("GithubAuthButton", () => {
   };
 
   it("should call the underlying GithubLoginButton with the correct props", () => {
-    expect(GithubLoginButton).toBeCalledTimes(1);
+    expect(GithubLoginButton).toHaveBeenCalledTimes(1);
     checkMockCall(GithubLoginButton, {
       align: "center",
       style: { width: `${buttonWidth}px` },
@@ -45,8 +45,8 @@ describe("GithubAuthButton", () => {
     );
 
     it("should call the callBack as expected", () => {
-      expect(mockCallBack).toBeCalledTimes(1);
-      expect(mockCallBack).toBeCalledWith("github");
+      expect(mockCallBack).toHaveBeenCalledTimes(1);
+      expect(mockCallBack).toHaveBeenCalledWith("github");
     });
   });
 });

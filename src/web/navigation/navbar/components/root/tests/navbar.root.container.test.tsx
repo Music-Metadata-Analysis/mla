@@ -51,7 +51,7 @@ describe("NavBarRootContainer", () => {
       beforeEach(() => arrange());
 
       it("should render the NavBarRoot with the correct props", () => {
-        expect(NavBarRoot).toBeCalledTimes(1);
+        expect(NavBarRoot).toHaveBeenCalledTimes(1);
         checkMockCall(
           NavBarRoot,
           {

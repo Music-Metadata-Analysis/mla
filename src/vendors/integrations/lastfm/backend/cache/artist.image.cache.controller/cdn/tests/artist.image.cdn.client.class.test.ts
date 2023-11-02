@@ -45,8 +45,8 @@ describe(ArtistImageCdnClient.name, () => {
     beforeEach(() => arrange());
 
     it("should initialize the ArtistImageScraper", () => {
-      expect(LastFMArtistImageScraperInterface).toBeCalledTimes(1);
-      expect(LastFMArtistImageScraperInterface).toBeCalledWith();
+      expect(LastFMArtistImageScraperInterface).toHaveBeenCalledTimes(1);
+      expect(LastFMArtistImageScraperInterface).toHaveBeenCalledWith();
     });
 
     describe("logCacheHitRate", () => {
@@ -55,7 +55,7 @@ describe(ArtistImageCdnClient.name, () => {
       });
 
       it("should NOT log when called before any queries", () => {
-        expect(consoleLogSpy).toBeCalledTimes(0);
+        expect(consoleLogSpy).toHaveBeenCalledTimes(0);
       });
     });
 
@@ -79,8 +79,8 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should call fetch with the expected arguments", () => {
-            expect(fetchSpy).toBeCalledTimes(1);
-            expect(fetchSpy).toBeCalledWith(
+            expect(fetchSpy).toHaveBeenCalledTimes(1);
+            expect(fetchSpy).toHaveBeenCalledWith(
               `https://${mockCdnHostname}/${expectedCdnFolderPath}/${encodeURI(
                 mockObjectName
               )}`
@@ -95,11 +95,11 @@ describe(ArtistImageCdnClient.name, () => {
             expect(
               jest.mocked(LastFMArtistImageScraperInterface).mock.instances[0]
                 .scrape
-            ).toBeCalledTimes(0);
+            ).toHaveBeenCalledTimes(0);
           });
 
           it("should NOT use the originServerClient", () => {
-            expect(mockPersistenceClient.write).toBeCalledTimes(0);
+            expect(mockPersistenceClient.write).toHaveBeenCalledTimes(0);
           });
 
           describe("logCacheHitRate", () => {
@@ -108,8 +108,8 @@ describe(ArtistImageCdnClient.name, () => {
             });
 
             it("should log the correct cache hit rate", () => {
-              expect(consoleLogSpy).toBeCalledTimes(1);
-              expect(consoleLogSpy).toBeCalledWith(
+              expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+              expect(consoleLogSpy).toHaveBeenCalledWith(
                 "[CloudFront] hit rate: 100.00%"
               );
             });
@@ -127,8 +127,8 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should call fetch with the expected arguments", () => {
-            expect(fetchSpy).toBeCalledTimes(1);
-            expect(fetchSpy).toBeCalledWith(
+            expect(fetchSpy).toHaveBeenCalledTimes(1);
+            expect(fetchSpy).toHaveBeenCalledWith(
               `https://${mockCdnHostname}/${expectedCdnFolderPath}/${encodeURI(
                 mockObjectName
               )}`
@@ -143,11 +143,11 @@ describe(ArtistImageCdnClient.name, () => {
             expect(
               jest.mocked(LastFMArtistImageScraperInterface).mock.instances[0]
                 .scrape
-            ).toBeCalledTimes(0);
+            ).toHaveBeenCalledTimes(0);
           });
 
           it("should NOT use the originServerClient", () => {
-            expect(mockPersistenceClient.write).toBeCalledTimes(0);
+            expect(mockPersistenceClient.write).toHaveBeenCalledTimes(0);
           });
 
           describe("logCacheHitRate", () => {
@@ -156,8 +156,8 @@ describe(ArtistImageCdnClient.name, () => {
             });
 
             it("should log the correct cache hit rate", () => {
-              expect(consoleLogSpy).toBeCalledTimes(1);
-              expect(consoleLogSpy).toBeCalledWith(
+              expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+              expect(consoleLogSpy).toHaveBeenCalledWith(
                 "[CloudFront] hit rate: 0.00%"
               );
             });
@@ -188,16 +188,16 @@ describe(ArtistImageCdnClient.name, () => {
           expect(
             jest.mocked(LastFMArtistImageScraperInterface).mock.instances[0]
               .scrape
-          ).toBeCalledTimes(1);
+          ).toHaveBeenCalledTimes(1);
           expect(
             jest.mocked(LastFMArtistImageScraperInterface).mock.instances[0]
               .scrape
-          ).toBeCalledWith(mockObjectName, expectedScraperRetries);
+          ).toHaveBeenCalledWith(mockObjectName, expectedScraperRetries);
         });
 
         it("should use the originServerClient", () => {
-          expect(mockPersistenceClient.write).toBeCalledTimes(1);
-          expect(mockPersistenceClient.write).toBeCalledWith(
+          expect(mockPersistenceClient.write).toHaveBeenCalledTimes(1);
+          expect(mockPersistenceClient.write).toHaveBeenCalledWith(
             `${instance["cacheFolderName"]}/${mockObjectName}`,
             `${mockObjectName}>Created`,
             { ContentType: "text/plain" }
@@ -210,8 +210,8 @@ describe(ArtistImageCdnClient.name, () => {
           });
 
           it("should log the correct cache hit rate", () => {
-            expect(consoleLogSpy).toBeCalledTimes(1);
-            expect(consoleLogSpy).toBeCalledWith(
+            expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+            expect(consoleLogSpy).toHaveBeenCalledWith(
               "[CloudFront] hit rate: 0.00%"
             );
           });

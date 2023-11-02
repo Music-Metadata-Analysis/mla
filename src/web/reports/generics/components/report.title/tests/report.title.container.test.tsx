@@ -29,8 +29,8 @@ describe("ReportTitleContainer", () => {
     });
 
     it("should call ReportTitle with the correct props", () => {
-      expect(ReportTitle).toBeCalledTimes(1);
-      expect(ReportTitle).toBeCalledWith(testProps, {});
+      expect(ReportTitle).toHaveBeenCalledTimes(1);
+      expect(ReportTitle).toHaveBeenCalledWith(testProps, {});
     });
   });
 
@@ -42,7 +42,7 @@ describe("ReportTitleContainer", () => {
     });
 
     it("should NOT call ReportTitle", () => {
-      expect(ReportTitle).toBeCalledTimes(0);
+      expect(ReportTitle).toHaveBeenCalledTimes(0);
     });
   });
 });

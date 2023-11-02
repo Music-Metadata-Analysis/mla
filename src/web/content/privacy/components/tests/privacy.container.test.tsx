@@ -39,7 +39,7 @@ describe("PrivacyContainer", () => {
     });
 
     it("should render the Dialogue component as expected", () => {
-      expect(DialogueContainer).toBeCalledTimes(1);
+      expect(DialogueContainer).toHaveBeenCalledTimes(1);
       const call = jest.mocked(DialogueContainer).mock.calls[0][0];
       expect(call.t).toBeDefined();
       expect(call.titleText).toBe(mockT("privacy.title"));

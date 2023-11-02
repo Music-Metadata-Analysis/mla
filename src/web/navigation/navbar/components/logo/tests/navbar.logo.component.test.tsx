@@ -51,8 +51,8 @@ describe("NavBarLogo", () => {
 
   const checkNavBarLink = () => {
     it("should render the title NavBarLinkContainer with the correct props", () => {
-      expect(NavBarLinkContainer).toBeCalledTimes(1);
-      expect(NavBarLinkContainer).toBeCalledWith(
+      expect(NavBarLinkContainer).toHaveBeenCalledTimes(1);
+      expect(NavBarLinkContainer).toHaveBeenCalledWith(
         {
           closeMobileMenu: mockCloseMobileMenu,
           children: _t(navbarTranslations.title),
@@ -68,8 +68,8 @@ describe("NavBarLogo", () => {
 
   const checkNavBarAvatar = () => {
     it("should render the Avatar with the correct props", () => {
-      expect(NavBarAvatar).toBeCalledTimes(1);
-      expect(NavBarAvatar).toBeCalledWith(
+      expect(NavBarAvatar).toHaveBeenCalledTimes(1);
+      expect(NavBarAvatar).toHaveBeenCalledWith(
         {
           user: mockAuthData,
         },

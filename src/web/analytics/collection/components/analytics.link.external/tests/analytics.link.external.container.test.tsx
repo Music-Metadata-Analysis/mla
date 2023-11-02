@@ -31,7 +31,7 @@ describe("AnalyticsExternalLinkWrapperContainer", () => {
   };
 
   it("should render the AnalyticsGenericWrapper as expected", () => {
-    expect(AnalyticsExternalLinkWrapper).toBeCalledTimes(1);
+    expect(AnalyticsExternalLinkWrapper).toHaveBeenCalledTimes(1);
     checkMockCall(AnalyticsExternalLinkWrapper, {}, 0, ["clickHandler"]);
   });
 });

@@ -259,7 +259,7 @@ describe(LastFMReportQueryAbstractBaseClass.name, () => {
     describe("queryUserHasNoData", () => {
       it("should raise an Not Implemented error", () => {
         const test = () => instance.queryUserHasNoData(mockReportState);
-        expect(test).toThrowError("Method not implemented.");
+        expect(test).toThrow("Method not implemented.");
       });
     });
 
@@ -274,8 +274,8 @@ describe(LastFMReportQueryAbstractBaseClass.name, () => {
       );
 
       it("should call the expected hook method", () => {
-        expect(mockLastFmHook.top20albums).toBeCalledTimes(1);
-        expect(mockLastFmHook.top20albums).toBeCalledWith(mockUserName);
+        expect(mockLastFmHook.top20albums).toHaveBeenCalledTimes(1);
+        expect(mockLastFmHook.top20albums).toHaveBeenCalledWith(mockUserName);
       });
     });
   });

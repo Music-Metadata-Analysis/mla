@@ -99,9 +99,9 @@ describe(endpointUnderTest, () => {
           });
 
           it("should call the proxy method with the correct params", () => {
-            expect(mockLastFMProxyMethods.getUserTopAlbums).toBeCalledWith(
-              username
-            );
+            expect(
+              mockLastFMProxyMethods.getUserTopAlbums
+            ).toHaveBeenCalledWith(username);
           });
         });
       });

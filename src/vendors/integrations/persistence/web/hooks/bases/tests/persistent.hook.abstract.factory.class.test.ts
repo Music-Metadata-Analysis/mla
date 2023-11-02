@@ -53,8 +53,8 @@ describe(PersistentHookAbstractFactory.name, () => {
         });
 
         it("should use the correct key for local storage", () => {
-          expect(mockHookFactory).toBeCalledTimes(1);
-          expect(mockHookFactory).toBeCalledWith(mockPartitionName);
+          expect(mockHookFactory).toHaveBeenCalledTimes(1);
+          expect(mockHookFactory).toHaveBeenCalledWith(mockPartitionName);
         });
       });
     });

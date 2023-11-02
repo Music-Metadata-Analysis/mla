@@ -67,11 +67,11 @@ describe("ReportPage", () => {
         });
 
         it("should NOT call the Authentication component", () => {
-          expect(Authentication).toBeCalledTimes(0);
+          expect(Authentication).toHaveBeenCalledTimes(0);
         });
 
         it("should call the ErrorBoundary correctly", () => {
-          expect(ErrorBoundaryContainer).toBeCalledTimes(1);
+          expect(ErrorBoundaryContainer).toHaveBeenCalledTimes(1);
           checkMockCall(
             ErrorBoundaryContainer,
             {
@@ -84,7 +84,7 @@ describe("ReportPage", () => {
         });
 
         it("should call the MockReportContainer correctly", () => {
-          expect(MockReportContainer).toBeCalledTimes(1);
+          expect(MockReportContainer).toHaveBeenCalledTimes(1);
           checkMockCall(
             MockReportContainer,
             {
@@ -97,7 +97,7 @@ describe("ReportPage", () => {
         });
 
         it("should NOT call the MockNoUserPage correctly", async () => {
-          expect(MockNoUserPage).toBeCalledTimes(0);
+          expect(MockNoUserPage).toHaveBeenCalledTimes(0);
         });
       });
 
@@ -108,19 +108,19 @@ describe("ReportPage", () => {
         });
 
         it("should NOT call the Authentication component", () => {
-          expect(Authentication).toBeCalledTimes(0);
+          expect(Authentication).toHaveBeenCalledTimes(0);
         });
 
         it("should NOT call the ErrorBoundary", () => {
-          expect(ErrorBoundaryContainer).toBeCalledTimes(0);
+          expect(ErrorBoundaryContainer).toHaveBeenCalledTimes(0);
         });
 
         it("should NOT call the MockReportContainer correctly", () => {
-          expect(MockReportContainer).toBeCalledTimes(0);
+          expect(MockReportContainer).toHaveBeenCalledTimes(0);
         });
 
         it("should call the MockNoUserPage correctly", async () => {
-          expect(MockNoUserPage).toBeCalledTimes(1);
+          expect(MockNoUserPage).toHaveBeenCalledTimes(1);
           checkMockCall(MockNoUserPage, {});
         });
       });
@@ -138,20 +138,20 @@ describe("ReportPage", () => {
         });
 
         it("should call the Authentication component", () => {
-          expect(Authentication).toBeCalledTimes(2);
+          expect(Authentication).toHaveBeenCalledTimes(2);
           checkMockCall(Authentication, {});
         });
 
         it("should NOT call the ErrorBoundary", () => {
-          expect(ErrorBoundaryContainer).toBeCalledTimes(0);
+          expect(ErrorBoundaryContainer).toHaveBeenCalledTimes(0);
         });
 
         it("should NOT call the MockReportContainer correctly", () => {
-          expect(MockReportContainer).toBeCalledTimes(0);
+          expect(MockReportContainer).toHaveBeenCalledTimes(0);
         });
 
         it("should NOT call the MockNoUserPage correctly", async () => {
-          expect(MockNoUserPage).toBeCalledTimes(0);
+          expect(MockNoUserPage).toHaveBeenCalledTimes(0);
         });
       });
 
@@ -162,20 +162,20 @@ describe("ReportPage", () => {
         });
 
         it("should call the Authentication component", () => {
-          expect(Authentication).toBeCalledTimes(2);
+          expect(Authentication).toHaveBeenCalledTimes(2);
           checkMockCall(Authentication, {});
         });
 
         it("should NOT call the ErrorBoundary", () => {
-          expect(ErrorBoundaryContainer).toBeCalledTimes(0);
+          expect(ErrorBoundaryContainer).toHaveBeenCalledTimes(0);
         });
 
         it("should NOT call the MockReportContainer correctly", () => {
-          expect(MockReportContainer).toBeCalledTimes(0);
+          expect(MockReportContainer).toHaveBeenCalledTimes(0);
         });
 
         it("should NOT call the MockNoUserPage correctly", async () => {
-          expect(MockNoUserPage).toBeCalledTimes(0);
+          expect(MockNoUserPage).toHaveBeenCalledTimes(0);
         });
       });
     });

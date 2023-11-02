@@ -100,7 +100,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
         beforeEach(() => instance.unregisterAllHandlers());
 
         it("should deregister every handler", async () => {
-          expect(unregisterSpy).toBeCalledTimes(6);
+          expect(unregisterSpy).toHaveBeenCalledTimes(6);
 
           expect(unregisterSpy.mock.calls[0][0]).toBe("wheel");
           expect(unregisterSpy.mock.calls[1][0]).toBe("touchstart");
@@ -133,7 +133,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
         });
 
         it("should not register any handlers", () => {
-          expect(registerSpy).toBeCalledTimes(0);
+          expect(registerSpy).toHaveBeenCalledTimes(0);
         });
       });
     });
@@ -143,7 +143,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
         beforeEach(() => instance.registerHookHandlers());
 
         it("should register the hook handlers", () => {
-          expect(registerSpy).toBeCalledTimes(2);
+          expect(registerSpy).toHaveBeenCalledTimes(2);
 
           expect(registerSpy.mock.calls[0][0]).toBe("wheel");
           expect(registerSpy.mock.calls[1][0]).toBe("touchstart");
@@ -233,7 +233,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
           beforeEach(() => instance.mouseDownHandler(mouseDownEvent));
 
           it("should register the mouse event handlers", () => {
-            expect(registerSpy).toBeCalledTimes(2);
+            expect(registerSpy).toHaveBeenCalledTimes(2);
 
             expect(registerSpy.mock.calls[0][0]).toBe("mousemove");
             expect(registerSpy.mock.calls[1][0]).toBe("mouseup");
@@ -290,7 +290,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
               });
 
               it("should deregister the mouse event handlers", async () => {
-                expect(unregisterSpy).toBeCalledTimes(2);
+                expect(unregisterSpy).toHaveBeenCalledTimes(2);
 
                 expect(unregisterSpy.mock.calls[0][0]).toBe("mousemove");
                 expect(unregisterSpy.mock.calls[1][0]).toBe("mouseup");
@@ -305,7 +305,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
           beforeEach(() => instance.registerHookHandlers());
 
           it("should register the hook handlers", () => {
-            expect(registerSpy).toBeCalledTimes(2);
+            expect(registerSpy).toHaveBeenCalledTimes(2);
 
             expect(registerSpy.mock.calls[0][0]).toBe("wheel");
             expect(registerSpy.mock.calls[1][0]).toBe("touchstart");
@@ -362,7 +362,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
               });
 
               it("should register the mouse event handlers", () => {
-                expect(registerSpy).toBeCalledTimes(4);
+                expect(registerSpy).toHaveBeenCalledTimes(4);
 
                 expect(registerSpy.mock.calls[2][0]).toBe("touchmove");
                 expect(registerSpy.mock.calls[3][0]).toBe("touchend");
@@ -422,7 +422,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
                   });
 
                   it("should deregister the touch event handlers", async () => {
-                    expect(unregisterSpy).toBeCalledTimes(2);
+                    expect(unregisterSpy).toHaveBeenCalledTimes(2);
 
                     expect(unregisterSpy.mock.calls[0][0]).toBe("touchend");
                     expect(unregisterSpy.mock.calls[1][0]).toBe("touchmove");
@@ -454,7 +454,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
           beforeEach(() => instance.mouseDownHandler(mouseDownEvent));
 
           it("should register the mouse event handlers", () => {
-            expect(registerSpy).toBeCalledTimes(2);
+            expect(registerSpy).toHaveBeenCalledTimes(2);
 
             expect(registerSpy.mock.calls[0][0]).toBe("mousemove");
             expect(registerSpy.mock.calls[1][0]).toBe("mouseup");
@@ -511,7 +511,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
               });
 
               it("should deregister the mouse event handlers", async () => {
-                expect(unregisterSpy).toBeCalledTimes(2);
+                expect(unregisterSpy).toHaveBeenCalledTimes(2);
 
                 expect(unregisterSpy.mock.calls[0][0]).toBe("mousemove");
                 expect(unregisterSpy.mock.calls[1][0]).toBe("mouseup");
@@ -526,7 +526,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
           beforeEach(() => instance.registerHookHandlers());
 
           it("should register the hook handlers", () => {
-            expect(registerSpy).toBeCalledTimes(2);
+            expect(registerSpy).toHaveBeenCalledTimes(2);
 
             expect(registerSpy.mock.calls[0][0]).toBe("wheel");
             expect(registerSpy.mock.calls[1][0]).toBe("touchstart");
@@ -580,7 +580,7 @@ describe(VerticalScrollBarEventHandlers.name, () => {
               });
 
               it("should NOT register the touch event handlers", () => {
-                expect(registerSpy).toBeCalledTimes(2);
+                expect(registerSpy).toHaveBeenCalledTimes(2);
               });
             });
           });

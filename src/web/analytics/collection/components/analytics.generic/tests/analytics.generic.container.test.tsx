@@ -35,7 +35,7 @@ describe("AnalyticsGenericWrapperContainer", () => {
   };
 
   it("should render the AnalyticsGenericWrapper as expected", () => {
-    expect(AnalyticsGenericWrapper).toBeCalledTimes(1);
+    expect(AnalyticsGenericWrapper).toHaveBeenCalledTimes(1);
     checkMockCall(AnalyticsGenericWrapper, {}, 0, ["clickHandler"]);
   });
 });

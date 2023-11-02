@@ -61,8 +61,10 @@ describe("useWindowThresholdCallback", () => {
 
   const checkChange = () => {
     it("should call the onChange callback with the expected props", async () => {
-      await waitFor(() => expect(currentProps.onChange).toBeCalledTimes(1));
-      expect(currentProps.onChange).toBeCalledWith(
+      await waitFor(() =>
+        expect(currentProps.onChange).toHaveBeenCalledTimes(1)
+      );
+      expect(currentProps.onChange).toHaveBeenCalledWith(
         received.result.current.state
       );
     });
@@ -161,8 +163,8 @@ describe("useWindowThresholdCallback", () => {
       });
 
       it("should call the onUnmount callback with the expected props", () => {
-        expect(currentProps.onUnmount).toBeCalledTimes(1);
-        expect(currentProps.onUnmount).toBeCalledWith();
+        expect(currentProps.onUnmount).toHaveBeenCalledTimes(1);
+        expect(currentProps.onUnmount).toHaveBeenCalledWith();
       });
     });
   };

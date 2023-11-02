@@ -62,7 +62,7 @@ describe(QueryString.name, () => {
         });
 
         it("it should not reload the page", () => {
-          expect(replaceStateSpy).toBeCalledWith(
+          expect(replaceStateSpy).toHaveBeenCalledWith(
             {},
             "",
             `${window.location.pathname}?${new URLSearchParams(testParams)}`
@@ -119,7 +119,7 @@ describe(QueryString.name, () => {
         });
 
         it("it should not reload the page", () => {
-          expect(replaceStateSpy).toBeCalledWith(
+          expect(replaceStateSpy).toHaveBeenCalledWith(
             {},
             "",
             `${window.location.pathname}?${new URLSearchParams(testParams)}`
@@ -143,7 +143,7 @@ describe(QueryString.name, () => {
         });
 
         it("it should not reload the page", () => {
-          expect(replaceStateSpy).toBeCalledWith(
+          expect(replaceStateSpy).toHaveBeenCalledWith(
             {},
             "",
             `${window.location.pathname}?${new URLSearchParams(testParams)}`

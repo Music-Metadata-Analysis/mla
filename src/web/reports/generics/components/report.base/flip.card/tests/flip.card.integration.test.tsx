@@ -122,7 +122,7 @@ describe("FlipCardContainer", () => {
       );
 
       it("should call the onLoad function as expected", () => {
-        expect(mockOnLoad).toBeCalledTimes(1);
+        expect(mockOnLoad).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -145,8 +145,8 @@ describe("FlipCardContainer", () => {
       });
 
       it("should call the onClick function as flipCard", () => {
-        expect(mockFlipCard).toBeCalledTimes(1);
-        expect(mockFlipCard).toBeCalledWith(currentProps.index);
+        expect(mockFlipCard).toHaveBeenCalledTimes(1);
+        expect(mockFlipCard).toHaveBeenCalledWith(currentProps.index);
       });
     });
   });
@@ -176,7 +176,7 @@ describe("FlipCardContainer", () => {
       );
 
       it("should call the onLoad function as expected", () => {
-        expect(mockOnLoad).toBeCalledTimes(1);
+        expect(mockOnLoad).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -199,8 +199,8 @@ describe("FlipCardContainer", () => {
       });
 
       it("should call the onClick function as flipCard", () => {
-        expect(mockFlipCard).toBeCalledTimes(1);
-        expect(mockFlipCard).toBeCalledWith(null);
+        expect(mockFlipCard).toHaveBeenCalledTimes(1);
+        expect(mockFlipCard).toHaveBeenCalledWith(null);
       });
     });
   });

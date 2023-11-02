@@ -56,7 +56,7 @@ describe("SplashBody", () => {
     beforeEach(() => arrange());
 
     it("should call Avatar as expected to display the logo", () => {
-      expect(Avatar).toBeCalledTimes(1);
+      expect(Avatar).toHaveBeenCalledTimes(1);
       const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.width).toStrictEqual(dialogueSettings.iconSizes);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -69,7 +69,7 @@ describe("SplashBody", () => {
     });
 
     it("should call Box with the correct props", () => {
-      expect(Box).toBeCalledTimes(2);
+      expect(Box).toHaveBeenCalledTimes(2);
       checkMockCall(
         Box,
         {
@@ -87,7 +87,7 @@ describe("SplashBody", () => {
     });
 
     it("should call Text with the correct props", () => {
-      expect(Text).toBeCalledTimes(2);
+      expect(Text).toHaveBeenCalledTimes(2);
       checkMockCall(
         Text,
         {
@@ -107,17 +107,17 @@ describe("SplashBody", () => {
     });
 
     it("should call ClickLink with the correct props", () => {
-      expect(ClickLink).toBeCalledTimes(1);
+      expect(ClickLink).toHaveBeenCalledTimes(1);
       checkMockCall(ClickLink, { href: lastFMConfig.homePage });
     });
 
     it("should call DimOnHover with the correct props", () => {
-      expect(DimOnHover).toBeCalledTimes(1);
+      expect(DimOnHover).toHaveBeenCalledTimes(1);
       checkMockCall(DimOnHover, {});
     });
 
     it("should call Flex with the correct props", () => {
-      expect(Flex).toBeCalledTimes(2);
+      expect(Flex).toHaveBeenCalledTimes(2);
       checkMockCall(
         Flex,
         {

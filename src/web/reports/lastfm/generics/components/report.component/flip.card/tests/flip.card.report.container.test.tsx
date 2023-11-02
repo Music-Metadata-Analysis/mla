@@ -103,8 +103,8 @@ describe("FlipCardReportContainer", () => {
   const checkEffectHookImageCountReset = () => {
     describe("useEffect (image count)", () => {
       it("should clear image load count on component mount", () => {
-        expect(mockImageController.reset).toBeCalledTimes(1);
-        expect(mockImageController.reset).toBeCalledWith();
+        expect(mockImageController.reset).toHaveBeenCalledTimes(1);
+        expect(mockImageController.reset).toHaveBeenCalledWith();
       });
     });
   };
@@ -112,20 +112,22 @@ describe("FlipCardReportContainer", () => {
   const checkEffectHookDataFetching = () => {
     describe("useEffect (data fetching)", () => {
       it("should clear the state on component mount", () => {
-        expect(currentLastFMHookState.clear).toBeCalledTimes(1);
-        expect(currentLastFMHookState.clear).toBeCalledWith();
+        expect(currentLastFMHookState.clear).toHaveBeenCalledTimes(1);
+        expect(currentLastFMHookState.clear).toHaveBeenCalledWith();
       });
 
       it("should start a fetch on component mount", () => {
-        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledTimes(1);
-        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
-          mockUserName
-        );
+        expect(
+          currentLastFMHookState[mockQuery.hookMethod]
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          currentLastFMHookState[mockQuery.hookMethod]
+        ).toHaveBeenCalledWith(mockUserName);
       });
 
       it("should clear the report state during unmounting of the component", () => {
         cleanup();
-        expect(currentLastFMHookState.clear).toBeCalledTimes(2);
+        expect(currentLastFMHookState.clear).toHaveBeenCalledTimes(2);
       });
     });
   };
@@ -133,12 +135,14 @@ describe("FlipCardReportContainer", () => {
   const checkEffectHookDataFetchingAfterTimeOutError = () => {
     describe("useEffect (data fetching - after timeout error)", () => {
       it("should clear the state on component mount", () => {
-        expect(currentLastFMHookState.clear).toBeCalledTimes(1);
-        expect(currentLastFMHookState.clear).toBeCalledWith();
+        expect(currentLastFMHookState.clear).toHaveBeenCalledTimes(1);
+        expect(currentLastFMHookState.clear).toHaveBeenCalledWith();
       });
 
       it("should start data fetching, and attempt to resume a timed out fetch", () => {
-        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledTimes(2);
+        expect(
+          currentLastFMHookState[mockQuery.hookMethod]
+        ).toHaveBeenCalledTimes(2);
         expect(
           currentLastFMHookState[mockQuery.hookMethod]
         ).toHaveBeenNthCalledWith(1, mockUserName);
@@ -149,7 +153,7 @@ describe("FlipCardReportContainer", () => {
 
       it("should clear the report state during unmounting of the component", () => {
         cleanup();
-        expect(currentLastFMHookState.clear).toBeCalledTimes(2);
+        expect(currentLastFMHookState.clear).toHaveBeenCalledTimes(2);
       });
     });
   };
@@ -157,18 +161,18 @@ describe("FlipCardReportContainer", () => {
   const checkEffectHookReportIsMadeReady = () => {
     describe("useEffect (report ready)", () => {
       it("should mark the report as ready", () => {
-        expect(currentLastFMHookState.ready).toBeCalledTimes(1);
-        expect(currentLastFMHookState.ready).toBeCalledWith();
+        expect(currentLastFMHookState.ready).toHaveBeenCalledTimes(1);
+        expect(currentLastFMHookState.ready).toHaveBeenCalledWith();
       });
 
       it("should increment the SearchMetric count", () => {
-        expect(mockMetricsHook.increment).toBeCalledTimes(1);
-        expect(mockMetricsHook.increment).toBeCalledWith("SearchMetric");
+        expect(mockMetricsHook.increment).toHaveBeenCalledTimes(1);
+        expect(mockMetricsHook.increment).toHaveBeenCalledWith("SearchMetric");
       });
 
       it("should generate the correct analytics event", () => {
-        expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
-        expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
+        expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledTimes(1);
+        expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledWith(
           Events.LastFM.ReportPresented(mockQuery.analyticsReportType)
         );
       });
@@ -178,22 +182,22 @@ describe("FlipCardReportContainer", () => {
   const checkEffectHookReportIsNotMadeReady = () => {
     describe("useEffect (report ready)", () => {
       it("should NOT mark the report as ready", () => {
-        expect(currentLastFMHookState.ready).toBeCalledTimes(0);
+        expect(currentLastFMHookState.ready).toHaveBeenCalledTimes(0);
       });
 
       it("should NOT increment the SearchMetric count", () => {
-        expect(mockMetricsHook.increment).toBeCalledTimes(0);
+        expect(mockMetricsHook.increment).toHaveBeenCalledTimes(0);
       });
 
       it("should NOT generate an analytics event", () => {
-        expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(0);
+        expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledTimes(0);
       });
     });
   };
 
   const checkErrorDisplayContainerProps = () => {
     it("should render the LastFMErrorDisplayContainer with the expected props", () => {
-      expect(LastFMErrorDisplayContainer).toBeCalledTimes(1);
+      expect(LastFMErrorDisplayContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         LastFMErrorDisplayContainer,
         {
@@ -210,7 +214,7 @@ describe("FlipCardReportContainer", () => {
 
   const checkBillBoardSpinnerProps = () => {
     it("should render the BillBoardProgressBar with the expected props", () => {
-      expect(BillBoardSpinner).toBeCalledTimes(1);
+      expect(BillBoardSpinner).toHaveBeenCalledTimes(1);
       checkMockCall(BillBoardSpinner, {
         titleText: _t(lastfm[mockQuery.translationKey].communication),
         visible: !currentLastFMHookState.reportProperties.ready,
@@ -220,7 +224,7 @@ describe("FlipCardReportContainer", () => {
 
   const checkFlipCardReportProps = () => {
     it("should render the FlipCardReport with the correct props", () => {
-      expect(FlipCardReport).toBeCalledTimes(1);
+      expect(FlipCardReport).toHaveBeenCalledTimes(1);
       checkMockCall(
         FlipCardReport,
         {
@@ -249,7 +253,7 @@ describe("FlipCardReportContainer", () => {
 
   const checkFlipCardReportNotRendered = () => {
     it("should NOT render the SunBurstReport", () => {
-      expect(FlipCardReport).toBeCalledTimes(0);
+      expect(FlipCardReport).toHaveBeenCalledTimes(0);
     });
   };
 
