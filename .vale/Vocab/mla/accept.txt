@@ -24,6 +24,7 @@ jose
 jwt
 lastfm|LASTFM
 lockfile
+matchers
 middleware|MIDDLEWARE
 navbar|NAVBAR
 netlify|NETLIFY

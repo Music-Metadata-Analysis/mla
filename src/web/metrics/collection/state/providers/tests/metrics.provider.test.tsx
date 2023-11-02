@@ -48,16 +48,17 @@ describe("MetricsProvider", () => {
     });
 
     it("should instantiate the factory as expected", () => {
-      expect(MockPersistantReducerFactory).toBeCalledTimes(1);
-      expect(MockPersistantReducerFactory).toBeCalledWith();
+      expect(MockPersistantReducerFactory).toHaveBeenCalledTimes(1);
+      expect(MockPersistantReducerFactory).toHaveBeenCalledWith();
     });
 
     it("should create a persisted reducer with the expected local storage key", () => {
-      expect(MockPersistantReducerFactory.prototype.create).toBeCalledTimes(1);
-      expect(MockPersistantReducerFactory.prototype.create).toBeCalledWith(
-        settings.localStorageKey,
-        mockIsSSRValue
-      );
+      expect(
+        MockPersistantReducerFactory.prototype.create
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        MockPersistantReducerFactory.prototype.create
+      ).toHaveBeenCalledWith(settings.localStorageKey, mockIsSSRValue);
     });
 
     it("should contain the expected properties", () => {

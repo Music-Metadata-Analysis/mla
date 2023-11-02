@@ -28,8 +28,8 @@ describe("LastFMReportSunBurstBaseStateEncapsulation", () => {
       beforeEach(() => instance.getNextStep(mockParams));
 
       it("should call the mock nextStep function as expected", () => {
-        expect(mockNextStep).toBeCalledTimes(1);
-        expect(mockNextStep).toBeCalledWith(mockParams);
+        expect(mockNextStep).toHaveBeenCalledTimes(1);
+        expect(mockNextStep).toHaveBeenCalledWith(mockParams);
       });
     });
 
@@ -78,8 +78,12 @@ describe("LastFMReportSunBurstBaseStateEncapsulation", () => {
       );
 
       it("should call the mock update function as expected", () => {
-        expect(mockUpdate).toBeCalledTimes(1);
-        expect(mockUpdate).toBeCalledWith(mockResponse, mockUrl, mockParams);
+        expect(mockUpdate).toHaveBeenCalledTimes(1);
+        expect(mockUpdate).toHaveBeenCalledWith(
+          mockResponse,
+          mockUrl,
+          mockParams
+        );
       });
     });
   });

@@ -27,8 +27,8 @@ describe("NextI18NextClientSSR", () => {
     });
 
     it("should call the vendor serverSideTranslations function correctly", () => {
-      expect(serverSideTranslations).toBeCalledTimes(1);
-      expect(serverSideTranslations).toBeCalledWith(
+      expect(serverSideTranslations).toHaveBeenCalledTimes(1);
+      expect(serverSideTranslations).toHaveBeenCalledWith(
         mockLocale,
         mockNamesSpaces
       );

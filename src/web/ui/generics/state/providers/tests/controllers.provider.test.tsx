@@ -40,17 +40,17 @@ describe("UserInterfaceRootProvider", () => {
     beforeEach(() => arrange());
 
     it("should call ImagesControllerProvider with the correct props", () => {
-      expect(ImagesControllerProvider).toBeCalledTimes(1);
+      expect(ImagesControllerProvider).toHaveBeenCalledTimes(1);
       checkMockCall(ImagesControllerProvider, {});
     });
 
     it("should call NavBarControllerProvider with the correct props", () => {
-      expect(NavBarControllerProvider).toBeCalledTimes(1);
+      expect(NavBarControllerProvider).toHaveBeenCalledTimes(1);
       checkMockCall(NavBarControllerProvider, {});
     });
 
     it("should call ScrollBarsControllerProvider with the correct props", () => {
-      expect(ScrollBarsControllerProvider).toBeCalledTimes(1);
+      expect(ScrollBarsControllerProvider).toHaveBeenCalledTimes(1);
       checkMockCall(ScrollBarsControllerProvider, {});
     });
 

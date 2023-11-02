@@ -39,7 +39,7 @@ describe("SunBurstErrorPanel", () => {
     beforeEach(() => arrange());
 
     it("should call the Box component as expected", () => {
-      expect(Box).toBeCalledTimes(1);
+      expect(Box).toHaveBeenCalledTimes(1);
       checkMockCall(
         Box,
         {
@@ -58,7 +58,7 @@ describe("SunBurstErrorPanel", () => {
     });
 
     it("should call the Center component as expected", () => {
-      expect(Center).toBeCalledTimes(1);
+      expect(Center).toHaveBeenCalledTimes(1);
       checkMockCall(
         Center,
         {
@@ -70,7 +70,7 @@ describe("SunBurstErrorPanel", () => {
     });
 
     it("should call the Container component as expected", () => {
-      expect(Container).toBeCalledTimes(1);
+      expect(Container).toHaveBeenCalledTimes(1);
       checkMockCall(
         Container,
         {

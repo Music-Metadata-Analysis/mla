@@ -69,7 +69,7 @@ describe("DialogueContainer", () => {
     expectedToggleState: boolean;
   }) => {
     it("should call the Dialogue component with the expected props", async () => {
-      await waitFor(() => expect(Dialogue).toBeCalledTimes(1));
+      await waitFor(() => expect(Dialogue).toHaveBeenCalledTimes(1));
       checkMockCall(
         Dialogue,
         {
@@ -89,8 +89,8 @@ describe("DialogueContainer", () => {
 
   const checkWindowThreshold = () => {
     it("should initialize the window threshold with the correct settings", () => {
-      expect(useWindowThreshold).toBeCalledTimes(1);
-      expect(useWindowThreshold).toBeCalledWith({
+      expect(useWindowThreshold).toHaveBeenCalledTimes(1);
+      expect(useWindowThreshold).toHaveBeenCalledWith({
         axis: "innerHeight",
         threshold: dialogueSettings.toggleMinimumDisplayHeight,
         lowState: false,

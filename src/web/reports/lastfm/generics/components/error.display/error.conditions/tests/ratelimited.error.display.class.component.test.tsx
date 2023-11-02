@@ -42,7 +42,7 @@ describe("RateLimitedErrorConditionalDisplay", () => {
       });
 
       it("should reload the page", () => {
-        expect(mockRouterHook.reload).toBeCalledTimes(1);
+        expect(mockRouterHook.reload).toHaveBeenCalledTimes(1);
       });
     });
   };

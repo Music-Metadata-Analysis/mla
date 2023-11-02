@@ -36,7 +36,7 @@ describe("NextAuthSSRClient", () => {
       });
 
       it("should NOT call the vendor object's getSession method", () => {
-        expect(getSession).toBeCalledTimes(0);
+        expect(getSession).toHaveBeenCalledTimes(0);
       });
 
       it("should return null", () => {
@@ -59,8 +59,8 @@ describe("NextAuthSSRClient", () => {
       });
 
       it("should call the vendor object's getSession method correctly", () => {
-        expect(getSession).toBeCalledTimes(1);
-        expect(getSession).toBeCalledWith(mockRequest);
+        expect(getSession).toHaveBeenCalledTimes(1);
+        expect(getSession).toHaveBeenCalledWith(mockRequest);
       });
 
       it("should return the vendor's auth state", () => {

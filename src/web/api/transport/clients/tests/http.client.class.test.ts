@@ -66,8 +66,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", async () => {
           await arrange();
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, getParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, getParams);
         });
 
         it("should return a success message", async () => {
@@ -90,8 +90,8 @@ describe("HttpApiClient", () => {
 
           it("should call the underlying fetch function correctly", () => {
             arrange().catch(() => null);
-            expect(fetch).toBeCalledTimes(1);
-            expect(fetch).toBeCalledWith(remotesite, getParams);
+            expect(fetch).toHaveBeenCalledTimes(1);
+            expect(fetch).toHaveBeenCalledWith(remotesite, getParams);
           });
 
           it("should throw the correct error message", async () => {
@@ -106,8 +106,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", () => {
           arrange().catch(() => null);
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, getParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, getParams);
         });
 
         it("should throw the correct error message", async () => {
@@ -141,8 +141,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", async () => {
           await arrange();
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, postParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, postParams);
         });
 
         it("should return a success message", async () => {
@@ -165,8 +165,8 @@ describe("HttpApiClient", () => {
 
           it("should call the underlying fetch function correctly", () => {
             arrange().catch(() => null);
-            expect(fetch).toBeCalledTimes(1);
-            expect(fetch).toBeCalledWith(remotesite, postParams);
+            expect(fetch).toHaveBeenCalledTimes(1);
+            expect(fetch).toHaveBeenCalledWith(remotesite, postParams);
           });
 
           it("should throw the correct error message", async () => {
@@ -181,8 +181,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", () => {
           arrange().catch(() => null);
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, postParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, postParams);
         });
 
         it("should throw the correct error message", async () => {
@@ -214,8 +214,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", async () => {
           await arrange();
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, getParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, getParams);
         });
 
         it("should return a success message", async () => {
@@ -238,8 +238,8 @@ describe("HttpApiClient", () => {
 
           it("should call the underlying fetch function correctly", () => {
             arrange();
-            expect(fetch).toBeCalledTimes(1);
-            expect(fetch).toBeCalledWith(remotesite, getParams);
+            expect(fetch).toHaveBeenCalledTimes(1);
+            expect(fetch).toHaveBeenCalledWith(remotesite, getParams);
           });
 
           it("should return the correct error message", async () => {
@@ -261,8 +261,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", () => {
           arrange();
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, getParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, getParams);
         });
 
         it("should return the correct error message", async () => {
@@ -281,8 +281,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", () => {
           arrange().catch(() => null);
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, getParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, getParams);
         });
 
         it("should throw the correct error message", async () => {
@@ -296,8 +296,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", () => {
           arrange().catch(() => null);
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, getParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, getParams);
         });
 
         it("should throw the correct error message", async () => {
@@ -331,8 +331,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", async () => {
           await arrange();
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, postParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, postParams);
         });
 
         it("should return a success message", async () => {
@@ -355,8 +355,8 @@ describe("HttpApiClient", () => {
 
           it("should call the underlying fetch function correctly", () => {
             arrange();
-            expect(fetch).toBeCalledTimes(1);
-            expect(fetch).toBeCalledWith(remotesite, postParams);
+            expect(fetch).toHaveBeenCalledTimes(1);
+            expect(fetch).toHaveBeenCalledWith(remotesite, postParams);
           });
 
           it("should return the correct error message", async () => {
@@ -378,8 +378,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", () => {
           arrange();
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, postParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, postParams);
         });
 
         it("should return the correct error message", async () => {
@@ -398,8 +398,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", () => {
           arrange().catch(() => null);
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, postParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, postParams);
         });
 
         it("should throw the correct error message", async () => {
@@ -413,8 +413,8 @@ describe("HttpApiClient", () => {
 
         it("should call the underlying fetch function correctly", () => {
           arrange().catch(() => null);
-          expect(fetch).toBeCalledTimes(1);
-          expect(fetch).toBeCalledWith(remotesite, postParams);
+          expect(fetch).toHaveBeenCalledTimes(1);
+          expect(fetch).toHaveBeenCalledWith(remotesite, postParams);
         });
 
         it("should throw the correct error message", async () => {

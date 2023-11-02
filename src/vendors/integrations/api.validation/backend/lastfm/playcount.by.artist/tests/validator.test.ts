@@ -33,8 +33,8 @@ describe("last.fm playcount by artist validator", () => {
       beforeEach(() => act());
 
       it("should call the underlying AJV validator correctly", () => {
-        expect(compiledValidator).toBeCalledTimes(1);
-        expect(compiledValidator).toBeCalledWith(mockData);
+        expect(compiledValidator).toHaveBeenCalledTimes(1);
+        expect(compiledValidator).toHaveBeenCalledWith(mockData);
       });
 
       it("should return the expected value", () => {
@@ -54,8 +54,8 @@ describe("last.fm playcount by artist validator", () => {
       beforeEach(() => act());
 
       it("should call the underlying AJV validator correctly", () => {
-        expect(compiledValidator).toBeCalledTimes(1);
-        expect(compiledValidator).toBeCalledWith(mockData);
+        expect(compiledValidator).toHaveBeenCalledTimes(1);
+        expect(compiledValidator).toHaveBeenCalledWith(mockData);
       });
 
       it("should return the expected value", () => {

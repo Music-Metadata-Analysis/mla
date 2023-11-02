@@ -33,7 +33,7 @@ describe("ConsentContainer", () => {
 
   const checkConsentProps = () => {
     it("should render the Consent component with the expected props", () => {
-      expect(Consent).toBeCalledTimes(1);
+      expect(Consent).toHaveBeenCalledTimes(1);
       checkMockCall(
         Consent,
         {
@@ -56,15 +56,15 @@ describe("ConsentContainer", () => {
     });
 
     it("should call the underlying analytics hook during render", () => {
-      expect(analyticsVendor.collection.hook).toBeCalledTimes(1);
-      expect(analyticsVendor.collection.hook).toBeCalledWith(
+      expect(analyticsVendor.collection.hook).toHaveBeenCalledTimes(1);
+      expect(analyticsVendor.collection.hook).toHaveBeenCalledWith(
         analyticsVendor.ClientClass
       );
     });
 
     it("should initialize analytics", () => {
-      expect(mockAnalyticsCollectionHook.setup).toBeCalledTimes(1);
-      expect(mockAnalyticsCollectionHook.setup).toBeCalledWith();
+      expect(mockAnalyticsCollectionHook.setup).toHaveBeenCalledTimes(1);
+      expect(mockAnalyticsCollectionHook.setup).toHaveBeenCalledWith();
     });
 
     checkConsentProps();
@@ -78,14 +78,14 @@ describe("ConsentContainer", () => {
     });
 
     it("should call the underlying analytics hook during render", () => {
-      expect(analyticsVendor.collection.hook).toBeCalledTimes(1);
-      expect(analyticsVendor.collection.hook).toBeCalledWith(
+      expect(analyticsVendor.collection.hook).toHaveBeenCalledTimes(1);
+      expect(analyticsVendor.collection.hook).toHaveBeenCalledWith(
         analyticsVendor.ClientClass
       );
     });
 
     it("should NOT initialize analytics", () => {
-      expect(mockAnalyticsCollectionHook.setup).toBeCalledTimes(0);
+      expect(mockAnalyticsCollectionHook.setup).toHaveBeenCalledTimes(0);
     });
 
     checkConsentProps();

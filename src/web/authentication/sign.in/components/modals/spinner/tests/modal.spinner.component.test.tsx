@@ -54,14 +54,14 @@ describe("AuthenticationSpinnerModal", () => {
   };
 
   it("should render the Box component correctly", () => {
-    expect(Box).toBeCalledTimes(1);
+    expect(Box).toHaveBeenCalledTimes(1);
     checkMockCall(Box, {
       borderWidth: 1,
     });
   });
 
   it("should render the Modal component correctly", () => {
-    expect(Modal).toBeCalledTimes(1);
+    expect(Modal).toHaveBeenCalledTimes(1);
     checkMockCall(Modal, {
       isCentered: true,
       isOpen: true,
@@ -71,12 +71,12 @@ describe("AuthenticationSpinnerModal", () => {
   });
 
   it("should render the ModalOverlay component correctly", () => {
-    expect(ModalOverlay).toBeCalledTimes(1);
+    expect(ModalOverlay).toHaveBeenCalledTimes(1);
     checkMockCall(ModalOverlay, {});
   });
 
   it("should render the ModalContent component correctly", () => {
-    expect(ModalContent).toBeCalledTimes(1);
+    expect(ModalContent).toHaveBeenCalledTimes(1);
     checkMockCall(ModalContent, {
       color: mockColourHook.modalColour.foreground,
       borderColor: mockColourHook.modalColour.border,
@@ -85,14 +85,14 @@ describe("AuthenticationSpinnerModal", () => {
   });
 
   it("should render the Container component correctly", () => {
-    expect(Container).toBeCalledTimes(1);
+    expect(Container).toHaveBeenCalledTimes(1);
     checkMockCall(Container, {
       centerContent: true,
     });
   });
 
   it("should render the ModalHeader component correctly", () => {
-    expect(ModalHeader).toBeCalledTimes(1);
+    expect(ModalHeader).toHaveBeenCalledTimes(1);
     checkMockCall(ModalHeader, {
       "data-testid": testIDs.AuthenticationSpinnerModalTitle,
     });
@@ -106,17 +106,17 @@ describe("AuthenticationSpinnerModal", () => {
   });
 
   it("should render the ModalBody component correctly", () => {
-    expect(ModalBody).toBeCalledTimes(1);
+    expect(ModalBody).toHaveBeenCalledTimes(1);
     checkMockCall(ModalBody, {});
   });
 
   it("should render the Center component correctly", () => {
-    expect(Center).toBeCalledTimes(1);
+    expect(Center).toHaveBeenCalledTimes(1);
     checkMockCall(Center, {});
   });
 
   it("should render the Spinner component correctly", () => {
-    expect(Spinner).toBeCalledTimes(1);
+    expect(Spinner).toHaveBeenCalledTimes(1);
     checkMockCall(Spinner, {
       size: "xl",
       "data-testid": testIDs.AuthenticationSpinnerModalSpinner,
@@ -126,7 +126,7 @@ describe("AuthenticationSpinnerModal", () => {
   });
 
   it("should render the ModalFooter component correctly", () => {
-    expect(ModalFooter).toBeCalledTimes(1);
+    expect(ModalFooter).toHaveBeenCalledTimes(1);
     checkMockCall(ModalFooter, {});
   });
 });

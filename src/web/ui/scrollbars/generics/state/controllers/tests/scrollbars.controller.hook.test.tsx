@@ -76,7 +76,7 @@ describe("useScrollBarsController", () => {
           });
 
           it("should keep the currently selected scrollbar value", () => {
-            expect(mockSetter).toBeCalledTimes(1);
+            expect(mockSetter).toHaveBeenCalledTimes(1);
 
             const fn = mockSetter.mock.calls[0][0];
 
@@ -91,7 +91,7 @@ describe("useScrollBarsController", () => {
         });
 
         it("should update the currently selected scrollbar value", () => {
-          expect(mockSetter).toBeCalledTimes(1);
+          expect(mockSetter).toHaveBeenCalledTimes(1);
 
           const fn = mockSetter.mock.calls[0][0];
 
@@ -107,7 +107,7 @@ describe("useScrollBarsController", () => {
         });
 
         it("should keep the currently selected scrollbar value", () => {
-          expect(mockSetter).toBeCalledTimes(0);
+          expect(mockSetter).toHaveBeenCalledTimes(0);
         });
       });
     });
@@ -120,7 +120,7 @@ describe("useScrollBarsController", () => {
       });
 
       it("should restore the stack to an empty one", () => {
-        expect(mockSetter).toBeCalledTimes(1);
+        expect(mockSetter).toHaveBeenCalledTimes(1);
 
         const fn = mockSetter.mock.calls[0][0];
 

@@ -34,7 +34,7 @@ describe("NextImageShim", () => {
     beforeEach(() => arrange());
 
     it("should call the underlying Next/Image implementation", () => {
-      expect(Image).toBeCalledTimes(1);
+      expect(Image).toHaveBeenCalledTimes(1);
       checkMockCall(Image, {
         alt: mockAltText,
         height: mockHeight,

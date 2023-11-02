@@ -28,8 +28,10 @@ describe(ProfilePersistenceClient.name, () => {
     beforeEach(() => arrange());
 
     it("should initialize the underlying PersistenceClient correctly", () => {
-      expect(persistenceVendorBackend.PersistenceClient).toBeCalledTimes(1);
-      expect(persistenceVendorBackend.PersistenceClient).toBeCalledWith(
+      expect(persistenceVendorBackend.PersistenceClient).toHaveBeenCalledTimes(
+        1
+      );
+      expect(persistenceVendorBackend.PersistenceClient).toHaveBeenCalledWith(
         mockPartitionName
       );
     });
@@ -41,8 +43,8 @@ describe(ProfilePersistenceClient.name, () => {
         });
 
         it("should call the underlying PersistenceClient as expected", () => {
-          expect(mockPersistenceClient.write).toBeCalledTimes(1);
-          expect(mockPersistenceClient.write).toBeCalledWith(
+          expect(mockPersistenceClient.write).toHaveBeenCalledTimes(1);
+          expect(mockPersistenceClient.write).toHaveBeenCalledWith(
             mockProfile.email,
             mockProfile,
             { ContentType: "application/json" }
@@ -56,7 +58,7 @@ describe(ProfilePersistenceClient.name, () => {
         });
 
         it("should NOT call the underlying PersistenceClient", () => {
-          expect(mockPersistenceClient.write).toBeCalledTimes(0);
+          expect(mockPersistenceClient.write).toHaveBeenCalledTimes(0);
         });
       });
     });

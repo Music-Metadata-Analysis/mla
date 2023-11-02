@@ -29,7 +29,7 @@ describe("HeaderContainer", () => {
 
   const checkHeaderComponentProps = () => {
     it("should call the Header component with the correct props", () => {
-      expect(Header).toBeCalledTimes(1);
+      expect(Header).toHaveBeenCalledTimes(1);
       checkMockCall(
         Header,
         {

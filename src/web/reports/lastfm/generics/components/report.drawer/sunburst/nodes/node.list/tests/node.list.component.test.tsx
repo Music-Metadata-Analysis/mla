@@ -115,7 +115,7 @@ describe("SunBurstEntityNodeList", () => {
 
   const checkChakraTextProps = () => {
     it("should render the chakra Text component with the expected props", () => {
-      expect(Text).toBeCalledTimes(1);
+      expect(Text).toHaveBeenCalledTimes(1);
 
       checkMockCall(
         Text,
@@ -132,7 +132,7 @@ describe("SunBurstEntityNodeList", () => {
 
   const checkChakraFlexProps = () => {
     it("should render the chakra Flex component with the expected props", () => {
-      expect(Flex).toBeCalledTimes(1);
+      expect(Flex).toHaveBeenCalledTimes(1);
 
       checkMockCall(
         Flex,
@@ -160,7 +160,7 @@ describe("SunBurstEntityNodeList", () => {
 
   const checkScrollBarProps = () => {
     it("should render the VerticalScrollBar component with the expected", () => {
-      expect(VerticalScrollBarContainer).toBeCalledTimes(1);
+      expect(VerticalScrollBarContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         VerticalScrollBarContainer,
         {
@@ -190,7 +190,7 @@ describe("SunBurstEntityNodeList", () => {
       const childNodes = currentProps.node.getChildren();
       expect(childNodes.length).toBe(count);
 
-      expect(currentProps.EntityComponent).toBeCalledTimes(count);
+      expect(currentProps.EntityComponent).toHaveBeenCalledTimes(count);
       for (let index = 0; index < count; index++) {
         checkMockCall(
           currentProps.EntityComponent,

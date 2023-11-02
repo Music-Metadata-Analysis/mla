@@ -70,29 +70,38 @@ describe("BillBoardProgressBar", () => {
     });
 
     it("should render the billboard", () => {
-      expect(BillBoardContainer).toBeCalledTimes(1);
+      expect(BillBoardContainer).toHaveBeenCalledTimes(1);
       checkMockCall(BillBoardContainer, { titleText: testTitle });
     });
 
     it("should render the details", () => {
-      expect(StatNumber).toBeCalledTimes(1);
-      expect(StatNumber).toBeCalledWith({ children: mockValue + "%" }, {});
-      expect(StatLabel).toBeCalledTimes(1);
-      expect(StatLabel).toBeCalledWith({ children: mockDetails.type }, {});
-      expect(StatHelpText).toBeCalledTimes(1);
-      expect(StatHelpText).toBeCalledWith(
+      expect(StatNumber).toHaveBeenCalledTimes(1);
+      expect(StatNumber).toHaveBeenCalledWith(
+        { children: mockValue + "%" },
+        {}
+      );
+      expect(StatLabel).toHaveBeenCalledTimes(1);
+      expect(StatLabel).toHaveBeenCalledWith(
+        { children: mockDetails.type },
+        {}
+      );
+      expect(StatHelpText).toHaveBeenCalledTimes(1);
+      expect(StatHelpText).toHaveBeenCalledWith(
         { children: mockTruncatedString },
         {}
       );
     });
 
     it("should call truncated with the expected value", () => {
-      expect(truncate).toBeCalledTimes(1);
-      expect(truncate).toBeCalledWith(mockDetails.resource, expectedMaxLength);
+      expect(truncate).toHaveBeenCalledTimes(1);
+      expect(truncate).toHaveBeenCalledWith(
+        mockDetails.resource,
+        expectedMaxLength
+      );
     });
 
     it("should render the progress bar", async () => {
-      expect(Progress).toBeCalledTimes(1);
+      expect(Progress).toHaveBeenCalledTimes(1);
       checkMockCall(Progress, progressBarProps());
     });
 
@@ -112,29 +121,38 @@ describe("BillBoardProgressBar", () => {
     });
 
     it("should render the billboard", () => {
-      expect(BillBoardContainer).toBeCalledTimes(1);
+      expect(BillBoardContainer).toHaveBeenCalledTimes(1);
       checkMockCall(BillBoardContainer, { titleText: testTitle });
     });
 
     it("should render the details", () => {
-      expect(StatNumber).toBeCalledTimes(1);
-      expect(StatNumber).toBeCalledWith({ children: mockValue + "%" }, {});
-      expect(StatLabel).toBeCalledTimes(1);
-      expect(StatLabel).toBeCalledWith({ children: mockDetails.type }, {});
-      expect(StatHelpText).toBeCalledTimes(1);
-      expect(StatHelpText).toBeCalledWith(
+      expect(StatNumber).toHaveBeenCalledTimes(1);
+      expect(StatNumber).toHaveBeenCalledWith(
+        { children: mockValue + "%" },
+        {}
+      );
+      expect(StatLabel).toHaveBeenCalledTimes(1);
+      expect(StatLabel).toHaveBeenCalledWith(
+        { children: mockDetails.type },
+        {}
+      );
+      expect(StatHelpText).toHaveBeenCalledTimes(1);
+      expect(StatHelpText).toHaveBeenCalledWith(
         { children: mockTruncatedString },
         {}
       );
     });
 
     it("should call truncated with the expected value", () => {
-      expect(truncate).toBeCalledTimes(1);
-      expect(truncate).toBeCalledWith(mockDetails.resource, expectedMaxLength);
+      expect(truncate).toHaveBeenCalledTimes(1);
+      expect(truncate).toHaveBeenCalledWith(
+        mockDetails.resource,
+        expectedMaxLength
+      );
     });
 
     it("should render the progress bar", async () => {
-      expect(Progress).toBeCalledTimes(1);
+      expect(Progress).toHaveBeenCalledTimes(1);
       checkMockCall(Progress, progressBarProps());
     });
 

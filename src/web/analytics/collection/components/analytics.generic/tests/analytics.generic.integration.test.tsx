@@ -35,12 +35,12 @@ describe("AnalyticsGenericWrapper", () => {
     );
 
     it("should call the click handler as expected", () => {
-      expect(mockClick).toBeCalledTimes(1);
+      expect(mockClick).toHaveBeenCalledTimes(1);
     });
 
     it("should call the analytics event emitter", () => {
-      expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
-      expect(mockAnalyticsCollectionHook.event).toBeCalledWith(mockEvent);
+      expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledTimes(1);
+      expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledWith(mockEvent);
     });
   });
 });

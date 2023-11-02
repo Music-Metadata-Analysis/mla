@@ -19,7 +19,7 @@ describe("createChakraTheme", () => {
   describe("when called", () => {
     it("should call extendTheme", async () => {
       arrange();
-      expect(extendTheme).toBeCalledTimes(1);
+      expect(extendTheme).toHaveBeenCalledTimes(1);
     });
 
     it("should generate the expected body", async () => {

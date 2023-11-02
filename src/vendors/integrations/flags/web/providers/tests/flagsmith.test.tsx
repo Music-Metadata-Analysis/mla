@@ -61,7 +61,7 @@ describe("FlagProvider", () => {
     });
 
     it("should initialize the vendor's provider with the correct arguments", () => {
-      expect(FlagsmithProvider).toBeCalledTimes(1);
+      expect(FlagsmithProvider).toHaveBeenCalledTimes(1);
       checkMockCalls(
         FlagsmithProvider,
         {

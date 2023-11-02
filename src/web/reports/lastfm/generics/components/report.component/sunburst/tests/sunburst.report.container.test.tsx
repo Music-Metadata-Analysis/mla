@@ -112,24 +112,24 @@ describe("SunBurstReportContainer", () => {
 
   const checkInstantiateHooks = () => {
     it("should instantiate the useAnalytics hook as expected", () => {
-      expect(useAnalytics).toBeCalledTimes(1);
-      expect(useAnalytics).toBeCalledWith();
+      expect(useAnalytics).toHaveBeenCalledTimes(1);
+      expect(useAnalytics).toHaveBeenCalledWith();
     });
 
     it("should instantiate the useTranslation hook as expected", () => {
-      expect(useTranslation).toBeCalledTimes(2);
-      expect(useTranslation).toBeCalledWith("lastfm");
-      expect(useTranslation).toBeCalledWith("sunburst");
+      expect(useTranslation).toHaveBeenCalledTimes(2);
+      expect(useTranslation).toHaveBeenCalledWith("lastfm");
+      expect(useTranslation).toHaveBeenCalledWith("sunburst");
     });
 
     it("should instantiate the useMetrics hook as expected", () => {
-      expect(useMetrics).toBeCalledTimes(1);
-      expect(useMetrics).toBeCalledWith();
+      expect(useMetrics).toHaveBeenCalledTimes(1);
+      expect(useMetrics).toHaveBeenCalledWith();
     });
 
     it("should instantiate the useSunBurstCacheController hook as expected", () => {
-      expect(useSunBurstCacheController).toBeCalledTimes(1);
-      expect(useSunBurstCacheController).toBeCalledWith({
+      expect(useSunBurstCacheController).toHaveBeenCalledTimes(1);
+      expect(useSunBurstCacheController).toHaveBeenCalledWith({
         queryClass: MockQueryClass,
         sourceName: "lastfm",
         userName: mockUserName,
@@ -137,29 +137,31 @@ describe("SunBurstReportContainer", () => {
     });
 
     it("should instantiate the useSunBurstLayoutController hook as expected", () => {
-      expect(useSunBurstLayoutController).toBeCalledTimes(1);
-      expect(useSunBurstLayoutController).toBeCalledWith();
+      expect(useSunBurstLayoutController).toHaveBeenCalledTimes(1);
+      expect(useSunBurstLayoutController).toHaveBeenCalledWith();
     });
   };
 
   const checkEffectHookDataFetchingWithCacheRetrieval = () => {
     describe("useEffect (data fetching)", () => {
       it("should attempt to retrieve a cached report", () => {
-        expect(mockSunburstCacheControllerHook.read).toBeCalledTimes(1);
-        expect(mockSunburstCacheControllerHook.read).toBeCalledWith();
+        expect(mockSunburstCacheControllerHook.read).toHaveBeenCalledTimes(1);
+        expect(mockSunburstCacheControllerHook.read).toHaveBeenCalledWith();
       });
 
       it("should clear the state and start a fetch on component mount", () => {
-        expect(currentLastFMHookState.clear).toBeCalledTimes(1);
-        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledTimes(1);
-        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
-          mockUserName
-        );
+        expect(currentLastFMHookState.clear).toHaveBeenCalledTimes(1);
+        expect(
+          currentLastFMHookState[mockQuery.hookMethod]
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          currentLastFMHookState[mockQuery.hookMethod]
+        ).toHaveBeenCalledWith(mockUserName);
       });
 
       it("should clear the report state during unmounting of the component", () => {
         cleanup();
-        expect(currentLastFMHookState.clear).toBeCalledTimes(2);
+        expect(currentLastFMHookState.clear).toHaveBeenCalledTimes(2);
       });
     });
   };
@@ -167,18 +169,18 @@ describe("SunBurstReportContainer", () => {
   const checkEffectHookDataFetchingWithNoCacheRetrieval = () => {
     describe("useEffect (data fetching)", () => {
       it("should attempt to retrieve a cached report", () => {
-        expect(mockSunburstCacheControllerHook.read).toBeCalledTimes(1);
-        expect(mockSunburstCacheControllerHook.read).toBeCalledWith();
+        expect(mockSunburstCacheControllerHook.read).toHaveBeenCalledTimes(1);
+        expect(mockSunburstCacheControllerHook.read).toHaveBeenCalledWith();
       });
 
       it("should clear the state but NOT start a fetch on component mount", () => {
-        expect(currentLastFMHookState.clear).toBeCalledTimes(1);
-        expect(currentLastFMHookState.clear).toBeCalledWith();
+        expect(currentLastFMHookState.clear).toHaveBeenCalledTimes(1);
+        expect(currentLastFMHookState.clear).toHaveBeenCalledWith();
       });
 
       it("should clear the report state during unmounting of the component", () => {
         cleanup();
-        expect(currentLastFMHookState.clear).toBeCalledTimes(2);
+        expect(currentLastFMHookState.clear).toHaveBeenCalledTimes(2);
       });
     });
   };
@@ -186,22 +188,24 @@ describe("SunBurstReportContainer", () => {
   const checkEffectHookDataFetchingWithResume = () => {
     describe("useEffect (report resume)", () => {
       it("should clear the state and start a fetch on component mount", () => {
-        expect(currentLastFMHookState.clear).toBeCalledTimes(1);
-        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
-          mockUserName
-        );
+        expect(currentLastFMHookState.clear).toHaveBeenCalledTimes(1);
+        expect(
+          currentLastFMHookState[mockQuery.hookMethod]
+        ).toHaveBeenCalledWith(mockUserName);
       });
 
       it("should resume the building the report", () => {
-        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledTimes(2);
-        expect(currentLastFMHookState[mockQuery.hookMethod]).toBeCalledWith(
-          mockUserName
-        );
+        expect(
+          currentLastFMHookState[mockQuery.hookMethod]
+        ).toHaveBeenCalledTimes(2);
+        expect(
+          currentLastFMHookState[mockQuery.hookMethod]
+        ).toHaveBeenCalledWith(mockUserName);
       });
 
       it("should clear the report state during unmounting of the component", () => {
         cleanup();
-        expect(currentLastFMHookState.clear).toBeCalledTimes(2);
+        expect(currentLastFMHookState.clear).toHaveBeenCalledTimes(2);
       });
     });
   };
@@ -213,8 +217,10 @@ describe("SunBurstReportContainer", () => {
   }) => {
     describe("useEffect (node selection)", () => {
       it("should trigger an analytics event for the selected node", () => {
-        expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
-        expect(mockAnalyticsHook.event).toBeCalledWith(
+        expect(mockAnalyticsHook.event).toHaveBeenCalledTimes(
+          analyticsCallCount
+        );
+        expect(mockAnalyticsHook.event).toHaveBeenCalledWith(
           mockQuery
             .getEncapsulatedNode(mockSunBurstControllerHookValues.node.selected)
             .getDrawerEvent()
@@ -222,8 +228,10 @@ describe("SunBurstReportContainer", () => {
       });
 
       it("should trigger a layout update", () => {
-        expect(mockSunBurstLayoutControllerHook.update).toBeCalledTimes(1);
-        expect(mockSunBurstLayoutControllerHook.update).toBeCalledWith();
+        expect(mockSunBurstLayoutControllerHook.update).toHaveBeenCalledTimes(
+          1
+        );
+        expect(mockSunBurstLayoutControllerHook.update).toHaveBeenCalledWith();
       });
     });
   };
@@ -235,8 +243,10 @@ describe("SunBurstReportContainer", () => {
   }) => {
     describe("useEffect (node selection)", () => {
       it("should NOT trigger an analytics event for the selected node", () => {
-        expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
-        expect(mockAnalyticsHook.event).not.toBeCalledWith(
+        expect(mockAnalyticsHook.event).toHaveBeenCalledTimes(
+          analyticsCallCount
+        );
+        expect(mockAnalyticsHook.event).not.toHaveBeenCalledWith(
           mockQuery
             .getEncapsulatedNode(mockSunBurstControllerHookValues.node.selected)
             .getDrawerEvent()
@@ -244,7 +254,9 @@ describe("SunBurstReportContainer", () => {
       });
 
       it("should NOT trigger a layout update", () => {
-        expect(mockSunBurstLayoutControllerHook.update).toBeCalledTimes(0);
+        expect(mockSunBurstLayoutControllerHook.update).toHaveBeenCalledTimes(
+          0
+        );
       });
     });
   };
@@ -255,21 +267,21 @@ describe("SunBurstReportContainer", () => {
     analyticsCallCount: number;
   }) => {
     it("should write the report to the remote cache", () => {
-      expect(mockSunburstCacheControllerHook.write).toBeCalledTimes(1);
-      expect(mockSunburstCacheControllerHook.write).toBeCalledWith();
+      expect(mockSunburstCacheControllerHook.write).toHaveBeenCalledTimes(1);
+      expect(mockSunburstCacheControllerHook.write).toHaveBeenCalledWith();
     });
 
     it("should NOT update the report state to ready", () => {
-      expect(currentLastFMHookState.ready).toBeCalledTimes(0);
+      expect(currentLastFMHookState.ready).toHaveBeenCalledTimes(0);
     });
 
     it("should NOT increment the search metric", () => {
-      expect(mockMetricsHook.increment).toBeCalledTimes(0);
+      expect(mockMetricsHook.increment).toHaveBeenCalledTimes(0);
     });
 
     it("should NOT trigger an analytics event for report presentation", () => {
-      expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
-      expect(mockAnalyticsHook.event).not.toBeCalledWith(
+      expect(mockAnalyticsHook.event).toHaveBeenCalledTimes(analyticsCallCount);
+      expect(mockAnalyticsHook.event).not.toHaveBeenCalledWith(
         Events.LastFM.ReportPresented(mockQuery.analyticsReportType)
       );
     });
@@ -281,18 +293,18 @@ describe("SunBurstReportContainer", () => {
     analyticsCallCount: number;
   }) => {
     it("should update the report state to ready", () => {
-      expect(currentLastFMHookState.ready).toBeCalledTimes(1);
-      expect(currentLastFMHookState.ready).toBeCalledWith();
+      expect(currentLastFMHookState.ready).toHaveBeenCalledTimes(1);
+      expect(currentLastFMHookState.ready).toHaveBeenCalledWith();
     });
 
     it("should increment the search metric", () => {
-      expect(mockMetricsHook.increment).toBeCalledTimes(1);
-      expect(mockMetricsHook.increment).toBeCalledWith("SearchMetric");
+      expect(mockMetricsHook.increment).toHaveBeenCalledTimes(1);
+      expect(mockMetricsHook.increment).toHaveBeenCalledWith("SearchMetric");
     });
 
     it("should trigger an analytics event for report presentation", () => {
-      expect(mockAnalyticsHook.event).toBeCalledTimes(analyticsCallCount);
-      expect(mockAnalyticsHook.event).toBeCalledWith(
+      expect(mockAnalyticsHook.event).toHaveBeenCalledTimes(analyticsCallCount);
+      expect(mockAnalyticsHook.event).toHaveBeenCalledWith(
         Events.LastFM.ReportPresented(mockQuery.analyticsReportType)
       );
     });
@@ -300,7 +312,7 @@ describe("SunBurstReportContainer", () => {
 
   const checkErrorDisplayContainerProps = () => {
     it("should call the LastFMErrorDisplayContainer with the expected props", () => {
-      expect(LastFMErrorDisplayContainer).toBeCalledTimes(1);
+      expect(LastFMErrorDisplayContainer).toHaveBeenCalledTimes(1);
       checkMockCall(LastFMErrorDisplayContainer, {
         query: mockQuery,
         reportProperties: currentLastFMHookState.reportProperties,
@@ -310,7 +322,7 @@ describe("SunBurstReportContainer", () => {
 
   const checkBillBoardProgressBarProps = () => {
     it("should call the BillBoardProgressBar with the expected props", () => {
-      expect(BillBoardProgressBar).toBeCalledTimes(1);
+      expect(BillBoardProgressBar).toHaveBeenCalledTimes(1);
       checkMockCall(BillBoardProgressBar, {
         details: mockQuery.getProgressDetails(
           currentLastFMHookState.reportProperties,
@@ -325,13 +337,15 @@ describe("SunBurstReportContainer", () => {
     });
 
     it("should translate the BillBoardProgressBar title correctly", () => {
-      expect(mockLastFmT).toBeCalledWith("playCountByArtist.communication");
+      expect(mockLastFmT).toHaveBeenCalledWith(
+        "playCountByArtist.communication"
+      );
     });
   };
 
   const checkSunBurstReportProps = () => {
     it("should render the SunBurstReport with the correct props", () => {
-      expect(SunBurstReport).toBeCalledTimes(1);
+      expect(SunBurstReport).toHaveBeenCalledTimes(1);
       checkMockCall(
         SunBurstReport,
         {

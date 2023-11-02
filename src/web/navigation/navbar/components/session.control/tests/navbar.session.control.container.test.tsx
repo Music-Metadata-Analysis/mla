@@ -54,7 +54,7 @@ describe("NavBarSessionControlContainer", () => {
     totalCalls: number;
   }) => {
     it("should call the NavSessionControl component as expected", () => {
-      expect(NavBarSessionControl).toBeCalledTimes(totalCalls);
+      expect(NavBarSessionControl).toHaveBeenCalledTimes(totalCalls);
     });
   };
 

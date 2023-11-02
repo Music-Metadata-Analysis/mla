@@ -37,13 +37,13 @@ describe("APIEndpointBase", () => {
 
   const checkTimeoutCleared = () => {
     it("should clear the timeout", async () => {
-      await waitFor(() => expect(clearTimeOut).toBeCalledTimes(1));
+      await waitFor(() => expect(clearTimeOut).toHaveBeenCalledTimes(1));
     });
   };
 
   const checkTimeoutNotCleared = () => {
     it("should NOT clear the timeout", () => {
-      expect(clearTimeOut).toBeCalledTimes(0);
+      expect(clearTimeOut).toHaveBeenCalledTimes(0);
     });
   };
 
@@ -61,7 +61,7 @@ describe("APIEndpointBase", () => {
 
   const checkLogger = (expectedProxyResponse?: string) => {
     it("should log a message", () => {
-      expect(mockEndpointLogger).toBeCalledTimes(1);
+      expect(mockEndpointLogger).toHaveBeenCalledTimes(1);
 
       const call = jest.mocked(mockEndpointLogger).mock.calls[0];
       expect(call[0]).toBe(mockReq);

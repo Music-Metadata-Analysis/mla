@@ -105,7 +105,7 @@ describe(endpointUnderTest, () => {
           it("should call the proxy method with the correct params", () => {
             expect(
               mockReportCacheProxyMethods.createCacheObject
-            ).toBeCalledWith({
+            ).toHaveBeenCalledWith({
               authenticatedUserName: mockSession?.email,
               reportName: mockReportName,
               sourceName: mockSourceName,

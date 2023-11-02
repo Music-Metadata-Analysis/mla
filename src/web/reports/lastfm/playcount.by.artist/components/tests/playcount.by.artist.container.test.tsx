@@ -38,7 +38,7 @@ describe("PlayCountByArtistContainer", () => {
     beforeEach(() => arrange());
 
     it("should call the SunBurstContainer with the correct props", () => {
-      expect(SunBurstContainer).toBeCalledTimes(1);
+      expect(SunBurstContainer).toHaveBeenCalledTimes(1);
       expect(getMockComponentPropCount({ component: SunBurstContainer })).toBe(
         3
       );

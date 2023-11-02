@@ -31,8 +31,8 @@ describe("useFlags", () => {
     });
 
     it("should call the underlying vendor hook during render", () => {
-      expect(flagVendor.hook).toBeCalledTimes(1);
-      expect(flagVendor.hook).toBeCalledWith();
+      expect(flagVendor.hook).toHaveBeenCalledTimes(1);
+      expect(flagVendor.hook).toHaveBeenCalledWith();
     });
 
     it("should return the vendor hook", () => {

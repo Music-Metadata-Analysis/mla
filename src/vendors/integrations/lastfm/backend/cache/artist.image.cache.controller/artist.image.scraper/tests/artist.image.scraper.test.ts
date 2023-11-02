@@ -101,8 +101,8 @@ describe("CheerioArtistImageScraper", () => {
           });
 
           it("should call fetch with the correct params", () => {
-            expect(fetch).toBeCalledTimes(1);
-            expect(fetch).toBeCalledWith(expectedURL);
+            expect(fetch).toHaveBeenCalledTimes(1);
+            expect(fetch).toHaveBeenCalledWith(expectedURL);
           });
 
           it("should return a promise containing the expected content", async () => {
@@ -124,7 +124,7 @@ describe("CheerioArtistImageScraper", () => {
           });
 
           it("should call fetch recursively on each retry with the correct params", () => {
-            expect(fetch).toBeCalledTimes(retries + 1);
+            expect(fetch).toHaveBeenCalledTimes(retries + 1);
             expect(fetch).toHaveBeenNthCalledWith(1, expectedURL);
             expect(fetch).toHaveBeenNthCalledWith(2, expectedURL);
             expect(fetch).toHaveBeenNthCalledWith(3, expectedURL);
@@ -147,8 +147,8 @@ describe("CheerioArtistImageScraper", () => {
           });
 
           it("should call fetch recursively on each retry with the correct params", () => {
-            expect(fetch).toBeCalledTimes(1);
-            expect(fetch).toBeCalledWith(expectedURL);
+            expect(fetch).toHaveBeenCalledTimes(1);
+            expect(fetch).toHaveBeenCalledWith(expectedURL);
           });
 
           it("should return a promise containing the expected content", async () => {
@@ -169,7 +169,7 @@ describe("CheerioArtistImageScraper", () => {
         });
 
         it("should call fetch recursively on each retry with the correct params", () => {
-          expect(fetch).toBeCalledTimes(retries + 1);
+          expect(fetch).toHaveBeenCalledTimes(retries + 1);
           expect(fetch).toHaveBeenNthCalledWith(1, expectedURL);
           expect(fetch).toHaveBeenNthCalledWith(2, expectedURL);
           expect(fetch).toHaveBeenNthCalledWith(3, expectedURL);
@@ -193,7 +193,7 @@ describe("CheerioArtistImageScraper", () => {
       });
 
       it("should NOT call fetch", () => {
-        expect(fetch).toBeCalledTimes(0);
+        expect(fetch).toHaveBeenCalledTimes(0);
       });
 
       it("should return a promise containing the expected content", async () => {

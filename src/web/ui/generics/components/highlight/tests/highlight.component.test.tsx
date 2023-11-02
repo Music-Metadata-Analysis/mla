@@ -30,7 +30,7 @@ describe("Highlight", () => {
     beforeEach(() => arrange());
 
     it("should call Box with the correct props", () => {
-      expect(Box).toBeCalledTimes(1);
+      expect(Box).toHaveBeenCalledTimes(1);
       checkMockCall(Box, {
         bg: mockColourHook.highlightColour.background,
         color: mockColourHook.highlightColour.foreground,

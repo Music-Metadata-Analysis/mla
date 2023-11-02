@@ -34,7 +34,7 @@ describe("ReportIndicator", () => {
     });
 
     it("should render the Box component with the correct props", () => {
-      expect(Box).toBeCalledTimes(1);
+      expect(Box).toHaveBeenCalledTimes(1);
       checkMockCall(Box, {
         mr: 5,
       });
@@ -53,7 +53,7 @@ describe("ReportIndicator", () => {
     });
 
     it("should NOT render the Box component", () => {
-      expect(Box).toBeCalledTimes(0);
+      expect(Box).toHaveBeenCalledTimes(0);
     });
   });
 });

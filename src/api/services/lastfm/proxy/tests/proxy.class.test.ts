@@ -74,8 +74,12 @@ describe("LastFMProxy", () => {
       it("should return a valid response", async () => {
         const response = await actAlbumMethodCall();
 
-        expect(underlyingClientMock1).toBeCalledTimes(1);
-        expect(underlyingClientMock1).toBeCalledWith(artist, album, username);
+        expect(underlyingClientMock1).toHaveBeenCalledTimes(1);
+        expect(underlyingClientMock1).toHaveBeenCalledWith(
+          artist,
+          album,
+          username
+        );
         expect(response).toStrictEqual(mockInfoResponse);
       });
     });
@@ -106,8 +110,8 @@ describe("LastFMProxy", () => {
       it("should return a valid response", async () => {
         const response = await actArtistMethodCall();
 
-        expect(underlyingClientMock1).toBeCalledTimes(1);
-        expect(underlyingClientMock1).toBeCalledWith(artist);
+        expect(underlyingClientMock1).toHaveBeenCalledTimes(1);
+        expect(underlyingClientMock1).toHaveBeenCalledWith(artist);
         expect(response).toStrictEqual(mockTopAlbumsResponse);
       });
     });
@@ -135,8 +139,12 @@ describe("LastFMProxy", () => {
       it("should return a valid response", async () => {
         const response = await actTrackMethodCall();
 
-        expect(underlyingClientMock1).toBeCalledTimes(1);
-        expect(underlyingClientMock1).toBeCalledWith(artist, track, username);
+        expect(underlyingClientMock1).toHaveBeenCalledTimes(1);
+        expect(underlyingClientMock1).toHaveBeenCalledWith(
+          artist,
+          track,
+          username
+        );
         expect(response).toStrictEqual(mockInfoResponse);
       });
     });
@@ -169,10 +177,10 @@ describe("LastFMProxy", () => {
 
       it("should return a valid response", async () => {
         const response = await actUserMethodCall();
-        expect(underlyingClientMock1).toBeCalledTimes(1);
-        expect(underlyingClientMock1).toBeCalledWith(username);
-        expect(underlyingClientMock2).toBeCalledTimes(1);
-        expect(underlyingClientMock2).toBeCalledWith(username);
+        expect(underlyingClientMock1).toHaveBeenCalledTimes(1);
+        expect(underlyingClientMock1).toHaveBeenCalledWith(username);
+        expect(underlyingClientMock2).toHaveBeenCalledTimes(1);
+        expect(underlyingClientMock2).toHaveBeenCalledWith(username);
         expect(response).toStrictEqual({
           albums: mockTopAlbumsResponse,
           image: mockProfileResponse.image,
@@ -223,10 +231,10 @@ describe("LastFMProxy", () => {
 
       it("should return a valid response", async () => {
         const response = await actUserMethodCall();
-        expect(underlyingClientMock1).toBeCalledTimes(1);
-        expect(underlyingClientMock1).toBeCalledWith(username);
-        expect(underlyingClientMock2).toBeCalledTimes(1);
-        expect(underlyingClientMock2).toBeCalledWith(username);
+        expect(underlyingClientMock1).toHaveBeenCalledTimes(1);
+        expect(underlyingClientMock1).toHaveBeenCalledWith(username);
+        expect(underlyingClientMock2).toHaveBeenCalledTimes(1);
+        expect(underlyingClientMock2).toHaveBeenCalledWith(username);
         expect(response).toStrictEqual({
           artists: mockTopArtistsResponse,
           image: mockProfileResponse.image,
@@ -277,10 +285,10 @@ describe("LastFMProxy", () => {
 
       it("should return a valid response", async () => {
         const response = await actUserMethodCall();
-        expect(underlyingClientMock1).toBeCalledTimes(1);
-        expect(underlyingClientMock1).toBeCalledWith(username);
-        expect(underlyingClientMock2).toBeCalledTimes(1);
-        expect(underlyingClientMock2).toBeCalledWith(username);
+        expect(underlyingClientMock1).toHaveBeenCalledTimes(1);
+        expect(underlyingClientMock1).toHaveBeenCalledWith(username);
+        expect(underlyingClientMock2).toHaveBeenCalledTimes(1);
+        expect(underlyingClientMock2).toHaveBeenCalledWith(username);
         expect(response).toStrictEqual({
           tracks: mockTopTracksResponse,
           image: mockProfileResponse.image,

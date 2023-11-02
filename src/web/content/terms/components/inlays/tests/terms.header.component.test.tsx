@@ -25,7 +25,7 @@ describe("TermsOfServiceHeader", () => {
     beforeEach(() => arrange());
 
     it("should call Container with the correct props", () => {
-      expect(Container).toBeCalledTimes(2);
+      expect(Container).toHaveBeenCalledTimes(2);
       checkMockCall(
         Container,
         {

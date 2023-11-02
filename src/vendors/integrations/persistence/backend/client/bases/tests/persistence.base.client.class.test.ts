@@ -39,8 +39,8 @@ describe(PersistenceVendorBaseClass.name, () => {
         );
 
         it("should call the mockPersistenceClient client with the correct arguments", () => {
-          expect(mockPersistenceClient).toBeCalledTimes(1);
-          expect(mockPersistenceClient).toBeCalledWith(
+          expect(mockPersistenceClient).toHaveBeenCalledTimes(1);
+          expect(mockPersistenceClient).toHaveBeenCalledWith(
             mockKeyName,
             mockStringData,
             {
@@ -67,8 +67,8 @@ describe(PersistenceVendorBaseClass.name, () => {
         });
 
         it("should call the mockPersistenceClient client with the correct arguments", () => {
-          expect(mockPersistenceClient).toBeCalledTimes(1);
-          expect(mockPersistenceClient).toBeCalledWith(
+          expect(mockPersistenceClient).toHaveBeenCalledTimes(1);
+          expect(mockPersistenceClient).toHaveBeenCalledWith(
             mockKeyName,
             mockStringData,
             {
@@ -82,8 +82,8 @@ describe(PersistenceVendorBaseClass.name, () => {
         });
 
         it("should log the error as expected", async () => {
-          expect(consoleErrorSpy).toBeCalledTimes(1);
-          expect(consoleErrorSpy).toBeCalledWith(
+          expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+          expect(consoleErrorSpy).toHaveBeenCalledWith(
             `ERROR: could not save object '${mockKeyName}'.`
           );
         });

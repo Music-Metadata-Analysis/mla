@@ -56,29 +56,29 @@ describe("BaseDocument", () => {
   };
 
   it("should render the Html Component with the correct props", () => {
-    expect(Html).toBeCalledTimes(1);
+    expect(Html).toHaveBeenCalledTimes(1);
     checkMockCall(Html, {});
   });
 
   it("should render the Head with the correct props", () => {
-    expect(Head).toBeCalledTimes(1);
+    expect(Head).toHaveBeenCalledTimes(1);
     checkMockCall(Head, {});
   });
 
   it("should render the ColorModeScript with the correct props", () => {
-    expect(ColorModeScript).toBeCalledTimes(1);
+    expect(ColorModeScript).toHaveBeenCalledTimes(1);
     checkMockCall(ColorModeScript, {
       initialColorMode: uiFrameworkVendor.core.config.initialColourMode,
     });
   });
 
   it("should render the Main component with the correct props", () => {
-    expect(Main).toBeCalledTimes(1);
+    expect(Main).toHaveBeenCalledTimes(1);
     checkMockCall(Main, {});
   });
 
   it("should render the NextScript component with the correct props", () => {
-    expect(NextScript).toBeCalledTimes(1);
+    expect(NextScript).toHaveBeenCalledTimes(1);
     checkMockCall(NextScript, {});
   });
 });

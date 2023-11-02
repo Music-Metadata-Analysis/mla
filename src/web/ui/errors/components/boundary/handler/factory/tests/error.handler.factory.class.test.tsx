@@ -49,7 +49,7 @@ describe("ErrorHandlerFactory", () => {
 
   const checkErrorHandlerContainerRender = () => {
     it("should render the ErrorHandlerContainer component with the expected props", () => {
-      expect(ErrorHandlerContainer).toBeCalledTimes(1);
+      expect(ErrorHandlerContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         ErrorHandlerContainer,
         {

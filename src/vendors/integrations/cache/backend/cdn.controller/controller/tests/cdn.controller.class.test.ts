@@ -38,7 +38,7 @@ describe(CdnController.name, () => {
         });
 
         it("should not query the CDN", () => {
-          expect(mockCdnQuery).toBeCalledTimes(0);
+          expect(mockCdnQuery).toHaveBeenCalledTimes(0);
         });
       });
 
@@ -50,8 +50,8 @@ describe(CdnController.name, () => {
           });
 
           it("should query the CDN one time", () => {
-            expect(mockCdnQuery).toBeCalledTimes(1);
-            expect(mockCdnQuery).toBeCalledWith(mockObjectName);
+            expect(mockCdnQuery).toHaveBeenCalledTimes(1);
+            expect(mockCdnQuery).toHaveBeenCalledWith(mockObjectName);
           });
 
           it("should return the CDN's response", () => {
@@ -67,8 +67,8 @@ describe(CdnController.name, () => {
           });
 
           it("should query the CDN still only one time", () => {
-            expect(mockCdnQuery).toBeCalledTimes(1);
-            expect(mockCdnQuery).toBeCalledWith(mockObjectName);
+            expect(mockCdnQuery).toHaveBeenCalledTimes(1);
+            expect(mockCdnQuery).toHaveBeenCalledWith(mockObjectName);
           });
 
           it("should return the CDN's response", () => {
@@ -86,8 +86,8 @@ describe(CdnController.name, () => {
       beforeEach(() => instance.logCacheHitRate());
 
       it("should call the logCacheHitRate method on the CDN client", () => {
-        expect(mockCdnLogCacheHitRate).toBeCalledTimes(1);
-        expect(mockCdnLogCacheHitRate).toBeCalledWith();
+        expect(mockCdnLogCacheHitRate).toHaveBeenCalledTimes(1);
+        expect(mockCdnLogCacheHitRate).toHaveBeenCalledWith();
       });
     });
   });

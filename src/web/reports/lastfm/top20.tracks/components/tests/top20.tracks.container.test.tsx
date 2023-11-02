@@ -34,7 +34,7 @@ describe("Top20TracksReportContainer", () => {
   };
 
   it("should render the FlipCardReport component correctly", () => {
-    expect(FlipCardReportContainer).toBeCalledTimes(1);
+    expect(FlipCardReportContainer).toHaveBeenCalledTimes(1);
     checkMockCall(
       FlipCardReportContainer,
       {

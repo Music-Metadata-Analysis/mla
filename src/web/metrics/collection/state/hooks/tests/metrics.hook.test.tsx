@@ -71,7 +71,7 @@ describe("useMetrics", () => {
   describe("increment", () => {
     it("should dispatch the reducer correctly", async () => {
       act(() => received.result.current.increment(mockMetric));
-      await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
+      await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
       expect(mockDispatch).toHaveBeenCalledWith({
         type: mockMetric,
       });

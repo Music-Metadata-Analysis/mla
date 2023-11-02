@@ -117,7 +117,7 @@ describe("SunBurstEntityNodeListContainer", () => {
     expectedTitleText: string | null;
   }) => {
     it("should render the SunBurstEntityNodeList with the correct props", () => {
-      expect(SunBurstEntityNodeList).toBeCalledTimes(1);
+      expect(SunBurstEntityNodeList).toHaveBeenCalledTimes(1);
       checkMockCall(
         SunBurstEntityNodeList,
         {
@@ -135,7 +135,7 @@ describe("SunBurstEntityNodeListContainer", () => {
 
   const checkNodeListComponentNotCalledProps = () => {
     it("should NOT render the SunBurstEntityNodeList component", () => {
-      expect(SunBurstEntityNodeList).toBeCalledTimes(0);
+      expect(SunBurstEntityNodeList).toHaveBeenCalledTimes(0);
     });
   };
 

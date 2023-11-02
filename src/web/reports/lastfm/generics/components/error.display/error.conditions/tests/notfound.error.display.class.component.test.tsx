@@ -42,8 +42,8 @@ describe("NotFoundErrorConditionalDisplay", () => {
       });
 
       it("should push the router to the retryRoute", () => {
-        expect(mockRouterHook.push).toBeCalledTimes(1);
-        expect(mockRouterHook.push).toBeCalledWith(mockQuery.retryRoute);
+        expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+        expect(mockRouterHook.push).toHaveBeenCalledWith(mockQuery.retryRoute);
       });
     });
   };

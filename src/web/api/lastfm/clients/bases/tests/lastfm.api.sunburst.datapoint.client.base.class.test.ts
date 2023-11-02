@@ -59,8 +59,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
 
   const checkUrl = () => {
     it("should make the request with the correct url", () => {
-      expect(mockHttpClientRequest).toBeCalledTimes(1);
-      expect(mockHttpClientRequest).toBeCalledWith(
+      expect(mockHttpClientRequest).toHaveBeenCalledTimes(1);
+      expect(mockHttpClientRequest).toHaveBeenCalledWith(
         instance.route?.replace(":username", mockUserParams.userName)
       );
     });
@@ -105,8 +105,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           checkUrl();
 
           it("should attempt to update the report based on the api response", () => {
-            expect(mockState.updateWithResponse).toBeCalledTimes(1);
-            expect(mockState.updateWithResponse).toBeCalledWith(
+            expect(mockState.updateWithResponse).toHaveBeenCalledTimes(1);
+            expect(mockState.updateWithResponse).toHaveBeenCalledWith(
               mockAPIResponse,
               mockUserParams,
               instance.route
@@ -114,7 +114,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "StartFetch",
               userName: mockUserParams.userName,
@@ -138,8 +138,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           checkUrl();
 
           it("should attempt to update the report based on the api response", () => {
-            expect(mockState.updateWithResponse).toBeCalledTimes(1);
-            expect(mockState.updateWithResponse).toBeCalledWith(
+            expect(mockState.updateWithResponse).toHaveBeenCalledTimes(1);
+            expect(mockState.updateWithResponse).toHaveBeenCalledWith(
               mockAPIResponse,
               mockUserParamsWithArtist,
               instance.route
@@ -147,7 +147,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "DataPointStartFetch",
             });
@@ -161,7 +161,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should NOT emit any analytics events", () => {
-            expect(mockEvent).toBeCalledTimes(0);
+            expect(mockEvent).toHaveBeenCalledTimes(0);
           });
         });
       });
@@ -183,8 +183,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           checkUrl();
 
           it("should attempt to update the report based on the api response", () => {
-            expect(mockState.updateWithResponse).toBeCalledTimes(1);
-            expect(mockState.updateWithResponse).toBeCalledWith(
+            expect(mockState.updateWithResponse).toHaveBeenCalledTimes(1);
+            expect(mockState.updateWithResponse).toHaveBeenCalledWith(
               mockAPIResponse,
               mockUserParams,
               instance.route
@@ -192,7 +192,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "StartFetch",
               userName: mockUserParams.userName,
@@ -205,7 +205,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should NOT emit any analytics events", () => {
-            expect(mockEvent).toBeCalledTimes(0);
+            expect(mockEvent).toHaveBeenCalledTimes(0);
           });
         });
 
@@ -217,8 +217,8 @@ describe("LastFMBaseSunBurstDataClient", () => {
           checkUrl();
 
           it("should attempt to update the report based on the api response", () => {
-            expect(mockState.updateWithResponse).toBeCalledTimes(1);
-            expect(mockState.updateWithResponse).toBeCalledWith(
+            expect(mockState.updateWithResponse).toHaveBeenCalledTimes(1);
+            expect(mockState.updateWithResponse).toHaveBeenCalledWith(
               mockAPIResponse,
               mockUserParamsWithArtist,
               instance.route
@@ -226,7 +226,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "DataPointStartFetch",
             });
@@ -237,7 +237,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should NOT emit any analytics events", () => {
-            expect(mockEvent).toBeCalledTimes(0);
+            expect(mockEvent).toHaveBeenCalledTimes(0);
           });
         });
       });
@@ -258,7 +258,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetch",
             userName: mockUserParams.userName,
@@ -272,11 +272,11 @@ describe("LastFMBaseSunBurstDataClient", () => {
         });
 
         it("should NOT remove the entity", () => {
-          expect(mockState.removeEntity).toBeCalledTimes(0);
+          expect(mockState.removeEntity).toHaveBeenCalledTimes(0);
         });
 
         it("should emit an analytics event for the error", () => {
-          expect(mockEvent).toBeCalledTimes(1);
+          expect(mockEvent).toHaveBeenCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
@@ -295,7 +295,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "DataPointStartFetch",
           });
@@ -306,14 +306,14 @@ describe("LastFMBaseSunBurstDataClient", () => {
         });
 
         it("should remove the entity", () => {
-          expect(mockState.removeEntity).toBeCalledTimes(1);
-          expect(mockState.removeEntity).toBeCalledWith(
+          expect(mockState.removeEntity).toHaveBeenCalledTimes(1);
+          expect(mockState.removeEntity).toHaveBeenCalledWith(
             mockUserParamsWithArtist
           );
         });
 
         it("should NOT emit any analytics events", () => {
-          expect(mockEvent).toBeCalledTimes(0);
+          expect(mockEvent).toHaveBeenCalledTimes(0);
         });
       });
     });
@@ -333,7 +333,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetch",
             userName: mockUserParams.userName,
@@ -347,7 +347,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         });
 
         it("should emit an analytics event for an unauthorized request", () => {
-          expect(mockEvent).toBeCalledTimes(1);
+          expect(mockEvent).toHaveBeenCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
@@ -366,7 +366,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "DataPointStartFetch",
           });
@@ -378,7 +378,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         });
 
         it("should emit an analytics event for an unauthorized request", () => {
-          expect(mockEvent).toBeCalledTimes(1);
+          expect(mockEvent).toHaveBeenCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
@@ -405,7 +405,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetch",
             userName: mockUserParams.userName,
@@ -419,11 +419,11 @@ describe("LastFMBaseSunBurstDataClient", () => {
         });
 
         it("should NOT remove the entity", () => {
-          expect(mockState.removeEntity).toBeCalledTimes(0);
+          expect(mockState.removeEntity).toHaveBeenCalledTimes(0);
         });
 
         it("should emit an analytics event for the unknown entity", () => {
-          expect(mockEvent).toBeCalledTimes(1);
+          expect(mockEvent).toHaveBeenCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
@@ -442,7 +442,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "DataPointStartFetch",
           });
@@ -453,14 +453,14 @@ describe("LastFMBaseSunBurstDataClient", () => {
         });
 
         it("should remove the entity", () => {
-          expect(mockState.removeEntity).toBeCalledTimes(1);
-          expect(mockState.removeEntity).toBeCalledWith(
+          expect(mockState.removeEntity).toHaveBeenCalledTimes(1);
+          expect(mockState.removeEntity).toHaveBeenCalledWith(
             mockUserParamsWithArtist
           );
         });
 
         it("should NOT emit any analytics events", () => {
-          expect(mockEvent).toBeCalledTimes(0);
+          expect(mockEvent).toHaveBeenCalledTimes(0);
         });
       });
     });
@@ -479,7 +479,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetch",
             userName: mockUserParams.userName,
@@ -493,7 +493,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         });
 
         it("should emit and analytics event for being ratelimited", () => {
-          expect(mockEvent).toBeCalledTimes(1);
+          expect(mockEvent).toHaveBeenCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
@@ -512,7 +512,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "DataPointStartFetch",
           });
@@ -524,7 +524,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         });
 
         it("should emit and analytics event for being ratelimited", () => {
-          expect(mockEvent).toBeCalledTimes(1);
+          expect(mockEvent).toHaveBeenCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
@@ -542,7 +542,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
       });
 
       const waitForBackOff = async () => {
-        await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+        await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
       };
 
       describe("with a retry header", () => {
@@ -560,7 +560,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           checkUrl();
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "StartFetch",
               userName: mockUserParams.userName,
@@ -572,7 +572,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should NOT emit any analytics events", () => {
-            expect(mockEvent).toBeCalledTimes(0);
+            expect(mockEvent).toHaveBeenCalledTimes(0);
           });
         });
 
@@ -585,7 +585,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           checkUrl();
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "DataPointStartFetch",
             });
@@ -595,7 +595,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should NOT emit any analytics events", () => {
-            expect(mockEvent).toBeCalledTimes(0);
+            expect(mockEvent).toHaveBeenCalledTimes(0);
           });
         });
       });
@@ -615,7 +615,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           checkUrl();
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "StartFetch",
               userName: mockUserParams.userName,
@@ -629,7 +629,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should register an analytics event for the error", () => {
-            expect(mockEvent).toBeCalledTimes(1);
+            expect(mockEvent).toHaveBeenCalledTimes(1);
             expect(mockEvent).toHaveBeenCalledWith(
               new analyticsVendor.collection.EventDefinition({
                 category: "LAST.FM",
@@ -649,7 +649,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           checkUrl();
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "DataPointStartFetch",
             });
@@ -661,7 +661,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
           });
 
           it("should register an analytics event for the error", () => {
-            expect(mockEvent).toBeCalledTimes(1);
+            expect(mockEvent).toHaveBeenCalledTimes(1);
             expect(mockEvent).toHaveBeenCalledWith(
               new analyticsVendor.collection.EventDefinition({
                 category: "LAST.FM",
@@ -689,7 +689,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetch",
             userName: mockUserParams.userName,
@@ -703,11 +703,11 @@ describe("LastFMBaseSunBurstDataClient", () => {
         });
 
         it("should NOT remove the entity", () => {
-          expect(mockState.removeEntity).toBeCalledTimes(0);
+          expect(mockState.removeEntity).toHaveBeenCalledTimes(0);
         });
 
         it("should emit an analytics event for the error", () => {
-          expect(mockEvent).toBeCalledTimes(1);
+          expect(mockEvent).toHaveBeenCalledTimes(1);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
               category: "LAST.FM",
@@ -726,7 +726,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "DataPointStartFetch",
           });
@@ -737,14 +737,14 @@ describe("LastFMBaseSunBurstDataClient", () => {
         });
 
         it("should remove the entity", () => {
-          expect(mockState.removeEntity).toBeCalledTimes(1);
-          expect(mockState.removeEntity).toBeCalledWith(
+          expect(mockState.removeEntity).toHaveBeenCalledTimes(1);
+          expect(mockState.removeEntity).toHaveBeenCalledWith(
             mockUserParamsWithArtist
           );
         });
 
         it("should NOT emit any analytics events", () => {
-          expect(mockEvent).toBeCalledTimes(0);
+          expect(mockEvent).toHaveBeenCalledTimes(0);
         });
       });
     });

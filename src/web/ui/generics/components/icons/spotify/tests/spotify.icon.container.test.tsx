@@ -39,7 +39,7 @@ describe("SpotifyIconContainerProps", () => {
     });
 
     it("should render the SpotifyIcon component with the correct props", () => {
-      expect(SpotifyIcon).toBeCalledTimes(1);
+      expect(SpotifyIcon).toHaveBeenCalledTimes(1);
       checkMockCall(
         SpotifyIcon,
         {
@@ -60,7 +60,7 @@ describe("SpotifyIconContainerProps", () => {
     });
 
     it("should render the SpotifyIcon component with the correct props", () => {
-      expect(SpotifyIcon).toBeCalledTimes(1);
+      expect(SpotifyIcon).toHaveBeenCalledTimes(1);
       checkMockCall(
         SpotifyIcon,
         {

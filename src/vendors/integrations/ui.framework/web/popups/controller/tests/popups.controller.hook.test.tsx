@@ -81,15 +81,15 @@ describe("usePopUpsController", () => {
         beforeEach(() => received.result.current.open(mockPopup));
 
         it("should set the state to open", () => {
-          expect(mockPopUpDispatch).toBeCalledTimes(1);
-          expect(mockPopUpDispatch).toBeCalledWith({
+          expect(mockPopUpDispatch).toHaveBeenCalledTimes(1);
+          expect(mockPopUpDispatch).toHaveBeenCalledWith({
             name: "FeedBack",
             type: "ShowPopUp",
           });
         });
 
         it("should NOT log an error", () => {
-          expect(errorSpy).toBeCalledTimes(0);
+          expect(errorSpy).toHaveBeenCalledTimes(0);
         });
       });
 
@@ -97,12 +97,12 @@ describe("usePopUpsController", () => {
         beforeEach(() => received.result.current.open(mockNonExistentPopup));
 
         it("should NOT change the state", () => {
-          expect(mockPopUpDispatch).toBeCalledTimes(0);
+          expect(mockPopUpDispatch).toHaveBeenCalledTimes(0);
         });
 
         it("should log an error", () => {
-          expect(errorSpy).toBeCalledTimes(1);
-          expect(errorSpy).toBeCalledWith(
+          expect(errorSpy).toHaveBeenCalledTimes(1);
+          expect(errorSpy).toHaveBeenCalledWith(
             `ERROR: Reference to non-existent PopUp: '${mockNonExistentPopup}'`
           );
         });
@@ -120,7 +120,7 @@ describe("usePopUpsController", () => {
         });
 
         it("should NOT log an error", () => {
-          expect(errorSpy).toBeCalledTimes(0);
+          expect(errorSpy).toHaveBeenCalledTimes(0);
         });
       });
 
@@ -136,8 +136,8 @@ describe("usePopUpsController", () => {
         });
 
         it("should log an error", () => {
-          expect(errorSpy).toBeCalledTimes(1);
-          expect(errorSpy).toBeCalledWith(
+          expect(errorSpy).toHaveBeenCalledTimes(1);
+          expect(errorSpy).toHaveBeenCalledWith(
             `ERROR: Reference to non-existent PopUp: '${mockNonExistentPopup}'`
           );
         });

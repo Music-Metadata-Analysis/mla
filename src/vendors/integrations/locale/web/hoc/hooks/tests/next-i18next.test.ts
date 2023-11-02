@@ -27,8 +27,8 @@ describe("useNextI18NextVendor", () => {
 
   const checkHookRender = () => {
     it("should render the vendor's useTranslation hook during render", () => {
-      expect(useTranslation).toBeCalledTimes(1);
-      expect(useTranslation).toBeCalledWith(mockNS);
+      expect(useTranslation).toHaveBeenCalledTimes(1);
+      expect(useTranslation).toHaveBeenCalledWith(mockNS);
     });
   };
 
@@ -70,8 +70,8 @@ describe("useNextI18NextVendor", () => {
         );
 
         it("should call the underlying vendor hook with the correct namespace", () => {
-          expect(mockT).toBeCalledTimes(1);
-          expect(mockT).toBeCalledWith(mockTranslationInput);
+          expect(mockT).toHaveBeenCalledTimes(1);
+          expect(mockT).toHaveBeenCalledWith(mockTranslationInput);
         });
 
         it("should return the expected translation value", () => {

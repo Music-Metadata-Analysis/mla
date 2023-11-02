@@ -51,8 +51,8 @@ describe("ReportSelectContainer", () => {
 
   const checkWindowThresholdHookRender = () => {
     it("should render the useWindowThreshold hook with the correct props", () => {
-      expect(useWindowThreshold).toBeCalledTimes(1);
-      expect(useWindowThreshold).toBeCalledWith({
+      expect(useWindowThreshold).toHaveBeenCalledTimes(1);
+      expect(useWindowThreshold).toHaveBeenCalledWith({
         axis: "innerWidth",
         lowState: false,
         threshold: config.select.indicatorWidth,
@@ -75,7 +75,7 @@ describe("ReportSelectContainer", () => {
       checkWindowThresholdHookRender();
 
       it("should render the ReportSelect component with props that include only the enabled reports", () => {
-        expect(ReportSelect).toBeCalledTimes(1);
+        expect(ReportSelect).toHaveBeenCalledTimes(1);
 
         jest.mocked(ReportSelect).mock.calls.forEach((call) => {
           expect(call[0].scrollRef).toBe(mockScrollRef);
@@ -121,8 +121,10 @@ describe("ReportSelectContainer", () => {
 
             renderedProps.clickHandler();
 
-            expect(mockUseRouter.push).toBeCalledTimes(1);
-            expect(mockUseRouter.push).toBeCalledWith(matchingReport?.route);
+            expect(mockUseRouter.push).toHaveBeenCalledTimes(1);
+            expect(mockUseRouter.push).toHaveBeenCalledWith(
+              matchingReport?.route
+            );
           });
         });
       });

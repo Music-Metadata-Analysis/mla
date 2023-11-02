@@ -38,7 +38,7 @@ describe("NextAuthProvider", () => {
     });
 
     it("should initialize the vendor's provider with the correct arguments", () => {
-      expect(SessionProvider).toBeCalledTimes(1);
+      expect(SessionProvider).toHaveBeenCalledTimes(1);
       checkMockCalls(
         SessionProvider,
         {

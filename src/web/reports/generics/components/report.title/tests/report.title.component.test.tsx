@@ -29,7 +29,7 @@ describe("ReportTitle", () => {
   };
 
   it("should call Box with the correct props", () => {
-    expect(Box).toBeCalledTimes(1);
+    expect(Box).toHaveBeenCalledTimes(1);
     checkMockCall(Box, {
       bg: mockColourHook.componentColour.background,
       color: mockColourHook.componentColour.foreground,
@@ -43,7 +43,7 @@ describe("ReportTitle", () => {
   });
 
   it("should call Container with the correct props", () => {
-    expect(Container).toBeCalledTimes(1);
+    expect(Container).toHaveBeenCalledTimes(1);
     checkMockCall(Container, {
       centerContent: true,
       maxW: `${4 * testProps.size + 20}px`,
@@ -56,7 +56,7 @@ describe("ReportTitle", () => {
   });
 
   it("should call Text with the correct props", () => {
-    expect(Text).toBeCalledTimes(2);
+    expect(Text).toHaveBeenCalledTimes(2);
     checkMockCall(
       Text,
       {

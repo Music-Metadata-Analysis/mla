@@ -42,13 +42,15 @@ describe("createColourModeManager", () => {
       });
 
       it("should synchronize the locale storage value", () => {
-        expect(localStorageManager.set).toBeCalledTimes(1);
-        expect(localStorageManager.set).toBeCalledWith(mockChangeMode);
+        expect(localStorageManager.set).toHaveBeenCalledTimes(1);
+        expect(localStorageManager.set).toHaveBeenCalledWith(mockChangeMode);
       });
 
       it("should synchronize the cookie storage value", () => {
-        expect(mockCookieStorageManager.set).toBeCalledTimes(1);
-        expect(mockCookieStorageManager.set).toBeCalledWith(mockChangeMode);
+        expect(mockCookieStorageManager.set).toHaveBeenCalledTimes(1);
+        expect(mockCookieStorageManager.set).toHaveBeenCalledWith(
+          mockChangeMode
+        );
       });
     });
   };
@@ -64,10 +66,10 @@ describe("createColourModeManager", () => {
     checkInstance();
 
     it("should call the local storage setter to synchronize values", () => {
-      expect(localStorageManager.get).toBeCalledTimes(1);
-      expect(localStorageManager.get).toBeCalledWith(mockInitialMode);
-      expect(localStorageManager.set).toBeCalledTimes(1);
-      expect(localStorageManager.set).toBeCalledWith(
+      expect(localStorageManager.get).toHaveBeenCalledTimes(1);
+      expect(localStorageManager.get).toHaveBeenCalledWith(mockInitialMode);
+      expect(localStorageManager.set).toHaveBeenCalledTimes(1);
+      expect(localStorageManager.set).toHaveBeenCalledWith(
         jest.mocked(localStorageManager.get).mock.results[0].value
       );
     });
@@ -89,8 +91,8 @@ describe("createColourModeManager", () => {
     checkInstance();
 
     it("should NOT call the local storage setter to synchronize values", () => {
-      expect(localStorageManager.get).toBeCalledTimes(0);
-      expect(localStorageManager.set).toBeCalledTimes(0);
+      expect(localStorageManager.get).toHaveBeenCalledTimes(0);
+      expect(localStorageManager.set).toHaveBeenCalledTimes(0);
     });
 
     it("should return the locale storage manager", () => {

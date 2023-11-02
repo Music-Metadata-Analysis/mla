@@ -85,7 +85,7 @@
       "",
       "\tconst commonPropsTest = () => {",
       "\t\tdescribe(\"should call the Container component correctly\" ,() => {",
-      "\t\t\texpect(Container).toBeCalledTimes(1)",
+      "\t\t\texpect(Container).toHaveBeenCalledTimes(1)",
       "\t\t\tcheckMockCall(Container, {}, 0, [])",
       "\t\t})",
       "\t}",
@@ -149,7 +149,7 @@
     "body": [
       "const check${1:COMPONENT}Component = () => {",
       "\t\tit(\"should call the ${1:COMPONENT} component correctly\", () => {",
-      "\t\t\texpect(${1:COMPONENT}).toBeCalledTimes(1);",
+      "\t\t\texpect(${1:COMPONENT}).toHaveBeenCalledTimes(1);",
       "\t\t\tcheckMockCall($1, {}, 0, []);",
       "\t\t});",
       "\t};"

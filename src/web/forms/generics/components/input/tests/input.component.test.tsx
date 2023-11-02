@@ -29,7 +29,7 @@ describe("StyledInput", () => {
     });
 
     it("should call the underlying Input component with the correct props", () => {
-      expect(Input).toBeCalledTimes(1);
+      expect(Input).toHaveBeenCalledTimes(1);
       checkMockCall(Input, {
         bg: mockColourHook.inputColour.background,
         borderColor: mockColourHook.inputColour.border,

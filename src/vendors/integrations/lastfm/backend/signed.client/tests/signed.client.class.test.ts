@@ -106,12 +106,12 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should NOT log an error", () => {
-                expect(errorSpy).toBeCalledTimes(0);
+                expect(errorSpy).toHaveBeenCalledTimes(0);
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should return the expected response", async () => {
@@ -132,12 +132,12 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should NOT log an error", () => {
-                expect(errorSpy).toBeCalledTimes(0);
+                expect(errorSpy).toHaveBeenCalledTimes(0);
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should return the expected response", async () => {
@@ -162,12 +162,12 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should NOT log an error", () => {
-                expect(errorSpy).toBeCalledTimes(0);
+                expect(errorSpy).toHaveBeenCalledTimes(0);
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should return the expected response", async () => {
@@ -188,12 +188,12 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should NOT log an error", () => {
-                expect(errorSpy).toBeCalledTimes(0);
+                expect(errorSpy).toHaveBeenCalledTimes(0);
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should return the expected response", async () => {
@@ -245,12 +245,12 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should NOT log an error", () => {
-                expect(errorSpy).toBeCalledTimes(0);
+                expect(errorSpy).toHaveBeenCalledTimes(0);
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should throw the expected error", async () => {
@@ -275,12 +275,12 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should NOT log an error", () => {
-                expect(errorSpy).toBeCalledTimes(0);
+                expect(errorSpy).toHaveBeenCalledTimes(0);
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should throw the expected error", async () => {
@@ -309,12 +309,12 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should NOT log an error", () => {
-                expect(errorSpy).toBeCalledTimes(0);
+                expect(errorSpy).toHaveBeenCalledTimes(0);
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should throw the expected error", async () => {
@@ -339,12 +339,12 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should NOT log an error", () => {
-                expect(errorSpy).toBeCalledTimes(0);
+                expect(errorSpy).toHaveBeenCalledTimes(0);
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should throw the expected error", async () => {
@@ -396,13 +396,13 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should log an error", () => {
-                expect(errorSpy).toBeCalledTimes(1);
-                expect(errorSpy).toBeCalledWith(getNetworkError());
+                expect(errorSpy).toHaveBeenCalledTimes(1);
+                expect(errorSpy).toHaveBeenCalledWith(getNetworkError());
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should throw the expected error", async () => {
@@ -427,13 +427,13 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should log an error", () => {
-                expect(errorSpy).toBeCalledTimes(1);
-                expect(errorSpy).toBeCalledWith(getNetworkError());
+                expect(errorSpy).toHaveBeenCalledTimes(1);
+                expect(errorSpy).toHaveBeenCalledWith(getNetworkError());
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should throw the expected error", async () => {
@@ -462,13 +462,13 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should log an error", () => {
-                expect(errorSpy).toBeCalledTimes(1);
-                expect(errorSpy).toBeCalledWith(getNetworkError());
+                expect(errorSpy).toHaveBeenCalledTimes(1);
+                expect(errorSpy).toHaveBeenCalledWith(getNetworkError());
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should throw the expected error", async () => {
@@ -493,13 +493,13 @@ describe(LastFMSignedClient.name, () => {
               });
 
               it("should log an error", () => {
-                expect(errorSpy).toBeCalledTimes(1);
-                expect(errorSpy).toBeCalledWith(getNetworkError());
+                expect(errorSpy).toHaveBeenCalledTimes(1);
+                expect(errorSpy).toHaveBeenCalledWith(getNetworkError());
               });
 
               it("should call fetch with the expected params", () => {
-                expect(fetchSpy).toBeCalledTimes(1);
-                expect(fetchSpy).toBeCalledWith(expectedUrl());
+                expect(fetchSpy).toHaveBeenCalledTimes(1);
+                expect(fetchSpy).toHaveBeenCalledWith(expectedUrl());
               });
 
               it("should throw the expected error", async () => {

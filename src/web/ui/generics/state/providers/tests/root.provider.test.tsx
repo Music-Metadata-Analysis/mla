@@ -92,15 +92,15 @@ describe("RootProvider", () => {
     beforeEach(() => arrange(mockFlagState));
 
     it("should call the HeaderContainer component correctly", async () => {
-      await waitFor(() => expect(HeaderContainer).toBeCalledTimes(1));
+      await waitFor(() => expect(HeaderContainer).toHaveBeenCalledTimes(1));
       await waitFor(() =>
-        expect(HeaderContainer).toBeCalledWith({ pageKey: "default" }, {})
+        expect(HeaderContainer).toHaveBeenCalledWith({ pageKey: "default" }, {})
       );
       expect(await screen.findByTestId(providers.HeaderContainer)).toBeTruthy;
     });
 
     it("should call the FlagVendorProvider component correctly", async () => {
-      await waitFor(() => expect(flagVendor.Provider).toBeCalledTimes(1));
+      await waitFor(() => expect(flagVendor.Provider).toHaveBeenCalledTimes(1));
       await waitFor(() =>
         checkMockCall(flagVendor.Provider, {
           state: mockFlagState,
@@ -115,22 +115,25 @@ describe("RootProvider", () => {
     beforeEach(() => arrange(mockFlagState, mockPageKey));
 
     it("should call the HeaderContainer component correctly", async () => {
-      await waitFor(() => expect(HeaderContainer).toBeCalledTimes(1));
+      await waitFor(() => expect(HeaderContainer).toHaveBeenCalledTimes(1));
       await waitFor(() =>
-        expect(HeaderContainer).toBeCalledWith({ pageKey: mockPageKey }, {})
+        expect(HeaderContainer).toHaveBeenCalledWith(
+          { pageKey: mockPageKey },
+          {}
+        )
       );
       expect(await screen.findByTestId(providers.HeaderContainer)).toBeTruthy;
     });
 
     it("should initialize the AuthVendorProvider", async () => {
-      await waitFor(() => expect(mockAuthProvider).toBeCalledTimes(1));
+      await waitFor(() => expect(mockAuthProvider).toHaveBeenCalledTimes(1));
       checkMockCall(mockAuthProvider, { session: mockSession });
       expect(await screen.findByTestId(providers.AuthVendorProvider))
         .toBeTruthy;
     });
 
     it("should initialize the FlagVendorProvider", async () => {
-      await waitFor(() => expect(flagVendor.Provider).toBeCalledTimes(1));
+      await waitFor(() => expect(flagVendor.Provider).toHaveBeenCalledTimes(1));
       await waitFor(() =>
         checkMockCall(flagVendor.Provider, {
           state: mockFlagState,
@@ -142,30 +145,32 @@ describe("RootProvider", () => {
 
     it("should initialize the Analytics collection Provider", async () => {
       await waitFor(() =>
-        expect(analyticsVendor.collection.Provider).toBeCalledTimes(1)
+        expect(analyticsVendor.collection.Provider).toHaveBeenCalledTimes(1)
       );
       expect(await screen.findByTestId(providers.AnalyticsProvider)).toBeTruthy;
     });
 
     it("should initialize the ControllersRootProvider Provider", async () => {
-      await waitFor(() => expect(ControllersRootProvider).toBeCalledTimes(1));
+      await waitFor(() =>
+        expect(ControllersRootProvider).toHaveBeenCalledTimes(1)
+      );
       expect(await screen.findByTestId(providers.ControllersRootProvider))
         .toBeTruthy;
     });
 
     it("should initialize the MetricsProvider", async () => {
-      await waitFor(() => expect(MetricsProvider).toBeCalledTimes(1));
+      await waitFor(() => expect(MetricsProvider).toHaveBeenCalledTimes(1));
       expect(await screen.findByTestId(providers.MetricsProvider)).toBeTruthy;
     });
 
     it("should initialize the ReportProvider", async () => {
-      await waitFor(() => expect(ReportProvider).toBeCalledTimes(1));
+      await waitFor(() => expect(ReportProvider).toHaveBeenCalledTimes(1));
       expect(await screen.findByTestId(providers.ReportProvider)).toBeTruthy;
     });
 
     it("should initialize the UserInterfacePopUpsProvider", async () => {
       await waitFor(() =>
-        expect(uiFrameworkVendor.popups.Provider).toBeCalledTimes(1)
+        expect(uiFrameworkVendor.popups.Provider).toHaveBeenCalledTimes(1)
       );
       checkMockCall(uiFrameworkVendor.popups.Provider, { popUps: popUps });
       expect(await screen.findByTestId(providers.UserInterfacePopUpsProvider))
@@ -174,7 +179,7 @@ describe("RootProvider", () => {
 
     it("should initialize the UserInterfaceVendorProvider", async () => {
       await waitFor(() =>
-        expect(uiFrameworkVendor.core.Provider).toBeCalledTimes(1)
+        expect(uiFrameworkVendor.core.Provider).toHaveBeenCalledTimes(1)
       );
       checkMockCall(uiFrameworkVendor.core.Provider, { cookies: mockCookies });
       expect(await screen.findByTestId(providers.UserInterfaceVendorProvider))

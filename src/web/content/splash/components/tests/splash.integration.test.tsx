@@ -63,7 +63,7 @@ describe("Splash", () => {
 
     describe("clicking on the start button", () => {
       beforeEach(async () => {
-        expect(mockRouterHook.push).toBeCalledTimes(0);
+        expect(mockRouterHook.push).toHaveBeenCalledTimes(0);
         const footer = await screen.findByTestId(
           testIDs.DialogueFooterComponent
         );
@@ -74,8 +74,10 @@ describe("Splash", () => {
       });
 
       it("should redirect to the search page", async () => {
-        await waitFor(() => expect(mockRouterHook.push).toBeCalledTimes(1));
-        expect(mockRouterHook.push).toBeCalledWith(
+        await waitFor(() =>
+          expect(mockRouterHook.push).toHaveBeenCalledTimes(1)
+        );
+        expect(mockRouterHook.push).toHaveBeenCalledWith(
           routes.search.lastfm.selection
         );
       });

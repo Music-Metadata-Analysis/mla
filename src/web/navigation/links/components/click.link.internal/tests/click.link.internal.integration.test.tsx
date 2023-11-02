@@ -38,7 +38,7 @@ describe("ClickInternalLink", () => {
     it("should call the link click tracker", () => {
       expect(
         mockAnalyticsCollectionHook.trackInternalLinkClick
-      ).toBeCalledTimes(1);
+      ).toHaveBeenCalledTimes(1);
       const call =
         mockAnalyticsCollectionHook.trackInternalLinkClick.mock.calls[0];
       expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
@@ -47,8 +47,8 @@ describe("ClickInternalLink", () => {
     });
 
     it("should navigate to the selected page", () => {
-      expect(mockRouterHook.push).toBeCalledTimes(1);
-      expect(mockRouterHook.push).toBeCalledWith(mockPath);
+      expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+      expect(mockRouterHook.push).toHaveBeenCalledWith(mockPath);
     });
   });
 });

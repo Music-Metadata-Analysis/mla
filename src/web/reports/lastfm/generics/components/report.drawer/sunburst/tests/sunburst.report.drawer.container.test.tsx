@@ -76,7 +76,7 @@ describe("LastFMSunBurstDrawerContainer", () => {
 
   const checkLastFMSunBurstDrawer = () => {
     it("should call the LastFMSunBurstDrawer component with the correct props", () => {
-      expect(LastFMSunBurstDrawer).toBeCalledTimes(1);
+      expect(LastFMSunBurstDrawer).toHaveBeenCalledTimes(1);
       checkMockCall(
         LastFMSunBurstDrawer,
         {
@@ -110,8 +110,8 @@ describe("LastFMSunBurstDrawerContainer", () => {
       });
 
       it("should attempt to select the d3Node of the passed EncapsulatedNode", () => {
-        expect(currentProps.setSelectedNode).toBeCalledTimes(1);
-        expect(currentProps.setSelectedNode).toBeCalledWith(mockD3Node);
+        expect(currentProps.setSelectedNode).toHaveBeenCalledTimes(1);
+        expect(currentProps.setSelectedNode).toHaveBeenCalledWith(mockD3Node);
       });
     });
   };
@@ -125,8 +125,8 @@ describe("LastFMSunBurstDrawerContainer", () => {
       });
 
       it("should attempt to select the d3Node of the parent of the EncapsulatedNode", () => {
-        expect(currentProps.setSelectedNode).toBeCalledTimes(1);
-        expect(currentProps.setSelectedNode).toBeCalledWith(
+        expect(currentProps.setSelectedNode).toHaveBeenCalledTimes(1);
+        expect(currentProps.setSelectedNode).toHaveBeenCalledWith(
           mockReportState.parent
         );
       });

@@ -108,7 +108,9 @@ describe("NavBar", () => {
       });
 
       it(`should produce an analytics event`, async () => {
-        expect(mockAnalyticsCollectionHook.trackButtonClick).toBeCalledTimes(1);
+        expect(
+          mockAnalyticsCollectionHook.trackButtonClick
+        ).toHaveBeenCalledTimes(1);
         const call = mockAnalyticsCollectionHook.trackButtonClick.mock.calls[0];
         expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
         expect(call[1]).toBe(_t(link));
@@ -117,13 +119,13 @@ describe("NavBar", () => {
 
       if (destination === "/") {
         it(`should route to ${destination}`, async () => {
-          expect(mockRouterHook.push).toBeCalledTimes(1);
-          expect(mockRouterHook.push).toBeCalledWith(destination);
+          expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+          expect(mockRouterHook.push).toHaveBeenCalledWith(destination);
         });
       } else {
         it(`should route to ${destination}`, async () => {
-          expect(mockRouterHook.push).toBeCalledTimes(1);
-          expect(mockRouterHook.push).toBeCalledWith(destination);
+          expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+          expect(mockRouterHook.push).toHaveBeenCalledWith(destination);
         });
       }
 

@@ -88,14 +88,14 @@ describe("StdOutLogger", () => {
     expected_log_message += currentProps.referer + " ";
     expected_log_message += currentProps.userAgent + " ";
     expected_log_message += `(${proxyResponseMsg})`;
-    expect(console.log).toBeCalledTimes(1);
-    expect(console.log).toBeCalledWith(expected_log_message);
+    expect(console.log).toHaveBeenCalledTimes(1);
+    expect(console.log).toHaveBeenCalledWith(expected_log_message);
   };
 
   const checkNextCalled = () => {
     it("should call the 'next' function", () => {
-      expect(currentProps.next).toBeCalledTimes(1);
-      expect(currentProps.next).toBeCalledWith();
+      expect(currentProps.next).toHaveBeenCalledTimes(1);
+      expect(currentProps.next).toHaveBeenCalledWith();
     });
   };
 

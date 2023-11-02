@@ -55,7 +55,7 @@ describe("LastFMErrorDisplayContainer", () => {
     calls: number
   ) => {
     it("should call the error conditions correctly", () => {
-      expect(mockedComponent).toBeCalledTimes(calls);
+      expect(mockedComponent).toHaveBeenCalledTimes(calls);
 
       (mockedComponent as jest.Mock).mock.calls.forEach((call) => {
         expect(call[0]).toStrictEqual({
@@ -77,11 +77,11 @@ describe("LastFMErrorDisplayContainer", () => {
     checkMockedErrorCondition(ErrorBase, 1);
 
     it("should render the MockError component", () => {
-      expect(MockError).toBeCalledTimes(1);
+      expect(MockError).toHaveBeenCalledTimes(1);
     });
 
     it("should NOT render the MockChild component", () => {
-      expect(MockChild).toBeCalledTimes(0);
+      expect(MockChild).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -95,11 +95,11 @@ describe("LastFMErrorDisplayContainer", () => {
     checkMockedErrorCondition(ErrorBase, 5);
 
     it("should NOT render the MockError component", () => {
-      expect(MockError).toBeCalledTimes(0);
+      expect(MockError).toHaveBeenCalledTimes(0);
     });
 
     it("should render the MockChild component", () => {
-      expect(MockChild).toBeCalledTimes(1);
+      expect(MockChild).toHaveBeenCalledTimes(1);
     });
   });
 });

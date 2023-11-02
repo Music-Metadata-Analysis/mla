@@ -53,8 +53,8 @@ describe("LastFMUserClientAdapter", () => {
 
       it("should call the external library correctly", async () => {
         res = await instance.getTopAlbums(username);
-        expect(mockVendorMethods.user.getTopAlbums).toBeCalledTimes(1);
-        expect(mockVendorMethods.user.getTopAlbums).toBeCalledWith({
+        expect(mockVendorMethods.user.getTopAlbums).toHaveBeenCalledTimes(1);
+        expect(mockVendorMethods.user.getTopAlbums).toHaveBeenCalledWith({
           user: username,
           period: instance.reportPeriod,
           limit: instance.reportCount,
@@ -140,15 +140,15 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(mockCacheController.query).toBeCalledTimes(1);
-          expect(mockCacheController.query).toBeCalledWith(
+          expect(mockCacheController.query).toHaveBeenCalledTimes(1);
+          expect(mockCacheController.query).toHaveBeenCalledWith(
             mockTopArtistsResponseComplete.topartists.artist[0].name
           );
         });
 
         it("should call the external library correctly", () => {
-          expect(mockVendorMethods.user.getTopArtists).toBeCalledTimes(1);
-          expect(mockVendorMethods.user.getTopArtists).toBeCalledWith({
+          expect(mockVendorMethods.user.getTopArtists).toHaveBeenCalledTimes(1);
+          expect(mockVendorMethods.user.getTopArtists).toHaveBeenCalledWith({
             user: username,
             period: instance.reportPeriod,
             limit: instance.reportCount,
@@ -162,8 +162,8 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should log the cache hit rate", () => {
-          expect(mockCacheController.logCacheHitRate).toBeCalledTimes(1);
-          expect(mockCacheController.logCacheHitRate).toBeCalledWith();
+          expect(mockCacheController.logCacheHitRate).toHaveBeenCalledTimes(1);
+          expect(mockCacheController.logCacheHitRate).toHaveBeenCalledWith();
         });
       });
 
@@ -179,15 +179,15 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(mockCacheController.query).toBeCalledTimes(1);
-          expect(mockCacheController.query).toBeCalledWith(
+          expect(mockCacheController.query).toHaveBeenCalledTimes(1);
+          expect(mockCacheController.query).toHaveBeenCalledWith(
             mockTopArtistsResponseComplete.topartists.artist[0].name
           );
         });
 
         it("should call the external library correctly", () => {
-          expect(mockVendorMethods.user.getTopArtists).toBeCalledTimes(1);
-          expect(mockVendorMethods.user.getTopArtists).toBeCalledWith({
+          expect(mockVendorMethods.user.getTopArtists).toHaveBeenCalledTimes(1);
+          expect(mockVendorMethods.user.getTopArtists).toHaveBeenCalledWith({
             user: username,
             period: instance.reportPeriod,
             limit: instance.reportCount,
@@ -200,8 +200,8 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should log the cache hit rate", () => {
-          expect(mockCacheController.logCacheHitRate).toBeCalledTimes(1);
-          expect(mockCacheController.logCacheHitRate).toBeCalledWith();
+          expect(mockCacheController.logCacheHitRate).toHaveBeenCalledTimes(1);
+          expect(mockCacheController.logCacheHitRate).toHaveBeenCalledWith();
         });
       });
     });
@@ -271,8 +271,8 @@ describe("LastFMUserClientAdapter", () => {
       });
 
       it("should call the external library correctly", () => {
-        expect(mockVendorMethods.user.getInfo).toBeCalledTimes(1);
-        expect(mockVendorMethods.user.getInfo).toBeCalledWith({
+        expect(mockVendorMethods.user.getInfo).toHaveBeenCalledTimes(1);
+        expect(mockVendorMethods.user.getInfo).toHaveBeenCalledWith({
           user: username,
         });
         expect(res).toStrictEqual({
@@ -364,15 +364,15 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(mockCacheController.query).toBeCalledTimes(1);
-          expect(mockCacheController.query).toBeCalledWith(
+          expect(mockCacheController.query).toHaveBeenCalledTimes(1);
+          expect(mockCacheController.query).toHaveBeenCalledWith(
             mockTopTracksResponseComplete.toptracks.track[0].artist.name
           );
         });
 
         it("should call the external library correctly", () => {
-          expect(mockVendorMethods.user.getTopTracks).toBeCalledTimes(1);
-          expect(mockVendorMethods.user.getTopTracks).toBeCalledWith({
+          expect(mockVendorMethods.user.getTopTracks).toHaveBeenCalledTimes(1);
+          expect(mockVendorMethods.user.getTopTracks).toHaveBeenCalledWith({
             user: username,
             period: instance.reportPeriod,
             limit: instance.reportCount,
@@ -386,8 +386,8 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should log the cache hit rate", () => {
-          expect(mockCacheController.logCacheHitRate).toBeCalledTimes(1);
-          expect(mockCacheController.logCacheHitRate).toBeCalledWith();
+          expect(mockCacheController.logCacheHitRate).toHaveBeenCalledTimes(1);
+          expect(mockCacheController.logCacheHitRate).toHaveBeenCalledWith();
         });
       });
 
@@ -403,13 +403,13 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should perform a cache lookup with the correct params", () => {
-          expect(mockCacheController.query).toBeCalledTimes(1);
-          expect(mockCacheController.query).toBeCalledWith(undefined);
+          expect(mockCacheController.query).toHaveBeenCalledTimes(1);
+          expect(mockCacheController.query).toHaveBeenCalledWith(undefined);
         });
 
         it("should call the external library correctly", () => {
-          expect(mockVendorMethods.user.getTopTracks).toBeCalledTimes(1);
-          expect(mockVendorMethods.user.getTopTracks).toBeCalledWith({
+          expect(mockVendorMethods.user.getTopTracks).toHaveBeenCalledTimes(1);
+          expect(mockVendorMethods.user.getTopTracks).toHaveBeenCalledWith({
             user: username,
             period: instance.reportPeriod,
             limit: instance.reportCount,
@@ -422,8 +422,8 @@ describe("LastFMUserClientAdapter", () => {
         });
 
         it("should log the cache hit rate", () => {
-          expect(mockCacheController.logCacheHitRate).toBeCalledTimes(1);
-          expect(mockCacheController.logCacheHitRate).toBeCalledWith();
+          expect(mockCacheController.logCacheHitRate).toHaveBeenCalledTimes(1);
+          expect(mockCacheController.logCacheHitRate).toHaveBeenCalledWith();
         });
       });
     });

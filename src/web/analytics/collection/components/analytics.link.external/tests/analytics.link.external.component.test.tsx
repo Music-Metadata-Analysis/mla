@@ -32,11 +32,11 @@ describe("AnalyticsExternalLinkWrapper", () => {
     });
 
     it("should call the button click handler", () => {
-      expect(mockClick).toBeCalledTimes(1);
+      expect(mockClick).toHaveBeenCalledTimes(1);
     });
 
     it("should call the button tracker", () => {
-      expect(mockAnalyticsClick).toBeCalledTimes(1);
+      expect(mockAnalyticsClick).toHaveBeenCalledTimes(1);
     });
   });
 });

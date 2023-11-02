@@ -77,20 +77,20 @@ describe("FeedbackPopUpContainer", () => {
 
   const checkPopUpTogglesOpen = () => {
     it("should toggle the PopUp to open", () => {
-      expect(mockPopUpsControllerHook.open).toBeCalledTimes(1);
-      expect(mockPopUpsControllerHook.open).toBeCalledWith(mockPopUpName);
+      expect(mockPopUpsControllerHook.open).toHaveBeenCalledTimes(1);
+      expect(mockPopUpsControllerHook.open).toHaveBeenCalledWith(mockPopUpName);
     });
   };
 
   const checkPopUpDoesNotToggleOpen = () => {
     it("should NOT toggle the PopUp to open", () => {
-      expect(mockPopUpsControllerHook.open).toBeCalledTimes(0);
+      expect(mockPopUpsControllerHook.open).toHaveBeenCalledTimes(0);
     });
   };
 
   const checkPopUpGeneratorRender = () => {
     it("should generate the PopUp with the expected props", () => {
-      expect(usePopUpsGenerator).toBeCalledTimes(1);
+      expect(usePopUpsGenerator).toHaveBeenCalledTimes(1);
       const call = jest.mocked(usePopUpsGenerator).mock.calls[0][0];
       expect(call.component).toBe(FeedbackPopUp);
       expect(call.message).toBe(_t(translations.popups[mockPopUpName]));

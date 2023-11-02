@@ -36,7 +36,7 @@ describe("AnalyticsExternalLinkWrapper", () => {
     it("should call the button tracker", () => {
       expect(
         mockAnalyticsCollectionHook.trackExternalLinkClick
-      ).toBeCalledTimes(1);
+      ).toHaveBeenCalledTimes(1);
       const call =
         mockAnalyticsCollectionHook.trackExternalLinkClick.mock.calls[0];
       expect(call[0].constructor.name).toBe("SyntheticBaseEvent");

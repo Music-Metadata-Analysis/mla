@@ -57,7 +57,7 @@ describe("NavBarSessionControlContainer", () => {
     });
 
     it("should render the RiLogoutBoxRLine icon.", () => {
-      expect(RiLogoutBoxRLine).toBeCalledTimes(1);
+      expect(RiLogoutBoxRLine).toHaveBeenCalledTimes(1);
       checkMockCall(RiLogoutBoxRLine, { size: 20, "data-testid": "signOut" });
     });
 
@@ -69,14 +69,14 @@ describe("NavBarSessionControlContainer", () => {
 
       it("should close the mobile menu", async () => {
         await waitFor(async () =>
-          expect(mockCloseMobileMenu).toBeCalledTimes(1)
+          expect(mockCloseMobileMenu).toHaveBeenCalledTimes(1)
         );
-        expect(mockCloseMobileMenu).toBeCalledWith();
+        expect(mockCloseMobileMenu).toHaveBeenCalledWith();
       });
 
       it("should call signOut once", async () => {
-        expect(mockAuthHook.signOut).toBeCalledTimes(1);
-        expect(mockAuthHook.signOut).toBeCalledWith();
+        expect(mockAuthHook.signOut).toHaveBeenCalledTimes(1);
+        expect(mockAuthHook.signOut).toHaveBeenCalledWith();
       });
     });
   });
@@ -89,7 +89,7 @@ describe("NavBarSessionControlContainer", () => {
     });
 
     it("should render the LockIcon", () => {
-      expect(LockIcon).toBeCalledTimes(1);
+      expect(LockIcon).toHaveBeenCalledTimes(1);
       checkMockCall(LockIcon, { w: 5, h: 5, "data-testid": "signIn" });
     });
 
@@ -102,9 +102,9 @@ describe("NavBarSessionControlContainer", () => {
 
       it("should close the mobile menu", async () => {
         await waitFor(async () =>
-          expect(mockCloseMobileMenu).toBeCalledTimes(1)
+          expect(mockCloseMobileMenu).toHaveBeenCalledTimes(1)
         );
-        expect(mockCloseMobileMenu).toBeCalledWith();
+        expect(mockCloseMobileMenu).toHaveBeenCalledWith();
       });
 
       it("should show the authentication modal ", async () => {
@@ -124,7 +124,7 @@ describe("NavBarSessionControlContainer", () => {
         });
 
         it("should NOT route back", async () => {
-          expect(mockRouterHook.back).toBeCalledTimes(0);
+          expect(mockRouterHook.back).toHaveBeenCalledTimes(0);
         });
       });
     });

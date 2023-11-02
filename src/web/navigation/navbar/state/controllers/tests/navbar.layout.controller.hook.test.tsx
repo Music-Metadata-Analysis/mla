@@ -73,10 +73,10 @@ describe("useNavBarController", () => {
       it(`should call ${property}'s underlying useToggle method`, () => {
         expect(
           mockHookValues.controls[property][toggleFunction]
-        ).toBeCalledTimes(1);
+        ).toHaveBeenCalledTimes(1);
         expect(
           mockHookValues.controls[property][toggleFunction]
-        ).toBeCalledWith();
+        ).toHaveBeenCalledWith();
       });
 
       it(`should only call ${property}'s underlying useToggle method`, () => {
@@ -88,7 +88,7 @@ describe("useNavBarController", () => {
           if (controlName !== property) {
             expect(
               mockHookValues.controls[controlName][toggleFunction]
-            ).toBeCalledTimes(0);
+            ).toHaveBeenCalledTimes(0);
           }
         });
       });
@@ -184,10 +184,10 @@ describe("useNavBarController", () => {
         it("should close the mobile menu", () => {
           expect(
             received.result.current.controls.mobileMenu.setFalse
-          ).toBeCalledTimes(1);
+          ).toHaveBeenCalledTimes(1);
           expect(
             received.result.current.controls.mobileMenu.setFalse
-          ).toBeCalledWith();
+          ).toHaveBeenCalledWith();
         });
 
         describe("when the hook is unmounted", () => {
@@ -214,7 +214,7 @@ describe("useNavBarController", () => {
             it("should NOT attempt to close the mobile menu again", () => {
               expect(
                 received.result.current.controls.mobileMenu.setFalse
-              ).toBeCalledTimes(0);
+              ).toHaveBeenCalledTimes(0);
             });
           });
         });
@@ -239,7 +239,7 @@ describe("useNavBarController", () => {
         it("should NOT attempt to close the mobile menu", () => {
           expect(
             received.result.current.controls.mobileMenu.setFalse
-          ).toBeCalledTimes(0);
+          ).toHaveBeenCalledTimes(0);
         });
       });
     });
@@ -264,7 +264,7 @@ describe("useNavBarController", () => {
         it("should NOT close the mobile menu", () => {
           expect(
             received.result.current.controls.mobileMenu.setFalse
-          ).toBeCalledTimes(0);
+          ).toHaveBeenCalledTimes(0);
         });
 
         describe("when the hook is unmounted", () => {
@@ -286,7 +286,7 @@ describe("useNavBarController", () => {
             it("should NOT attempt to close the mobile menu", () => {
               expect(
                 received.result.current.controls.mobileMenu.setFalse
-              ).toBeCalledTimes(0);
+              ).toHaveBeenCalledTimes(0);
             });
           });
         });
@@ -307,7 +307,7 @@ describe("useNavBarController", () => {
         it("should NOT attempt to close the mobile menu", () => {
           expect(
             received.result.current.controls.mobileMenu.setFalse
-          ).toBeCalledTimes(0);
+          ).toHaveBeenCalledTimes(0);
         });
       });
     });

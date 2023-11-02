@@ -99,7 +99,9 @@ describe(ReportCacheRetrieveEndpointFactoryV2.name, () => {
 
   const checkCaching = () => {
     it("should call the proxy service with the correct props", () => {
-      expect(mockReportCacheProxyMethods.retrieveCacheObject).toBeCalledWith({
+      expect(
+        mockReportCacheProxyMethods.retrieveCacheObject
+      ).toHaveBeenCalledWith({
         authenticatedUserName: mockSession?.email,
         reportName: String(report).toLowerCase(),
         sourceName: String(source).toLowerCase(),
@@ -110,39 +112,39 @@ describe(ReportCacheRetrieveEndpointFactoryV2.name, () => {
 
   const checkNoCaching = () => {
     it("should NOT call the proxy service", () => {
-      expect(mockReportCacheProxyMethods.retrieveCacheObject).toBeCalledTimes(
-        0
-      );
+      expect(
+        mockReportCacheProxyMethods.retrieveCacheObject
+      ).toHaveBeenCalledTimes(0);
     });
   };
 
   const checkJWT = () => {
     it("should instantiate the authentication client as expected", () => {
-      expect(authVendorBackend.Client).toBeCalledTimes(1);
-      expect(authVendorBackend.Client).toBeCalledWith(mockReq);
+      expect(authVendorBackend.Client).toHaveBeenCalledTimes(1);
+      expect(authVendorBackend.Client).toHaveBeenCalledWith(mockReq);
     });
 
     it("should call the getSession method with the correct props", () => {
-      expect(mockAuthClient.getSession).toBeCalledTimes(1);
-      expect(mockAuthClient.getSession).toBeCalledWith();
+      expect(mockAuthClient.getSession).toHaveBeenCalledTimes(1);
+      expect(mockAuthClient.getSession).toHaveBeenCalledWith();
     });
   };
 
   const checkNoJWT = () => {
     it("should NOT instantiate the authentication client", () => {
-      expect(authVendorBackend.Client).toBeCalledTimes(0);
+      expect(authVendorBackend.Client).toHaveBeenCalledTimes(0);
     });
   };
 
   const checkTimeoutCleared = () => {
     it("should clear the timeout", async () => {
-      await waitFor(() => expect(clearTimeOutSpy).toBeCalledTimes(1));
+      await waitFor(() => expect(clearTimeOutSpy).toHaveBeenCalledTimes(1));
     });
   };
 
   const checkTimeoutNotCleared = () => {
     it("should NOT clear the timeout", () => {
-      expect(clearTimeOutSpy).toBeCalledTimes(0);
+      expect(clearTimeOutSpy).toHaveBeenCalledTimes(0);
     });
   };
 
@@ -160,7 +162,7 @@ describe(ReportCacheRetrieveEndpointFactoryV2.name, () => {
 
   const checkLogger = (expectedProxyResponse?: string) => {
     it("should log a message", () => {
-      expect(mockEndpointLogger).toBeCalledTimes(1);
+      expect(mockEndpointLogger).toHaveBeenCalledTimes(1);
 
       const call = jest.mocked(mockEndpointLogger).mock.calls[0];
       expect(call[0]).toBe(mockReq);

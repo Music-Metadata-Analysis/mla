@@ -33,8 +33,8 @@ describe("useAuth", () => {
     });
 
     it("should call the underlying vendor hook during render", () => {
-      expect(authVendor.hook).toBeCalledTimes(1);
-      expect(authVendor.hook).toBeCalledWith();
+      expect(authVendor.hook).toHaveBeenCalledTimes(1);
+      expect(authVendor.hook).toHaveBeenCalledWith();
     });
 
     it("should return the vendor hook", () => {

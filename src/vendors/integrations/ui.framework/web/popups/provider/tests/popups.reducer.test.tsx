@@ -49,10 +49,11 @@ describe("PopUpsControllerReducer", () => {
   };
 
   it("should be wrapped in the correct middlewares", () => {
-    expect(mockApplyMiddleware).toBeCalledTimes(1);
-    expect(mockApplyMiddleware).toBeCalledWith(corePopUpsControllerReducer, [
-      mockLoggingMiddleware,
-    ]);
+    expect(mockApplyMiddleware).toHaveBeenCalledTimes(1);
+    expect(mockApplyMiddleware).toHaveBeenCalledWith(
+      corePopUpsControllerReducer,
+      [mockLoggingMiddleware]
+    );
   });
 
   it("should handle HidePopUp correctly", () => {
@@ -61,8 +62,8 @@ describe("PopUpsControllerReducer", () => {
       name: "FeedBack",
     } as PopUpsControllerActionType;
     received = arrange(action, getInitialState());
-    expect(mockStates.HidePopUp).toBeCalledTimes(1);
-    expect(mockStates.HidePopUp).toBeCalledWith(mockInitialState, action);
+    expect(mockStates.HidePopUp).toHaveBeenCalledTimes(1);
+    expect(mockStates.HidePopUp).toHaveBeenCalledWith(mockInitialState, action);
     expect(received).toBe(mockReturn);
   });
 
@@ -72,8 +73,8 @@ describe("PopUpsControllerReducer", () => {
       name: "FeedBack",
     } as PopUpsControllerActionType;
     received = arrange(action, getInitialState());
-    expect(mockStates.ShowPopUp).toBeCalledTimes(1);
-    expect(mockStates.ShowPopUp).toBeCalledWith(mockInitialState, action);
+    expect(mockStates.ShowPopUp).toHaveBeenCalledTimes(1);
+    expect(mockStates.ShowPopUp).toHaveBeenCalledWith(mockInitialState, action);
     expect(received).toBe(mockReturn);
   });
 });

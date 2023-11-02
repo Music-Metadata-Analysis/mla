@@ -63,7 +63,7 @@ describe("Dialogue", () => {
 
   const checkBillboardComponentRender = () => {
     it("should call the Billboard component with the expected props", () => {
-      expect(BillboardContainer).toBeCalledTimes(1);
+      expect(BillboardContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         BillboardContainer,
         {
@@ -76,7 +76,7 @@ describe("Dialogue", () => {
 
   const checkChakraFlexComponentRender = () => {
     it("should call the chakra Flex component with the expected props", () => {
-      expect(Flex).toBeCalledTimes(1);
+      expect(Flex).toHaveBeenCalledTimes(1);
       checkMockCall(
         Flex,
         {
@@ -101,7 +101,7 @@ describe("Dialogue", () => {
         expectedCalls += 1;
       }
 
-      expect(Box).toBeCalledTimes(expectedCalls);
+      expect(Box).toHaveBeenCalledTimes(expectedCalls);
     });
   };
 
@@ -110,7 +110,7 @@ describe("Dialogue", () => {
     name: string
   ) => {
     it(`should call the ${name} with the expected props`, () => {
-      expect(component).toBeCalledTimes(1);
+      expect(component).toHaveBeenCalledTimes(1);
       checkMockCall(
         component,
         {
@@ -154,7 +154,7 @@ describe("Dialogue", () => {
 
   const checkNoHeaderComponentRender = () => {
     it("should NOT render the HeaderComponent", () => {
-      expect(mockHeader).toBeCalledTimes(0);
+      expect(mockHeader).toHaveBeenCalledTimes(0);
     });
   };
 
@@ -169,7 +169,7 @@ describe("Dialogue", () => {
 
   const checkNoToggleComponentRender = () => {
     it("should NOT render the ToggleComponent", () => {
-      expect(mockToggle).toBeCalledTimes(0);
+      expect(mockToggle).toHaveBeenCalledTimes(0);
     });
   };
 
@@ -184,7 +184,7 @@ describe("Dialogue", () => {
 
   const checkNoBodyComponentRender = () => {
     it("should NOT render the BodyComponent", () => {
-      expect(mockBody).toBeCalledTimes(0);
+      expect(mockBody).toHaveBeenCalledTimes(0);
     });
   };
 
@@ -199,7 +199,7 @@ describe("Dialogue", () => {
 
   const checkNoFooterComponentRender = () => {
     it("should NOT render the FooterComponent", () => {
-      expect(mockFooter).toBeCalledTimes(0);
+      expect(mockFooter).toHaveBeenCalledTimes(0);
     });
   };
 

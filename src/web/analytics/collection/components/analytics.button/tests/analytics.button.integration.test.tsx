@@ -29,11 +29,13 @@ describe("AnalyticsButtonWrapper", () => {
     );
 
     it("should call the click handler as expected", () => {
-      expect(mockClick).toBeCalledTimes(1);
+      expect(mockClick).toHaveBeenCalledTimes(1);
     });
 
     it("should call the analytics button tracker", () => {
-      expect(mockAnalyticsCollectionHook.trackButtonClick).toBeCalledTimes(1);
+      expect(
+        mockAnalyticsCollectionHook.trackButtonClick
+      ).toHaveBeenCalledTimes(1);
       const call = mockAnalyticsCollectionHook.trackButtonClick.mock.calls[0];
       expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
       expect(call[1]).toBe(mockButtonName);

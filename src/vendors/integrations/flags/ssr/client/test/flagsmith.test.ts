@@ -41,16 +41,16 @@ describe("FlagSmithClientSSR", () => {
     });
 
     it("should initialize the vendor object correctly", () => {
-      expect(flagsmith.init).toBeCalledTimes(1);
-      expect(flagsmith.init).toBeCalledWith({
+      expect(flagsmith.init).toHaveBeenCalledTimes(1);
+      expect(flagsmith.init).toHaveBeenCalledWith({
         environmentID: mockFlagEnvironment,
         identity: `normalizeUndefined(${mockIdentity})`,
       });
     });
 
     it("should call the vendor object's getState method correctly", () => {
-      expect(flagsmith.getState).toBeCalledTimes(1);
-      expect(flagsmith.getState).toBeCalledWith();
+      expect(flagsmith.getState).toHaveBeenCalledTimes(1);
+      expect(flagsmith.getState).toHaveBeenCalledWith();
     });
 
     it("should return the vendor's flag state", () => {

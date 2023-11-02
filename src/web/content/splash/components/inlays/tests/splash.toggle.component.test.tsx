@@ -33,7 +33,7 @@ describe("SplashToggle", () => {
     beforeEach(() => arrange());
 
     it("should call Container with the correct props", () => {
-      expect(Container).toBeCalledTimes(1);
+      expect(Container).toHaveBeenCalledTimes(1);
       checkMockCall(
         Container,
         {
@@ -47,7 +47,7 @@ describe("SplashToggle", () => {
     });
 
     it("should call ListItem with the correct props", () => {
-      expect(ListItem).toBeCalledTimes(3);
+      expect(ListItem).toHaveBeenCalledTimes(3);
       checkMockCall(
         ListItem,
         {
@@ -72,12 +72,12 @@ describe("SplashToggle", () => {
     });
 
     it("should call UnorderedList with the correct props", () => {
-      expect(UnorderedList).toBeCalledTimes(1);
+      expect(UnorderedList).toHaveBeenCalledTimes(1);
       checkMockCall(UnorderedList, {}, 0);
     });
 
     it("should call Highlight with the correct props (visible by default)", () => {
-      expect(Highlight).toBeCalledTimes(1);
+      expect(Highlight).toHaveBeenCalledTimes(1);
       checkMockCall(Highlight, {
         mb: 3,
         borderWidth: "1px",

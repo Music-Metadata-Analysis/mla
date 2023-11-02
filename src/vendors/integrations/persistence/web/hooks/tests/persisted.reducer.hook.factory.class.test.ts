@@ -58,8 +58,10 @@ describe(PersistentReducerFactory.name, () => {
         });
 
         it("should use the correct key for local storage", () => {
-          expect(createPersistedReducer).toBeCalledTimes(1);
-          expect(createPersistedReducer).toBeCalledWith(mockPartitionName);
+          expect(createPersistedReducer).toHaveBeenCalledTimes(1);
+          expect(createPersistedReducer).toHaveBeenCalledWith(
+            mockPartitionName
+          );
         });
       });
     });

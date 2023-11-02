@@ -30,7 +30,7 @@ describe("ClickInternalLink", () => {
   };
 
   it("should render Box Component as expected", () => {
-    expect(Box).toBeCalledTimes(1);
+    expect(Box).toHaveBeenCalledTimes(1);
     checkMockCall(Box, { cursor: "pointer" });
   });
 
@@ -44,7 +44,7 @@ describe("ClickInternalLink", () => {
     it("should call the link click tracker", () => {
       expect(
         mockAnalyticsCollectionHook.trackInternalLinkClick
-      ).toBeCalledTimes(1);
+      ).toHaveBeenCalledTimes(1);
       const call =
         mockAnalyticsCollectionHook.trackInternalLinkClick.mock.calls[0];
       expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
@@ -53,7 +53,7 @@ describe("ClickInternalLink", () => {
     });
 
     it("should call the routing click handler", () => {
-      expect(mockRouterClick).toBeCalledTimes(1);
+      expect(mockRouterClick).toHaveBeenCalledTimes(1);
     });
   });
 });

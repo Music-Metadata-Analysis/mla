@@ -50,7 +50,7 @@ describe("AboutBody", () => {
     beforeEach(() => arrange());
 
     it("should call Avatar as expected to display the logo", () => {
-      expect(Avatar).toBeCalledTimes(1);
+      expect(Avatar).toHaveBeenCalledTimes(1);
       const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.width).toStrictEqual(dialogueSettings.iconSizes);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -63,7 +63,7 @@ describe("AboutBody", () => {
     });
 
     it("should call Box with the correct props", () => {
-      expect(Box).toBeCalledTimes(2);
+      expect(Box).toHaveBeenCalledTimes(2);
       checkMockCall(
         Box,
         {
@@ -81,12 +81,12 @@ describe("AboutBody", () => {
     });
 
     it("should call Center with the correct props", () => {
-      expect(Center).toBeCalledTimes(1);
+      expect(Center).toHaveBeenCalledTimes(1);
       checkMockCall(Center, {}, 0);
     });
 
     it("should call Flex with the correct props", () => {
-      expect(Flex).toBeCalledTimes(1);
+      expect(Flex).toHaveBeenCalledTimes(1);
       checkMockCall(
         Flex,
         {
@@ -98,7 +98,7 @@ describe("AboutBody", () => {
     });
 
     it("should call Text with the correct props", () => {
-      expect(Text).toBeCalledTimes(2);
+      expect(Text).toHaveBeenCalledTimes(2);
       checkMockCall(
         Text,
         {
@@ -118,12 +118,12 @@ describe("AboutBody", () => {
     });
 
     it("should call ClickLink with the correct props", () => {
-      expect(ClickLink).toBeCalledTimes(1);
+      expect(ClickLink).toHaveBeenCalledTimes(1);
       checkMockCall(ClickLink, { href: externalLinks.svs });
     });
 
     it("should call DimOnHover with the correct props", () => {
-      expect(DimOnHover).toBeCalledTimes(1);
+      expect(DimOnHover).toHaveBeenCalledTimes(1);
       checkMockCall(DimOnHover, {});
     });
   });

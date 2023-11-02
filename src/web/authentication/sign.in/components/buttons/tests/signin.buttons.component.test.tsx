@@ -46,7 +46,7 @@ describe("AuthenticationComponent", () => {
   };
 
   it("should call the AnalyticsWrapper component correctly", () => {
-    expect(AnalyticsButtonWrapper).toBeCalledTimes(5);
+    expect(AnalyticsButtonWrapper).toHaveBeenCalledTimes(5);
     checkMockCall(
       AnalyticsButtonWrapper,
       {
@@ -85,7 +85,7 @@ describe("AuthenticationComponent", () => {
   });
 
   it("should call the FacebookAuthButton component correctly", () => {
-    expect(mockFacebookAuthButton).toBeCalledTimes(1);
+    expect(mockFacebookAuthButton).toHaveBeenCalledTimes(1);
     checkMockCall(
       mockFacebookAuthButton,
       {
@@ -98,7 +98,7 @@ describe("AuthenticationComponent", () => {
   });
 
   it("should call the GithubAuthButton component correctly", () => {
-    expect(mockGithubAuthButton).toBeCalledTimes(1);
+    expect(mockGithubAuthButton).toHaveBeenCalledTimes(1);
     checkMockCall(
       mockGithubAuthButton,
       {
@@ -111,7 +111,7 @@ describe("AuthenticationComponent", () => {
   });
 
   it("should call the GoogleAuthButton component correctly", () => {
-    expect(mockGoogleAuthButton).toBeCalledTimes(1);
+    expect(mockGoogleAuthButton).toHaveBeenCalledTimes(1);
     checkMockCall(
       mockGoogleAuthButton,
       {
@@ -124,7 +124,7 @@ describe("AuthenticationComponent", () => {
   });
 
   it("should call the LastFMAuthButton component correctly", () => {
-    expect(mockLastFMAuthButton).toBeCalledTimes(1);
+    expect(mockLastFMAuthButton).toHaveBeenCalledTimes(1);
     checkMockCall(
       mockLastFMAuthButton,
       {
@@ -144,7 +144,7 @@ describe("AuthenticationComponent", () => {
     });
 
     it("should call the LastFMIconContainer component correctly", () => {
-      expect(LastFMIconContainer).toBeCalledTimes(1);
+      expect(LastFMIconContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         LastFMIconContainer,
         {
@@ -158,7 +158,7 @@ describe("AuthenticationComponent", () => {
   });
 
   it("should call the SpotifyAuthButton component correctly", () => {
-    expect(mockSpotifyAuthButton).toBeCalledTimes(1);
+    expect(mockSpotifyAuthButton).toHaveBeenCalledTimes(1);
     checkMockCall(
       mockSpotifyAuthButton,
       {

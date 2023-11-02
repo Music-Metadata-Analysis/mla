@@ -30,7 +30,7 @@ describe("AboutToggle", () => {
     beforeEach(() => arrange());
 
     it("should call Box with the correct props", () => {
-      expect(Box).toBeCalledTimes(1);
+      expect(Box).toHaveBeenCalledTimes(1);
       checkMockCall(
         Box,
         {
@@ -41,7 +41,7 @@ describe("AboutToggle", () => {
     });
 
     it("should call Container with the correct props", () => {
-      expect(Container).toBeCalledTimes(1);
+      expect(Container).toHaveBeenCalledTimes(1);
       checkMockCall(
         Container,
         {
@@ -57,7 +57,7 @@ describe("AboutToggle", () => {
     });
 
     it("should call ListItem with the correct props", () => {
-      expect(ListItem).toBeCalledTimes(3);
+      expect(ListItem).toHaveBeenCalledTimes(3);
       checkMockCall(
         ListItem,
         {
@@ -82,7 +82,7 @@ describe("AboutToggle", () => {
     });
 
     it("should call UnorderedList with the correct props", () => {
-      expect(UnorderedList).toBeCalledTimes(1);
+      expect(UnorderedList).toHaveBeenCalledTimes(1);
       checkMockCall(UnorderedList, {}, 0);
     });
   });

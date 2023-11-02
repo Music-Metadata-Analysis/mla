@@ -56,7 +56,7 @@ describe("SunBurstChart", () => {
 
   const checkChakraComponents = () => {
     it("should call the Box component correctly", () => {
-      expect(Box).toBeCalledTimes(1);
+      expect(Box).toHaveBeenCalledTimes(1);
       checkMockCall(
         Box,
         {
@@ -75,14 +75,14 @@ describe("SunBurstChart", () => {
     });
 
     it("should call the Center component correctly", () => {
-      expect(Center).toBeCalledTimes(1);
+      expect(Center).toHaveBeenCalledTimes(1);
       checkMockCall(Center, {}, 0, []);
     });
   };
 
   const checkSunBurstChartContainer = () => {
     it("should call the SunBurstChartContainer component correctly", () => {
-      expect(SunBurstChartSVGContainer).toBeCalledTimes(1);
+      expect(SunBurstChartSVGContainer).toHaveBeenCalledTimes(1);
       checkMockCall(
         SunBurstChartSVGContainer,
         {

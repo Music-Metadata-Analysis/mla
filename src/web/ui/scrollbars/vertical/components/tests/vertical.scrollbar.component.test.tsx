@@ -43,7 +43,7 @@ describe("VerticalScrollBarComponent", () => {
 
   const checkScrollBarTrackProps = () => {
     it("should call the ScrollBarTrack Box component correctly", () => {
-      expect(Box).toBeCalledTimes(2);
+      expect(Box).toHaveBeenCalledTimes(2);
       checkMockCall(
         Box,
         {
@@ -75,7 +75,7 @@ describe("VerticalScrollBarComponent", () => {
 
   const checkScrollBarThumbProps = () => {
     it("should call the ScrollBarThumb Box component correctly", () => {
-      expect(Box).toBeCalledTimes(2);
+      expect(Box).toHaveBeenCalledTimes(2);
       checkMockCall(
         Box,
         {

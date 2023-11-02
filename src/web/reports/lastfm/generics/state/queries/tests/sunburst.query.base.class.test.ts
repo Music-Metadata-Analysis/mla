@@ -218,16 +218,16 @@ describe(SunBurstBaseQuery.name, () => {
         });
 
         it("should instantiate the SunBurstDataTranslator class", () => {
-          expect(SunBurstStateToChartDataTranslator).toBeCalledTimes(1);
-          expect(SunBurstStateToChartDataTranslator).toBeCalledWith(
+          expect(SunBurstStateToChartDataTranslator).toHaveBeenCalledTimes(1);
+          expect(SunBurstStateToChartDataTranslator).toHaveBeenCalledWith(
             ["artists", "albums", "tracks"],
             mockTranslatedRemainderKey
           );
         });
 
         it("should call the convert method of the sunBurstDataTranslator class", () => {
-          expect(mockConvert).toBeCalledTimes(1);
-          expect(mockConvert).toBeCalledWith(
+          expect(mockConvert).toHaveBeenCalledTimes(1);
+          expect(mockConvert).toHaveBeenCalledWith(
             {
               children: [],
               entity: "root",

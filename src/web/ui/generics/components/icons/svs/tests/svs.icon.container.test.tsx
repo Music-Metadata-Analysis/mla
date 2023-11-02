@@ -39,7 +39,7 @@ describe("SVSIconContainer", () => {
     });
 
     it("should render the SVSIcon component with the correct props", () => {
-      expect(SVSIcon).toBeCalledTimes(1);
+      expect(SVSIcon).toHaveBeenCalledTimes(1);
       checkMockCall(
         SVSIcon,
         {
@@ -61,7 +61,7 @@ describe("SVSIconContainer", () => {
     });
 
     it("should render the SVSIcon component with the correct props", () => {
-      expect(SVSIcon).toBeCalledTimes(1);
+      expect(SVSIcon).toHaveBeenCalledTimes(1);
       checkMockCall(
         SVSIcon,
         {

@@ -49,7 +49,7 @@ describe("UserNameForm", () => {
   };
 
   it("should render the chakra Flex component with the correct props", () => {
-    expect(Flex).toBeCalledTimes(2);
+    expect(Flex).toHaveBeenCalledTimes(2);
     checkMockCall(Flex, {
       flexDirection: "column",
       justify: "center",
@@ -76,7 +76,7 @@ describe("UserNameForm", () => {
   });
 
   it("should render the StyledButton component with the correct props", async () => {
-    expect(StyledButton).toBeCalledTimes(1);
+    expect(StyledButton).toHaveBeenCalledTimes(1);
     checkMockCall(StyledButton, {
       analyticsName: "Search: last.fm",
       isLoading: false,
@@ -109,8 +109,8 @@ describe("UserNameForm", () => {
       });
 
       it("should call the handleSubmit function as expected", () => {
-        expect(mockValidate).toBeCalledTimes(2);
-        expect(mockSubmit).toBeCalledTimes(1);
+        expect(mockValidate).toHaveBeenCalledTimes(2);
+        expect(mockSubmit).toHaveBeenCalledTimes(1);
       });
     });
   });

@@ -63,8 +63,8 @@ describe(ReportCacheRetrieveClient.name, () => {
 
   const checkQueryStringGet = () => {
     it("should call the get method of the QueryString class as expected", () => {
-      expect(QueryString.prototype.get).toBeCalledTimes(1);
-      expect(QueryString.prototype.get).toBeCalledWith(
+      expect(QueryString.prototype.get).toHaveBeenCalledTimes(1);
+      expect(QueryString.prototype.get).toHaveBeenCalledWith(
         cacheSettings.cacheQueryStringIdentifier
       );
     });
@@ -72,20 +72,20 @@ describe(ReportCacheRetrieveClient.name, () => {
 
   const checkQueryStringRemove = () => {
     it("should remove the window query string", () => {
-      expect(jest.mocked(QueryString).mock.instances[0].remove).toBeCalledTimes(
-        1
-      );
-      expect(jest.mocked(QueryString).mock.instances[0].remove).toBeCalledWith([
-        cacheSettings.cacheQueryStringIdentifier,
-      ]);
+      expect(
+        jest.mocked(QueryString).mock.instances[0].remove
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        jest.mocked(QueryString).mock.instances[0].remove
+      ).toHaveBeenCalledWith([cacheSettings.cacheQueryStringIdentifier]);
     });
   };
 
   const checkNoQueryStringRemove = () => {
     it("should NOT attempt to remove the window query string", () => {
-      expect(jest.mocked(QueryString).mock.instances[0].remove).toBeCalledTimes(
-        0
-      );
+      expect(
+        jest.mocked(QueryString).mock.instances[0].remove
+      ).toHaveBeenCalledTimes(0);
     });
   };
 
@@ -97,12 +97,12 @@ describe(ReportCacheRetrieveClient.name, () => {
 
   const checkUrl = () => {
     it("should make the request with the correct url", () => {
-      expect(mockFetch).toBeCalledTimes(1);
+      expect(mockFetch).toHaveBeenCalledTimes(1);
       const expectedUrl = instance.route
         .replace(":source", encodeURIComponent(params.sourceName))
         .replace(":report", encodeURIComponent(params.reportName))
         .replace(":username", encodeURIComponent(params.userName));
-      expect(mockTransport).toBeCalledWith(expectedUrl, {
+      expect(mockTransport).toHaveBeenCalledWith(expectedUrl, {
         method: "POST",
         body: params.body,
       });
@@ -171,7 +171,9 @@ describe(ReportCacheRetrieveClient.name, () => {
               checkUrl();
 
               it("should dispatch the reducer correctly", async () => {
-                await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+                await waitFor(() =>
+                  expect(mockDispatch).toHaveBeenCalledTimes(2)
+                );
                 expect(mockDispatch).toHaveBeenCalledWith({
                   type: "StartCreateCachedReport",
                 });
@@ -181,7 +183,7 @@ describe(ReportCacheRetrieveClient.name, () => {
               });
 
               it("should register events correctly", async () => {
-                await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+                await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
                 expect(mockEvent).toHaveBeenCalledWith(mockRequestEvent);
                 expect(mockEvent).toHaveBeenCalledWith(mockSuccessEvent);
               });
@@ -204,7 +206,9 @@ describe(ReportCacheRetrieveClient.name, () => {
               checkUrl();
 
               it("should dispatch the reducer correctly", async () => {
-                await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+                await waitFor(() =>
+                  expect(mockDispatch).toHaveBeenCalledTimes(2)
+                );
                 expect(mockDispatch).toHaveBeenCalledWith({
                   type: "StartCreateCachedReport",
                 });
@@ -214,7 +218,7 @@ describe(ReportCacheRetrieveClient.name, () => {
               });
 
               it("should register events correctly", async () => {
-                await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+                await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
                 expect(mockEvent).toHaveBeenCalledWith(mockRequestEvent);
                 expect(mockEvent).toHaveBeenCalledWith(mockUnauthorizedEvent);
               });
@@ -237,7 +241,9 @@ describe(ReportCacheRetrieveClient.name, () => {
               checkUrl();
 
               it("should dispatch the reducer correctly", async () => {
-                await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+                await waitFor(() =>
+                  expect(mockDispatch).toHaveBeenCalledTimes(2)
+                );
                 expect(mockDispatch).toHaveBeenCalledWith({
                   type: "StartCreateCachedReport",
                 });
@@ -247,7 +253,7 @@ describe(ReportCacheRetrieveClient.name, () => {
               });
 
               it("should register events correctly", async () => {
-                await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+                await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
                 expect(mockEvent).toHaveBeenCalledWith(mockRequestEvent);
                 expect(mockEvent).toHaveBeenCalledWith(mockFailedEvent);
               });
@@ -270,7 +276,9 @@ describe(ReportCacheRetrieveClient.name, () => {
               checkUrl();
 
               it("should dispatch the reducer correctly", async () => {
-                await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+                await waitFor(() =>
+                  expect(mockDispatch).toHaveBeenCalledTimes(2)
+                );
                 expect(mockDispatch).toHaveBeenCalledWith({
                   type: "StartCreateCachedReport",
                 });
@@ -280,7 +288,7 @@ describe(ReportCacheRetrieveClient.name, () => {
               });
 
               it("should register events correctly", async () => {
-                await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+                await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
                 expect(mockEvent).toHaveBeenCalledWith(mockRequestEvent);
                 expect(mockEvent).toHaveBeenCalledWith(mockFailedEvent);
               });
@@ -303,7 +311,9 @@ describe(ReportCacheRetrieveClient.name, () => {
               checkUrl();
 
               it("should dispatch the reducer correctly", async () => {
-                await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+                await waitFor(() =>
+                  expect(mockDispatch).toHaveBeenCalledTimes(2)
+                );
                 expect(mockDispatch).toHaveBeenCalledWith({
                   type: "StartCreateCachedReport",
                 });
@@ -313,7 +323,7 @@ describe(ReportCacheRetrieveClient.name, () => {
               });
 
               it("should register events correctly", async () => {
-                await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+                await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
                 expect(mockEvent).toHaveBeenCalledWith(mockRequestEvent);
                 expect(mockEvent).toHaveBeenCalledWith(mockFailedEvent);
               });
@@ -336,15 +346,15 @@ describe(ReportCacheRetrieveClient.name, () => {
           checkNoQueryStringRemove();
 
           it("should not call fetch", () => {
-            expect(mockFetch).toBeCalledTimes(0);
+            expect(mockFetch).toHaveBeenCalledTimes(0);
           });
 
           it("should not dispatch an action", () => {
-            expect(mockDispatch).toBeCalledTimes(0);
+            expect(mockDispatch).toHaveBeenCalledTimes(0);
           });
 
           it("should not emit an event", () => {
-            expect(mockEvent).toBeCalledTimes(0);
+            expect(mockEvent).toHaveBeenCalledTimes(0);
           });
         });
       });

@@ -34,8 +34,8 @@ describe("MetricsReducer", () => {
   };
 
   it("should be wrapped in the correct middlewares", () => {
-    expect(mockApplyMiddleware).toBeCalledTimes(1);
-    expect(mockApplyMiddleware).toBeCalledWith(coreMetricsReducer, [
+    expect(mockApplyMiddleware).toHaveBeenCalledTimes(1);
+    expect(mockApplyMiddleware).toHaveBeenCalledWith(coreMetricsReducer, [
       mockLoggingMiddleware,
     ]);
   });
@@ -46,8 +46,11 @@ describe("MetricsReducer", () => {
     } as MetricsActionType;
 
     received = arrange(action, { ...getInitialState() });
-    expect(mockStates.SearchMetric).toBeCalledTimes(1);
-    expect(mockStates.SearchMetric).toBeCalledWith(getInitialState(), action);
+    expect(mockStates.SearchMetric).toHaveBeenCalledTimes(1);
+    expect(mockStates.SearchMetric).toHaveBeenCalledWith(
+      getInitialState(),
+      action
+    );
     expect(received).toBe(mockReturn);
   });
 

@@ -93,8 +93,8 @@ describe("FlipCardDrawerContainer", () => {
   const checkEffectHookEmitsEvent = () => {
     describe("useEffect (analytics)", () => {
       it("should emit the expected analytics event", () => {
-        expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(1);
-        expect(mockAnalyticsCollectionHook.event).toBeCalledWith(
+        expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledTimes(1);
+        expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledWith(
           currentProps.reportStateInstance.getDrawerEvent(
             currentProps.objectIndex as number
           )
@@ -106,14 +106,14 @@ describe("FlipCardDrawerContainer", () => {
   const checkEffectHookDoesNotEmitEvent = () => {
     describe("useEffect (analytics)", () => {
       it("should NOT emit an analytics event", () => {
-        expect(mockAnalyticsCollectionHook.event).toBeCalledTimes(0);
+        expect(mockAnalyticsCollectionHook.event).toHaveBeenCalledTimes(0);
       });
     });
   };
 
   const checkFlipCardDrawerProps = () => {
     it("should render the FlipCardDrawer component with the correct props", () => {
-      expect(FlipCardDrawer).toBeCalledTimes(1);
+      expect(FlipCardDrawer).toHaveBeenCalledTimes(1);
       checkMockCall(
         FlipCardDrawer,
         {
@@ -144,7 +144,7 @@ describe("FlipCardDrawerContainer", () => {
 
   const checkFlipCardDrawerNotRendered = () => {
     it("should NOT render the FlipCardDrawer component", () => {
-      expect(FlipCardDrawer).toBeCalledTimes(0);
+      expect(FlipCardDrawer).toHaveBeenCalledTimes(0);
     });
   };
 

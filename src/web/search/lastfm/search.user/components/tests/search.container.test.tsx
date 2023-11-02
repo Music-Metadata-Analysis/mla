@@ -31,14 +31,14 @@ describe("SearchContainer", () => {
     });
 
     it("should render the navbar threshold toggle hook with the correct props", () => {
-      expect(useNavBarThresholdToggle).toBeCalledTimes(1);
-      expect(useNavBarThresholdToggle).toBeCalledWith({
+      expect(useNavBarThresholdToggle).toHaveBeenCalledTimes(1);
+      expect(useNavBarThresholdToggle).toHaveBeenCalledWith({
         threshold: navbarSettings.minimumHeightDuringInput,
       });
     });
 
     it("should render the Search component with the correct props", () => {
-      expect(Search).toBeCalledTimes(1);
+      expect(Search).toHaveBeenCalledTimes(1);
       checkMockCall(Search, {
         route: mockRoute,
         titleText: mockTitleText,

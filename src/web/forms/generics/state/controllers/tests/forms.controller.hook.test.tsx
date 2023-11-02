@@ -31,8 +31,8 @@ describe("useFormsController", () => {
     });
 
     it("should call the underlying vendor hook during render", () => {
-      expect(uiFrameworkVendor.core.formHook).toBeCalledTimes(1);
-      expect(uiFrameworkVendor.core.formHook).toBeCalledWith();
+      expect(uiFrameworkVendor.core.formHook).toHaveBeenCalledTimes(1);
+      expect(uiFrameworkVendor.core.formHook).toHaveBeenCalledWith();
     });
 
     it("should return the vendor hook", () => {

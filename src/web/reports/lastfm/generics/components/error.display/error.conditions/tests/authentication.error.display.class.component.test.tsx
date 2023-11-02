@@ -45,7 +45,7 @@ describe("AuthenticationErrorConditionalDisplay", () => {
       });
 
       it("should render with the correct props", async () => {
-        expect(Authentication).toBeCalledWith({}, {});
+        expect(Authentication).toHaveBeenCalledWith({}, {});
       });
     });
   });
@@ -61,7 +61,7 @@ describe("AuthenticationErrorConditionalDisplay", () => {
       });
 
       it("should render with the correct props", async () => {
-        expect(Authentication).toBeCalledWith({}, {});
+        expect(Authentication).toHaveBeenCalledWith({}, {});
       });
     });
   });

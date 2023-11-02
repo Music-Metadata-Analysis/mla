@@ -80,7 +80,7 @@ describe("SunBurstControlPanel", () => {
 
   const checkChakraBoxProps = () => {
     it("should render the chakra Box component as expected", () => {
-      expect(Box).toBeCalledTimes(1);
+      expect(Box).toHaveBeenCalledTimes(1);
       checkMockCall(
         Box,
         {
@@ -98,7 +98,7 @@ describe("SunBurstControlPanel", () => {
 
   const checkChakraFlexProps = () => {
     it("should render the chakra Flex component as expected", () => {
-      expect(Flex).toBeCalledTimes(2);
+      expect(Flex).toHaveBeenCalledTimes(2);
       checkMockCall(
         Flex,
         {
@@ -121,7 +121,7 @@ describe("SunBurstControlPanel", () => {
 
   const checkSunBurstDetailsPanelProps = () => {
     it("should render the SunBurstDetailsPanel component as expected", async () => {
-      expect(SunBurstDetailsPanel).toBeCalledTimes(1);
+      expect(SunBurstDetailsPanel).toHaveBeenCalledTimes(1);
       checkMockCall(
         SunBurstDetailsPanel,
         {
@@ -146,7 +146,7 @@ describe("SunBurstControlPanel", () => {
     isOpen: boolean;
   }) => {
     it("should render the ButtonWithoutAnalytics component with the expected props", () => {
-      expect(ButtonWithoutAnalytics).toBeCalledTimes(2);
+      expect(ButtonWithoutAnalytics).toHaveBeenCalledTimes(2);
       checkMockCall(
         ButtonWithoutAnalytics,
         {
@@ -206,14 +206,14 @@ describe("SunBurstControlPanel", () => {
 
       if (hasParent && !isOpen) {
         it("should select the node's parent", () => {
-          expect(mockSetSelectedNode).toBeCalledTimes(1);
-          expect(mockSetSelectedNode).toBeCalledWith(
+          expect(mockSetSelectedNode).toHaveBeenCalledTimes(1);
+          expect(mockSetSelectedNode).toHaveBeenCalledWith(
             currentProps.node.getParent()
           );
         });
       } else {
         it("should not select anything", () => {
-          expect(mockSetSelectedNode).toBeCalledTimes(0);
+          expect(mockSetSelectedNode).toHaveBeenCalledTimes(0);
         });
       }
     });

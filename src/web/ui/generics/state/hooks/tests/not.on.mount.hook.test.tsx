@@ -40,7 +40,7 @@ describe(useNotOnMountEffect.name, () => {
       });
 
       it(`should not call the test hook's useEffect hook`, () => {
-        expect(mockSpy).toBeCalledTimes(0);
+        expect(mockSpy).toHaveBeenCalledTimes(0);
       });
 
       describe("when the test hook sets a new value", () => {
@@ -58,7 +58,7 @@ describe(useNotOnMountEffect.name, () => {
           });
 
           it(`should execute the test hook's useEffect hook`, () => {
-            expect(mockSpy).toBeCalledTimes(1);
+            expect(mockSpy).toHaveBeenCalledTimes(1);
           });
         });
       });

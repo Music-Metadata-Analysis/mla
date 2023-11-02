@@ -61,7 +61,9 @@ describe("useNavBarThresholdToggle", () => {
   const checkIsVisible = ({ expectedCalls }: { expectedCalls: number }) => {
     it(`should display the navbar`, async () => {
       await waitFor(() =>
-        expect(mockUseNavBar.navigation.setTrue).toBeCalledTimes(expectedCalls)
+        expect(mockUseNavBar.navigation.setTrue).toHaveBeenCalledTimes(
+          expectedCalls
+        )
       );
       for (let i = 1; i < expectedCalls + 1; i++) {
         expect(mockUseNavBar.navigation.setTrue).toHaveBeenNthCalledWith(i);
@@ -72,7 +74,9 @@ describe("useNavBarThresholdToggle", () => {
   const checkIsNotVisible = ({ expectedCalls }: { expectedCalls: number }) => {
     it(`should hide the navbar`, async () => {
       await waitFor(() =>
-        expect(mockUseNavBar.navigation.setFalse).toBeCalledTimes(expectedCalls)
+        expect(mockUseNavBar.navigation.setFalse).toHaveBeenCalledTimes(
+          expectedCalls
+        )
       );
       for (let i = 1; i < expectedCalls + 1; i++) {
         expect(mockUseNavBar.navigation.setFalse).toHaveBeenNthCalledWith(i);
@@ -89,8 +93,8 @@ describe("useNavBarThresholdToggle", () => {
       });
 
       it("should set the navbar to the show state", () => {
-        expect(mockUseNavBar.navigation.setTrue).toBeCalledTimes(1);
-        expect(mockUseNavBar.navigation.setTrue).toBeCalledWith();
+        expect(mockUseNavBar.navigation.setTrue).toHaveBeenCalledTimes(1);
+        expect(mockUseNavBar.navigation.setTrue).toHaveBeenCalledWith();
       });
     });
   };

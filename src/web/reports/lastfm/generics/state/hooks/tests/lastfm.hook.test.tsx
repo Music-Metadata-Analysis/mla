@@ -104,7 +104,7 @@ describe("useLastFM", () => {
     );
 
     it("should dispatch the reducer correctly", async () => {
-      await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
+      await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
       expect(mockDispatch).toHaveBeenCalledWith({
         type: "ResetState",
       });
@@ -117,7 +117,7 @@ describe("useLastFM", () => {
     );
 
     it("should dispatch the reducer correctly", async () => {
-      await waitFor(() => expect(mockDispatch).toBeCalledTimes(1));
+      await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
       expect(mockDispatch).toHaveBeenCalledWith({
         type: "ReadyFetch",
       });
@@ -130,8 +130,10 @@ describe("useLastFM", () => {
     });
 
     it("should initialize the LastFMTopAlbumsReport class", async () => {
-      await waitFor(() => expect(LastFMTopAlbumsReport).toBeCalledTimes(1));
-      expect(LastFMTopAlbumsReport).toBeCalledWith(
+      await waitFor(() =>
+        expect(LastFMTopAlbumsReport).toHaveBeenCalledTimes(1)
+      );
+      expect(LastFMTopAlbumsReport).toHaveBeenCalledWith(
         mockDispatch,
         mockAnalyticsHook.event
       );
@@ -139,9 +141,9 @@ describe("useLastFM", () => {
 
     it("should retrieve the report from lastfm", async () => {
       await waitFor(() =>
-        expect(LastFMTopAlbumsReport.prototype.retrieveReport).toBeCalledTimes(
-          1
-        )
+        expect(
+          LastFMTopAlbumsReport.prototype.retrieveReport
+        ).toHaveBeenCalledTimes(1)
       );
       expect(
         LastFMTopAlbumsReport.prototype.retrieveReport
@@ -157,8 +159,10 @@ describe("useLastFM", () => {
     });
 
     it("should initialize the LastFMTopArtistsReport class", async () => {
-      await waitFor(() => expect(LastFMTopArtistsReport).toBeCalledTimes(1));
-      expect(LastFMTopArtistsReport).toBeCalledWith(
+      await waitFor(() =>
+        expect(LastFMTopArtistsReport).toHaveBeenCalledTimes(1)
+      );
+      expect(LastFMTopArtistsReport).toHaveBeenCalledWith(
         mockDispatch,
         mockAnalyticsHook.event
       );
@@ -166,9 +170,9 @@ describe("useLastFM", () => {
 
     it("should retrieve the report from lastfm", async () => {
       await waitFor(() =>
-        expect(LastFMTopArtistsReport.prototype.retrieveReport).toBeCalledTimes(
-          1
-        )
+        expect(
+          LastFMTopArtistsReport.prototype.retrieveReport
+        ).toHaveBeenCalledTimes(1)
       );
       expect(
         LastFMTopArtistsReport.prototype.retrieveReport
@@ -184,8 +188,10 @@ describe("useLastFM", () => {
     });
 
     it("should initialize the LastFMTopTracksReport class", async () => {
-      await waitFor(() => expect(LastFMTopTracksReport).toBeCalledTimes(1));
-      expect(LastFMTopTracksReport).toBeCalledWith(
+      await waitFor(() =>
+        expect(LastFMTopTracksReport).toHaveBeenCalledTimes(1)
+      );
+      expect(LastFMTopTracksReport).toHaveBeenCalledWith(
         mockDispatch,
         mockAnalyticsHook.event
       );
@@ -193,9 +199,9 @@ describe("useLastFM", () => {
 
     it("should retrieve the report from lastfm", async () => {
       await waitFor(() =>
-        expect(LastFMTopTracksReport.prototype.retrieveReport).toBeCalledTimes(
-          1
-        )
+        expect(
+          LastFMTopTracksReport.prototype.retrieveReport
+        ).toHaveBeenCalledTimes(1)
       );
       expect(
         LastFMTopTracksReport.prototype.retrieveReport
@@ -212,20 +218,20 @@ describe("useLastFM", () => {
 
     it("should initialize the LastFMReportPlayCountByArtistStateEncapsulation class", async () => {
       await waitFor(() =>
-        expect(LastFMReportPlayCountByArtistStateEncapsulation).toBeCalledTimes(
-          1
-        )
+        expect(
+          LastFMReportPlayCountByArtistStateEncapsulation
+        ).toHaveBeenCalledTimes(1)
       );
-      expect(LastFMReportPlayCountByArtistStateEncapsulation).toBeCalledWith(
-        received.result.current.reportProperties
-      );
+      expect(
+        LastFMReportPlayCountByArtistStateEncapsulation
+      ).toHaveBeenCalledWith(received.result.current.reportProperties);
     });
 
     it("should initialize the LastFMPlayCountByArtistDataClient class", async () => {
       await waitFor(() =>
-        expect(LastFMPlayCountByArtistDataClient).toBeCalledTimes(1)
+        expect(LastFMPlayCountByArtistDataClient).toHaveBeenCalledTimes(1)
       );
-      expect(LastFMPlayCountByArtistDataClient).toBeCalledWith(
+      expect(LastFMPlayCountByArtistDataClient).toHaveBeenCalledWith(
         mockDispatch,
         mockAnalyticsHook.event,
         jest.mocked(LastFMReportPlayCountByArtistStateEncapsulation).mock
@@ -237,7 +243,7 @@ describe("useLastFM", () => {
       await waitFor(() =>
         expect(
           LastFMPlayCountByArtistDataClient.prototype.retrieveReport
-        ).toBeCalledTimes(1)
+        ).toHaveBeenCalledTimes(1)
       );
       expect(
         LastFMPlayCountByArtistDataClient.prototype.retrieveReport

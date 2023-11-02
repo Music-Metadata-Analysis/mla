@@ -99,7 +99,7 @@ describe(endpointUnderTest, () => {
           });
 
           it("should call the proxy method with the correct params", () => {
-            expect(mockLastFMProxyMethods.getTrackInfo).toBeCalledWith(
+            expect(mockLastFMProxyMethods.getTrackInfo).toHaveBeenCalledWith(
               query.artist,
               query.track,
               query.username
@@ -119,7 +119,9 @@ describe(endpointUnderTest, () => {
           });
 
           it("should NOT call the proxy method", () => {
-            expect(mockLastFMProxyMethods.getTrackInfo).toBeCalledTimes(0);
+            expect(mockLastFMProxyMethods.getTrackInfo).toHaveBeenCalledTimes(
+              0
+            );
           });
         });
       });

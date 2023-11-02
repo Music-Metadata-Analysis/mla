@@ -50,7 +50,7 @@ describe("AuthenticationSignInModalContainer", () => {
 
   const checkAuthenticationSignInModalComponent = () => {
     it("should render the AuthenticationSignInModal as expected", () => {
-      expect(AuthenticationSignInModal).toBeCalledTimes(1);
+      expect(AuthenticationSignInModal).toHaveBeenCalledTimes(1);
       checkMockCall(
         AuthenticationSignInModal,
         {

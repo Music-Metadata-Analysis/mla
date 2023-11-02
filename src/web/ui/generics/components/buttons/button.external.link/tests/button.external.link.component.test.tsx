@@ -36,7 +36,7 @@ describe("ButtonLink", () => {
   };
 
   it("should render ClickLink as expected", () => {
-    expect(ClickLink).toBeCalledTimes(1);
+    expect(ClickLink).toHaveBeenCalledTimes(1);
     const call = jest.mocked(ClickLink).mock.calls[0];
     expect(call[0].href).toBe(mockHref);
     expect(call[0].children).toBeDefined();
@@ -44,7 +44,7 @@ describe("ButtonLink", () => {
   });
 
   it("should render BaseButton as expected", () => {
-    expect(BaseButton).toBeCalledTimes(1);
+    expect(BaseButton).toHaveBeenCalledTimes(1);
     const call = jest.mocked(BaseButton).mock.calls[0];
     expect(call[0].bg).toBe(mockColour);
     expect(call[0].children).toBeDefined();

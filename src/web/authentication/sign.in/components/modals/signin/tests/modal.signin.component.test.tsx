@@ -96,7 +96,7 @@ describe("AuthenticationModal", () => {
 
   const checkChakraModalComponentRender = () => {
     it("should render the Modal component correctly", () => {
-      expect(Modal).toBeCalledTimes(1);
+      expect(Modal).toHaveBeenCalledTimes(1);
       checkMockCall(Modal, {
         isCentered: true,
         isOpen: currentProps.isOpen,
@@ -108,20 +108,20 @@ describe("AuthenticationModal", () => {
 
   const checkChakraModalOverlayComponentRender = () => {
     it("should render the ModalOverlay component correctly", () => {
-      expect(ModalOverlay).toBeCalledTimes(1);
+      expect(ModalOverlay).toHaveBeenCalledTimes(1);
       checkMockCall(ModalOverlay, {});
     });
   };
 
   const checkNoChakraModalOverlayContentComponentRender = () => {
     it("should NOT render the ModalOverlay component", () => {
-      expect(ModalOverlay).toBeCalledTimes(0);
+      expect(ModalOverlay).toHaveBeenCalledTimes(0);
     });
   };
 
   const checkChakraModalContentComponentRender = () => {
     it("should render the ModalContent component correctly", () => {
-      expect(ModalContent).toBeCalledTimes(1);
+      expect(ModalContent).toHaveBeenCalledTimes(1);
       checkMockCall(ModalContent, {
         bg: mockColourHook.modalColour.background,
         borderColor: mockColourHook.modalColour.border,
@@ -135,13 +135,13 @@ describe("AuthenticationModal", () => {
 
   const checkNoChakraModalContentComponentRender = () => {
     it("should NOT render the ModalContent component", () => {
-      expect(ModalContent).toBeCalledTimes(0);
+      expect(ModalContent).toHaveBeenCalledTimes(0);
     });
   };
 
   const checkChakraContainerComponentRender = () => {
     it("should render the Container component correctly", () => {
-      expect(Container).toBeCalledTimes(1);
+      expect(Container).toHaveBeenCalledTimes(1);
       checkMockCall(Container, {
         centerContent: true,
       });
@@ -150,7 +150,7 @@ describe("AuthenticationModal", () => {
 
   const checkChakraModalCloseButtonComponentRender = () => {
     it("should render the ModalCloseButton component correctly", () => {
-      expect(ModalCloseButton).toBeCalledTimes(1);
+      expect(ModalCloseButton).toHaveBeenCalledTimes(1);
       checkMockCall(ModalCloseButton, {
         "data-testid": testIDs.AuthenticationModalCloseButton,
         sx: {
@@ -162,7 +162,7 @@ describe("AuthenticationModal", () => {
 
   const checkChakraModalHeaderComponentRender = () => {
     it("should render the ModalHeader component correctly", () => {
-      expect(ModalHeader).toBeCalledTimes(1);
+      expect(ModalHeader).toHaveBeenCalledTimes(1);
       checkMockCall(ModalHeader, {
         "data-testid": testIDs.AuthenticationModalTitle,
       });
@@ -171,7 +171,7 @@ describe("AuthenticationModal", () => {
 
   const checkChakraModalBodyComponentRender = () => {
     it("should call the ModalBody component correctly", () => {
-      expect(ModalBody).toBeCalledTimes(1);
+      expect(ModalBody).toHaveBeenCalledTimes(1);
       checkMockCall(ModalBody, {
         pl: 2,
         pr: 2,
@@ -181,14 +181,14 @@ describe("AuthenticationModal", () => {
 
   const checkChakraCenterComponentRender = () => {
     it("should call the Center component correctly", () => {
-      expect(Center).toBeCalledTimes(1);
+      expect(Center).toHaveBeenCalledTimes(1);
       checkMockCall(Center, {});
     });
   };
 
   const checkChakraBoxComponentRender = () => {
     it("should render the Box component correctly", () => {
-      expect(BoxWithRef).toBeCalledTimes(2);
+      expect(BoxWithRef).toHaveBeenCalledTimes(2);
       checkMockCall(
         BoxWithRef,
         {
@@ -210,7 +210,7 @@ describe("AuthenticationModal", () => {
 
   const checkChakraFlexComponentRender = () => {
     it("should call the Flex component correctly", () => {
-      expect(Flex).toBeCalledTimes(2);
+      expect(Flex).toHaveBeenCalledTimes(2);
       checkMockCall(
         Flex,
         {
@@ -236,7 +236,7 @@ describe("AuthenticationModal", () => {
 
   const checkVerticalScrollBarComponentRender = () => {
     it("should call the VerticalScrollBar component correctly", () => {
-      expect(VerticalScrollBarContainer).toBeCalledTimes(1);
+      expect(VerticalScrollBarContainer).toHaveBeenCalledTimes(1);
       const call = jest.mocked(VerticalScrollBarContainer).mock.calls[0][0];
       expect(call.scrollRef).toBeDefined();
       expect(call.update).toBe(null);
@@ -249,7 +249,7 @@ describe("AuthenticationModal", () => {
 
   const checkSignInButtonsComponentRender = () => {
     it("should call the SignInButtons component correctly", () => {
-      expect(SignInButtons).toBeCalledTimes(1);
+      expect(SignInButtons).toHaveBeenCalledTimes(1);
       const call = jest.mocked(SignInButtons).mock.calls[0][0];
       expect(call.handleSignIn).toBe(mockHandleSignIn);
       expect(typeof call.t).toBe("function");
@@ -259,14 +259,14 @@ describe("AuthenticationModal", () => {
 
   const checkModalFooterComponentRender = () => {
     it("should call the ModalFooter component correctly", () => {
-      expect(ModalFooter).toBeCalledTimes(1);
+      expect(ModalFooter).toHaveBeenCalledTimes(1);
       checkMockCall(ModalFooter, {});
     });
   };
 
   const checkClickLinkInternalContainerRender = () => {
     it("should call the ClickLinkInternalContainer component correctly", () => {
-      expect(ClickLinkInternalContainer).toBeCalledTimes(1);
+      expect(ClickLinkInternalContainer).toHaveBeenCalledTimes(1);
       checkMockCall(ClickLinkInternalContainer, {
         path: routes.legal.terms,
       });

@@ -42,7 +42,7 @@ describe("Header", () => {
     });
 
     it("should render the web framework's HeadShim component", () => {
-      expect(mockHeadShim).toBeCalledTimes(1);
+      expect(mockHeadShim).toHaveBeenCalledTimes(1);
       checkMockCall(mockHeadShim, {}, 0);
     });
 

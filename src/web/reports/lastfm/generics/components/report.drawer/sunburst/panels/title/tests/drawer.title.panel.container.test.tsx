@@ -45,7 +45,7 @@ describe("SunBurstDrawerTitlePanelContainer", () => {
     expectedSubTitleText: string;
   }) => {
     it("should call the SunBurstDrawerTitlePanel component with the correct props", () => {
-      expect(SunBurstDrawerTitlePanel).toBeCalledTimes(1);
+      expect(SunBurstDrawerTitlePanel).toHaveBeenCalledTimes(1);
       checkMockCall(
         SunBurstDrawerTitlePanel,
         {

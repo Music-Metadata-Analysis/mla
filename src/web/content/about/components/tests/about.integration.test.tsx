@@ -68,7 +68,7 @@ describe("About", () => {
 
     describe("clicking on the start button", () => {
       beforeEach(async () => {
-        expect(mockRouterHook.push).toBeCalledTimes(0);
+        expect(mockRouterHook.push).toHaveBeenCalledTimes(0);
         const footer = await screen.findByTestId(
           testIDs.DialogueFooterComponent
         );
@@ -79,8 +79,10 @@ describe("About", () => {
       });
 
       it("should redirect to the search page", async () => {
-        await waitFor(() => expect(mockRouterHook.push).toBeCalledTimes(1));
-        expect(mockRouterHook.push).toBeCalledWith(
+        await waitFor(() =>
+          expect(mockRouterHook.push).toHaveBeenCalledTimes(1)
+        );
+        expect(mockRouterHook.push).toHaveBeenCalledWith(
           routes.search.lastfm.selection
         );
       });
@@ -88,7 +90,7 @@ describe("About", () => {
 
     describe("clicking on the privacy button", () => {
       beforeEach(async () => {
-        expect(mockRouterHook.push).toBeCalledTimes(0);
+        expect(mockRouterHook.push).toHaveBeenCalledTimes(0);
         const footer = await screen.findByTestId(
           testIDs.DialogueFooterComponent
         );
@@ -99,8 +101,10 @@ describe("About", () => {
       });
 
       it("should redirect to the privacy page", async () => {
-        await waitFor(() => expect(mockRouterHook.push).toBeCalledTimes(1));
-        expect(mockRouterHook.push).toBeCalledWith(routes.legal.privacy);
+        await waitFor(() =>
+          expect(mockRouterHook.push).toHaveBeenCalledTimes(1)
+        );
+        expect(mockRouterHook.push).toHaveBeenCalledWith(routes.legal.privacy);
       });
     });
   });

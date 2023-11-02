@@ -45,7 +45,7 @@ describe("SunBurstDetailsPanel", () => {
 
   const checkBoxProps = () => {
     it("should render the chakra Box component with the expected props", () => {
-      expect(Box).toBeCalledTimes(3);
+      expect(Box).toHaveBeenCalledTimes(3);
       checkMockCall(
         Box,
         {
@@ -80,7 +80,7 @@ describe("SunBurstDetailsPanel", () => {
 
   const checkFlexProps = () => {
     it("should render the chakra Flex component with the expected props", () => {
-      expect(Flex).toBeCalledTimes(2);
+      expect(Flex).toHaveBeenCalledTimes(2);
       checkMockCall(Flex, {}, 0);
       checkMockCall(Flex, {}, 1);
     });
@@ -88,14 +88,14 @@ describe("SunBurstDetailsPanel", () => {
 
   const checkStatProps = () => {
     it("should render the chakra Stat component with the expected props", () => {
-      expect(Stat).toBeCalledTimes(1);
+      expect(Stat).toHaveBeenCalledTimes(1);
       checkMockCall(Stat, {}, 0);
     });
   };
 
   const checkStatLabelProps = () => {
     it("should render the chakra StatLabel component with the expected props", () => {
-      expect(StatLabel).toBeCalledTimes(1);
+      expect(StatLabel).toHaveBeenCalledTimes(1);
       checkMockCall(
         StatLabel,
         {
@@ -114,7 +114,7 @@ describe("SunBurstDetailsPanel", () => {
 
   const checkStatHelpTextProps = () => {
     it("should render the chakra StatHelpText component with the expected props", () => {
-      expect(StatHelpText).toBeCalledTimes(1);
+      expect(StatHelpText).toHaveBeenCalledTimes(1);
       checkMockCall(
         StatHelpText,
         {

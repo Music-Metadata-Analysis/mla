@@ -51,7 +51,7 @@ describe("SunBurstNodeDisplay", () => {
     });
 
     it("should call Box as expected", () => {
-      expect(Box).toBeCalledTimes(1);
+      expect(Box).toHaveBeenCalledTimes(1);
       checkMockCall(
         Box,
         {
@@ -74,12 +74,12 @@ describe("SunBurstNodeDisplay", () => {
       });
 
       it("should NOT call a click handler", () => {
-        expect(mockSelectNode).toBeCalledTimes(0);
+        expect(mockSelectNode).toHaveBeenCalledTimes(0);
       });
     });
 
     it("should call Container as expected", () => {
-      expect(Container).toBeCalledTimes(1);
+      expect(Container).toHaveBeenCalledTimes(1);
       checkMockCall(Container, {
         m: 0,
         p: 0,
@@ -89,7 +89,7 @@ describe("SunBurstNodeDisplay", () => {
     });
 
     it("should call Text as expected", () => {
-      expect(Text).toBeCalledTimes(1);
+      expect(Text).toHaveBeenCalledTimes(1);
       checkMockCall(Text, {
         fontSize: "sm",
         "data-testid": testIDs.NodeDisplayText,

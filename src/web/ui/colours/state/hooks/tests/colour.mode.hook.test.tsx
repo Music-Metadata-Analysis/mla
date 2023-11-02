@@ -31,8 +31,8 @@ describe("useColourMode", () => {
     });
 
     it("should call the underlying vendor hook during render", () => {
-      expect(uiFrameworkVendor.core.colourModeHook).toBeCalledTimes(1);
-      expect(uiFrameworkVendor.core.colourModeHook).toBeCalledWith();
+      expect(uiFrameworkVendor.core.colourModeHook).toHaveBeenCalledTimes(1);
+      expect(uiFrameworkVendor.core.colourModeHook).toHaveBeenCalledWith();
     });
 
     it("should return the vendor hook", () => {

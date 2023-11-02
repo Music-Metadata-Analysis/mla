@@ -35,7 +35,7 @@ describe("NavBarColorModeToggle", () => {
 
   const checkSwitch = ({ isChecked }: { isChecked: boolean }) => {
     it("should render the Switch", () => {
-      expect(Switch).toBeCalledTimes(1);
+      expect(Switch).toHaveBeenCalledTimes(1);
 
       const call = jest.mocked(Switch).mock.calls[0][0];
 
@@ -60,12 +60,12 @@ describe("NavBarColorModeToggle", () => {
     });
 
     it("should render the SunIcon", () => {
-      expect(SunIcon).toBeCalledTimes(1);
+      expect(SunIcon).toHaveBeenCalledTimes(1);
       checkMockCall(SunIcon, { color: "yellow.500", w: 5, h: 5 });
     });
 
     it("should NOT render the MoonIcon", () => {
-      expect(MoonIcon).toBeCalledTimes(0);
+      expect(MoonIcon).toHaveBeenCalledTimes(0);
     });
 
     checkSwitch({ isChecked: true });
@@ -79,12 +79,12 @@ describe("NavBarColorModeToggle", () => {
     });
 
     it("should render the MoonIcon", () => {
-      expect(MoonIcon).toBeCalledTimes(1);
+      expect(MoonIcon).toHaveBeenCalledTimes(1);
       checkMockCall(MoonIcon, { w: 5, h: 5 });
     });
 
     it("should render the SunIcon", () => {
-      expect(SunIcon).toBeCalledTimes(0);
+      expect(SunIcon).toHaveBeenCalledTimes(0);
     });
 
     checkSwitch({ isChecked: false });

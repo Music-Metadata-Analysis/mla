@@ -49,7 +49,7 @@ describe("BillboardContainer", () => {
 
   const checkChakraCenterComponentRender = () => {
     it("should render the chakra Center component as expected", () => {
-      expect(Center).toBeCalledTimes(1);
+      expect(Center).toHaveBeenCalledTimes(1);
       checkMockCall(Center, { height: "calc(100vh)" }, 0);
     });
   };
@@ -62,7 +62,7 @@ describe("BillboardContainer", () => {
     expectedPaddingBottom: number;
   }) => {
     it("should render the chakra Box component as expected", () => {
-      expect(Box).toBeCalledTimes(1);
+      expect(Box).toHaveBeenCalledTimes(1);
       checkMockCall(
         Box,
         {
@@ -80,7 +80,7 @@ describe("BillboardContainer", () => {
 
   const checkChakraContainerComponentRender = () => {
     it("should render the chakra Container component as expected", () => {
-      expect(Container).toBeCalledTimes(1);
+      expect(Container).toHaveBeenCalledTimes(1);
       checkMockCall(
         Container,
         {
@@ -99,13 +99,13 @@ describe("BillboardContainer", () => {
 
   const checkChakraContainerComponentNoRender = () => {
     it("should NOT render the chakra Container component", () => {
-      expect(Container).toBeCalledTimes(0);
+      expect(Container).toHaveBeenCalledTimes(0);
     });
   };
 
   const checkChakraTextComponentRender = () => {
     it("should render the chakra Text component as expected", () => {
-      expect(Text).toBeCalledTimes(1);
+      expect(Text).toHaveBeenCalledTimes(1);
       checkMockCall(Text, {
         "data-testid": testIDs.BillBoardTitle,
         fontSize: ["xl", "2xl", "3xl"],
@@ -115,7 +115,7 @@ describe("BillboardContainer", () => {
 
   const checkChakraTextComponentNoRender = () => {
     it("should NOT render the chakra Text component", () => {
-      expect(Text).toBeCalledTimes(0);
+      expect(Text).toHaveBeenCalledTimes(0);
     });
   };
 

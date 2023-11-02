@@ -68,7 +68,7 @@ describe("useImagesController", () => {
       beforeEach(() => received.result.current.load());
 
       it("should increment the count", () => {
-        expect(mockImagesLoaded).toBeCalledTimes(1);
+        expect(mockImagesLoaded).toHaveBeenCalledTimes(1);
         const callback = jest.mocked(mockImagesLoaded).mock.calls[0][0];
         expect(callback(1)).toBe(2);
       });
@@ -78,8 +78,8 @@ describe("useImagesController", () => {
       beforeEach(() => received.result.current.reset());
 
       it("should zero the count", () => {
-        expect(mockImagesLoaded).toBeCalledTimes(1);
-        expect(mockImagesLoaded).toBeCalledWith(0);
+        expect(mockImagesLoaded).toHaveBeenCalledTimes(1);
+        expect(mockImagesLoaded).toHaveBeenCalledWith(0);
       });
     });
   });

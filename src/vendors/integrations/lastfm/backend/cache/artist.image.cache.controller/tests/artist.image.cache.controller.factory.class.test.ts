@@ -44,23 +44,25 @@ describe(ArtistImageCacheControllerFactory.name, () => {
       beforeEach(() => (result = instance.create()));
 
       it("should instantiate the PersistenceClient as expected", () => {
-        expect(persistenceVendorBackend.PersistenceClient).toBeCalledTimes(1);
-        expect(persistenceVendorBackend.PersistenceClient).toBeCalledWith(
+        expect(
+          persistenceVendorBackend.PersistenceClient
+        ).toHaveBeenCalledTimes(1);
+        expect(persistenceVendorBackend.PersistenceClient).toHaveBeenCalledWith(
           "MockValue1"
         );
       });
 
       it("should instantiate the CdnClient as expected", () => {
-        expect(ArtistImageCdnClient).toBeCalledTimes(1);
-        expect(ArtistImageCdnClient).toBeCalledWith(
+        expect(ArtistImageCdnClient).toHaveBeenCalledTimes(1);
+        expect(ArtistImageCdnClient).toHaveBeenCalledWith(
           mockPersistenceClient,
           "MockValue2"
         );
       });
 
       it("should instantiate the CacheController as expected", () => {
-        expect(cacheVendorBackend.CdnController).toBeCalledTimes(1);
-        expect(cacheVendorBackend.CdnController).toBeCalledWith(
+        expect(cacheVendorBackend.CdnController).toHaveBeenCalledTimes(1);
+        expect(cacheVendorBackend.CdnController).toHaveBeenCalledWith(
           "",
           jest.mocked(ArtistImageCdnClient).mock.instances[0]
         );

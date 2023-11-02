@@ -68,8 +68,8 @@ describe("SearchSelection", () => {
           });
 
           it("should route to the expected page", () => {
-            expect(mockRouterHook.push).toBeCalledTimes(1);
-            expect(mockRouterHook.push).toBeCalledWith(
+            expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+            expect(mockRouterHook.push).toHaveBeenCalledWith(
               config.select.options[index].route
             );
           });
@@ -126,8 +126,8 @@ describe("SearchSelection", () => {
           });
 
           it("should route to the expected page", () => {
-            expect(mockRouterHook.push).toBeCalledTimes(1);
-            expect(mockRouterHook.push).toBeCalledWith(
+            expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+            expect(mockRouterHook.push).toHaveBeenCalledWith(
               config.select.options[index].route
             );
           });

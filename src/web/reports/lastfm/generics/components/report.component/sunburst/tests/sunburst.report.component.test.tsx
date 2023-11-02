@@ -110,7 +110,7 @@ describe("SunBurstReport", () => {
     componentName: string;
   }) => {
     it(`should render the ${componentName} component ${calls} time(s)`, () => {
-      expect(component).toBeCalledTimes(calls);
+      expect(component).toHaveBeenCalledTimes(calls);
     });
   };
 
@@ -165,7 +165,7 @@ describe("SunBurstReport", () => {
 
     if (calls > 2) {
       it("should render the info section Flex component correctly", () => {
-        expect(Flex).toBeCalledTimes(3);
+        expect(Flex).toHaveBeenCalledTimes(3);
         checkMockCall(
           Flex,
           {
@@ -235,7 +235,7 @@ describe("SunBurstReport", () => {
 
     if (calls > 0) {
       it("should render the SunBurstTitlePanel component correctly", () => {
-        expect(SunBurstTitlePanel).toBeCalledTimes(1);
+        expect(SunBurstTitlePanel).toHaveBeenCalledTimes(1);
         checkMockCall(
           SunBurstTitlePanel,
           {
@@ -259,7 +259,7 @@ describe("SunBurstReport", () => {
 
     if (calls > 0) {
       it("should render the SunBurstControlPanel component correctly", () => {
-        expect(SunBurstControlPanel).toBeCalledTimes(1);
+        expect(SunBurstControlPanel).toHaveBeenCalledTimes(1);
         checkMockCall(
           SunBurstControlPanel,
           {
@@ -288,7 +288,7 @@ describe("SunBurstReport", () => {
 
     if (calls > 0) {
       it("should call the SunBurstInfoPanel component correctly", () => {
-        expect(SunBurstInfoPanel).toBeCalledTimes(1);
+        expect(SunBurstInfoPanel).toHaveBeenCalledTimes(1);
         checkMockCall(
           SunBurstInfoPanel,
           {
@@ -311,7 +311,7 @@ describe("SunBurstReport", () => {
 
     if (calls > 0) {
       it("should call the SunBurstChart component correctly", () => {
-        expect(SunBurstChart).toBeCalledTimes(1);
+        expect(SunBurstChart).toHaveBeenCalledTimes(1);
         checkMockCall(
           SunBurstChart,
           {
@@ -347,10 +347,10 @@ describe("SunBurstReport", () => {
         it("should call the underlying hook function correctly", () => {
           expect(
             mockSunBurstControllerHook.svg.setTransitioning
-          ).toBeCalledTimes(1);
+          ).toHaveBeenCalledTimes(1);
           expect(
             mockSunBurstControllerHook.svg.setTransitioning
-          ).toBeCalledWith(false);
+          ).toHaveBeenCalledWith(false);
         });
       });
     }
@@ -369,7 +369,7 @@ describe("SunBurstReport", () => {
 
     if (calls > 0) {
       it("should call the SunBurstNotVisiblePanel component", () => {
-        expect(SunBurstErrorPanel).toBeCalledTimes(1);
+        expect(SunBurstErrorPanel).toHaveBeenCalledTimes(1);
         checkMockCall(
           SunBurstErrorPanel,
           {

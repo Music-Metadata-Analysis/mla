@@ -32,7 +32,7 @@ describe("StandardButton", () => {
 
   it("should render BaseButton as expected", () => {
     arrange();
-    expect(BaseButton).toBeCalledTimes(1);
+    expect(BaseButton).toHaveBeenCalledTimes(1);
     checkMockCall(BaseButton, {
       "data-testid": mockTestId,
     });
@@ -50,7 +50,9 @@ describe("StandardButton", () => {
     });
 
     it("should call the button click tracker", () => {
-      expect(mockAnalyticsCollectionHook.trackButtonClick).toBeCalledTimes(1);
+      expect(
+        mockAnalyticsCollectionHook.trackButtonClick
+      ).toHaveBeenCalledTimes(1);
       const call = mockAnalyticsCollectionHook.trackButtonClick.mock.calls[0];
       expect(call[0].constructor.name).toBe("SyntheticBaseEvent");
       expect(call[1]).toBe(mockAnalyticsName);

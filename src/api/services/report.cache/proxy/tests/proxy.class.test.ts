@@ -57,8 +57,10 @@ describe(ReportCacheProxy.name, () => {
     });
 
     it("should instantiate the underlying persistanceVendor", () => {
-      expect(persistenceVendorBackend.PersistenceClient).toBeCalledTimes(1);
-      expect(persistenceVendorBackend.PersistenceClient).toBeCalledWith(
+      expect(persistenceVendorBackend.PersistenceClient).toHaveBeenCalledTimes(
+        1
+      );
+      expect(persistenceVendorBackend.PersistenceClient).toHaveBeenCalledWith(
         mockBucketName
       );
     });
@@ -98,32 +100,32 @@ describe(ReportCacheProxy.name, () => {
         it("should instantiate the CdnOriginReportsCacheObject class correctly", () => {
           expect(
             cacheVendorBackend.CdnOriginReportsCacheObject
-          ).toBeCalledTimes(1);
-          expect(cacheVendorBackend.CdnOriginReportsCacheObject).toBeCalledWith(
-            {
-              authenticatedUserName: mockAuthenticatedUser,
-              reportName: mockReportName,
-              sourceName: mockSourceName,
-              userName: mockUserName,
-              content: mockObjectContent,
-            }
-          );
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            cacheVendorBackend.CdnOriginReportsCacheObject
+          ).toHaveBeenCalledWith({
+            authenticatedUserName: mockAuthenticatedUser,
+            reportName: mockReportName,
+            sourceName: mockSourceName,
+            userName: mockUserName,
+            content: mockObjectContent,
+          });
         });
 
         it("should call the getStorageName method of the CdnOriginReportsCacheObject class correctly", () => {
           expect(
             cacheVendorBackend.CdnOriginReportsCacheObject.prototype
               .getStorageName
-          ).toBeCalledTimes(1);
+          ).toHaveBeenCalledTimes(1);
           expect(
             cacheVendorBackend.CdnOriginReportsCacheObject.prototype
               .getStorageName
-          ).toBeCalledWith();
+          ).toHaveBeenCalledWith();
         });
 
         it("should call the write method of the mockPersistenceClient", () => {
-          expect(mockPersistenceClient.write).toBeCalledTimes(1);
-          expect(mockPersistenceClient.write).toBeCalledWith(
+          expect(mockPersistenceClient.write).toHaveBeenCalledTimes(1);
+          expect(mockPersistenceClient.write).toHaveBeenCalledWith(
             mockObjectName,
             mockObjectContent,
             mockObjectHeaders
@@ -173,33 +175,33 @@ describe(ReportCacheProxy.name, () => {
         it("should instantiate the CdnOriginReportsCacheObject class correctly", () => {
           expect(
             cacheVendorBackend.CdnOriginReportsCacheObject
-          ).toBeCalledTimes(1);
-          expect(cacheVendorBackend.CdnOriginReportsCacheObject).toBeCalledWith(
-            {
-              authenticatedUserName: mockAuthenticatedUser,
-              reportName: mockReportName,
-              sourceName: mockSourceName,
-              userName: mockUserName,
-            }
-          );
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            cacheVendorBackend.CdnOriginReportsCacheObject
+          ).toHaveBeenCalledWith({
+            authenticatedUserName: mockAuthenticatedUser,
+            reportName: mockReportName,
+            sourceName: mockSourceName,
+            userName: mockUserName,
+          });
         });
 
         it("should call the getStorageName method of the CdnOriginReportsCacheObject class correctly", () => {
           expect(
             cacheVendorBackend.CdnOriginReportsCacheObject.prototype
               .getStorageName
-          ).toBeCalledTimes(1);
+          ).toHaveBeenCalledTimes(1);
           expect(
             cacheVendorBackend.CdnOriginReportsCacheObject.prototype
               .getStorageName
-          ).toBeCalledWith();
+          ).toHaveBeenCalledWith();
         });
       };
 
       const checkFetch = () => {
         it("should call fetch with the expected props", () => {
-          expect(fetchSpy).toBeCalledTimes(1);
-          expect(fetchSpy).toBeCalledWith(
+          expect(fetchSpy).toHaveBeenCalledTimes(1);
+          expect(fetchSpy).toHaveBeenCalledWith(
             [
               "https:/",
               process.env.LASTFM_CACHE_AWS_CLOUDFRONT_DOMAIN_NAME,
@@ -229,8 +231,8 @@ describe(ReportCacheProxy.name, () => {
           checkFetch();
 
           it("should retrieve the Cache-Control header", () => {
-            expect(mockHeaders.get).toBeCalledTimes(1);
-            expect(mockHeaders.get).toBeCalledWith("Cache-Control");
+            expect(mockHeaders.get).toHaveBeenCalledTimes(1);
+            expect(mockHeaders.get).toHaveBeenCalledWith("Cache-Control");
           });
 
           it("should return the correct result", () => {
@@ -260,8 +262,8 @@ describe(ReportCacheProxy.name, () => {
           checkFetch();
 
           it("should retrieve the Cache-Control header", () => {
-            expect(mockHeaders.get).toBeCalledTimes(1);
-            expect(mockHeaders.get).toBeCalledWith("Cache-Control");
+            expect(mockHeaders.get).toHaveBeenCalledTimes(1);
+            expect(mockHeaders.get).toHaveBeenCalledWith("Cache-Control");
           });
 
           it("should return the correct result", () => {
@@ -296,7 +298,7 @@ describe(ReportCacheProxy.name, () => {
         checkFetch();
 
         it("should NOT retrieve the Cache-Control header", () => {
-          expect(mockHeaders.get).toBeCalledTimes(0);
+          expect(mockHeaders.get).toHaveBeenCalledTimes(0);
         });
 
         it("should throw the expected error", () => {
@@ -326,7 +328,7 @@ describe(ReportCacheProxy.name, () => {
         checkFetch();
 
         it("should NOT retrieve the Cache-Control header", () => {
-          expect(mockHeaders.get).toBeCalledTimes(0);
+          expect(mockHeaders.get).toHaveBeenCalledTimes(0);
         });
 
         it("should throw the expected error", () => {

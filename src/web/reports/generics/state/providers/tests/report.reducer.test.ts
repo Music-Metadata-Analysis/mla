@@ -45,8 +45,8 @@ describe("ReportReducer", () => {
   };
 
   it("should be wrapped in the correct middlewares", () => {
-    expect(mockApplyMiddleware).toBeCalledTimes(1);
-    expect(mockApplyMiddleware).toBeCalledWith(coreReportReducer, [
+    expect(mockApplyMiddleware).toHaveBeenCalledTimes(1);
+    expect(mockApplyMiddleware).toHaveBeenCalledWith(coreReportReducer, [
       mockLoggingMiddleware,
     ]);
   });

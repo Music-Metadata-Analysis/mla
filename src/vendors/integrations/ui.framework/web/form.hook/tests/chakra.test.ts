@@ -60,14 +60,14 @@ describe("useChakraForm", () => {
       );
 
       it("should NOT generate a new toast", () => {
-        expect(mockToast).toBeCalledTimes(0);
-        expect(mockToast.isActive).toBeCalledTimes(1);
-        expect(mockToast.close).toBeCalledTimes(0);
+        expect(mockToast).toHaveBeenCalledTimes(0);
+        expect(mockToast.isActive).toHaveBeenCalledTimes(1);
+        expect(mockToast.close).toHaveBeenCalledTimes(0);
       });
 
       it("should update the toast", () => {
-        expect(mockToast.update).toBeCalledTimes(1);
-        expect(mockToast.update).toBeCalledWith(testField, {
+        expect(mockToast.update).toHaveBeenCalledTimes(1);
+        expect(mockToast.update).toHaveBeenCalledWith(testField, {
           duration: 1000,
           isClosable: false,
           status: "error",
@@ -80,10 +80,10 @@ describe("useChakraForm", () => {
       beforeEach(() => received.result.current.error.close(testField));
 
       it("should close the toast toast", () => {
-        expect(mockToast).toBeCalledTimes(0);
-        expect(mockToast.isActive).toBeCalledTimes(1);
-        expect(mockToast.close).toBeCalledTimes(1);
-        expect(mockToast.close).toBeCalledWith(testField);
+        expect(mockToast).toHaveBeenCalledTimes(0);
+        expect(mockToast.isActive).toHaveBeenCalledTimes(1);
+        expect(mockToast.close).toHaveBeenCalledTimes(1);
+        expect(mockToast.close).toHaveBeenCalledWith(testField);
       });
     });
   });
@@ -104,16 +104,16 @@ describe("useChakraForm", () => {
       );
 
       it("should generate a new toast", () => {
-        expect(mockToast).toBeCalledTimes(1);
-        expect(mockToast).toBeCalledWith({
+        expect(mockToast).toHaveBeenCalledTimes(1);
+        expect(mockToast).toHaveBeenCalledWith({
           duration: 1000,
           id: testField,
           isClosable: false,
           status: "error",
           title: testMessage,
         });
-        expect(mockToast.isActive).toBeCalledTimes(1);
-        expect(mockToast.close).toBeCalledTimes(0);
+        expect(mockToast.isActive).toHaveBeenCalledTimes(1);
+        expect(mockToast.close).toHaveBeenCalledTimes(0);
       });
     });
 
@@ -121,9 +121,9 @@ describe("useChakraForm", () => {
       beforeEach(() => received.result.current.error.close(testField));
 
       it("should NOT close the toast toast", () => {
-        expect(mockToast).toBeCalledTimes(0);
-        expect(mockToast.isActive).toBeCalledTimes(1);
-        expect(mockToast.close).toBeCalledTimes(0);
+        expect(mockToast).toHaveBeenCalledTimes(0);
+        expect(mockToast.isActive).toHaveBeenCalledTimes(1);
+        expect(mockToast.close).toHaveBeenCalledTimes(0);
       });
     });
   });

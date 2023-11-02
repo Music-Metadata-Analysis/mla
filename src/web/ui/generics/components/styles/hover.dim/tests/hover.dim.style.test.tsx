@@ -20,7 +20,7 @@ describe("DimOnHover", () => {
   };
 
   it("should call Box with the correct props", () => {
-    expect(Box).toBeCalledTimes(1);
+    expect(Box).toHaveBeenCalledTimes(1);
     checkMockCall(Box, {}, 0, [], true);
   });
 

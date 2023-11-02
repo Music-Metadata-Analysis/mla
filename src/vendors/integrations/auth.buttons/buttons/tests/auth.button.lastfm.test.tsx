@@ -57,8 +57,8 @@ describe("LastFMAuthButton", () => {
     it("should render the underlying iconComponent", () => {
       arrange();
 
-      expect(iconComponent).toBeCalledTimes(1);
-      expect(iconComponent).toBeCalledWith({
+      expect(iconComponent).toHaveBeenCalledTimes(1);
+      expect(iconComponent).toHaveBeenCalledWith({
         height: undefined,
         width: undefined,
       });
@@ -86,8 +86,8 @@ describe("LastFMAuthButton", () => {
       });
 
       it("should call the callBack as expected", () => {
-        expect(mockCallBack).toBeCalledTimes(1);
-        expect(mockCallBack).toBeCalledWith("lastfm");
+        expect(mockCallBack).toHaveBeenCalledTimes(1);
+        expect(mockCallBack).toHaveBeenCalledWith("lastfm");
       });
     });
   });

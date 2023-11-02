@@ -57,24 +57,24 @@ describe("useVerticalScrollBarEventsController", () => {
     it("should register the hook handlers on mount (useEffect)", () => {
       expect(
         mockVerticalScrollBarEventHandlers.registerHookHandlers
-      ).toBeCalledTimes(1);
+      ).toHaveBeenCalledTimes(1);
       expect(
         mockVerticalScrollBarEventHandlers.registerHookHandlers
-      ).toBeCalledWith();
+      ).toHaveBeenCalledWith();
     });
   };
   const checkDoesNotRegister = () => {
     it("should NOT register the hook handlers on mount (useEffect)", () => {
       expect(
         mockVerticalScrollBarEventHandlers.registerHookHandlers
-      ).toBeCalledTimes(0);
+      ).toHaveBeenCalledTimes(0);
     });
   };
 
   const checkActivatesScrollBar = () => {
     it("should activate the current scrollRef on mount (useEffect)", () => {
-      expect(mockUseScrollBars.add).toBeCalledTimes(1);
-      expect(mockUseScrollBars.add).toBeCalledWith(
+      expect(mockUseScrollBars.add).toHaveBeenCalledTimes(1);
+      expect(mockUseScrollBars.add).toHaveBeenCalledWith(
         currentProps.scrollRef.current?.id
       );
     });
@@ -82,7 +82,7 @@ describe("useVerticalScrollBarEventsController", () => {
 
   const checkDoesNotActivateScrollBar = () => {
     it("should NOT activate the current scrollRef on mount (useEffect)", () => {
-      expect(mockUseScrollBars.add).toBeCalledTimes(0);
+      expect(mockUseScrollBars.add).toHaveBeenCalledTimes(0);
     });
   };
 
@@ -94,20 +94,20 @@ describe("useVerticalScrollBarEventsController", () => {
 
       it("should deactivate this scrollbar", async () => {
         await waitFor(() =>
-          expect(mockUseScrollBars.remove).toBeCalledTimes(1)
+          expect(mockUseScrollBars.remove).toHaveBeenCalledTimes(1)
         );
-        expect(mockUseScrollBars.remove).toBeCalledWith();
+        expect(mockUseScrollBars.remove).toHaveBeenCalledWith();
       });
 
       it("should unregister the hook handlers", async () => {
         await waitFor(() =>
           expect(
             mockVerticalScrollBarEventHandlers.unregisterAllHandlers
-          ).toBeCalledTimes(1)
+          ).toHaveBeenCalledTimes(1)
         );
         expect(
           mockVerticalScrollBarEventHandlers.unregisterAllHandlers
-        ).toBeCalledWith();
+        ).toHaveBeenCalledWith();
       });
     });
   };
@@ -125,10 +125,10 @@ describe("useVerticalScrollBarEventsController", () => {
       it("should call the underlying VerticalScrollBarEventHandlers class method", () => {
         expect(
           mockVerticalScrollBarEventHandlers.mouseDownHandler
-        ).toBeCalledTimes(1);
+        ).toHaveBeenCalledTimes(1);
         expect(
           mockVerticalScrollBarEventHandlers.mouseDownHandler
-        ).toBeCalledWith(mouseEvent);
+        ).toHaveBeenCalledWith(mouseEvent);
       });
     });
   };
@@ -144,14 +144,14 @@ describe("useVerticalScrollBarEventsController", () => {
     checkDoesNotRegister();
 
     it("should NOT notify the handlers of the active scrollbar on mount (useEffect)", () => {
-      expect(activeScrollBarSetter).toBeCalledTimes(0);
+      expect(activeScrollBarSetter).toHaveBeenCalledTimes(0);
     });
 
     checkUnmount();
     checkDoesNotActivateScrollBar();
 
     it("should NOT notify the handlers of the newly mounted scrollbar on mount (useEffect)", () => {
-      expect(activeScrollBarSetter).toBeCalledTimes(0);
+      expect(activeScrollBarSetter).toHaveBeenCalledTimes(0);
     });
 
     checkMouseDownHandler();
@@ -176,7 +176,7 @@ describe("useVerticalScrollBarEventsController", () => {
       checkRegister();
 
       it("should notify the handlers of the active scrollbar on mount (useEffect)", () => {
-        expect(activeScrollBarSetter).toBeCalledTimes(2);
+        expect(activeScrollBarSetter).toHaveBeenCalledTimes(2);
         expect(activeScrollBarSetter).toHaveBeenNthCalledWith(
           1,
           mockActiveScrollBarID
@@ -187,7 +187,7 @@ describe("useVerticalScrollBarEventsController", () => {
       checkActivatesScrollBar();
 
       it("should notify the handlers of the newly mounted scrollbar on mount (useEffect)", async () => {
-        expect(activeScrollBarSetter).toBeCalledTimes(2);
+        expect(activeScrollBarSetter).toHaveBeenCalledTimes(2);
         expect(activeScrollBarSetter).toHaveBeenNthCalledWith(2, mockDivId);
       });
 
@@ -205,16 +205,18 @@ describe("useVerticalScrollBarEventsController", () => {
       checkDoesNotRegister();
 
       it("should NOT notify the handlers of the active scrollbar on mount (useEffect)", () => {
-        expect(activeScrollBarSetter).toBeCalledTimes(1);
-        expect(activeScrollBarSetter).not.toBeCalledWith(mockActiveScrollBarID);
+        expect(activeScrollBarSetter).toHaveBeenCalledTimes(1);
+        expect(activeScrollBarSetter).not.toHaveBeenCalledWith(
+          mockActiveScrollBarID
+        );
       });
 
       checkUnmount();
       checkActivatesScrollBar();
 
       it("should notify the handlers of the newly mounted scrollbar on mount (useEffect)", async () => {
-        expect(activeScrollBarSetter).toBeCalledTimes(1);
-        expect(activeScrollBarSetter).toBeCalledWith(mockDivId);
+        expect(activeScrollBarSetter).toHaveBeenCalledTimes(1);
+        expect(activeScrollBarSetter).toHaveBeenCalledWith(mockDivId);
       });
 
       checkMouseDownHandler();

@@ -43,8 +43,8 @@ describe("LastFMBaseClient", () => {
 
   const checkUrl = () => {
     it("should make the request with the correct url", () => {
-      expect(mockHttpClientRequest).toBeCalledTimes(1);
-      expect(mockHttpClientRequest).toBeCalledWith(
+      expect(mockHttpClientRequest).toHaveBeenCalledTimes(1);
+      expect(mockHttpClientRequest).toHaveBeenCalledWith(
         instance.route?.replace(
           ":username",
           encodeURIComponent(mockUserParams.userName)
@@ -62,8 +62,8 @@ describe("LastFMBaseClient", () => {
       expectedRoute += `?username=${encodeURIComponent(
         mockUserParamsWithArtist.userName
       )}`;
-      expect(mockHttpClientRequest).toBeCalledTimes(1);
-      expect(mockHttpClientRequest).toBeCalledWith(expectedRoute);
+      expect(mockHttpClientRequest).toHaveBeenCalledTimes(1);
+      expect(mockHttpClientRequest).toHaveBeenCalledWith(expectedRoute);
     });
   };
 
@@ -115,7 +115,7 @@ describe("LastFMBaseClient", () => {
           checkUrl();
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "StartFetch",
               userName: mockUserParams.userName,
@@ -131,7 +131,7 @@ describe("LastFMBaseClient", () => {
           });
 
           it("should register events correctly", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+            await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
             expect(mockEvent).toHaveBeenCalledWith(requestEvent);
             expect(mockEvent).toHaveBeenCalledWith(
               new analyticsVendor.collection.EventDefinition({
@@ -153,7 +153,7 @@ describe("LastFMBaseClient", () => {
           checkUrlWithQueryString();
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "StartFetch",
               userName: mockUserParams.userName,
@@ -169,7 +169,7 @@ describe("LastFMBaseClient", () => {
           });
 
           it("should register events correctly", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+            await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
             expect(mockEvent).toHaveBeenCalledWith(requestEvent);
             expect(mockEvent).toHaveBeenCalledWith(
               new analyticsVendor.collection.EventDefinition({
@@ -192,7 +192,7 @@ describe("LastFMBaseClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetch",
             userName: mockUserParams.userName,
@@ -206,7 +206,7 @@ describe("LastFMBaseClient", () => {
         });
 
         it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+          await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
           expect(mockEvent).toHaveBeenCalledWith(requestEvent);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
@@ -228,7 +228,7 @@ describe("LastFMBaseClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetch",
             userName: mockUserParams.userName,
@@ -242,7 +242,7 @@ describe("LastFMBaseClient", () => {
         });
 
         it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+          await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
           expect(mockEvent).toHaveBeenCalledWith(requestEvent);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
@@ -262,7 +262,7 @@ describe("LastFMBaseClient", () => {
         });
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetch",
             userName: mockUserParams.userName,
@@ -276,7 +276,7 @@ describe("LastFMBaseClient", () => {
         });
 
         it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+          await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
           expect(mockEvent).toHaveBeenCalledWith(requestEvent);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
@@ -298,7 +298,7 @@ describe("LastFMBaseClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetch",
             userName: mockUserParams.userName,
@@ -312,7 +312,7 @@ describe("LastFMBaseClient", () => {
         });
 
         it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+          await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
           expect(mockEvent).toHaveBeenCalledWith(requestEvent);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
@@ -326,7 +326,7 @@ describe("LastFMBaseClient", () => {
 
       describe("when a request time out", () => {
         const waitForBackOff = async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
         };
 
         describe("with a retry header", () => {
@@ -339,7 +339,7 @@ describe("LastFMBaseClient", () => {
           checkUrl();
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "StartFetch",
               userName: mockUserParams.userName,
@@ -353,8 +353,8 @@ describe("LastFMBaseClient", () => {
           });
 
           it("should NOT register events", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(1));
-            expect(mockEvent).toBeCalledTimes(1);
+            await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(1));
+            expect(mockEvent).toHaveBeenCalledTimes(1);
             expect(mockEvent).toHaveBeenCalledWith(requestEvent);
           });
         });
@@ -369,7 +369,7 @@ describe("LastFMBaseClient", () => {
           checkUrl();
 
           it("should dispatch the reducer correctly", async () => {
-            await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+            await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
             expect(mockDispatch).toHaveBeenCalledWith({
               type: "StartFetch",
               userName: mockUserParams.userName,
@@ -383,7 +383,7 @@ describe("LastFMBaseClient", () => {
           });
 
           it("should register a failure event", async () => {
-            await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+            await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
             expect(mockEvent).toHaveBeenCalledWith(requestEvent);
             expect(mockEvent).toHaveBeenCalledWith(
               new analyticsVendor.collection.EventDefinition({
@@ -406,7 +406,7 @@ describe("LastFMBaseClient", () => {
         checkUrl();
 
         it("should dispatch the reducer correctly", async () => {
-          await waitFor(() => expect(mockDispatch).toBeCalledTimes(2));
+          await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(2));
           expect(mockDispatch).toHaveBeenCalledWith({
             type: "StartFetch",
             userName: mockUserParams.userName,
@@ -420,7 +420,7 @@ describe("LastFMBaseClient", () => {
         });
 
         it("should register events correctly", async () => {
-          await waitFor(() => expect(mockEvent).toBeCalledTimes(2));
+          await waitFor(() => expect(mockEvent).toHaveBeenCalledTimes(2));
           expect(mockEvent).toHaveBeenCalledWith(requestEvent);
           expect(mockEvent).toHaveBeenCalledWith(
             new analyticsVendor.collection.EventDefinition({
