@@ -1,5 +1,5 @@
-import type { ReportType } from "../generic.report.types";
 import type { ReportStateInterface } from "./report.state.types";
+import type { ReportType } from "../generic.report.types";
 import type { DataSourceTypes } from "@src/web/reports/generics/types/source.types";
 
 export type ReportActionType =

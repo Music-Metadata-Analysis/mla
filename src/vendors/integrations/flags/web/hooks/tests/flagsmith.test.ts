@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import { useFlags, useFlagsmith } from "flagsmith/react";
 import useFlagSmithVendor from "../flagsmith";

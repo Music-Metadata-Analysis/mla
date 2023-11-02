@@ -130,7 +130,10 @@ describe("Dialogue", () => {
     it(`should wrap the ${name} in a chakra Box component`, async () => {
       const call = jest
         .mocked(Box)
-        .mock.calls.find((call) => call[0]["data-testid"] == testId);
+        .mock.calls.find(
+          (call) =>
+            (call[0] as { "data-testid": string })["data-testid"] == testId
+        );
       expect(call).toBeDefined();
       expect(
         await within(await screen.findByTestId(testId)).findByText(

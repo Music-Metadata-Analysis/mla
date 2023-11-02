@@ -1,5 +1,5 @@
 import { waitFor, act } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";

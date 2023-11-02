@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/colour.mode.hook.mock";
 import useColourMode from "../colour.mode.hook";

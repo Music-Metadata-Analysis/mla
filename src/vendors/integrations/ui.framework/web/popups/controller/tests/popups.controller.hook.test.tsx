@@ -1,7 +1,8 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/popups.controller.hook.mock";
 import usePopUpsController from "../popups.controller.hook";
+import { createHookWrapper } from "@src/fixtures/mocks/mock.hook.wrapper";
 import { PopUpsControllerContext } from "@src/vendors/integrations/ui.framework/web/popups/provider/popups.provider";
 import type { PopUpsControllerContextInterface } from "@src/vendors/types/integrations/ui.framework/popups/popups.context.types";
 import type { ReactNode } from "react";
@@ -47,10 +48,12 @@ describe("usePopUpsController", () => {
 
   const arrange = (providerPopupProps: PopUpsControllerContextInterface) => {
     return renderHook(() => usePopUpsController(), {
-      wrapper: providerWrapper,
-      initialProps: {
-        mockPopupContext: providerPopupProps,
-      },
+      wrapper: createHookWrapper<MockInterfaceContextWithChildren>(
+        providerWrapper,
+        {
+          mockPopupContext: providerPopupProps,
+        }
+      ),
     });
   };
 

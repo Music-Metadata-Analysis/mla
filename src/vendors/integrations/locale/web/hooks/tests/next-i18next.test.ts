@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import { useTranslation } from "next-i18next";
 import useNextI18NextVendor from "../next-i18next";

@@ -124,7 +124,7 @@ describe("SunBurstDrawerControlPanel", () => {
           m: 2,
           size: "xs",
           width: 50,
-          disabled: !parent,
+          isDisabled: !parent,
         },
         0,
         ["onClick"]

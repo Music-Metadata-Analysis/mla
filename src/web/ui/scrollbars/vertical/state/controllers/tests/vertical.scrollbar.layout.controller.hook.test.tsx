@@ -1,5 +1,5 @@
 import { waitFor, fireEvent } from "@testing-library/react";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import { useState } from "react";
 import mockHookValues from "../__mocks__/vertical.scrollbar.layout.controller.hook.mock";

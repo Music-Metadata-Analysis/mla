@@ -157,7 +157,7 @@ describe("SunBurstControlPanel", () => {
           mb: 2,
           size: "xs",
           width: 50,
-          disabled: !hasParent || isOpen,
+          isDisabled: !hasParent || isOpen,
         },
         0,
         ["onClick"]
@@ -172,7 +172,7 @@ describe("SunBurstControlPanel", () => {
           mb: 2,
           size: "xs",
           width: 50,
-          disabled: isOpen,
+          isDisabled: isOpen,
           onClick: currentProps.openDrawer,
         },
         1,

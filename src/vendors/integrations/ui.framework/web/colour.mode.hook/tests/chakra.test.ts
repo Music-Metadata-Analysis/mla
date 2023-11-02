@@ -1,5 +1,5 @@
 import { useColorMode } from "@chakra-ui/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import useChakraColourMode from "../chakra";
 import { mockColourModeHook } from "@src/vendors/integrations/ui.framework/__mocks__/vendor.mock";

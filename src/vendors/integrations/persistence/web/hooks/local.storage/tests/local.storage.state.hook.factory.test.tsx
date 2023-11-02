@@ -1,4 +1,4 @@
-import { renderHook, act } from "@testing-library/react-hooks";
+import { renderHook, act } from "@testing-library/react";
 import createLocalStorageState from "../local.storage.state.hook.factory";
 
 describe("createLocalStorageState", () => {

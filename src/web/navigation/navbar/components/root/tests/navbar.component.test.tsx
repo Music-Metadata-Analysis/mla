@@ -201,7 +201,7 @@ describe("NavBar", () => {
       checkProp(iconRender, "data-testid", testIDs.NavBarMobileMenuButton);
       checkProp(
         iconRender,
-        "disabled",
+        "isDisabled",
         !mockNavBarLayoutControllerHook.controls.hamburger.state
       );
       checkProp(iconRender, "display", { sm: "none" });

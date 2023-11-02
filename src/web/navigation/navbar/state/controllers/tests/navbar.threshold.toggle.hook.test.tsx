@@ -1,5 +1,5 @@
 import { fireEvent, waitFor } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import mockHookValues from "../__mocks__/navbar.threshold.toggle.hook.mock";
 import useNavBarThresholdToggle, {
   UseNavBarThresholdToggleInterface,

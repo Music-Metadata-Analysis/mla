@@ -1,5 +1,5 @@
 import { waitFor } from "@testing-library/react";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/toggle.hook.mock";
 import useToggle from "../toggle.hook";

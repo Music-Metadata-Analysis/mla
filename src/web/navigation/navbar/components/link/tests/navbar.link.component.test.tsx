@@ -46,7 +46,7 @@ describe("NavBarLink", () => {
           },
           bg: mockColourHook.navButtonColour.background,
           borderColor: expectedBorderColour,
-          disabled: mockTransaction,
+          isDisabled: mockTransaction,
           m: [1, 2, 2],
           pl: [1, 2, 2],
           pr: [1, 2, 2],

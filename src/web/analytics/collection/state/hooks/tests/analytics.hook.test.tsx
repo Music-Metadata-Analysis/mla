@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import mockAnalyticsCollectionHook from "../__mocks__/analytics.hook.mock";
 import useAnalytics from "../analytics.hook";

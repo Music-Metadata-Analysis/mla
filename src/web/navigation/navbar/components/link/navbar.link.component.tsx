@@ -25,7 +25,7 @@ const NavLink = ({
       }}
       bg={navButtonColour.background}
       borderColor={selected ? navButtonColour.selectedBackground : transparent}
-      disabled={transaction}
+      isDisabled={transaction}
       m={[1, 2, 2]}
       onClick={handleClick}
       pl={[1, 2, 2]}

@@ -1,5 +1,5 @@
-import type { ReportType } from "../generic.report.types";
 import type { ReportActionType } from "./report.action.types";
+import type { ReportType } from "../generic.report.types";
 
 interface ReportDataInterface {
   integration: string | null;

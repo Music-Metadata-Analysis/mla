@@ -43,7 +43,7 @@ describe("useChakraPopUp", () => {
 
   const arrange = () => {
     render(
-      <uiFrameworkVendor.core.Provider cookies={""}>
+      <uiFrameworkVendor.core.Provider cookies={"chakra-ui-color-mode=dark;"}>
         <PopUpsControllerProvider popUps={[mockName]}>
           <PopUpHarness />
         </PopUpsControllerProvider>
