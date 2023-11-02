@@ -4,10 +4,6 @@ const settings = {
     m: 1,
     size: "sm",
   },
-  iconComponentProps: {
-    width: 75,
-    height: 75,
-  },
   iconSizes: [50, 50, 75],
   listItemPadding: [0.5, 0.5, 0, 0],
   smallTextFontSize: [14, 16, 16, "md"],

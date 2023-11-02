@@ -29,8 +29,9 @@ export default function ReportSelect({
         <Flex justify={"space-evenly"} align={"center"}>
           <Box mb={1}>
             <Avatar
-              icon={<LastFMIconContainer width={100} height={100} />}
+              icon={<LastFMIconContainer />}
               width={[50, 50, 75]}
+              height={[50, 50, 75]}
             />
           </Box>
           <VerticalScrollBarContainer

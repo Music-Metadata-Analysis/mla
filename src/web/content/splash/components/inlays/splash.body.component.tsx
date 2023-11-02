@@ -19,11 +19,8 @@ export default function PrivacyText({ t }: DialogueInlayComponentInterface) {
           <ClickLink href={lastFMConfig.homePage}>
             <DimOnHover>
               <Avatar
-                icon={
-                  <LastFMIconContainer
-                    {...dialogueSettings.iconComponentProps}
-                  />
-                }
+                icon={<LastFMIconContainer />}
+                height={dialogueSettings.iconSizes}
                 width={dialogueSettings.iconSizes}
               />
             </DimOnHover>

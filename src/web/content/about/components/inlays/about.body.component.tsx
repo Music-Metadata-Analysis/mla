@@ -21,9 +21,8 @@ export default function PrivacyBody({ t }: DialogueInlayComponentInterface) {
           <ClickLink href={externalLinks.svs}>
             <DimOnHover>
               <Avatar
-                icon={
-                  <SVSIconContainer {...dialogueSettings.iconComponentProps} />
-                }
+                icon={<SVSIconContainer />}
+                height={dialogueSettings.iconSizes}
                 width={dialogueSettings.iconSizes}
               />
             </DimOnHover>

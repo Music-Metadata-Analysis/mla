@@ -1,9 +1,4 @@
-export interface SpotifyIconComponentProps {
-  height?: number;
-  width?: number;
-}
-
-export default function Icon({ width, height }: SpotifyIconComponentProps) {
+export default function Icon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -11,8 +6,6 @@ export default function Icon({ width, height }: SpotifyIconComponentProps) {
       aria-labelledby="title"
       aria-describedby="desc"
       role="img"
-      width={`${width}px`}
-      height={`${height}px`}
     >
       <title>Spotify Login Icon</title>
       <desc>A color styled icon from Orion Icon Library.</desc>

@@ -68,8 +68,6 @@ describe("FeedbackPopUpContainer", () => {
       it("should call the underlying SVSIcon component as exoected", () => {
         checkMockCall(SVSIcon, {
           altText: _t(translations.altText.svs),
-          width: 75,
-          height: 75,
         });
       });
     });

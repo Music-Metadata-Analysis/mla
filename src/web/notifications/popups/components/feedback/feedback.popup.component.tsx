@@ -30,6 +30,7 @@ export default function FeedbackDialogue({
           <DimOnHover ml={2} mb={2}>
             <Avatar
               data-testid={testIDs.FeedBackDialogueIcon}
+              height={50}
               icon={<Icon />}
               width={50}
             />

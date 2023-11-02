@@ -39,9 +39,7 @@ export interface WebFrameworkVendorRouterHandlersInterface {
 
 export interface WebFrameworkVendorImageShimProps {
   alt: string;
-  height: number;
   src: string;
-  width: number;
 }
 
 export interface WebFrameworkVendorInterface {

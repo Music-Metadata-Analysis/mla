@@ -16,9 +16,7 @@ export default function FeedbackPopUpContainer() {
   const { metrics } = useMetrics();
   const popups = usePopUpsController();
 
-  const Icon = () => (
-    <SVSIcon altText={t("altText.svs")} width={75} height={75} />
-  );
+  const Icon = () => <SVSIcon altText={t("altText.svs")} />;
 
   usePopUpsGenerator({
     component: FeedbackPopUp,
