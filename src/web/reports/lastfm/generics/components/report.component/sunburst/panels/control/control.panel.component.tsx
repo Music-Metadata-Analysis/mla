@@ -58,7 +58,7 @@ export default function SunBurstControlPanel({
             size={"xs"}
             onClick={() => setSelectedNode(node.getParent() as d3Node)}
             width={50}
-            disabled={!node.getParent() || isOpen}
+            isDisabled={!node.getParent() || isOpen}
           >
             {"\u25B2"}
           </ButtonWithoutAnalytics>
@@ -71,7 +71,7 @@ export default function SunBurstControlPanel({
             size={"xs"}
             onClick={openDrawer}
             width={50}
-            disabled={isOpen}
+            isDisabled={isOpen}
           >
             {getControlButtonLabel()}
           </ButtonWithoutAnalytics>

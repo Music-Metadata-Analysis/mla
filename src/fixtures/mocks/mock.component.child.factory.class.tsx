@@ -13,13 +13,15 @@ class MockComponentFactory {
       }: {
         "data-testid": string | undefined;
         onClick: (...args: unknown[]) => void | undefined;
-        disabled: boolean | undefined;
+        isDisabled: boolean | undefined;
       }) => {
         return (
           <div
             data-testid={props["data-testid"] ? props["data-testid"] : name}
             onClick={
-              props["onClick"] && !props.disabled ? props["onClick"] : undefined
+              props["onClick"] && !props.isDisabled
+                ? props["onClick"]
+                : undefined
             }
             {...otherProps}
           >

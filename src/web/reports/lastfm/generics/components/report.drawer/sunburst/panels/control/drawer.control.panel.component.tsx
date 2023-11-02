@@ -38,7 +38,7 @@ export default function SunBurstDrawerControlPanel({
         size={"xs"}
         onClick={() => selectParentNode()}
         width={50}
-        disabled={!node.getParent()}
+        isDisabled={!node.getParent()}
       >
         {"\u25B2"}
       </ButtonWithoutAnalytics>

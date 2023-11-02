@@ -1,5 +1,5 @@
 import { act, fireEvent } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/navbar.layout.controller.hook.mock";
 import useNavBarLayoutController from "../navbar.layout.controller.hook";

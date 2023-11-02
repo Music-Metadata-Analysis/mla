@@ -40,7 +40,9 @@ describe("NavBarColorModeToggle", () => {
       const call = jest.mocked(Switch).mock.calls[0][0];
 
       expect(call.colorScheme).toBe("yellow");
-      expect(call["data-testid"]).toBe(testIDs.ColorModeToggle);
+      expect((call as { "data-testid": string })["data-testid"]).toBe(
+        testIDs.ColorModeToggle
+      );
       expect(call.isChecked).toBe(isChecked);
       expect(call.ml).toStrictEqual([1, 2, 3]);
       expect(call.mr).toStrictEqual([0, 0.5, 0.5]);

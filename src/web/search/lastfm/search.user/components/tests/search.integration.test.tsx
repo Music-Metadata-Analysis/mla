@@ -4,6 +4,7 @@ import lastfmTranslations from "@locales/lastfm.json";
 import mainTranslations from "@locales/main.json";
 import settings from "@src/config/lastfm";
 import routes from "@src/config/routes";
+import { uiFrameworkVendor } from "@src/vendors/integrations/ui.framework/vendor";
 import mockAuthHook, {
   mockUserProfile,
 } from "@src/web/authentication/session/hooks/__mocks__/auth.hook.mock";
@@ -37,10 +38,12 @@ describe("SearchTopTracks", () => {
 
   const arrange = () => {
     render(
-      <SearchContainer
-        titleText={mockTitle}
-        route={routes.reports.lastfm.top20tracks}
-      />
+      <uiFrameworkVendor.core.Provider cookies={""}>
+        <SearchContainer
+          titleText={mockTitle}
+          route={routes.reports.lastfm.top20tracks}
+        />
+      </uiFrameworkVendor.core.Provider>
     );
   };
 

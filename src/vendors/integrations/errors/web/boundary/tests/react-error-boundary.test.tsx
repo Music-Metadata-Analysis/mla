@@ -60,6 +60,7 @@ describe("ErrorBoundary", () => {
     describe("when the create error button is clicked", () => {
       beforeEach(async () => {
         const link = await screen.findByTestId(testIDs.ErrorTrigger);
+        consoleErrorSpy.mockClear();
         fireEvent.click(link);
       });
 
@@ -81,11 +82,14 @@ describe("ErrorBoundary", () => {
       });
 
       it("should report an error to the console", () => {
-        expect(consoleErrorSpy).toBeCalledTimes(2);
+        expect(consoleErrorSpy).toBeCalledTimes(3);
         expect(consoleErrorSpy.mock.calls[0][0].message).toBe(
           "Uncaught [Error: Test Error!]"
         );
-        expect(consoleErrorSpy.mock.calls[1][0]).toContain(
+        expect(consoleErrorSpy.mock.calls[0][0].message).toEqual(
+          consoleErrorSpy.mock.calls[1][0].message
+        );
+        expect(consoleErrorSpy.mock.calls[2][0]).toContain(
           testIDs.ComponentWithError
         );
       });

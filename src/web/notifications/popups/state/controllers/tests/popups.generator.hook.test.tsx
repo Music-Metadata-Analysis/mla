@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import mockHookValues from "../__mocks__/popups.generator.hook.mock";
 import usePopUpsGenerator from "../popups.generator.hook";
 import { createSimpleComponent } from "@fixtures/react/simple";

@@ -1,4 +1,4 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import { useRef } from "react";
 import useSunBurstLayoutController, {

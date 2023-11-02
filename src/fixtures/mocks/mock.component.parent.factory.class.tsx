@@ -8,9 +8,9 @@ class MockComponentWithChildrenFactory {
         children,
         ...props
       }: {
-        children: React.ReactChildren;
+        children: React.ReactElement;
         "data-testid": string | undefined;
-        disabled: boolean | undefined;
+        isDisabled: boolean | undefined;
         onClick: (...args: unknown[]) => void | undefined;
         type?: "button";
       }) => {
@@ -18,7 +18,9 @@ class MockComponentWithChildrenFactory {
           <div
             data-testid={props["data-testid"] ? props["data-testid"] : name}
             onClick={
-              props["onClick"] && !props.disabled ? props["onClick"] : undefined
+              props["onClick"] && !props.isDisabled
+                ? props["onClick"]
+                : undefined
             }
           >
             {children}

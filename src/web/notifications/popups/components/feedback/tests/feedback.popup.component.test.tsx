@@ -62,7 +62,9 @@ describe("FeedbackPopUp", () => {
   it("should call the Avatar correctly to display the icon", () => {
     expect(Avatar).toBeCalledTimes(1);
     const call = jest.mocked(Avatar).mock.calls[0][0];
-    expect(call["data-testid"]).toBe(testIDs.FeedBackDialogueIcon);
+    expect((call as { "data-testid": string })["data-testid"]).toBe(
+      testIDs.FeedBackDialogueIcon
+    );
     expect(call.width).toStrictEqual(50);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(renderToString(call.icon!)).toBe(renderToString(mockIcon()));

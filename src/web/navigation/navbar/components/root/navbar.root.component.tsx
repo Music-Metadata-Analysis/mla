@@ -87,7 +87,7 @@ export default function NavBarRoot({
               aria-label={"Open Menu"}
               data-testid={testIDs.NavBarMobileMenuButton}
               display={{ sm: "none" }}
-              disabled={!controls.hamburger.state}
+              isDisabled={!controls.hamburger.state}
               icon={
                 controls.mobileMenu.state ? <CloseIcon /> : <HamburgerIcon />
               }

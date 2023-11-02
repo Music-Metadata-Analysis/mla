@@ -1,9 +1,10 @@
 import { act, waitFor } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import React from "react";
 import { AnalyticsContext } from "../../provider/analytics.provider";
 import useAnalyticsClient from "../analytics.hook";
+import { createHookWrapper } from "@src/fixtures/mocks/mock.hook.wrapper";
 import {
   mockAnalyticsCollectionHook,
   mockGoogleAnalytics,
@@ -84,10 +85,10 @@ describe("useAnalytics", () => {
 
   const arrange = (providerProps: AnalyticsVendorContextInterface) => {
     return renderHook(() => useAnalyticsClient(analyticsVendor.ClientClass), {
-      wrapper: providerWrapper,
-      initialProps: {
-        mockContext: providerProps,
-      },
+      wrapper: createHookWrapper<MockAnalyticsContextWithChildren>(
+        providerWrapper,
+        { mockContext: providerProps }
+      ),
     });
   };
 

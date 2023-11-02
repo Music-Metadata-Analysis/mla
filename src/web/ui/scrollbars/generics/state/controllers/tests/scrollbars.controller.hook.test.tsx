@@ -1,6 +1,7 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import useScrollBarsController from "../scrollbars.controller.hook";
+import { createHookWrapper } from "@src/fixtures/mocks/mock.hook.wrapper";
 import mockHookValues from "@src/web/ui/scrollbars/generics/state/controllers/__mocks__/scrollbars.controller.hook.mock";
 import { ScrollBarsControllerContext } from "@src/web/ui/scrollbars/generics/state/providers/scrollbars.provider";
 import type { ScrollBarsControllerContextInterface } from "@src/web/ui/scrollbars/generics/types/state/provider.types";
@@ -37,10 +38,10 @@ describe("useScrollBarsController", () => {
 
   const arrange = (mockContext: ScrollBarsControllerContextInterface) => {
     return renderHook(() => useScrollBarsController(), {
-      wrapper: providerWrapper,
-      initialProps: {
-        mockContext,
-      },
+      wrapper: createHookWrapper<MockInterfaceContextWithChildren>(
+        providerWrapper,
+        { mockContext }
+      ),
     });
   };
 

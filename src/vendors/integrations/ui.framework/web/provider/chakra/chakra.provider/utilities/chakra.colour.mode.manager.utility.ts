@@ -1,21 +1,21 @@
-import { cookieStorageManager, localStorageManager } from "@chakra-ui/react";
+import { cookieStorageManagerSSR, localStorageManager } from "@chakra-ui/react";
 import type { ColorMode } from "@chakra-ui/react";
 
 const createColourModeManager = (
   cookies: string | { [key: string]: string },
   initialMode: ColorMode
 ) => {
-  let cookieManager: ReturnType<typeof cookieStorageManager>;
+  let cookieManager: ReturnType<typeof cookieStorageManagerSSR>;
   let readManager:
-    | ReturnType<typeof cookieStorageManager>
+    | ReturnType<typeof cookieStorageManagerSSR>
     | typeof localStorageManager;
 
   if (typeof cookies === "string") {
-    cookieManager = cookieStorageManager(cookies);
+    cookieManager = cookieStorageManagerSSR(cookies);
     readManager = cookieManager;
     localStorageManager.set(localStorageManager.get(initialMode) as ColorMode);
   } else {
-    cookieManager = cookieStorageManager("");
+    cookieManager = cookieStorageManagerSSR("");
     readManager = localStorageManager;
   }
 

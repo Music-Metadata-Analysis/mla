@@ -1,7 +1,8 @@
 import { act, waitFor } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import React from "react";
+import { createHookWrapper } from "@src/fixtures/mocks/mock.hook.wrapper";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import LastFMTopAlbumsReport from "@src/web/api/lastfm/clients/flipcard/top20.albums.class";
 import LastFMTopArtistsReport from "@src/web/api/lastfm/clients/flipcard/top20.artists.class";
@@ -62,10 +63,9 @@ describe("useLastFM", () => {
 
   const arrange = (providerProps: ReportContextInterface) => {
     return renderHook(() => useLastFM(), {
-      wrapper: providerWrapper,
-      initialProps: {
+      wrapper: createHookWrapper<MockUserContextWithChildren>(providerWrapper, {
         mockContext: providerProps,
-      },
+      }),
     });
   };
 

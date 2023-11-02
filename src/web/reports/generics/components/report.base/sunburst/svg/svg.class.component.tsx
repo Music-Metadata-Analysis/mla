@@ -314,7 +314,7 @@ export default class SunBurstChartSVG extends Component<SunBurstChartSVGProps> {
             Math.PI,
           y0: Math.max(0, d.y0 - p.depth),
           y1: Math.max(0, d.y1 - p.depth),
-        };
+        } as d3Node;
       }
     });
   };

@@ -1,7 +1,8 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/images.controller.hook.mock";
 import useImagesController from "../images.controller.hook";
+import { createHookWrapper } from "@src/fixtures/mocks/mock.hook.wrapper";
 import { ImagesControllerContext } from "@src/web/ui/images/state/providers/images.provider";
 import type { ImagesControllerContextInterface } from "@src/web/ui/images/types/state/provider.types";
 import type { ReactNode } from "react";
@@ -33,10 +34,10 @@ describe("useImagesController", () => {
 
   const arrange = (providerImageProps: ImagesControllerContextInterface) => {
     return renderHook(() => useImagesController(), {
-      wrapper: providerWrapper,
-      initialProps: {
-        mockImageContext: providerImageProps,
-      },
+      wrapper: createHookWrapper<MockInterfaceContextWithChildren>(
+        providerWrapper,
+        { mockImageContext: providerImageProps }
+      ),
     });
   };
 

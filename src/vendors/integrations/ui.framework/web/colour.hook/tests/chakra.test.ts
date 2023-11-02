@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import useChakraColour from "../chakra";
 import mockHookValues from "@src/vendors/integrations/ui.framework/__mocks__/vendor.colour.hook.mock";

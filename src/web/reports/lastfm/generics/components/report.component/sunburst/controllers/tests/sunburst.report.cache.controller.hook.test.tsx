@@ -1,8 +1,9 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import useSunBurstCacheController, {
   SunBurstCacheControllerProps,
 } from "../sunburst.report.cache.controller.hook";
+import { createHookWrapper } from "@src/fixtures/mocks/mock.hook.wrapper";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import ReportCacheCreateClient from "@src/web/api/report.cache/clients/create/report.cache.create.api.client.class";
 import ReportCacheRetrieveClient from "@src/web/api/report.cache/clients/retrieve/report.cache.retrieve.api.client.class";
@@ -67,10 +68,9 @@ describe(useSunBurstCacheController.name, () => {
 
   const arrange = (providerProps: ReportContextInterface) => {
     return renderHook(() => useSunBurstCacheController(mockHookProps), {
-      wrapper: providerWrapper,
-      initialProps: {
+      wrapper: createHookWrapper<MockUserContextWithChildren>(providerWrapper, {
         mockContext: providerProps,
-      },
+      }),
     });
   };
 

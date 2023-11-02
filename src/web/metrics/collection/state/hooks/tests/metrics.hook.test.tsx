@@ -1,8 +1,9 @@
 import { act, waitFor } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/metrics.hook.mock";
 import useMetrics from "../metrics.hook";
+import { createHookWrapper } from "@src/fixtures/mocks/mock.hook.wrapper";
 import { InitialState } from "@src/web/metrics/collection/state/providers/metrics.initial";
 import { MetricsContext } from "@src/web/metrics/collection/state/providers/metrics.provider";
 import type { MetricsContextInterface } from "@src/web/metrics/collection/types/state/provider.types";
@@ -35,10 +36,12 @@ describe("useMetrics", () => {
 
   const arrange = (providerProps: MetricsContextInterface) => {
     return renderHook(() => useMetrics(), {
-      wrapper: providerWrapper,
-      initialProps: {
-        mockContext: providerProps,
-      },
+      wrapper: createHookWrapper<MockMetricsContextWithChildren>(
+        providerWrapper,
+        {
+          mockContext: providerProps,
+        }
+      ),
     });
   };
 
