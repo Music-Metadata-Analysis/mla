@@ -1,4 +1,6 @@
+import { Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
+import { renderToString } from "react-dom/server";
 import SignInButtons from "../signin.buttons.component";
 import authenticationTranslations from "@locales/authentication.json";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -19,6 +21,11 @@ import SpotifyIconContainer from "@src/web/ui/generics/components/icons/spotify/
 
 jest.mock("@src/vendors/integrations/auth.buttons/vendor");
 
+jest.mock("@chakra-ui/react", () => {
+  const { createChakraMock } = require("@fixtures/chakra");
+  return createChakraMock(["Avatar"]);
+});
+
 jest.mock(
   "@src/web/analytics/collection/components/analytics.button/analytics.button.container",
   () =>
@@ -29,6 +36,8 @@ jest.mock(
   "@src/web/ui/generics/components/icons/lastfm/lastfm.icon.container",
   () => require("@fixtures/react/child").createComponent("LastFMIconContainer")
 );
+
+jest.mock("@src/vendors/integrations/web.framework/vendor");
 
 describe("AuthenticationComponent", () => {
   const buttonWidth = 245;
@@ -138,22 +147,22 @@ describe("AuthenticationComponent", () => {
 
   describe("when the LastFMAuthButton's Icon is called", () => {
     beforeEach(() => {
-      const icon = jest.mocked(mockLastFMAuthButton).mock.calls[0][0]
+      const IconComponent = jest.mocked(mockLastFMAuthButton).mock.calls[0][0]
         .iconComponent as () => JSX.Element;
-      icon();
+      render(IconComponent());
     });
 
-    it("should call the LastFMIconContainer component correctly", () => {
-      expect(LastFMIconContainer).toHaveBeenCalledTimes(1);
-      checkMockCall(
-        LastFMIconContainer,
-        {
-          height: 26,
-          width: 26,
-        },
-        0,
-        ["onClick", "callBack", "iconComponent"]
+    it("should call the Avatar component correctly", () => {
+      expect(Avatar).toHaveBeenCalledTimes(1);
+      expect(Avatar).toHaveBeenCalledTimes(1);
+      const call = jest.mocked(Avatar).mock.calls[0][0];
+      expect(call.height).toStrictEqual(26);
+      expect(call.width).toStrictEqual(26);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(renderToString(call.icon!)).toBe(
+        renderToString(<LastFMIconContainer />)
       );
+      expect(Object.keys(call).length).toBe(3);
     });
   });
 

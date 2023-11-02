@@ -4,7 +4,11 @@ export const mockHeadShim = jest.fn(({ children }: { children?: unknown }) => {
   return <>{children}</>;
 });
 
-export const mockImageShim = jest.fn();
+export const mockImageShim = jest.fn((props) => {
+  // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+  return <img {...props} />;
+});
+
 export const mockIsBuildTime = jest.fn();
 export const mockIsSSR = jest.fn();
 

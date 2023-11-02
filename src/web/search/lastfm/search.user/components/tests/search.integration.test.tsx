@@ -17,6 +17,8 @@ jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 
+jest.mock("@src/vendors/integrations/web.framework/vendor");
+
 jest.mock(
   "@src/web/authentication/sign.in/components/authentication.container",
   () =>

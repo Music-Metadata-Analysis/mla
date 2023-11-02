@@ -30,6 +30,7 @@
       "@fixtures/react/simple": [
         "src/fixtures/mocks/mock.component.simple.factory.class.tsx"
       ],
+      "@JestConfig/*": ["jest/*"],
       "@locales/*": ["public/locales/en/*"],
       "@public/*": ["public/*"],
       "@src/*": ["src/*"]

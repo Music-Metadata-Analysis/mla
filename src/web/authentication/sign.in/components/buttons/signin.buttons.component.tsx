@@ -1,3 +1,4 @@
+import { Avatar } from "@chakra-ui/react";
 import { authButtonVendor } from "@src/vendors/integrations/auth.buttons/vendor";
 import AnalyticsButtonWrapper from "@src/web/analytics/collection/components/analytics.button/analytics.button.container";
 import LastFMIconContainer from "@src/web/ui/generics/components/icons/lastfm/lastfm.icon.container";
@@ -42,7 +43,11 @@ export default function SignInButtons({
       <AnalyticsButtonWrapper buttonName={"LastFM Login"}>
         <authButtonVendor.LastFMAuthButton
           callBack={handleSignIn}
-          iconComponent={() => LastFMIconContainer({ width: 26, height: 26 })}
+          iconComponent={() => {
+            return (
+              <Avatar icon={<LastFMIconContainer />} width={26} height={26} />
+            );
+          }}
           text={t("buttons.lastfm")}
           width={buttonWidth}
         />

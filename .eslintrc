@@ -5,7 +5,6 @@
   "ignorePatterns": ["src/vendors/integrations/api.validation/**/generated.js"],
   "parser": "@typescript-eslint/parser",
   "extends": [
-    "next",
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "plugin:jest-formatting/recommended"

@@ -58,10 +58,7 @@ describe("LastFMAuthButton", () => {
       arrange();
 
       expect(iconComponent).toHaveBeenCalledTimes(1);
-      expect(iconComponent).toHaveBeenCalledWith({
-        height: undefined,
-        width: undefined,
-      });
+      expect(iconComponent).toHaveBeenCalledWith();
     });
 
     it("should have the correct width", async () => {

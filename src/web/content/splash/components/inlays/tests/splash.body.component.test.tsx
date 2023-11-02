@@ -58,14 +58,13 @@ describe("SplashBody", () => {
     it("should call Avatar as expected to display the logo", () => {
       expect(Avatar).toHaveBeenCalledTimes(1);
       const call = jest.mocked(Avatar).mock.calls[0][0];
+      expect(call.height).toStrictEqual(dialogueSettings.iconSizes);
       expect(call.width).toStrictEqual(dialogueSettings.iconSizes);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(renderToString(call.icon!)).toBe(
-        renderToString(
-          <LastFMIconContainer {...dialogueSettings.iconComponentProps} />
-        )
+        renderToString(<LastFMIconContainer />)
       );
-      expect(Object.keys(call).length).toBe(2);
+      expect(Object.keys(call).length).toBe(3);
     });
 
     it("should call Box with the correct props", () => {

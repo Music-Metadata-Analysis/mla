@@ -16,8 +16,9 @@ export default function Search({ route, titleText }: SearchProps) {
       <Flex justify={"space-evenly"} align={"center"} w={"100%"}>
         <Box>
           <Avatar
-            icon={<LastFMIconContainer width={100} height={100} />}
+            icon={<LastFMIconContainer />}
             width={[50, 50, 75]}
+            height={[50, 50, 75]}
           />
         </Box>
         <Box pl={5}>

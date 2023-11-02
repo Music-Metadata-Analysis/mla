@@ -37,6 +37,8 @@ jest.mock(
     )
 );
 
+jest.mock("@src/vendors/integrations/web.framework/vendor");
+
 describe("AuthenticationContainer", () => {
   let mockCallBack: (() => void) | undefined;
 

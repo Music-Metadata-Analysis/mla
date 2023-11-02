@@ -15,9 +15,7 @@ export default function SpotifyAuthButton({
 
   const config = {
     activeStyle: { background: "#1f1f1f" },
-    icon: createSvgIcon(({ size }: { size: number }) =>
-      iconComponent({ width: size, height: size })
-    ),
+    icon: createSvgIcon(() => iconComponent()),
     style: { background: "#0a0a0a", color: "white" },
     text,
   };

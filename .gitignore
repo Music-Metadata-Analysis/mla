@@ -45,6 +45,9 @@ cypress.env.json
 # Typescript
 *.tsbuildinfo
 
+# ASDF
+.tool-versions
+
 # CICD-Tools
 .cicd-tools/boxes/*
 !.cicd-tools/boxes/bootstrap

@@ -15,9 +15,7 @@ export default function LastFMAuthButton({
 
   const config = {
     activeStyle: { background: "#8F0000" },
-    icon: createSvgIcon(({ size }: { size: number }) =>
-      iconComponent({ width: size, height: size })
-    ),
+    icon: createSvgIcon(() => iconComponent()),
     style: { background: "#7F0000", color: "white" },
     text,
   };

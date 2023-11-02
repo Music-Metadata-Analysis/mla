@@ -2,13 +2,7 @@ import type { AuthVendorServiceType } from "@src/vendors/types/integrations/auth
 
 export interface AuthButtonVendorComponentInterface {
   callBack: (authServiceType: AuthVendorServiceType) => void;
-  iconComponent?: ({
-    width,
-    height,
-  }: {
-    width: number;
-    height: number;
-  }) => JSX.Element;
+  iconComponent?: () => JSX.Element;
   text: string;
   width: number;
 }

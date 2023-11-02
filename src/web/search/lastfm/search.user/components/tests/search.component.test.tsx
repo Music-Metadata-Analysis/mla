@@ -81,12 +81,13 @@ describe("Search", () => {
     it("should render the Avatar component with the correct props", () => {
       expect(Avatar).toHaveBeenCalledTimes(1);
       const call = jest.mocked(Avatar).mock.calls[0][0];
+      expect(call.height).toStrictEqual([50, 50, 75]);
       expect(call.width).toStrictEqual([50, 50, 75]);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(renderToString(call.icon!)).toBe(
         renderToString(<LastFMIconContainer />)
       );
-      expect(Object.keys(call).length).toBe(2);
+      expect(Object.keys(call).length).toBe(3);
     });
 
     it("should render the UsernameFormContainer component with the correct props", () => {

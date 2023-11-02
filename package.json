@@ -54,7 +54,7 @@
     "formik": "^2.4.5",
     "i18next": "^23.0.0",
     "js-cookie": "^3.0.1",
-    "next": "^12.1.1",
+    "next": "^14.0.0",
     "next-auth": "^4.20.1",
     "next-connect": "^0.11.1",
     "next-i18next": "^15.0.0",
@@ -111,8 +111,8 @@
     "webpack-dev-server": "^4.15.1"
   },
   "engines": {
-    "npm": "^8.0.0",
-    "node": "^16.0.0"
+    "npm": "^9.0.0",
+    "node": "^18.18.2"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -142,7 +142,6 @@
     "setupFilesAfterEnv": [
       "<rootDir>/jest/setup/emotion.js",
       "<rootDir>/jest/setup/fetch.js",
-      "<rootDir>/jest/setup/next.jsx",
       "<rootDir>/jest/setup/snapshot.js",
       "<rootDir>/jest/setup/text.js",
       "<rootDir>/jest/setup/testing-library.js"
@@ -155,6 +154,7 @@
       "^@fixtures/react/child$": "<rootDir>/src/fixtures/mocks/mock.component.child.factory.class.tsx",
       "^@fixtures/react/parent$": "<rootDir>/src/fixtures/mocks/mock.component.parent.factory.class.tsx",
       "^@fixtures/react/simple$": "<rootDir>/src/fixtures/mocks/mock.component.simple.factory.class.tsx",
+      "^@JestConfig/(.*)": "<rootDir>/jest/$1",
       "^@locales/(.*)": "<rootDir>/public/locales/en/$1",
       "^@src/(.*)": "<rootDir>/src/$1",
       "^@panva/hkdf": "@panva/hkdf",
