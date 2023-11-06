@@ -1,3 +1,6 @@
+import EndPointLoggerMiddleware from "./middleware/endpoint.logger.middleware.class";
+import TimeoutClearMiddleware from "./middleware/timeout.clear.middleware.class";
+import TimeoutSetMiddleware from "./middleware/timeout.set.middleware.class";
 import requestSettings from "@src/config/requests";
 import * as status from "@src/config/status";
 import { apiHandlerVendorBackend } from "@src/vendors/integrations/api.handler/vendor.backend";
@@ -13,28 +16,26 @@ import type {
   ApiFrameworkVendorApiRequestType,
   ApiFrameworkVendorApiResponseType,
 } from "@src/vendors/types/integrations/api.framework/vendor.backend.types";
-import type { ApiHandlerVendorHandlerType } from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
+import type {
+  ApiHandlerVendorMiddlewareStackInterface,
+  ApiHandlerVendorRequestHandlerType,
+} from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
 import type { ApiLoggerVendorEndpointLoggerInterface } from "@src/vendors/types/integrations/api.logger/vendor.backend.types";
 
 export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
   implements ApiEndPointFactoryInterface
 {
-  private readonly _endpointLogger: ApiLoggerVendorEndpointLoggerInterface;
+  private readonly endpointLogger: ApiLoggerVendorEndpointLoggerInterface;
   protected abstract readonly proxyFailureStatusCodes: {
     [index: number]: HttpApiClientStatusMessageType;
   };
   protected readonly timeOut = requestSettings.timeout;
-  protected readonly handler: ApiHandlerVendorHandlerType;
   protected abstract proxy: ProxyClass;
   public abstract readonly service: string;
   public abstract readonly route: string;
 
   constructor() {
-    this.handler = new apiHandlerVendorBackend.HandlerFactory({
-      errorHandler: this.errorHandler,
-      fallBackHandler: this.fallBackHandler,
-    }).create();
-    this._endpointLogger = new apiLoggerVendorBackend.endpointLogger();
+    this.endpointLogger = new apiLoggerVendorBackend.endpointLogger();
   }
 
   protected abstract getProxyResponse(
@@ -42,27 +43,31 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
     body: ApiEndpointRequestBodyType | null
   ): ProxyClassReturnType;
 
-  protected abstract setUpHandler(): void;
+  protected abstract setUpHandler(
+    middlewareStack: ApiHandlerVendorMiddlewareStackInterface
+  ): ApiHandlerVendorRequestHandlerType;
 
-  public createHandler(): ApiHandlerVendorHandlerType {
-    this.setUpHandler();
-    this.handler.use(this._endpointLogger.log);
-    return this.handler;
+  protected setUpMiddleware(
+    middlewareStack: ApiHandlerVendorMiddlewareStackInterface
+  ): void {
+    middlewareStack.useBefore(
+      new TimeoutSetMiddleware(this.service, this.timeOut)
+    );
+    middlewareStack.useAfter(new TimeoutClearMiddleware());
+    middlewareStack.useAfter(new EndPointLoggerMiddleware(this.endpointLogger));
   }
 
-  protected setRequestTimeout = (
-    req: ApiFrameworkVendorApiRequestType,
-    res: ApiFrameworkVendorApiResponseType,
-    next: () => void
-  ): void => {
-    req.proxyTimeoutInstance = setTimeout(() => {
-      req.proxyResponse = `${this.service}: Timed out! Please retry this request!`;
-      res.setHeader("retry-after", 0);
-      res.status(503).json(status.STATUS_503_MESSAGE);
-      delete req.proxyTimeoutInstance;
-      next();
-    }, this.timeOut);
-  };
+  public createHandler(): ApiHandlerVendorRequestHandlerType {
+    const baseHandlerMiddlewareStack =
+      new apiHandlerVendorBackend.HandlerMiddleWareStack();
+    this.setUpMiddleware(baseHandlerMiddlewareStack);
+    const handlerFactory = new apiHandlerVendorBackend.HandlerFactory({
+      baseHandler: this.setUpHandler(baseHandlerMiddlewareStack),
+      errorHandler: this.errorHandler,
+      route: this.route,
+    });
+    return handlerFactory.create();
+  }
 
   protected clearRequestTimeout = (
     req: ApiFrameworkVendorApiRequestType
@@ -73,12 +78,11 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
     }
   };
 
-  protected errorHandler = (
+  protected errorHandler = async (
     err: RemoteServiceError,
     req: ApiFrameworkVendorApiRequestType,
-    res: ApiFrameworkVendorApiResponseType,
-    next: () => void
-  ): void => {
+    res: ApiFrameworkVendorApiResponseType
+  ): Promise<void> => {
     this.clearRequestTimeout(req);
     req.proxyResponse = `${this.service}: ${err.toString()}`;
     if (
@@ -91,13 +95,17 @@ export default abstract class APIEndpointBase<ProxyClass, ProxyClassReturnType>
     } else {
       res.status(502).json(status.STATUS_502_MESSAGE);
     }
-    next();
+    this.catchAllLogger(req, res);
   };
 
-  protected fallBackHandler = (
+  protected isRequestTimedOut(req: ApiFrameworkVendorApiRequestType) {
+    return req.proxyTimeoutInstance === undefined;
+  }
+
+  protected catchAllLogger(
     req: ApiFrameworkVendorApiRequestType,
     res: ApiFrameworkVendorApiResponseType
-  ): void => {
-    res.status(405).json(status.STATUS_405_MESSAGE);
-  };
+  ) {
+    this.endpointLogger.log(req, res);
+  }
 }

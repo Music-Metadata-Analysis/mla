@@ -3,7 +3,7 @@ import ConcreteV2EndpointWithProxyError from "./implementations/concrete.v2.last
 import ConcreteV2EndpointWithProxyResponseError from "./implementations/concrete.v2.lastfm.proxy.response.error.class";
 import ConcreteV2EndpointWithProxySuccess from "./implementations/concrete.v2.lastfm.proxy.success.class";
 import ConcreteV2EndpointWithProxyTimeout from "./implementations/concrete.v2.lastfm.timeout.error.class";
-import LastFMApiEndpointFactoryV2 from "../v2.lastfm.endpoint.base.class";
+import LastFMApiEndpointFactoryBaseV2 from "../v2.lastfm.endpoint.factory.base.class";
 import { proxyFailureStatusCodes } from "@src/config/api";
 import * as status from "@src/config/status";
 import {
@@ -27,10 +27,10 @@ jest.mock("@src/vendors/integrations/flags/vendor.backend");
 
 jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
 
-describe(LastFMApiEndpointFactoryV2.name, () => {
+describe(LastFMApiEndpointFactoryBaseV2.name, () => {
   let clearTimeOutSpy: jest.SpyInstance;
 
-  let factoryInstance: LastFMApiEndpointFactoryV2 & {
+  let factoryInstance: LastFMApiEndpointFactoryBaseV2 & {
     errorCode?: number;
     flag: string | null;
   };
@@ -152,9 +152,7 @@ describe(LastFMApiEndpointFactoryV2.name, () => {
       const call = jest.mocked(mockEndpointLogger).mock.calls[0];
       expect(call[0]).toBe(mockReq);
       expect(call[1]).toBe(mockRes);
-      expect(call[2]).toBeInstanceOf(Function);
-      expect(call[2].name).toBe("next");
-      expect(call.length).toBe(3);
+      expect(call.length).toBe(2);
     });
 
     it("should log the correct proxy response", () => {

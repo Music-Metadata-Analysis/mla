@@ -54,7 +54,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
 
   const mockInvalidPayload = undefined;
   const mockSuccessfulProxyResponse = {
-    id: "mock cache id",
+    id: "mock payload",
   } as const;
   const mockValidPayload = { mock: "payload" };
   const mockValidReport = ["mockReport"] as [string];
@@ -160,9 +160,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
       const call = jest.mocked(mockEndpointLogger).mock.calls[0];
       expect(call[0]).toBe(mockReq);
       expect(call[1]).toBe(mockRes);
-      expect(call[2]).toBeInstanceOf(Function);
-      expect(call[2].name).toBe("next");
-      expect(call.length).toBe(3);
+      expect(call.length).toBe(2);
     });
 
     if (expectedProxyResponse) {
@@ -202,7 +200,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
       checkNoProxyCall();
     });
 
-    describe("with an invalid cache id", () => {
+    describe("with an invalid payload", () => {
       beforeEach(async () => {
         concreteValidatorSelection.mockImplementation(() => ({
           valid: false,
@@ -246,7 +244,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
       checkNoProxyCall();
     });
 
-    describe("with an invalid cache id", () => {
+    describe("with an invalid payload", () => {
       beforeEach(async () => {
         concreteValidatorSelection.mockImplementation(() => ({
           valid: false,
@@ -494,7 +492,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkProxyCall();
               });
 
-              describe("with an invalid cache id", () => {
+              describe("with an invalid payload", () => {
                 beforeEach(async () => {
                   concreteValidatorSelection.mockImplementation(() => ({
                     valid: false,
@@ -622,7 +620,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkProxyCall();
               });
 
-              describe("with an invalid cache id", () => {
+              describe("with an invalid payload", () => {
                 beforeEach(async () => {
                   concreteValidatorSelection.mockImplementation(() => ({
                     valid: false,
@@ -907,6 +905,9 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
         beforeEach(() => {
           FactoryClassSelector = ReportCacheEndpointTestDoubleWithTimeoutV2;
           concreteValidatorSelection = mockConcreteTimeoutValidator;
+          mockReportCacheProxyMethods.createCacheObject.mockImplementation(
+            () => null
+          );
         });
 
         describe("with a valid username", () => {
@@ -947,7 +948,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkProxyCall();
               });
 
-              describe("with an invalid cache id", () => {
+              describe("with an invalid payload", () => {
                 beforeEach(async () => {
                   concreteValidatorSelection.mockImplementation(() => ({
                     valid: false,

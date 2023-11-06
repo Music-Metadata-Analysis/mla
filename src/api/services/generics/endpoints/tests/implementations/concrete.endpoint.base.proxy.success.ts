@@ -5,6 +5,10 @@ import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
 } from "@src/contracts/api/types/request.types";
+import type {
+  ApiHandlerVendorMiddlewareStackInterface,
+  ApiHandlerVendorRequestHandlerType,
+} from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
 
 export default class ConcreteBaseProxySuccessClass extends ApiEndpointBase<
   Record<string, never>,
@@ -25,13 +29,15 @@ export default class ConcreteBaseProxySuccessClass extends ApiEndpointBase<
     this.proxyFailureStatusCodes = { ...serviceFailureStatusCodes.lastfm };
   }
 
-  protected setUpHandler(): void {
-    this.handler.get(this.route, async (req, res, next) => {
-      this.setRequestTimeout(req, res, next);
+  protected setUpHandler(
+    middlewareStack: ApiHandlerVendorMiddlewareStackInterface
+  ): ApiHandlerVendorRequestHandlerType {
+    return middlewareStack.createHandler("GET", async (req, res, next) => {
       const response = await this.getProxyResponse({}, null);
-      res.status(200).json(response);
-      this.clearRequestTimeout(req);
-      next();
+      if (!this.isRequestTimedOut(req)) {
+        res.status(200).json(response);
+        await next();
+      }
     });
   }
 

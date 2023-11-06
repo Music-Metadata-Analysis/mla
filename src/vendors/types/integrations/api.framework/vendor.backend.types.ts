@@ -1,4 +1,4 @@
-import type { ApiEndpointResponseExtensions } from "@src/contracts/api/types/response.types";
+import type { ApiEndpointRequestExtensions } from "@src/contracts/api/types/request.types";
 import type {
   VendorApiRequestType,
   VendorApiResponseType,
@@ -6,6 +6,6 @@ import type {
 
 export interface ApiFrameworkVendorApiRequestType
   extends VendorApiRequestType,
-    ApiEndpointResponseExtensions {}
+    ApiEndpointRequestExtensions {}
 
 export type ApiFrameworkVendorApiResponseType = VendorApiResponseType;

@@ -19,7 +19,6 @@ describe("StdOutLogger", () => {
     statusCode: number;
     url: string;
     userAgent: string;
-    next: () => void;
   };
 
   let instance: StdOutLogger;
@@ -71,7 +70,7 @@ describe("StdOutLogger", () => {
 
   const actLog = () => {
     instance = new StdOutLogger();
-    instance.log(mockReq, mockRes, currentProps.next);
+    instance.log(mockReq, mockRes);
     mockRes.status(currentProps.statusCode).json({ status: "ready" });
   };
 
@@ -90,13 +89,6 @@ describe("StdOutLogger", () => {
     expected_log_message += `(${proxyResponseMsg})`;
     expect(console.log).toHaveBeenCalledTimes(1);
     expect(console.log).toHaveBeenCalledWith(expected_log_message);
-  };
-
-  const checkNextCalled = () => {
-    it("should call the 'next' function", () => {
-      expect(currentProps.next).toHaveBeenCalledTimes(1);
-      expect(currentProps.next).toHaveBeenCalledWith();
-    });
   };
 
   describe("with a string based list of ips as the x-forwarded-header", () => {
@@ -128,8 +120,6 @@ describe("StdOutLogger", () => {
               currentProps.proxyResponse as string
             );
           });
-
-          checkNextCalled();
         });
       });
 
@@ -152,8 +142,6 @@ describe("StdOutLogger", () => {
               currentProps.proxyResponse as string
             );
           });
-
-          checkNextCalled();
         });
       });
     });
@@ -182,8 +170,6 @@ describe("StdOutLogger", () => {
               instance.noProxyResponseMsg
             );
           });
-
-          checkNextCalled();
         });
       });
 
@@ -206,8 +192,6 @@ describe("StdOutLogger", () => {
               instance.noProxyResponseMsg
             );
           });
-
-          checkNextCalled();
         });
       });
     });
@@ -242,8 +226,6 @@ describe("StdOutLogger", () => {
               currentProps.proxyResponse as string
             );
           });
-
-          checkNextCalled();
         });
       });
 
@@ -266,8 +248,6 @@ describe("StdOutLogger", () => {
               currentProps.proxyResponse as string
             );
           });
-
-          checkNextCalled();
         });
       });
     });
@@ -296,8 +276,6 @@ describe("StdOutLogger", () => {
               instance.noProxyResponseMsg
             );
           });
-
-          checkNextCalled();
         });
       });
 
@@ -320,8 +298,6 @@ describe("StdOutLogger", () => {
               instance.noProxyResponseMsg
             );
           });
-
-          checkNextCalled();
         });
       });
     });
@@ -356,8 +332,6 @@ describe("StdOutLogger", () => {
               currentProps.proxyResponse as string
             );
           });
-
-          checkNextCalled();
         });
       });
 
@@ -377,8 +351,6 @@ describe("StdOutLogger", () => {
           it("should log the expected message, using the first x-forwarded header's address", () => {
             checkLogMessage("?.?.?.?", currentProps.proxyResponse as string);
           });
-
-          checkNextCalled();
         });
       });
     });
@@ -407,8 +379,6 @@ describe("StdOutLogger", () => {
               instance.noProxyResponseMsg
             );
           });
-
-          checkNextCalled();
         });
       });
 
@@ -428,8 +398,6 @@ describe("StdOutLogger", () => {
           it("should log the expected message, using the first x-forwarded header's address", () => {
             checkLogMessage("?.?.?.?", instance.noProxyResponseMsg);
           });
-
-          checkNextCalled();
         });
       });
     });
