@@ -90,7 +90,7 @@ describe(ReportCacheRetrieveEndpointFactoryV2.name, () => {
     "Error: `.each` called with an empty Array of table data.\n";
 
   const checkCacheControlHeader = () => {
-    it("should set a retry-after header", () => {
+    it("should set a cache-control header", () => {
       expect(mockRes.getHeader("Cache-Control")).toBe(
         mockSuccessfulProxyResponse.cacheControl
       );
@@ -167,9 +167,7 @@ describe(ReportCacheRetrieveEndpointFactoryV2.name, () => {
       const call = jest.mocked(mockEndpointLogger).mock.calls[0];
       expect(call[0]).toBe(mockReq);
       expect(call[1]).toBe(mockRes);
-      expect(call[2]).toBeInstanceOf(Function);
-      expect(call[2].name).toBe("next");
-      expect(call.length).toBe(3);
+      expect(call.length).toBe(2);
     });
 
     if (expectedProxyResponse) {
@@ -657,6 +655,9 @@ describe(ReportCacheRetrieveEndpointFactoryV2.name, () => {
       describe("that times out", () => {
         beforeEach(() => {
           FactoryClassSelector = ReportCacheEndpointTestDoubleWithTimeoutV2;
+          mockReportCacheProxyMethods.retrieveCacheObject.mockImplementation(
+            () => null
+          );
         });
 
         describe("with a valid report", () => {

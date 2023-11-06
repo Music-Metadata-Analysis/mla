@@ -1,6 +1,5 @@
 import type { HttpApiClientHttpMethodType } from "@src/contracts/api/types/clients/http.client.types";
 import type { RemoteServiceError } from "@src/contracts/api/types/services/generics/proxy/proxy.error.types";
-import type { ParameterizedVendorApiHandlerType } from "@src/vendors/integrations/api.handler/_types/vendor.specific.types";
 import type {
   ApiFrameworkVendorApiRequestType,
   ApiFrameworkVendorApiResponseType,
@@ -38,26 +37,18 @@ export interface ApiHandlerVendorMiddlewareStackInterface {
 }
 
 export interface ApiHandlerVendorFactoryInterface {
-  create: () => ApiHandlerVendorHandlerType;
+  create: () => ApiHandlerVendorRequestHandlerType;
 }
 
 export interface ApiHandlerVendorFactoryConstructorInterface {
+  baseHandler: ApiHandlerVendorRequestHandlerWithNextType;
   errorHandler: (
     error: RemoteServiceError,
     req: ApiFrameworkVendorApiRequestType,
-    res: ApiFrameworkVendorApiResponseType,
-    next: () => void
-  ) => void;
-  fallBackHandler: (
-    req: ApiFrameworkVendorApiRequestType,
     res: ApiFrameworkVendorApiResponseType
-  ) => void;
+  ) => Promise<void>;
+  route: string;
 }
-
-export type ApiHandlerVendorHandlerType = ParameterizedVendorApiHandlerType<
-  ApiFrameworkVendorApiRequestType,
-  ApiFrameworkVendorApiResponseType
->;
 
 export interface ApiHandlerVendorBackendInterface {
   HandlerFactory: new (

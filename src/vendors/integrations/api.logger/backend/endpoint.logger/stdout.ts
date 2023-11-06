@@ -9,7 +9,7 @@ export default class StdOutLogger
 {
   public readonly noProxyResponseMsg = "No remote service consumed.";
 
-  public log: ApiLoggerVendorEndpointLoggerType = (req, res, next) => {
+  public log: ApiLoggerVendorEndpointLoggerType = (req, res) => {
     const fields: Array<string> = [];
 
     const remoteIp = this.getRemoteIpAddress(req);
@@ -25,8 +25,6 @@ export default class StdOutLogger
     fields.push(`(${proxyResponse})`);
 
     console.log(fields.join(" "));
-
-    next();
   };
 
   protected getRemoteIpAddress(req: ApiFrameworkVendorApiRequestType): string {

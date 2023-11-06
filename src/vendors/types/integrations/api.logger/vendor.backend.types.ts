@@ -9,8 +9,7 @@ export interface ApiLoggerVendorEndpointLoggerInterface {
 
 export type ApiLoggerVendorEndpointLoggerType = (
   req: ApiFrameworkVendorApiRequestType,
-  res: ApiFrameworkVendorApiResponseType,
-  next: () => void
+  res: ApiFrameworkVendorApiResponseType
 ) => void;
 
 export interface ApiLoggerVendorBackendInterface {

@@ -6,6 +6,10 @@ import type {
   ApiEndpointRequestQueryParamType,
   ApiEndpointRequestBodyType,
 } from "@src/contracts/api/types/request.types";
+import type {
+  ApiHandlerVendorMiddlewareStackInterface,
+  ApiHandlerVendorRequestHandlerType,
+} from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
 
 export default class ConcreteBaseProxyErrorClass extends ApiEndpointBase<
   Record<string, never>,
@@ -18,7 +22,7 @@ export default class ConcreteBaseProxyErrorClass extends ApiEndpointBase<
   public errorCode?: number;
   public mockError = "mockError";
   public route = "/api/v1/endpoint";
-  public timeOut = 100;
+  public timeOut = 1000;
   public service = "mockService";
 
   constructor() {
@@ -26,12 +30,13 @@ export default class ConcreteBaseProxyErrorClass extends ApiEndpointBase<
     this.proxyFailureStatusCodes = { ...serviceFailureStatusCodes.lastfm };
   }
 
-  protected setUpHandler(): void {
-    this.handler.get(this.route, async (req, res, next) => {
-      this.setRequestTimeout(req, res, next);
+  protected setUpHandler(
+    middlewareStack: ApiHandlerVendorMiddlewareStackInterface
+  ): ApiHandlerVendorRequestHandlerType {
+    return middlewareStack.createHandler("GET", async (req, res, next) => {
       const response = await this.getProxyResponse({}, null);
       res.status(200).json(response);
-      next();
+      await next();
     });
   }
 

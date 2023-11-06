@@ -66,9 +66,7 @@ describe("APIEndpointBase", () => {
       const call = jest.mocked(mockEndpointLogger).mock.calls[0];
       expect(call[0]).toBe(mockReq);
       expect(call[1]).toBe(mockRes);
-      expect(call[2]).toBeInstanceOf(Function);
-      expect(call[2].name).toBe("next");
-      expect(call.length).toBe(3);
+      expect(call.length).toBe(2);
     });
 
     it("should log the correct proxy response", () => {

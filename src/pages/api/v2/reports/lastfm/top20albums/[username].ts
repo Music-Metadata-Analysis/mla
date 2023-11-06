@@ -1,8 +1,8 @@
-import LastFMApiEndpointFactoryV2 from "@src/api/services/lastfm/endpoints/v2.lastfm.endpoint.base.class";
+import LastFMApiEndpointFactoryBaseV2 from "@src/api/services/lastfm/endpoints/v2.lastfm.endpoint.factory.base.class";
 import apiRoutes from "@src/config/apiRoutes";
 import type { ApiEndpointRequestPathParamType } from "@src/contracts/api/types/request.types";
 
-class Top20AlbumsEndpointFactoryV2 extends LastFMApiEndpointFactoryV2 {
+class Top20AlbumsEndpointFactoryV2 extends LastFMApiEndpointFactoryBaseV2 {
   public readonly flag = null;
   public readonly route = apiRoutes.v2.reports.lastfm.top20albums;
 

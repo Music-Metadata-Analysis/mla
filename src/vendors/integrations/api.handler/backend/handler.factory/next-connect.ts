@@ -1,4 +1,4 @@
-import nextConnect from "next-connect";
+import { createRouter } from "next-connect";
 import type {
   ApiFrameworkVendorApiRequestType,
   ApiFrameworkVendorApiResponseType,
@@ -6,31 +6,36 @@ import type {
 import type {
   ApiHandlerVendorFactoryInterface,
   ApiHandlerVendorFactoryConstructorInterface,
+  ApiHandlerVendorRequestHandlerType,
 } from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
-import type { NextConnect } from "next-connect";
 
 class NextConnectHandlerFactory implements ApiHandlerVendorFactoryInterface {
+  protected baseHandler: ApiHandlerVendorFactoryConstructorInterface["baseHandler"];
   protected errorHandler: ApiHandlerVendorFactoryConstructorInterface["errorHandler"];
-  protected fallBackHandler: ApiHandlerVendorFactoryConstructorInterface["fallBackHandler"];
+  protected route: ApiHandlerVendorFactoryConstructorInterface["route"];
 
   constructor({
+    baseHandler,
     errorHandler,
-    fallBackHandler,
+    route,
   }: ApiHandlerVendorFactoryConstructorInterface) {
+    this.baseHandler = baseHandler;
     this.errorHandler = errorHandler;
-    this.fallBackHandler = fallBackHandler;
+    this.route = route;
   }
 
-  public create(): NextConnect<
-    ApiFrameworkVendorApiRequestType,
-    ApiFrameworkVendorApiResponseType
-  > {
-    return nextConnect<
+  public create(): ApiHandlerVendorRequestHandlerType {
+    const router = createRouter<
       ApiFrameworkVendorApiRequestType,
       ApiFrameworkVendorApiResponseType
-    >({
-      onError: this.errorHandler,
-      onNoMatch: this.fallBackHandler,
+    >();
+    router.all(this.route, this.baseHandler);
+    return router.handler({
+      onError: this.errorHandler as (
+        error: unknown,
+        req: ApiFrameworkVendorApiRequestType,
+        res: ApiFrameworkVendorApiResponseType
+      ) => void,
     });
   }
 }

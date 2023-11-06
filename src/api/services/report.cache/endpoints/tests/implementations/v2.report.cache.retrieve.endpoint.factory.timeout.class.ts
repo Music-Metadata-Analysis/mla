@@ -4,7 +4,7 @@ import type { ReportCacheRetrieveResponseInterface } from "@src/contracts/api/ty
 import type { PersistenceVendorDataType } from "@src/vendors/types/integrations/persistence/vendor.backend.types";
 
 export default class ReportCacheEndpointTestDoubleWithTimeoutV2 extends ReportCacheRetrieveEndpointBaseV2 {
-  public timeOut = 100;
+  public timeOut = 10;
 
   protected override async getProxyResponse(
     params: ApiEndpointRequestQueryParamType

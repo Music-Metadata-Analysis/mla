@@ -1,4 +1,4 @@
-import LastFMApiEndpointFactoryV2 from "@src/api/services/lastfm/endpoints/v2.lastfm.endpoint.base.class";
+import LastFMApiEndpointFactoryBaseV2 from "@src/api/services/lastfm/endpoints/v2.lastfm.endpoint.factory.base.class";
 import { mockLastFMProxyMethods } from "@src/api/services/lastfm/proxy/__mocks__/proxy.class.mock";
 import apiRoutes from "@src/config/apiRoutes";
 import handleProxy, {
@@ -51,7 +51,7 @@ describe(endpointUnderTest, () => {
 
   describe("An instance of the endpoint factory class", () => {
     it("should inherit from LastFMApiEndpointFactoryV2", () => {
-      expect(endpointFactory).toBeInstanceOf(LastFMApiEndpointFactoryV2);
+      expect(endpointFactory).toBeInstanceOf(LastFMApiEndpointFactoryBaseV2);
     });
 
     it("should have the correct route set", () => {
