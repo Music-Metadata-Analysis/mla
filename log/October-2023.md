@@ -10,7 +10,7 @@ I would describe this as very much a work in progress and feel there is much mor
 
 ## Components
 
-I began first by attempting to extract components from the code base. Naturally this lent itself towards the backend api and frontend client, but there were quite a few others that emerged naturally during this process.  (It's worth clarifying that these are architectural components, and are very distinct from React components.)
+I began first by attempting to extract components from the code base. Naturally this lent itself towards the backend api and frontend client, but there were quite a few others that emerged naturally during this process. (It's worth clarifying that these are architectural components, and are very distinct from React components.)
 
 Refactoring was greatly helped by a simple [architecture enforcement script](../.github/scripts/architecture.sh) I wrote to enforce boundaries between the components. It may make sense to eventually put these components in different code bases, but there is over-head associated with this, and it wasn't immediately feasible during refactoring. For now I'm happy with the mono-codebase structure.
 
@@ -44,7 +44,7 @@ The primary feature shipped during the last iteration was the 'Count by Artist' 
 
 This report aggregates together hundreds of API requests of a given user's Artist and Album listening habits to create an interactive chart.
 
-This chart is built by showing the proportion of all listens belonging to the user's Top 20 most listened to artists. Each of these Top 20 Artists then has their listens sorted into their 20 most popular albums (popularity here is defined by the last.fm API).  The remaining listens outside of these constraints are classified as "unidentified".
+This chart is built by showing the proportion of all listens belonging to the user's Top 20 most listened to artists. Each of these Top 20 Artists then has their listens sorted into their 20 most popular albums (popularity here is defined by the last.fm API). The remaining listens outside of these constraints are classified as "unidentified".
 
 The result is a pretty fun tool to explore your listening habits with respect to your favourite Artists:
 <br />
@@ -109,4 +109,4 @@ In practice this meant using interfaces and abstract classes rather than creatin
 
 - I've noticed quite a few places where the structure of the code could be further improved, to make the architecture "cleaner". However, at this point it's mostly about folder naming as opposed to the massive refactors that were undertaken previously.
 - I'd like to test the "generic-ness" of my solution by providing other aggregate type reports for users to check out.
-- I'm still interested in connecting other data sources such as Spotify.
+- I'm still interested in connecting other data sources such as [Spotify](https://www.spotify.com/).
