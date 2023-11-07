@@ -15,6 +15,9 @@
   "ignorePatterns": [
     {
       "pattern": "^https://github.com/Music-Metadata-Analysis/mla/"
+    },
+    {
+      "pattern": "^https://www.spotify.com/"
     }
   ]
 }
