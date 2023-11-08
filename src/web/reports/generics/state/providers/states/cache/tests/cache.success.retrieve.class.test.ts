@@ -11,22 +11,11 @@ describe(testType, () => {
   let action: actionType;
   let received: ReportStateInterface;
 
-  const startState = {
-    data: {
-      integration: "mockIntegration",
-      report: {},
-    },
-    error: null,
-    inProgress: true,
-    profileUrl: "mockProfileUrl",
-    ready: false,
-    retries: 3,
-    userName: "mockUsername",
-  } as ReportStateInterface;
+  const emptyState = { retries: 1 } as ReportStateInterface;
 
   const mockCachedState = {
     ...stateFixture,
-    retries: 1,
+    retries: 3,
   };
 
   const arrange = (state: ReportStateInterface, action: actionType) => {
@@ -42,13 +31,16 @@ describe(testType, () => {
             type: testType,
             cachedReportState: { ...mockCachedState },
           };
-          arrange(startState, action);
+          arrange(emptyState, action);
         });
 
         it("should return the correct state", () => {
           expect(received).toStrictEqual({
             ...mockCachedState,
-            retries: startState.retries,
+            data: {
+              ...mockCachedState.data,
+            },
+            retries: emptyState.retries,
           });
         });
       });
@@ -58,11 +50,11 @@ describe(testType, () => {
           action = {
             type: "UnknownType",
           } as unknown as actionType;
-          arrange(startState, action);
+          arrange(emptyState, action);
         });
 
         it("should return the correct state", () => {
-          expect(received).toStrictEqual(startState);
+          expect(received).toStrictEqual(emptyState);
         });
       });
     });

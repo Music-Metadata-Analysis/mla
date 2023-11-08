@@ -1,5 +1,5 @@
 import ReducerState from "../cache.start.retrieve.class";
-import stateFixture from "@src/contracts/api/services/lastfm/fixtures/aggregates/playcount.by.artist/lastfm.report.state.playcount.by.artist.sunburst.complete.1.json";
+import { mockInitialReportData } from "@src/web/reports/generics/state/providers/tests/fixtures/report.state.data";
 import type { ReportActionType } from "@src/web/reports/generics/types/state/providers/report.action.types";
 import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 
@@ -11,7 +11,9 @@ describe(testType, () => {
   let action: actionType;
   let received: ReportStateInterface;
 
-  const completeReport = { ...stateFixture, ready: false };
+  const emptyState = { retries: 3 } as ReportStateInterface;
+  const testIntegrationType = "TEST";
+  const testUserName = "testUserName";
 
   const arrange = (state: ReportStateInterface, action: actionType) => {
     stateClass = new ReducerState(state, action);
@@ -24,15 +26,23 @@ describe(testType, () => {
         beforeEach(() => {
           action = {
             type: testType,
+            integration: testIntegrationType,
+            userName: testUserName,
           };
-          arrange(completeReport, action);
+          arrange(emptyState, action);
         });
 
         it("should return the correct state", () => {
-          expect(received).toStrictEqual({
-            ...completeReport,
-            inProgress: true,
+          expect(received.inProgress).toBe(true);
+          expect(received.userName).toBe(testUserName);
+          expect(received.data).toStrictEqual({
+            integration: testIntegrationType,
+            report: mockInitialReportData,
           });
+          expect(received.error).toBe(null);
+          expect(received.profileUrl).toBe(null);
+          expect(received.ready).toBe(false);
+          expect(received.retries).toBe(stateClass.initialRetries);
         });
       });
 
@@ -41,11 +51,11 @@ describe(testType, () => {
           action = {
             type: "UnknownType",
           } as unknown as actionType;
-          arrange(completeReport, action);
+          arrange(emptyState, action);
         });
 
         it("should return the correct state", () => {
-          expect(received).toStrictEqual(completeReport);
+          expect(received).toStrictEqual(emptyState);
         });
       });
     });

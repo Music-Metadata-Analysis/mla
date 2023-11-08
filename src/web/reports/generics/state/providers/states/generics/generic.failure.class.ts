@@ -13,7 +13,7 @@ class ReducerGenericFailureFetch extends ReportReducerStateBaseClass<"FailureFet
       error: this.action.type,
       inProgress: false,
       profileUrl: null,
-      ready: true,
+      ready: false,
       retries: this.initialRetries,
       userName: this.action.userName,
     };

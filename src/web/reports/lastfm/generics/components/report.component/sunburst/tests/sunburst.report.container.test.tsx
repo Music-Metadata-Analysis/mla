@@ -310,6 +310,27 @@ describe("SunBurstReportContainer", () => {
     });
   };
 
+  const checkEffectHookReportReadyButReportAlreadyReady = ({
+    analyticsCallCount,
+  }: {
+    analyticsCallCount: number;
+  }) => {
+    it("should NOT update the report state to ready", () => {
+      expect(currentLastFMHookState.ready).toHaveBeenCalledTimes(0);
+    });
+
+    it("should NOT increment the search metric", () => {
+      expect(mockMetricsHook.increment).toHaveBeenCalledTimes(0);
+    });
+
+    it("should NOT trigger an analytics event for report presentation", () => {
+      expect(mockAnalyticsHook.event).toHaveBeenCalledTimes(analyticsCallCount);
+      expect(mockAnalyticsHook.event).not.toHaveBeenCalledWith(
+        Events.LastFM.ReportPresented(mockQuery.analyticsReportType)
+      );
+    });
+  };
+
   const checkErrorDisplayContainerProps = () => {
     it("should call the LastFMErrorDisplayContainer with the expected props", () => {
       expect(LastFMErrorDisplayContainer).toHaveBeenCalledTimes(1);
@@ -404,9 +425,28 @@ describe("SunBurstReportContainer", () => {
 
           checkInstantiateHooks();
           checkEffectHookDataFetchingWithCacheRetrieval();
-          checkEffectHookNodeSelection({ analyticsCallCount: 2 });
-          checkEffectHookReportReadyWithNoCacheWriting({
-            analyticsCallCount: 2,
+          checkEffectHookNodeSelection({ analyticsCallCount: 1 });
+          checkEffectHookReportReadyButReportAlreadyReady({
+            analyticsCallCount: 1,
+          });
+          checkErrorDisplayContainerProps();
+          checkBillBoardProgressBarProps();
+          checkSunBurstReportProps();
+        });
+
+        describe("when the report is NOT complete", () => {
+          beforeEach(() => {
+            mockQuery.getReportData(
+              currentLastFMHookState.reportProperties
+            ).status.complete = false;
+            arrange();
+          });
+
+          checkInstantiateHooks();
+          checkEffectHookDataFetchingWithCacheRetrieval();
+          checkEffectHookNodeSelectionNoUpdate({ analyticsCallCount: 0 });
+          checkEffectHookReportReadyButReportAlreadyReady({
+            analyticsCallCount: 0,
           });
           checkErrorDisplayContainerProps();
           checkBillBoardProgressBarProps();
@@ -430,6 +470,7 @@ describe("SunBurstReportContainer", () => {
             "and is resumable (%s)",
             (resumableCondition) => {
               beforeEach(() => {
+                currentLastFMHookState.reportProperties.userName = mockUserName;
                 currentLastFMHookState.reportProperties.inProgress = false;
                 currentLastFMHookState.reportProperties.error =
                   resumableCondition;

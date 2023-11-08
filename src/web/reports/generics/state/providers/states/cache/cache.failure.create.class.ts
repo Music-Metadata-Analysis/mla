@@ -7,7 +7,7 @@ class ReducerCacheFailureCreate extends ReportReducerStateBaseClass<"FailureCrea
   generateState(): ReportStateInterface {
     return {
       data: { ...this.state.data },
-      error: null,
+      error: null, // A cache creation problem should not negatively impact users.
       inProgress: false,
       profileUrl: this.state.profileUrl,
       ready: false,

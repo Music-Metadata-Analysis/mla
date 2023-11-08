@@ -129,8 +129,9 @@ export default abstract class SunBurstBaseQuery<
     reportProperties: ReportStateEncapsulation["reportProperties"]
   ) {
     const canBeResumed =
-      reportProperties.inProgress === false &&
       reportProperties.ready === false &&
+      reportProperties.userName !== null &&
+      reportProperties.inProgress === false &&
       this.getReportData(reportProperties).status.complete !== true;
 
     if (
@@ -149,7 +150,6 @@ export default abstract class SunBurstBaseQuery<
   ) {
     return (
       reportProperties.ready &&
-      reportProperties.userName !== null &&
       this.getReportData(reportProperties).content.length === 0
     );
   }

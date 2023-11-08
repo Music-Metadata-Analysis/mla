@@ -135,121 +135,227 @@ describe(LastFMReportQueryAbstractBaseClass.name, () => {
     describe("queryIsDataReady", () => {
       let result: boolean;
 
-      describe("when the report is in progress", () => {
-        beforeEach(() => (mockReportState.inProgress = true));
+      const expectFalseResult = () => {
+        it("should return false", () => {
+          expect(result).toBe(false);
+        });
+      };
 
-        describe("when the report is ready", () => {
-          beforeEach(() => (mockReportState.ready = true));
+      describe("when the report has a username", () => {
+        beforeEach(() => (mockReportState.userName = "mockUserName"));
 
-          describe("when the report has no error", () => {
-            beforeEach(() => {
-              mockReportState.error = null;
+        describe("when the report is in progress", () => {
+          beforeEach(() => (mockReportState.inProgress = true));
 
-              result = instance.queryIsDataReady(mockReportState);
+          describe("when the report is ready", () => {
+            beforeEach(() => (mockReportState.ready = true));
+
+            describe("when the report has no error", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
 
-            it("should return false", () => {
-              expect(result).toBe(false);
+            describe("when the report has an error", () => {
+              beforeEach(() => {
+                mockReportState.error = "DataPointFailureFetch";
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
           });
 
-          describe("when the report has an error", () => {
-            beforeEach(() => {
-              mockReportState.error = "DataPointFailureFetch";
+          describe("when the report is NOT ready", () => {
+            beforeEach(() => (mockReportState.ready = false));
 
-              result = instance.queryIsDataReady(mockReportState);
+            describe("when the report has no error", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
 
-            it("should return false", () => {
-              expect(result).toBe(false);
+            describe("when the report has an error", () => {
+              beforeEach(() => {
+                mockReportState.error = "DataPointFailureFetch";
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
           });
         });
 
-        describe("when the report is NOT ready", () => {
-          beforeEach(() => (mockReportState.ready = false));
+        describe("when the report is NOT in progress", () => {
+          beforeEach(() => (mockReportState.inProgress = false));
 
-          describe("when the report has no error", () => {
-            beforeEach(() => {
-              mockReportState.error = null;
+          describe("when the report is ready", () => {
+            beforeEach(() => (mockReportState.ready = true));
 
-              result = instance.queryIsDataReady(mockReportState);
+            describe("when the report has no error", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
 
-            it("should return false", () => {
-              expect(result).toBe(false);
+            describe("when the report has an error", () => {
+              beforeEach(() => {
+                mockReportState.error = "DataPointFailureFetch";
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
           });
 
-          describe("when the report has an error", () => {
-            beforeEach(() => {
-              mockReportState.error = "DataPointFailureFetch";
+          describe("when the report is NOT ready", () => {
+            beforeEach(() => (mockReportState.ready = false));
 
-              result = instance.queryIsDataReady(mockReportState);
+            describe("when the report has no error", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              it("should return true", () => {
+                expect(result).toBe(true);
+              });
             });
 
-            it("should return false", () => {
-              expect(result).toBe(false);
+            describe("when the report has an error", () => {
+              beforeEach(() => {
+                mockReportState.error = "DataPointFailureFetch";
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
           });
         });
       });
 
-      describe("when the report is NOT in progress", () => {
-        beforeEach(() => (mockReportState.inProgress = false));
+      describe("when the report has a no username", () => {
+        beforeEach(() => (mockReportState.userName = null));
 
-        describe("when the report is ready", () => {
-          beforeEach(() => (mockReportState.ready = true));
+        describe("when the report is in progress", () => {
+          beforeEach(() => (mockReportState.inProgress = true));
 
-          describe("when the report has no error", () => {
-            beforeEach(() => {
-              mockReportState.error = null;
+          describe("when the report is ready", () => {
+            beforeEach(() => (mockReportState.ready = true));
 
-              result = instance.queryIsDataReady(mockReportState);
+            describe("when the report has no error", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
 
-            it("should return false", () => {
-              expect(result).toBe(false);
+            describe("when the report has an error", () => {
+              beforeEach(() => {
+                mockReportState.error = "DataPointFailureFetch";
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
           });
 
-          describe("when the report has an error", () => {
-            beforeEach(() => {
-              mockReportState.error = "DataPointFailureFetch";
+          describe("when the report is NOT ready", () => {
+            beforeEach(() => (mockReportState.ready = false));
 
-              result = instance.queryIsDataReady(mockReportState);
+            describe("when the report has no error", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
 
-            it("should return false", () => {
-              expect(result).toBe(false);
+            describe("when the report has an error", () => {
+              beforeEach(() => {
+                mockReportState.error = "DataPointFailureFetch";
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
           });
         });
 
-        describe("when the report is NOT ready", () => {
-          beforeEach(() => (mockReportState.ready = false));
+        describe("when the report is NOT in progress", () => {
+          beforeEach(() => (mockReportState.inProgress = false));
 
-          describe("when the report has no error", () => {
-            beforeEach(() => {
-              mockReportState.error = null;
+          describe("when the report is ready", () => {
+            beforeEach(() => (mockReportState.ready = true));
 
-              result = instance.queryIsDataReady(mockReportState);
+            describe("when the report has no error", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              it("should return false", () => {
+                expect(result).toBe(false);
+              });
             });
 
-            it("should return true", () => {
-              expect(result).toBe(true);
+            describe("when the report has an error", () => {
+              beforeEach(() => {
+                mockReportState.error = "DataPointFailureFetch";
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
           });
 
-          describe("when the report has an error", () => {
-            beforeEach(() => {
-              mockReportState.error = "DataPointFailureFetch";
+          describe("when the report is NOT ready", () => {
+            beforeEach(() => (mockReportState.ready = false));
 
-              result = instance.queryIsDataReady(mockReportState);
+            describe("when the report has no error", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
 
-            it("should return false", () => {
-              expect(result).toBe(false);
+            describe("when the report has an error", () => {
+              beforeEach(() => {
+                mockReportState.error = "DataPointFailureFetch";
+
+                result = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalseResult();
             });
           });
         });

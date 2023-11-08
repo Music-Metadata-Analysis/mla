@@ -36,7 +36,7 @@ describe(testType, () => {
           });
           expect(received.error).toBe(null);
           expect(received.profileUrl).toBe(null);
-          expect(received.ready).toBe(true);
+          expect(received.ready).toBe(false);
           expect(received.retries).toBe(stateClass.initialRetries);
         });
       });

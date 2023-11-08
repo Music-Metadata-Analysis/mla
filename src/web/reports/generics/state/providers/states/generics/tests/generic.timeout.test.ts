@@ -71,7 +71,7 @@ describe(testType, () => {
               report: mockInitialReportData,
             });
             expect(received.error).toBe("FailureFetch");
-            expect(received.ready).toBe(true);
+            expect(received.ready).toBe(false);
             expect(received.retries).toBe(mockRetries);
           });
         });
