@@ -13,7 +13,7 @@ class ReducerGenericTimeoutFetch extends ReportReducerStateBaseClass<"TimeoutFet
       error: this.state.retries > 0 ? this.action.type : "FailureFetch",
       inProgress: false,
       profileUrl: null,
-      ready: this.state.retries > 0 ? false : true,
+      ready: false,
       retries: this.state.retries > 0 ? this.state.retries - 1 : 0,
       userName: this.action.userName,
     };

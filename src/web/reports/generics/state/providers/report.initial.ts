@@ -32,7 +32,7 @@ export const InitialState = <ReportStateInterface>{
   error: null,
   inProgress: false,
   profileUrl: null,
-  ready: true,
+  ready: false,
   userName: null,
 };
 

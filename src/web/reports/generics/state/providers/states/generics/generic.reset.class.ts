@@ -13,7 +13,7 @@ class ReducerGenericResetFetch extends ReportReducerStateBaseClass<"ResetState">
       error: null,
       inProgress: false,
       profileUrl: null,
-      ready: true,
+      ready: false,
       retries: this.initialRetries,
       userName: null,
     };

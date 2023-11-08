@@ -6,13 +6,16 @@ class ReducerCacheStartRetrieve extends ReportReducerStateBaseClass<"StartRetrie
 
   generateState(): ReportStateInterface {
     return {
-      data: { ...this.state.data },
+      data: {
+        integration: this.action.integration,
+        report: this.initialReport,
+      },
       error: null,
       inProgress: true,
-      profileUrl: this.state.profileUrl,
+      profileUrl: null,
       ready: false,
       retries: this.state.retries,
-      userName: this.state.userName,
+      userName: this.action.userName,
     };
   }
 }

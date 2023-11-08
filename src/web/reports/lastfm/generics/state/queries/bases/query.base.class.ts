@@ -76,6 +76,7 @@ export default abstract class LastFMReportQueryAbstractBaseClass<
     reportProperties: ReportStateEncapsulation["reportProperties"]
   ) {
     if (reportProperties.inProgress) return false;
+    if (!reportProperties.userName) return false;
     if (reportProperties.ready) return false;
     if (reportProperties.error) return false;
     return true;

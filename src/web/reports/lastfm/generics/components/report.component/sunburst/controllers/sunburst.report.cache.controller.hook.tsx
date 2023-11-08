@@ -14,7 +14,7 @@ export type SunBurstCacheControllerProps<
   ReportType extends SunBurstBaseReportState<unknown>,
 > = {
   queryClass: new () => SunBurstBaseQuery<ReportType>;
-  sourceName: string;
+  sourceName: "lastfm" | "test";
   userName: string;
 };
 

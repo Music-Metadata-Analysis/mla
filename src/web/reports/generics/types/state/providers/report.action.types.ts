@@ -56,6 +56,8 @@ export type ReportActionType =
     }
   | {
       type: "StartRetrieveCachedReport";
+      userName: string;
+      integration: DataSourceTypes;
     }
   | {
       type: "SuccessCreateCachedReport";

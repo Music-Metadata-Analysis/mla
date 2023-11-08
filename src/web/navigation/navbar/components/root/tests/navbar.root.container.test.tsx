@@ -75,8 +75,8 @@ describe("NavBarRootContainer", () => {
     });
   };
 
-  describe("when the user report state is ready", () => {
-    beforeEach(() => (mockLastFMHook.reportProperties.ready = true));
+  describe("when the user report state is NOT inProgress", () => {
+    beforeEach(() => (mockLastFMHook.reportProperties.inProgress = false));
 
     describe("when the authState is 'processing'", () => {
       beforeEach(() => (mockAuthHook.status = "processing"));
@@ -91,8 +91,8 @@ describe("NavBarRootContainer", () => {
     });
   });
 
-  describe("when the user report state is NOT ready", () => {
-    beforeEach(() => (mockLastFMHook.reportProperties.ready = false));
+  describe("when the user report state is inProgress", () => {
+    beforeEach(() => (mockLastFMHook.reportProperties.inProgress = true));
 
     describe("when the authState is 'processing'", () => {
       beforeEach(() => (mockAuthHook.status = "processing"));

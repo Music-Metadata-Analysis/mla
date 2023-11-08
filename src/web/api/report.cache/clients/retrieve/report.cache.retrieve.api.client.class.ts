@@ -13,6 +13,7 @@ import type {
   ReportCacheRetrieveClientInterface,
   ReportCacheRetrieveClientParamsInterface,
 } from "@src/web/api/report.cache/types/cache.report.api.client.types";
+import type { DataSourceTypes } from "@src/web/reports/generics/types/source.types";
 import type { reportDispatchType } from "@src/web/reports/generics/types/state/providers/report.context.types";
 import type { ReportStateInterface } from "@src/web/reports/generics/types/state/providers/report.state.types";
 
@@ -34,6 +35,12 @@ class ReportRetrieveCreateClient
   protected configuredHandlers = [handleSuccessful, handleNotFound];
   protected configuredQueryMappings = {
     username: "userName",
+  };
+  protected dataSourceMappings: {
+    [param: string]: DataSourceTypes;
+  } = {
+    lastfm: "LAST.FM",
+    test: "TEST",
   };
   protected queryStringClient: QueryString;
   public readonly route = apiRoutes.v2.cache.retrieve;
@@ -68,6 +75,8 @@ class ReportRetrieveCreateClient
   ): void {
     this.dispatcher({
       type: "StartRetrieveCachedReport",
+      integration: this.getIntegrationFromParams(params),
+      userName: params.userName,
     });
     this.eventDispatcher(
       new analyticsVendor.collection.EventDefinition({
@@ -82,6 +91,12 @@ class ReportRetrieveCreateClient
     this.queryStringClient.update({
       [this.cacheQueryStringName]: "1",
     });
+  }
+
+  protected getIntegrationFromParams(
+    params: ReportCacheRetrieveClientParamsInterface
+  ): DataSourceTypes {
+    return this.dataSourceMappings[params.sourceName];
   }
 }
 

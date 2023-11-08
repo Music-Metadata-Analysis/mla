@@ -31,6 +31,7 @@ describe(testType, () => {
         it("should return the correct state", () => {
           expect(received).toStrictEqual({
             ...completeReport,
+            error: null,
             inProgress: false,
           });
         });

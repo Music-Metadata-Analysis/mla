@@ -46,7 +46,7 @@ describe(useSunBurstCacheController.name, () => {
     SunBurstBaseReportState<unknown>
   > = {
     queryClass: MockQueryClass,
-    sourceName: "mockSourceName",
+    sourceName: "test",
     userName: "mockUserName",
   };
 

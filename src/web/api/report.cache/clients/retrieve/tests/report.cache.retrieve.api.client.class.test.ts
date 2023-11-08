@@ -27,7 +27,7 @@ describe(ReportCacheRetrieveClient.name, () => {
   const mockParams: ReportCacheRetrieveClientParamsInterface = {
     authenticatedUserName: "mock@gmail.com",
     reportName: "mock Report Name",
-    sourceName: "mock Source Name",
+    sourceName: "test",
     userName: "mockUserName",
   };
 
@@ -185,6 +185,8 @@ describe(ReportCacheRetrieveClient.name, () => {
               );
               expect(mockDispatch).toHaveBeenCalledWith({
                 type: "StartRetrieveCachedReport",
+                integration: "TEST",
+                userName: mockParams.userName,
               });
               expect(mockDispatch).toHaveBeenCalledWith({
                 type: "SuccessRetrieveCachedReport",
@@ -221,6 +223,8 @@ describe(ReportCacheRetrieveClient.name, () => {
               );
               expect(mockDispatch).toHaveBeenCalledWith({
                 type: "StartRetrieveCachedReport",
+                integration: "TEST",
+                userName: mockParams.userName,
               });
               expect(mockDispatch).toHaveBeenCalledWith({
                 type: "FailureRetrieveCachedReport",
@@ -256,6 +260,8 @@ describe(ReportCacheRetrieveClient.name, () => {
               );
               expect(mockDispatch).toHaveBeenCalledWith({
                 type: "StartRetrieveCachedReport",
+                integration: "TEST",
+                userName: mockParams.userName,
               });
               expect(mockDispatch).toHaveBeenCalledWith({
                 type: "FailureRetrieveCachedReport",
@@ -291,6 +297,8 @@ describe(ReportCacheRetrieveClient.name, () => {
               );
               expect(mockDispatch).toHaveBeenCalledWith({
                 type: "StartRetrieveCachedReport",
+                integration: "TEST",
+                userName: mockParams.userName,
               });
               expect(mockDispatch).toHaveBeenCalledWith({
                 type: "FailureRetrieveCachedReport",
@@ -326,6 +334,8 @@ describe(ReportCacheRetrieveClient.name, () => {
               );
               expect(mockDispatch).toHaveBeenCalledWith({
                 type: "StartRetrieveCachedReport",
+                integration: "TEST",
+                userName: mockParams.userName,
               });
               expect(mockDispatch).toHaveBeenCalledWith({
                 type: "FailureRetrieveCachedReport",

@@ -249,274 +249,22 @@ describe(SunBurstBaseQuery.name, () => {
     describe("queryIsDataReady", () => {
       let received: boolean;
 
-      describe("when an api request is NOT in progress", () => {
-        beforeEach(() => {
-          mockReportState.inProgress = false;
+      const expectFalse = () => {
+        it("should return false", () => {
+          expect(received).toBe(false);
         });
+      };
 
-        describe("when the report is complete", () => {
-          beforeEach(() => {
-            getReportState().status.complete = true;
-          });
-
-          describe("when the report is not ready", () => {
-            beforeEach(() => {
-              mockReportState.ready = false;
-            });
-
-            describe("when the report has an error", () => {
-              beforeEach(() => {
-                mockReportState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-
-            describe("when the report has NO error", () => {
-              beforeEach(() => {
-                mockReportState.error = null;
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(true);
-              });
-            });
-          });
-
-          describe("when the report is ready", () => {
-            beforeEach(() => {
-              mockReportState.ready = true;
-            });
-
-            describe("when the report has an error", () => {
-              beforeEach(() => {
-                mockReportState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-
-            describe("when the report has NO error", () => {
-              beforeEach(() => {
-                mockReportState.error = null;
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return true", () => {
-                expect(received).toBe(false);
-              });
-            });
-          });
+      const expectTrue = () => {
+        it("should return true", () => {
+          expect(received).toBe(true);
         });
-
-        describe("when the report is NOT complete", () => {
-          beforeEach(() => {
-            getReportState().status.complete = false;
-          });
-
-          describe("when the report is not ready", () => {
-            beforeEach(() => {
-              mockReportState.ready = false;
-            });
-
-            describe("when the report has an error", () => {
-              beforeEach(() => {
-                mockReportState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-
-            describe("when the report has NO error", () => {
-              beforeEach(() => {
-                mockReportState.error = null;
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-          });
-
-          describe("when the report is ready", () => {
-            beforeEach(() => {
-              mockReportState.ready = true;
-            });
-
-            describe("when the report has an error", () => {
-              beforeEach(() => {
-                mockReportState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-
-            describe("when the report has NO error", () => {
-              beforeEach(() => {
-                mockReportState.error = null;
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return true", () => {
-                expect(received).toBe(false);
-              });
-            });
-          });
-        });
-      });
-
-      describe("when an api request is in progress", () => {
-        beforeEach(() => {
-          mockReportState.inProgress = true;
-        });
-
-        describe("when the report is complete", () => {
-          beforeEach(() => {
-            getReportState().status.complete = true;
-          });
-
-          describe("when the report is not ready", () => {
-            beforeEach(() => {
-              mockReportState.ready = false;
-            });
-
-            describe("when the report has an error", () => {
-              beforeEach(() => {
-                mockReportState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-
-            describe("when the report has NO error", () => {
-              beforeEach(() => {
-                mockReportState.error = null;
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-          });
-
-          describe("when the report is ready", () => {
-            beforeEach(() => {
-              mockReportState.ready = true;
-            });
-
-            describe("when the report has an error", () => {
-              beforeEach(() => {
-                mockReportState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-
-            describe("when the report has NO error", () => {
-              beforeEach(() => {
-                mockReportState.error = null;
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return true", () => {
-                expect(received).toBe(false);
-              });
-            });
-          });
-        });
-
-        describe("when the report is NOT complete", () => {
-          beforeEach(() => {
-            getReportState().status.complete = false;
-          });
-
-          describe("when the report is not ready", () => {
-            beforeEach(() => {
-              mockReportState.ready = false;
-            });
-
-            describe("when the report has an error", () => {
-              beforeEach(() => {
-                mockReportState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-
-            describe("when the report has NO error", () => {
-              beforeEach(() => {
-                mockReportState.error = null;
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-          });
-
-          describe("when the report is ready", () => {
-            beforeEach(() => {
-              mockReportState.ready = true;
-            });
-
-            describe("when the report has an error", () => {
-              beforeEach(() => {
-                mockReportState.error = "FailureFetch";
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
-            });
-
-            describe("when the report has NO error", () => {
-              beforeEach(() => {
-                mockReportState.error = null;
-                received = instance.queryIsDataReady(mockReportState);
-              });
-
-              it("should return true", () => {
-                expect(received).toBe(false);
-              });
-            });
-          });
-        });
-      });
-    });
-
-    describe("queryIsResumable", () => {
-      let received: boolean;
+      };
 
       const truthTable = (mutablePath: boolean) => {
-        describe("when the report is in progress", () => {
+        describe("when the report is complete", () => {
           beforeEach(() => {
-            mockReportState.inProgress = true;
+            getReportState().status.complete = true;
           });
 
           describe("when the report is ready", () => {
@@ -524,26 +272,22 @@ describe(SunBurstBaseQuery.name, () => {
               mockReportState.ready = true;
             });
 
-            describe("when the report is complete", () => {
+            describe("when the report has an error", () => {
               beforeEach(() => {
-                getReportState().status.complete = true;
-                received = instance.queryIsResumable(mockReportState);
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
               });
 
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
+              expectFalse();
             });
 
-            describe("when the report is NOT complete", () => {
+            describe("when the report has NO error", () => {
               beforeEach(() => {
-                getReportState().status.complete = false;
-                received = instance.queryIsResumable(mockReportState);
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
               });
 
-              it("should return false", () => {
-                expect(received).toBe(false);
-              });
+              expectFalse();
             });
           });
 
@@ -552,25 +296,255 @@ describe(SunBurstBaseQuery.name, () => {
               mockReportState.ready = false;
             });
 
-            describe("when the report is complete", () => {
+            describe("when the report has an error", () => {
               beforeEach(() => {
-                getReportState().status.complete = true;
-                received = instance.queryIsResumable(mockReportState);
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
               });
 
-              it("should return false", () => {
-                expect(received).toBe(false);
+              expectFalse();
+            });
+
+            describe("when the report has NO error (mutable)", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
+              });
+
+              if (mutablePath) {
+                expectTrue();
+              } else {
+                expectFalse();
+              }
+            });
+          });
+        });
+
+        describe("when the report is NOT complete", () => {
+          beforeEach(() => {
+            getReportState().status.complete = false;
+          });
+
+          describe("when the report is ready", () => {
+            beforeEach(() => {
+              mockReportState.ready = true;
+            });
+
+            describe("when the report has an error", () => {
+              beforeEach(() => {
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalse();
+            });
+
+            describe("when the report has NO error", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalse();
+            });
+          });
+
+          describe("when the report is NOT ready", () => {
+            beforeEach(() => {
+              mockReportState.ready = false;
+            });
+
+            describe("when the report has an error", () => {
+              beforeEach(() => {
+                mockReportState.error = "FailureFetch";
+                received = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalse();
+            });
+
+            describe("when the report has NO error", () => {
+              beforeEach(() => {
+                mockReportState.error = null;
+                received = instance.queryIsDataReady(mockReportState);
+              });
+
+              expectFalse();
+            });
+          });
+        });
+      };
+
+      describe("when an api request is in progress", () => {
+        beforeEach(() => {
+          mockReportState.inProgress = true;
+        });
+
+        describe("when the report has a userName", () => {
+          beforeEach(() => {
+            mockReportState.userName = "mockUserName";
+          });
+
+          truthTable(false);
+        });
+
+        describe("when the report has NO userName", () => {
+          beforeEach(() => {
+            mockReportState.userName = null;
+          });
+
+          truthTable(false);
+        });
+      });
+
+      describe("when an api request is NOT in progress", () => {
+        beforeEach(() => {
+          mockReportState.inProgress = false;
+        });
+
+        describe("when the report has a userName", () => {
+          beforeEach(() => {
+            mockReportState.userName = "mockUserName";
+          });
+
+          truthTable(true);
+        });
+
+        describe("when the report has NO userName", () => {
+          beforeEach(() => {
+            mockReportState.userName = null;
+          });
+
+          truthTable(false);
+        });
+      });
+    });
+
+    describe("queryIsResumable", () => {
+      let received: boolean;
+
+      const expectFalse = () => {
+        it("should return false", () => {
+          expect(received).toBe(false);
+        });
+      };
+
+      const expectTrue = () => {
+        it("should return true", () => {
+          expect(received).toBe(true);
+        });
+      };
+
+      const truthTable = (mutablePath: boolean) => {
+        describe("when the report is in progress", () => {
+          beforeEach(() => {
+            mockReportState.inProgress = true;
+          });
+
+          describe("when the report has a userName", () => {
+            beforeEach(() => {
+              mockReportState.userName = "mockUserName";
+            });
+
+            describe("when the report is ready", () => {
+              beforeEach(() => {
+                mockReportState.ready = true;
+              });
+
+              describe("when the report is complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = true;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
+              });
+
+              describe("when the report is NOT complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = false;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
               });
             });
 
-            describe("when the report is NOT complete", () => {
+            describe("when the report is NOT ready", () => {
               beforeEach(() => {
-                getReportState().status.complete = false;
-                received = instance.queryIsResumable(mockReportState);
+                mockReportState.ready = false;
               });
 
-              it("should return false", () => {
-                expect(received).toBe(false);
+              describe("when the report is complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = true;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
+              });
+
+              describe("when the report is NOT complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = false;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
+              });
+            });
+          });
+
+          describe("when the report has NO userName", () => {
+            beforeEach(() => {
+              mockReportState.userName = null;
+            });
+
+            describe("when the report is ready", () => {
+              beforeEach(() => {
+                mockReportState.ready = true;
+              });
+
+              describe("when the report is complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = true;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
+              });
+
+              describe("when the report is NOT complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = false;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
+              });
+            });
+
+            describe("when the report is NOT ready", () => {
+              beforeEach(() => {
+                mockReportState.ready = false;
+              });
+
+              describe("when the report is complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = true;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
+              });
+
+              describe("when the report is NOT complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = false;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
               });
             });
           });
@@ -581,58 +555,114 @@ describe(SunBurstBaseQuery.name, () => {
             mockReportState.inProgress = false;
           });
 
-          describe("when the report is ready", () => {
+          describe("when the report has a userName", () => {
             beforeEach(() => {
-              mockReportState.ready = true;
+              mockReportState.userName = "mockUserName";
             });
 
-            describe("when the report is complete", () => {
+            describe("when the report is ready", () => {
               beforeEach(() => {
-                getReportState().status.complete = true;
-                received = instance.queryIsResumable(mockReportState);
+                mockReportState.ready = true;
               });
 
-              it("should return false", () => {
-                expect(received).toBe(false);
+              describe("when the report is complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = true;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
+              });
+
+              describe("when the report is NOT complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = false;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
               });
             });
 
-            describe("when the report is NOT complete", () => {
+            describe("when the report is NOT ready", () => {
               beforeEach(() => {
-                getReportState().status.complete = false;
-                received = instance.queryIsResumable(mockReportState);
+                mockReportState.ready = false;
               });
 
-              it("should return false", () => {
-                expect(received).toBe(false);
+              describe("when the report is complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = true;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
+              });
+
+              describe("when the report is NOT complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = false;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                if (mutablePath) {
+                  expectTrue();
+                } else {
+                  expectFalse();
+                }
               });
             });
           });
 
-          describe("when the report is NOT ready", () => {
+          describe("when the report has NO userName", () => {
             beforeEach(() => {
-              mockReportState.ready = false;
+              mockReportState.userName = null;
             });
 
-            describe("when the report is complete", () => {
+            describe("when the report is ready", () => {
               beforeEach(() => {
-                getReportState().status.complete = true;
-                received = instance.queryIsResumable(mockReportState);
+                mockReportState.ready = true;
               });
 
-              it("should return false", () => {
-                expect(received).toBe(false);
+              describe("when the report is complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = true;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
+              });
+
+              describe("when the report is NOT complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = false;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
               });
             });
 
-            describe("when the report is NOT complete", () => {
+            describe("when the report is NOT ready", () => {
               beforeEach(() => {
-                getReportState().status.complete = false;
-                received = instance.queryIsResumable(mockReportState);
+                mockReportState.ready = false;
               });
 
-              it(`should return ${mutablePath}`, () => {
-                expect(received).toBe(mutablePath);
+              describe("when the report is complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = true;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
+              });
+
+              describe("when the report is NOT complete", () => {
+                beforeEach(() => {
+                  getReportState().status.complete = false;
+                  received = instance.queryIsResumable(mockReportState);
+                });
+
+                expectFalse();
               });
             });
           });
@@ -663,6 +693,14 @@ describe(SunBurstBaseQuery.name, () => {
         truthTable(true);
       });
 
+      describe("when there is an FailureRetrieveCachedReport error", () => {
+        beforeEach(() => {
+          mockReportState.error = "FailureRetrieveCachedReport";
+        });
+
+        truthTable(true);
+      });
+
       describe("when there some other error", () => {
         beforeEach(() => {
           mockReportState.error = "NotFoundFetch";
@@ -675,74 +713,54 @@ describe(SunBurstBaseQuery.name, () => {
     describe("queryUserHasNoData", () => {
       let received: boolean;
 
-      const truthTable = (mutableParam1: boolean, mutableParam2: boolean) => {
-        describe("when there is a username", () => {
-          beforeEach(() => (mockReportState.userName = "niall-byrne"));
+      const expectFalse = () => {
+        it("should return false", () => {
+          expect(received).toBe(false);
+        });
+      };
 
-          describe("when there is content", () => {
-            beforeEach(() => {
-              getReportState().content = [
-                { name: "The Cure", playcount: 0, albums: [], fetched: false },
-              ];
-              received = instance.queryUserHasNoData(mockReportState);
-            });
+      const expectTrue = () => {
+        it("should return true", () => {
+          expect(received).toBe(true);
+        });
+      };
 
-            it(`should return ${!mutableParam1}`, () => {
-              expect(received).toBe(!mutableParam1);
-            });
+      const truthTable = (mutablePath: boolean) => {
+        describe("when there is content", () => {
+          beforeEach(() => {
+            getReportState().content = [
+              { name: "The Cure", playcount: 0, albums: [], fetched: false },
+            ];
+            received = instance.queryUserHasNoData(mockReportState);
           });
 
-          describe("when there is NOT content", () => {
-            beforeEach(() => {
-              getReportState().content = [];
-              received = instance.queryUserHasNoData(mockReportState);
-            });
-
-            it(`should return ${!mutableParam2}`, () => {
-              expect(received).toBe(!mutableParam2);
-            });
-          });
+          expectFalse();
         });
 
-        describe("when there is NOT a username", () => {
-          beforeEach(() => (mockReportState.userName = null));
-
-          describe("when there is content", () => {
-            beforeEach(() => {
-              getReportState().content = [
-                { name: "The Cure", playcount: 0, albums: [], fetched: false },
-              ];
-              received = instance.queryUserHasNoData(mockReportState);
-            });
-
-            it("should return false", () => {
-              expect(received).toBe(false);
-            });
+        describe("when there is NOT content", () => {
+          beforeEach(() => {
+            getReportState().content = [];
+            received = instance.queryUserHasNoData(mockReportState);
           });
 
-          describe("when there is NOT content", () => {
-            beforeEach(() => {
-              getReportState().content = [];
-              received = instance.queryUserHasNoData(mockReportState);
-            });
-
-            it("should return false", () => {
-              expect(received).toBe(false);
-            });
-          });
+          if (mutablePath) {
+            expectTrue();
+          } else {
+            expectFalse();
+          }
         });
       };
 
       describe("when the report is ready", () => {
         beforeEach(() => (mockReportState.ready = true));
 
-        truthTable(true, false);
+        truthTable(true);
       });
 
       describe("when the report is NOT ready", () => {
         beforeEach(() => (mockReportState.ready = false));
 
-        truthTable(true, true);
+        truthTable(false);
       });
     });
 

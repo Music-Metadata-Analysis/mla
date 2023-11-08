@@ -23,7 +23,7 @@ export default function NavBarRootContainer({
   const router = useRouter();
 
   const isTransaction = () =>
-    !reportProperties.ready || authStatus === "processing";
+    reportProperties.inProgress || authStatus === "processing";
 
   useEffect(() => {
     if (isTransaction()) controller.controls.mobileMenu.setFalse();
