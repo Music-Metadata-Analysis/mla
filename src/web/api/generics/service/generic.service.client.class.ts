@@ -79,7 +79,7 @@ abstract class GenericApiAbstractClient<
     Object.entries(this.configuredParamsMappings).forEach(([k, v]) => {
       customizedRoute = customizedRoute.replace(
         k,
-        encodeURIComponent(String(params[v]))
+        encodeURIComponent(String(params[v]).toLowerCase())
       );
     });
     if (searchParams) {

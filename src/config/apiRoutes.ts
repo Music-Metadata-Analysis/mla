@@ -7,10 +7,8 @@ const apiRoutes = {
     },
   },
   v2: {
-    cache: {
-      create: "/api/v2/cache/:source/:report/:username",
-      retrieve: "/api/v2/cache/:source/:report",
-    },
+    cache: "/api/v2/cache/:source/:report",
+    cacheLegacyCreate: "/api/v2/cache/:source/:report/:username",
     data: {
       lastfm: {
         artists: {

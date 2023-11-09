@@ -6,7 +6,11 @@ describe("apiValidationVendorBackend", () => {
     expect(apiValidationVendorBackend.lastfm.playCountByArtist).toBe(
       lastFMplayCountByArtist
     );
-    expect(Object.keys(apiValidationVendorBackend).length).toBe(1);
+    expect(apiValidationVendorBackend["last.fm"].playCountByArtist).toBe(
+      lastFMplayCountByArtist
+    );
+    expect(Object.keys(apiValidationVendorBackend).length).toBe(2);
     expect(Object.keys(apiValidationVendorBackend.lastfm).length).toBe(1);
+    expect(Object.keys(apiValidationVendorBackend["last.fm"]).length).toBe(1);
   });
 });

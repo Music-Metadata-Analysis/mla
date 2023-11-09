@@ -1,6 +1,6 @@
 import ReportCacheEndpointFactoryBaseV2 from "./generics/v2.report.cache.endpoint.factory.base.class";
-import CreateRequestBodyValidatorMiddleware from "./middleware/create.request.body.validator.middleware.class";
-import CreateRequestParamsValidatorMiddleware from "./middleware/create.request.params.validator.middleware.class";
+import CreateRequestBodyValidatorMiddleware from "../middleware/create.request.body.validator.middleware.class";
+import CreateRequestParamsValidatorMiddleware from "../middleware/create.request.params.validator.middleware.class";
 import AuthenticationMiddleware from "@src/api/services/generics/endpoints/middleware/authentication.middleware.class";
 import { proxyFailureStatusCodes } from "@src/config/api";
 import apiRoutes from "@src/config/apiRoutes";
@@ -12,6 +12,7 @@ import type {
   ApiEndpointRequestBodyType,
 } from "@src/contracts/api/types/request.types";
 import type { ReportCacheCreateResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
+import type { DataSourceType } from "@src/contracts/api/types/source.types";
 import type {
   ApiFrameworkVendorApiRequestType,
   ApiFrameworkVendorApiResponseType,
@@ -31,7 +32,7 @@ export default class ReportCacheCreateEndpointFactoryV2 extends ReportCacheEndpo
       apiValidationVendorBackend
     );
   public readonly service = "S3";
-  public readonly route = apiRoutes.v2.cache.create;
+  public readonly route = apiRoutes.v2.cache;
 
   constructor() {
     super();
@@ -80,8 +81,8 @@ export default class ReportCacheCreateEndpointFactoryV2 extends ReportCacheEndpo
     return await this.proxy.createCacheObject({
       authenticatedUserName: String(params.authenticatedUserName),
       reportName: String(params.report),
-      sourceName: String(params.source),
-      userName: String(params.username),
+      sourceName: String(params.source) as Lowercase<DataSourceType>,
+      userName: String(body.userName),
       content: body,
     });
   }

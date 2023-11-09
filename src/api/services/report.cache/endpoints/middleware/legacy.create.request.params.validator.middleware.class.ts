@@ -9,7 +9,7 @@ import type {
 import type { ApiHandlerVendorMiddlewareInterface } from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
 import type { ApiValidationVendorBackendInterface } from "@src/vendors/types/integrations/api.validator/vendor.backend.types";
 
-export default class CreateRequestParamsValidatorMiddleware
+export default class LegacyCreateRequestParamsValidatorMiddleware
   implements ApiHandlerVendorMiddlewareInterface
 {
   protected readonly validators =
@@ -49,6 +49,7 @@ export default class CreateRequestParamsValidatorMiddleware
     const error =
       !params.source ||
       !params.report ||
+      !params.username ||
       !Object.keys(this.validators).includes(params.source.toString()) ||
       !Object.keys(this.validators[params.source.toString()]).includes(
         params.report.toString()

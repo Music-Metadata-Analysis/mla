@@ -2,12 +2,13 @@ import type {
   ReportCacheCreateResponseInterface,
   ReportCacheRetrieveResponseInterface,
 } from "@src/contracts/api/types/services/report.cache/response.types";
+import type { DataSourceType } from "@src/contracts/api/types/source.types";
 import type { PersistenceVendorDataType } from "@src/vendors/types/integrations/persistence/vendor.backend.types";
 
 export interface ReportCacheProxyCreateCacheObjectInterface {
   authenticatedUserName: string;
   reportName: string;
-  sourceName: string;
+  sourceName: Lowercase<DataSourceType>;
   userName: string;
   content: PersistenceVendorDataType;
 }
@@ -15,7 +16,7 @@ export interface ReportCacheProxyCreateCacheObjectInterface {
 export interface ReportCacheProxyRetrieveCacheObjectInterface {
   authenticatedUserName: string;
   reportName: string;
-  sourceName: string;
+  sourceName: Lowercase<DataSourceType>;
   userName: string;
 }
 

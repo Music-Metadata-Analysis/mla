@@ -1,4 +1,5 @@
 import S3CdnOriginReportsCacheObject from "../s3";
+import type { DataSourceType } from "@src/contracts/api/types/source.types";
 
 describe(S3CdnOriginReportsCacheObject.name, () => {
   let instance: S3CdnOriginReportsCacheObject;
@@ -8,7 +9,7 @@ describe(S3CdnOriginReportsCacheObject.name, () => {
   const arrange = (
     mockAuthenticatedUserName: string,
     mockReportName: string,
-    mockSourceName: string,
+    mockSourceName: Lowercase<DataSourceType>,
     mockUserName: string
   ) => {
     instance = new S3CdnOriginReportsCacheObject({
@@ -24,14 +25,14 @@ describe(S3CdnOriginReportsCacheObject.name, () => {
       [
         "mockReportType1",
         "mockSearchedUser1",
-        "mockSource1",
+        ["test", "test"],
         "mock1@authenticated.com",
         "bW9ja1JlcG9ydFR5cGUxLW1vY2tTZWFyY2hlZFVzZXIx.json",
       ],
       [
         "mockReportType2",
         "mockSearchedUser2",
-        "mockSource2",
+        ["last.fm", "lastfm"],
         "mock2@authenticated.com",
         "bW9ja1JlcG9ydFR5cGUyLW1vY2tTZWFyY2hlZFVzZXIy.json",
       ],
@@ -48,7 +49,7 @@ describe(S3CdnOriginReportsCacheObject.name, () => {
           arrange(
             mockAuthenticatedUserName,
             mockReportName,
-            mockSourceName,
+            mockSourceName[0] as Lowercase<DataSourceType>,
             mockUserName
           )
         );
@@ -71,7 +72,7 @@ describe(S3CdnOriginReportsCacheObject.name, () => {
           it("should return the correct result", () => {
             expect(result).toBe(
               [
-                mockSourceName,
+                mockSourceName[1],
                 "reports",
                 mockAuthenticatedUserName,
                 expectedBaseName,

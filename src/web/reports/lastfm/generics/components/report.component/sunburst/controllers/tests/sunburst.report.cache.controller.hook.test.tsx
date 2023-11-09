@@ -46,7 +46,7 @@ describe(useSunBurstCacheController.name, () => {
     SunBurstBaseReportState<unknown>
   > = {
     queryClass: MockQueryClass,
-    sourceName: "test",
+    sourceName: "TEST",
     userName: "mockUserName",
   };
 
@@ -201,7 +201,6 @@ describe(useSunBurstCacheController.name, () => {
             authenticatedUserName: mockAuthHook.user?.email,
             reportName: queryInstance.getReportTranslationKey().toLowerCase(),
             sourceName: mockHookProps.sourceName,
-            userName: mockHookProps.userName,
             body: mockBody,
           });
         });

@@ -1,4 +1,5 @@
 import { Buffer } from "buffer";
+import type { DataSourceType } from "@src/contracts/api/types/source.types";
 import type {
   CacheVendorCdnOriginReportsCacheObjectConstructorInterface,
   CacheVendorCdnOriginReportsCacheObjectInterface,
@@ -9,8 +10,15 @@ export default class S3CdnOriginReportsCacheObject
 {
   protected authenticatedUserName: string;
   protected reportName: string;
-  protected sourceName: string;
+  protected sourceName: Lowercase<DataSourceType>;
   protected userName: string;
+
+  protected sourceNameMapping: {
+    [key in Lowercase<DataSourceType>]: string;
+  } = {
+    test: "test",
+    "last.fm": "lastfm",
+  };
 
   constructor({
     authenticatedUserName,
@@ -31,7 +39,7 @@ export default class S3CdnOriginReportsCacheObject
   getStorageName() {
     const objectBaseName = this.getCacheId() + ".json";
     return [
-      this.sourceName,
+      this.sourceNameMapping[this.sourceName],
       "reports",
       this.authenticatedUserName,
       objectBaseName,

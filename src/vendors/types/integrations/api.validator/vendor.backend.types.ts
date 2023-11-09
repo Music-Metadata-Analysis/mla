@@ -11,7 +11,7 @@ export interface ApiValidationVendorBackendInterface {
   [key: string]: {
     [key: string]: ApiValidationVendorValidatorFunctionType;
   };
-  lastfm: {
+  "last.fm": {
     playCountByArtist: ApiValidationVendorValidatorFunctionType;
   };
 }

@@ -32,7 +32,7 @@ describe(ReportCacheProxy.name, () => {
 
   const mockAuthenticatedUser = "mockAuthenticatedUser";
   const mockReportName = "mockReportName";
-  const mockSourceName = "mockSourceName";
+  const mockSourceName = "test";
   const mockUserName = "mockUserName";
 
   const mockObjectName = "some/path/on/cdn/server/basename.json";

@@ -1,11 +1,13 @@
 import { waitFor } from "@testing-library/react";
 import ReportCacheCreateEndpointV2TestDouble, {
   mockValidator as mockConcreteValidator,
-} from "./implementations/v2.report.cache.create.endpoint.factory.success.class";
+} from "./implementations/v2.legacy.report.cache.create.endpoint.factory.success.class";
 import ReportCacheEndpointTestDoubleWithTimeoutV2, {
   mockValidator as mockConcreteTimeoutValidator,
-} from "./implementations/v2.report.cache.create.endpoint.factory.timeout.class";
-import ReportCacheCreateEndpointFactoryV2 from "../v2.report.cache.create.endpoint.factory.class";
+} from "./implementations/v2.legacy.report.cache.create.endpoint.factory.timeout.class";
+import LegacyReportCacheCreateEndpointFactoryV2, {
+  EndpointSunsetDate,
+} from "../v2.legacy.report.cache.create.endpoint.factory.class";
 import { mockReportCacheProxyMethods } from "@src/api/services/report.cache/proxy/__mocks__/proxy.class.mock";
 import { proxyFailureStatusCodes } from "@src/config/api";
 import apiRoutes from "@src/config/apiRoutes";
@@ -32,13 +34,13 @@ jest.mock("@src/vendors/integrations/auth/vendor.backend");
 
 jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
 
-describe(ReportCacheCreateEndpointFactoryV2.name, () => {
+describe(LegacyReportCacheCreateEndpointFactoryV2.name, () => {
   let clearTimeOutSpy: jest.SpyInstance;
 
-  let FactoryClassSelector: new () => ReportCacheCreateEndpointFactoryV2;
+  let FactoryClassSelector: new () => LegacyReportCacheCreateEndpointFactoryV2;
   let concreteValidatorSelection: jest.Mock;
 
-  let factoryInstance: ReportCacheCreateEndpointFactoryV2 & {
+  let factoryInstance: LegacyReportCacheCreateEndpointFactoryV2 & {
     errorCode?: number;
   };
 
@@ -153,6 +155,18 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
     });
   };
 
+  const checkSunsetHeader = () => {
+    it("should set a Sunset header", () => {
+      expect(mockRes.getHeader("Sunset")).toBe(EndpointSunsetDate.toString());
+    });
+  };
+
+  const checkNoSunsetHeader = () => {
+    it("should NOT set a Sunset header", () => {
+      expect(mockRes.getHeader("Sunset")).toBeUndefined();
+    });
+  };
+
   const checkLogger = (expectedProxyResponse?: string) => {
     it("should log a message", () => {
       expect(mockEndpointLogger).toHaveBeenCalledTimes(1);
@@ -198,6 +212,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
       checkNoRetryHeader();
       checkLogger(undefined);
       checkNoProxyCall();
+      checkSunsetHeader();
     });
 
     describe("with an invalid payload", () => {
@@ -219,6 +234,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
       checkNoRetryHeader();
       checkLogger(undefined);
       checkNoProxyCall();
+      checkSunsetHeader();
     });
   };
 
@@ -242,6 +258,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
       checkNoRetryHeader();
       checkLogger(undefined);
       checkNoProxyCall();
+      checkSunsetHeader();
     });
 
     describe("with an invalid payload", () => {
@@ -263,6 +280,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
       checkNoRetryHeader();
       checkLogger(undefined);
       checkNoProxyCall();
+      checkSunsetHeader();
     });
   };
 
@@ -273,7 +291,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
     });
 
     it("should have the correct route set", () => {
-      expect(factoryInstance.route).toBe(apiRoutes.v2.cache.create);
+      expect(factoryInstance.route).toBe(apiRoutes.v2.cacheLegacyCreate);
     });
 
     it("should have the correct service set", () => {
@@ -336,6 +354,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkNoRetryHeader();
                 checkLogger(mockLoggedSuccessMessage);
                 checkProxyCall();
+                checkSunsetHeader();
               });
 
               describe("with an invalid payload", () => {
@@ -359,6 +378,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkNoRetryHeader();
                 checkLogger(undefined);
                 checkNoProxyCall();
+                checkSunsetHeader();
               });
             });
 
@@ -490,6 +510,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkNoRetryHeader();
                 checkLogger(mockLoggedInvalidResponseMessage);
                 checkProxyCall();
+                checkSunsetHeader();
               });
 
               describe("with an invalid payload", () => {
@@ -513,6 +534,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkNoRetryHeader();
                 checkLogger(undefined);
                 checkNoProxyCall();
+                checkSunsetHeader();
               });
             });
 
@@ -618,6 +640,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkNoRetryHeader();
                 checkLogger(mockLoggedErrorMessage);
                 checkProxyCall();
+                checkNoSunsetHeader();
               });
 
               describe("with an invalid payload", () => {
@@ -641,6 +664,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkNoRetryHeader();
                 checkLogger(undefined);
                 checkNoProxyCall();
+                checkSunsetHeader();
               });
             });
 
@@ -786,6 +810,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                     checkNoRetryHeader();
                     checkLogger(mockLoggedErrorMessage);
                     checkProxyCall();
+                    checkSunsetHeader();
                   });
 
                   describe("with an invalid payload", () => {
@@ -809,6 +834,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                     checkNoRetryHeader();
                     checkLogger(undefined);
                     checkNoProxyCall();
+                    checkSunsetHeader();
                   });
                 });
 
@@ -946,6 +972,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkRetryHeader();
                 checkLogger(mockLoggedTimedOutRequest);
                 checkProxyCall();
+                checkSunsetHeader();
               });
 
               describe("with an invalid payload", () => {
@@ -969,6 +996,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
                 checkNoRetryHeader();
                 checkLogger(undefined);
                 checkNoProxyCall();
+                checkSunsetHeader();
               });
             });
 
@@ -1083,6 +1111,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
           checkNoRetryHeader();
           checkLogger(undefined);
           checkNoProxyCall();
+          checkSunsetHeader();
         });
       });
     });
@@ -1693,6 +1722,7 @@ describe(ReportCacheCreateEndpointFactoryV2.name, () => {
           checkNoRetryHeader();
           checkLogger(undefined);
           checkNoProxyCall();
+          checkSunsetHeader();
         });
       });
     });

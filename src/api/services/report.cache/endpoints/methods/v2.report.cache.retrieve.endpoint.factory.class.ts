@@ -1,11 +1,12 @@
 import ReportCacheEndpointFactoryBaseV2 from "./generics/v2.report.cache.endpoint.factory.base.class";
-import RetrieveRequestParamsValidatorMiddleware from "./middleware/retrieve.request.params.validator.middleware.class";
+import RetrieveRequestParamsValidatorMiddleware from "../middleware/retrieve.request.params.validator.middleware.class";
 import AuthenticationMiddleware from "@src/api/services/generics/endpoints/middleware/authentication.middleware.class";
 import { proxyFailureStatusCodes } from "@src/config/api";
 import apiRoutes from "@src/config/apiRoutes";
 import type { HttpApiClientStatusMessageType } from "@src/contracts/api/types/clients/http.client.types";
 import type { ApiEndpointRequestQueryParamType } from "@src/contracts/api/types/request.types";
 import type { ReportCacheRetrieveResponseInterface } from "@src/contracts/api/types/services/report.cache/response.types";
+import type { DataSourceType } from "@src/contracts/api/types/source.types";
 import type {
   ApiFrameworkVendorApiRequestType,
   ApiFrameworkVendorApiResponseType,
@@ -21,7 +22,7 @@ export default class ReportCacheRetrieveEndpointFactoryV2 extends ReportCacheEnd
     [index: number]: HttpApiClientStatusMessageType;
   };
   public readonly service = "CloudFront";
-  public readonly route = apiRoutes.v2.cache.retrieve;
+  public readonly route = apiRoutes.v2.cache;
 
   constructor() {
     super();
@@ -66,7 +67,7 @@ export default class ReportCacheRetrieveEndpointFactoryV2 extends ReportCacheEnd
     return (await this.proxy.retrieveCacheObject({
       authenticatedUserName: String(params.authenticatedUserName),
       reportName: String(params.report),
-      sourceName: String(params.source),
+      sourceName: String(params.source) as Lowercase<DataSourceType>,
       userName: String(params.username),
     })) as ReportCacheRetrieveResponseInterface<PersistenceVendorDataType>;
   }

@@ -1,6 +1,6 @@
 import { waitFor } from "@testing-library/react";
 import ConcreteBaseProxyErrorClass from "./implementations/concrete.endpoint.base.proxy.error.class";
-import ConcreteBaseProxySuccessClass from "./implementations/concrete.endpoint.base.proxy.success";
+import ConcreteBaseProxySuccessClass from "./implementations/concrete.endpoint.base.proxy.success.class";
 import ConcreteBaseEndpointTimeoutErrorClass from "./implementations/concrete.endpoint.base.timeout.error.class";
 import { proxyFailureStatusCodes } from "@src/config/api";
 import * as status from "@src/config/status";
