@@ -27,7 +27,7 @@ describe(ReportCacheRetrieveClient.name, () => {
   const mockParams: ReportCacheRetrieveClientParamsInterface = {
     authenticatedUserName: "mock@gmail.com",
     reportName: "mock Report Name",
-    sourceName: "test",
+    sourceName: "TEST",
     userName: "mockUserName",
   };
 
@@ -105,8 +105,14 @@ describe(ReportCacheRetrieveClient.name, () => {
       expect(mockFetch).toHaveBeenCalledTimes(1);
       const expectedUrl =
         instance.route
-          .replace(":source", encodeURIComponent(params.sourceName))
-          .replace(":report", encodeURIComponent(params.reportName)) +
+          .replace(
+            ":source",
+            encodeURIComponent(params.sourceName.toLowerCase())
+          )
+          .replace(
+            ":report",
+            encodeURIComponent(params.reportName.toLowerCase())
+          ) +
         "?" +
         new URLSearchParams({ username: params.userName }).toString();
       expect(mockTransport).toHaveBeenCalledWith(expectedUrl, {
@@ -143,7 +149,7 @@ describe(ReportCacheRetrieveClient.name, () => {
         });
 
         it("should return the configured route", () => {
-          expect(returnedUrl).toBe(apiRoutes.v2.cache.retrieve);
+          expect(returnedUrl).toBe(apiRoutes.v2.cache);
         });
       });
     });

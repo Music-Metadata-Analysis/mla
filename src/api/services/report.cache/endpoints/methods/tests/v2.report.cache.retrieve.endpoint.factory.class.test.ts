@@ -372,7 +372,7 @@ describe(ReportCacheRetrieveEndpointFactoryV2.name, () => {
     });
 
     it("should have the correct route set", () => {
-      expect(factoryInstance.route).toBe(apiRoutes.v2.cache.retrieve);
+      expect(factoryInstance.route).toBe(apiRoutes.v2.cache);
     });
 
     it("should have the correct service set", () => {

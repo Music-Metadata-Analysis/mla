@@ -4,6 +4,7 @@ import ReportCacheCreateClient from "@src/web/api/report.cache/clients/create/re
 import ReportCacheRetrieveClient from "@src/web/api/report.cache/clients/retrieve/report.cache.retrieve.api.client.class";
 import useAuth from "@src/web/authentication/session/hooks/auth.hook";
 import { ReportContext } from "@src/web/reports/generics/state/providers/report.provider";
+import type { DataSourceType } from "@src/contracts/api/types/source.types";
 import type { AuthVendorSessionType } from "@src/vendors/types/integrations/auth/vendor.types";
 import type { reportDispatchType } from "@src/web/reports/generics/types/state/providers/report.context.types";
 import type SunBurstBaseReportState from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
@@ -14,7 +15,7 @@ export type SunBurstCacheControllerProps<
   ReportType extends SunBurstBaseReportState<unknown>,
 > = {
   queryClass: new () => SunBurstBaseQuery<ReportType>;
-  sourceName: "lastfm" | "test";
+  sourceName: DataSourceType;
   userName: string;
 };
 
@@ -57,7 +58,6 @@ const useSunBurstCacheController = <
       body: reportProperties,
       sourceName,
       reportName: query.getReportTranslationKey().toLowerCase(),
-      userName,
     });
   };
 

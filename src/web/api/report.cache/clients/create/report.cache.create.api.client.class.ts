@@ -29,13 +29,12 @@ class ReportCacheCreateClient
   protected configuredParamsMappings = {
     ":report": "reportName",
     ":source": "sourceName",
-    ":username": "userName",
   };
   protected configuredErrorHandler = handleFailure;
   protected configuredHandlers = [handleSuccessful, handleUnauthorized];
   protected configuredQueryMappings = {};
   protected queryStringClient: QueryString;
-  public readonly route = apiRoutes.v2.cache.create;
+  public readonly route = apiRoutes.v2.cache;
 
   constructor(dispatch: reportDispatchType, event: EventCreatorType) {
     super(dispatch, event);

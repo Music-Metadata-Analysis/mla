@@ -1,6 +1,6 @@
 import type { ReportStateInterface } from "./report.state.types";
 import type { ReportType } from "../generic.report.types";
-import type { DataSourceTypes } from "@src/web/reports/generics/types/source.types";
+import type { DataSourceType } from "@src/contracts/api/types/source.types";
 
 export type ReportActionType =
   | {
@@ -27,7 +27,7 @@ export type ReportActionType =
   | {
       type: "FailureFetch";
       userName: string;
-      integration: DataSourceTypes;
+      integration: DataSourceType;
     }
   | {
       type: "FailureRetrieveCachedReport";
@@ -35,12 +35,12 @@ export type ReportActionType =
   | {
       type: "NotFoundFetch";
       userName: string;
-      integration: DataSourceTypes;
+      integration: DataSourceType;
     }
   | {
       type: "RatelimitedFetch";
       userName: string;
-      integration: DataSourceTypes;
+      integration: DataSourceType;
     }
   | {
       type: "ReadyFetch";
@@ -52,12 +52,12 @@ export type ReportActionType =
   | {
       type: "StartFetch";
       userName: string;
-      integration: DataSourceTypes;
+      integration: DataSourceType;
     }
   | {
       type: "StartRetrieveCachedReport";
       userName: string;
-      integration: DataSourceTypes;
+      integration: DataSourceType;
     }
   | {
       type: "SuccessCreateCachedReport";
@@ -65,7 +65,7 @@ export type ReportActionType =
   | {
       type: "SuccessFetch";
       data: ReportType;
-      integration: DataSourceTypes;
+      integration: DataSourceType;
       userName: string;
       userProfile: string;
     }
@@ -76,10 +76,10 @@ export type ReportActionType =
   | {
       type: "TimeoutFetch";
       userName: string;
-      integration: DataSourceTypes;
+      integration: DataSourceType;
     }
   | {
       type: "UnauthorizedFetch";
       userName: string;
-      integration: DataSourceTypes;
+      integration: DataSourceType;
     };

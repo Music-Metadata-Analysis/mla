@@ -1,3 +1,4 @@
+import type { DataSourceType } from "@src/contracts/api/types/source.types";
 import type { PersistenceVendorClientInterface } from "@src/vendors/types/integrations/persistence/vendor.backend.types";
 
 export interface CacheVendorCdnInterface<ObjectType> {
@@ -8,7 +9,7 @@ export interface CacheVendorCdnInterface<ObjectType> {
 export interface CacheVendorCdnOriginReportsCacheObjectConstructorInterface {
   authenticatedUserName: string;
   reportName: string;
-  sourceName: string;
+  sourceName: Lowercase<DataSourceType>;
   userName: string;
 }
 

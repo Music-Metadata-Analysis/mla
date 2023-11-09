@@ -3,6 +3,10 @@ import type { ApiValidationVendorBackendInterface } from "@src/vendors/types/int
 
 export const apiValidationVendorBackend: ApiValidationVendorBackendInterface = {
   lastfm: {
+    // TODO: remove during Sunset of LegacyApiEndpoint
+    playCountByArtist: lastFMplayCountByArtist,
+  },
+  "last.fm": {
     playCountByArtist: lastFMplayCountByArtist,
   },
 };

@@ -11,6 +11,7 @@ import type {
   ReportCacheCreateResponseInterface,
   ReportCacheRetrieveResponseInterface,
 } from "@src/contracts/api/types/services/report.cache/response.types";
+import type { DataSourceType } from "@src/contracts/api/types/source.types";
 import type { CacheVendorCdnOriginReportsCacheObjectInterface } from "@src/vendors/types/integrations/cache/vendor.backend.types";
 import type { PersistenceVendorClientInterface } from "@src/vendors/types/integrations/persistence/vendor.backend.types";
 import type { PersistenceVendorDataType } from "@src/vendors/types/integrations/persistence/vendor.backend.types";
@@ -79,7 +80,7 @@ class ReportCacheProxy implements ReportCacheProxyInterface {
   protected createCacheReportObject(args: {
     authenticatedUserName: string;
     reportName: string;
-    sourceName: string;
+    sourceName: Lowercase<DataSourceType>;
     userName: string;
   }): CacheVendorCdnOriginReportsCacheObjectInterface {
     return new cacheVendorBackend.CdnOriginReportsCacheObject(args);

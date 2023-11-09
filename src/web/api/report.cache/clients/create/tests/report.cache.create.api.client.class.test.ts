@@ -26,9 +26,11 @@ describe(ReportCacheRetrieveClient.name, () => {
   const mockParams: ReportCacheCreateClientParamsInterface = {
     authenticatedUserName: "mock@gmail.com",
     reportName: "mock Report Name",
-    sourceName: "mock Source Name",
-    userName: "mockUserName",
-    body: { mock: "reportJSON" } as unknown as ReportStateInterface,
+    sourceName: "TEST",
+    body: {
+      mock: "reportJSON",
+      userName: "mockUserName",
+    } as unknown as ReportStateInterface,
   };
 
   const mockRequestEvent = new analyticsVendor.collection.EventDefinition({
@@ -99,9 +101,12 @@ describe(ReportCacheRetrieveClient.name, () => {
     it("should make the request with the correct url", () => {
       expect(mockFetch).toHaveBeenCalledTimes(1);
       const expectedUrl = instance.route
-        .replace(":source", encodeURIComponent(params.sourceName))
-        .replace(":report", encodeURIComponent(params.reportName))
-        .replace(":username", encodeURIComponent(params.userName));
+        .replace(":source", encodeURIComponent(params.sourceName.toLowerCase()))
+        .replace(
+          ":report",
+          encodeURIComponent(params.reportName.toLowerCase())
+        );
+
       expect(mockTransport).toHaveBeenCalledWith(expectedUrl, {
         method: "POST",
         body: params.body,
@@ -136,7 +141,7 @@ describe(ReportCacheRetrieveClient.name, () => {
         });
 
         it("should return the configured route", () => {
-          expect(returnedRoute).toBe(apiRoutes.v2.cache.create);
+          expect(returnedRoute).toBe(apiRoutes.v2.cache);
         });
       });
     });
