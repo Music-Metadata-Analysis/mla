@@ -6,7 +6,7 @@ import type {
   MockAPIEndpointResponseType,
 } from "@src/vendors/types/integrations/api.framework/vendor.fixture.types";
 
-jest.mock("@src/vendors/integrations/api.logger/vendor.backend.ts");
+jest.mock("@src/vendors/integrations/api.logger/vendor.backend");
 
 describe(EndPointLoggerMiddleware.name, () => {
   let instance: EndPointLoggerMiddleware;
