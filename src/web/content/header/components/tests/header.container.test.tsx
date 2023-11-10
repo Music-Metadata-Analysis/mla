@@ -9,7 +9,7 @@ jest.mock("@src/web/locale/translation/hooks/translation.hook");
 
 jest.mock("@src/vendors/integrations/web.framework/vendor");
 
-jest.mock("../header.component.tsx", () =>
+jest.mock("../header.component", () =>
   require("@fixtures/react/child").createComponent("Header")
 );
 

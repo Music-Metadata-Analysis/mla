@@ -19,7 +19,7 @@ jest.mock("next-auth/providers/facebook");
 jest.mock("next-auth/providers/github");
 jest.mock("next-auth/providers/google");
 jest.mock("next-auth/providers/spotify");
-jest.mock("../providers/lastfm.ts");
+jest.mock("../providers/lastfm");
 
 jest.mock("@src/vendors/integrations/flags/vendor.backend");
 
