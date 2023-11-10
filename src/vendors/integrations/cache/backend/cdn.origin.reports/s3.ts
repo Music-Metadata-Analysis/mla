@@ -13,13 +13,6 @@ export default class S3CdnOriginReportsCacheObject
   protected sourceName: Lowercase<DataSourceType>;
   protected userName: string;
 
-  protected sourceNameMapping: {
-    [key in Lowercase<DataSourceType>]: string;
-  } = {
-    test: "test",
-    "last.fm": "lastfm",
-  };
-
   constructor({
     authenticatedUserName,
     reportName,
@@ -39,7 +32,7 @@ export default class S3CdnOriginReportsCacheObject
   getStorageName() {
     const objectBaseName = this.getCacheId() + ".json";
     return [
-      this.sourceNameMapping[this.sourceName],
+      this.sourceName,
       "reports",
       this.authenticatedUserName,
       objectBaseName,

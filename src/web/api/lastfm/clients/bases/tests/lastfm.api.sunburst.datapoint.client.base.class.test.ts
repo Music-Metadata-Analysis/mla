@@ -17,7 +17,7 @@ describe("LastFMBaseSunBurstDataClient", () => {
   let mockHttpClientRequest: jest.SpyInstance;
   let mockFetch: jest.SpyInstance;
 
-  const integrationType = "LAST.FM";
+  const integrationType = "LASTFM";
   const reportType = "BASE";
 
   const mockAPIResponse = { data: "mocked data" };

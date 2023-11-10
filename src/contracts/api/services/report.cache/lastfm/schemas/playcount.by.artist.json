@@ -9,7 +9,7 @@
     },
     "constantLastFM": {
       "type": "string",
-      "const": "LAST.FM"
+      "pattern": "^LASTFM$|^LAST.FM$"
     },
     "constantNull": {
       "type": "null",

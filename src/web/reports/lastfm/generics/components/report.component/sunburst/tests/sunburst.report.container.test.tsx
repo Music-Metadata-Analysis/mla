@@ -131,7 +131,7 @@ describe("SunBurstReportContainer", () => {
       expect(useSunBurstCacheController).toHaveBeenCalledTimes(1);
       expect(useSunBurstCacheController).toHaveBeenCalledWith({
         queryClass: MockQueryClass,
-        sourceName: "LAST.FM",
+        sourceName: "LASTFM",
         userName: mockUserName,
       });
     });

@@ -1,1 +1,1 @@
-export type DataSourceType = "TEST" | "LAST.FM";
+export type DataSourceType = "TEST" | "LASTFM";

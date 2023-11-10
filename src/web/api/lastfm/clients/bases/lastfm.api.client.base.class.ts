@@ -17,7 +17,7 @@ abstract class LastFMReportBaseClient<ResponseType>
   protected dispatch: reportDispatchType;
   protected eventDispatch: EventCreatorType;
   protected eventType = "BASE" as IntegrationRequestType;
-  protected integration = "LAST.FM" as const;
+  protected integration = "LASTFM" as const;
   protected response!: HttpApiClientResponse<ResponseType>;
   protected abstract route: string;
   protected invalidRetryHeaderError =
