@@ -25,14 +25,14 @@ describe(S3CdnOriginReportsCacheObject.name, () => {
       [
         "mockReportType1",
         "mockSearchedUser1",
-        ["test", "test"],
+        "test",
         "mock1@authenticated.com",
         "bW9ja1JlcG9ydFR5cGUxLW1vY2tTZWFyY2hlZFVzZXIx.json",
       ],
       [
         "mockReportType2",
         "mockSearchedUser2",
-        ["last.fm", "lastfm"],
+        "lastfm",
         "mock2@authenticated.com",
         "bW9ja1JlcG9ydFR5cGUyLW1vY2tTZWFyY2hlZFVzZXIy.json",
       ],
@@ -49,7 +49,7 @@ describe(S3CdnOriginReportsCacheObject.name, () => {
           arrange(
             mockAuthenticatedUserName,
             mockReportName,
-            mockSourceName[0] as Lowercase<DataSourceType>,
+            mockSourceName as Lowercase<DataSourceType>,
             mockUserName
           )
         );
@@ -72,7 +72,7 @@ describe(S3CdnOriginReportsCacheObject.name, () => {
           it("should return the correct result", () => {
             expect(result).toBe(
               [
-                mockSourceName[1],
+                mockSourceName,
                 "reports",
                 mockAuthenticatedUserName,
                 expectedBaseName,

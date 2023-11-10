@@ -38,7 +38,7 @@ export default function SunBurstReportContainer<
   const cache = useSunBurstCacheController<ReportStateType>({
     queryClass,
     userName,
-    sourceName: "LAST.FM",
+    sourceName: "LASTFM",
   });
   const sunBurstLayoutController = useSunBurstLayoutController();
 
