@@ -124,8 +124,8 @@ jobs:
       POST_COMMAND: git diff --exit-code
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
 
-  deploy_stage:
-    if: github.ref == 'refs/heads/master'
+  deploy_stage_disabled:
+    if: github.ref == 'refs/heads/never'
     needs: [configuration, success_notification]
     secrets:
       FILE_CONTENT: ${{ secrets.STAGE_ENVIRONMENT_CONTENT }}
@@ -140,6 +140,17 @@ jobs:
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
       POST_COMMAND: NETLIFY_AUTH_TOKEN="${ENV_SECRET_1}" netlify deploy --build --prod -s "${ENV_SECRET_2}"
       SECRET_CONTENT_FILENAME: .env.local
+      VERBOSE_NOTIFICATIONS: true
+
+  deploy_stage:
+    if: github.ref == 'refs/heads/master'
+    needs: [configuration, success_notification]
+    secrets:
+      FLYIO_API_TOKEN: ${{ secrets.FLYIO_API_TOKEN }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-95-container-flyio_deploy.yml@master
+    with:
+      FLYIO_ENDPOINT_URL: "https://stage-mla.fly.dev"
       VERBOSE_NOTIFICATIONS: true
 
   deploy_production:
@@ -249,6 +260,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     needs: [configuration, deploy_stage]
     secrets:
+      ENV_SECRET_1: "https://stage-mla.fly.dev"
       FILE_CONTENT: ${{ secrets.STAGE_ENVIRONMENT_CONTENT }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-npm-run_cached_command.yml@master
@@ -257,6 +269,8 @@ jobs:
       COMMAND: smoke:ci
       COMMAND_NAME: Smoke Tests (Stage)
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
+      PRE_COMMAND: |
+        sed -i.bak "s,NEXTAUTH_URL=.*,NEXTAUTH_URL=${ENV_SECRET_1}," .env.local
       SECRET_CONTENT_FILENAME: .env.local
       VERBOSE_NOTIFICATIONS: true
 
