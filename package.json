@@ -19,6 +19,7 @@
     "smoke:env": "ts-node cypress/utils/build.config.ts",
     "smoke:run": "cypress run --e2e --headless --config video=false,screenshotOnRunFailure=false",
     "start": "next start",
+    "start:container": "[[ -n \"${ENV_LOCAL_MOUNT}\" ]] && cp \"${ENV_LOCAL_MOUNT}\" .env.local; next start",
     "test": "jest --watch"
   },
   "overrides": {
