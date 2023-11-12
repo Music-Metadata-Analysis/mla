@@ -26,6 +26,7 @@ RUN mkdir -p /app/.next/cache/images
 FROM node:18-alpine AS runner
 WORKDIR /app
 
+ENV ENV_LOCAL_MOUNT ""
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
@@ -41,4 +42,4 @@ USER nextjs
 # CMD ["yarn", "start"]
 
 # If using npm comment out above and use below instead
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:container"]
