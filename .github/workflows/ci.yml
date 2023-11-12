@@ -153,8 +153,8 @@ jobs:
       FLYIO_ENDPOINT_URL: "https://stage-mla.fly.dev"
       VERBOSE_NOTIFICATIONS: true
 
-  deploy_production:
-    if: github.ref == 'refs/heads/production'
+  deploy_production_disabled:
+    if: github.ref == 'refs/heads/never'
     needs: [configuration, success_notification]
     secrets:
       FILE_CONTENT: ${{ secrets.PRODUCTION_ENVIRONMENT_CONTENT }}
@@ -170,6 +170,27 @@ jobs:
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
       POST_COMMAND: NETLIFY_AUTH_TOKEN="${ENV_SECRET_1}" NEXTAUTH_URL="${ENV_SECRET_2}" netlify deploy --build --prod -s "${ENV_SECRET_3}"
       SECRET_CONTENT_FILENAME: .env.local
+      VERBOSE_NOTIFICATIONS: true
+
+  deploy_production:
+    if: github.ref == 'refs/heads/production'
+    needs: [configuration]
+    secrets:
+      GCP_CLOUD_RUN_SERVICE_NAME: ${{ secrets.GCP_CLOUD_RUN_SERVICE_NAME }}
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_REGION_NAME: ${{ secrets.GCP_REGION_NAME }}
+      GCP_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+      GCP_SERVICE_ACCOUNT_JSON: ${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-95-container-gcp_cloud_run_deploy.yml@master
+    with:
+      GCP_CLOUD_RUN_EXTRA_ARGS: --set-env-vars="ENV_LOCAL_MOUNT=/secrets/.env.local" --set-secrets=/secrets/.env.local=env:latest --allow-unauthenticated
+      IMAGE_NAME: "niallbyrne/mla"
+      MIN_INSTANCES: 1
+      MAX_INSTANCES: 5
+      REGISTRY: "docker.io"
       VERBOSE_NOTIFICATIONS: true
 
   json_schema_lint:

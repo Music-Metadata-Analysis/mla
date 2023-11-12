@@ -17,6 +17,7 @@ eslint|ESLINT
 Flagsmith
 flipcard|FLIPCARD
 fn
+gcp|GCP
 github|GITHUB
 http
 http|HTTP
