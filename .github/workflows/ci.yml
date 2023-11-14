@@ -124,24 +124,6 @@ jobs:
       POST_COMMAND: git diff --exit-code
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
 
-  deploy_stage_disabled_netlify:
-    if: github.ref == 'refs/heads/never'
-    needs: [configuration, success_notification]
-    secrets:
-      FILE_CONTENT: ${{ secrets.STAGE_ENVIRONMENT_CONTENT }}
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      ENV_SECRET_1: ${{ secrets.NETLIFY_TOKEN }}
-      ENV_SECRET_2: ${{ secrets.STAGE_NETLIFY_SITE_ID }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-npm-run_cached_command.yml@master
-    with:
-      ADDITIONAL_CACHE_PATHS: "~/.cache/Cypress"
-      COMMAND: ci:netlify
-      COMMAND_NAME: Deploy to Stage
-      CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
-      POST_COMMAND: NETLIFY_AUTH_TOKEN="${ENV_SECRET_1}" netlify deploy --build --prod -s "${ENV_SECRET_2}"
-      SECRET_CONTENT_FILENAME: .env.local
-      VERBOSE_NOTIFICATIONS: true
-
   deploy_stage:
     if: github.ref == 'refs/heads/master'
     needs: [configuration, success_notification]
@@ -151,46 +133,6 @@ jobs:
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-95-container-flyio_deploy.yml@master
     with:
       FLYIO_ENDPOINT_URL: "https://stage-mla.fly.dev"
-      VERBOSE_NOTIFICATIONS: true
-
-  deploy_production_disabled_gcp:
-    if: github.ref == 'refs/heads/never'
-    needs: [configuration, success_notification]
-    secrets:
-      GCP_CLOUD_RUN_SERVICE_NAME: ${{ secrets.GCP_CLOUD_RUN_SERVICE_NAME }}
-      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-      GCP_REGION_NAME: ${{ secrets.GCP_REGION_NAME }}
-      GCP_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
-      GCP_SERVICE_ACCOUNT_JSON: ${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}
-      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-95-container-gcp_cloud_run_deploy.yml@master
-    with:
-      GCP_CLOUD_RUN_EXTRA_ARGS: --set-env-vars="ENV_LOCAL_MOUNT=/secrets/.env.local" --set-secrets=/secrets/.env.local=env:latest --allow-unauthenticated
-      IMAGE_NAME: "niallbyrne/mla"
-      MIN_INSTANCES: 1
-      MAX_INSTANCES: 5
-      REGISTRY: "docker.io"
-      VERBOSE_NOTIFICATIONS: true
-
-  deploy_production_disabled_netlify:
-    if: github.ref == 'refs/heads/never'
-    needs: [configuration, success_notification]
-    secrets:
-      FILE_CONTENT: ${{ secrets.PRODUCTION_ENVIRONMENT_CONTENT }}
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      ENV_SECRET_1: ${{ secrets.NETLIFY_TOKEN }}
-      ENV_SECRET_2: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_production_url }}
-      ENV_SECRET_3: ${{ secrets.PRODUCTION_NETLIFY_SITE_ID }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-npm-run_cached_command.yml@master
-    with:
-      ADDITIONAL_CACHE_PATHS: "~/.cache/Cypress"
-      COMMAND: ci:netlify
-      COMMAND_NAME: Deploy to Production
-      CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
-      POST_COMMAND: NETLIFY_AUTH_TOKEN="${ENV_SECRET_1}" NEXTAUTH_URL="${ENV_SECRET_2}" netlify deploy --build --prod -s "${ENV_SECRET_3}"
-      SECRET_CONTENT_FILENAME: .env.local
       VERBOSE_NOTIFICATIONS: true
 
   deploy_production:
