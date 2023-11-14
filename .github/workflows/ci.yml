@@ -124,7 +124,7 @@ jobs:
       POST_COMMAND: git diff --exit-code
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
 
-  deploy_stage_disabled:
+  deploy_stage_disabled_netlify:
     if: github.ref == 'refs/heads/never'
     needs: [configuration, success_notification]
     secrets:
@@ -135,7 +135,7 @@ jobs:
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-npm-run_cached_command.yml@master
     with:
       ADDITIONAL_CACHE_PATHS: "~/.cache/Cypress"
-      COMMAND: netlify:ci
+      COMMAND: ci:netlify
       COMMAND_NAME: Deploy to Stage
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
       POST_COMMAND: NETLIFY_AUTH_TOKEN="${ENV_SECRET_1}" netlify deploy --build --prod -s "${ENV_SECRET_2}"
@@ -153,28 +153,9 @@ jobs:
       FLYIO_ENDPOINT_URL: "https://stage-mla.fly.dev"
       VERBOSE_NOTIFICATIONS: true
 
-  deploy_production_disabled:
+  deploy_production_disabled_gcp:
     if: github.ref == 'refs/heads/never'
     needs: [configuration, success_notification]
-    secrets:
-      FILE_CONTENT: ${{ secrets.PRODUCTION_ENVIRONMENT_CONTENT }}
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      ENV_SECRET_1: ${{ secrets.NETLIFY_TOKEN }}
-      ENV_SECRET_2: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_netlify_production_url }}
-      ENV_SECRET_3: ${{ secrets.PRODUCTION_NETLIFY_SITE_ID }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-npm-run_cached_command.yml@master
-    with:
-      ADDITIONAL_CACHE_PATHS: "~/.cache/Cypress"
-      COMMAND: netlify:ci
-      COMMAND_NAME: Deploy to Production
-      CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
-      POST_COMMAND: NETLIFY_AUTH_TOKEN="${ENV_SECRET_1}" NEXTAUTH_URL="${ENV_SECRET_2}" netlify deploy --build --prod -s "${ENV_SECRET_3}"
-      SECRET_CONTENT_FILENAME: .env.local
-      VERBOSE_NOTIFICATIONS: true
-
-  deploy_production:
-    if: github.ref == 'refs/heads/production'
-    needs: [configuration]
     secrets:
       GCP_CLOUD_RUN_SERVICE_NAME: ${{ secrets.GCP_CLOUD_RUN_SERVICE_NAME }}
       GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -191,6 +172,44 @@ jobs:
       MIN_INSTANCES: 1
       MAX_INSTANCES: 5
       REGISTRY: "docker.io"
+      VERBOSE_NOTIFICATIONS: true
+
+  deploy_production_disabled_netlify:
+    if: github.ref == 'refs/heads/never'
+    needs: [configuration, success_notification]
+    secrets:
+      FILE_CONTENT: ${{ secrets.PRODUCTION_ENVIRONMENT_CONTENT }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      ENV_SECRET_1: ${{ secrets.NETLIFY_TOKEN }}
+      ENV_SECRET_2: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_production_url }}
+      ENV_SECRET_3: ${{ secrets.PRODUCTION_NETLIFY_SITE_ID }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-npm-run_cached_command.yml@master
+    with:
+      ADDITIONAL_CACHE_PATHS: "~/.cache/Cypress"
+      COMMAND: ci:netlify
+      COMMAND_NAME: Deploy to Production
+      CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
+      POST_COMMAND: NETLIFY_AUTH_TOKEN="${ENV_SECRET_1}" NEXTAUTH_URL="${ENV_SECRET_2}" netlify deploy --build --prod -s "${ENV_SECRET_3}"
+      SECRET_CONTENT_FILENAME: .env.local
+      VERBOSE_NOTIFICATIONS: true
+
+  deploy_production:
+    if: github.ref == 'refs/heads/production'
+    needs: [configuration, success_notification]
+    secrets:
+      FILE_CONTENT: ${{ secrets.PRODUCTION_ENVIRONMENT_CONTENT }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      ENV_SECRET_1: ${{ secrets.VERCEL_TOKEN }}
+      ENV_SECRET_2: ${{ secrets.PRODUCTION_VERCEL_CONFIG }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-npm-run_cached_command.yml@master
+    with:
+      ADDITIONAL_CACHE_PATHS: "~/.cache/Cypress"
+      COMMAND: ci:vercel; vercel pull --yes --environment=production --token="${ENV_SECRET_1}"
+      COMMAND_NAME: Deploy to Production
+      CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
+      POST_COMMAND: vercel build --prod --token="${ENV_SECRET_1}" && vercel deploy --prebuilt --prod --token="${ENV_SECRET_1}"
+      PRE_COMMAND: mkdir -p .vercel && echo "${ENV_SECRET_2}" > .vercel/project.json
+      SECRET_CONTENT_FILENAME: .env.local
       VERBOSE_NOTIFICATIONS: true
 
   json_schema_lint:

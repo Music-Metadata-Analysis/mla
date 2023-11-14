@@ -51,4 +51,5 @@ util
 util
 utilcve
 validator
+vercel|Vercel
 vscode|VSCODE

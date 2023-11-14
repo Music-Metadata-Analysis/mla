@@ -3,7 +3,7 @@
   "ci_commitizen_rev_range": "HEAD",
   "ci_concurrency_limit": 4,
   "ci_extra_release_content": [],
-  "ci_netlify_production_url": "https://mla.niallbyrne.ca",
+  "ci_production_url": "https://mla.niallbyrne.ca",
   "ci_python_versions": ["3.9"],
   "ci_trufflehog_extra_scan_args": "--only-verified",
   "ci_verbose_notifications": false
