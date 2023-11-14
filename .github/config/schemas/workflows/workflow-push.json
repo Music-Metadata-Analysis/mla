@@ -8,7 +8,7 @@
     "ci_commitizen_rev_range",
     "ci_concurrency_limit",
     "ci_extra_release_content",
-    "ci_netlify_production_url",
+    "ci_production_url",
     "ci_verbose_notifications",
     "ci_python_versions",
     "ci_trufflehog_extra_scan_args"
@@ -35,7 +35,7 @@
         "type": "string"
       }
     },
-    "ci_netlify_production_url": {
+    "ci_production_url": {
       "description": "This string is the url next auth will use in production, as it's not a standard netlify domain.",
       "pattern": "^https://.+",
       "type": "string"
