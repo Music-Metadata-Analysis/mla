@@ -15,14 +15,16 @@ export default function ErrorBoundaryContainer({
   route,
   stateReset,
 }: ErrorBoundaryContainerProps) {
+  const { ErrorBoundary } = errorVendor;
+
   return (
-    <errorVendor.ErrorBoundary
+    <ErrorBoundary
       eventDefinition={eventDefinition}
       errorHandlerFactory={new ErrorHandlerFactory().create}
       route={route}
       stateReset={stateReset}
     >
       {children}
-    </errorVendor.ErrorBoundary>
+    </ErrorBoundary>
   );
 }
