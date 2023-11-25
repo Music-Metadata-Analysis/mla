@@ -13,7 +13,7 @@ class ReducerGenericRatelimitedFetch extends ReportReducerStateBaseClass<"Rateli
       error: this.action.type,
       inProgress: false,
       profileUrl: null,
-      ready: false,
+      ready: true,
       retries: this.initialRetries,
       userName: this.action.userName,
     };
