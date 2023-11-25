@@ -81,13 +81,81 @@ describe("NavBarRootContainer", () => {
     describe("when the authState is 'processing'", () => {
       beforeEach(() => (mockAuthHook.status = "processing"));
 
-      checkNavBar({ expectedTransactionValue: true });
+      describe("when the report is in a ready state", () => {
+        beforeEach(() => (mockLastFMHook.reportProperties.ready = true));
+
+        describe("when the there is a user defined", () => {
+          beforeEach(
+            () => (mockLastFMHook.reportProperties.userName = "userName")
+          );
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+
+        describe("when the there NOT a user defined", () => {
+          beforeEach(() => (mockLastFMHook.reportProperties.userName = null));
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+      });
+
+      describe("when the report is NOT in a ready state", () => {
+        beforeEach(() => (mockLastFMHook.reportProperties.ready = false));
+
+        describe("when the there is a user defined", () => {
+          beforeEach(
+            () => (mockLastFMHook.reportProperties.userName = "userName")
+          );
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+
+        describe("when the there NOT a user defined", () => {
+          beforeEach(() => (mockLastFMHook.reportProperties.userName = null));
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+      });
     });
 
     describe("when the authState is NOT 'processing'", () => {
       beforeEach(() => (mockAuthHook.status = "authenticated"));
 
-      checkNavBar({ expectedTransactionValue: false });
+      describe("when the report is in a ready state", () => {
+        beforeEach(() => (mockLastFMHook.reportProperties.ready = true));
+
+        describe("when the there is a user defined", () => {
+          beforeEach(
+            () => (mockLastFMHook.reportProperties.userName = "userName")
+          );
+
+          checkNavBar({ expectedTransactionValue: false });
+        });
+
+        describe("when the there NOT a user defined", () => {
+          beforeEach(() => (mockLastFMHook.reportProperties.userName = null));
+
+          checkNavBar({ expectedTransactionValue: false });
+        });
+      });
+
+      describe("when the report is NOT in a ready state", () => {
+        beforeEach(() => (mockLastFMHook.reportProperties.ready = false));
+
+        describe("when the there is a user defined", () => {
+          beforeEach(
+            () => (mockLastFMHook.reportProperties.userName = "userName")
+          );
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+
+        describe("when the there NOT a user defined", () => {
+          beforeEach(() => (mockLastFMHook.reportProperties.userName = null));
+
+          checkNavBar({ expectedTransactionValue: false });
+        });
+      });
     });
   });
 
@@ -97,13 +165,81 @@ describe("NavBarRootContainer", () => {
     describe("when the authState is 'processing'", () => {
       beforeEach(() => (mockAuthHook.status = "processing"));
 
-      checkNavBar({ expectedTransactionValue: true });
+      describe("when the report is in a ready state", () => {
+        beforeEach(() => (mockLastFMHook.reportProperties.ready = true));
+
+        describe("when the there is a user defined", () => {
+          beforeEach(
+            () => (mockLastFMHook.reportProperties.userName = "userName")
+          );
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+
+        describe("when the there NOT a user defined", () => {
+          beforeEach(() => (mockLastFMHook.reportProperties.userName = null));
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+      });
+
+      describe("when the report is NOT in a ready state", () => {
+        beforeEach(() => (mockLastFMHook.reportProperties.ready = false));
+
+        describe("when the there is a user defined", () => {
+          beforeEach(
+            () => (mockLastFMHook.reportProperties.userName = "userName")
+          );
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+
+        describe("when the there NOT a user defined", () => {
+          beforeEach(() => (mockLastFMHook.reportProperties.userName = null));
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+      });
     });
 
     describe("when the authState is NOT 'processing'", () => {
       beforeEach(() => (mockAuthHook.status = "authenticated"));
 
-      checkNavBar({ expectedTransactionValue: true });
+      describe("when the report is in a ready state", () => {
+        beforeEach(() => (mockLastFMHook.reportProperties.ready = true));
+
+        describe("when the there is a user defined", () => {
+          beforeEach(
+            () => (mockLastFMHook.reportProperties.userName = "userName")
+          );
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+
+        describe("when the there NOT a user defined", () => {
+          beforeEach(() => (mockLastFMHook.reportProperties.userName = null));
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+      });
+
+      describe("when the report is NOT in a ready state", () => {
+        beforeEach(() => (mockLastFMHook.reportProperties.ready = false));
+
+        describe("when the there is a user defined", () => {
+          beforeEach(
+            () => (mockLastFMHook.reportProperties.userName = "userName")
+          );
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+
+        describe("when the there NOT a user defined", () => {
+          beforeEach(() => (mockLastFMHook.reportProperties.userName = null));
+
+          checkNavBar({ expectedTransactionValue: true });
+        });
+      });
     });
   });
 });
