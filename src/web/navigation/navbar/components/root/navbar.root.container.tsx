@@ -22,8 +22,12 @@ export default function NavBarRootContainer({
   const { reportProperties } = useLastFM();
   const router = useRouter();
 
+  const isGeneratingReport = () =>
+    reportProperties.inProgress ||
+    (!reportProperties.ready && reportProperties.userName !== null);
+
   const isTransaction = () =>
-    reportProperties.inProgress || authStatus === "processing";
+    authStatus === "processing" || isGeneratingReport();
 
   useEffect(() => {
     if (isTransaction()) controller.controls.mobileMenu.setFalse();

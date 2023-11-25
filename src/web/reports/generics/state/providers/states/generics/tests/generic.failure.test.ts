@@ -40,7 +40,7 @@ describe(testType, () => {
             report: mockInitialReportData,
           });
           expect(received.error).toBe(testType);
-          expect(received.ready).toBe(false);
+          expect(received.ready).toBe(true);
           expect(received.retries).toBe(stateClass.initialRetries);
         });
       });
