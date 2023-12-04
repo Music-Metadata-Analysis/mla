@@ -5,6 +5,7 @@ axios
 checkin
 ci|CI
 clickthrough
+commitizen
 config|CONFIG
 css
 cve
