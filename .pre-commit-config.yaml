@@ -14,7 +14,7 @@ repos:
           - ".github/config/schemas/workflows/workflow-push.json"
         stages: [commit]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 3.2.2
+    rev: v3.2.2
     hooks:
       - id: commitizen
         stages: [commit-msg]
