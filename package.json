@@ -40,7 +40,7 @@
     }
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.435.0",
+    "@aws-sdk/client-s3": "^3.504.0",
     "@chakra-ui/icons": "^2.0.0",
     "@chakra-ui/react": "^2.0.0",
     "@emotion/react": "^11.8.2",
