@@ -10,7 +10,7 @@
 # NOTIFICATION_LINK:                Consumed by the notification script to provide a clickable link to the workflow run in GitHub.
 # PROJECT_NAME:                     The slugified name of the template project.  Should match the GitHub repository name.
 # PROJECT_OWNER:                    The GitHub owner of the project.
-# TEMPLATE_BRANCH_NAME_BASE:        The name of the templated repository's default branch name.  (Defaults to 'master'.)
+# TEMPLATE_BRANCH_NAME_BASE:        The name of the templated repository's default branch name.  (Defaults to 'main'.)
 # TEMPLATE_BRANCH_NAME_DEVELOPMENT: The name of the templated repository's development branch name.  (Defaults to 'dev'.)
 
 # CI only script.
@@ -35,7 +35,7 @@ main() {
     echo "NOTIFICATION_LINK=${PROJECT_NAME}${WORKFLOW_NAME} [<${WORKFLOW_URL}|${BRANCH_OR_TAG}>]"
     echo "PROJECT_NAME=${PROJECT_NAME}"
     echo "PROJECT_OWNER=${PROJECT_OWNER}"
-    echo "TEMPLATE_BRANCH_NAME_BASE=${TEMPLATE_BRANCH_NAME_BASE-master}"
+    echo "TEMPLATE_BRANCH_NAME_BASE=${TEMPLATE_BRANCH_NAME_BASE-main}"
     echo "TEMPLATE_BRANCH_NAME_DEVELOPMENT=${TEMPLATE_BRANCH_NAME_DEVELOPMENT-dev}"
   } >> "${GITHUB_ENV}"
 
