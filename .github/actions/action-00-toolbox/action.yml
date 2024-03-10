@@ -13,6 +13,6 @@ runs:
   using: "composite"
   steps:
     - name: Toolbox - Install CICD-Tools Toolbox
-      uses: cicd-tools-org/cicd-tools/.github/actions/action-00-toolbox@master
+      uses: cicd-tools-org/cicd-tools/.github/actions/action-00-toolbox@main
       with:
         PROJECT_ROOT_PATH: ${{ inputs.PROJECT_ROOT_PATH }}

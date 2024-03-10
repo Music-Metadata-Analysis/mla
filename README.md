@@ -14,7 +14,7 @@
 
 ### Stage
 
-[![MLA CI/CD](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml)
+[![MLA CI/CD](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Music-Metadata-Analysis/mla/actions/workflows/ci.yml)
 
 <a href="https://www.statuscake.com" title="Website Uptime Monitoring"><img src="https://app.statuscake.com/button/index.php?Track=7031389&Days=1&Design=1" /></a>
 
