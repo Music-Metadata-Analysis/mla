@@ -60,7 +60,7 @@ export default function UserNameFormContainer({
       return;
     }
     const params = {
-      [fields.username]: values.username,
+      [fields.username]: values.username.toLowerCase(),
     };
     const query = new URLSearchParams(params);
     router.push(`${route}?${query.toString()}`);
