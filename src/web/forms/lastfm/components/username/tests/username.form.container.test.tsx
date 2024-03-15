@@ -146,59 +146,70 @@ describe("UserNameFormContainer", () => {
     const mockAction = {
       setSubmitting: jest.fn(),
     } as never as FormikHelpers<LastFMUserSearchInterface>;
-    const mockFormContent = { username: "validUsername" };
 
-    describe("when the user is logged in", () => {
-      beforeEach(() => {
-        mockAuthHook.status = "authenticated";
-        mockAuthHook.user = mockUserProfile;
-        arrangeHandleSubmit();
-      });
+    describe.each(["camelCaseUserName", "snake-case-user-name"])(
+      "with a valid username (%s)",
 
-      describe("when submitted with a username", () => {
-        beforeEach(() => handleSubmit(mockFormContent, mockAction));
+      (mockUserName) => {
+        const mockFormContent = { username: mockUserName };
 
-        it("should NOT call setSubmitting", () => {
-          expect(mockAction.setSubmitting).toHaveBeenCalledTimes(0);
+        describe("when the user is logged in", () => {
+          beforeEach(() => {
+            mockAuthHook.status = "authenticated";
+            mockAuthHook.user = mockUserProfile;
+            arrangeHandleSubmit();
+          });
+
+          describe("when submitted with a username", () => {
+            beforeEach(() => handleSubmit(mockFormContent, mockAction));
+
+            it("should NOT call setSubmitting", () => {
+              expect(mockAction.setSubmitting).toHaveBeenCalledTimes(0);
+            });
+
+            it("should redirect to the expected route", () => {
+              const caseConvertedMockFormContent = {
+                username: mockFormContent.username.toLocaleLowerCase(),
+              };
+              const query = new URLSearchParams(caseConvertedMockFormContent);
+
+              expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
+              expect(mockRouterHook.push).toHaveBeenCalledWith(
+                `${mockRoute}?${query.toString()}`
+              );
+            });
+          });
         });
 
-        it("should redirect to the expected route", () => {
-          const query = new URLSearchParams(mockFormContent);
-          expect(mockRouterHook.push).toHaveBeenCalledTimes(1);
-          expect(mockRouterHook.push).toHaveBeenCalledWith(
-            `${mockRoute}?${query.toString()}`
-          );
+        describe("when the user is not logged in", () => {
+          beforeEach(() => {
+            mockAuthHook.status = "unauthenticated";
+            mockAuthHook.user = null;
+            arrangeHandleSubmit();
+          });
+
+          describe("when submitted with a username", () => {
+            beforeEach(() => handleSubmit(mockFormContent, mockAction));
+
+            it("should call setSubmitting as expected", () => {
+              expect(mockAction.setSubmitting).toHaveBeenCalledTimes(1);
+              expect(mockAction.setSubmitting).toHaveBeenCalledWith(false);
+            });
+
+            it("should generate an error", () => {
+              expect(mockFormHook.error.open).toHaveBeenCalledTimes(1);
+              expect(mockFormHook.error.open).toHaveBeenCalledWith(
+                "session",
+                _t(lastfmTranslations.search.errors.session.notLoggedIn)
+              );
+            });
+
+            it("should NOT redirect", () => {
+              expect(mockRouterHook.push).toHaveBeenCalledTimes(0);
+            });
+          });
         });
-      });
-    });
-
-    describe("when the user is not logged in", () => {
-      beforeEach(() => {
-        mockAuthHook.status = "unauthenticated";
-        mockAuthHook.user = null;
-        arrangeHandleSubmit();
-      });
-
-      describe("when submitted with a username", () => {
-        beforeEach(() => handleSubmit(mockFormContent, mockAction));
-
-        it("should call setSubmitting as expected", () => {
-          expect(mockAction.setSubmitting).toHaveBeenCalledTimes(1);
-          expect(mockAction.setSubmitting).toHaveBeenCalledWith(false);
-        });
-
-        it("should generate an error", () => {
-          expect(mockFormHook.error.open).toHaveBeenCalledTimes(1);
-          expect(mockFormHook.error.open).toHaveBeenCalledWith(
-            "session",
-            _t(lastfmTranslations.search.errors.session.notLoggedIn)
-          );
-        });
-
-        it("should NOT redirect", () => {
-          expect(mockRouterHook.push).toHaveBeenCalledTimes(0);
-        });
-      });
-    });
+      }
+    );
   });
 });
