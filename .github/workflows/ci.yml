@@ -3,9 +3,10 @@ name: Music Analytics Project CI/CD
 
 # CI_ENVIRONMENT_CONTENT            - Environment file content for the ci environment
 # STAGE_ENVIRONMENT_CONTENT         - Environment file content for the ci environment
-# STAGE_NETLIFY_SITE_ID             - Netlify Stage Site ID
+# STAGE_VERCEL_CONFIG               - Identify the Vercel Project and Organization
 # PRODUCTION_ENVIRONMENT_CONTENT    - Environment file content for the ci environment
-# PRODUCTION_NETLIFY_SITE_ID        - Netlify Production Site ID
+# PRODUCTION_VERCEL_CONFIG          - Identify the Vercel Project and Organization
+# VERCEL_TOKEN                      - The authentication token used by Vercel
 
 on:
   push:
@@ -128,11 +129,19 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: [configuration, success_notification]
     secrets:
-      FLYIO_API_TOKEN: ${{ secrets.FLYIO_API_TOKEN }}
+      FILE_CONTENT: ${{ secrets.STAGE_ENVIRONMENT_CONTENT }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-95-container-flyio_deploy.yml@main
+      ENV_SECRET_1: ${{ secrets.VERCEL_TOKEN }}
+      ENV_SECRET_2: ${{ secrets.STAGE_VERCEL_CONFIG }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-npm-run_cached_command.yml@main
     with:
-      FLYIO_ENDPOINT_URL: "https://stage-mla.fly.dev"
+      ADDITIONAL_CACHE_PATHS: "~/.cache/Cypress"
+      COMMAND: ci:vercel; vercel pull --yes --environment=production --token="${ENV_SECRET_1}"
+      COMMAND_NAME: Deploy to Stage
+      CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
+      POST_COMMAND: vercel build --prod --token="${ENV_SECRET_1}" && vercel deploy --prebuilt --prod --token="${ENV_SECRET_1}"
+      PRE_COMMAND: mkdir -p .vercel && echo "${ENV_SECRET_2}" > .vercel/project.json
+      SECRET_CONTENT_FILENAME: .env.local
       VERBOSE_NOTIFICATIONS: true
 
   deploy_production:
@@ -242,7 +251,6 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: [configuration, deploy_stage]
     secrets:
-      ENV_SECRET_1: "https://stage-mla.fly.dev"
       FILE_CONTENT: ${{ secrets.STAGE_ENVIRONMENT_CONTENT }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-npm-run_cached_command.yml@main
@@ -251,8 +259,6 @@ jobs:
       COMMAND: smoke:ci
       COMMAND_NAME: Smoke Tests (Stage)
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
-      PRE_COMMAND: |
-        sed -i.bak "s,NEXTAUTH_URL=.*,NEXTAUTH_URL=${ENV_SECRET_1}," .env.local
       SECRET_CONTENT_FILENAME: .env.local
       VERBOSE_NOTIFICATIONS: true
 
