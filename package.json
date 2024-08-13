@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "cd ./node_modules/@toplast/lastfm && yarn add -D typescript@4.8.4 && yarn install && yarn run build",
+    "postinstall": "cd ./node_modules/@toplast/lastfm && yarn add -D typescript@4.9.5 && yarn install && yarn run build",
     "build": "next build",
     "build:validators": "ts-node $(find src/vendors/integrations/api.validation -name compile.ts)",
     "ci:netlify": "npm install --unsafe-perm=true netlify-cli -g",
@@ -25,7 +25,6 @@
   },
   "overrides": {
     "@babel/traverse": ">=7.23.2",
-    "axios": ">=0.21.2",
     "eslint-plugin-unused-imports": {
       "@typescript-eslint/eslint-plugin": "^5.0.0"
     },
@@ -46,7 +45,7 @@
     "@chakra-ui/react": "^2.0.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.6.0",
-    "@toplast/lastfm": "https://github.com/niall-byrne/lastfm#dev",
+    "@toplast/lastfm": "https://github.com/niall-byrne/lastfm#ad722e225b9544ba75a15c7dd61063ce47fc9459",
     "ajv": "^8.12.0",
     "cheerio": "^1.0.0-rc.12",
     "d3": "^7.8.5",
