@@ -60,7 +60,7 @@
     "next": "^14.0.3",
     "next-auth": "^4.24.8",
     "next-connect": "^1.0.0",
-    "next-i18next": "^15.0.0",
+    "next-i18next": "^15.3.0",
     "node-fetch": "^2.7.0",
     "react": "^18.0.0",
     "react-card-flip": "^1.2.2",
