@@ -71,7 +71,8 @@
     "react-i18next": "^13.0.0",
     "react-icons": "^4.12.0",
     "react-social-login-buttons": "^3.9.1",
-    "use-persisted-reducer": "^2.1.0"
+    "use-persisted-reducer": "^2.1.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@emotion/jest": "^11.11.0",
@@ -107,8 +108,8 @@
     "typescript": "^4.6.3"
   },
   "engines": {
-    "npm": "^9.0.0",
-    "node": "^18.18.2"
+    "npm": "^10.0.0",
+    "node": "^22.18.0"
   },
   "jest": {
     "collectCoverageFrom": [
