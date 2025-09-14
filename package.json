@@ -51,7 +51,7 @@
     "@chakra-ui/react": "^2.0.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.6.0",
-    "@toplast/lastfm": "https://github.com/niall-byrne/lastfm#3504e5e1b8578f4c16ec59c8f11647e84e7bd6e4",
+    "@toplast/lastfm": "https://github.com/niall-byrne/lastfm#976d15ff2d6baaf7e77f58fb833800a7415a04f2",
     "ajv": "^8.12.0",
     "cheerio": "^1.0.0-rc.12",
     "d3": "^7.8.5",
