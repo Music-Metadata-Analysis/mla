@@ -62,7 +62,7 @@ jobs:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-30-generic-markdown_links.yml@main
     with:
-      CONFIG_FILE: ".github/config/actions/gaurav-nelson-github-action-markdown-link-check.json"
+      CONFIG_FILE: ".github/config/actions/github-action-markdown-link-check.json"
       DOCUMENTATION_PATH: "."
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
 

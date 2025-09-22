@@ -17,6 +17,9 @@
       "pattern": "^https://github.com/Music-Metadata-Analysis/mla/"
     },
     {
+      "pattern": "^https://www.npmjs.com/"
+    },
+    {
       "pattern": "^https://www.spotify.com/"
     }
   ]
