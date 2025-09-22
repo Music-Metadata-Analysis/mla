@@ -140,7 +140,7 @@ jobs:
       COMMAND_NAME: Deploy to Stage
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
       POST_COMMAND: vercel build --prod --token="${ENV_SECRET_1}" && vercel deploy --prebuilt --prod --token="${ENV_SECRET_1}"
-      PRE_COMMAND: mkdir -p .vercel && echo "${ENV_SECRET_2}" > .vercel/project.json
+      PRE_COMMAND: ./.github/scripts/job-40-vercel-author.sh && mkdir -p .vercel && echo "${ENV_SECRET_2}" > .vercel/project.json
       SECRET_CONTENT_FILENAME: .env.local
       VERBOSE_NOTIFICATIONS: true
 
@@ -159,7 +159,7 @@ jobs:
       COMMAND_NAME: Deploy to Production
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
       POST_COMMAND: vercel build --prod --token="${ENV_SECRET_1}" && vercel deploy --prebuilt --prod --token="${ENV_SECRET_1}"
-      PRE_COMMAND: mkdir -p .vercel && echo "${ENV_SECRET_2}" > .vercel/project.json
+      PRE_COMMAND: ./.github/scripts/job-40-vercel-author.sh && mkdir -p .vercel && echo "${ENV_SECRET_2}" > .vercel/project.json
       SECRET_CONTENT_FILENAME: .env.local
       VERBOSE_NOTIFICATIONS: true
 
