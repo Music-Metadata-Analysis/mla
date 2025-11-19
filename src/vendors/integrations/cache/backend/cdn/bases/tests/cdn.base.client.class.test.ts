@@ -30,6 +30,7 @@ describe(CacheVendorCdnBaseClient.name, () => {
       status: 0,
       headers: mockHeaders,
       ok: false,
+      clone: () => Object.assign({}, mockResponse),
       text: () => Promise.resolve("defaultValue"),
     } as unknown as Response;
     jest.mocked(window.fetch).mockResolvedValue(mockResponse);
@@ -54,61 +55,103 @@ describe(CacheVendorCdnBaseClient.name, () => {
     describe("query", () => {
       let result: string;
 
-      describe("when the fetch response is 200", () => {
+      describe("when the fetch response is ok", () => {
         beforeEach(() => {
           mockResponse.status = 200;
           mockResponse.ok = true;
         });
 
-        describe("when the result is cached", () => {
+        describe("when the fetch response text is valid", () => {
           const response = "CachedResponse";
 
           beforeEach(async () => {
-            mockHeaders.get.mockReturnValueOnce("Hit");
             mockResponse.text = () => Promise.resolve(response);
-
-            result = await instance.query(mockObjectName);
           });
 
-          it("should call fetch with the expected arguments", () => {
-            expect(fetchSpy).toHaveBeenCalledTimes(1);
-            expect(fetchSpy).toHaveBeenCalledWith(
-              `https://mockCacheServer/${mockObjectName}`
-            );
-          });
+          describe("when the result is cached", () => {
+            beforeEach(async () => {
+              mockHeaders.get.mockReturnValueOnce("Hit");
 
-          it("should return the deserialized cached response", () => {
-            expect(result).toBe(`${response}>mockDeserializedObject`);
-          });
-
-          it("should NOT create a new object", () => {
-            expect(mockObjectCreator).toHaveBeenCalledTimes(0);
-          });
-
-          it("should NOT use the originServerClient", () => {
-            expect(mockPersistenceClient.write).toHaveBeenCalledTimes(0);
-          });
-
-          describe("logCacheHitRate", () => {
-            beforeEach(() => {
-              instance.logCacheHitRate();
+              result = await instance.query(mockObjectName);
             });
 
-            it("should log the correct cache hit rate", () => {
-              expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-              expect(consoleLogSpy).toHaveBeenCalledWith(
-                "[mockCdnClient] hit rate: 100.00%"
+            it("should call fetch with the expected arguments", () => {
+              expect(fetchSpy).toHaveBeenCalledTimes(1);
+              expect(fetchSpy).toHaveBeenCalledWith(
+                `https://mockCacheServer/${mockObjectName}`
               );
+            });
+
+            it("should return the deserialized cached response", () => {
+              expect(result).toBe(`${response}>mockDeserializedObject`);
+            });
+
+            it("should NOT create a new object", () => {
+              expect(mockObjectCreator).toHaveBeenCalledTimes(0);
+            });
+
+            it("should NOT use the originServerClient", () => {
+              expect(mockPersistenceClient.write).toHaveBeenCalledTimes(0);
+            });
+
+            describe("logCacheHitRate", () => {
+              beforeEach(() => {
+                instance.logCacheHitRate();
+              });
+
+              it("should log the correct cache hit rate", () => {
+                expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+                expect(consoleLogSpy).toHaveBeenCalledWith(
+                  "[mockCdnClient] hit rate: 100.00%"
+                );
+              });
+            });
+          });
+
+          describe("when the result is NOT cached", () => {
+            beforeEach(async () => {
+              mockHeaders.get.mockReturnValueOnce(undefined);
+
+              result = await instance.query(mockObjectName);
+            });
+
+            it("should call fetch with the expected arguments", () => {
+              expect(fetchSpy).toHaveBeenCalledTimes(1);
+              expect(fetchSpy).toHaveBeenCalledWith(
+                `https://mockCacheServer/${mockObjectName}`
+              );
+            });
+
+            it("should return the deserialized cached response", () => {
+              expect(result).toBe(`${response}>mockDeserializedObject`);
+            });
+
+            it("should NOT create a new object", () => {
+              expect(mockObjectCreator).toHaveBeenCalledTimes(0);
+            });
+
+            it("should NOT use the originServerClient", () => {
+              expect(mockPersistenceClient.write).toHaveBeenCalledTimes(0);
+            });
+
+            describe("logCacheHitRate", () => {
+              beforeEach(() => {
+                instance.logCacheHitRate();
+              });
+
+              it("should log the correct cache hit rate", () => {
+                expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+                expect(consoleLogSpy).toHaveBeenCalledWith(
+                  "[mockCdnClient] hit rate: 0.00%"
+                );
+              });
             });
           });
         });
 
-        describe("when the result is NOT cached", () => {
-          const response = "CachedResponse";
-
+        describe("when the fetch response text is invalid", () => {
           beforeEach(async () => {
-            mockHeaders.get.mockReturnValueOnce(undefined);
-            mockResponse.text = () => Promise.resolve(response);
+            mockResponse.text = () => Promise.resolve("");
 
             result = await instance.query(mockObjectName);
           });
@@ -121,15 +164,21 @@ describe(CacheVendorCdnBaseClient.name, () => {
           });
 
           it("should return the deserialized cached response", () => {
-            expect(result).toBe(`${response}>mockDeserializedObject`);
+            expect(result).toBe(`${mockObjectName}>Created`);
           });
 
-          it("should NOT create a new object", () => {
-            expect(mockObjectCreator).toHaveBeenCalledTimes(0);
+          it("should create a new object", () => {
+            expect(mockObjectCreator).toHaveBeenCalledTimes(1);
+            expect(mockObjectCreator).toHaveBeenCalledWith(mockObjectName);
           });
 
-          it("should NOT use the originServerClient", () => {
-            expect(mockPersistenceClient.write).toHaveBeenCalledTimes(0);
+          it("should use the originServerClient", () => {
+            expect(mockPersistenceClient.write).toHaveBeenCalledTimes(1);
+            expect(mockPersistenceClient.write).toHaveBeenCalledWith(
+              `${mockObjectName}>transformed`,
+              `${mockObjectName}>Created>mockSerializedObject`,
+              { ContentType: "text/plain" }
+            );
           });
 
           describe("logCacheHitRate", () => {
@@ -147,7 +196,7 @@ describe(CacheVendorCdnBaseClient.name, () => {
         });
       });
 
-      describe("when the fetch response is 404", () => {
+      describe("when the fetch response is not ok", () => {
         beforeEach(async () => {
           mockResponse.status = 404;
           mockResponse.ok = false;

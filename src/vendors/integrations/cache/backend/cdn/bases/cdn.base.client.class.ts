@@ -35,9 +35,18 @@ export default abstract class CacheVendorCdnBaseClient<ObjectType>
     this.requestCount++;
     return fetch(this.getOriginServerUrlFromObjectName(objectName)).then(
       async (response) => {
+        let validResponse = true;
+
         if (!response.ok) {
+          validResponse = false;
+        } else if ((await response.clone().text()).length == 0) {
+          validResponse = false;
+        }
+
+        if (!validResponse) {
           return await this.populateCache(objectName);
         }
+
         return await this.getCachedResponse(response);
       }
     );

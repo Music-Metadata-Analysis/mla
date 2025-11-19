@@ -32,6 +32,7 @@ describe(CloudFrontCdnBaseClass.name, () => {
       status: 0,
       headers: mockHeaders,
       ok: false,
+      clone: () => Object.assign({}, mockResponse),
       text: () => Promise.resolve("defaultValue"),
     } as unknown as Response;
     jest.mocked(window.fetch).mockResolvedValue(mockResponse);

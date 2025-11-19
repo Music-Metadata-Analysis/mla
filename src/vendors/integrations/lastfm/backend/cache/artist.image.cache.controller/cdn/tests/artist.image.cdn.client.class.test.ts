@@ -30,6 +30,7 @@ describe(ArtistImageCdnClient.name, () => {
       status: 0,
       headers: mockHeaders,
       ok: false,
+      clone: () => Object.assign({}, mockResponse),
       text: () => Promise.resolve("defaultValue"),
     } as unknown as Response;
     fetchSpy.mockResolvedValue(mockResponse);
