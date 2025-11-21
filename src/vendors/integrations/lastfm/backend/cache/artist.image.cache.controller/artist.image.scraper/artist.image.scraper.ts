@@ -16,7 +16,11 @@ export default class CheerioArtistImageScraper
   ): Promise<string> {
     if (artistName) {
       const url = this.getArtistURL(artistName);
-      return fetch(url)
+      return fetch(url, {
+        headers: {
+          cookie: "lfmanon=0",
+        },
+      })
         .then((response) => {
           if (!response.ok) {
             throw new Error(this.invalidResponseMessage);

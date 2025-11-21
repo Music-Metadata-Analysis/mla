@@ -39,6 +39,9 @@ describe("CheerioArtistImageScraper", () => {
 
   let mockArtistName: string | undefined;
 
+  const expectedHeaders = {
+    headers: { cookie: "lfmanon=0" },
+  };
   const mockResponse = jest.fn();
   const retries = 2;
 
@@ -102,7 +105,7 @@ describe("CheerioArtistImageScraper", () => {
 
           it("should call fetch with the correct params", () => {
             expect(fetch).toHaveBeenCalledTimes(1);
-            expect(fetch).toHaveBeenCalledWith(expectedURL);
+            expect(fetch).toHaveBeenCalledWith(expectedURL, expectedHeaders);
           });
 
           it("should return a promise containing the expected content", async () => {
@@ -125,9 +128,21 @@ describe("CheerioArtistImageScraper", () => {
 
           it("should call fetch recursively on each retry with the correct params", () => {
             expect(fetch).toHaveBeenCalledTimes(retries + 1);
-            expect(fetch).toHaveBeenNthCalledWith(1, expectedURL);
-            expect(fetch).toHaveBeenNthCalledWith(2, expectedURL);
-            expect(fetch).toHaveBeenNthCalledWith(3, expectedURL);
+            expect(fetch).toHaveBeenNthCalledWith(
+              1,
+              expectedURL,
+              expectedHeaders
+            );
+            expect(fetch).toHaveBeenNthCalledWith(
+              2,
+              expectedURL,
+              expectedHeaders
+            );
+            expect(fetch).toHaveBeenNthCalledWith(
+              3,
+              expectedURL,
+              expectedHeaders
+            );
           });
 
           it("should return a promise containing the expected content", async () => {
@@ -148,7 +163,7 @@ describe("CheerioArtistImageScraper", () => {
 
           it("should call fetch recursively on each retry with the correct params", () => {
             expect(fetch).toHaveBeenCalledTimes(1);
-            expect(fetch).toHaveBeenCalledWith(expectedURL);
+            expect(fetch).toHaveBeenCalledWith(expectedURL, expectedHeaders);
           });
 
           it("should return a promise containing the expected content", async () => {
@@ -170,9 +185,21 @@ describe("CheerioArtistImageScraper", () => {
 
         it("should call fetch recursively on each retry with the correct params", () => {
           expect(fetch).toHaveBeenCalledTimes(retries + 1);
-          expect(fetch).toHaveBeenNthCalledWith(1, expectedURL);
-          expect(fetch).toHaveBeenNthCalledWith(2, expectedURL);
-          expect(fetch).toHaveBeenNthCalledWith(3, expectedURL);
+          expect(fetch).toHaveBeenNthCalledWith(
+            1,
+            expectedURL,
+            expectedHeaders
+          );
+          expect(fetch).toHaveBeenNthCalledWith(
+            2,
+            expectedURL,
+            expectedHeaders
+          );
+          expect(fetch).toHaveBeenNthCalledWith(
+            3,
+            expectedURL,
+            expectedHeaders
+          );
         });
 
         it("should return a promise containing the expected content", async () => {
