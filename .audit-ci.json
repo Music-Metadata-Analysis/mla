@@ -1,7 +1,7 @@
 {
   "low": true,
   "package-manager": "auto",
-  "allowlist": ["GHSA-ffrw-9mx8-89p8|flagsmith-nodejs>pino>fast-redact"],
+  "allowlist": [],
   "registry": "https://registry.npmjs.org",
   "skip-dev": true
 }
