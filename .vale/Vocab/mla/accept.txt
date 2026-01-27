@@ -26,6 +26,7 @@ jose
 jwt
 lastfm|LASTFM
 lockfile
+lodash
 matchers
 middleware|MIDDLEWARE
 navbar|NAVBAR
