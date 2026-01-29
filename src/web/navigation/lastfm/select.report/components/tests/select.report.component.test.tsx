@@ -3,13 +3,14 @@ import { BoxWithRef, Flex, Avatar } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import Option from "../option/report.option.component";
-import ReportSelect, { ReportSelectProps } from "../select.report.component";
+import ReportSelect from "../select.report.component";
 import { ids } from "../select.report.identifiers";
 import settings from "@src/config/navbar";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
 import LastFMIconContainer from "@src/web/ui/generics/components/icons/lastfm/lastfm.icon.container";
 import VerticalScrollBarContainer from "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container";
+import type { ReportSelectProps } from "../select.report.component";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Avatar", "Flex"], ["Box"])

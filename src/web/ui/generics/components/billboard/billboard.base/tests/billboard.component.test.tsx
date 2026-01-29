@@ -1,10 +1,11 @@
 import { Box, Center, Container, Text } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import Billboard, { BillboardProps } from "../billboard.component";
+import Billboard from "../billboard.component";
 import { testIDs } from "../billboard.identifiers";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
+import type { BillboardProps } from "../billboard.component";
 
 jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 

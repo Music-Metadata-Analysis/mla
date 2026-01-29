@@ -1,11 +1,10 @@
 import { render, screen, within } from "@testing-library/react";
 import ErrorDisplay from "../error.display.component";
-import ErrorDisplayContainer, {
-  ErrorDisplayContainerProps,
-} from "../error.display.container";
+import ErrorDisplayContainer from "../error.display.container";
 import translations from "@locales/errors.json";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import type { ErrorDisplayContainerProps } from "../error.display.container";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 

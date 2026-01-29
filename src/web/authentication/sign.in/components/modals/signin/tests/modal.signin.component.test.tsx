@@ -13,9 +13,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import AuthenticationSignInComponent, {
-  AuthenticationSignInModalProps,
-} from "../modal.signin.component";
+import AuthenticationSignInComponent from "../modal.signin.component";
 import { testIDs, ids } from "../modal.signin.identifiers";
 import routes from "@src/config/routes";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -24,6 +22,7 @@ import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/
 import ClickLinkInternalContainer from "@src/web/navigation/links/components/click.link.internal/click.link.internal.container";
 import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 import VerticalScrollBarContainer from "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container";
+import type { AuthenticationSignInModalProps } from "../modal.signin.component";
 
 jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 

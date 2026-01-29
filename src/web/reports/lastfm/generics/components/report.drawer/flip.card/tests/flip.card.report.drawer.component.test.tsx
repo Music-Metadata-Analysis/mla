@@ -1,8 +1,6 @@
 import { Box, Divider, Flex, Img, Text } from "@chakra-ui/react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import FlipCardDrawer, {
-  FlipCardDrawerProps,
-} from "../flip.card.report.drawer.component";
+import FlipCardDrawer from "../flip.card.report.drawer.component";
 import { testIDs } from "../flip.card.report.drawer.identifiers";
 import lastfmTranslations from "@locales/lastfm.json";
 import settings from "@src/config/flip.card";
@@ -15,6 +13,7 @@ import ReportDrawer from "@src/web/reports/generics/components/report.drawer/rep
 import mockFlipCardController from "@src/web/reports/lastfm/generics/components/report.component/flip.card/controllers/__mocks__/flip.card.controller.hook.mock";
 import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 import StyledButtonLink from "@src/web/ui/generics/components/buttons/button.external.link/button.external.link.component";
+import type { FlipCardDrawerProps } from "../flip.card.report.drawer.component";
 
 jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 

@@ -1,12 +1,11 @@
 import { render } from "@testing-library/react";
-import ErrorBoundaryContainer, {
-  ErrorBoundaryContainerProps,
-} from "../error.boundary.container";
+import ErrorBoundaryContainer from "../error.boundary.container";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockErrorBoundary } from "@src/vendors/integrations/errors/__mocks__/vendor.mock";
 import Events from "@src/web/analytics/collection/events/definitions";
 import ErrorHandlerFactory from "@src/web/ui/errors/components/boundary/handler/factory/error.handler.factory.class";
+import type { ErrorBoundaryContainerProps } from "../error.boundary.container";
 
 jest.mock(
   "@src/web/ui/errors/components/boundary/handler/factory/error.handler.factory.class"

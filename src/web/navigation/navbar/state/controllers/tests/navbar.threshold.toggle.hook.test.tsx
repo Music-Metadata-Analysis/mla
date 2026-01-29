@@ -1,10 +1,9 @@
 import { fireEvent, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react";
 import mockHookValues from "../__mocks__/navbar.threshold.toggle.hook.mock";
-import useNavBarThresholdToggle, {
-  UseNavBarThresholdToggleInterface,
-} from "../navbar.threshold.toggle.hook";
+import useNavBarThresholdToggle from "../navbar.threshold.toggle.hook";
 import mockUseNavBar from "@src/web/navigation/navbar/state/controllers/__mocks__/navbar.controller.hook.mock";
+import type { UseNavBarThresholdToggleInterface } from "../navbar.threshold.toggle.hook";
 
 jest.mock(
   "@src/web/navigation/navbar/state/controllers/navbar.controller.hook"

@@ -1,8 +1,9 @@
-import Ajv, { ValidateFunction } from "ajv";
+import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone";
 import fs from "fs";
 import path from "path";
 import schema from "@src/contracts/api/services/report.cache/lastfm/schemas/playcount.by.artist.json";
+import type { ValidateFunction } from "ajv";
 
 jest.mock("ajv/dist/standalone", () => jest.fn());
 jest.mock("ajv");

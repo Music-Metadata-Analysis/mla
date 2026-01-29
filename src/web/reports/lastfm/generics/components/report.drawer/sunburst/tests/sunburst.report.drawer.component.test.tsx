@@ -1,8 +1,6 @@
 import { Divider, Flex } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import SunBurstReportDrawer, {
-  LastFMSunBurstDrawerProps,
-} from "../sunburst.report.drawer.component";
+import SunBurstReportDrawer from "../sunburst.report.drawer.component";
 import { testIDs } from "../sunburst.report.drawer.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import ReportDrawer from "@src/web/reports/generics/components/report.drawer/report.drawer.component";
@@ -11,6 +9,7 @@ import SunBurstNodeListContainer from "@src/web/reports/lastfm/generics/componen
 import SunBurstDrawerControlContainer from "@src/web/reports/lastfm/generics/components/report.drawer/sunburst/panels/control/drawer.control.panel.container";
 import SunBurstDrawerTitleContainer from "@src/web/reports/lastfm/generics/components/report.drawer/sunburst/panels/title/drawer.title.panel.container";
 import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
+import type { LastFMSunBurstDrawerProps } from "../sunburst.report.drawer.component";
 import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 jest.mock("@src/web/ui/colours/state/hooks/colour.hook");

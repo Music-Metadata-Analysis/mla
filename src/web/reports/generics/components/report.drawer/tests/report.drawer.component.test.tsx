@@ -6,13 +6,14 @@ import {
   DrawerOverlay,
   DrawerCloseButton,
   DrawerContent,
-  DrawerContentProps,
 } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import ReportDrawer, { ReportDrawerProps } from "../report.drawer.component";
+import ReportDrawer from "../report.drawer.component";
 import { testIDs } from "../report.drawer.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
+import type { ReportDrawerProps } from "../report.drawer.component";
+import type { DrawerContentProps } from "@chakra-ui/react";
 
 jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 

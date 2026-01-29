@@ -2,9 +2,11 @@
   "compilerOptions": {
     "jsx": "react",
     "module": "commonjs",
-    "types": ["cypress", "node"]
+    "types": ["cypress", "node"],
+    "preserveValueImports": false,
+    "importsNotUsedAsValues": "remove",
+    "verbatimModuleSyntax": true
   },
   "extends": "../tsconfig.json",
-  "include": ["../**/*.ts*"],
-  "importsNotUsedAsValues": "error"
+  "include": ["../**/*.ts*"]
 }

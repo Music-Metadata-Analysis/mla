@@ -1,12 +1,11 @@
 import { Box, Center, Container } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import SunBurstErrorPanel, {
-  SunBurstErrorPanelProps,
-} from "../error.panel.component";
+import SunBurstErrorPanel from "../error.panel.component";
 import { testIDs } from "../error.panel.identifiers";
 import settings from "@src/config/sunburst";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
+import type { SunBurstErrorPanelProps } from "../error.panel.component";
 
 jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 

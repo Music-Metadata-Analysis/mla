@@ -1,11 +1,10 @@
 import { render } from "@testing-library/react";
 import SunBurstDrawerControlPanel from "../drawer.control.panel.component";
-import SunBurstDrawerControlPanelContainer, {
-  SunBurstDrawerControlPanelContainerProps,
-} from "../drawer.control.panel.container";
+import SunBurstDrawerControlPanelContainer from "../drawer.control.panel.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
+import type { SunBurstDrawerControlPanelContainerProps } from "../drawer.control.panel.container";
 import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");

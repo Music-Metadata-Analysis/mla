@@ -1,5 +1,5 @@
 import "@src/web/ui/css/root.css";
-import App, { AppContext } from "next/app";
+import App from "next/app";
 import NavConfig from "@src/config/navbar";
 import { normalizeUndefined } from "@src/utilities/generics/voids";
 import { analyticsVendor } from "@src/vendors/integrations/analytics/vendor";
@@ -14,6 +14,7 @@ import type { FlagVendorStateInterface } from "@src/vendors/types/integrations/f
 import type { UIVendorStateType } from "@src/vendors/types/integrations/ui.framework/vendor.types";
 import type { WebFrameworkVendorAppComponentProps } from "@src/vendors/types/integrations/web.framework/vendor.types";
 import type { HeaderContainerProps } from "@src/web/content/header/components/header.container";
+import type { AppContext } from "next/app";
 
 export interface MLAProps {
   cookies: UIVendorStateType;

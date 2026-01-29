@@ -5,9 +5,7 @@ import SunBurstControlPanel from "../panels/control/control.panel.component";
 import SunBurstErrorPanel from "../panels/error/error.panel.component";
 import SunBurstInfoPanel from "../panels/info/info.panel.component";
 import SunBurstTitlePanel from "../panels/title/title.panel.component";
-import SunBurstReport, {
-  SunBurstReportProps,
-} from "../sunburst.report.component";
+import SunBurstReport from "../sunburst.report.component";
 import settings from "@src/config/sunburst";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import SunBurstChart from "@src/web/reports/generics/components/report.base/sunburst/sunburst.chart.component";
@@ -15,8 +13,10 @@ import nullNode from "@src/web/reports/generics/state/charts/sunburst/null.node"
 import mockSunBurstControllerHook from "@src/web/reports/generics/state/controllers/sunburst/__mocks__/sunburst.controller.hook.mock";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import type { SunBurstReportProps } from "../sunburst.report.component";
 import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 import type LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
+import type { ReactNode } from "react";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Box", "Flex"])
@@ -52,9 +52,8 @@ describe("SunBurstReport", () => {
   let currentProps: SunBurstReportProps<
     LastFMReportSunBurstBaseStateEncapsulation<unknown>
   >;
-  let mockVisible: boolean;
-
   const expectedBreakPoints = [250, 250, 300, 500, 600, 600];
+
   const mockNode = { data: { name: "mockNode", entity: "unknown" as const } };
   const mockReport = new MockQueryClass();
   const mockReportState = {
@@ -68,6 +67,7 @@ describe("SunBurstReport", () => {
       userName: "niall-byrne",
     },
   } as unknown as LastFMReportSunBurstBaseStateEncapsulation<unknown>;
+  const mockVisible = false;
 
   const mockLastFMt = jest.fn((key: string) => `lastFMt(${key})`);
   const mockSunBurstT = jest.fn((key: string) => `sunBurstT(${key})`);
@@ -106,7 +106,7 @@ describe("SunBurstReport", () => {
   }: {
     calls: number;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    component: (...args: any[]) => JSX.Element | null;
+    component: (...args: any[]) => JSX.Element | ReactNode | null;
     componentName: string;
   }) => {
     it(`should render the ${componentName} component ${calls} time(s)`, () => {

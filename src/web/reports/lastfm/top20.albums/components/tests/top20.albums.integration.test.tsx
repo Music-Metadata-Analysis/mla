@@ -1,8 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import Top20AlbumsContainer, {
-  Top20AlbumsReportContainerProps,
-} from "../top20.albums.container";
+import Top20AlbumsContainer from "../top20.albums.container";
 import cardTranslations from "@locales/cards.json";
 import translations from "@locales/lastfm.json";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
@@ -10,6 +8,7 @@ import { testIDs as drawerTestIDs } from "@src/web/reports/generics/components/r
 import { testIDs as lastFMDrawerIDs } from "@src/web/reports/lastfm/generics/components/report.drawer/flip.card/flip.card.report.drawer.identifiers";
 import mockLastFMHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
 import mockImageControllerHook from "@src/web/ui/images/state/controllers/__mocks__/images.controller.hook.mock";
+import type { Top20AlbumsReportContainerProps } from "../top20.albums.container";
 import type { reportHookAsLastFMTop20AlbumReport } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");

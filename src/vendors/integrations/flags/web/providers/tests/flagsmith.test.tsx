@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import flagsmith from "flagsmith/isomorphic";
-import { FlagsmithProvider, FlagsmithContextType } from "flagsmith/react";
+import { FlagsmithProvider } from "flagsmith/react";
 import FlagProvider from "../flagsmith";
 import checkMockCalls from "@src/fixtures/mocks/mock.component.call";
+import type { FlagsmithContextType } from "flagsmith/react";
 
 jest.mock("@src/utilities/generics/voids");
 

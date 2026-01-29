@@ -1,9 +1,10 @@
-import { createMocks, RequestOptions, ResponseOptions } from "node-mocks-http";
+import { createMocks } from "node-mocks-http";
 import type {
   MockAPIEndpointRequestType,
   MockAPIEndpointResponseType,
 } from "@src/vendors/types/integrations/api.framework/vendor.fixture.types";
 import type { AuthVendorSessionType } from "@src/vendors/types/integrations/auth/vendor.types";
+import type { RequestOptions, ResponseOptions } from "node-mocks-http";
 
 export const createAPIMocks = (
   reqOptions: RequestOptions,

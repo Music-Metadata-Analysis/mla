@@ -1,14 +1,13 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import SunBurstEntityNodeList, {
-  SunBurstEntityNodeListProps,
-} from "../node.list.component";
+import SunBurstEntityNodeList from "../node.list.component";
 import { ids, testIDs } from "../node.list.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import SunBurstNodeButton from "@src/web/reports/lastfm/generics/components/report.drawer/sunburst/nodes/node.button/node.button.component";
 import SunBurstNodeDisplay from "@src/web/reports/lastfm/generics/components/report.drawer/sunburst/nodes/node.display/node.display.component";
 import VerticalScrollBarContainer from "@src/web/ui/scrollbars/vertical/components/vertical.scrollbar.container";
+import type { SunBurstEntityNodeListProps } from "../node.list.component";
 import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 jest.mock("@chakra-ui/react", () =>

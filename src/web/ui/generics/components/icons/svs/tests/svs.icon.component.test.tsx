@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import SVSIcon, { SVSIconProps } from "../svs.icon.component";
+import SVSIcon from "../svs.icon.component";
 import defaultImage from "@JestConfig/modules/images";
+import type { SVSIconProps } from "../svs.icon.component";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 

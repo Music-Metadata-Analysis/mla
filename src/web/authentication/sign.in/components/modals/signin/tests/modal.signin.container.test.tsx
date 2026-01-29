@@ -1,12 +1,11 @@
 import { render } from "@testing-library/react";
 import { useRef } from "react";
 import AuthenticationSignInModal from "../modal.signin.component";
-import AuthenticationSignInModalContainer, {
-  AuthenticationSignInModalContainerProps,
-} from "../modal.signin.container";
+import AuthenticationSignInModalContainer from "../modal.signin.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
+import type { AuthenticationSignInModalContainerProps } from "../modal.signin.container";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 

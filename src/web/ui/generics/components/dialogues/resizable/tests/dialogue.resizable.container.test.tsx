@@ -1,8 +1,6 @@
 import { render, waitFor } from "@testing-library/react";
 import Dialogue from "../dialogue.resizable.component";
-import DialogueContainer, {
-  DialogueContainerProps,
-} from "../dialogue.resizable.container";
+import DialogueContainer from "../dialogue.resizable.container";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import dialogueSettings from "@src/config/dialogue";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -10,6 +8,7 @@ import { mockUseRouter } from "@src/vendors/integrations/web.framework/__mocks__
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import mockUseWindowThreshold from "@src/web/ui/window/state/hooks/__mocks__/window.threshold.hook.mock";
 import useWindowThreshold from "@src/web/ui/window/state/hooks/window.threshold.hook";
+import type { DialogueContainerProps } from "../dialogue.resizable.container";
 
 jest.mock("@src/web/navigation/routing/hooks/router.hook");
 

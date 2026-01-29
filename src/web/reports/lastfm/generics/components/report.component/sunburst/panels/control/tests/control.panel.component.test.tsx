@@ -1,8 +1,6 @@
 import { Flex, Box } from "@chakra-ui/react";
 import { render, screen, within, fireEvent } from "@testing-library/react";
-import SunBurstControlPanel, {
-  SunBurstControlPanelProps,
-} from "../control.panel.component";
+import SunBurstControlPanel from "../control.panel.component";
 import { testIDs } from "../control.panel.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
@@ -10,6 +8,7 @@ import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/compo
 import SunBurstDetailsPanel from "@src/web/reports/lastfm/generics/components/report.component/sunburst/panels/details/details.panel.component";
 import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
 import ButtonWithoutAnalytics from "@src/web/ui/generics/components/buttons/button.base/button.base.component";
+import type { SunBurstControlPanelProps } from "../control.panel.component";
 import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 jest.mock("@src/web/ui/colours/state/hooks/colour.hook");

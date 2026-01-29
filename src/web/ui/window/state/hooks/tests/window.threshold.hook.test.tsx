@@ -2,9 +2,8 @@ import { fireEvent, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react";
 import dk from "deep-keys";
 import mockHookValues from "../__mocks__/window.threshold.hook.mock";
-import useWindowThreshold, {
-  UseWindowThresholdInterface,
-} from "../window.threshold.hook";
+import useWindowThreshold from "../window.threshold.hook";
+import type { UseWindowThresholdInterface } from "../window.threshold.hook";
 
 describe("useWindowThreshold", () => {
   let received: ReturnType<typeof arrange>;

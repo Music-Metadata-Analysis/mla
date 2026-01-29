@@ -11,11 +11,11 @@ jest.mock("../navbar.link.component", () =>
 );
 
 describe("NavBarLinkContainer", () => {
-  let mockPath: string;
   let mockTransaction: boolean;
   let mockSelected: boolean;
 
   const mockMouseEvent = { button: 0 } as MouseEvent<HTMLElement>;
+  const mockPath = "/mock/path";
   const mockCloseMobileMenu = jest.fn();
   const mockTracker = jest.fn();
   const linkText = "Link";

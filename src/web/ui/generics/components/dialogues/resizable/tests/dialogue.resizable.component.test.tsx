@@ -1,12 +1,13 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import Dialogue, { DialogueProps } from "../dialogue.resizable.component";
+import Dialogue from "../dialogue.resizable.component";
 import { testIDs } from "../dialogue.resizable.identifiers";
 import { createSimpleComponent } from "@fixtures/react/simple";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { mockUseRouter } from "@src/vendors/integrations/web.framework/__mocks__/vendor.mock";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";
+import type { DialogueProps } from "../dialogue.resizable.component";
 import type { DialogueInlayComponentType } from "@src/web/ui/generics/types/components/dialogue.types";
 
 jest.mock("@chakra-ui/react", () =>

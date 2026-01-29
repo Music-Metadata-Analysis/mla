@@ -1,11 +1,10 @@
 import { Text, Box, Container } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import SunBurstTitlePanel, {
-  SunBurstTitlePanelProps,
-} from "../title.panel.component";
+import SunBurstTitlePanel from "../title.panel.component";
 import { testIDs } from "../title.panel.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/web/ui/colours/state/hooks/__mocks__/colour.hook.mock";
+import type { SunBurstTitlePanelProps } from "../title.panel.component";
 
 jest.mock("@src/web/ui/colours/state/hooks/colour.hook");
 

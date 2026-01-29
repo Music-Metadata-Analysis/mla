@@ -14,7 +14,7 @@ const MockedGetToken = jest.mocked(getToken);
 describe(NextAuthClient.name, () => {
   let instance: NextAuthClient;
   let mockRequest: MockAPIEndpointRequestType;
-  let originalEnvironment: typeof process.env;
+  const originalEnvironment: typeof process.env = process.env;
   const mockJWTSecret = "mockJWTSecret";
   const mockValidJWT = {
     email: "mock@mock.com",

@@ -1,7 +1,5 @@
 import { render } from "@testing-library/react";
-import PlayCountByArtistContainer, {
-  PlayCountByArtistContainerProps,
-} from "../playcount.by.artist.container";
+import PlayCountByArtistContainer from "../playcount.by.artist.container";
 import {
   getMockComponentProp,
   getMockComponentPropCount,
@@ -9,6 +7,7 @@ import {
 import SunBurstContainer from "@src/web/reports/lastfm/generics/components/report.component/sunburst/sunburst.report.container";
 import mockUserHook from "@src/web/reports/lastfm/generics/state/hooks/__mocks__/lastfm.hook.mock";
 import PlayCountByArtistQuery from "@src/web/reports/lastfm/playcount.by.artist/state/queries/playcount.by.artist.report.class";
+import type { PlayCountByArtistContainerProps } from "../playcount.by.artist.container";
 import type { reportHookAsLastFMPlayCountByArtistReport } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
 
 jest.mock(

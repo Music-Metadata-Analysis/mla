@@ -1,8 +1,9 @@
-import { createContext, ReactNode, useReducer } from "react";
+import { createContext, useReducer } from "react";
 import { InitialContext } from "./popups.initial";
 import { PopUpsControllerReducer } from "./popups.reducer";
 import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
 import type { PopUpComponentNameType } from "@src/vendors/types/integrations/ui.framework/popups/popups.state.types";
+import type { ReactNode } from "react";
 
 interface PopUpsControllerProviderProps {
   children: ReactNode;

@@ -1,10 +1,9 @@
 import { Container, Text } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
-import SunBurstDrawerTitlePanel, {
-  SunBurstDrawerTitlePanelProps,
-} from "../drawer.title.panel.component";
+import SunBurstDrawerTitlePanel from "../drawer.title.panel.component";
 import { testIDs } from "../drawer.title.panel.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
+import type { SunBurstDrawerTitlePanelProps } from "../drawer.title.panel.component";
 
 jest.mock("@chakra-ui/react", () =>
   require("@fixtures/chakra").createChakraMock(["Container", "Text"])

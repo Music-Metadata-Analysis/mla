@@ -1,9 +1,10 @@
-import { createContext, ReactNode } from "react";
+import { createContext } from "react";
 import InitialValues from "./metrics.initial";
 import { MetricsReducer } from "./metrics.reducer";
 import settings from "@src/config/metrics";
 import { persistenceVendor } from "@src/vendors/integrations/persistence/vendor";
 import { webFrameworkVendor } from "@src/vendors/integrations/web.framework/vendor";
+import type { ReactNode } from "react";
 
 export const MetricsContext = createContext({ ...InitialValues });
 

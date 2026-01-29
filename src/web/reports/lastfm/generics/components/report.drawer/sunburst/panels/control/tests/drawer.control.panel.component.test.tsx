@@ -1,12 +1,11 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import SunBurstDrawerControlPanel, {
-  SunBurstDrawerControlPanelProps,
-} from "../drawer.control.panel.component";
+import SunBurstDrawerControlPanel from "../drawer.control.panel.component";
 import { testIDs } from "../drawer.control.panel.identifiers";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import ButtonWithoutAnalytics from "@src/web/ui/generics/components/buttons/button.base/button.base.component";
+import type { SunBurstDrawerControlPanelProps } from "../drawer.control.panel.component";
 import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 
 jest.mock(

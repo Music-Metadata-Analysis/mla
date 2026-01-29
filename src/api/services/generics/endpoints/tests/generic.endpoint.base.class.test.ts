@@ -26,7 +26,7 @@ describe("APIEndpointBase", () => {
   let mockReq: MockAPIEndpointRequestType;
   let mockRes: MockAPIEndpointResponseType;
 
-  let method: HttpApiClientHttpMethodType;
+  const method: HttpApiClientHttpMethodType = "GET";
 
   const mockService = "mockService";
 

@@ -5,12 +5,11 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
-import FlipCardContainer, {
-  FlipCardContainerProps,
-} from "../flip.card.container";
+import FlipCardContainer from "../flip.card.container";
 import { testIDs } from "../flip.card.identifiers";
 import cardTranslations from "@locales/cards.json";
 import { _t } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
+import type { FlipCardContainerProps } from "../flip.card.container";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 

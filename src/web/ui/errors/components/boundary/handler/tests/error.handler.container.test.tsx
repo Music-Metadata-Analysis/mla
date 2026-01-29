@@ -1,11 +1,10 @@
 import { render } from "@testing-library/react";
-import ErrorHandlerContainer, {
-  ErrorHandlerContainerProps,
-} from "../error.handler.container";
+import ErrorHandlerContainer from "../error.handler.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import Events from "@src/web/analytics/collection/events/definitions";
 import mockAnalyticsCollectionHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import ErrorDisplayContainer from "@src/web/ui/errors/components/display/error.display.container";
+import type { ErrorHandlerContainerProps } from "../error.handler.container";
 
 jest.mock("@src/web/analytics/collection/state/hooks/analytics.hook");
 

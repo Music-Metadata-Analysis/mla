@@ -18,7 +18,7 @@ const mockIsFeatureEnabled = jest.fn();
 
 describe(FlagSmithClient.name, () => {
   let instance: FlagSmithClient;
-  let mockFlagName: string;
+  const mockFlagName = "mockFlagName";
   const mockEnvironmentName = "mockEnvironmentName";
   const mockGroupName = "mockGroupName";
 

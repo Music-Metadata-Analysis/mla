@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect } from "react";
 import settings from "@src/config/lastfm";
 import routes from "@src/config/routes";
 import Events from "@src/web/analytics/collection/events/definitions";
@@ -7,6 +7,7 @@ import Authentication from "@src/web/authentication/sign.in/components/authentic
 import useLastFM from "@src/web/reports/lastfm/generics/state/hooks/lastfm.hook";
 import ErrorBoundaryContainer from "@src/web/ui/errors/components/boundary/error.boundary.container";
 import type { reportHookAsLastFM } from "@src/web/reports/lastfm/generics/types/state/hooks/lastfm.hook.types";
+import type { FC } from "react";
 
 interface LastFMReportPage<T extends reportHookAsLastFM> {
   NoUserComponent: FC;

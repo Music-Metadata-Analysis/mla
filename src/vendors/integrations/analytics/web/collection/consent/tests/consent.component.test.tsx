@@ -1,11 +1,12 @@
 import { Text } from "@chakra-ui/react";
 import { render, screen, within } from "@testing-library/react";
 import CookieConsent from "react-cookie-consent";
-import Consent, { ConsentProps } from "../consent.component";
+import Consent from "../consent.component";
 import { testIDs } from "../consent.identifiers";
 import { settings } from "@src/config/cookies";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockColourHook from "@src/vendors/integrations/ui.framework/__mocks__/vendor.colour.hook.mock";
+import type { ConsentProps } from "../consent.component";
 
 jest.mock("@src/vendors/integrations/ui.framework/vendor");
 

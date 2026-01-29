@@ -1,14 +1,13 @@
 import { render } from "@testing-library/react";
 import SunBurstEntityNodeList from "../node.list.component";
-import SunBurstEntityNodeListContainer, {
-  SunBurstEntityNodeListContainerProps,
-} from "../node.list.container";
+import SunBurstEntityNodeListContainer from "../node.list.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import { MockUseTranslation } from "@src/web/locale/translation/hooks/__mocks__/translation.hook.mock";
 import useTranslation from "@src/web/locale/translation/hooks/translation.hook";
 import MockSunBurstNodeAbstractBase from "@src/web/reports/lastfm/generics/components/report.component/sunburst/encapsulations/tests/implementations/concrete.sunburst.node.encapsulation.class";
 import SunBurstNodeButton from "@src/web/reports/lastfm/generics/components/report.drawer/sunburst/nodes/node.button/node.button.component";
 import SunBurstNodeDisplay from "@src/web/reports/lastfm/generics/components/report.drawer/sunburst/nodes/node.display/node.display.component";
+import type { SunBurstEntityNodeListContainerProps } from "../node.list.container";
 import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
 import type { SunBurstDrawerNodeComponentProps } from "@src/web/reports/lastfm/generics/types/components/drawer/sunburst.types";
 import type { FC } from "react";

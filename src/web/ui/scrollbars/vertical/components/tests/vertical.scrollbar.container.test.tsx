@@ -1,13 +1,12 @@
 import { render } from "@testing-library/react";
 import VerticalScrollBar from "../vertical.scrollbar.component";
-import VerticalScrollBarContainer, {
-  VerticalScrollBarContainerProps,
-} from "../vertical.scrollbar.container";
+import VerticalScrollBarContainer from "../vertical.scrollbar.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
 import mockUseVerticalScrollBarEventsController from "@src/web/ui/scrollbars/vertical/state/controllers/__mocks__/vertical.scrollbar.events.controller.hook.mock";
 import mockUseVerticalScrollBarLayoutController from "@src/web/ui/scrollbars/vertical/state/controllers/__mocks__/vertical.scrollbar.layout.controller.hook.mock";
 import useVerticalScrollBarEventsController from "@src/web/ui/scrollbars/vertical/state/controllers/vertical.scrollbar.events.controller.hook";
 import useVerticalScrollLayoutController from "@src/web/ui/scrollbars/vertical/state/controllers/vertical.scrollbar.layout.controller.hook";
+import type { VerticalScrollBarContainerProps } from "../vertical.scrollbar.container";
 
 jest.mock(
   "@src/web/ui/scrollbars/vertical/state/controllers/vertical.scrollbar.events.controller.hook"

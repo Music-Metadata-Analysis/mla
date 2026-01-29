@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { renderToString } from "react-dom/server";
 import FeedbackPopUp from "../feedback.popup.component";
 import FeedbackPopUpContainer from "../feedback.popup.container";
@@ -15,6 +15,7 @@ import mockPopUpsControllerHook from "@src/web/notifications/popups/state/contro
 import usePopUpsGenerator from "@src/web/notifications/popups/state/controllers/popups.generator.hook";
 import SVSIcon from "@src/web/ui/generics/components/icons/svs/svs.icon.component";
 import useNotOnMountEffect from "@src/web/ui/generics/state/hooks/not.on.mount.hook";
+import type { FC } from "react";
 
 jest.mock("@src/web/authentication/session/hooks/auth.hook");
 

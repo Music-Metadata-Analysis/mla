@@ -1,16 +1,10 @@
 import { Flex, FormControl } from "@chakra-ui/react";
-import {
-  Formik,
-  Form,
-  Field,
-  FieldInputProps,
-  FormikProps,
-  FormikHelpers,
-} from "formik";
+import { Formik, Form, Field } from "formik";
 import { ids, fields } from "./username.form.identifiers";
 import StyledInput from "@src/web/forms/generics/components/input/input.component";
 import StyledButton from "@src/web/ui/generics/components/buttons/button.standard/button.standard.component";
 import type { LastFMUserSearchInterface } from "@src/web/forms/lastfm/types/username.form.types";
+import type { FieldInputProps, FormikProps, FormikHelpers } from "formik";
 
 interface UserNameFormProps {
   handleSubmit: (

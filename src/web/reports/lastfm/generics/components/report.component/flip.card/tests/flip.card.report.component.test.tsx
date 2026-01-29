@@ -1,8 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import FlipCardReport, {
-  FlipCardReportProps,
-} from "../flip.card.report.component";
+import FlipCardReport from "../flip.card.report.component";
 import lastfmTranslations from "@locales/lastfm.json";
 import settings from "@src/config/flip.card";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -21,6 +19,7 @@ import {
   MockReportStateEncapsulation,
 } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.last.fm.query.class";
 import mockImageController from "@src/web/ui/images/state/controllers/__mocks__/images.controller.hook.mock";
+import type { FlipCardReportProps } from "../flip.card.report.component";
 import type { LastFMTopAlbumsReportResponseInterface } from "@src/contracts/api/types/services/lastfm/responses/reports/top/top.albums.types";
 
 jest.mock("@chakra-ui/react", () =>

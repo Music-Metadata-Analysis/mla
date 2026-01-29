@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import LastFMIcon, { LastFMIconProps } from "../lastfm.icon.component";
+import LastFMIcon from "../lastfm.icon.component";
 import defaultImage from "@JestConfig/modules/images";
+import type { LastFMIconProps } from "../lastfm.icon.component";
 
 jest.mock("@src/web/locale/translation/hooks/translation.hook");
 

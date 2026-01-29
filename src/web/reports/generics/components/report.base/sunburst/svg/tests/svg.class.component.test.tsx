@@ -5,16 +5,18 @@ import {
   fireEvent,
   waitFor,
 } from "@testing-library/react";
-import { RefObject, useState, Dispatch } from "react";
+import { useState } from "react";
 import mockDataSet3 from "./data/sunburst.data.set.3.json";
 import mockDataSet4 from "./data/sunburst.data.set.4.json";
-import SunBurstChart, { SunBurstChartSVGProps } from "../svg.class.component";
+import SunBurstChart from "../svg.class.component";
 import { classes, ids, testIDs } from "../svg.identifiers";
 import LastFMTranslations from "@locales/lastfm.json";
 import { getMockProp } from "@src/fixtures/mocks/mock.component.props";
 import nullNode from "@src/web/reports/generics/state/charts/sunburst/null.node";
+import type { SunBurstChartSVGProps } from "../svg.class.component";
 import type { SunBurstData } from "@src/contracts/api/types/services/generics/aggregates/generic.sunburst.types";
 import type { d3Node } from "@src/web/reports/generics/types/state/charts/sunburst.types";
+import type { RefObject, Dispatch } from "react";
 import type { SetStateAction } from "react";
 
 type CheckClickProps = {

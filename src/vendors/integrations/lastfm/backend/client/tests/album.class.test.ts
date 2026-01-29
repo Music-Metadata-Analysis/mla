@@ -5,9 +5,9 @@ import type { LastFMAlbumInfoInterface } from "@src/contracts/api/types/services
 import type { LastFMVendorClientError } from "@src/vendors/types/integrations/lastfm/vendor.backend.types";
 
 describe("LastFMAlbumClientAdapter", () => {
-  let secretKey: "123VerySecret";
   const artist = "The Cure";
   const album = "Kiss Me, Kiss Me, Kiss Me";
+  const secretKey = "123VerySecret";
   const username = "niall-byrne";
   const mockAlbumInfo = { album: { track: ["Just Like Heaven"] } };
   let instance: LastFMAlbumClientAdapter;

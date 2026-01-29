@@ -1,7 +1,7 @@
 // @ts-ignore: mocked with forwardRef
 import { render } from "@testing-library/react";
 import { useRef } from "react";
-import ReportSelect, { ReportSelectProps } from "../select.report.component";
+import ReportSelect from "../select.report.component";
 import ReportSelectContainer from "../select.report.container";
 import translations from "@locales/lastfm.json";
 import config from "@src/config/lastfm";
@@ -13,6 +13,7 @@ import {
 import mockUseFlags from "@src/web/runtime/feature.flags/hooks/__mocks__/flags.hook.mock";
 import mockUseWindowThreshold from "@src/web/ui/window/state/hooks/__mocks__/window.threshold.hook.mock";
 import useWindowThreshold from "@src/web/ui/window/state/hooks/window.threshold.hook";
+import type { ReportSelectProps } from "../select.report.component";
 import type { MutableRefObject } from "react";
 
 jest.mock("react", () => ({

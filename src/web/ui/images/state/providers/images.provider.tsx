@@ -1,5 +1,6 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, useState } from "react";
 import InitialContext from "./images.initial";
+import type { ReactNode } from "react";
 
 export const ImagesControllerContext = createContext(InitialContext);
 

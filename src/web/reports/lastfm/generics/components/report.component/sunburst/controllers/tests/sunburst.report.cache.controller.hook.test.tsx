@@ -1,8 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import dk from "deep-keys";
-import useSunBurstCacheController, {
-  SunBurstCacheControllerProps,
-} from "../sunburst.report.cache.controller.hook";
+import useSunBurstCacheController from "../sunburst.report.cache.controller.hook";
 import { createHookWrapper } from "@src/fixtures/mocks/mock.hook.wrapper";
 import mockAnalyticsHook from "@src/web/analytics/collection/state/hooks/__mocks__/analytics.hook.mock";
 import ReportCacheCreateClient from "@src/web/api/report.cache/clients/create/report.cache.create.api.client.class";
@@ -14,6 +12,7 @@ import { InitialState } from "@src/web/reports/generics/state/providers/report.i
 import { ReportContext } from "@src/web/reports/generics/state/providers/report.provider";
 import mockHookValues from "@src/web/reports/lastfm/generics/components/report.component/sunburst/controllers/__mocks__/sunburst.report.cache.controller.hook.mock";
 import { MockQueryClass } from "@src/web/reports/lastfm/generics/state/queries/tests/implementations/concrete.sunburst.query.class";
+import type { SunBurstCacheControllerProps } from "../sunburst.report.cache.controller.hook";
 import type { LastFMAggregateReportResponseInterface } from "@src/contracts/api/types/services/lastfm/aggregates/lastfm.aggregate.report.types";
 import type { ReportContextInterface } from "@src/web/reports/generics/types/state/providers/report.context.types";
 import type SunBurstBaseReportState from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
