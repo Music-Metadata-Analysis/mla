@@ -1,5 +1,6 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import NextI18NextClientSSR from "../next-i18next";
+const i18n = require("@src/../next-i18next.config");
 
 jest.mock("next-i18next/serverSideTranslations");
 
@@ -30,7 +31,8 @@ describe("NextI18NextClientSSR", () => {
       expect(serverSideTranslations).toHaveBeenCalledTimes(1);
       expect(serverSideTranslations).toHaveBeenCalledWith(
         mockLocale,
-        mockNamesSpaces
+        mockNamesSpaces,
+        i18n
       );
     });
 
