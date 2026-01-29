@@ -37,6 +37,7 @@ describe("LastFM Search Dialogues (Enabled)", () => {
 
           describe(`when we click the '${reportConfig.reportName}' button`, () => {
             before(() => {
+              cy.wait(1000);
               cy.contains(reportConfig.reportName, { timeout }).click();
             });
 

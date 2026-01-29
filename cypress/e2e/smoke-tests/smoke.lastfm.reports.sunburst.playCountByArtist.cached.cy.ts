@@ -35,6 +35,7 @@ describe("Count By Artist SunBurst Report", async () => {
 
         describe(`when we select the '${reportConfig.reportName}' report`, () => {
           before(() => {
+            cy.wait(1000);
             cy.contains(reportConfig.reportName, { timeout }).click();
           });
 
