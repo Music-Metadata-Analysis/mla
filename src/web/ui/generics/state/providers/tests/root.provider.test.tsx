@@ -96,7 +96,7 @@ describe("RootProvider", () => {
       await waitFor(() =>
         expect(HeaderContainer).toHaveBeenCalledWith({ pageKey: "default" }, {})
       );
-      expect(await screen.findByTestId(providers.HeaderContainer)).toBeTruthy;
+      expect(await screen.findByTestId(providers.HeaderContainer)).toBeTruthy();
     });
 
     it("should call the FlagVendorProvider component correctly", async () => {
@@ -106,8 +106,9 @@ describe("RootProvider", () => {
           state: mockFlagState,
         })
       );
-      expect(await screen.findByTestId(providers.FlagVendorProvider))
-        .toBeTruthy;
+      expect(
+        await screen.findByTestId(providers.FlagVendorProvider)
+      ).toBeTruthy();
     });
   });
 
@@ -122,14 +123,15 @@ describe("RootProvider", () => {
           {}
         )
       );
-      expect(await screen.findByTestId(providers.HeaderContainer)).toBeTruthy;
+      expect(await screen.findByTestId(providers.HeaderContainer)).toBeTruthy();
     });
 
     it("should initialize the AuthVendorProvider", async () => {
       await waitFor(() => expect(mockAuthProvider).toHaveBeenCalledTimes(1));
       checkMockCall(mockAuthProvider, { session: mockSession });
-      expect(await screen.findByTestId(providers.AuthVendorProvider))
-        .toBeTruthy;
+      expect(
+        await screen.findByTestId(providers.AuthVendorProvider)
+      ).toBeTruthy();
     });
 
     it("should initialize the FlagVendorProvider", async () => {
@@ -139,33 +141,37 @@ describe("RootProvider", () => {
           state: mockFlagState,
         })
       );
-      expect(await screen.findByTestId(providers.FlagVendorProvider))
-        .toBeTruthy;
+      expect(
+        await screen.findByTestId(providers.FlagVendorProvider)
+      ).toBeTruthy();
     });
 
     it("should initialize the Analytics collection Provider", async () => {
       await waitFor(() =>
         expect(analyticsVendor.collection.Provider).toHaveBeenCalledTimes(1)
       );
-      expect(await screen.findByTestId(providers.AnalyticsProvider)).toBeTruthy;
+      expect(
+        await screen.findByTestId(providers.AnalyticsProvider)
+      ).toBeTruthy();
     });
 
     it("should initialize the ControllersRootProvider Provider", async () => {
       await waitFor(() =>
         expect(ControllersRootProvider).toHaveBeenCalledTimes(1)
       );
-      expect(await screen.findByTestId(providers.ControllersRootProvider))
-        .toBeTruthy;
+      expect(
+        await screen.findByTestId(providers.ControllersRootProvider)
+      ).toBeTruthy();
     });
 
     it("should initialize the MetricsProvider", async () => {
       await waitFor(() => expect(MetricsProvider).toHaveBeenCalledTimes(1));
-      expect(await screen.findByTestId(providers.MetricsProvider)).toBeTruthy;
+      expect(await screen.findByTestId(providers.MetricsProvider)).toBeTruthy();
     });
 
     it("should initialize the ReportProvider", async () => {
       await waitFor(() => expect(ReportProvider).toHaveBeenCalledTimes(1));
-      expect(await screen.findByTestId(providers.ReportProvider)).toBeTruthy;
+      expect(await screen.findByTestId(providers.ReportProvider)).toBeTruthy();
     });
 
     it("should initialize the UserInterfacePopUpsProvider", async () => {
@@ -173,8 +179,9 @@ describe("RootProvider", () => {
         expect(uiFrameworkVendor.popups.Provider).toHaveBeenCalledTimes(1)
       );
       checkMockCall(uiFrameworkVendor.popups.Provider, { popUps: popUps });
-      expect(await screen.findByTestId(providers.UserInterfacePopUpsProvider))
-        .toBeTruthy;
+      expect(
+        await screen.findByTestId(providers.UserInterfacePopUpsProvider)
+      ).toBeTruthy();
     });
 
     it("should initialize the UserInterfaceVendorProvider", async () => {
@@ -182,12 +189,13 @@ describe("RootProvider", () => {
         expect(uiFrameworkVendor.core.Provider).toHaveBeenCalledTimes(1)
       );
       checkMockCall(uiFrameworkVendor.core.Provider, { cookies: mockCookies });
-      expect(await screen.findByTestId(providers.UserInterfaceVendorProvider))
-        .toBeTruthy;
+      expect(
+        await screen.findByTestId(providers.UserInterfaceVendorProvider)
+      ).toBeTruthy();
     });
 
     it("should display the RootProvider's Child Elements", async () => {
-      expect(await screen.findByTestId(providers.RootProvider)).toBeTruthy;
+      expect(await screen.findByTestId(providers.RootProvider)).toBeTruthy();
     });
   });
 });

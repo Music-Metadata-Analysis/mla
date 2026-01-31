@@ -32,7 +32,6 @@ export default function FeedbackPopUpContainer() {
     ) {
       popups.open(popUpName);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metrics]);
 
   return null;

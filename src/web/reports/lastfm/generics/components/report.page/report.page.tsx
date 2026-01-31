@@ -33,6 +33,7 @@ export default function LastFMReportPage<T extends reportHookAsLastFM>({
   useEffect(() => {
     if (userName === undefined) {
       const urlParams = new URLSearchParams(window.location.search);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setUserName(urlParams.get(settings.search.fieldName));
     }
   }, [userName]);

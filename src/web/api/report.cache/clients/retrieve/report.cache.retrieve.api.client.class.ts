@@ -63,7 +63,6 @@ class ReportRetrieveCreateClient
   }
 
   protected handleBegin(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     params: ReportCacheRetrieveClientParamsInterface
   ): void {
     this.dispatcher({

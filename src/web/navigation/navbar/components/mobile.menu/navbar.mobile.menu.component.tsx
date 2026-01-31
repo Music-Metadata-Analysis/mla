@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 import { Box, Flex } from "@chakra-ui/react";
 import { testIDs } from "./navbar.mobile.menu.identifiers";
 import NavBarOptions from "@src/web/navigation/navbar/components/options/navbar.options.component";

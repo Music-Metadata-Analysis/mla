@@ -158,7 +158,7 @@ describe("AuthenticationComponent", () => {
       const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.height).toStrictEqual(26);
       expect(call.width).toStrictEqual(26);
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       expect(renderToString(call.icon!)).toBe(
         renderToString(<LastFMIconContainer />)
       );

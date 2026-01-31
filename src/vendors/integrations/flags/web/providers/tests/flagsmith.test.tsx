@@ -58,7 +58,7 @@ describe("FlagProvider", () => {
     });
 
     it("should initialize the vendor's provider", async () => {
-      expect(await screen.findByTestId("FlagsmithProvider")).toBeTruthy;
+      expect(await screen.findByTestId("FlagsmithProvider")).toBeTruthy();
     });
 
     it("should initialize the vendor's provider with the correct arguments", () => {

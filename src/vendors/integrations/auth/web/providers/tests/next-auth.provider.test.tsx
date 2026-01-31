@@ -34,7 +34,7 @@ describe("NextAuthProvider", () => {
     });
 
     it("should initialize the vendor's provider", async () => {
-      expect(await screen.findByTestId("SessionProvider")).toBeTruthy;
+      expect(await screen.findByTestId("SessionProvider")).toBeTruthy();
     });
 
     it("should initialize the vendor's provider with the correct arguments", () => {

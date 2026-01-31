@@ -67,7 +67,7 @@ describe("FeedbackPopUp", () => {
     );
     expect(call.height).toStrictEqual(50);
     expect(call.width).toStrictEqual(50);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
     expect(renderToString(call.icon!)).toBe(renderToString(mockIcon()));
     expect(Object.keys(call).length).toBe(4);
   });

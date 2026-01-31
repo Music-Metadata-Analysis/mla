@@ -60,7 +60,6 @@ describe("SplashBody", () => {
       const call = jest.mocked(Avatar).mock.calls[0][0];
       expect(call.height).toStrictEqual(dialogueSettings.iconSizes);
       expect(call.width).toStrictEqual(dialogueSettings.iconSizes);
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(renderToString(call.icon!)).toBe(
         renderToString(<LastFMIconContainer />)
       );

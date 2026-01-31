@@ -23,6 +23,7 @@ export default function LastFMAuthButton({
   const LastFMButton = createButton(config);
 
   return (
+    // eslint-disable-next-line react-hooks/static-components
     <LastFMButton
       align={"center"}
       onClick={() => callBack("lastfm")}

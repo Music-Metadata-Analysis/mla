@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Switch } from "@chakra-ui/react";
 import { testIDs } from "./navbar.colour.mode.identifiers";

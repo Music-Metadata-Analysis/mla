@@ -25,7 +25,6 @@ export default function SunBurstChartSVGContainer(
     };
     window.addEventListener("resize", windowResize);
     return () => window.removeEventListener("resize", windowResize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

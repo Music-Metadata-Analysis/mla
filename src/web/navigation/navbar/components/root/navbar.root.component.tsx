@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Box, Flex, IconButton } from "@chakra-ui/react";
 import { testIDs } from "./navbar.root.identifiers";

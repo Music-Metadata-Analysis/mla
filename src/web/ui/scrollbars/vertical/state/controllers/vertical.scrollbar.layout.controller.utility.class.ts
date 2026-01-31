@@ -26,7 +26,6 @@ export default class VerticalScrollBarDiv {
 
   set onScroll(fn: () => void) {
     if (this.requiresScroll()) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       this._ref!.onscroll = fn;
     }
   }

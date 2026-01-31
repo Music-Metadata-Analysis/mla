@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 import { Flex } from "@chakra-ui/react";
 import settings from "@src/config/flip.card";
 import FlipCardContainer from "@src/web/reports/generics/components/report.base/flip.card/flip.card.container";

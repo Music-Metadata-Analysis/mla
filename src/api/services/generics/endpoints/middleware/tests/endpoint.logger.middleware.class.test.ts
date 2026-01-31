@@ -20,8 +20,6 @@ describe(EndPointLoggerMiddleware.name, () => {
     jest.clearAllMocks();
   });
 
-  mockEndpointLogger;
-
   const arrange = () =>
     (instance = new EndPointLoggerMiddleware({ log: mockEndpointLogger }));
 

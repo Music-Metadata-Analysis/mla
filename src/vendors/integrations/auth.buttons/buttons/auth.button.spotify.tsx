@@ -23,6 +23,7 @@ export default function SpotifyAuthButton({
   const SpotifyLoginButton = createButton(config);
 
   return (
+    // eslint-disable-next-line react-hooks/static-components
     <SpotifyLoginButton
       align={"center"}
       onClick={() => callBack("spotify")}

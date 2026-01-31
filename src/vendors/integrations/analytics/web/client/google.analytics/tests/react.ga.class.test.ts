@@ -22,7 +22,6 @@ describe(GoogleAnalytics.name, () => {
   } as AnalyticsEventDefinitionInterface;
   const mockAnalyticsID = "mockAnalyticsID";
   const mockUrl = "/mockUrl";
-  GoogleAnalytics;
   const arrange = () => (instance = new GoogleAnalytics());
 
   beforeEach(() => jest.clearAllMocks());

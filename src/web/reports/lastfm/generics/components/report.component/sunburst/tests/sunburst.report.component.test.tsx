@@ -83,8 +83,6 @@ describe("SunBurstReport", () => {
   };
 
   const arrangeMockSelectedNode = () => {
-    mockSunBurstControllerHook.node.selected ===
-      (JSON.parse(JSON.stringify(nullNode)) as d3Node);
     mockSunBurstControllerHook.node.selected.data = mockNode.data;
   };
 

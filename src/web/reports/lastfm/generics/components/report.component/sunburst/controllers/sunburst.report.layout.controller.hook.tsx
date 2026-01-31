@@ -29,19 +29,19 @@ const useSunBurstLayoutController = () => {
   const [currentLayout, setCurrentLayout] =
     useState<keyof typeof SunBurstLayoutFlexProps>("normal");
 
+  const updateLayout = () => {
+    setCanFitOnScreen(calculateCanFitOnScreen());
+    setCurrentLayout(calculateLayoutType(refInfo, refChart));
+  };
+
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     updateLayout();
     window.addEventListener("resize", updateLayout);
     return () => {
       window.removeEventListener("resize", updateLayout);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const updateLayout = () => {
-    setCanFitOnScreen(calculateCanFitOnScreen());
-    setCurrentLayout(calculateLayoutType(refInfo, refChart));
-  };
 
   return {
     canFitOnScreen,

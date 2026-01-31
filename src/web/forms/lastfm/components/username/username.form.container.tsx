@@ -28,7 +28,6 @@ export default function UserNameFormContainer({
       ) as HTMLInputElement;
       element.focus();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authSession]);
 
   const validateUserName = (value: string) => {

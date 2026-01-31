@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 import { Box, Flex } from "@chakra-ui/react";
 import { testIDs } from "./dialogue.resizable.identifiers";
 import BillboardContainer from "@src/web/ui/generics/components/billboard/billboard.base/billboard.container";

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/refs */
 import { Box, Flex, Avatar } from "@chakra-ui/react";
 import Option from "./option/report.option.component";
 import { ids } from "./select.report.identifiers";

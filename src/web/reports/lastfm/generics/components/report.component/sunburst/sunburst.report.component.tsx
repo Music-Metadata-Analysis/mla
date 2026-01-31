@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/refs */
 import { Box, Flex } from "@chakra-ui/react";
 import SunBurstControlPanel from "./panels/control/control.panel.component";
 import SunBurstErrorPanel from "./panels/error/error.panel.component";
