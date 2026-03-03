@@ -52,7 +52,7 @@
     "ajv": "^8.12.0",
     "cheerio": "^1.0.0-rc.12",
     "d3": "^7.8.5",
-    "flagsmith": "^3.20.0",
+    "flagsmith": "^4.0.2",
     "flagsmith-nodejs": "^3.1.1",
     "formik": "^2.4.5",
     "i18next": "^23.0.0",
