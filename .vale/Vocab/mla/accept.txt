@@ -35,6 +35,7 @@ netlify|NETLIFY
 nextjs|NEXTJS
 npm|NPM
 params
+picomatch
 playcount
 playcountbyartist
 postcss
@@ -56,4 +57,4 @@ utilcve
 validator
 vercel|Vercel
 vscode|VSCODE
-
+yaml
