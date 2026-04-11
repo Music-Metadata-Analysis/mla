@@ -4,7 +4,7 @@ import { lastFMVendorBackend } from "@src/vendors/integrations/lastfm/vendor.bac
 import type { LastFMImageDataInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/image.data.types";
 import type { LastFMUserProfileInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/user.profile.types";
 import type { TokenSet, User } from "next-auth";
-import type { OAuthConfig } from "next-auth/providers";
+import type { OAuthConfig } from "next-auth/providers/oauth";
 
 jest.mock("@src/vendors/integrations/lastfm/vendor.backend");
 

@@ -2,7 +2,7 @@ import apiRoutes from "@src/config/apiRoutes";
 import { lastFMVendorBackend } from "@src/vendors/integrations/lastfm/vendor.backend";
 import type { LastFMUserProfileInterface } from "@src/contracts/api/types/services/lastfm/responses/elements/user.profile.types";
 import type { TokenSet, User } from "next-auth";
-import type { OAuthConfig } from "next-auth/providers";
+import type { OAuthConfig } from "next-auth/providers/oauth";
 
 const LastFMProvider = (): OAuthConfig<LastFMUserProfileInterface> => ({
   id: "lastfm",

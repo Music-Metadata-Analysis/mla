@@ -35,6 +35,7 @@ navbar|NAVBAR
 netlify|NETLIFY
 nextjs|NEXTJS
 npm|NPM
+oauth
 params
 picomatch
 playcount
