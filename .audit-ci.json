@@ -1,7 +1,7 @@
 {
   "low": true,
   "package-manager": "auto",
-  "allowlist": [],
+  "allowlist": ["GHSA-w5hq-g745-h8pq"],
   "registry": "https://registry.npmjs.org",
   "skip-dev": true
 }
