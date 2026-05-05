@@ -25,7 +25,7 @@
   },
   "overrides": {
     "@toplast/lastfm": {
-      "axios": ">=1.15.0"
+      "axios": ">=1.16.0"
     },
     "@babel/traverse": ">=7.23.2",
     "next-auth": {
