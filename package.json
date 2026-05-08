@@ -31,6 +31,7 @@
     "next-auth": {
       "cookie": "^0.7.0"
     },
+    "fast-uri": ">=3.1.1",
     "fast-xml-parser": ">=4.4.1",
     "json-schema": " >=0.4.0",
     "node-fetch": "^2.7.0",
