@@ -42,6 +42,7 @@ picomatch
 playcount
 playcountbyartist
 postcss
+qs
 repo
 serverless
 scrollbar
