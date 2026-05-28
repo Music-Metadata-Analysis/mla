@@ -53,6 +53,7 @@ subcomponents
 subfolder
 svg
 swc|SWC
+tmp
 ui|UI
 url
 util
