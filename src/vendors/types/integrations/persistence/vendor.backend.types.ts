@@ -12,7 +12,7 @@ export interface PersistenceVendorClientInterface {
     keyName: string,
     data: PersistenceVendorDataType,
     headers: PersistenceVendorClientHeadersInterface
-  ): void;
+  ): Promise<void>;
 }
 
 export type PersistenceVendorClientConstructorType = new (

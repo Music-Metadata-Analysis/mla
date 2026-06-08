@@ -29,7 +29,7 @@ export default abstract class PersistenceVendorBaseClass
     keyName: string,
     data: PersistenceVendorDataType,
     headers: PersistenceVendorClientHeadersInterface
-  ): void;
+  ): void | Promise<void>;
 
   protected handleError(
     err: Error,
