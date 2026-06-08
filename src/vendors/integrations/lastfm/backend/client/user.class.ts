@@ -59,15 +59,15 @@ class LastFmUserClientAdapter
 
   protected async attachArtistArtwork(artists: LastFMUserAlbumInterface[]) {
     const cacheLookups: Promise<string>[] = [];
-    artists.map((artist) => {
+    artists.forEach((artist) => {
       cacheLookups.push(this.cache.query(artist.name));
     });
 
     await Promise.all(cacheLookups).then((urls) => {
-      artists.map((artist) => {
+      artists.forEach((artist) => {
         const artistImage = urls.shift() as Awaited<string>;
         if (artist.name && artist.image) {
-          artist.image.map((image) => {
+          artist.image.forEach((image) => {
             image["#text"] = artistImage;
           });
         }
@@ -95,15 +95,15 @@ class LastFmUserClientAdapter
 
   protected async attachTrackArtistArtwork(tracks: LastFMUserTrackInterface[]) {
     const cacheLookups: Promise<string>[] = [];
-    tracks.map((track) => {
+    tracks.forEach((track) => {
       cacheLookups.push(this.cache.query(track.artist?.name));
     });
 
     await Promise.all(cacheLookups).then((urls) => {
-      tracks.map((track) => {
+      tracks.forEach((track) => {
         const artistImage = urls.shift() as Awaited<string>;
         if (track.name && track.image) {
-          track.image.map((image) => {
+          track.image.forEach((image) => {
             image["#text"] = artistImage;
           });
         }
