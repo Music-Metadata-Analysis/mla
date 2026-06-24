@@ -63,3 +63,4 @@ validator
 vercel|Vercel
 vscode|VSCODE
 yaml
+ws
