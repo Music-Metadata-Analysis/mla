@@ -82,7 +82,7 @@
     "@emotion/jest": "^11.11.0",
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.2",
-    "@netlify/plugin-nextjs": "^4.41.1",
+    "@netlify/plugin-nextjs": "^5.15.12",
     "@swc/jest": "^0.2.22",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
