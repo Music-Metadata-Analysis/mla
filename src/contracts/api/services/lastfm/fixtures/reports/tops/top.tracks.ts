@@ -9,22 +9,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/b1c1524a907dd10a1fe17bd6b12857ef",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/b1c1524a907dd10a1fe17bd6b12857ef",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/b1c1524a907dd10a1fe17bd6b12857ef",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/b1c1524a907dd10a1fe17bd6b12857ef",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/b1c1524a907dd10a1fe17bd6b12857ef",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/b1c1524a907dd10a1fe17bd6b12857ef",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/b1c1524a907dd10a1fe17bd6b12857ef",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/b1c1524a907dd10a1fe17bd6b12857ef",
         },
       ],
       artist: {
@@ -45,22 +45,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
       ],
       artist: {
@@ -81,22 +81,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
       ],
       artist: {
@@ -117,22 +117,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
       ],
       artist: {
@@ -153,22 +153,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
       ],
       artist: {
@@ -189,22 +189,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/5cc9efe6ec8e437d9ceb5ca496b731e9",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/5cc9efe6ec8e437d9ceb5ca496b731e9",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/5cc9efe6ec8e437d9ceb5ca496b731e9",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/5cc9efe6ec8e437d9ceb5ca496b731e9",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/5cc9efe6ec8e437d9ceb5ca496b731e9",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/5cc9efe6ec8e437d9ceb5ca496b731e9",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/5cc9efe6ec8e437d9ceb5ca496b731e9",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/5cc9efe6ec8e437d9ceb5ca496b731e9",
         },
       ],
       artist: {
@@ -225,22 +225,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
       ],
       artist: {
@@ -261,22 +261,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
         },
       ],
       artist: {
@@ -297,22 +297,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/8fd5fa85c382d988534ff9695fb17493",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/8fd5fa85c382d988534ff9695fb17493",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/8fd5fa85c382d988534ff9695fb17493",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/8fd5fa85c382d988534ff9695fb17493",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/8fd5fa85c382d988534ff9695fb17493",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/8fd5fa85c382d988534ff9695fb17493",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/8fd5fa85c382d988534ff9695fb17493",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/8fd5fa85c382d988534ff9695fb17493",
         },
       ],
       artist: {
@@ -333,22 +333,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
       ],
       artist: {
@@ -369,22 +369,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
       ],
       artist: {
@@ -405,22 +405,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
       ],
       artist: {
@@ -441,22 +441,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
       ],
       artist: {
@@ -477,22 +477,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/051cd43d93ea423ec2265d75abfd12ba",
         },
       ],
       artist: {
@@ -513,22 +513,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/171b1dbf7af84a3eca89175d53b4948c",
         },
       ],
       artist: {
@@ -549,22 +549,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/e67b7e699d276537720a25f9028f46f9",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/e67b7e699d276537720a25f9028f46f9",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/e67b7e699d276537720a25f9028f46f9",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/e67b7e699d276537720a25f9028f46f9",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/e67b7e699d276537720a25f9028f46f9",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/e67b7e699d276537720a25f9028f46f9",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/e67b7e699d276537720a25f9028f46f9",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/e67b7e699d276537720a25f9028f46f9",
         },
       ],
       artist: {
@@ -585,22 +585,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/a194cfbd58c94d3acd93dbd7f051c9e8",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/a194cfbd58c94d3acd93dbd7f051c9e8",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/a194cfbd58c94d3acd93dbd7f051c9e8",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/a194cfbd58c94d3acd93dbd7f051c9e8",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/a194cfbd58c94d3acd93dbd7f051c9e8",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/a194cfbd58c94d3acd93dbd7f051c9e8",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/a194cfbd58c94d3acd93dbd7f051c9e8",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/a194cfbd58c94d3acd93dbd7f051c9e8",
         },
       ],
       artist: {
@@ -621,22 +621,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/c078330be6654505a3d185521a42ce7a",
         },
       ],
       artist: {
@@ -657,22 +657,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/07b3487dfe444576c5f5a2307562d357",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/07b3487dfe444576c5f5a2307562d357",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/07b3487dfe444576c5f5a2307562d357",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/07b3487dfe444576c5f5a2307562d357",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/07b3487dfe444576c5f5a2307562d357",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/07b3487dfe444576c5f5a2307562d357",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/07b3487dfe444576c5f5a2307562d357",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/07b3487dfe444576c5f5a2307562d357",
         },
       ],
       artist: {
@@ -693,22 +693,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/330d84663bd3f6eccd282cda488d2d28",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/330d84663bd3f6eccd282cda488d2d28",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/330d84663bd3f6eccd282cda488d2d28",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/330d84663bd3f6eccd282cda488d2d28",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/330d84663bd3f6eccd282cda488d2d28",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/330d84663bd3f6eccd282cda488d2d28",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/avatar170s/330d84663bd3f6eccd282cda488d2d28",
+            "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/330d84663bd3f6eccd282cda488d2d28",
         },
       ],
       artist: {
@@ -726,22 +726,22 @@ export const response = {
     {
       size: "small" as const,
       "#text":
-        "https://lastfm.freetls.fastly.net/i/u/34s/3045c415a689785ec440988170f4d015.png",
+        "https://lastfm-img.freetls.fastly.net/i/u/34s/3045c415a689785ec440988170f4d015.png",
     },
     {
       size: "medium" as const,
       "#text":
-        "https://lastfm.freetls.fastly.net/i/u/64s/3045c415a689785ec440988170f4d015.png",
+        "https://lastfm-img.freetls.fastly.net/i/u/64s/3045c415a689785ec440988170f4d015.png",
     },
     {
       size: "large" as const,
       "#text":
-        "https://lastfm.freetls.fastly.net/i/u/174s/3045c415a689785ec440988170f4d015.png",
+        "https://lastfm-img.freetls.fastly.net/i/u/174s/3045c415a689785ec440988170f4d015.png",
     },
     {
       size: "extralarge" as const,
       "#text":
-        "https://lastfm.freetls.fastly.net/i/u/300x300/3045c415a689785ec440988170f4d015.png",
+        "https://lastfm-img.freetls.fastly.net/i/u/300x300/3045c415a689785ec440988170f4d015.png",
     },
   ],
   playcount: 212829,

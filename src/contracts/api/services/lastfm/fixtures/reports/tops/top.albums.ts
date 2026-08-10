@@ -11,22 +11,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/700f3432326b3345535bc20bdc259232.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/700f3432326b3345535bc20bdc259232.jpg",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/700f3432326b3345535bc20bdc259232.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/700f3432326b3345535bc20bdc259232.jpg",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/700f3432326b3345535bc20bdc259232.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/700f3432326b3345535bc20bdc259232.jpg",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/700f3432326b3345535bc20bdc259232.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/700f3432326b3345535bc20bdc259232.jpg",
         },
       ],
       mbid: "36379a06-b646-4e83-ac12-7a9464fb20ad",
@@ -45,22 +45,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/f9180f6ba74947dfc74ff4dfed7012ed.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/f9180f6ba74947dfc74ff4dfed7012ed.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/f9180f6ba74947dfc74ff4dfed7012ed.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/f9180f6ba74947dfc74ff4dfed7012ed.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/f9180f6ba74947dfc74ff4dfed7012ed.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/f9180f6ba74947dfc74ff4dfed7012ed.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/f9180f6ba74947dfc74ff4dfed7012ed.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/f9180f6ba74947dfc74ff4dfed7012ed.png",
         },
       ],
       mbid: "699beec8-7fd5-4e18-af90-9dafa1d50830",
@@ -79,22 +79,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/283a264a2b1943119d72d0b1071d37f6.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/283a264a2b1943119d72d0b1071d37f6.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/283a264a2b1943119d72d0b1071d37f6.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/283a264a2b1943119d72d0b1071d37f6.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/283a264a2b1943119d72d0b1071d37f6.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/283a264a2b1943119d72d0b1071d37f6.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/283a264a2b1943119d72d0b1071d37f6.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/283a264a2b1943119d72d0b1071d37f6.png",
         },
       ],
       mbid: "a1f038aa-5742-464e-bb49-66998bda9167",
@@ -113,22 +113,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/e6d4821f6a554c7bc882a9fa75070dfe.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/e6d4821f6a554c7bc882a9fa75070dfe.jpg",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/e6d4821f6a554c7bc882a9fa75070dfe.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/e6d4821f6a554c7bc882a9fa75070dfe.jpg",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/e6d4821f6a554c7bc882a9fa75070dfe.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/e6d4821f6a554c7bc882a9fa75070dfe.jpg",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/e6d4821f6a554c7bc882a9fa75070dfe.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/e6d4821f6a554c7bc882a9fa75070dfe.jpg",
         },
       ],
       mbid: "2b91931d-477d-31c7-8938-b965e97a0d88",
@@ -147,22 +147,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/f47f0408a925403cbea2564add58000f.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/f47f0408a925403cbea2564add58000f.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/f47f0408a925403cbea2564add58000f.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/f47f0408a925403cbea2564add58000f.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/f47f0408a925403cbea2564add58000f.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/f47f0408a925403cbea2564add58000f.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/f47f0408a925403cbea2564add58000f.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/f47f0408a925403cbea2564add58000f.png",
         },
       ],
       mbid: "0ec67913-5de5-4ca5-a354-59f34af17c77",
@@ -181,22 +181,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/fba6a9a135084af78e0cb2f7e9fa9060.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/fba6a9a135084af78e0cb2f7e9fa9060.jpg",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/fba6a9a135084af78e0cb2f7e9fa9060.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/fba6a9a135084af78e0cb2f7e9fa9060.jpg",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/fba6a9a135084af78e0cb2f7e9fa9060.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/fba6a9a135084af78e0cb2f7e9fa9060.jpg",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/fba6a9a135084af78e0cb2f7e9fa9060.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/fba6a9a135084af78e0cb2f7e9fa9060.jpg",
         },
       ],
       mbid: "2d2b593a-27ff-4550-8fdc-6259fe60f501",
@@ -215,22 +215,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/4a469d29449e4cafcca14fddde374e0a.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/4a469d29449e4cafcca14fddde374e0a.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/4a469d29449e4cafcca14fddde374e0a.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/4a469d29449e4cafcca14fddde374e0a.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/4a469d29449e4cafcca14fddde374e0a.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/4a469d29449e4cafcca14fddde374e0a.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/4a469d29449e4cafcca14fddde374e0a.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/4a469d29449e4cafcca14fddde374e0a.png",
         },
       ],
       mbid: "64b14734-0f6d-4995-8a44-de410afe583f",
@@ -267,22 +267,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/947a95e7321b4d7f86580726efa1911b.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/947a95e7321b4d7f86580726efa1911b.jpg",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/947a95e7321b4d7f86580726efa1911b.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/947a95e7321b4d7f86580726efa1911b.jpg",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/947a95e7321b4d7f86580726efa1911b.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/947a95e7321b4d7f86580726efa1911b.jpg",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/947a95e7321b4d7f86580726efa1911b.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/947a95e7321b4d7f86580726efa1911b.jpg",
         },
       ],
       mbid: "169ad0eb-5875-4067-88c8-e662ca96645f",
@@ -301,22 +301,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/fde56f24a48543d0a9bdb7e38cfedecf.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/fde56f24a48543d0a9bdb7e38cfedecf.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/fde56f24a48543d0a9bdb7e38cfedecf.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/fde56f24a48543d0a9bdb7e38cfedecf.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/fde56f24a48543d0a9bdb7e38cfedecf.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/fde56f24a48543d0a9bdb7e38cfedecf.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/fde56f24a48543d0a9bdb7e38cfedecf.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/fde56f24a48543d0a9bdb7e38cfedecf.png",
         },
       ],
       mbid: "36222ec7-b649-45e5-8cbd-579a1596c1d8",
@@ -335,22 +335,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/2a5b0c523a5c4bcb9faf1f9bbc8be1e0.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/2a5b0c523a5c4bcb9faf1f9bbc8be1e0.jpg",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/2a5b0c523a5c4bcb9faf1f9bbc8be1e0.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/2a5b0c523a5c4bcb9faf1f9bbc8be1e0.jpg",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/2a5b0c523a5c4bcb9faf1f9bbc8be1e0.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/2a5b0c523a5c4bcb9faf1f9bbc8be1e0.jpg",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/2a5b0c523a5c4bcb9faf1f9bbc8be1e0.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/2a5b0c523a5c4bcb9faf1f9bbc8be1e0.jpg",
         },
       ],
       mbid: "",
@@ -369,22 +369,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/7d42b69bbc51b649de964c6ceaf91f72.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/7d42b69bbc51b649de964c6ceaf91f72.jpg",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/7d42b69bbc51b649de964c6ceaf91f72.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/7d42b69bbc51b649de964c6ceaf91f72.jpg",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/7d42b69bbc51b649de964c6ceaf91f72.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/7d42b69bbc51b649de964c6ceaf91f72.jpg",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/7d42b69bbc51b649de964c6ceaf91f72.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/7d42b69bbc51b649de964c6ceaf91f72.jpg",
         },
       ],
       mbid: "5f05c499-31d3-4e81-a761-de425f427f9d",
@@ -403,22 +403,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/a11b52c0751f95f9b385fac0a2ed833a.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/a11b52c0751f95f9b385fac0a2ed833a.jpg",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/a11b52c0751f95f9b385fac0a2ed833a.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/a11b52c0751f95f9b385fac0a2ed833a.jpg",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/a11b52c0751f95f9b385fac0a2ed833a.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/a11b52c0751f95f9b385fac0a2ed833a.jpg",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/a11b52c0751f95f9b385fac0a2ed833a.jpg",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/a11b52c0751f95f9b385fac0a2ed833a.jpg",
         },
       ],
       mbid: "4cefbd1a-cf2d-3a90-a8a7-0a594b54e673",
@@ -437,22 +437,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/17d7407f0e7b1de1145216f0def27fb1.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/17d7407f0e7b1de1145216f0def27fb1.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/17d7407f0e7b1de1145216f0def27fb1.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/17d7407f0e7b1de1145216f0def27fb1.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/17d7407f0e7b1de1145216f0def27fb1.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/17d7407f0e7b1de1145216f0def27fb1.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/17d7407f0e7b1de1145216f0def27fb1.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/17d7407f0e7b1de1145216f0def27fb1.png",
         },
       ],
       mbid: "8ac83438-a943-4f95-885a-b9148a5e0349",
@@ -471,22 +471,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/26add14151894ed2bd57ffca732f5eeb.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/26add14151894ed2bd57ffca732f5eeb.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/26add14151894ed2bd57ffca732f5eeb.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/26add14151894ed2bd57ffca732f5eeb.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/26add14151894ed2bd57ffca732f5eeb.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/26add14151894ed2bd57ffca732f5eeb.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/26add14151894ed2bd57ffca732f5eeb.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/26add14151894ed2bd57ffca732f5eeb.png",
         },
       ],
       mbid: "3c2db5b4-6750-4f1b-b1ad-c6535a4f6e8c",
@@ -505,22 +505,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/2e6c3375498b46f78e72f3b9aa9009fc.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/2e6c3375498b46f78e72f3b9aa9009fc.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/2e6c3375498b46f78e72f3b9aa9009fc.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/2e6c3375498b46f78e72f3b9aa9009fc.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/2e6c3375498b46f78e72f3b9aa9009fc.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/2e6c3375498b46f78e72f3b9aa9009fc.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/2e6c3375498b46f78e72f3b9aa9009fc.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/2e6c3375498b46f78e72f3b9aa9009fc.png",
         },
       ],
       mbid: "6e1ea4ed-6df3-3a4a-96a9-734f0a6b47e3",
@@ -539,22 +539,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/a95cd321ee4a4c3f82fd14e3f093d058.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/a95cd321ee4a4c3f82fd14e3f093d058.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/a95cd321ee4a4c3f82fd14e3f093d058.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/a95cd321ee4a4c3f82fd14e3f093d058.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/a95cd321ee4a4c3f82fd14e3f093d058.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/a95cd321ee4a4c3f82fd14e3f093d058.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/a95cd321ee4a4c3f82fd14e3f093d058.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/a95cd321ee4a4c3f82fd14e3f093d058.png",
         },
       ],
       mbid: "",
@@ -591,22 +591,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/970547ad52cd4d0790c4baabfbdcd645.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/970547ad52cd4d0790c4baabfbdcd645.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/970547ad52cd4d0790c4baabfbdcd645.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/970547ad52cd4d0790c4baabfbdcd645.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/970547ad52cd4d0790c4baabfbdcd645.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/970547ad52cd4d0790c4baabfbdcd645.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/970547ad52cd4d0790c4baabfbdcd645.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/970547ad52cd4d0790c4baabfbdcd645.png",
         },
       ],
       mbid: "4ea311e6-6d77-4f6d-a916-5f10f72025db",
@@ -625,22 +625,22 @@ export const response = {
         {
           size: "small" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/29f72d0333df4193981b5ff16dd37df6.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/29f72d0333df4193981b5ff16dd37df6.png",
         },
         {
           size: "medium" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/29f72d0333df4193981b5ff16dd37df6.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/29f72d0333df4193981b5ff16dd37df6.png",
         },
         {
           size: "large" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/29f72d0333df4193981b5ff16dd37df6.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/29f72d0333df4193981b5ff16dd37df6.png",
         },
         {
           size: "extralarge" as const,
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/29f72d0333df4193981b5ff16dd37df6.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/29f72d0333df4193981b5ff16dd37df6.png",
         },
       ],
       mbid: "00163fb1-5ab7-4fec-b0dd-a915e2722340",
@@ -654,22 +654,22 @@ export const response = {
     {
       size: "small" as const,
       "#text":
-        "https://lastfm.freetls.fastly.net/i/u/34s/64d6a286426942e5c23b11e63dd414c3.png",
+        "https://lastfm-img.freetls.fastly.net/i/u/34s/64d6a286426942e5c23b11e63dd414c3.png",
     },
     {
       size: "medium" as const,
       "#text":
-        "https://lastfm.freetls.fastly.net/i/u/64s/64d6a286426942e5c23b11e63dd414c3.png",
+        "https://lastfm-img.freetls.fastly.net/i/u/64s/64d6a286426942e5c23b11e63dd414c3.png",
     },
     {
       size: "large" as const,
       "#text":
-        "https://lastfm.freetls.fastly.net/i/u/174s/64d6a286426942e5c23b11e63dd414c3.png",
+        "https://lastfm-img.freetls.fastly.net/i/u/174s/64d6a286426942e5c23b11e63dd414c3.png",
     },
     {
       size: "extralarge" as const,
       "#text":
-        "https://lastfm.freetls.fastly.net/i/u/300x300/64d6a286426942e5c23b11e63dd414c3.png",
+        "https://lastfm-img.freetls.fastly.net/i/u/300x300/64d6a286426942e5c23b11e63dd414c3.png",
     },
   ],
   playcount: 55,

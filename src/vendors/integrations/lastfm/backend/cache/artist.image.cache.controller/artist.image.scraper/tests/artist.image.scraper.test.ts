@@ -5,7 +5,7 @@ const mockValidExpectedHTML = `
   <ul class="image-list">
       <li class="image-list-item-wrapper">
           <a href="/music/God+Is+an+Astronaut/+images/82133e6c8c384693c6596d69efcf786f" class="image-list-item">
-              <img src="https://lastfm.freetls.fastly.net/i/u/avatar170s/82133e6c8c384693c6596d69efcf786f" alt="giaa2015" loading="lazy">
+              <img src="https://lastfm-img.freetls.fastly.net/i/u/avatar170s/82133e6c8c384693c6596d69efcf786f" alt="giaa2015" loading="lazy">
               <span class="image-list-item-preferred-container">
                   <span class="image-list-item-preferred-icon">
                       <span class="sr-only">Preferred image</span>
@@ -110,7 +110,7 @@ describe("CheerioArtistImageScraper", () => {
 
           it("should return a promise containing the expected content", async () => {
             expect(await response).toBe(
-              "https://lastfm.freetls.fastly.net/i/u/avatar170s/82133e6c8c384693c6596d69efcf786f"
+              "https://lastfm-img.freetls.fastly.net/i/u/avatar170s/82133e6c8c384693c6596d69efcf786f"
             );
           });
         });

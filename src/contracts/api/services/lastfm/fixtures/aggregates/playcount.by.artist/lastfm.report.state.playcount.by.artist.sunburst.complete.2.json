@@ -20383,19 +20383,19 @@
       "image": [
         {
           "size": "small",
-          "#text": "https://lastfm.freetls.fastly.net/i/u/34s/3045c415a689785ec440988170f4d015.png"
+          "#text": "https://lastfm-img.freetls.fastly.net/i/u/34s/3045c415a689785ec440988170f4d015.png"
         },
         {
           "size": "medium",
-          "#text": "https://lastfm.freetls.fastly.net/i/u/64s/3045c415a689785ec440988170f4d015.png"
+          "#text": "https://lastfm-img.freetls.fastly.net/i/u/64s/3045c415a689785ec440988170f4d015.png"
         },
         {
           "size": "large",
-          "#text": "https://lastfm.freetls.fastly.net/i/u/174s/3045c415a689785ec440988170f4d015.png"
+          "#text": "https://lastfm-img.freetls.fastly.net/i/u/174s/3045c415a689785ec440988170f4d015.png"
         },
         {
           "size": "extralarge",
-          "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/3045c415a689785ec440988170f4d015.png"
+          "#text": "https://lastfm-img.freetls.fastly.net/i/u/300x300/3045c415a689785ec440988170f4d015.png"
         }
       ],
       "playcount": 233905

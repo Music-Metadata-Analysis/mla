@@ -17,6 +17,7 @@ dev
 env
 eslint|ESLINT
 esnext
+fastly
 Flagsmith
 flipcard|FLIPCARD
 fn

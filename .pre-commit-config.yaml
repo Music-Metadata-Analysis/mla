@@ -47,6 +47,14 @@ repos:
           - "--exclude=SC2317"
           - "-x"
       - id: security-credentials
+        args:
+          - "git"
+          - "file://."
+          - "--fail"
+          - "--no-update"
+          - "--debug"
+          - "--max-depth=500"
+          - "--exclude-detectors=FastlyPersonalToken,Lastfm"
       - id: spelling-commit-message
       - id: spelling-markdown
   - repo: https://github.com/adrienverge/yamllint.git

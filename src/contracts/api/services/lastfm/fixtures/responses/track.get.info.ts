@@ -21,22 +21,22 @@ export const response = {
       image: [
         {
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/34s/83b8ba7098904df8cd2a781da5b4f871.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/34s/83b8ba7098904df8cd2a781da5b4f871.png",
           size: "small" as const,
         },
         {
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/64s/83b8ba7098904df8cd2a781da5b4f871.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/64s/83b8ba7098904df8cd2a781da5b4f871.png",
           size: "medium" as const,
         },
         {
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/174s/83b8ba7098904df8cd2a781da5b4f871.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/174s/83b8ba7098904df8cd2a781da5b4f871.png",
           size: "large" as const,
         },
         {
           "#text":
-            "https://lastfm.freetls.fastly.net/i/u/300x300/83b8ba7098904df8cd2a781da5b4f871.png",
+            "https://lastfm-img.freetls.fastly.net/i/u/300x300/83b8ba7098904df8cd2a781da5b4f871.png",
           size: "extralarge" as const,
         },
       ],
