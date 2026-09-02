@@ -45,6 +45,7 @@ export default function UserNameForm({
                 <FormControl isInvalid={form.errors.username !== undefined}>
                   <StyledInput
                     {...field}
+                    autoComplete={"off"}
                     id={ids.username}
                     placeholder={placeHolderText}
                     width={["150px", "300px", "400px", "500px"]}

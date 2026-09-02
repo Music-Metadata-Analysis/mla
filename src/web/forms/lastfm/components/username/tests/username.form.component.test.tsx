@@ -75,6 +75,14 @@ describe("UserNameForm", () => {
     expect(inputField.placeholder).toBe(mockPlaceHolderText);
   });
 
+  it("should set the auto complete property as expected", async () => {
+    const inputField = (await screen.findByPlaceholderText(
+      mockPlaceHolderText
+    )) as HTMLInputElement;
+
+    expect(inputField.autocomplete).toBe("off");
+  });
+
   it("should render the StyledButton component with the correct props", async () => {
     expect(StyledButton).toHaveBeenCalledTimes(1);
     checkMockCall(StyledButton, {
