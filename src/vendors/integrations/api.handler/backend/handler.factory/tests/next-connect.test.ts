@@ -5,7 +5,6 @@ import type {
   ApiFrameworkVendorApiResponseType,
 } from "@src/vendors/types/integrations/api.framework/vendor.backend.types";
 import type { ApiHandlerVendorRequestHandlerType } from "@src/vendors/types/integrations/api.handler/vendor.backend.types";
-import type { NodeRouter } from "next-connect/dist/types/node";
 
 jest.mock("next-connect");
 
@@ -21,9 +20,11 @@ describe(NextConnectHandlerFactory.name, () => {
   const mockRouter = {
     all: jest.fn(),
     handler: jest.fn(() => mockHandler),
-  } as unknown as NodeRouter<
-    ApiFrameworkVendorApiRequestType,
-    ApiFrameworkVendorApiResponseType
+  } as unknown as ReturnType<
+    typeof createRouter<
+      ApiFrameworkVendorApiRequestType,
+      ApiFrameworkVendorApiResponseType
+    >
   >;
 
   const mockHandler = {
