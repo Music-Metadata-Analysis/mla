@@ -184,5 +184,64 @@ describe("useVerticalScrollBarLayoutController", () => {
         );
       });
     });
+
+    describe("when scrollRef is updated to a null value (useEffect)", () => {
+      it("should reset the layout and avoid recalculating scroll attributes", async () => {
+        jest
+          .mocked(VerticalScrollBarDiv.prototype.requiresScroll)
+          .mockReturnValue(true);
+        jest
+          .mocked(VerticalScrollBarDiv.prototype.getRefProperty)
+          .mockReturnValue(42);
+        mockGetter.mockReturnValue({ id: "scrollbar-id" });
+
+        act(() =>
+          received.result.current.setProps({
+            scrollRef: mockScrollRef,
+            verticalAdjustment: 5,
+            update: null,
+          })
+        );
+
+        await waitFor(() =>
+          expect(
+            VerticalScrollBarDiv.prototype.getScrollAttributes
+          ).toHaveBeenCalledTimes(6)
+        );
+        expect(received.result.current.hook).toStrictEqual({
+          requiresScroll: true,
+          scrollBarHeight: 42,
+          scrollBarId: "scrollbar-id",
+          scrollBarTop: 42,
+          scrollThumbOffset: mockInternalAttributeScrollThumbOffset,
+          scrollThumbSize: mockInternalAttributeScrollThumbSize,
+        });
+
+        jest
+          .mocked(VerticalScrollBarDiv.prototype.getScrollAttributes)
+          .mockClear();
+
+        act(() =>
+          received.result.current.setProps({
+            scrollRef: mockScrollNullRef,
+            verticalAdjustment: 5,
+            update: null,
+          })
+        );
+
+        expect(mockSetter).toHaveBeenLastCalledWith(null);
+        expect(received.result.current.hook).toStrictEqual({
+          requiresScroll: false,
+          scrollBarHeight: 0,
+          scrollBarId: undefined,
+          scrollBarTop: 0,
+          scrollThumbOffset: 0,
+          scrollThumbSize: 0,
+        });
+        expect(
+          VerticalScrollBarDiv.prototype.getScrollAttributes
+        ).not.toHaveBeenCalled();
+      });
+    });
   });
 });
