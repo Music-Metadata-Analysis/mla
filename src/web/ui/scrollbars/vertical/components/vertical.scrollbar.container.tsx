@@ -20,24 +20,25 @@ const VerticalScrollBarContainer = ({
 }: VerticalScrollBarContainerProps) => {
   const verticalAdjustment = 5;
 
-  const { scrollBarDiv, scrollThumbOffset, scrollThumbSize } =
-    useVerticalScrollBarLayoutController({
-      scrollRef,
-      update,
-      verticalAdjustment,
-    });
+  const {
+    requiresScroll,
+    scrollBarHeight,
+    scrollBarId,
+    scrollBarTop,
+    scrollThumbOffset,
+    scrollThumbSize,
+  } = useVerticalScrollBarLayoutController({
+    scrollRef,
+    update,
+    verticalAdjustment,
+  });
 
   const { mouseDownHandler } = useVerticalScrollBarEventsController({
     scrollRef,
   });
 
-  const getAriaMaximumValue = () => {
-    return (
-      scrollBarDiv.getRefProperty("offsetHeight") -
-      scrollThumbSize -
-      verticalAdjustment
-    );
-  };
+  const getAriaMaximumValue = () =>
+    scrollBarHeight - scrollThumbSize - verticalAdjustment;
 
   const getAriaMinimumValue = () => {
     return 0;
@@ -51,21 +52,19 @@ const VerticalScrollBarContainer = ({
 
   const getThumbOffsetTop = () => asCSS(scrollThumbOffset);
 
-  const getTrackHeight = () =>
-    asCSS(scrollBarDiv.getRefProperty("offsetHeight") - verticalAdjustment);
+  const getTrackHeight = () => asCSS(scrollBarHeight - verticalAdjustment);
 
   const getTrackOffsetRight = () => asCSS(horizontalOffset);
 
-  const getTrackOffsetTop = () =>
-    asCSS(scrollBarDiv.getRefProperty("offsetTop") + verticalOffset);
+  const getTrackOffsetTop = () => asCSS(scrollBarTop + verticalOffset);
 
   const asCSS = (value: number) => `${value}px`;
 
-  if (!scrollBarDiv.ref || !scrollBarDiv.requiresScroll()) return null;
+  if (!scrollBarId || !requiresScroll) return null;
 
   return (
     <VerticalScrollBar
-      ariaControls={scrollBarDiv.ref.id}
+      ariaControls={scrollBarId}
       ariaValuemax={getAriaMaximumValue()}
       ariaValuemin={getAriaMinimumValue()}
       ariaValuenow={getAriaValueNow()}
