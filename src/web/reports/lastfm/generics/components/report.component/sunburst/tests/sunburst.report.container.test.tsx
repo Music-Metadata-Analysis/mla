@@ -1,4 +1,5 @@
 import { cleanup, render } from "@testing-library/react";
+import { isValidElement } from "react";
 import mockSunburstCacheControllerHook from "../controllers/__mocks__/sunburst.report.cache.controller.hook.mock";
 import mockSunBurstLayoutControllerHook from "../controllers/__mocks__/sunburst.report.layout.controller.hook.mock";
 import useSunBurstLayoutController from "../controllers/sunburst.report.layout.controller.hook";
@@ -367,12 +368,29 @@ describe("SunBurstReportContainer", () => {
   const checkSunBurstReportProps = () => {
     it("should render the SunBurstReport with the correct props", () => {
       expect(SunBurstReport).toHaveBeenCalledTimes(1);
+      const drawer = jest.mocked(SunBurstReport).mock.calls[0][0].drawer;
+      expect(isValidElement(drawer)).toBe(true);
+      if (!isValidElement(drawer)) {
+        throw new Error("SunBurstReport drawer prop must be a React element");
+      }
+      expect(drawer.type).toBe(mockQuery.getDrawerComponent());
+      expect(drawer.props.node.getNode()).toBe(
+        mockSunBurstControllerHookValues.node.selected
+      );
+      expect(drawer.props).toMatchObject({
+        alignment: "left",
+        isOpen: mockSunBurstControllerHookValues.drawer.state,
+        onClose: mockSunBurstControllerHookValues.drawer.setFalse,
+        setSelectedNode: mockSunBurstControllerHookValues.node.setSelected,
+        svgTransition: mockSunBurstControllerHookValues.svg.isTransitioning,
+      });
       checkMockCall(
         SunBurstReport,
         {
           encapsulatedReportState: mockQuery.getEncapsulatedReportState(
             currentLastFMHookState.reportProperties
           ),
+          drawer,
           lastFMt: mockLastFmT,
           query: mockQuery,
           sunBurstT: mockSunBurstT,
