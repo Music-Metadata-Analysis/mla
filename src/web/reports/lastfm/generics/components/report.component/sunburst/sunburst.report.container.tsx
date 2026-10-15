@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { createElement, useEffect } from "react";
 import useSunBurstLayoutController from "./controllers/sunburst.report.layout.controller.hook";
 import SunBurstReport from "./sunburst.report.component";
 import Events from "@src/web/analytics/collection/events/definitions";
@@ -43,6 +43,14 @@ export default function SunBurstReportContainer<
   const sunBurstLayoutController = useSunBurstLayoutController();
 
   const query = new queryClass();
+  const drawer = createElement(query.getDrawerComponent(), {
+    alignment: "left",
+    node: query.getEncapsulatedNode(sunBurstController.node.selected),
+    isOpen: sunBurstController.drawer.state,
+    onClose: sunBurstController.drawer.setFalse,
+    setSelectedNode: sunBurstController.node.setSelected,
+    svgTransition: sunBurstController.svg.isTransitioning,
+  });
 
   useEffect(() => {
     lastfm.clear();
@@ -111,6 +119,7 @@ export default function SunBurstReportContainer<
         encapsulatedReportState={query.getEncapsulatedReportState(
           lastfm.reportProperties
         )}
+        drawer={drawer}
         lastFMt={lastFMt}
         query={query}
         sunBurstT={sunBurstT}

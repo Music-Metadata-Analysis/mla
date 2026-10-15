@@ -12,11 +12,13 @@ import type { tFunctionType } from "@src/vendors/types/integrations/locale/vendo
 import type { SunBurstControllerHookType } from "@src/web/reports/generics/state/controllers/sunburst/sunburst.controller.hook";
 import type LastFMReportSunBurstBaseStateEncapsulation from "@src/web/reports/lastfm/generics/state/encapsulations/lastfm.report.encapsulation.sunburst.base.class";
 import type SunBurstBaseQuery from "@src/web/reports/lastfm/generics/state/queries/sunburst.query.base.class";
+import type { ReactNode } from "react";
 
 export interface SunBurstReportProps<
   T extends LastFMReportSunBurstBaseStateEncapsulation<unknown>,
 > {
   encapsulatedReportState: T;
+  drawer: ReactNode;
   lastFMt: tFunctionType;
   query: SunBurstBaseQuery<T>;
   sunBurstController: SunBurstControllerHookType;
@@ -29,6 +31,7 @@ export default function SunBurstReport<
   ReportStateType extends LastFMReportSunBurstBaseStateEncapsulation<unknown>,
 >({
   encapsulatedReportState,
+  drawer,
   lastFMt,
   query,
   sunBurstController,
@@ -36,7 +39,6 @@ export default function SunBurstReport<
   sunBurstT,
   visible,
 }: SunBurstReportProps<ReportStateType>) {
-  const DrawerComponent = query.getDrawerComponent();
   const breakPoints = [250, 250, 300, 500, 600, 600];
 
   return (
@@ -52,14 +54,7 @@ export default function SunBurstReport<
         <Box
           display={sunBurstLayoutController.canFitOnScreen ? "inline" : "none"}
         >
-          <DrawerComponent
-            alignment={"left"}
-            node={query.getEncapsulatedNode(sunBurstController.node.selected)}
-            isOpen={sunBurstController.drawer.state}
-            onClose={sunBurstController.drawer.setFalse}
-            setSelectedNode={sunBurstController.node.setSelected}
-            svgTransition={sunBurstController.svg.isTransitioning}
-          />
+          {drawer}
 
           <Flex
             justifyContent={"center"}
