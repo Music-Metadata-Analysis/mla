@@ -1,5 +1,11 @@
 import { LockIcon } from "@chakra-ui/icons";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import NavBarSessionControlContainer from "../navbar.session.control.container";
 import authenticationTranslocations from "@locales/authentication.json";
@@ -43,17 +49,19 @@ describe("NavBarSessionControlContainer", () => {
     jest.clearAllMocks();
   });
 
-  const arrange = () => {
-    render(
-      <NavBarSessionControlContainer closeMobileMenu={mockCloseMobileMenu} />
+  const arrange = async () => {
+    await act(async () =>
+      render(
+        <NavBarSessionControlContainer closeMobileMenu={mockCloseMobileMenu} />
+      )
     );
   };
 
   describe("when the user is logged in", () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       mockAuthHook.user = mockUserProfile;
       mockAuthHook.status = "authenticated";
-      arrange();
+      await arrange();
     });
 
     it("should render the RiLogoutBoxRLine icon.", () => {
@@ -82,10 +90,10 @@ describe("NavBarSessionControlContainer", () => {
   });
 
   describe("when the user is NOT logged in", () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       mockAuthHook.user = null;
       mockAuthHook.status = "unauthenticated";
-      arrange();
+      await arrange();
     });
 
     it("should render the LockIcon", () => {

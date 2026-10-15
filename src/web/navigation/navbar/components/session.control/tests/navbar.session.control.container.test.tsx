@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { act, render, waitFor } from "@testing-library/react";
 import NavBarSessionControl from "../navbar.session.control.component";
 import NavBarSessionControlContainer from "../navbar.session.control.container";
 import checkMockCall from "@src/fixtures/mocks/mock.component.call";
@@ -42,10 +42,13 @@ describe("NavBarSessionControlContainer", () => {
     jest.clearAllMocks();
   });
 
-  const arrange = () => {
-    render(
-      <NavBarSessionControlContainer closeMobileMenu={mockCloseMobileMenu} />
-    );
+  const arrange = async () => {
+    await act(async () => {
+      render(
+        <NavBarSessionControlContainer closeMobileMenu={mockCloseMobileMenu} />
+      );
+      await Promise.resolve();
+    });
   };
 
   const checkSessionControlComponentTotalCalls = ({
@@ -53,8 +56,10 @@ describe("NavBarSessionControlContainer", () => {
   }: {
     totalCalls: number;
   }) => {
-    it("should call the NavSessionControl component as expected", () => {
-      expect(NavBarSessionControl).toHaveBeenCalledTimes(totalCalls);
+    it("should call the NavSessionControl component as expected", async () => {
+      await waitFor(() =>
+        expect(NavBarSessionControl).toHaveBeenCalledTimes(totalCalls)
+      );
     });
   };
 
@@ -65,20 +70,22 @@ describe("NavBarSessionControlContainer", () => {
     call: number;
     props: Record<string, unknown>;
   }) => {
-    it(`call #${call} of the NavSessionControl should have the expected props`, () => {
-      checkMockCall(NavBarSessionControl, props, call, [
-        "handleClick",
-        "onAuthenticationModalClose",
-      ]);
+    it(`call #${call} of the NavSessionControl should have the expected props`, async () => {
+      await waitFor(() =>
+        checkMockCall(NavBarSessionControl, props, call, [
+          "handleClick",
+          "onAuthenticationModalClose",
+        ])
+      );
     });
   };
 
   describe("when the user is logged in", () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       mockAuthHook.user = mockUserProfile;
       mockAuthHook.status = "authenticated";
 
-      arrange();
+      await arrange();
     });
 
     checkSessionControlComponentTotalCalls({ totalCalls: 2 });
@@ -87,11 +94,11 @@ describe("NavBarSessionControlContainer", () => {
   });
 
   describe("when the user is NOT logged in", () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       mockAuthHook.user = null;
       mockAuthHook.status = "unauthenticated";
 
-      arrange();
+      await arrange();
     });
 
     checkSessionControlComponentTotalCalls({ totalCalls: 1 });

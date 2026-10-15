@@ -24,6 +24,26 @@ export default function useChakraPopUp(
     ),
   };
 
+  const closeToast = () => {
+    toast.close(props.name);
+    popups.dispatch({ type: "HidePopUp", name: props.name });
+  };
+
+  const createToast = () => {
+    if (!toast.isActive(props.name)) {
+      toast({
+        id: props.name,
+        ...toastProps,
+      });
+    }
+  };
+
+  const updateToast = () => {
+    if (toast.isActive(props.name)) {
+      toast.update(props.name, toastProps);
+    }
+  };
+
   useEffect(() => {
     // PopUps Start Closed
     return () => closeToast();
@@ -45,26 +65,6 @@ export default function useChakraPopUp(
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colorMode]);
-
-  const closeToast = () => {
-    toast.close(props.name);
-    popups.dispatch({ type: "HidePopUp", name: props.name });
-  };
-
-  const createToast = () => {
-    if (!toast.isActive(props.name)) {
-      toast({
-        id: props.name,
-        ...toastProps,
-      });
-    }
-  };
-
-  const updateToast = () => {
-    if (toast.isActive(props.name)) {
-      toast.update(props.name, toastProps);
-    }
-  };
 
   return null;
 }
