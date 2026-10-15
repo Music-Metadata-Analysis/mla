@@ -22,11 +22,13 @@ const NavBarSessionControlContainer = ({
   }, []);
 
   useEffect(() => {
-    if (authentication.status === "unauthenticated") {
-      setControlButtonType("signIn");
-    } else {
-      setControlButtonType("signOut");
-    }
+    Promise.resolve().then(() => {
+      if (authentication.status === "unauthenticated") {
+        setControlButtonType("signIn");
+      } else {
+        setControlButtonType("signOut");
+      }
+    });
   }, [authentication.status]);
 
   const generateAnalyticsName = () => {
