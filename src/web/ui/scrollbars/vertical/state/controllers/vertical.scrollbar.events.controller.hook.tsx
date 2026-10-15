@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import VerticalScrollBarEventHandlers from "./vertical.scrollbar.events.controller.utility.class";
 import useScrollBarsController from "@src/web/ui/scrollbars/generics/state/controllers/scrollbars.controller.hook";
-import type { RefObject } from "react";
+import type { MouseEventHandler, RefObject } from "react";
 
 export interface useVerticalScrollBarEventsControllerProps {
   scrollRef: RefObject<HTMLDivElement>;
@@ -11,20 +11,19 @@ const useVerticalScrollBarEventsController = ({
   scrollRef,
 }: useVerticalScrollBarEventsControllerProps) => {
   const scrollbars = useScrollBarsController();
-  const handlers = useRef(
-    new VerticalScrollBarEventHandlers(scrollRef)
-  ).current;
+  const handlersRef = useRef(new VerticalScrollBarEventHandlers(scrollRef));
 
   useEffect(() => {
+    const handlers = handlersRef.current;
     const activeScrollBar = scrollbars.current();
     if (activeScrollBar) {
       handlers.activeScrollBar = activeScrollBar;
       handlers.registerHookHandlers();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scrollbars]);
 
   useEffect(() => {
+    const handlers = handlersRef.current;
     if (scrollRef.current) {
       scrollbars.add(scrollRef.current.id);
       handlers.activeScrollBar = scrollRef.current.id;
@@ -36,8 +35,13 @@ const useVerticalScrollBarEventsController = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const mouseDownHandler: MouseEventHandler = useCallback(
+    (event) => handlersRef.current.mouseDownHandler(event),
+    []
+  );
+
   return {
-    mouseDownHandler: handlers.mouseDownHandler,
+    mouseDownHandler,
   };
 };
 
