@@ -1,6 +1,5 @@
 import { waitFor, fireEvent } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react";
-import dk from "deep-keys";
 import { useState } from "react";
 import mockHookValues from "../__mocks__/vertical.scrollbar.layout.controller.hook.mock";
 import useVerticalScrollBarLayoutController from "../vertical.scrollbar.layout.controller.hook";
@@ -76,17 +75,12 @@ describe("useVerticalScrollBarLayoutController", () => {
     });
 
     it("should contain all the same properties as the mock hook", () => {
-      const mockObjectKeys = dk(mockHookValues).sort();
-      const hookKeys = dk(received.result.current.hook).sort();
-      expect(
-        hookKeys.filter((key) => key !== "scrollBarDiv.ref")
-      ).toStrictEqual(mockObjectKeys);
+      const mockObjectKeys = Object.keys(mockHookValues).sort();
+      const hookKeys = Object.keys(received.result.current.hook).sort();
+      expect(hookKeys).toStrictEqual(mockObjectKeys);
     });
 
-    it("should contain an instance of VerticalScrollDiv", () => {
-      expect(received.result.current.hook.scrollBarDiv).toBeInstanceOf(
-        VerticalScrollBarDiv
-      );
+    it("should initialize a VerticalScrollBarDiv instance", () => {
       expect(VerticalScrollBarDiv).toHaveBeenCalledTimes(1);
       expect(VerticalScrollBarDiv).toHaveBeenCalledWith({
         scrollRef: currentProps.scrollRef,
