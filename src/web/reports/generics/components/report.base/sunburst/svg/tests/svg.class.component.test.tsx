@@ -104,9 +104,7 @@ describe("SunBurstChartSVG", () => {
     });
 
   const TestSunBurstContainer = () => {
-    // eslint-disable-next-line react-hooks/globals
     [currentProps, testContainerUpdateProps] = useState(createProps());
-    // eslint-disable-next-line react-hooks/globals
     [testContainerSelection, testContainerSetSelection] = useState(
       currentProps.selectedNode
     );
