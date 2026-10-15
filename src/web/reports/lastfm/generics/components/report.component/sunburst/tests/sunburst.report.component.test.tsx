@@ -1,5 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
+import { createElement } from "react";
 import mockSunBurstLayoutControllerHook from "../controllers/__mocks__/sunburst.report.layout.controller.hook.mock";
 import SunBurstControlPanel from "../panels/control/control.panel.component";
 import SunBurstErrorPanel from "../panels/error/error.panel.component";
@@ -89,6 +90,14 @@ describe("SunBurstReport", () => {
   const arrangeProps = () =>
     (currentProps = {
       encapsulatedReportState: mockReportState,
+      drawer: createElement(mockReport.getDrawerComponent(), {
+        alignment: "left",
+        isOpen: mockSunBurstControllerHook.drawer.state,
+        node: mockReport.getEncapsulatedNode(nullNode as d3Node),
+        onClose: mockSunBurstControllerHook.drawer.setFalse,
+        setSelectedNode: mockSunBurstControllerHook.node.setSelected,
+        svgTransition: mockSunBurstControllerHook.svg.isTransitioning,
+      }),
       lastFMt: mockLastFMt,
       query: mockReport,
       sunBurstController: mockSunBurstControllerHook,
