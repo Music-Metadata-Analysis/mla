@@ -1,12 +1,10 @@
-import VerticalScrollBarDiv from "../vertical.scrollbar.layout.controller.utility.class";
+import type { VerticalScrollBarLayoutControllerHookType } from "../vertical.scrollbar.layout.controller.hook";
 
-jest.mock("../vertical.scrollbar.layout.controller.utility.class");
-
-const mockValues = {
-  scrollBarDiv: new VerticalScrollBarDiv({
-    scrollRef: { current: null },
-    verticalAdjustment: 5,
-  }),
+const mockValues: VerticalScrollBarLayoutControllerHookType = {
+  requiresScroll: false,
+  scrollBarHeight: 0,
+  scrollBarId: undefined,
+  scrollBarTop: 0,
   scrollThumbSize: 10,
   scrollThumbOffset: 20,
 };

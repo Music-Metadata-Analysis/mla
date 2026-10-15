@@ -24,7 +24,8 @@ describe("VerticalScrollBarContainer", () => {
   let currentProps: VerticalScrollBarContainerProps;
 
   const mockVerticalAdjustment = 5;
-  const mockPropertyValues = [150, 155, 160];
+  const mockScrollBarHeight = 150;
+  const mockScrollBarTop = 160;
   const mockScrollThumbSize = 10;
   const mockScrollThumbOffset = 25;
 
@@ -53,13 +54,12 @@ describe("VerticalScrollBarContainer", () => {
 
   const resetProps = () => {
     currentProps = { ...baseProps };
-    mockUseVerticalScrollBarLayoutController.scrollBarDiv.ref =
-      currentProps.scrollRef.current;
-    mockUseVerticalScrollBarLayoutController.scrollBarDiv.getRefProperty = jest
-      .fn()
-      .mockReturnValueOnce(mockPropertyValues[0])
-      .mockReturnValueOnce(mockPropertyValues[1])
-      .mockReturnValueOnce(mockPropertyValues[2]);
+    mockUseVerticalScrollBarLayoutController.requiresScroll = false;
+    mockUseVerticalScrollBarLayoutController.scrollBarHeight =
+      mockScrollBarHeight;
+    mockUseVerticalScrollBarLayoutController.scrollBarId =
+      currentProps.scrollRef.current?.id;
+    mockUseVerticalScrollBarLayoutController.scrollBarTop = mockScrollBarTop;
     mockUseVerticalScrollBarLayoutController.scrollThumbSize =
       mockScrollThumbSize;
     mockUseVerticalScrollBarLayoutController.scrollThumbOffset =
@@ -101,7 +101,7 @@ describe("VerticalScrollBarContainer", () => {
             mockVerticalAdjustment,
           ariaValuemin: 0,
           ariaValuemax:
-            mockPropertyValues[0] -
+            mockScrollBarHeight -
             mockUseVerticalScrollBarLayoutController.scrollThumbSize -
             mockVerticalAdjustment,
           mouseDownHandler:
@@ -112,11 +112,9 @@ describe("VerticalScrollBarContainer", () => {
           thumbOffsetTop: asCSS(
             mockUseVerticalScrollBarLayoutController.scrollThumbOffset
           ),
-          trackHeight: asCSS(mockPropertyValues[1] - mockVerticalAdjustment),
+          trackHeight: asCSS(mockScrollBarHeight - mockVerticalAdjustment),
           trackOffsetRight: asCSS(currentProps.horizontalOffset),
-          trackOffsetTop: asCSS(
-            mockPropertyValues[2] + currentProps.verticalOffset
-          ),
+          trackOffsetTop: asCSS(mockScrollBarTop + currentProps.verticalOffset),
           zIndex: currentProps.zIndex ? currentProps.zIndex : 0,
         },
         0
@@ -130,38 +128,12 @@ describe("VerticalScrollBarContainer", () => {
     });
   };
 
-  const checkPropertyRetrieval = () => {
-    it("should call the VerticalScrollBarDiv.getRefProperty method 3 times", () => {
-      expect(
-        mockUseVerticalScrollBarLayoutController.scrollBarDiv.getRefProperty
-      ).toHaveBeenCalledTimes(3);
-      expect(
-        mockUseVerticalScrollBarLayoutController.scrollBarDiv.getRefProperty
-      ).toHaveBeenNthCalledWith(1, "offsetHeight");
-      expect(
-        mockUseVerticalScrollBarLayoutController.scrollBarDiv.getRefProperty
-      ).toHaveBeenNthCalledWith(2, "offsetHeight");
-      expect(
-        mockUseVerticalScrollBarLayoutController.scrollBarDiv.getRefProperty
-      ).toHaveBeenNthCalledWith(3, "offsetTop");
-    });
-  };
-
-  const checkNoPropertyRetrieval = () => {
-    it("should NOT call the VerticalScrollBarDiv.getRefProperty method", () => {
-      expect(
-        mockUseVerticalScrollBarLayoutController.scrollBarDiv.getRefProperty
-      ).toHaveBeenCalledTimes(0);
-    });
-  };
-
   describe("with a custom zIndex value", () => {
     beforeEach(() => (currentProps.zIndex = 1));
 
     describe("when VerticalScrollBarDiv.requiresScroll returns false", () => {
       beforeEach(() => {
-        mockUseVerticalScrollBarLayoutController.scrollBarDiv.requiresScroll =
-          jest.fn(() => false);
+        mockUseVerticalScrollBarLayoutController.requiresScroll = false;
 
         arrange();
       });
@@ -169,13 +141,11 @@ describe("VerticalScrollBarContainer", () => {
       checkUseVerticalScrollBarLayoutControllerRender();
       checkUseVerticalScrollBarEventsControllerRender();
       checkNoVerticalScrollBarRender();
-      checkNoPropertyRetrieval();
     });
 
     describe("when VerticalScrollBarDiv.requiresScroll returns true", () => {
       beforeEach(() => {
-        mockUseVerticalScrollBarLayoutController.scrollBarDiv.requiresScroll =
-          jest.fn(() => true);
+        mockUseVerticalScrollBarLayoutController.requiresScroll = true;
 
         arrange();
       });
@@ -183,7 +153,6 @@ describe("VerticalScrollBarContainer", () => {
       checkUseVerticalScrollBarLayoutControllerRender();
       checkUseVerticalScrollBarEventsControllerRender();
       checkVerticalScrollBarRender();
-      checkPropertyRetrieval();
     });
   });
 
@@ -192,8 +161,7 @@ describe("VerticalScrollBarContainer", () => {
 
     describe("when VerticalScrollBarDiv.requiresScroll returns false", () => {
       beforeEach(() => {
-        mockUseVerticalScrollBarLayoutController.scrollBarDiv.requiresScroll =
-          jest.fn(() => false);
+        mockUseVerticalScrollBarLayoutController.requiresScroll = false;
 
         arrange();
       });
@@ -201,13 +169,11 @@ describe("VerticalScrollBarContainer", () => {
       checkUseVerticalScrollBarLayoutControllerRender();
       checkUseVerticalScrollBarEventsControllerRender();
       checkNoVerticalScrollBarRender();
-      checkNoPropertyRetrieval();
     });
 
     describe("when VerticalScrollBarDiv.requiresScroll returns true", () => {
       beforeEach(() => {
-        mockUseVerticalScrollBarLayoutController.scrollBarDiv.requiresScroll =
-          jest.fn(() => true);
+        mockUseVerticalScrollBarLayoutController.requiresScroll = true;
 
         arrange();
       });
@@ -215,7 +181,6 @@ describe("VerticalScrollBarContainer", () => {
       checkUseVerticalScrollBarLayoutControllerRender();
       checkUseVerticalScrollBarEventsControllerRender();
       checkVerticalScrollBarRender();
-      checkPropertyRetrieval();
     });
   });
 });
